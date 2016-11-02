@@ -17,12 +17,16 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::post('login', 'App\Http\Controllers\Auth\LoginController@login')
+    ->name('login.post');
+Route::post('logout', 'App\Http\Controllers\Auth\LoginController@logout ')
+    ->name('logout.post');
+
+
 /*Route::get('auth/login', 'Auth\AuthController@getLogin')
     ->name('login.get');
-Route::post('login', 'Auth\AuthController@postLogin')
-    ->name('login.post');
-Route::post('logout', 'Auth\AuthController@getLogout')
-    ->name('logout.post');
+
+
 
 Route::get('register', 'Auth\AuthController@getRegister')
     ->name('register.get');

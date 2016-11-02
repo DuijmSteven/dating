@@ -3,7 +3,7 @@
     <title>{{ isset ($title) ? $title : 'Title'  }}</title>
     <meta name="description" content="Dating app">
     <meta name="author" content="Dating">
-{{--    <meta name="csrf" value="{{ csrf_token() }}">--}}
+    <meta name="csrf" value="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ elixir('css/app.css') }}">
 
     <!--[if lt IE 9]>

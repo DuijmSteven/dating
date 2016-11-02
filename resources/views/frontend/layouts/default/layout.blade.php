@@ -30,7 +30,7 @@
          * can be defined here
          */
         var DP = {
-            baseUrl: '{!! url() !!}'
+            baseUrl: '{!! url('/') !!}'
         };
     </script>
     <script src="{{ elixir('js/app.js') }}"></script>
