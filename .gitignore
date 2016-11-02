@@ -1,0 +1,7 @@
+/vendor
+/node_modules
+.env
+.idea
+public/css
+public/js
+public/build

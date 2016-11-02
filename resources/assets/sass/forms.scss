@@ -1,0 +1,11 @@
+.form-control {
+    &.form-error {
+        border-color: red;
+    }
+}
+
+small {
+    &.form-error {
+        color: red;
+    }
+}
