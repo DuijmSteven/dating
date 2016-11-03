@@ -1,5 +1,5 @@
-window.$ = window.jQuery = require('jquery');
-var autocomplete = require( 'jquery-ui/autocomplete');
+window.jQuery = require('jquery');
+window.$ = window.jQuery;
 require('bootstrap-sass');
 
 $(document).ready(function() {

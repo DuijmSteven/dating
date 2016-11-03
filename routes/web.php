@@ -11,19 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Auth::routes();
-
-Route::post('login', 'App\Http\Controllers\Auth\LoginController@login')
+Route::post('login', 'Auth\LoginController@login')
     ->name('login.post');
-Route::post('logout', 'App\Http\Controllers\Auth\LoginController@logout ')
+Route::post('logout', 'Auth\LoginController@logout ')
     ->name('logout.post');
 
 
-/*Route::get('auth/login', 'Auth\AuthController@getLogin')
+Route::get('login', 'Auth\LoginController@showLoginForm')
     ->name('login.get');
 
 
@@ -36,7 +30,7 @@ Route::post('register', 'Auth\AuthController@postRegister')
 Route::get('password/reset', 'Auth\PasswordController@getEmail')
     ->name('password.reset.get');
 Route::post('password/email', 'Auth\PasswordController@postEmail')
-    ->name('password.reset.post');*/
+    ->name('password.reset.post');
 
 Route::get('/', 'frontend\HomeController@index')
     ->name('root');
