@@ -14,16 +14,19 @@ class UploadManager
      * @param string $location
      * @return bool
      */
-    public function saveFile(UploadedFile $uploadedFile, $filename, $path = '', $location = 'cloud')
+    public function saveFile(UploadedFile $uploadedFile, $path = '', $location = 'cloud')
     {
-        $disk = Storage::disk($location);
-
         //Check if uploaded file is valid and upload it to cloud or save it locally
         if ($uploadedFile->isValid()) {
-            $disk->put($path.$filename, file_get_contents($uploadedFile));
-            return true;
+            try {
+                $filepath =  $uploadedFile->store($path, $location);
+            } catch (\Exception $exception) {
+                throw $exception;
+            }
+
+            return $filepath;
         } else {
-            return false;
+            throw (new \Exception);
         }
     }
 
@@ -41,10 +44,7 @@ class UploadManager
 
     public function saveUserPhoto(UploadedFile $uploadedFile, $userId, $location = 'cloud')
     {
-        $filename = md5($uploadedFile->getClientOriginalName() . microtime() . $userId) . '.' .
-                    $uploadedFile->getClientOriginalExtension();
-
-        $this->saveFile($uploadedFile, $filename, 'users/photos/' . $userId . '/', $location);
+        $filename = $this->saveFile($uploadedFile, 'users/photos/' . $userId, $location);
 
         return $filename;
     }

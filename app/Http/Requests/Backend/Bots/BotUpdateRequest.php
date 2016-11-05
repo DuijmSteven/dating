@@ -25,7 +25,7 @@ class BotUpdateRequest extends Request
     {
         $userProfileFields = \UserConstants::PROFILE_FIELDS;
 
-        \Log::info($this->all());
+        \Log::info($this->route('id'));
 
         return [
             'username' => 'min:5|max:50|string|required|unique:users,'. $this->route('id'),

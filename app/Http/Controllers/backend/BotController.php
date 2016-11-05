@@ -109,7 +109,7 @@ class BotController extends Controller
         return view(
             'backend.bots.edit',
             [
-                'title' => 'Create Bot - ' . \MetaConstants::SITE_NAME,
+                'title' => 'Edit Bot - '. $user['username'] . '(ID: '. $user['id'] .') - ' . \MetaConstants::SITE_NAME,
                 'headingLarge' => 'Bot',
                 'headingSmall' => 'Edit',
                 'carbonNow' => Carbon::now(),
