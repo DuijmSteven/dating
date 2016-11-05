@@ -2,7 +2,7 @@
 
 namespace App\Managers;
 
-use Storage;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UploadManager

@@ -13,7 +13,7 @@
 
 Route::post('login', 'Auth\LoginController@login')
     ->name('login.post');
-Route::post('logout', 'Auth\LoginController@logout ')
+Route::post('logout', 'Auth\LoginController@logout')
     ->name('logout.post');
 
 
@@ -22,9 +22,9 @@ Route::get('login', 'Auth\LoginController@showLoginForm')
 
 
 
-Route::get('register', 'Auth\AuthController@getRegister')
+Route::get('register', 'Auth\RegisterController@showRegistrationForm')
     ->name('register.get');
-Route::post('register', 'Auth\AuthController@postRegister')
+Route::post('register', 'Auth\RegisterController@register')
     ->name('register.post');
 
 Route::get('password/reset', 'Auth\PasswordController@getEmail')

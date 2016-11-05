@@ -10,7 +10,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Input;
+use Illuminate\Support\Facades\Input;
 
 class BotController extends Controller
 {

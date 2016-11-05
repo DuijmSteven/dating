@@ -65,11 +65,11 @@ class BotManager extends UserBotManager
      */
     private function buildUserArrayToPersist(array $botData)
     {
-        $usersTableData = array_where($botData, function ($key, $value) {
+        $usersTableData = array_where($botData, function ($value, $key) {
             return in_array($key, UserConstants::USER_FIELDS);
         });
 
-        $userMetaTableData = array_where($botData, function ($key, $value) {
+        $userMetaTableData = array_where($botData, function ($value, $key) {
             return in_array($key, array_keys(UserConstants::PROFILE_FIELDS));
         });
 
@@ -77,6 +77,8 @@ class BotManager extends UserBotManager
         $userDataToPersist['password'] = Hash::make($userDataToPersist['password']);
         $userDataToPersist['role'] = UserConstants::ROLES['bot'];
         $userDataToPersist['meta'] = $userMetaTableData;
+
+        $userDataToPersist['active'] = 1;
 
         if (empty($botData['user_images'][0])) {
             $userDataToPersist['user_images'] = [];
