@@ -40,14 +40,14 @@ class BotManager extends UserBotManager
 
     public function updateBot(array $botData, $botId = 1)
     {
-        $usersTableData = array_where($botData, function ($key, $value) {
+        $usersTableData = array_where($botData, function ($value, $key) {
             return in_array($key, UserConstants::BOT_USER_TABLE_FIELDS);
         });
 
-        $user = User::findOrFail($botId)->first();
+        $user = User::findOrFail($botId);
         $user->update($usersTableData);
 
-        $userMetaTableData = array_where($botData, function ($key, $value) {
+        $userMetaTableData = array_where($botData, function ($value, $key) {
             return in_array($key, array_keys(UserConstants::PROFILE_FIELDS));
         });
 

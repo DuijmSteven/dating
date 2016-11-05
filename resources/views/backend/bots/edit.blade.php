@@ -30,7 +30,7 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="text" class="form-control" id="password" name="" value="botpassword" readonly>
+                            <input type="text" class="form-control" id="password" name="botpassword" value="botpassword">
                         </div>
                     </div>
 

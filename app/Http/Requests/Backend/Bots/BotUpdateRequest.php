@@ -25,10 +25,8 @@ class BotUpdateRequest extends Request
     {
         $userProfileFields = \UserConstants::PROFILE_FIELDS;
 
-        \Log::info($this->route('id'));
-
         return [
-            'username' => 'min:5|max:50|string|required|unique:users,'. $this->route('id'),
+            'username' => 'min:5|max:50|string|required|unique:users,username,' . trim($this->route('id') . ',id'),
             'gender' => 'in:'. implode($userProfileFields['gender'], ','),
             'relationship_status' => 'in:'. implode($userProfileFields['relationship_status'], ','),
             'body_type' => 'in:'. implode($userProfileFields['body_type'], ','),
