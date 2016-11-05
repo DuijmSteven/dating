@@ -33,7 +33,7 @@ class UserController extends Controller
     public function index()
     {
         $viewData = [
-            'users' => User::paginate(15),
+            'users' => User::with(['meta', 'roles'])->paginate(15),
             'carbonNow' => Carbon::now()
         ];
 

@@ -65,6 +65,6 @@ class UserManager
     {
         $latestIds = Activity::users($minutes)->pluck('user_id')->toArray();
 
-        return User::with('meta')->whereIn('id', $latestIds)->limit(\UserConstants::MAX_AMOUNT_ONLINE_TO_SHOW)->get();
+        return User::whereIn('id', $latestIds)->limit(\UserConstants::MAX_AMOUNT_ONLINE_TO_SHOW)->get();
     }
 }

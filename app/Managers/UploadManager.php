@@ -19,10 +19,7 @@ class UploadManager
         //Check if uploaded file is valid and upload it to cloud or save it locally
         if ($uploadedFile->isValid()) {
             try {
-                $filepath =  $uploadedFile->store($path, $location, [
-                    'visibility' => 'public',
-                    'ContentType' => $_FILES['image'][]
-                ]);
+                $filepath =  $uploadedFile->store($path, $location);
             } catch (\Exception $exception) {
                 throw $exception;
             }
@@ -50,6 +47,7 @@ class UploadManager
         $filename = $this->saveFile($uploadedFile, 'users/photos/' . $userId, $location);
 
         $visibility = Storage::getVisibility($filename);
+        \Log::info($visibility);
         return $filename;
     }
 }

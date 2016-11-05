@@ -182,6 +182,7 @@ return [
          * Plugins
          */
         Kim\Activity\ActivityServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
 
         /*
          * Ours
