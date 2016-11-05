@@ -101,10 +101,7 @@ class BotController extends Controller
      */
     public function edit(Request $request)
     {
-        $user = User::with([
-            'images',
-            'meta'
-        ])->where('id', $request->route('id'))->get()->toArray()[0];
+        $user = User::findOrFail($request->route('id'));
 
         return view(
             'backend.bots.edit',

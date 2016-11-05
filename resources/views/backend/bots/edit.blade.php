@@ -8,7 +8,7 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" method="post" action="{!! route('backend.bots.update', ['id' => $user['id']]) !!}" enctype="multipart/form-data">
+        <form role="form" method="post" action="{!! route('backend.bots.update', ['id' => $user->id]) !!}" enctype="multipart/form-data">
             {!! csrf_field() !!}
             <div class="box-body">
                 <div class="row">
@@ -20,7 +20,7 @@
                                    id="username"
                                    name="username"
                                    required
-                                   value="{!! $user['username'] !!}"
+                                   value="{!! $user->username !!}"
                             >
                             @if ($errors->has('username'))
                                 {!! $errors->first('username', '<small class="form-error">:message</small>') !!}
@@ -47,7 +47,7 @@
                                        class="form-control pull-right"
                                        id="datepicker-bot-create"
                                        name="dob"
-                                       value="{!! $user['meta']['dob'] !!}"
+                                       value="{!! $user->meta->dob->format('Y-m-d') !!}"
                                 >
                                 @if ($errors->has('dob'))
                                     {!! $errors->first('dob', '<small class="form-error">:message</small>') !!}
@@ -63,7 +63,7 @@
                             <input type="text"
                                    class="js-autocompleteDutchCites form-control"
                                    name="city"
-                                   value="{!! $user['meta']['city'] !!}"
+                                   value="{!! $user->meta->city !!}"
                             >
                             @if ($errors->has('city'))
                                 {!! $errors->first('city', '<small class="form-error">:message</small>') !!}
@@ -83,7 +83,7 @@
                                 >
                                     @foreach(array_merge([''], $possibleOptions) as $option)
                                         <option value="{!! $option == '' ? null : $option !!}"
-                                                {!! ($user['meta'][$field] == $option) ? 'selected' : '' !!}
+                                                {!! ($user->meta[$field] == $option) ? 'selected' : '' !!}
                                         >
                                             {!! ucfirst(str_replace('_', ' ', $option)) !!}
                                         </option>
@@ -111,7 +111,7 @@
                                           class="form-control"
                                           cols="30"
                                           rows="10"
-                                >{!! $user['meta'][$field] !!}</textarea>
+                                >{!! $user->meta[$field] !!}</textarea>
                                 @include('frontend.forms.helpers.error_message', ['field' => $field])
                             </div>
                         </div>
@@ -135,9 +135,9 @@
                             <input type="file" class="form-control" id="user_images" name="user_images[]" multiple>
                         </div>
                     </div>
-                    @foreach($user['images'] as $image)
+                    @foreach($user->visibleImages as $image)
                         <div class="col-sm-6 text-center">
-                            <img src="{!! \StorageHelper::fileUrl($image['filename'], 'users/photos/' . $user['id'] ) !!}" />
+                            <img width="200" src="{!! \StorageHelper::fileUrl($image['filename']) !!}" />
                         </div>
                     @endforeach
             </div>

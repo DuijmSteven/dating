@@ -96,6 +96,11 @@ class User extends Authenticatable
         return $this->hasMany('App\UserImage');
     }
 
+    public function visibleImages()
+    {
+        return $this->hasMany('App\UserImage')->where('visible', 1);
+    }
+
     public function setEmailAttribute($email)
     {
         if (empty($email)) { // will check for empty string, null values, see php.net about it

@@ -46,6 +46,8 @@ class UploadManager
     {
         $filename = $this->saveFile($uploadedFile, 'users/photos/' . $userId, $location);
 
+        $visibility = Storage::getVisibility($filename);
+        \Log::info($visibility);
         return $filename;
     }
 }

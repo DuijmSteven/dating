@@ -6,9 +6,9 @@ use Storage;
 
 class StorageHelper
 {
-    public static function fileUrl($filename = '', $path = '', $location = 'cloud')
+    public static function fileUrl($filename = '', $location = 'cloud')
     {
         $disk = Storage::disk($location);
-        return $disk->url($path . '/' . $filename);
+        return $disk->url($filename);
     }
 }
