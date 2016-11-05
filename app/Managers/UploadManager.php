@@ -44,10 +44,6 @@ class UploadManager
 
     public function saveUserPhoto(UploadedFile $uploadedFile, $userId, $location = 'cloud')
     {
-        $filename = $this->saveFile($uploadedFile, 'users/photos/' . $userId, $location);
-
-        $visibility = Storage::getVisibility($filename);
-        \Log::info($visibility);
-        return $filename;
+        return $this->saveFile($uploadedFile, 'users/photos/' . $userId, $location);
     }
 }

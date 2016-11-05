@@ -44,9 +44,9 @@ Route::group([
 ], function () {
     Route::get('/', 'frontend\UserController@index')
         ->name('users.retrieve');
-    Route::post('/', 'frontend\UserController@index')
+    Route::post('/', 'frontend\PeasantController@index')
         ->name('users.store');
-    Route::get('/create', 'frontend\UserController@create')
+    Route::get('/create', 'frontend\PeasantController@create')
         ->name('users.create');
     Route::get('/search', 'frontend\UserSearchController@getSearch')
         ->name('users.search.get');
@@ -56,13 +56,13 @@ Route::group([
         ->name('users.search.results.get');
     Route::get('/online', 'frontend\UserController@online')
         ->name('users.online');
-    Route::get('/{user}', 'frontend\UserController@show')
+    Route::get('/{user}', 'frontend\PeasantController@show')
         ->name('users.show');
-    Route::put('/(user)', 'frontend\UserController@update')
+    Route::put('/(user)', 'frontend\PeasantController@update')
         ->name('users.update');
-    Route::delete('/{user}', 'frontend\UserController@destroy')
+    Route::delete('/{user}', 'frontend\PeasantController@destroy')
         ->name('users.destroy');
-    Route::get('/{user}/edit', 'frontend\UserController@edit')
+    Route::get('/{user}/edit', 'frontend\PeasantController@edit')
         ->name('users.edit');
 });
 

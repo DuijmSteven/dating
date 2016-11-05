@@ -4,7 +4,7 @@
 @section('content')
 
 <div class="row">
-    @include('frontend.users.partials.profile_grid', [
+    @include('frontend.peasants.partials.profile_grid', [
         'users' => $users,
         'carbonNow' => $carbonNow
     ])

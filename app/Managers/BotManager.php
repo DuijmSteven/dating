@@ -2,26 +2,29 @@
 
 namespace App\Managers;
 
+use App\Bot;
+use App\BotMeta;
 use App\Helpers\ApplicationConstants\UserConstants;
-use App\Helpers\ccampbell\ChromePhp\ChromePhp;
 use App\User;
-use App\UserMeta;
-use Hash;
+use Illuminate\Support\Facades\Hash;
 
-class BotManager extends UserBotManager
+class BotManager extends UserManager
 {
-    /** @var User  */
-    private $user;
+    /** @var Bot  */
+    private $bot;
+
+    /** @var UploadManager */
+    private $uploadManager;
 
     /**
      * BotManager constructor.
-     * @param User $user
+     * @param Bot $bot
      * @param UploadManager $uploadManager
      */
-    public function __construct(User $user, UploadManager $uploadManager)
+    public function __construct(Bot $bot, UploadManager $uploadManager)
     {
-        $this->user = $user;
-        parent::__construct($this->user, $uploadManager);
+        $this->bot = $bot;
+        parent::__construct($this->bot, $uploadManager);
     }
 
     /**
@@ -34,8 +37,8 @@ class BotManager extends UserBotManager
      */
     public function createBot(array $botData)
     {
-        $userData = $this->buildUserArrayToPersist($botData);
-        $this->persistUser($userData);
+        $botData = $this->buildUserArrayToPersist($botData);
+        $this->persistUser($botData);
     }
 
     public function updateBot(array $botData, $botId = 1)
@@ -44,14 +47,14 @@ class BotManager extends UserBotManager
             return in_array($key, UserConstants::BOT_USER_TABLE_FIELDS);
         });
 
-        $user = User::findOrFail($botId);
-        $user->update($usersTableData);
+        $bot = Bot::findOrFail($botId);
+        $bot->update($usersTableData);
 
         $userMetaTableData = array_where($botData, function ($value, $key) {
             return in_array($key, array_keys(UserConstants::PROFILE_FIELDS));
         });
 
-        UserMeta::where('user_id', $botId)->update($userMetaTableData);
+        BotMeta::where('user_id', $botId)->update($userMetaTableData);
     }
 
     /**
