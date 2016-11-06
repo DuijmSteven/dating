@@ -170,8 +170,9 @@ class UserManager
      */
     public function latestOnline($minutes)
     {
+        \Log::debug($minutes);
         $latestIds = Activity::users($minutes)->pluck('user_id')->toArray();
-
+\Log::info($latestIds);
         return User::whereIn('id', $latestIds)->limit(\UserConstants::MAX_AMOUNT_ONLINE_TO_SHOW)->get();
     }
 }
