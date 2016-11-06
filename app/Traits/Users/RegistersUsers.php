@@ -40,7 +40,6 @@ trait RegistersUsers
             /** @var Peasant $createdPeasant */
             $createdPeasant = $this->create($request->all());
 
-            \Log::debug($createdPeasant->toArray());
         } catch (\Exception $exception) {
             DB::rollBack();
             throw $exception;
@@ -51,8 +50,6 @@ trait RegistersUsers
                 'user_id' => $createdPeasant->id,
                 'country' => 'nl'
             ]);
-
-            \Log::debug($peasantMetaInstance->toArray());
 
             $peasantMetaInstance->save();
         } catch (\Exception $exception) {

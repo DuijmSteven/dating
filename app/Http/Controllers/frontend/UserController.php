@@ -60,7 +60,7 @@ class UserController extends Controller
     public function online(Request $request)
     {
         $viewData = [
-            'users' => $this->userManager->latestOnline(15, $request->input('page')),
+            'users' => $this->userManager->latestOnline(15),
             'carbonNow' => Carbon::now()
         ];
         return view(
