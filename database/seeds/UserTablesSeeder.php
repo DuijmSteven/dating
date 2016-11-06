@@ -40,7 +40,7 @@ class UserTablesSeeder extends Seeder
 
                 $roleUserInstance = new RoleUser([
                     'user_id' => $createdUser->id,
-                    'role_id' => rand(1, 3)
+                    'role_id' => 3
                 ]);
 
                 $roleUserInstance->save();
