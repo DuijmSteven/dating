@@ -32,9 +32,6 @@
                 <a href="<?= route('backend.dashboard'); ?>">
                     <i class="fa fa-dashboard"></i>
                     <span>Dashboard</span>
-                    <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
                 </a>
             </li>
             <li class="treeview <?= str_contains(\Request::route()->getName(), 'backend.bots') ? 'active' : ''; ?>">
