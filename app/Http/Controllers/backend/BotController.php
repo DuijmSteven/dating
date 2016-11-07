@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\Helpers\ccampbell\ChromePhp\ChromePhp;
 use App\Http\Requests\Backend\Bots\BotCreateRequest;
 use App\Http\Requests\Backend\Bots\BotUpdateRequest;
 use App\Managers\BotManager;
@@ -124,6 +123,7 @@ class BotController extends Controller
         $botUpdateRequest->formatInput();
         $botData = $botUpdateRequest->all();
 
+        \Log::info($botData);
         $this->botManager->updateBot($botData, $botUpdateRequest->route('id'));
 
         return redirect()->back();

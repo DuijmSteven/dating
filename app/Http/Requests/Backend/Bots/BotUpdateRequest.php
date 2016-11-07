@@ -25,9 +25,12 @@ class BotUpdateRequest extends Request
     {
         $userProfileFields = \UserConstants::PROFILE_FIELDS;
 
-        return [
+        $rules = [
             'username' => 'min:5|max:50|string|required|unique:users,username,' . trim($this->route('id') . ',id'),
-            'gender' => 'in:'. implode($userProfileFields['gender'], ','),
+            'password' => 'required|min:6',
+            'active' => 'required|boolean',
+            'dob' => 'required|date_format:Y-m-d',
+            'gender' => 'required|in:'. implode($userProfileFields['gender'], ','),
             'relationship_status' => 'in:'. implode($userProfileFields['relationship_status'], ','),
             'body_type' => 'in:'. implode($userProfileFields['body_type'], ','),
             'eye_color' => 'in:'. implode($userProfileFields['eye_color'], ','),
@@ -39,6 +42,14 @@ class BotUpdateRequest extends Request
             'city' => 'string|min:3|max:40',
             'about_me' => 'string|max:1000',
             'looking_for' => 'string|max:1000',
+            'profile_image' => 'image|max:4000',
         ];
+
+        $imageCount = count($this->input('user_images')) - 1;
+        foreach (range(0, $imageCount) as $index) {
+            $rules['user_images.' . $index] = 'image|max:4000';
+        }
+
+        return $rules;
     }
 }

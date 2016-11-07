@@ -16,18 +16,18 @@ class UserManager
     /** @var User */
     private $user;
 
-    /** @var UploadManager  */
-    private $uploadManager;
+    /** @var StorageManager  */
+    private $storageManager;
 
     /**
      * HandlesUserDbInteractions constructor.
      * @param User $user
-     * @param UploadManager $uploadManager
+     * @param StorageManager $storageManager
      */
-    public function __construct(User $user, UploadManager $uploadManager)
+    public function __construct(User $user, StorageManager $storageManager)
     {
         $this->user = $user;
-        $this->uploadManager = $uploadManager;
+        $this->storageManager = $storageManager;
     }
 
     public function persistUser(array $userData)
@@ -38,7 +38,17 @@ class UserManager
             $this->persistUserProfileImage($userData['profile_image'], $createdUser->id);
         }
 
-        if (isset($userData['profile_image'])) {
+        if (isset($userData['user_images'])) {
+            $this->persistUserImages($userData['user_images'], $createdUser->id);
+        }
+    }
+
+    public function updateUser(array $userData)
+    {
+        \Log::info($userData);
+        $createdUser = $this->updateUserDetails($userData);
+\Log::info($createdUser);
+        if (isset($userData['user_images'])) {
             $this->persistUserImages($userData['user_images'], $createdUser->id);
         }
     }
@@ -66,7 +76,7 @@ class UserManager
     {
         UserImage::where('user_id', $userId)->get();
 
-        $uploadedUserImagesFilename = $this->uploadManager->saveUserPhoto($userProfileImage, $userId);
+        $uploadedUserImagesFilename = $this->storageManager->saveUserPhoto($userProfileImage, $userId);
 
         $userImage = new UserImage([
             'user_id' => $userId,
@@ -83,7 +93,7 @@ class UserManager
         $imageFilenames = [];
 
         foreach ($userImages as $image) {
-            $imageFilenames[] = $this->uploadManager->saveUserPhoto($image, $userId);
+            $imageFilenames[] = $this->storageManager->saveUserPhoto($image, $userId);
         }
         return $imageFilenames;
     }
@@ -132,6 +142,39 @@ class UserManager
     }
 
     /**
+     * @param $userData
+     * @return mixed
+     * @throws \Exception
+     */
+    private function updateUserDetails($userData)
+    {
+        DB::beginTransaction();
+        try {
+            $updatedUser = $this->user->update($userData);
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
+
+        try {
+            $userMetaInstance = UserMeta::where('user_id', $updatedUser->id)->get();
+
+            $userMetaTableData = array_where($userData, function ($value, $key) {
+                return in_array($key, array_keys(\UserConstants::PROFILE_FIELDS));
+            });
+
+            $userMetaInstance->update($userMetaTableData);
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
+        DB::commit();
+
+        return $updatedUser;
+    }
+
+
+    /**
      * Only used in development to insert rows in the sessions
      * table for an amount of users
      *
@@ -158,6 +201,7 @@ class UserManager
             ]);
         }
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
         return $randomUsers;
     }
 
@@ -170,9 +214,8 @@ class UserManager
      */
     public function latestOnline($minutes)
     {
-        \Log::debug($minutes);
         $latestIds = Activity::users($minutes)->pluck('user_id')->toArray();
-\Log::info($latestIds);
+
         return User::whereIn('id', $latestIds)->limit(\UserConstants::MAX_AMOUNT_ONLINE_TO_SHOW)->get();
     }
 }

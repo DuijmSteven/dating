@@ -4,8 +4,6 @@ namespace App\Managers;
 
 use App\Bot;
 use App\BotMeta;
-use App\Helpers\ApplicationConstants\UserConstants;
-use App\User;
 use Illuminate\Support\Facades\Hash;
 
 class BotManager extends UserManager
@@ -13,18 +11,18 @@ class BotManager extends UserManager
     /** @var Bot  */
     private $bot;
 
-    /** @var UploadManager */
-    private $uploadManager;
+    /** @var StorageManager */
+    private $storageManager;
 
     /**
      * BotManager constructor.
      * @param Bot $bot
-     * @param UploadManager $uploadManager
+     * @param StorageManager $storageManager
      */
-    public function __construct(Bot $bot, UploadManager $uploadManager)
+    public function __construct(Bot $bot, StorageManager $storageManager)
     {
         $this->bot = $bot;
-        parent::__construct($this->bot, $uploadManager);
+        parent::__construct($this->bot, $storageManager);
     }
 
     /**
@@ -37,24 +35,15 @@ class BotManager extends UserManager
      */
     public function createBot(array $botData)
     {
-        $botData = $this->buildUserArrayToPersist($botData);
+        $botData = $this->buildBotArrayToPersist($botData);
         $this->persistUser($botData);
     }
 
     public function updateBot(array $botData, $botId = 1)
     {
-        $usersTableData = array_where($botData, function ($value, $key) {
-            return in_array($key, UserConstants::BOT_USER_TABLE_FIELDS);
-        });
+        $botData = $this->buildBotArrayToPersist($botData);
 
-        $bot = Bot::findOrFail($botId);
-        $bot->update($usersTableData);
-
-        $userMetaTableData = array_where($botData, function ($value, $key) {
-            return in_array($key, array_keys(UserConstants::PROFILE_FIELDS));
-        });
-
-        BotMeta::where('user_id', $botId)->update($userMetaTableData);
+        $this->updateUser($botData);
     }
 
     /**
@@ -66,19 +55,19 @@ class BotManager extends UserManager
      * @param array $botData
      * @return array
      */
-    private function buildUserArrayToPersist(array $botData)
+    private function buildBotArrayToPersist(array $botData)
     {
         $usersTableData = array_where($botData, function ($value, $key) {
-            return in_array($key, UserConstants::USER_FIELDS);
+            return in_array($key, \UserConstants::USER_FIELDS);
         });
 
         $userMetaTableData = array_where($botData, function ($value, $key) {
-            return in_array($key, array_keys(UserConstants::PROFILE_FIELDS));
+            return in_array($key, array_keys(\UserConstants::PROFILE_FIELDS));
         });
 
         $userDataToPersist = $usersTableData;
         $userDataToPersist['password'] = Hash::make($userDataToPersist['password']);
-        $userDataToPersist['role'] = UserConstants::ROLES['bot'];
+        $userDataToPersist['role'] = \UserConstants::ROLES['bot'];
         $userDataToPersist['meta'] = $userMetaTableData;
 
         $userDataToPersist['active'] = 1;

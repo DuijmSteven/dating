@@ -137,6 +137,10 @@
                     </div>
                     @foreach($user->visibleImages as $image)
                         <div class="col-sm-6 text-center">
+                            <form method="post" action="{!! route('images.destroy', ['imageId' => $image->id]) !!}">
+                                {!! csrf_field() !!}
+                                <button type="submit"><i class="fa fa-close"></i></button>
+                            </form>
                             <img width="200" src="{!! \StorageHelper::fileUrl($image['filename']) !!}" />
                         </div>
                     @endforeach

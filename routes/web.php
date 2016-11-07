@@ -56,7 +56,7 @@ Route::group([
         ->name('users.search.results.get');
     Route::get('/online', 'frontend\UserController@online')
         ->name('users.online');
-    Route::get('/{user}', 'frontend\PeasantController@show')
+    Route::get('/{userId}', 'frontend\UserController@show')
         ->name('users.show');
     Route::put('/(user)', 'frontend\PeasantController@update')
         ->name('users.update');
@@ -65,6 +65,9 @@ Route::group([
     Route::get('/{user}/edit', 'frontend\PeasantController@edit')
         ->name('users.edit');
 });
+
+Route::post('images/{imageId}/delete', 'UserImagesController@destroy')
+    ->name('images.destroy');
 
 Route::group([
     'prefix' => 'backend',

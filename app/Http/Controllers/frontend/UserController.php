@@ -52,6 +52,32 @@ class UserController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($userId)
+    {
+        $user = User::findOrFail($userId);
+
+        $viewData = [
+            'user' => $user,
+            'carbonNow' => Carbon::now()
+        ];
+
+        return view(
+            'frontend/users/profile',
+            array_merge(
+                $viewData,
+                [
+                    'title' => 'Profile - '. $user->username
+                ]
+            )
+        );
+    }
+
+    /**
      * Online users view
      *
      * @param Request $request

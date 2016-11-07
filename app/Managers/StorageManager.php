@@ -2,10 +2,11 @@
 
 namespace App\Managers;
 
+use App\UserImage;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class UploadManager
+class StorageManager
 {
     /**
      * @param UploadedFile $uploadedFile
@@ -42,8 +43,30 @@ class UploadManager
         }
     }
 
+    /**
+     * @param UploadedFile $uploadedFile
+     * @param $userId
+     * @param string $location
+     * @return bool
+     */
     public function saveUserPhoto(UploadedFile $uploadedFile, $userId, $location = 'cloud')
     {
         return $this->saveFile($uploadedFile, 'users/photos/' . $userId, $location);
+    }
+
+    /**
+     * @param $imageId
+     * @return mixed
+     */
+    public function deleteImage($imageId)
+    {
+        /** @var UserImage $image */
+        $image = UserImage::findOrFail($imageId);
+
+        if(Storage::disk('cloud')->exists($image->filename)) {
+            $deleted = Storage::disk('cloud')->delete($image->filename);
+            return $deleted;
+        }
+        return false;
     }
 }

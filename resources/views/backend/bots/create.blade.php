@@ -26,6 +26,9 @@
                                    required
                                    value="{!! old('username', '') !!}"
                             >
+                            @if ($errors->has('username'))
+                                {!! $errors->first('username', '<small class="form-error">:message</small>') !!}
+                            @endif
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -44,6 +47,9 @@
                                 <option value="1" {!! (old('active') === 1) ? 'selected' : '' !!}>Active</option>
                                 <option value="0" {!! (old('active') === 0) ? 'selected' : '' !!}>Inactive</option>
                             </select>
+                            @if ($errors->has('active'))
+                                {!! $errors->first('active', '<small class="form-error">:message</small>') !!}
+                            @endif
                         </div>
                     </div>
 
@@ -63,6 +69,9 @@
                                        required
                                        value="{!! old('dob', '1998-01-01') !!}"
                                 >
+                                @if ($errors->has('dob'))
+                                    {!! $errors->first('dob', '<small class="form-error">:message</small>') !!}
+                                @endif
                             </div>
                             <!-- /.input group -->
                         </div>
@@ -76,6 +85,9 @@
                                    name="city"
                                    value="{!! old('city', '') !!}"
                             >
+                            @if ($errors->has('city'))
+                                {!! $errors->first('city', '<small class="form-error">:message</small>') !!}
+                            @endif
                         </div>
                     </div>
 
@@ -135,12 +147,18 @@
                         <div class="form-group">
                             <label for="profile_image">Profile Picture</label>
                             <input type="file" class="form-control" id="profile_image" name="profile_image">
+                            @if ($errors->has('profile_image'))
+                                {!! $errors->first('profile_image', '<small class="form-error">:message</small>') !!}
+                            @endif
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="user_images">Gallery Pictures</label>
                             <input type="file" class="form-control" id="user_images" name="user_images[]" multiple>
+                            @if ($errors->has('user_images'))
+                                {!! $errors->first('user_images', '<small class="form-error">:message</small>') !!}
+                            @endif
                         </div>
                     </div>
             </div>
