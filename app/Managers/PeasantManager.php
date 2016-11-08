@@ -9,17 +9,17 @@ class PeasantManager extends UserManager
     /** @var Peasant */
     private $peasant;
 
-    /** @var UploadManager */
-    private $uploadManager;
+    /** @var StorageManager */
+    private $storageManager;
 
     /**
-     * PeasantManager constructor.
+     * StorageManager constructor.
      * @param Peasant $peasant
      * @param UploadManager $uploadManager
      */
-    public function __construct(Peasant $peasant, UploadManager $uploadManager)
+    public function __construct(Peasant $peasant, StorageManager $storageManager)
     {
         $this->peasant = $peasant;
-        parent::__construct($this->peasant, $uploadManager);
+        parent::__construct($this->peasant, $storageManager);
     }
 }

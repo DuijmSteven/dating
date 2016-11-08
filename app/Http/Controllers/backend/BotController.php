@@ -123,7 +123,6 @@ class BotController extends Controller
         $botUpdateRequest->formatInput();
         $botData = $botUpdateRequest->all();
 
-        \Log::info($botData);
         $this->botManager->updateBot($botData, $botUpdateRequest->route('id'));
 
         return redirect()->back();

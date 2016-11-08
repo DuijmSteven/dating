@@ -45,14 +45,18 @@ class UserManager
 
     public function updateUser(array $userData)
     {
-        \Log::info($userData);
         $createdUser = $this->updateUserDetails($userData);
-\Log::info($createdUser);
+
         if (isset($userData['user_images'])) {
             $this->persistUserImages($userData['user_images'], $createdUser->id);
         }
     }
 
+    /**
+     * @param array $userImages
+     * @param int $userId
+     * @return array
+     */
     private function persistUserImages(array $userImages, $userId = 1)
     {
         if (empty($userImages)) {

@@ -16,20 +16,17 @@ Route::post('login', 'Auth\LoginController@login')
 Route::post('logout', 'Auth\LoginController@logout')
     ->name('logout.post');
 
-
 Route::get('login', 'Auth\LoginController@showLoginForm')
     ->name('login.get');
-
-
 
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')
     ->name('register.get');
 Route::post('register', 'Auth\RegisterController@register')
     ->name('register.post');
 
-Route::get('password/reset', 'Auth\PasswordController@getEmail')
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')
     ->name('password.reset.get');
-Route::post('password/email', 'Auth\PasswordController@postEmail')
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')
     ->name('password.reset.post');
 
 Route::get('/', 'frontend\HomeController@index')
@@ -66,7 +63,7 @@ Route::group([
         ->name('users.edit');
 });
 
-Route::post('images/{imageId}/delete', 'UserImagesController@destroy')
+Route::delete('images/{imageId}/delete', 'UserImagesController@destroy')
     ->name('images.destroy');
 
 Route::group([
