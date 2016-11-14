@@ -135,18 +135,53 @@
                             <input type="file" class="form-control" id="user_images" name="user_images[]" multiple>
                         </div>
                     </div>
-                    @foreach($user->visibleImages as $image)
-                        <div class="col-sm-6 text-center">
-                            <form method="POST" action="{!! route('images.destroy', ['imageId' => $image->id]) !!}">
-                                {!! csrf_field() !!}
-                                {{ method_field('DELETE') }}
-                                <button type="submit"><i class="fa fa-close"></i></button>
-                            </form>
-                            <img width="200" src="{!! \StorageHelper::fileUrl($image['filename']) !!}" />
-                        </div>
-                    @endforeach
+                    <div class="col-xs-12 table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <th>Image</th>
+                                <th>Actions</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="2">
+                                        Profile Image
+                                    </td>
+                                </tr>
+                                @foreach($user->profileImage as $image)
+                                    <tr>
+                                        <td>
+                                            <img width="200" src="{!! \StorageHelper::fileUrl($image['filename']) !!}" />
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                <tr>
+                                    <td colspan="2">
+                                        Gallery Images
+                                    </td>
+                                </tr>
+                                @foreach($user->visibleImagesNotProfile as $image)
+                                    <tr>
+                                        <td>
+                                            <img width="200" src="{!! \StorageHelper::fileUrl($image['filename']) !!}" />
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
             </div>
             </div>
+            <form method="POST" action="{!! route('images.destroy', ['imageId' => $image->id]) !!}">
+                {!! csrf_field() !!}
+                {{ method_field('DELETE') }}
+                <button type="submit"><i class="fa fa-close"></i></button>
+            </form>
             <!-- /.box-body -->
             <div class="box-footer text-right">
                 <button type="submit" class="btn btn-primary">Submit</button>

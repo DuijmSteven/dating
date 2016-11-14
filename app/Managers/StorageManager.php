@@ -10,17 +10,17 @@ class StorageManager
 {
     /**
      * @param UploadedFile $uploadedFile
-     * @param $filename
      * @param string $path
      * @param string $location
-     * @return bool
+     * @return mixed
+     * @throws \Exception
      */
     public function saveFile(UploadedFile $uploadedFile, $path = '', $location = 'cloud')
     {
         //Check if uploaded file is valid and upload it to cloud or save it locally
         if ($uploadedFile->isValid()) {
             try {
-                $filepath =  $uploadedFile->store($path, $location);
+                $filepath = $uploadedFile->store($path, $location);
             } catch (\Exception $exception) {
                 throw $exception;
             }

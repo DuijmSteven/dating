@@ -31,7 +31,7 @@ class BotController extends Controller
      */
     public function index()
     {
-        $bots = User::with('roles')->whereHas('roles', function ($query) {
+        $bots = User::with(['meta', 'roles'])->whereHas('roles', function ($query) {
             $query->where('name', 'bot');
         })->paginate(10);
 
