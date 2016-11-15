@@ -4934,7 +4934,8 @@ small.form-error {
 /*
 * Tables ===============================================================
 */
-table .action-buttons a {
+table .action-buttons .btn {
   display: block;
   margin-bottom: 5px;
+  width: 100%;
 }

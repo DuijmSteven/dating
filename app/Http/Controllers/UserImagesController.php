@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Managers\StorageManager;
 use App\UserImage;
+use Illuminate\Support\Facades\DB;
 
 class UserImagesController extends Controller
 {
@@ -24,6 +25,27 @@ class UserImagesController extends Controller
         }
 
         return redirect()->back();
+    }
 
+    public function setProfileImage($imageId)
+    {
+        DB::beginTransaction();
+        try {
+            UserImage::where('profile', 1)->update(['profile' => 0]);
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
+
+        try {
+            UserImage::where('id', $imageId)->update(['profile' => 1]);
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
+
+        DB::commit();
+
+        return redirect()->back();
     }
 }

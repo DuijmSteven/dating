@@ -20,12 +20,16 @@ class StorageManager
         //Check if uploaded file is valid and upload it to cloud or save it locally
         if ($uploadedFile->isValid()) {
             try {
-                $filepath = $uploadedFile->store($path, $location);
+                $filename = md5(microtime()
+                    . $uploadedFile->getClientOriginalName()
+                    . $uploadedFile->getClientSize());
+
+                $uploadedFile->storeAs($path, $filename, $location);
             } catch (\Exception $exception) {
                 throw $exception;
             }
 
-            return $filepath;
+            return $filename;
         } else {
             throw (new \Exception);
         }
@@ -51,7 +55,7 @@ class StorageManager
      */
     public function saveUserPhoto(UploadedFile $uploadedFile, $userId, $location = 'cloud')
     {
-        return $this->saveFile($uploadedFile, 'users/photos/' . $userId, $location);
+        return $this->saveFile($uploadedFile, \StorageHelper::userImagesPath . $userId, $location);
     }
 
     /**
