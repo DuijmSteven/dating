@@ -15,33 +15,33 @@ class StorageManager
      * @return mixed
      * @throws \Exception
      */
-    public function saveFile(UploadedFile $uploadedFile, $path = '', $location = 'cloud')
+    public function saveFile(UploadedFile $uploadedFile, string $path, $location = 'cloud')
     {
         //Check if uploaded file is valid and upload it to cloud or save it locally
         if ($uploadedFile->isValid()) {
             try {
-                $filename = md5(microtime()
+                $fileName = md5(microtime()
                     . $uploadedFile->getClientOriginalName()
                     . $uploadedFile->getClientSize());
 
-                $uploadedFile->storeAs($path, $filename, $location);
+                $uploadedFile->storeAs($path, $fileName, $location);
             } catch (\Exception $exception) {
                 throw $exception;
             }
 
-            return $filename;
+            return $fileName;
         } else {
             throw (new \Exception);
         }
     }
 
-    public function getFile($filename, $path = '', $location = 'cloud')
+    public function getFile(string $fileName, string $path, $location = 'cloud')
     {
         $disk = Storage::disk($location);
 
         //Check if file exists and return url
-        if ($disk->has($path . $filename)) {
-            return $disk->url($path . $filename);
+        if ($disk->has($path . $fileName)) {
+            return $disk->url($path . $fileName);
         } else {
             return false;
         }
@@ -53,16 +53,16 @@ class StorageManager
      * @param string $location
      * @return bool
      */
-    public function saveUserPhoto(UploadedFile $uploadedFile, $userId, $location = 'cloud')
+    public function saveUserPhoto(UploadedFile $uploadedFile, int $userId, $location = 'cloud')
     {
-        return $this->saveFile($uploadedFile, \StorageHelper::userImagesPath . $userId, $location);
+        return $this->saveFile($uploadedFile, \StorageHelper::$userImagesPath . $userId, $location);
     }
 
     /**
      * @param $imageId
      * @return mixed
      */
-    public function deleteImage($imageId)
+    public function deleteImage(int $imageId)
     {
         /** @var UserImage $image */
         $image = UserImage::findOrFail($imageId);

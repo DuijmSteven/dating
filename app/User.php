@@ -93,12 +93,17 @@ class User extends Authenticatable
 
     public function images()
     {
-        return $this->hasMany('App\UserImage');
+        return $this->hasMany('App\UserImage')->orderBy('visible', 'desc');
     }
 
     public function visibleImages()
     {
         return $this->hasMany('App\UserImage')->where('visible', 1);
+    }
+
+    public function imagesNotProfile()
+    {
+        return $this->hasMany('App\UserImage')->where('profile', 0)->orderBy('visible', 'desc');
     }
 
     public function visibleImagesNotProfile()

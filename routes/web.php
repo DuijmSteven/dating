@@ -67,6 +67,8 @@ Route::delete('images/{imageId}/delete', 'UserImagesController@destroy')
     ->name('images.destroy');
 Route::get('images/{imageId}/set-profile', 'UserImagesController@setProfileImage')
     ->name('images.set_profile');
+Route::get('images/{imageId}/toggle-visibility', 'UserImagesController@toggleImageVisibility')
+    ->name('images.toggle_visibility');
 
 Route::group([
     'prefix' => 'backend',

@@ -4,19 +4,33 @@ namespace App\Http\Controllers;
 
 
 use App\Managers\StorageManager;
+use App\Managers\UserImageManager;
 use App\UserImage;
 use Illuminate\Support\Facades\DB;
 
 class UserImagesController extends Controller
 {
+    /** @var UserImageManager $userImageManager */
+    private $userImageManager;
+
     /** @var StorageManager */
     private $storageManager;
 
-    public function __construct(StorageManager $storageManager)
+    /**
+     * UserImagesController constructor.
+     * @param UserImageManager $userImageManager
+     * @param StorageManager $storageManager
+     */
+    public function __construct(UserImageManager $userImageManager, StorageManager $storageManager)
     {
+        $this->userImageManager = $userImageManager;
         $this->storageManager = $storageManager;
     }
 
+    /**
+     * @param $imageId
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy($imageId)
     {
         if ($this->storageManager->deleteImage($imageId)) {
@@ -27,25 +41,20 @@ class UserImagesController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * @param $imageId
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
     public function setProfileImage($imageId)
     {
-        DB::beginTransaction();
-        try {
-            UserImage::where('profile', 1)->update(['profile' => 0]);
-        } catch (\Exception $exception) {
-            DB::rollBack();
-            throw $exception;
-        }
+        $this->userImageManager->setProfileImage($imageId);
+        return redirect()->back();
+    }
 
-        try {
-            UserImage::where('id', $imageId)->update(['profile' => 1]);
-        } catch (\Exception $exception) {
-            DB::rollBack();
-            throw $exception;
-        }
-
-        DB::commit();
-
+    public function toggleImageVisibility($imageId)
+    {
+        $this->userImageManager->toggleImageVisibility($imageId);
         return redirect()->back();
     }
 }

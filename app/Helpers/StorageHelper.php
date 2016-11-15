@@ -2,21 +2,21 @@
 
 namespace App\Helpers;
 
-use Storage;
+use Illuminate\Support\Facades\Storage;
 
 class StorageHelper
 {
     public static $userImagesPath = 'users/images/';
 
-    public static function userImageUrl($userId, $filename = '')
+    public static function userImageUrl(int $userId, string $filename)
     {
         $filePath = self::$userImagesPath . $userId . '/' . $filename;
         return self::fileUrl($filePath);
     }
 
-    private function fileUrl($filepath = '', $location = 'cloud')
+    public static function fileUrl(string $filePath, $location = 'cloud')
     {
         $disk = Storage::disk($location);
-        return $disk->url($filepath);
+        return $disk->url($filePath);
     }
 }

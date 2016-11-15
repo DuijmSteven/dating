@@ -76,8 +76,6 @@
                     </div>
                     <?php $counter = 0; ?>
                     @foreach(\UserConstants::SELECTABLE_PROFILE_FIELDS as $field => $possibleOptions)
-
-
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="{!! $field !!}">{!! ucfirst(str_replace('_', ' ', $field)) !!}</label>
@@ -153,21 +151,29 @@
         </form>
         <div class="table-responsive">
             <table class="table table-striped">
+                <?php $tableColumnAmount = 3; ?>
                 <thead>
-                <th>Image</th>
-                <th>Actions</th>
+                    <tr>
+                        <th>Image</th>
+                        <th>Visible</th>
+                        <th>Actions</th>
+                    </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td colspan="2">
+                    <td colspan="<?= $tableColumnAmount; ?>">
                         Profile Image
                     </td>
                 </tr>
-                @if(count($user->profileImage) > 0)
-                    @foreach($user->profileImage as $image)
+                <?php $userProfileImage = $user->profileImage; ?>
+                @if(count($userProfileImage) > 0)
+                    @foreach($userProfileImage as $image)
                         <tr>
                             <td>
-                                <img width="200" src="{!! \StorageHelper::fileUrl($image['filename']) !!}"/>
+                                <img width="200" src="{!! \StorageHelper::userImageUrl($user->id, $image['filename']) !!}"/>
+                            </td>
+                            <td>
+                                <?= ($image->visible) ? 'Yes' : 'No' ; ?>
                             </td>
                             <td class="action-buttons">
                                 <form method="POST" action="{!! route('images.destroy', ['imageId' => $image->id]) !!}">
@@ -180,21 +186,26 @@
                     @endforeach
                 @else
                     <tr>
-                        <td colspan="2">
+                        <td colspan="<?= $tableColumnAmount; ?>">
                             No profile image set
                         </td>
                     </tr>
                 @endif
                 <tr>
-                    <td colspan="2">
-                        Gallery Images
+                    <td colspan="<?= $tableColumnAmount; ?>">
+                        Other Images
                     </td>
                 </tr>
-                @if(count($user->visibleImagesNotProfile) > 0)
-                    @foreach($user->visibleImagesNotProfile as $image)
+
+                <?php $userImagesNotProfile = $user->imagesNotProfile; ?>
+                @if(count($userImagesNotProfile) > 0)
+                    @foreach($userImagesNotProfile as $image)
                         <tr>
                             <td>
-                                <img width="200" src="{!! \StorageHelper::fileUrl($image['filename']) !!}"/>
+                                <img width="200" src="{!! \StorageHelper::userImageUrl($user->id, $image['filename']) !!}"/>
+                            </td>
+                            <td>
+                                <?= ($image->visible) ? 'Yes' : 'No' ; ?>
                             </td>
                             <td class="action-buttons">
                                 <form method="POST" action="{!! route('images.destroy', ['imageId' => $image->id]) !!}">
@@ -203,12 +214,13 @@
                                     <button type="submit" class="btn btn-danger">Delete</button>
                                 </form>
                                 <a href="{!! route('images.set_profile', ['imageId' => $image->id]) !!}" class="btn btn-success">Set profile</a>
+                                <a href="{!! route('images.toggle_visibility', ['imageId' => $image->id]) !!}" class="btn btn-default">Toggle visibility</a>
                             </td>
                         </tr>
                     @endforeach
                 @else
                     <tr>
-                        <td colspan="2">
+                        <td colspan="<?= $tableColumnAmount; ?>">
                             No images found
                         </td>
                     </tr>
