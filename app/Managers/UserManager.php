@@ -43,12 +43,12 @@ class UserManager
         }
     }
 
-    public function updateUser(array $userData)
+    public function updateUser(array $userData, int $userId)
     {
-        $createdUser = $this->updateUserDetails($userData);
+        $this->updateUserDetails($userData, $userId);
 
         if (isset($userData['user_images'])) {
-            $this->persistUserImages($userData['user_images'], $createdUser->id);
+            $this->persistUserImages($userData['user_images'], $userId);
         }
     }
 
@@ -76,15 +76,15 @@ class UserManager
         }
     }
 
-    private function persistUserProfileImage(UploadedFile $userProfileImage, $userId = 1)
+    private function persistUserProfileImage(UploadedFile $userProfileImage, int $userId)
     {
         UserImage::where('user_id', $userId)->get();
 
-        $uploadedUserImagesFilename = $this->storageManager->saveUserPhoto($userProfileImage, $userId);
+        $uploadedUserImageFilename = $this->storageManager->saveUserPhoto($userProfileImage, $userId);
 
         $userImage = new UserImage([
             'user_id' => $userId,
-            'filename' => $uploadedUserImagesFilename,
+            'filename' => $uploadedUserImageFilename,
             'visible' => 1,
             'profile' => 1
         ]);
@@ -92,7 +92,7 @@ class UserManager
         $userImage->save();
     }
 
-    private function uploadUserImagesToCloud(array $userImages, $userId = 1)
+    private function uploadUserImagesToCloud(array $userImages, int $userId)
     {
         $imageFilenames = [];
 
@@ -107,11 +107,11 @@ class UserManager
      * @return mixed
      * @throws \Exception
      */
-    private function persistUserDetails($userData)
+    private function persistUserDetails(array $userData)
     {
         DB::beginTransaction();
         try {
-            $createdUser = $this->user->create($userData);
+            $createdUser = $this->user->create($userData['user']);
         } catch (\Exception $exception) {
             DB::rollBack();
             throw $exception;
@@ -119,7 +119,7 @@ class UserManager
 
         try {
             $userMetaInstance = new UserMeta(array_merge(
-                $userData['meta'],
+                $userData['user_meta'],
                 ['user_id' => $createdUser->id]
             ));
 
@@ -132,7 +132,7 @@ class UserManager
         try {
             /** @var RoleUser $roleUserInstance */
             $roleUserInstance = new RoleUser([
-                'role_id' => $userData['role'],
+                'role_id' => $userData['user']['role'],
                 'user_id' => $createdUser->id
             ]);
 
@@ -146,28 +146,25 @@ class UserManager
     }
 
     /**
-     * @param $userData
-     * @return mixed
+     * @param array $userData
+     * @param int $userId
+     * @return bool
      * @throws \Exception
      */
-    private function updateUserDetails($userData)
+    private function updateUserDetails(array $userData, int $userId)
     {
         DB::beginTransaction();
         try {
-            $updatedUser = $this->user->update($userData);
+            $updatedUser = $this->user->where('id', $userId)->update($userData['user']);
         } catch (\Exception $exception) {
             DB::rollBack();
             throw $exception;
         }
 
         try {
-            $userMetaInstance = UserMeta::where('user_id', $updatedUser->id)->get();
+            $userMetaInstance = UserMeta::where('user_id', $userId)->first();
 
-            $userMetaTableData = array_where($userData, function ($value, $key) {
-                return in_array($key, array_keys(\UserConstants::PROFILE_FIELDS));
-            });
-
-            $userMetaInstance->update($userMetaTableData);
+            $userMetaInstance->update($userData['user_meta']);
         } catch (\Exception $exception) {
             DB::rollBack();
             throw $exception;

@@ -22,14 +22,16 @@ class StorageManager
             try {
                 $fileName = md5(microtime()
                     . $uploadedFile->getClientOriginalName()
-                    . $uploadedFile->getClientSize());
+                    . $uploadedFile->getClientSize())
+                    . '.' . $uploadedFile->extension();
 
                 $uploadedFile->storeAs($path, $fileName, $location);
+
+                return $fileName;
             } catch (\Exception $exception) {
                 throw $exception;
             }
 
-            return $fileName;
         } else {
             throw (new \Exception);
         }
@@ -67,8 +69,8 @@ class StorageManager
         /** @var UserImage $image */
         $image = UserImage::findOrFail($imageId);
 
-        if(Storage::disk('cloud')->exists($image->filename)) {
-            $deleted = Storage::disk('cloud')->delete($image->filename);
+        if(Storage::disk('cloud')->exists(\StorageHelper::$userImagesPath . $image->user_id . '/' . $image->filename)) {
+            $deleted = Storage::disk('cloud')->delete(\StorageHelper::$userImagesPath . $image->user_id . '/' . $image->filename);
             return $deleted;
         }
         return false;

@@ -27,10 +27,10 @@ class BotUpdateRequest extends Request
 
         $rules = [
             'username' => 'min:5|max:50|string|required|unique:users,username,' . trim($this->route('id') . ',id'),
-            'password' => 'required|min:6',
-            'active' => 'required|boolean',
-            'dob' => 'required|date_format:Y-m-d',
-            'gender' => 'required|in:'. implode($userProfileFields['gender'], ','),
+            'password' => 'min:6',
+            'active' => 'boolean',
+            'dob' => 'date_format:Y-m-d',
+            'gender' => 'in:'. implode($userProfileFields['gender'], ','),
             'relationship_status' => 'in:'. implode($userProfileFields['relationship_status'], ','),
             'body_type' => 'in:'. implode($userProfileFields['body_type'], ','),
             'eye_color' => 'in:'. implode($userProfileFields['eye_color'], ','),

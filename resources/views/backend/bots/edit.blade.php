@@ -8,9 +8,10 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" method="post" action="{!! route('backend.bots.update', ['id' => $user->id]) !!}"
+        <form role="form" method="POST" action="{!! route('backend.bots.update', ['id' => $user->id]) !!}"
               enctype="multipart/form-data">
             {!! csrf_field() !!}
+            {!! method_field('PUT') !!}
             <div class="box-body">
                 <div class="row">
                     <div class="col-sm-6">
@@ -31,8 +32,27 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="text" class="form-control" id="password" name="botpassword"
+                            <input type="text" class="form-control" id="password" name="password"
                                    value="botpassword">
+                        </div>
+                        @if ($errors->has('password'))
+                            {!! $errors->first('password', '<small class="form-error">:message</small>') !!}
+                        @endif
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="active">Active</label>
+                            <select name="active"
+                                    id="active"
+                                    class="form-control"
+                                    required
+                            >
+                                <option value="1" {!! ($user->active == 1) ? 'selected' : '' !!}>Active</option>
+                                <option value="0" {!! ($user->active == 0) ? 'selected' : '' !!}>Inactive</option>
+                            </select>
+                            @if ($errors->has('active'))
+                                {!! $errors->first('active', '<small class="form-error">:message</small>') !!}
+                            @endif
                         </div>
                     </div>
 

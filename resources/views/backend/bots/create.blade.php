@@ -36,7 +36,8 @@
                             <label for="password">Password</label>
                             <input type="text" class="form-control" id="password" name="password" value="botpassword">
                         </div>
-                    </div><div class="col-sm-6">
+                    </div>
+                    <div class="col-sm-6">
                         <div class="form-group">
                             <label for="active">Active</label>
                             <select name="active"

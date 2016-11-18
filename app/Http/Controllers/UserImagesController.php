@@ -31,7 +31,7 @@ class UserImagesController extends Controller
      * @param $imageId
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($imageId)
+    public function destroy(int $imageId)
     {
         if ($this->storageManager->deleteImage($imageId)) {
             $image = UserImage::find($imageId);
@@ -46,13 +46,13 @@ class UserImagesController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function setProfileImage($imageId)
+    public function setProfileImage(int $imageId)
     {
         $this->userImageManager->setProfileImage($imageId);
         return redirect()->back();
     }
 
-    public function toggleImageVisibility($imageId)
+    public function toggleImageVisibility(int $imageId)
     {
         $this->userImageManager->toggleImageVisibility($imageId);
         return redirect()->back();

@@ -35,27 +35,23 @@ class BotManager extends UserManager
      */
     public function createBot(array $botData)
     {
-        $botData = $this->buildBotArrayToPersist($botData);
+        $botData = $this->buildBotArrayToPersist($botData, 'create');
         $this->persistUser($botData);
     }
 
-    public function updateBot(array $botData, $botId = 1)
+    public function updateBot(array $botData, int $botId)
     {
-        $botData = $this->buildBotArrayToPersist($botData);
+        $botData = $this->buildBotArrayToPersist($botData, 'update');
 
-        $this->updateUser($botData);
+        $this->updateUser($botData, $botId);
     }
 
     /**
-     * Receives an array with data of a user, admin or bot
-     * that is to be created, and returns an array suitable
-     * to be used to persist the data to the user table,
-     * role_user table and user_meta table
-     *
      * @param array $botData
+     * @param string $action
      * @return array
      */
-    private function buildBotArrayToPersist(array $botData)
+    private function buildBotArrayToPersist(array $botData, string $action)
     {
         $usersTableData = array_where($botData, function ($value, $key) {
             return in_array($key, \UserConstants::USER_FIELDS);
@@ -65,12 +61,11 @@ class BotManager extends UserManager
             return in_array($key, array_keys(\UserConstants::PROFILE_FIELDS));
         });
 
-        $userDataToPersist = $usersTableData;
-        $userDataToPersist['password'] = Hash::make($userDataToPersist['password']);
-        $userDataToPersist['role'] = \UserConstants::ROLES['bot'];
-        $userDataToPersist['meta'] = $userMetaTableData;
+        $userDataToPersist['user'] = $usersTableData;
+        $userDataToPersist['user_meta'] = $userMetaTableData;
 
-        $userDataToPersist['active'] = 1;
+        $userDataToPersist['user']['password'] = Hash::make($userDataToPersist['user']['password']);
+        $userDataToPersist['user']['active'] = 1;
 
         if (empty($botData['user_images'][0])) {
             $userDataToPersist['user_images'] = [];
@@ -82,6 +77,10 @@ class BotManager extends UserManager
             $userDataToPersist['profile_image'] = null;
         } else {
             $userDataToPersist['profile_image'] = $botData['profile_image'];
+        }
+
+        if ($action == 'create') {
+            $userDataToPersist['user']['role'] = \UserConstants::ROLES['bot'];
         }
 
         return $userDataToPersist;

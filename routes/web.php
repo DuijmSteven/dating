@@ -89,7 +89,7 @@ Route::group([
 
         Route::get('/edit/{id}', 'backend\BotController@edit')
             ->name('backend.bots.edit.get');
-        Route::post('/edit/{id}', 'backend\BotController@update')
+        Route::put('/edit/{id}', 'backend\BotController@update')
             ->name('backend.bots.update');
     });
 
