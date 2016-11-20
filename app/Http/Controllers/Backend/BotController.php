@@ -75,9 +75,23 @@ class BotController extends Controller
         $botData = $botCreateRequest->all();
         $botData['city'] = strtolower($botData['city']);
 
-        $this->botManager->createBot($botData);
+        try  {
+            $this->botManager->createBot($botData);
 
-        return redirect()->back();
+            $alerts[] = [
+                'type' => 'success',
+                'message' => 'The bot was created successfully'
+            ];
+        } catch (\Exception $exception) {
+            $alerts[] = [
+                'type' => 'error',
+                'message' => 'The bot was not created due to an exception.'
+            ];
+        }
+
+        \Log::info($alerts);
+
+        return redirect()->back()->with('alerts', $alerts);
     }
 
     /**

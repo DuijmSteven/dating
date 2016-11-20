@@ -10,6 +10,9 @@ class BotManager extends UserManager
     /** @var StorageManager */
     private $storageManager;
 
+    /** @var User $user */
+    private $user;
+
     /**
      * BotManager constructor.
      * @param User $user
@@ -60,7 +63,6 @@ class BotManager extends UserManager
         $userDataToPersist['user'] = $usersTableData;
         $userDataToPersist['user_meta'] = $userMetaTableData;
 
-        $userDataToPersist['user']['password'] = Hash::make($userDataToPersist['user']['password']);
         $userDataToPersist['user']['active'] = 1;
 
         if (empty($botData['user_images'][0])) {
@@ -76,6 +78,7 @@ class BotManager extends UserManager
         }
 
         if ($action == 'create') {
+            $userDataToPersist['user']['password'] = Hash::make($userDataToPersist['user']['password']);
             $userDataToPersist['user']['role'] = \UserConstants::ROLES['bot'];
         }
 

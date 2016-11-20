@@ -31,16 +31,6 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="text" class="form-control" id="password" name="password"
-                                   value="botpassword">
-                        </div>
-                        @if ($errors->has('password'))
-                            {!! $errors->first('password', '<small class="form-error">:message</small>') !!}
-                        @endif
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
                             <label for="active">Active</label>
                             <select name="active"
                                     id="active"
@@ -86,7 +76,7 @@
                             <input type="text"
                                    class="js-autocompleteDutchCites form-control"
                                    name="city"
-                                   value="{!! $bot->meta->city !!}"
+                                   value="{!! ucfirst($bot->meta->city) !!}"
                             >
                             @if ($errors->has('city'))
                                 {!! $errors->first('city', '<small class="form-error">:message</small>') !!}

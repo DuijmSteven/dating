@@ -76,7 +76,7 @@
                             <input type="text"
                                    class="js-autocompleteDutchCites form-control"
                                    name="city"
-                                   value="{!! $peasant->meta->city !!}"
+                                   value="{!! ucfirst($peasant->meta->city) !!}"
                             >
                             @if ($errors->has('city'))
                                 {!! $errors->first('city', '<small class="form-error">:message</small>') !!}

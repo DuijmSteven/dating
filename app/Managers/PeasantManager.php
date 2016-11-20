@@ -63,7 +63,6 @@ class PeasantManager extends UserManager
         $userDataToPersist['user'] = $usersTableData;
         $userDataToPersist['user_meta'] = $userMetaTableData;
 
-        $userDataToPersist['user']['password'] = Hash::make($userDataToPersist['user']['password']);
         $userDataToPersist['user']['active'] = 1;
 
         if (empty($peasantData['user_images'][0])) {
@@ -79,6 +78,7 @@ class PeasantManager extends UserManager
         }
 
         if ($action == 'create') {
+            $userDataToPersist['user']['password'] = Hash::make($userDataToPersist['user']['password']);
             $userDataToPersist['user']['role'] = \UserConstants::ROLES['peasant'];
         }
 

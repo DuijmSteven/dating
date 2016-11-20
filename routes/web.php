@@ -71,6 +71,12 @@ Route::get('images/{imageId}/toggle-visibility', 'UserImagesController@toggleIma
     ->name('images.toggle_visibility');
 
 Route::group([
+    'prefix' => 'flirts'
+], function () {
+    Route::get('/{senderId}/{recipientId}', 'Frontend\FlirtController@send');
+});
+
+Route::group([
     'prefix' => 'backend',
     'middleware' => ['admin']
 ], function () {

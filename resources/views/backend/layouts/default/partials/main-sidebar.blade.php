@@ -51,7 +51,7 @@
                     </li>
                     <li class="<?= \Request::route()->getName() == 'backend.bots.create.get' ? 'active' : ''; ?>">
                         <a href="<?= route('backend.bots.create.get'); ?>">
-                            <i class="fa fa-user"></i>
+                            <i class="fa fa-user-plus"></i>
                             Create
                         </a>
                     </li>
@@ -59,7 +59,7 @@
             </li>
             <li class="treeview <?= str_contains(\Request::route()->getName(), 'backend.peasants') ? 'active' : ''; ?>">
                 <a href="#">
-                    <i class="fa fa-android"></i>
+                    <i class="fa fa-users"></i>
                     <span>Peasants</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
@@ -74,7 +74,7 @@
                     </li>
                     <li class="<?= \Request::route()->getName() == 'backend.peasants.create.get' ? 'active' : ''; ?>">
                         <a href="<?= route('backend.peasants.create.get'); ?>">
-                            <i class="fa fa-user"></i>
+                            <i class="fa fa-user-plus"></i>
                             Create
                         </a>
                     </li>

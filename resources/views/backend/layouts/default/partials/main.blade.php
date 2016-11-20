@@ -1,4 +1,14 @@
 <div class="content-wrapper">
+
+    @if((session('alerts') !== null) && count(session('alerts')))
+        @foreach(session('alerts') as $alert)
+            <div class="alert alert-{!! $alert['type'] !!} alert-dismissible" style="border-radius: 0">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close" style="text-decoration: none">&times;</a>
+                <strong>{!! ucfirst($alert['type']) !!}!</strong> {!! $alert['message'] !!}
+            </div>
+        @endforeach
+    @endif
+
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
