@@ -76,7 +76,7 @@ class PeasantController extends Controller
         $peasantData['city'] = strtolower($peasantData['city']);
 
         $this->peasantManager->createPeasant($peasantData);
-        
+
         return redirect()->back();
     }
 

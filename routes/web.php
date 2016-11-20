@@ -108,5 +108,11 @@ Route::group([
         Route::put('/edit/{id}', 'Backend\PeasantController@update')
             ->name('backend.peasants.update');
     });
+
+    Route::group([
+        'prefix' => 'users'
+    ], function () {
+        Route::get('/cities', 'Backend\UserController@getCities');
+    });
 });
 
