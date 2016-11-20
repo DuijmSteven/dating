@@ -4,11 +4,11 @@
 @section('content')
     <div class="box box-primary">
         <div class="box-header with-border">
-            <h3 class="box-title">Edit Bot</h3>
+            <h3 class="box-title">Edit Peasant</h3>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" method="POST" action="{!! route('backend.bots.update', ['id' => $bot->id]) !!}"
+        <form role="form" method="POST" action="{!! route('backend.peasants.update', ['id' => $peasant->id]) !!}"
               enctype="multipart/form-data">
             {!! csrf_field() !!}
             {!! method_field('PUT') !!}
@@ -22,7 +22,7 @@
                                    id="username"
                                    name="username"
                                    required
-                                   value="{!! $bot->username !!}"
+                                   value="{!! $peasant->username !!}"
                             >
                             @if ($errors->has('username'))
                                 {!! $errors->first('username', '<small class="form-error">:message</small>') !!}
@@ -47,8 +47,8 @@
                                     class="form-control"
                                     required
                             >
-                                <option value="1" {!! ($bot->active == 1) ? 'selected' : '' !!}>Active</option>
-                                <option value="0" {!! ($bot->active == 0) ? 'selected' : '' !!}>Inactive</option>
+                                <option value="1" {!! ($peasant->active == 1) ? 'selected' : '' !!}>Active</option>
+                                <option value="0" {!! ($peasant->active == 0) ? 'selected' : '' !!}>Inactive</option>
                             </select>
                             @if ($errors->has('active'))
                                 {!! $errors->first('active', '<small class="form-error">:message</small>') !!}
@@ -70,7 +70,7 @@
                                 <input type="text"
                                        class="form-control pull-right datepicker__date"
                                        name="dob"
-                                       value="{!! $bot->meta->dob->format('Y-m-d') !!}"
+                                       value="{!! $peasant->meta->dob->format('Y-m-d') !!}"
                                 >
                                 @if ($errors->has('dob'))
                                     {!! $errors->first('dob', '<small class="form-error">:message</small>') !!}
@@ -86,7 +86,7 @@
                             <input type="text"
                                    class="js-autocompleteDutchCites form-control"
                                    name="city"
-                                   value="{!! $bot->meta->city !!}"
+                                   value="{!! $peasant->meta->city !!}"
                             >
                             @if ($errors->has('city'))
                                 {!! $errors->first('city', '<small class="form-error">:message</small>') !!}
@@ -104,7 +104,7 @@
                                 >
                                     @foreach(array_merge([''], $possibleOptions) as $option)
                                         <option value="{!! $option == '' ? null : $option !!}"
-                                                {!! ($bot->meta[$field] == $option) ? 'selected' : '' !!}
+                                                {!! ($peasant->meta[$field] == $option) ? 'selected' : '' !!}
                                         >
                                             {!! ucfirst(str_replace('_', ' ', $option)) !!}
                                         </option>
@@ -134,7 +134,7 @@
                                           class="form-control"
                                           cols="30"
                                           rows="10"
-                                >{!! $bot->meta[$field] !!}</textarea>
+                                >{!! $peasant->meta[$field] !!}</textarea>
                                 @include('frontend.forms.helpers.error_message', ['field' => $field])
                             </div>
                         </div>
@@ -178,12 +178,12 @@
                         Profile Image
                     </td>
                 </tr>
-                <?php $botProfileImage = $bot->profileImage; ?>
-                @if(count($botProfileImage) > 0)
-                    @foreach($botProfileImage as $image)
+                <?php $peasantProfileImage = $peasant->profileImage; ?>
+                @if(count($peasantProfileImage) > 0)
+                    @foreach($peasantProfileImage as $image)
                         <tr>
                             <td>
-                                <img width="200" src="{!! \StorageHelper::userImageUrl($bot->id, $image['filename']) !!}"/>
+                                <img width="200" src="{!! \StorageHelper::userImageUrl($peasant->id, $image['filename']) !!}"/>
                             </td>
                             <td>
                                 <?= ($image->visible) ? 'Yes' : 'No' ; ?>
@@ -210,12 +210,12 @@
                     </td>
                 </tr>
 
-                <?php $botImagesNotProfile = $bot->imagesNotProfile; ?>
-                @if(count($botImagesNotProfile) > 0)
-                    @foreach($botImagesNotProfile as $image)
+                <?php $peasantImagesNotProfile = $peasant->imagesNotProfile; ?>
+                @if(count($peasantImagesNotProfile) > 0)
+                    @foreach($peasantImagesNotProfile as $image)
                         <tr>
                             <td>
-                                <img width="200" src="{!! \StorageHelper::userImageUrl($bot->id, $image['filename']) !!}"/>
+                                <img width="200" src="{!! \StorageHelper::userImageUrl($peasant->id, $image['filename']) !!}"/>
                             </td>
                             <td>
                                 <?= ($image->visible) ? 'Yes' : 'No' ; ?>

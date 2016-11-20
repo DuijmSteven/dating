@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Backend\Bots;
+namespace App\Http\Requests\Backend\Peasants;
 
 use App\Http\Requests\Request;
 
-class BotUpdateRequest extends Request
+class PeasantUpdateRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.

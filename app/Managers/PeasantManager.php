@@ -2,24 +2,86 @@
 
 namespace App\Managers;
 
-use App\Peasant;
+use App\User;
+use Illuminate\Support\Facades\Hash;
 
 class PeasantManager extends UserManager
 {
-    /** @var Peasant */
-    private $peasant;
+    /** @var User  */
+    private $user;
 
     /** @var StorageManager */
     private $storageManager;
 
     /**
-     * StorageManager constructor.
-     * @param Peasant $peasant
-     * @param UploadManager $uploadManager
+     * PeasantManager constructor.
+     * @param User $user
+     * @param StorageManager $storageManager
      */
-    public function __construct(Peasant $peasant, StorageManager $storageManager)
+    public function __construct(User $user, StorageManager $storageManager)
     {
-        $this->peasant = $peasant;
-        parent::__construct($this->peasant, $storageManager);
+        $this->user = $user;
+        parent::__construct($this->user, $storageManager);
+    }
+
+    /**
+     * Receives an array tha contains the data for
+     * the creation of the new Peasant in the Database
+     * and persists the new Peasant's data to the
+     * user table, role_user table and user_meta table
+     *
+     * @param array $peasantData
+     */
+    public function createPeasant(array $peasantData)
+    {
+        $peasantData = $this->buildPeasantArrayToPersist($peasantData, 'create');
+        $this->persistUser($peasantData);
+    }
+
+    public function updatePeasant(array $peasantData, int $peasantId)
+    {
+        $peasantData = $this->buildPeasantArrayToPersist($peasantData, 'update');
+
+        $this->updateUser($peasantData, $peasantId);
+    }
+
+    /**
+     * @param array $peasantData
+     * @param string $action
+     * @return array
+     */
+    private function buildPeasantArrayToPersist(array $peasantData, string $action)
+    {
+        $usersTableData = array_where($peasantData, function ($value, $key) {
+            return in_array($key, \UserConstants::USER_FIELDS);
+        });
+
+        $userMetaTableData = array_where($peasantData, function ($value, $key) {
+            return in_array($key, array_keys(\UserConstants::PROFILE_FIELDS));
+        });
+
+        $userDataToPersist['user'] = $usersTableData;
+        $userDataToPersist['user_meta'] = $userMetaTableData;
+
+        $userDataToPersist['user']['password'] = Hash::make($userDataToPersist['user']['password']);
+        $userDataToPersist['user']['active'] = 1;
+
+        if (empty($peasantData['user_images'][0])) {
+            $userDataToPersist['user_images'] = [];
+        } else {
+            $userDataToPersist['user_images'] = $peasantData['user_images'];
+        }
+
+        if (!isset($peasantData['profile_image'])) {
+            $userDataToPersist['profile_image'] = null;
+        } else {
+            $userDataToPersist['profile_image'] = $peasantData['profile_image'];
+        }
+
+        if ($action == 'create') {
+            $userDataToPersist['user']['role'] = \UserConstants::ROLES['peasant'];
+        }
+
+        return $userDataToPersist;
     }
 }

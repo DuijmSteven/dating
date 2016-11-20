@@ -4,7 +4,7 @@ $(window).load(function () {
     *   CREATE BOT =================================================
     */
     // Instantiate date picker in  bot creation view
-    $('#datepicker-bot-create').datepicker({
+    $('.datepicker__date').datepicker({
         'autoclose': true,
         'format': 'yyyy-mm-dd'
     });

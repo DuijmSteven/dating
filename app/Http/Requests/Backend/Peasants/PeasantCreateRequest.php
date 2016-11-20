@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Backend\Bots;
+namespace App\Http\Requests\Backend\Peasants;
 
 use App\Http\Requests\Request;
 
-class BotUpdateRequest extends Request
+class PeasantCreateRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,11 +26,11 @@ class BotUpdateRequest extends Request
         $userProfileFields = \UserConstants::PROFILE_FIELDS;
 
         $rules = [
-            'username' => 'min:5|max:50|string|required|unique:users,username,' . trim($this->route('id') . ',id'),
-            'password' => 'min:6',
-            'active' => 'boolean',
-            'dob' => 'date_format:Y-m-d',
-            'gender' => 'in:'. implode($userProfileFields['gender'], ','),
+            'username' => 'min:5|max:50|string|required|unique:users',
+            'password' => 'required|min:6',
+            'active' => 'required|boolean',
+            'dob' => 'required|date_format:Y-m-d',
+            'gender' => 'required|in:'. implode($userProfileFields['gender'], ','),
             'relationship_status' => 'in:'. implode($userProfileFields['relationship_status'], ','),
             'body_type' => 'in:'. implode($userProfileFields['body_type'], ','),
             'eye_color' => 'in:'. implode($userProfileFields['eye_color'], ','),
@@ -41,7 +41,8 @@ class BotUpdateRequest extends Request
             'province' => 'in:'. implode($userProfileFields['province'], ','),
             'city' => 'string|min:3|max:40',
             'about_me' => 'string|max:1000',
-            'looking_for' => 'string|max:1000'
+            'looking_for' => 'string|max:1000',
+            'profile_image' => 'image|max:4000',
         ];
 
         $imageCount = count($this->input('user_images')) - 1;

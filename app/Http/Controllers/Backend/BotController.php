@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\backend;
+namespace App\Http\Controllers\Backend;
 
 use App\Http\Requests\Backend\Bots\BotCreateRequest;
 use App\Http\Requests\Backend\Bots\BotUpdateRequest;
@@ -77,8 +77,7 @@ class BotController extends Controller
 
         $this->botManager->createBot($botData);
 
-        $inputWithoutFiles = Input::except('user_images');
-        return redirect()->back()->withInput($inputWithoutFiles);
+        return redirect()->back();
     }
 
     /**
@@ -98,16 +97,16 @@ class BotController extends Controller
      */
     public function edit(Request $request)
     {
-        $user = User::findOrFail($request->route('id'));
+        $bot = User::findOrFail($request->route('id'));
 
         return view(
             'backend.bots.edit',
             [
-                'title' => 'Edit Bot - '. $user['username'] . '(ID: '. $user['id'] .') - ' . \MetaConstants::SITE_NAME,
+                'title' => 'Edit Bot - '. $bot['username'] . '(ID: '. $bot['id'] .') - ' . \MetaConstants::SITE_NAME,
                 'headingLarge' => 'Bot',
                 'headingSmall' => 'Edit',
                 'carbonNow' => Carbon::now(),
-                'user' => $user
+                'bot' => $bot
             ]
         );
     }

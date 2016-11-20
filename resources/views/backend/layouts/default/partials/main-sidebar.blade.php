@@ -57,6 +57,29 @@
                     </li>
                 </ul>
             </li>
+            <li class="treeview <?= str_contains(\Request::route()->getName(), 'backend.peasants') ? 'active' : ''; ?>">
+                <a href="#">
+                    <i class="fa fa-android"></i>
+                    <span>Peasants</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="<?= \Request::route()->getName() == 'backend.peasants.retrieve' ? 'active' : ''; ?>">
+                        <a href="<?= route('backend.peasants.retrieve'); ?>">
+                            <i class="fa fa-list"></i>
+                            Overview
+                        </a>
+                    </li>
+                    <li class="<?= \Request::route()->getName() == 'backend.peasants.create.get' ? 'active' : ''; ?>">
+                        <a href="<?= route('backend.peasants.create.get'); ?>">
+                            <i class="fa fa-user"></i>
+                            Create
+                        </a>
+                    </li>
+                </ul>
+            </li>
             <li class="treeview">
                 <a href="<?= route('home'); ?>">
                     <i class="fa fa-globe"></i>

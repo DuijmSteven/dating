@@ -74,37 +74,39 @@ Route::group([
     'prefix' => 'backend',
     'middleware' => ['admin']
 ], function () {
-    Route::get('/dashboard', 'backend\DashboardController@dashboard')
+    Route::get('/dashboard', 'Backend\DashboardController@dashboard')
         ->name('backend.dashboard');
 
     Route::group([
         'prefix' => 'bots'
     ], function () {
-        Route::get('/', 'backend\BotController@index')
+        Route::get('/', 'Backend\BotController@index')
             ->name('backend.bots.retrieve');
-        Route::get('/create', 'backend\BotController@create')
+        Route::get('/create', 'Backend\BotController@create')
             ->name('backend.bots.create.get');
-        Route::post('/create', 'backend\BotController@store')
+        Route::post('/create', 'Backend\BotController@store')
             ->name('backend.bots.store');
 
-        Route::get('/edit/{id}', 'backend\BotController@edit')
+        Route::get('/edit/{id}', 'Backend\BotController@edit')
             ->name('backend.bots.edit.get');
-        Route::put('/edit/{id}', 'backend\BotController@update')
+        Route::put('/edit/{id}', 'Backend\BotController@update')
             ->name('backend.bots.update');
     });
 
     Route::group([
-        'prefix' => 'users'
+        'prefix' => 'peasants'
     ], function () {
-        Route::get('/', 'backend\UserController@index')
-            ->name('backend.users.retrieve');
+        Route::get('/', 'Backend\PeasantController@index')
+            ->name('backend.peasants.retrieve');
+        Route::get('/create', 'Backend\PeasantController@create')
+            ->name('backend.peasants.create.get');
+        Route::post('/create', 'Backend\PeasantController@store')
+            ->name('backend.peasants.store');
 
-        Route::get('/create', 'backend\UserController@create')
-            ->name('backend.users.create.get');
-        Route::post('/create', 'backend\UserController@postCreate')
-            ->name('backend.users.create.post');
-
-        Route::get('/cities', 'backend\UserController@getCities');
+        Route::get('/edit/{id}', 'Backend\PeasantController@edit')
+            ->name('backend.peasants.edit.get');
+        Route::put('/edit/{id}', 'Backend\PeasantController@update')
+            ->name('backend.peasants.update');
     });
 });
 

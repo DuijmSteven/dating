@@ -64,8 +64,7 @@
                                     <i class="fa fa-calendar"></i>
                                 </div>
                                 <input type="text"
-                                       class="form-control pull-right"
-                                       id="datepicker-bot-create"
+                                       class="form-control pull-right datepicker__date"
                                        name="dob"
                                        required
                                        value="{!! old('dob', '1998-01-01') !!}"

@@ -2,27 +2,23 @@
 
 namespace App\Managers;
 
-use App\Bot;
-use App\BotMeta;
+use App\User;
 use Illuminate\Support\Facades\Hash;
 
 class BotManager extends UserManager
 {
-    /** @var Bot  */
-    private $bot;
-
     /** @var StorageManager */
     private $storageManager;
 
     /**
      * BotManager constructor.
-     * @param Bot $bot
+     * @param User $user
      * @param StorageManager $storageManager
      */
-    public function __construct(Bot $bot, StorageManager $storageManager)
+    public function __construct(User $user, StorageManager $storageManager)
     {
-        $this->bot = $bot;
-        parent::__construct($this->bot, $storageManager);
+        $this->user = $user;
+        parent::__construct($this->user, $storageManager);
     }
 
     /**

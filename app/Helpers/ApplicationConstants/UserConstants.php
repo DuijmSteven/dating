@@ -182,7 +182,7 @@ class UserConstants
 
     const ROLES = [
         'admin' => 1,
-        'user' => 2,
+        'peasant' => 2,
         'bot' => 3
     ];
 
