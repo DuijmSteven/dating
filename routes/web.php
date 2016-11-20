@@ -29,9 +29,9 @@ Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm'
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')
     ->name('password.reset.post');
 
-Route::get('/', 'frontend\HomeController@index')
+Route::get('/', 'Frontend\HomeController@index')
     ->name('root');
-Route::get('/home', 'frontend\HomeController@index')
+Route::get('/home', 'Frontend\HomeController@index')
     ->name('home');
 
 /* User routes */
@@ -39,27 +39,27 @@ Route::group([
     'prefix' => 'users',
     'middleware' => ['auth']
 ], function () {
-    Route::get('/', 'frontend\UserController@index')
+    Route::get('/', 'Frontend\UserController@index')
         ->name('users.retrieve');
-    Route::post('/', 'frontend\PeasantController@index')
+    Route::post('/', 'Frontend\PeasantController@index')
         ->name('users.store');
-    Route::get('/create', 'frontend\PeasantController@create')
+    Route::get('/create', 'Frontend\PeasantController@create')
         ->name('users.create');
-    Route::get('/search', 'frontend\UserSearchController@getSearch')
+    Route::get('/search', 'Frontend\UserSearchController@getSearch')
         ->name('users.search.get');
-    Route::post('/search', 'frontend\UserSearchController@postSearch')
+    Route::post('/search', 'Frontend\UserSearchController@postSearch')
         ->name('users.search.post');
-    Route::get('/search-results', 'frontend\UserSearchController@getSearchResults')
+    Route::get('/search-results', 'Frontend\UserSearchController@getSearchResults')
         ->name('users.search.results.get');
-    Route::get('/online', 'frontend\UserController@online')
+    Route::get('/online', 'Frontend\UserController@online')
         ->name('users.online');
-    Route::get('/{userId}', 'frontend\UserController@show')
+    Route::get('/{userId}', 'Frontend\UserController@show')
         ->name('users.show');
-    Route::put('/(user)', 'frontend\PeasantController@update')
+    Route::put('/(user)', 'Frontend\PeasantController@update')
         ->name('users.update');
-    Route::delete('/{user}', 'frontend\PeasantController@destroy')
+    Route::delete('/{user}', 'Frontend\PeasantController@destroy')
         ->name('users.destroy');
-    Route::get('/{user}/edit', 'frontend\PeasantController@edit')
+    Route::get('/{user}/edit', 'Frontend\PeasantController@edit')
         ->name('users.edit');
 });
 

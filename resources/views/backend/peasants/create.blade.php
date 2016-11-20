@@ -34,7 +34,7 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="text" class="form-control" id="password" name="password" value="peasantpassword">
+                            <input type="text" class="form-control" id="password" name="password" value="" required>
                         </div>
                     </div>
                     <div class="col-sm-6">

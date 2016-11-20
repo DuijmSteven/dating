@@ -27,7 +27,6 @@ class PeasantUpdateRequest extends Request
 
         $rules = [
             'username' => 'min:5|max:50|string|required|unique:users,username,' . trim($this->route('id') . ',id'),
-            'password' => 'min:6',
             'active' => 'boolean',
             'dob' => 'date_format:Y-m-d',
             'gender' => 'in:'. implode($userProfileFields['gender'], ','),
