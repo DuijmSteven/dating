@@ -61,13 +61,21 @@ Route::group([
         ->name('users.destroy');
     Route::get('/{user}/edit', 'Frontend\PeasantController@edit')
         ->name('users.edit');
+
+    Route::group([
+        'prefix' => 'favorites'
+    ], function () {
+        Route::post('{userId}/{favoriteId}', 'FavoriteController@storeUserFavorite');
+        Route::delete('{userId}/{favoriteId}', 'FavoriteController@deleteUserFavorite');
+        Route::get('{userId}', 'FavoriteController@retrieveUserFavorites');
+    });
 });
 
-Route::delete('images/{imageId}/delete', 'UserImagesController@destroy')
+Route::delete('images/{imageId}/delete', 'UserImageController@destroy')
     ->name('images.destroy');
-Route::get('images/{imageId}/set-profile', 'UserImagesController@setProfileImage')
+Route::get('images/{imageId}/set-profile', 'UserImageController@setProfileImage')
     ->name('images.set_profile');
-Route::get('images/{imageId}/toggle-visibility', 'UserImagesController@toggleImageVisibility')
+Route::get('images/{imageId}/toggle-visibility', 'UserImageController@toggleImageVisibility')
     ->name('images.toggle_visibility');
 
 Route::group([
@@ -122,3 +130,8 @@ Route::group([
     });
 });
 
+Route::group([
+    'prefix' => 'test'
+], function () {
+
+});
