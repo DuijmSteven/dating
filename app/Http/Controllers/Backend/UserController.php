@@ -106,6 +106,6 @@ class UserController extends Controller
     public function getCities()
     {
         header('Content-Type: application/json');
-        return json_encode(UserConstants::CITIES['nl']);
+        return json_encode(UserConstants::$cities['nl']);
     }
 }

@@ -92,7 +92,7 @@
                     </div>
 
                     <?php $counter = 0; ?>
-                    @foreach(\UserConstants::SELECTABLE_PROFILE_FIELDS as $field => $possibleOptions)
+                    @foreach(\UserConstants::$selectableProfileFields['public'] as $field => $possibleOptions)
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="{!! $field !!}">{!! ucfirst(str_replace('_', ' ', $field)) !!}</label>
@@ -101,11 +101,11 @@
                                         class="form-control"
                                         {!! ($field == 'gender') ? 'required' : '' !!}
                                 >
-                                    @foreach(array_merge([''], $possibleOptions) as $option)
-                                        <option value="{!! $option == '' ? null : $option !!}"
-                                                {!! (old($field) == $option) ? 'selected' : '' !!}
+                                    @foreach(array_merge([''], $possibleOptions) as $key => $value)
+                                        <option value="{!! $key == '' ? null : $key !!}"
+                                                {!! (old($field) == $key) ? 'selected' : '' !!}
                                         >
-                                            {!! ucfirst(str_replace('_', ' ', $option)) !!}
+                                            {!! $value !!}
                                         </option>
                                     @endforeach
                                 </select>
@@ -122,7 +122,7 @@
                     <div class="col-xs-12"><hr/></div>
 
                     <?php $counter = 0; ?>
-                    @foreach(\UserConstants::TEXTFIELD_PROFILE_FIELDS as $field)
+                    @foreach(\UserConstants::$textFieldProfileFields as $field)
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="{!! $field !!}">{!! ucfirst(str_replace('_', ' ', $field)) !!}</label>

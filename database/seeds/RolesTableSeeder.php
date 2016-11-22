@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\ApplicationConstants\UserConstants;
 use App\Role;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
@@ -19,8 +20,8 @@ class RolesTableSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table('roles')->truncate();
 
-        foreach (\UserConstants::ROLES as $role => $roleId) {
-            Role::create(['name' => $role]);
+        foreach (UserConstants::$selectableProfileFields['private']['role'] as $key => $value) {
+            Role::create(['name' => $value]);
         }
 
         // supposed to only apply to a single connection and reset it's self

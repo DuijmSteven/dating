@@ -2,197 +2,112 @@
 
 class UserConstants
 {
-    const USER_FIELDS = [
+    const MAX_AMOUNT_ONLINE_TO_SHOW = 30;
+
+    public static $userFields = [
         'username',
         'email',
         'password'
     ];
 
-    const BOT_USER_TABLE_FIELDS = [
+    public static $selectableProfileFields = [
+        'public' => [
+            'gender' => [
+                0 => 'male',
+                1 => 'female'
+            ],
+            'relationship_status' => [
+                0 => 'single',
+                1 => 'in_a_relationship'
+            ],
+            'body_type' => [
+                0 => 'skinny',
+                1 => 'slender',
+                2 => 'average',
+                3 => 'athletic',
+                4 => 'curvy',
+                5 => 'big'
+            ],
+            'height' => [
+                0 => '<140',
+                1 => '140-150',
+                2 => '150-160',
+                3 => '160-170',
+                4 => '170-180',
+                5 => '180-190',
+                6 => '190-200',
+                7 => '>200'
+            ],
+            'eye_color' => [
+                0 => 'green',
+                1 => 'blue',
+                2 => 'brown',
+                3 => 'hazel',
+                4 => 'black'
+            ],
+            'hair_color' => [
+                0 => 'black',
+                1 => 'grey',
+                2 => 'white',
+                3 => 'brown',
+                4 => 'blond',
+                5 => 'dark_blond',
+                6 => 'red',
+                7 => 'pink'
+            ],
+            'smoking_habits' => [
+                0 => 'yes',
+                1 => 'social',
+                2 => 'none'
+            ],
+            'drinking_habits' => [
+                0 => 'yes',
+                1 => 'social',
+                2 => 'none'
+            ],
+            'province' => [
+                0 => 'drenthe',
+                1 => 'flevoland',
+                2 => 'friesland',
+                3 => 'gelderland',
+                4 => 'groningen',
+                5 => 'limburg',
+                6 => 'noord_brabant',
+                7 => 'noord_holland',
+                8 => 'overijseel',
+                9 => 'utrecht',
+                10 => 'zeeland',
+                11 => 'zuid_holland'
+            ]
+        ],
+        'private' => [
+            'role' => [
+                1 => 'admin',
+                2 => 'peasant',
+                3 => 'bot'
+            ]
+        ]
+    ];
+
+    public static $botUserTableFields = [
         'username',
         'password'
     ];
 
-    const PROFILE_FIELDS = [
-        'gender' => [
-            'male',
-            'female',
-        ],
-        'relationship_status' => [
-            'single',
-            'in_a_relationship'
-        ],
-        'body_type' => [
-            'skinny',
-            'slender',
-            'average',
-            'athletic',
-            'curvy',
-            'big'
-        ],
-        'height' => [
-            '<140',
-            '140-150',
-            '150-160',
-            '160-170',
-            '170-180',
-            '180-190',
-            '190-200',
-            '>200'
-        ],
-        'eye_color' => [
-            'green',
-            'blue',
-            'brown',
-            'hazel',
-            'black'
-        ],
-        'hair_color' => [
-            'black',
-            'grey',
-            'white',
-            'brown',
-            'blond',
-            'dark_blond',
-            'red',
-            'pink'
-        ],
-        'smoking_habits' => [
-            'yes',
-            'social',
-            'none'
-        ],
-        'drinking_habits' => [
-            'yes',
-            'social',
-            'none'
-        ],
-        'province' => [
-            'drenthe',
-            'flevoland',
-            'friesland',
-            'gelderland',
-            'groningen',
-            'limburg',
-            'noord_brabant',
-            'noord_holland',
-            'overijseel',
-            'utrecht',
-            'zeeland',
-            'zuid_holland',
-        ],
-        'city' => [
-            'utrecht',
-            'amsterdam',
-            'eindhoven',
-            'tilburg',
-        ],
-        'about_me' => '',
-        'looking_for' => '',
-        'dob' => '',
-        'country' => ''
+    public static $privateProfileFields = [
+        'role'
     ];
 
-    const PRIVATE_PROFILE_FIELDS = [
-        'role' => [
-            'admin' => 1,
-            'user' => 2,
-            'bot', 3
-        ]
-    ];
-
-    const TEXTFIELD_PROFILE_FIELDS = [
+    public static $textFieldProfileFields = [
         'about_me',
         'looking_for'
     ];
 
-    const SELECTABLE_PROFILE_FIELDS = [
-        'gender' => [
-            'male',
-            'female',
-        ],
-        'relationship_status' => [
-            'single',
-            'in_a_relationship'
-        ],
-        'body_type' => [
-            'skinny',
-            'slender',
-            'average',
-            'athletic',
-            'curvy',
-            'big'
-        ],
-        'eye_color' => [
-            'green',
-            'blue',
-            'brown',
-            'hazel',
-            'black'
-        ],
-        'height' => [
-            '<140',
-            '140-150',
-            '150-160',
-            '160-170',
-            '170-180',
-            '180-190',
-            '190-200',
-            '>200'
-        ],
-        'hair_color' => [
-            'black',
-            'grey',
-            'white',
-            'brown',
-            'blond',
-            'dark_blond',
-            'red',
-            'pink'
-        ],
-        'smoking_habits' => [
-            'yes',
-            'social',
-            'none'
-        ],
-        'drinking_habits' => [
-            'yes',
-            'social',
-            'none'
-        ],
-        'province' => [
-            'drenthe',
-            'flevoland',
-            'friesland',
-            'gelderland',
-            'groningen',
-            'limburg',
-            'noord_brabant',
-            'noord_holland',
-            'overijseel',
-            'utrecht',
-            'zeeland',
-            'zuid_holland',
-        ],
-    ];
-
-    const IMMUTABLE_PROFILE_FIELDS = [
+    public static $immutableProfileFields = [
         'gender'
     ];
 
-    const ROLES = [
-        'admin' => 1,
-        'peasant' => 2,
-        'bot' => 3
-    ];
-
-    const COUNTRIES = [
-        'nl' => 'Netherlands'
-    ];
-
-    const MAX_AMOUNT_ONLINE_TO_SHOW = 30;
-
-    const CITIES = [
+    public static $cities = [
         'nl' => [
             "'s-Graveland",
             "'s-Gravendeel",
@@ -1671,4 +1586,24 @@ class UserConstants
             "Zwolle"
         ]
     ];
+
+    public static function getSelectableField(string $fieldName)
+    {
+        return self::$selectableProfileFields['public'][$fieldName];
+    }
+
+    public static function getSelectableFieldFlipped(string $fieldName)
+    {
+        return array_flip(self::$selectableProfileFields['public'][$fieldName]);
+    }
+
+    public static function getSelectableFieldKeys(string $fieldName)
+    {
+        return array_keys(self::$selectableProfileFields['public'][$fieldName]);
+    }
+
+    public static function getSelectableFieldValues(string $fieldName)
+    {
+        return array_values(self::$selectableProfileFields['public'][$fieldName]);
+    }
 }

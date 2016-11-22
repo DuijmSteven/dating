@@ -16,6 +16,8 @@ class VerifyAdmin
      */
     public function handle($request, Closure $next)
     {
+        \Log::info(\Auth::user()->roles()->get());
+
         if (is_null(\Auth::user()) || \Auth::user()->roles()->get()[0]->name !== 'admin') {
             return redirect()->route('login.get');
         }

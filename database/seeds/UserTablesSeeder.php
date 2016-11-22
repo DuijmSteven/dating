@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\ApplicationConstants\UserConstants;
 use App\RoleUser;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
@@ -26,7 +27,7 @@ class UserTablesSeeder extends Seeder
         DB::table('user_meta')->truncate();
         DB::table('role_user')->truncate();
 
-        foreach (\UserConstants::PROFILE_FIELDS['gender'] as $key => $gender) {
+        foreach (UserConstants::getSelectableField('gender') as $key => $value) {
 
             $userAmount = 60;
 
@@ -35,7 +36,7 @@ class UserTablesSeeder extends Seeder
 
                 $createdUser->meta()->save(factory(App\UserMeta::class)->make([
                     'user_id' => $createdUser->id,
-                    'gender' => $gender,
+                    'gender' => $key,
                 ]));
 
                 $roleUserInstance = new RoleUser([
