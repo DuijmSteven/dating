@@ -1643,9 +1643,12 @@ class UserConstants
         }
 
         if (
-            $arrayManipulationMethodName != '' &&
-            in_array($arrayManipulationMethodName, $allowedArrayManipulations)
+            $arrayManipulationMethodName != ''
         ) {
+            if (!in_array($arrayManipulationMethodName, $allowedArrayManipulations)) {
+                throw new \Exception;
+            }
+
             $data = call_user_func($arrayManipulationMethodName, $data);
         }
 
@@ -1655,35 +1658,6 @@ class UserConstants
 
         return null;
     }
-
-/*    public static function selectableFieldFlipped(string $fieldName, string $visibility = 'public')
-    {
-        if (isset(self::$selectableFields[$visibility][$fieldName])) {
-            return array_flip(self::$selectableFields[$visibility][$fieldName]);
-        }
-
-        return null;
-    }
-
-    public static function selectableFieldKeys(string $fieldName, string $visibility = 'public')
-    {
-        if (isset(self::$selectableFields[$visibility][$fieldName])) {
-            return array_keys(self::$selectableFields[$visibility][$fieldName]);
-        }
-
-        return null;
-    }
-
-    public static function selectableFieldValues(string $fieldName)
-    {
-        if (in_array($fieldName, array_keys(self::$selectableFields['public']))) {
-            return array_values(self::$selectableFields['public'][$fieldName]);
-        } elseif (in_array($fieldName, array_keys(self::$selectableFields['private']))) {
-            return array_values(self::$selectableFields['private'][$fieldName]);
-        }
-
-        return null;
-    }*/
 
     public static function userTableFields(string $userType = 'bot', string $visibility = 'public')
     {
