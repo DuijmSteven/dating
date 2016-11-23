@@ -26,13 +26,18 @@
                                 <tr>
                                     <td>{!! $bot->id !!}</td>
                                     <td>
-                                        <strong>Username:</strong> {!! $bot->username !!} <br>
-                                        <strong>Age:</strong> {!! $carbonNow->diffInYears($bot->meta->dob) !!} <br>
+                                        <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $bot->username !!} <br>
+                                        <strong>{!! @trans('user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($bot->meta->dob) !!} <br>
                                     </td>
                                     <td>
-                                        @foreach(\UserConstants::publicFieldNames() as $fieldName)
+                                        @foreach(\UserConstants::selectableFields('bot') as $fieldName => $a)
                                             <strong>{!! ucfirst(str_replace('_', ' ', $fieldName)) !!}:
-                                            </strong> {!! ucfirst(str_replace('_', ' ', $bot->meta->{$fieldName})) !!} <br>
+                                            </strong> {!! @trans('user_constants.' . $fieldName . '.' . $bot->meta->{$fieldName}) !!} <br>
+                                        @endforeach
+
+                                        @foreach(array_merge(\UserConstants::textFields('bot'), \UserConstants::textInputs('bot')) as $fieldName)
+                                            <strong>{!! @trans('user_constants.' . $fieldName) !!}:
+                                            </strong> {!! $bot->meta->{$fieldName} !!}<br>
                                         @endforeach
                                     </td>
                                     <td class="action-buttons">
