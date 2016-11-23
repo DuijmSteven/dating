@@ -31,7 +31,7 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                @include('frontend.forms.helpers.error_message', ['field' => $field])
+                                @include('helpers.forms.error_message', ['field' => $field])
                             </div>
                         </div>
 

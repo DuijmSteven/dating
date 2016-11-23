@@ -92,7 +92,7 @@
                     </div>
 
                     <?php $counter = 0; ?>
-                    @foreach(\UserConstants::$selectableProfileFields['public'] as $field => $possibleOptions)
+                    @foreach(\UserConstants::selectableFields() as $field => $possibleOptions)
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="{!! $field !!}">{!! ucfirst(str_replace('_', ' ', $field)) !!}</label>
@@ -105,11 +105,11 @@
                                         <option value="{!! $key == '' ? null : $key !!}"
                                                 {!! (old($field) == $key) ? 'selected' : '' !!}
                                         >
-                                            {!! $value !!}
+                                            {!! ucfirst($value) !!}
                                         </option>
                                     @endforeach
                                 </select>
-                                @include('frontend.forms.helpers.error_message', ['field' => $field])
+                                @include('helpers.forms.error_message', ['field' => $field])
                             </div>
                         </div>
                         {{--Prevents breaking when error on > xs viewports--}}
@@ -122,7 +122,7 @@
                     <div class="col-xs-12"><hr/></div>
 
                     <?php $counter = 0; ?>
-                    @foreach(\UserConstants::$textFieldProfileFields as $field)
+                    @foreach(\UserConstants::textFields() as $field)
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="{!! $field !!}">{!! ucfirst(str_replace('_', ' ', $field)) !!}</label>
@@ -132,7 +132,7 @@
                                           cols="30"
                                           rows="10"
                                 >{!! old($field, '') !!}</textarea>
-                                @include('frontend.forms.helpers.error_message', ['field' => $field])
+                                @include('helpers.forms.error_message', ['field' => $field])
                             </div>
                         </div>
                         @if($counter % 2)

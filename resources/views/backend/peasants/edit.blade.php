@@ -84,7 +84,7 @@
                         </div>
                     </div>
                     <?php $counter = 0; ?>
-                    @foreach(\UserConstants::SELECTABLE_PROFILE_FIELDS as $field => $possibleOptions)
+                    @foreach(\UserConstants::selectableFields('peasant') as $field => $possibleOptions)
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="{!! $field !!}">{!! ucfirst(str_replace('_', ' ', $field)) !!}</label>
@@ -92,15 +92,15 @@
                                         id="{!! $field !!}"
                                         class="form-control"
                                 >
-                                    @foreach(array_merge([''], $possibleOptions) as $option)
-                                        <option value="{!! $option == '' ? null : $option !!}"
-                                                {!! ($peasant->meta[$field] == $option) ? 'selected' : '' !!}
+                                    @foreach(array_merge([''], $possibleOptions) as $key => $value)
+                                        <option value="{!! $key == '' ? null : $key !!}"
+                                                {!! ($peasant->meta[$field] == $key) ? 'selected' : '' !!}
                                         >
-                                            {!! ucfirst(str_replace('_', ' ', $option)) !!}
+                                            {!! ucfirst($value) !!}
                                         </option>
                                     @endforeach
                                 </select>
-                                @include('frontend.forms.helpers.error_message', ['field' => $field])
+                                @include('helpers.forms.error_message', ['field' => $field])
                             </div>
                         </div>
                         {{--Prevents breaking when error on > xs viewports--}}
@@ -115,7 +115,7 @@
                     </div>
 
                     <?php $counter = 0; ?>
-                    @foreach(\UserConstants::TEXTFIELD_PROFILE_FIELDS as $field)
+                    @foreach(\UserConstants::textFields('peasant') as $field)
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="{!! $field !!}">{!! ucfirst(str_replace('_', ' ', $field)) !!}</label>
@@ -125,7 +125,7 @@
                                           cols="30"
                                           rows="10"
                                 >{!! $peasant->meta[$field] !!}</textarea>
-                                @include('frontend.forms.helpers.error_message', ['field' => $field])
+                                @include('helpers.forms.error_message', ['field' => $field])
                             </div>
                         </div>
                         @if($counter % 2)

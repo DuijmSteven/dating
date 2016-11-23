@@ -89,8 +89,6 @@ class BotController extends Controller
             ];
         }
 
-        \Log::info($alerts);
-
         return redirect()->back()->with('alerts', $alerts);
     }
 

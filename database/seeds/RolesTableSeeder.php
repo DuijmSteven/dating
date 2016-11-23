@@ -15,12 +15,14 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
+
+        \Log::info(UserConstants::selectableField('role'));
         Model::unguard();
         //disable foreign key check for this connection before running seeders
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table('roles')->truncate();
 
-        foreach (UserConstants::$selectableProfileFields['private']['role'] as $key => $value) {
+        foreach (UserConstants::selectableField('role') as $key => $value) {
             Role::create(['name' => $value]);
         }
 

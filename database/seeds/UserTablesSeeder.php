@@ -27,7 +27,7 @@ class UserTablesSeeder extends Seeder
         DB::table('user_meta')->truncate();
         DB::table('role_user')->truncate();
 
-        foreach (UserConstants::getSelectableField('gender') as $key => $value) {
+        foreach (UserConstants::selectableField('gender') as $key => $value) {
 
             $userAmount = 60;
 

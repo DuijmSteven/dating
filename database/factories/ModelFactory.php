@@ -30,21 +30,23 @@ $factory->define(App\User::class, function (FakerGenerator $faker) {
 $factory->define(App\UserMeta::class, function (FakerGenerator $faker) {
     $faker->addProvider(new FakerProvider\nl_NL\Address($faker));
 
+    $selectableProfileFields = UserConstants::selectableFields();
+
     return [
         'user_id'=> $faker->randomDigit,
         'dob' => $faker->dateTimeBetween('-60 years', '-18 years', date_default_timezone_get())->format('Y-m-d'),
-        'gender' => array_rand(UserConstants::getSelectableField('gender')),
-        'relationship_status' => array_rand(UserConstants::getSelectableField('relationship_status')),
+        'gender' => array_rand($selectableProfileFields['gender']),
+        'relationship_status' => array_rand($selectableProfileFields['relationship_status']),
         'city' => $faker->city,
-        'height' => array_rand(UserConstants::getSelectableField('height')),
-        'body_type' => array_rand(UserConstants::getSelectableField('body_type')),
-        'eye_color' => array_rand(UserConstants::getSelectableField('eye_color')),
-        'hair_color' => array_rand(UserConstants::getSelectableField('hair_color')),
-        'smoking_habits' => array_rand(UserConstants::getSelectableField('smoking_habits')),
-        'drinking_habits' => array_rand(UserConstants::getSelectableField('drinking_habits')),
+        'height' => array_rand($selectableProfileFields['height']),
+        'body_type' => array_rand($selectableProfileFields['body_type']),
+        'eye_color' => array_rand($selectableProfileFields['eye_color']),
+        'hair_color' => array_rand($selectableProfileFields['hair_color']),
+        'smoking_habits' => array_rand($selectableProfileFields['smoking_habits']),
+        'drinking_habits' => array_rand($selectableProfileFields['drinking_habits']),
         'country' => 'nl',
         'about_me' => $faker->realText($maxNbChars = 200, $indexSize = 2),
         'looking_for' => $faker->realText($maxNbChars = 200, $indexSize = 2),
-        'province' => array_rand(UserConstants::getSelectableField('province'))
+        'province' => array_rand($selectableProfileFields['province'])
     ];
 });

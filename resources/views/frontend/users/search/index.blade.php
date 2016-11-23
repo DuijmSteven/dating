@@ -13,7 +13,7 @@
                            class="form-control {!! $errors->has('query') ? 'form-error' : '' !!}"
                            value="{{ old('query') }}"
                     >
-                    @include('frontend.forms.helpers.error_message', ['field' => 'query'])
+                    @include('helpers.forms.error_message', ['field' => 'query'])
                 </div>
             </div>
             <div class="col-sm-6">
@@ -25,7 +25,7 @@
                            class="form-control"
                            value="{{ old('username') }}"
                     >
-                    @include('frontend.forms.helpers.error_message', ['field' => 'username'])
+                    @include('helpers.forms.error_message', ['field' => 'username'])
                 </div>
             </div>
 
@@ -49,7 +49,7 @@
                                 </option>
                             @endforeach
                         </select>
-                        @include('frontend.forms.helpers.error_message', ['field' => $field])
+                        @include('helpers.forms.error_message', ['field' => $field])
                     </div>
                 </div>
 

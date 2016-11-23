@@ -4,106 +4,113 @@ class UserConstants
 {
     const MAX_AMOUNT_ONLINE_TO_SHOW = 30;
 
-    public static $userFields = [
-        'username',
-        'email',
-        'password'
-    ];
-
-    public static $selectableProfileFields = [
-        'public' => [
-            'gender' => [
-                0 => 'male',
-                1 => 'female'
+    public static $userTableFields = [
+        'common' => [
+            'public' => [
+                'username'
             ],
-            'relationship_status' => [
-                0 => 'single',
-                1 => 'in_a_relationship'
-            ],
-            'body_type' => [
-                0 => 'skinny',
-                1 => 'slender',
-                2 => 'average',
-                3 => 'athletic',
-                4 => 'curvy',
-                5 => 'big'
-            ],
-            'height' => [
-                0 => '<140',
-                1 => '140-150',
-                2 => '150-160',
-                3 => '160-170',
-                4 => '170-180',
-                5 => '180-190',
-                6 => '190-200',
-                7 => '>200'
-            ],
-            'eye_color' => [
-                0 => 'green',
-                1 => 'blue',
-                2 => 'brown',
-                3 => 'hazel',
-                4 => 'black'
-            ],
-            'hair_color' => [
-                0 => 'black',
-                1 => 'grey',
-                2 => 'white',
-                3 => 'brown',
-                4 => 'blond',
-                5 => 'dark_blond',
-                6 => 'red',
-                7 => 'pink'
-            ],
-            'smoking_habits' => [
-                0 => 'yes',
-                1 => 'social',
-                2 => 'none'
-            ],
-            'drinking_habits' => [
-                0 => 'yes',
-                1 => 'social',
-                2 => 'none'
-            ],
-            'province' => [
-                0 => 'drenthe',
-                1 => 'flevoland',
-                2 => 'friesland',
-                3 => 'gelderland',
-                4 => 'groningen',
-                5 => 'limburg',
-                6 => 'noord_brabant',
-                7 => 'noord_holland',
-                8 => 'overijseel',
-                9 => 'utrecht',
-                10 => 'zeeland',
-                11 => 'zuid_holland'
+            'private' => [
+                'password'
             ]
         ],
-        'private' => [
-            'role' => [
-                1 => 'admin',
-                2 => 'peasant',
-                3 => 'bot'
+        'peasant' => [
+            'public' => [
+                'email'
             ]
         ]
     ];
 
-    public static $botUserTableFields = [
-        'username',
-        'password'
+    public static $selectableFields = [
+        'common' => [
+            'public' => [
+                'gender' => [
+                    0 => 'male',
+                    1 => 'female'
+                ],
+                'relationship_status' => [
+                    0 => 'single',
+                    1 => 'in_a_relationship'
+                ],
+                'body_type' => [
+                    0 => 'skinny',
+                    1 => 'slender',
+                    2 => 'average',
+                    3 => 'athletic',
+                    4 => 'curvy',
+                    5 => 'big'
+                ],
+                'height' => [
+                    0 => '<140',
+                    1 => '140-150',
+                    2 => '150-160',
+                    3 => '160-170',
+                    4 => '170-180',
+                    5 => '180-190',
+                    6 => '190-200',
+                    7 => '>200'
+                ],
+                'eye_color' => [
+                    0 => 'green',
+                    1 => 'blue',
+                    2 => 'brown',
+                    3 => 'hazel',
+                    4 => 'black'
+                ],
+                'hair_color' => [
+                    0 => 'black',
+                    1 => 'grey',
+                    2 => 'white',
+                    3 => 'brown',
+                    4 => 'blond',
+                    5 => 'dark_blond',
+                    6 => 'red',
+                    7 => 'pink'
+                ],
+                'smoking_habits' => [
+                    0 => 'yes',
+                    1 => 'social',
+                    2 => 'none'
+                ],
+                'drinking_habits' => [
+                    0 => 'yes',
+                    1 => 'social',
+                    2 => 'none'
+                ],
+                'province' => [
+                    0 => 'drenthe',
+                    1 => 'flevoland',
+                    2 => 'friesland',
+                    3 => 'gelderland',
+                    4 => 'groningen',
+                    5 => 'limburg',
+                    6 => 'noord_brabant',
+                    7 => 'noord_holland',
+                    8 => 'overijseel',
+                    9 => 'utrecht',
+                    10 => 'zeeland',
+                    11 => 'zuid_holland'
+                ]
+            ],
+            'private' => [
+                'role' => [
+                    1 => 'admin',
+                    2 => 'peasant',
+                    3 => 'bot'
+                ]
+            ]
+        ]
     ];
 
-    public static $privateProfileFields = [
-        'role'
+    public static $textFields = [
+        'common' => [
+            'public' => [
+                'about_me',
+                'looking_for'
+            ]
+        ]
     ];
 
-    public static $textFieldProfileFields = [
-        'about_me',
-        'looking_for'
-    ];
-
-    public static $immutableProfileFields = [
+    public static $immutableFields = [
         'gender'
     ];
 
@@ -1587,23 +1594,133 @@ class UserConstants
         ]
     ];
 
-    public static function getSelectableField(string $fieldName)
+    public static function selectableFields(string $userType = 'bot', string $visibility = 'public')
     {
-        return self::$selectableProfileFields['public'][$fieldName];
+        $result = [];
+
+        if (isset(self::$selectableFields['common'][$visibility])) {
+            $result = array_merge($result, self::$selectableFields['common'][$visibility]);
+        }
+
+        if (isset(self::$selectableFields[$userType][$visibility])) {
+            $result = array_merge($result, self::$selectableFields[$userType][$visibility]);
+        }
+
+        return (empty($result)) ? null : $result;
     }
 
-    public static function getSelectableFieldFlipped(string $fieldName)
+    public static function selectableField(string $fieldName, string $userType = 'bot', string $arrayManipulationMethodName = '')
     {
-        return array_flip(self::$selectableProfileFields['public'][$fieldName]);
+        $data = [];
+
+        $allowedArrayManipulations = [
+            'array_flip',
+            'array_keys',
+            'array_values'
+        ];
+
+        if (
+            isset(self::$selectableFields['common']['public']) &&
+            in_array($fieldName, array_keys(self::$selectableFields['common']['public']))
+        ) {
+            $data = self::$selectableFields['common']['public'][$fieldName];
+        } elseif (
+            isset(self::$selectableFields[$userType]['public']) &&
+            in_array($fieldName, array_keys(self::$selectableFields[$userType]['public']))
+        ) {
+            $data = self::$selectableFields['common']['public'][$fieldName];
+        } elseif (
+            isset(self::$selectableFields['common']['private']) &&
+            in_array($fieldName, array_keys(self::$selectableFields['common']['private']))
+        ) {
+
+            $data = self::$selectableFields['common']['private'][$fieldName];
+        } elseif (
+            isset(self::$selectableFields[$userType]['private']) &&
+            in_array($fieldName, array_keys(self::$selectableFields[$userType]['private']))
+        ) {
+            $data = self::$selectableFields[$userType]['private'][$fieldName];
+        }
+
+        if (
+            $arrayManipulationMethodName != '' &&
+            in_array($arrayManipulationMethodName, $allowedArrayManipulations)
+        ) {
+            $data = call_user_func($arrayManipulationMethodName, $data);
+        }
+
+        if (!empty($data)) {
+            return $data;
+        }
+
+        return null;
     }
 
-    public static function getSelectableFieldKeys(string $fieldName)
+/*    public static function selectableFieldFlipped(string $fieldName, string $visibility = 'public')
     {
-        return array_keys(self::$selectableProfileFields['public'][$fieldName]);
+        if (isset(self::$selectableFields[$visibility][$fieldName])) {
+            return array_flip(self::$selectableFields[$visibility][$fieldName]);
+        }
+
+        return null;
     }
 
-    public static function getSelectableFieldValues(string $fieldName)
+    public static function selectableFieldKeys(string $fieldName, string $visibility = 'public')
     {
-        return array_values(self::$selectableProfileFields['public'][$fieldName]);
+        if (isset(self::$selectableFields[$visibility][$fieldName])) {
+            return array_keys(self::$selectableFields[$visibility][$fieldName]);
+        }
+
+        return null;
+    }
+
+    public static function selectableFieldValues(string $fieldName)
+    {
+        if (in_array($fieldName, array_keys(self::$selectableFields['public']))) {
+            return array_values(self::$selectableFields['public'][$fieldName]);
+        } elseif (in_array($fieldName, array_keys(self::$selectableFields['private']))) {
+            return array_values(self::$selectableFields['private'][$fieldName]);
+        }
+
+        return null;
+    }*/
+
+    public static function userTableFields(string $userType = 'bot', string $visibility = 'public')
+    {
+        $result = [];
+
+        if (isset(self::$userTableFields['common'][$visibility])) {
+            $result = array_merge($result, self::$userTableFields['common'][$visibility]);
+        }
+
+        if (isset(self::$userTableFields[$userType][$visibility])) {
+            $result = array_merge($result, self::$userTableFields[$userType][$visibility]);
+        }
+
+        return (empty($result)) ? null : $result;
+    }
+
+    public static function textFields(string $userType = 'bot', string $visibility = 'public')
+    {
+        $result = [];
+
+        if (isset(self::$textFields['common'][$visibility])) {
+            $result = array_merge($result, self::$textFields['common'][$visibility]);
+        }
+
+        if (isset(self::$textFields[$userType][$visibility])) {
+            $result = array_merge($result, self::$textFields[$userType][$visibility]);
+        }
+
+        return (empty($result)) ? null : $result;
+    }
+
+    public static function publicFieldNames(string $userType = 'bot')
+    {
+        return array_merge(
+            array_keys(self::selectableFields($userType)),
+            array_keys(self::userTableFields($userType)),
+            self::textFields($userType)
+        );
     }
 }

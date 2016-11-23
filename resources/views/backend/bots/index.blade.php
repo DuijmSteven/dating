@@ -30,7 +30,7 @@
                                         <strong>Age:</strong> {!! $carbonNow->diffInYears($bot->meta->dob) !!} <br>
                                     </td>
                                     <td>
-                                        @foreach(array_keys(\UserConstants::PROFILE_FIELDS) as $fieldName)
+                                        @foreach(\UserConstants::publicFieldNames() as $fieldName)
                                             <strong>{!! ucfirst(str_replace('_', ' ', $fieldName)) !!}:
                                             </strong> {!! ucfirst(str_replace('_', ' ', $bot->meta->{$fieldName})) !!} <br>
                                         @endforeach
