@@ -24,7 +24,7 @@ class BotCreateRequest extends Request
      */
     public function rules()
     {
-        $userProfileFields = UserConstants::$selectableProfileFields['public'];
+        $userProfileFields = UserConstants::selectableFields('bot');
 
         $rules = [
             'username' => 'min:5|max:50|string|required|unique:users',

@@ -2,6 +2,8 @@
 
 namespace App\Managers;
 
+use App\Helpers\ApplicationConstants\PaginationConstants;
+use App\Helpers\ApplicationConstants\UserConstants;
 use App\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
@@ -42,7 +44,7 @@ class UserSearchManager
             if (isset($parameters['username'])) {
                 $query = $query->where('username', 'like', '%' . $parameters['username'] . '%');
             }
-            foreach (\UserConstants::SELECTABLE_PROFILE_FIELDS as $field => $values) {
+            foreach (UserConstants::selectableFields('peasant') as $field => $values) {
                 if (isset($parameters[$field])) {
                     $query->whereHas('meta', function ($query) use ($parameters, $field) {
                         $query->where($field, $parameters[$field]);
@@ -55,7 +57,7 @@ class UserSearchManager
             $results = $query->get();
             return $results;
         }
-        $results = $query->paginate(\PaginationConstants::PER_PAGE['user_profiles'], ['*'], 'page', $page);
+        $results = $query->paginate(PaginationConstants::PER_PAGE['user_profiles'], ['*'], 'page', $page);
 
         return $results;
     }

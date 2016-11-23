@@ -2,6 +2,7 @@
 
 namespace App\Managers;
 
+use App\Helpers\ApplicationConstants\UserConstants;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -53,11 +54,24 @@ class PeasantManager extends UserManager
     private function buildPeasantArrayToPersist(array $peasantData, string $action)
     {
         $usersTableData = array_where($peasantData, function ($value, $key) {
-            return in_array($key, \UserConstants::USER_FIELDS);
+            return in_array(
+                $key,
+                array_merge(
+                    UserConstants::userTableFields('peasant'),
+                    ['password']
+                )
+            );
         });
 
         $userMetaTableData = array_where($peasantData, function ($value, $key) {
-            return in_array($key, array_keys(\UserConstants::PROFILE_FIELDS));
+            return in_array(
+                $key,
+                array_merge(
+                    array_keys(UserConstants::selectableFields('peasant')),
+                    UserConstants::textFields('peasant'),
+                    UserConstants::textInputs('peasant')
+                )
+            );
         });
 
         $userDataToPersist['user'] = $usersTableData;
@@ -79,7 +93,7 @@ class PeasantManager extends UserManager
 
         if ($action == 'create') {
             $userDataToPersist['user']['password'] = Hash::make($userDataToPersist['user']['password']);
-            $userDataToPersist['user']['role'] = \UserConstants::ROLES['peasant'];
+            $userDataToPersist['user']['role'] = UserConstants::selectableField('role', 'peasant', 'array_flip')['peasant'];
         }
 
         return $userDataToPersist;

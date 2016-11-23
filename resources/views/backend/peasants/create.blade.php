@@ -12,7 +12,6 @@
         <form role="form" method="POST" action="{!! route('backend.peasants.store') !!}" enctype="multipart/form-data">
             {!! csrf_field() !!}
             <input type="hidden" value="peasant" name="role">
-            <input type="hidden" value="" name="email">
             <input type="hidden" type="text" value="nl" name="country">
             <div class="box-body">
                 <div class="row">
@@ -33,8 +32,30 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
+                            <label for="password">Email</label>
+                            <input type="email"
+                                   class="form-control"
+                                   id="email"
+                                   name="email"
+                                   value="{!! old('email', '') !!}"
+                                   required>
+                            @if ($errors->has('email'))
+                                {!! $errors->first('email', '<small class="form-error">:message</small>') !!}
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="text" class="form-control" id="password" name="password" value="" required>
+                            <input type="text"
+                                   class="form-control"
+                                   id="password"
+                                   name="password"
+                                   value="{!! old('password', '') !!}"
+                                   required>
+                            @if ($errors->has('password'))
+                                {!! $errors->first('password', '<small class="form-error">:message</small>') !!}
+                            @endif
                         </div>
                     </div>
                     <div class="col-sm-6">

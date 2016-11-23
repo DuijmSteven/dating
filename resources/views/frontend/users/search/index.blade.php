@@ -33,7 +33,7 @@
             <div class="col-xs-12"></div>
 
             <?php $counter = 0; ?>
-            @foreach(\UserConstants::SELECTABLE_PROFILE_FIELDS as $field => $possibleOptions)
+            @foreach(\UserConstants::selectableFields('peasant') as $field => $possibleOptions)
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="query">{!! ucfirst(str_replace('_', ' ', $field)) !!}</label>
@@ -41,11 +41,11 @@
                                 id="{!! $field !!}"
                                 class="form-control"
                         >
-                            @foreach(array_merge(['any'], $possibleOptions) as $option)
-                                <option value="{{ $option == 'any' ? null : $option }}"
-                                        {{ (old($field) == $option) ? 'selected' : '' }}
+                            @foreach(array_merge(['any'], $possibleOptions) as $key => $value)
+                                <option value="{{ $key == 'any' ? null : $key }}"
+                                        {{ (old($field) == $key) ? 'selected' : '' }}
                                 >
-                                    {{ ucfirst(str_replace('_', ' ', $option)) }}
+                                    {{ ucfirst($value) }}
                                 </option>
                             @endforeach
                         </select>

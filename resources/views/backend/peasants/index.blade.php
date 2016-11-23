@@ -27,10 +27,11 @@
                                     <td>{!! $peasant->id !!}</td>
                                     <td>
                                         <strong>Username:</strong> {!! $peasant->username !!} <br>
+                                        <strong>Email:</strong> {!! $peasant->email !!} <br>
                                         <strong>Age:</strong> {!! $carbonNow->diffInYears($peasant->meta->dob) !!} <br>
                                     </td>
                                     <td>
-                                        @foreach(array_keys(\UserConstants::PROFILE_FIELDS) as $fieldName)
+                                        @foreach(\UserConstants::publicFieldNames('peasant') as $fieldName)
                                             <strong>{!! ucfirst(str_replace('_', ' ', $fieldName)) !!}:
                                             </strong> {!! ucfirst(str_replace('_', ' ', $peasant->meta->{$fieldName})) !!} <br>
                                         @endforeach

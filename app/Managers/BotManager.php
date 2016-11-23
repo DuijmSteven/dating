@@ -2,6 +2,7 @@
 
 namespace App\Managers;
 
+use App\Helpers\ApplicationConstants\UserConstants;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -53,11 +54,24 @@ class BotManager extends UserManager
     private function buildBotArrayToPersist(array $botData, string $action)
     {
         $usersTableData = array_where($botData, function ($value, $key) {
-            return in_array($key, \UserConstants::USER_FIELDS);
+            return in_array(
+                $key,
+                array_merge(
+                    UserConstants::userTableFields('bot'),
+                    ['password']
+                )
+            );
         });
 
         $userMetaTableData = array_where($botData, function ($value, $key) {
-            return in_array($key, array_keys(\UserConstants::PROFILE_FIELDS));
+            return in_array(
+                $key,
+                array_merge(
+                    array_keys(UserConstants::selectableFields('bot')),
+                    UserConstants::textFields('bot'),
+                    UserConstants::textInputs('bot')
+                )
+            );
         });
 
         $userDataToPersist['user'] = $usersTableData;
@@ -79,7 +93,7 @@ class BotManager extends UserManager
 
         if ($action == 'create') {
             $userDataToPersist['user']['password'] = Hash::make($userDataToPersist['user']['password']);
-            $userDataToPersist['user']['role'] = \UserConstants::ROLES['bot'];
+            $userDataToPersist['user']['role'] = UserConstants::selectableField('role', 'bot', 'array_flip')['bot'];
         }
 
         return $userDataToPersist;

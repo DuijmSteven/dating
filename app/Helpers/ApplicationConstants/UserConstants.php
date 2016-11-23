@@ -110,6 +110,16 @@ class UserConstants
         ]
     ];
 
+    public static $textInputs = [
+        'common' => [
+            'public' => [
+                'dob',
+                'city',
+                'country'
+            ]
+        ]
+    ];
+
     public static $immutableFields = [
         'gender'
     ];
@@ -1594,6 +1604,11 @@ class UserConstants
         ]
     ];
 
+    /**
+     * @param string $userType
+     * @param string $visibility
+     * @return array|null
+     */
     public static function selectableFields(string $userType = 'bot', string $visibility = 'public')
     {
         $result = [];
@@ -1609,47 +1624,19 @@ class UserConstants
         return (empty($result)) ? null : $result;
     }
 
+    /**
+     * @param string $fieldName
+     * @param string $userType
+     * @param string $arrayManipulationMethodName
+     * @return mixed|null
+     * @throws \Exception
+     */
     public static function selectableField(string $fieldName, string $userType = 'bot', string $arrayManipulationMethodName = '')
     {
-        $data = [];
+        $data = self::getSelectableFieldData($fieldName, $userType);
 
-        $allowedArrayManipulations = [
-            'array_flip',
-            'array_keys',
-            'array_values'
-        ];
-
-        if (
-            isset(self::$selectableFields['common']['public']) &&
-            in_array($fieldName, array_keys(self::$selectableFields['common']['public']))
-        ) {
-            $data = self::$selectableFields['common']['public'][$fieldName];
-        } elseif (
-            isset(self::$selectableFields[$userType]['public']) &&
-            in_array($fieldName, array_keys(self::$selectableFields[$userType]['public']))
-        ) {
-            $data = self::$selectableFields['common']['public'][$fieldName];
-        } elseif (
-            isset(self::$selectableFields['common']['private']) &&
-            in_array($fieldName, array_keys(self::$selectableFields['common']['private']))
-        ) {
-
-            $data = self::$selectableFields['common']['private'][$fieldName];
-        } elseif (
-            isset(self::$selectableFields[$userType]['private']) &&
-            in_array($fieldName, array_keys(self::$selectableFields[$userType]['private']))
-        ) {
-            $data = self::$selectableFields[$userType]['private'][$fieldName];
-        }
-
-        if (
-            $arrayManipulationMethodName != ''
-        ) {
-            if (!in_array($arrayManipulationMethodName, $allowedArrayManipulations)) {
-                throw new \Exception;
-            }
-
-            $data = call_user_func($arrayManipulationMethodName, $data);
+        if ($arrayManipulationMethodName != '') {
+            $data = self::applyArrayMethod($arrayManipulationMethodName, $data);
         }
 
         if (!empty($data)) {
@@ -1659,6 +1646,11 @@ class UserConstants
         return null;
     }
 
+    /**
+     * @param string $userType
+     * @param string $visibility
+     * @return array|null
+     */
     public static function userTableFields(string $userType = 'bot', string $visibility = 'public')
     {
         $result = [];
@@ -1674,6 +1666,11 @@ class UserConstants
         return (empty($result)) ? null : $result;
     }
 
+    /**
+     * @param string $userType
+     * @param string $visibility
+     * @return array|null
+     */
     public static function textFields(string $userType = 'bot', string $visibility = 'public')
     {
         $result = [];
@@ -1689,12 +1686,92 @@ class UserConstants
         return (empty($result)) ? null : $result;
     }
 
+    public static function textInputs(string $userType = 'bot', string $visibility = 'public')
+    {
+        $result = [];
+
+        if (isset(self::$textInputs['common'][$visibility])) {
+            $result = array_merge($result, self::$textInputs['common'][$visibility]);
+        }
+
+        if (isset(self::$textInputs[$userType][$visibility])) {
+            $result = array_merge($result, self::$textInputs[$userType][$visibility]);
+        }
+
+        return (empty($result)) ? null : $result;
+    }
+
+
+    /**
+     * @param string $userType
+     * @return array
+     */
     public static function publicFieldNames(string $userType = 'bot')
     {
         return array_merge(
             array_keys(self::selectableFields($userType)),
             array_keys(self::userTableFields($userType)),
-            self::textFields($userType)
+            self::textFields($userType),
+            self::textInputs($userType)
         );
+    }
+
+    /**
+     * @param string $fieldName
+     * @param string $userType
+     * @return mixed
+     */
+    private static function getSelectableFieldData(string $fieldName, string $userType)
+    {
+        $data = [];
+
+        if (
+            isset(self::$selectableFields['common']['public']) &&
+            in_array($fieldName, array_keys(self::$selectableFields['common']['public']))
+        ) {
+            $data = self::$selectableFields['common']['public'][$fieldName];
+            return $data;
+        } elseif (
+            isset(self::$selectableFields[$userType]['public']) &&
+            in_array($fieldName, array_keys(self::$selectableFields[$userType]['public']))
+        ) {
+            $data = self::$selectableFields['common']['public'][$fieldName];
+            return $data;
+        } elseif (
+            isset(self::$selectableFields['common']['private']) &&
+            in_array($fieldName, array_keys(self::$selectableFields['common']['private']))
+        ) {
+            $data = self::$selectableFields['common']['private'][$fieldName];
+            return $data;
+        } elseif (
+            isset(self::$selectableFields[$userType]['private']) &&
+            in_array($fieldName, array_keys(self::$selectableFields[$userType]['private']))
+        ) {
+            $data = self::$selectableFields[$userType]['private'][$fieldName];
+            return $data;
+        }
+        return $data;
+    }
+
+    /**
+     * @param string $arrayManipulationMethodName
+     * @param $data
+     * @return mixed
+     * @throws \Exception
+     */
+    private static function applyArrayMethod(string $arrayManipulationMethodName, array $data)
+    {
+        $allowedArrayManipulations = [
+            'array_flip',
+            'array_keys',
+            'array_values'
+        ];
+
+        if (!in_array($arrayManipulationMethodName, $allowedArrayManipulations)) {
+            throw new \Exception;
+        }
+
+        $data = call_user_func($arrayManipulationMethodName, $data);
+        return $data;
     }
 }

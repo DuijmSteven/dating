@@ -8,7 +8,7 @@ use App\Managers\UserImageManager;
 use App\UserImage;
 use Illuminate\Support\Facades\DB;
 
-class UserImagesController extends Controller
+class UserImageController extends Controller
 {
     /** @var UserImageManager $userImageManager */
     private $userImageManager;
