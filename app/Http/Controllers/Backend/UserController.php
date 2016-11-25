@@ -3,109 +3,48 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Helpers\ApplicationConstants\UserConstants;
-use App\User;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Managers\UserManager;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $users = User::with('roles')->whereHas('roles', function ($query) {
-            $query->where('name', 'user');
-        })->get();
-
-        $viewData = [
-            'users' => $users
-        ];
-
-        return view('backend.users.index', array_merge(
-            $viewData,
-            [
-                'title' => 'User Overview - ' . \MetaConstants::SITE_NAME,
-                'headingLarge' => 'Users',
-                'headingSmall' => 'Overview',
-            ]
-        ));
-    }
+    /** @var UserManager $userManager */
+    protected $userManager;
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * UserController constructor.
+     * @param UserManager $userManager
      */
-    public function create()
+    public function __construct(UserManager $userManager)
     {
-    }
-
-    public function postCreate()
-    {
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        $this->userManager = $userManager;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $userId
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $userId)
     {
-        //
+        try {
+            $this->userManager->deleteUser($userId);
+            return redirect()->back();
+
+        } catch (\Exception $exception) {
+            throw $exception;
+        }
     }
 
-    public function getCities()
+    /**
+     * @param $countryCode
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getCities($countryCode)
     {
-        header('Content-Type: application/json');
-        return json_encode(UserConstants::$cities['nl']);
+        return response()->json([
+            'cities' => UserConstants::getCities($countryCode)
+        ]);
     }
 }

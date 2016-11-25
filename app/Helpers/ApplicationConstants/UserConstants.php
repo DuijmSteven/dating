@@ -1774,4 +1774,12 @@ class UserConstants
         $data = call_user_func($arrayManipulationMethodName, $data);
         return $data;
     }
+
+    /**
+     * @return array
+     */
+    public static function getCities(string $countryCode = 'nl')
+    {
+        return self::$cities[$countryCode];
+    }
 }

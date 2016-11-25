@@ -38,7 +38,15 @@
                                     </td>
                                     <td class="action-buttons">
                                         <a href="{!! route('backend.peasants.edit.get', [$peasant->id]) !!}" class="btn btn-default">Edit</a>
-                                        <a href="" class="btn btn-danger" disabled>Delete</a>
+                                        <form method="POST" action="{!! route('backend.users.destroy', ['userId' => $peasant->id]) !!}">
+                                            {!! csrf_field() !!}
+                                            {!! method_field('DELETE') !!}
+                                            <button type="submit"
+                                                    class="btn btn-danger"
+                                                    onclick="confirm('Are you sure you want to delete this bot?')">
+                                                Delete
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

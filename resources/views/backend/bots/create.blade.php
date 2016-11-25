@@ -81,7 +81,7 @@
                         <div class="form-group">
                             <label for="password">City</label>
                             <input type="text"
-                                   class="js-autocompleteDutchCites form-control"
+                                   class="js-autoCompleteDutchCites form-control"
                                    name="city"
                                    value="{!! old('city', '') !!}"
                             >

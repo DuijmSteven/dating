@@ -213,10 +213,21 @@ class UserManager
      * @param $minutes
      * @return User Collection
      */
-    public function latestOnline($minutes)
+    public function latestOnline(int $minutes)
     {
         $latestIds = Activity::users($minutes)->pluck('user_id')->toArray();
 
         return User::whereIn('id', $latestIds)->limit(\UserConstants::MAX_AMOUNT_ONLINE_TO_SHOW)->get();
+    }
+
+    public function deleteUser(int $userId)
+    {
+        $user = $this->user->findOrFail($userId);
+
+        DB::transaction(function () use ($user, $userId) {
+            $user->delete();
+            UserMeta::where('user_id', $userId)->delete();
+            RoleUser::where('user_id', $userId)->delete();
+        });
     }
 }

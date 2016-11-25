@@ -41,10 +41,6 @@ Route::group([
 ], function () {
     Route::get('/', 'Frontend\UserController@index')
         ->name('users.retrieve');
-    Route::post('/', 'Frontend\PeasantController@index')
-        ->name('users.store');
-    Route::get('/create', 'Frontend\PeasantController@create')
-        ->name('users.create');
     Route::get('/search', 'Frontend\UserSearchController@getSearch')
         ->name('users.search.get');
     Route::post('/search', 'Frontend\UserSearchController@postSearch')
@@ -55,12 +51,6 @@ Route::group([
         ->name('users.online');
     Route::get('/{userId}', 'Frontend\UserController@show')
         ->name('users.show');
-    Route::put('/(user)', 'Frontend\PeasantController@update')
-        ->name('users.update');
-    Route::delete('/{user}', 'Frontend\PeasantController@destroy')
-        ->name('users.destroy');
-    Route::get('/{user}/edit', 'Frontend\PeasantController@edit')
-        ->name('users.edit');
 
     Route::group([
         'prefix' => 'favorites'
@@ -71,18 +61,25 @@ Route::group([
     });
 });
 
-Route::delete('images/{imageId}/delete', 'UserImageController@destroy')
-    ->name('images.destroy');
-Route::get('images/{imageId}/set-profile', 'UserImageController@setProfileImage')
-    ->name('images.set_profile');
-Route::get('images/{imageId}/toggle-visibility', 'UserImageController@toggleImageVisibility')
-    ->name('images.toggle_visibility');
+Route::group([
+    'prefix' => 'images'
+], function () {
+    Route::delete('{imageId}/delete', 'UserImageController@destroy')
+        ->name('images.destroy');
+    Route::get('{imageId}/set-profile', 'UserImageController@setProfileImage')
+        ->name('images.set_profile');
+    Route::get('{imageId}/toggle-visibility', 'UserImageController@toggleImageVisibility')
+        ->name('images.toggle_visibility');
+});
 
 Route::group([
     'prefix' => 'flirts'
 ], function () {
     Route::get('/{senderId}/{recipientId}', 'Frontend\FlirtController@send');
 });
+
+Route::get('cities/{countryCode}', 'Backend\UserController@getCities')
+    ->name('cities.retrieve');
 
 Route::group([
     'prefix' => 'backend',
@@ -126,12 +123,12 @@ Route::group([
     Route::group([
         'prefix' => 'users'
     ], function () {
-        Route::get('/cities', 'Backend\UserController@getCities');
+        Route::delete('{userId}/delete', 'Backend\UserController@destroy')
+            ->name('backend.users.destroy');
     });
 });
 
 Route::group([
     'prefix' => 'test'
 ], function () {
-
 });
