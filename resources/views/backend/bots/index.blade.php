@@ -1,3 +1,4 @@
+
 @extends('backend.layouts.default.layout')
 
 
@@ -31,13 +32,17 @@
                                     </td>
                                     <td>
                                         @foreach(\UserConstants::selectableFields('bot') as $fieldName => $a)
-                                            <strong>{!! ucfirst(str_replace('_', ' ', $fieldName)) !!}:
-                                            </strong> {!! @trans('user_constants.' . $fieldName . '.' . $bot->meta->{$fieldName}) !!} <br>
+                                            @if($bot->meta->{$fieldName})
+                                                <strong>{!! ucfirst(str_replace('_', ' ', $fieldName)) !!}:
+                                                </strong> {!! @trans('user_constants.' . $fieldName . '.' . $bot->meta->{$fieldName}) !!} <br>
+                                            @endif
                                         @endforeach
 
                                         @foreach(array_merge(\UserConstants::textFields('bot'), \UserConstants::textInputs('bot')) as $fieldName)
-                                            <strong>{!! @trans('user_constants.' . $fieldName) !!}:
-                                            </strong> {!! $bot->meta->{$fieldName} !!}<br>
+                                            @if($bot->meta->{$fieldName})
+                                                <strong>{!! @trans('user_constants.' . $fieldName) !!}:
+                                                </strong> {!! $bot->meta->{$fieldName} !!}<br>
+                                            @endif
                                         @endforeach
                                     </td>
                                     <td class="action-buttons">

@@ -222,12 +222,33 @@ class UserManager
 
     public function deleteUser(int $userId)
     {
-        $user = $this->user->findOrFail($userId);
-
-        DB::transaction(function () use ($user, $userId) {
+        $user = $this->user->with(['images'])->findOrFail($userId);
+        
+        DB::beginTransaction();
+        try {
             $user->delete();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
+
+        try {
             UserMeta::where('user_id', $userId)->delete();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
+
+        try {
             RoleUser::where('user_id', $userId)->delete();
-        });
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
+        DB::commit();
+
+        foreach ($user->images as $image) {
+            $this->storageManager->deleteImage($image->user_id, $image->filename);
+        }
     }
 }

@@ -61,16 +61,14 @@ class StorageManager
     }
 
     /**
-     * @param $imageId
-     * @return mixed
+     * @param int $userId
+     * @param string $filename
+     * @return bool
      */
-    public function deleteImage(int $imageId)
+    public function deleteImage(int $userId, string $filename)
     {
-        /** @var UserImage $image */
-        $image = UserImage::findOrFail($imageId);
-
-        if(Storage::disk('cloud')->exists(\StorageHelper::$userImagesPath . $image->user_id . '/' . $image->filename)) {
-            $deleted = Storage::disk('cloud')->delete(\StorageHelper::$userImagesPath . $image->user_id . '/' . $image->filename);
+        if(Storage::disk('cloud')->exists(\StorageHelper::$userImagesPath . $userId . '/' . $filename)) {
+            $deleted = Storage::disk('cloud')->delete(\StorageHelper::$userImagesPath . $userId . '/' . $filename);
             return $deleted;
         }
         return false;

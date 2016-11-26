@@ -28,15 +28,20 @@ class UserImageController extends Controller
     }
 
     /**
-     * @param $imageId
+     * @param int $imageId
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function destroy(int $imageId)
     {
-        if ($this->storageManager->deleteImage($imageId)) {
-            $image = UserImage::find($imageId);
+        try {
+            $image = UserImage::findOrFail($imageId);
             $image->delete();
+        } catch (\Exception $exception) {
+            throw $exception;
         }
+
+        $this->storageManager->deleteImage($image->user_id, $image->filename);
 
         return redirect()->back();
     }

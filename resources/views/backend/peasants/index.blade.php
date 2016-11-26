@@ -1,3 +1,4 @@
+
 @extends('backend.layouts.default.layout')
 
 
@@ -14,42 +15,51 @@
                 <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
                         <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>User data</th>
-                                <th>Meta data</th>
-                                <th>Actions</th>
-                            </tr>
+                        <tr>
+                            <th>ID</th>
+                            <th>User data</th>
+                            <th>Meta data</th>
+                            <th>Actions</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            @foreach($peasants as $peasant)
-                                <tr>
-                                    <td>{!! $peasant->id !!}</td>
-                                    <td>
-                                        <strong>Username:</strong> {!! $peasant->username !!} <br>
-                                        <strong>Email:</strong> {!! $peasant->email !!} <br>
-                                        <strong>Age:</strong> {!! $carbonNow->diffInYears($peasant->meta->dob) !!} <br>
-                                    </td>
-                                    <td>
-                                        @foreach(\UserConstants::publicFieldNames('peasant') as $fieldName)
+                        @foreach($peasants as $peasant)
+                            <tr>
+                                <td>{!! $peasant->id !!}</td>
+                                <td>
+                                    <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $peasant->username !!} <br>
+                                    <strong>{!! @trans('user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($peasant->meta->dob) !!} <br>
+                                </td>
+                                <td>
+                                    @foreach(\UserConstants::selectableFields('peasant') as $fieldName => $a)
+                                        @if($peasant->meta->{$fieldName})
                                             <strong>{!! ucfirst(str_replace('_', ' ', $fieldName)) !!}:
-                                            </strong> {!! ucfirst(str_replace('_', ' ', $peasant->meta->{$fieldName})) !!} <br>
-                                        @endforeach
-                                    </td>
-                                    <td class="action-buttons">
-                                        <a href="{!! route('backend.peasants.edit.get', [$peasant->id]) !!}" class="btn btn-default">Edit</a>
-                                        <form method="POST" action="{!! route('backend.users.destroy', ['userId' => $peasant->id]) !!}">
-                                            {!! csrf_field() !!}
-                                            {!! method_field('DELETE') !!}
-                                            <button type="submit"
-                                                    class="btn btn-danger"
-                                                    onclick="confirm('Are you sure you want to delete this bot?')">
-                                                Delete
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
+                                            </strong> {!! @trans('user_constants.' . $fieldName . '.' . $peasant->meta->{$fieldName}) !!} <br>
+                                        @endif
+                                    @endforeach
+
+                                    @foreach(array_merge(\UserConstants::textFields('peasant'), \UserConstants::textInputs('peasant')) as $fieldName)
+                                        @if($peasant->meta->{$fieldName})
+                                            <strong>{!! @trans('user_constants.' . $fieldName) !!}:
+                                            </strong> {!! $peasant->meta->{$fieldName} !!}<br>
+                                        @endif
+                                    @endforeach
+                                </td>
+                                <td class="action-buttons">
+                                    <a href="{!! route('backend.peasants.edit.get', [$peasant->id]) !!}" class="btn btn-default">Edit</a>
+
+                                    <form method="POST" action="{!! route('backend.users.destroy', ['userId' => $peasant->id]) !!}">
+                                        {!! csrf_field() !!}
+                                        {!! method_field('DELETE') !!}
+                                        <button type="submit"
+                                                class="btn btn-danger"
+                                                onclick="confirm('Are you sure you want to delete this peasant?')">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
