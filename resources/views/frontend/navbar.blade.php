@@ -8,23 +8,25 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Dating</a>
+            <a class="navbar-brand" href="{!! route('home') !!}">Staging</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li class="{!! \Request::route()->getName() == 'users.retrieve' ? 'active' : '' !!}">
-                    <a href="{{ route('users.retrieve') }}">
-                        {{ @trans('profiles.main_heading') }}
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="{!! str_contains(\Request::route()->getName(), 'users.search') ? 'active' : '' !!}"><a href="{{ route('users.search.get') }}">Search for users</a>
-                </li>
-                <li class="{!! \Request::route()->getName() == 'users.online' ? 'active' : '' !!}"><a href="{{ route('users.online') }}">Online users</a>
-                </li>
-            </ul>
+            @if(isset($authenticatedUser))
+                <ul class="nav navbar-nav">
+                    <li class="{!! \Request::route()->getName() == 'users.retrieve' ? 'active' : '' !!}">
+                        <a href="{{ route('users.retrieve') }}">
+                            {{ @trans('profiles.main_heading') }}
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="{!! str_contains(\Request::route()->getName(), 'users.search') ? 'active' : '' !!}"><a href="{{ route('users.search.get') }}">Search for users</a>
+                    </li>
+                    <li class="{!! \Request::route()->getName() == 'users.online' ? 'active' : '' !!}"><a href="{{ route('users.online') }}">Online users</a>
+                    </li>
+                </ul>
+            @endif
 
             <ul class="nav navbar-nav navbar-right">
                 @if(isset($authenticatedUser))
