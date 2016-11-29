@@ -124,7 +124,7 @@
                                 >
                                     @foreach(array_merge(['' => ''], $possibleOptions) as $key => $value)
                                         <option value="{!! $key === '' ? null : $key !!}"
-                                                {!! (!emptyString(old($field)) && old($field) == $key) ? 'selected' : '' !!}
+                                                {!! (old($field) != '' && old($field) == $key) ? 'selected' : '' !!}
                                                 >
                                             {!! $value !!}
                                         </option>
