@@ -2,9 +2,9 @@
 
 namespace App\Traits\Users;
 
+use App\User;
+use App\UserMeta;
 use Illuminate\Foundation\Auth\RedirectsUsers;
-use App\Peasant;
-use App\PeasantMeta;
 use App\RoleUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,21 +37,21 @@ trait RegistersUsers
 
         DB::beginTransaction();
         try {
-            /** @var Peasant $createdPeasant */
-            $createdPeasant = $this->create($request->all());
+            /** @var User $createdUser */
+            $createdUser = $this->create($request->all());
 
         } catch (\Exception $exception) {
             DB::rollBack();
             throw $exception;
         }
         try {
-            /** @var PeasantMeta $peasantMetaInstance */
-            $peasantMetaInstance = new PeasantMeta([
-                'user_id' => $createdPeasant->id,
+            /** @var UserMeta $userMetaInstance */
+            $userMetaInstance = new UserMeta([
+                'user_id' => $createdUser->id,
                 'country' => 'nl'
             ]);
 
-            $peasantMetaInstance->save();
+            $userMetaInstance->save();
         } catch (\Exception $exception) {
             DB::rollBack();
             throw $exception;
@@ -59,8 +59,8 @@ trait RegistersUsers
         try {
             /** @var RoleUser $roleUserInstance */
             $roleUserInstance = new RoleUser([
-                'role_id' => \UserConstants::ROLES['user'],
-                'user_id' => $createdPeasant->id
+                'role_id' => \UserConstants::selectableField('role', 'common', 'array_flip')['peasant'],
+                'user_id' => $createdUser->id
             ]);
 
             $roleUserInstance->save();
@@ -70,9 +70,9 @@ trait RegistersUsers
         }
         DB::commit();
 
-        $this->guard()->login($createdPeasant);
+        $this->guard()->login($createdUser);
 
-        return $this->registered($request, $createdPeasant)
+        return $this->registered($request, $createdUser)
             ?: redirect($this->redirectPath());
     }
 
