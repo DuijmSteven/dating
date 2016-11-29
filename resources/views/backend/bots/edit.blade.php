@@ -95,11 +95,11 @@
                                         id="{!! $field !!}"
                                         class="form-control"
                                 >
-                                    @foreach(array_merge([''], $possibleOptions) as $key => $value)
+                                    @foreach(array_merge(['' => ''], $possibleOptions) as $key => $value)
                                         <option value="{!! $key == '' ? null : $key !!}"
                                                 {!! ($bot->meta->{$field} == $key) ? 'selected' : '' !!}
                                         >
-                                            {!! ucfirst($value) !!}
+                                            {!! $value !!}
                                         </option>
                                     @endforeach
                                 </select>
