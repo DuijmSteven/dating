@@ -109,7 +109,7 @@ class BotController extends Controller
      */
     public function edit(Request $request)
     {
-        $bot = User::findOrFail($request->route('id'));
+        $bot = User::with(['meta'])->findOrFail($request->route('id'));
 
         return view(
             'backend.bots.edit',
