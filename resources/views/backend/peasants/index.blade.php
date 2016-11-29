@@ -6,6 +6,13 @@
 @section('content')
 
     <div class="row">
+
+        <div class="col-xs-12">
+            <div class="pagination__container text-right">
+                {!! $peasants->render() !!}
+            </div>
+        </div>
+
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
@@ -32,14 +39,14 @@
                                 </td>
                                 <td>
                                     @foreach(\UserConstants::selectableFields('peasant') as $fieldName => $a)
-                                        @if($peasant->meta->{$fieldName})
+                                        @if(isset($peasant->meta->{$fieldName}))
                                             <strong>{!! ucfirst(str_replace('_', ' ', $fieldName)) !!}:
                                             </strong> {!! @trans('user_constants.' . $fieldName . '.' . $peasant->meta->{$fieldName}) !!} <br>
                                         @endif
                                     @endforeach
 
                                     @foreach(array_merge(\UserConstants::textFields('peasant'), \UserConstants::textInputs('peasant')) as $fieldName)
-                                        @if($peasant->meta->{$fieldName})
+                                        @if(isset($peasant->meta->{$fieldName}))
                                             <strong>{!! @trans('user_constants.' . $fieldName) !!}:
                                             </strong> {!! $peasant->meta->{$fieldName} !!}<br>
                                         @endif

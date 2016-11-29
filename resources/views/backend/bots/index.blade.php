@@ -6,6 +6,13 @@
 @section('content')
 
     <div class="row">
+
+        <div class="col-xs-12">
+            <div class="pagination__container text-right">
+                {!! $bots->render() !!}
+            </div>
+        </div>
+
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
@@ -32,14 +39,14 @@
                                     </td>
                                     <td>
                                         @foreach(\UserConstants::selectableFields('bot') as $fieldName => $a)
-                                            @if($bot->meta->{$fieldName})
+                                            @if(isset($bot->meta->{$fieldName}))
                                                 <strong>{!! ucfirst(str_replace('_', ' ', $fieldName)) !!}:
                                                 </strong> {!! @trans('user_constants.' . $fieldName . '.' . $bot->meta->{$fieldName}) !!} <br>
                                             @endif
                                         @endforeach
 
                                         @foreach(array_merge(\UserConstants::textFields('bot'), \UserConstants::textInputs('bot')) as $fieldName)
-                                            @if($bot->meta->{$fieldName})
+                                            @if(isset($bot->meta->{$fieldName}))
                                                 <strong>{!! @trans('user_constants.' . $fieldName) !!}:
                                                 </strong> {!! $bot->meta->{$fieldName} !!}<br>
                                             @endif

@@ -152,7 +152,7 @@
                 </div>
             </div>
         </form>
-        <div class="table-responsive">
+        <div class="table-responsive" id="images-section">
             <table class="table table-striped">
                 <?php $tableColumnAmount = 3; ?>
                 <thead>

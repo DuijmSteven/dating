@@ -11,13 +11,12 @@
 |
 */
 
+Route::get('login', 'Auth\LoginController@showLoginForm')
+    ->name('login.get');
 Route::post('login', 'Auth\LoginController@login')
     ->name('login.post');
 Route::post('logout', 'Auth\LoginController@logout')
     ->name('logout.post');
-
-Route::get('login', 'Auth\LoginController@showLoginForm')
-    ->name('login.get');
 
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')
     ->name('register.get');

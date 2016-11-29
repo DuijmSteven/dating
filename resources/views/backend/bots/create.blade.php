@@ -101,11 +101,11 @@
                                         class="form-control"
                                         {!! ($field == 'gender') ? 'required' : '' !!}
                                 >
-                                    @foreach(array_merge([''], $possibleOptions) as $key => $value)
-                                        <option value="{!! $key == '' ? null : $key !!}"
-                                                {!! (old($field) == $key) ? 'selected' : '' !!}
+                                    @foreach(array_merge(['' => ''], $possibleOptions) as $key => $value)
+                                        <option value="{!! $key === '' ? null : $key !!}"
+                                                {!! (!emptyString(old($field)) && old($field) == $key) ? 'selected' : '' !!}
                                         >
-                                            {!! ucfirst($value) !!}
+                                            {!! $value !!}
                                         </option>
                                     @endforeach
                                 </select>

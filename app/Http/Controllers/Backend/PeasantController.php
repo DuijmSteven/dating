@@ -75,9 +75,21 @@ class PeasantController extends Controller
         $peasantData = $peasantCreateRequest->all();
         $peasantData['city'] = strtolower($peasantData['city']);
 
-        $this->peasantManager->createPeasant($peasantData);
+        try  {
+            $this->peasantManager->createPeasant($peasantData);
 
-        return redirect()->back();
+            $alerts[] = [
+                'type' => 'success',
+                'message' => 'The peasant was created successfully'
+            ];
+        } catch (\Exception $exception) {
+            $alerts[] = [
+                'type' => 'error',
+                'message' => 'The peasant was not created due to an exception.'
+            ];
+        }
+
+        return redirect()->back()->with('alerts', $alerts);
     }
 
     /**

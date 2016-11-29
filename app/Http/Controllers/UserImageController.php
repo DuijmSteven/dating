@@ -6,7 +6,8 @@ namespace App\Http\Controllers;
 use App\Managers\StorageManager;
 use App\Managers\UserImageManager;
 use App\UserImage;
-use Illuminate\Support\Facades\DB;
+use Redirect;
+use URL;
 
 class UserImageController extends Controller
 {
@@ -43,7 +44,7 @@ class UserImageController extends Controller
 
         $this->storageManager->deleteImage($image->user_id, $image->filename);
 
-        return redirect()->back();
+        return Redirect::to(URL::previous() . "#images-section");
     }
 
     /**
@@ -54,12 +55,12 @@ class UserImageController extends Controller
     public function setProfileImage(int $imageId)
     {
         $this->userImageManager->setProfileImage($imageId);
-        return redirect()->back();
+        return Redirect::to(URL::previous() . "#images-section");
     }
 
     public function toggleImageVisibility(int $imageId)
     {
         $this->userImageManager->toggleImageVisibility($imageId);
-        return redirect()->back();
+        return Redirect::to(URL::previous() . "#images-section");
     }
 }
