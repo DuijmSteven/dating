@@ -8,9 +8,6 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-
-        <?php \Log::info($bot);?>
-
         <form role="form" method="POST" action="{!! route('backend.bots.update', ['id' => $bot->id]) !!}"
               enctype="multipart/form-data">
             {!! csrf_field() !!}

@@ -77,8 +77,6 @@ class BotManager extends UserManager
         $userDataToPersist['user'] = $usersTableData;
         $userDataToPersist['user_meta'] = $userMetaTableData;
 
-        $userDataToPersist['user']['active'] = 1;
-
         if (empty($botData['user_images'][0])) {
             $userDataToPersist['user_images'] = [];
         } else {
