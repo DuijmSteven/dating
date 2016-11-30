@@ -50,6 +50,8 @@ Route::group([
         ->name('users.online');
     Route::get('/{userId}', 'Frontend\UserController@show')
         ->name('users.show');
+    Route::get('{userId}/set-profile-image/{imageId}', 'UserImageController@setProfileImage')
+        ->name('users.set_profile_image');
 
     Route::group([
         'prefix' => 'favorites'
@@ -65,8 +67,6 @@ Route::group([
 ], function () {
     Route::delete('{imageId}/delete', 'UserImageController@destroy')
         ->name('images.destroy');
-    Route::get('{imageId}/set-profile', 'UserImageController@setProfileImage')
-        ->name('images.set_profile');
     Route::get('{imageId}/toggle-visibility', 'UserImageController@toggleImageVisibility')
         ->name('images.toggle_visibility');
 });

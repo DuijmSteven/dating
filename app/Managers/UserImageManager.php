@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class UserImageManager
 {
-    public function setProfileImage($imageId)
+    public function setProfileImage(int $userId, int $imageId)
     {
         DB::beginTransaction();
         try {
-            UserImage::where('profile', 1)->update(['profile' => 0]);
+            UserImage::where('user_id', $userId)->where('profile', 1)->update(['profile' => 0]);
         } catch (\Exception $exception) {
             DB::rollBack();
             throw $exception;
@@ -28,7 +28,7 @@ class UserImageManager
         DB::commit();
     }
 
-    public function toggleImageVisibility($imageId)
+    public function toggleImageVisibility(int $imageId)
     {
         $image = UserImage::findOrFail($imageId);
 

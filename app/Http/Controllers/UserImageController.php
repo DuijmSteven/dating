@@ -51,9 +51,9 @@ class UserImageController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function setProfileImage(int $imageId)
+    public function setProfileImage(int $userId, int $imageId)
     {
-        $this->userImageManager->setProfileImage($imageId);
+        $this->userImageManager->setProfileImage($userId, $imageId);
         return Redirect::to(URL::previous() . "#images-section");
     }
 

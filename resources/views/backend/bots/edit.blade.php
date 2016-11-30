@@ -216,7 +216,7 @@
                                     {!! method_field('DELETE') !!}
                                     <button type="submit" class="btn btn-danger">Delete</button>
                                 </form>
-                                <a href="{!! route('images.set_profile', ['imageId' => $image->id]) !!}" class="btn btn-success">Set profile</a>
+                                <a href="{!! route('users.set_profile_image', ['userId' => $bot->id, 'imageId' => $image->id]) !!}" class="btn btn-success">Set profile</a>
                                 <a href="{!! route('images.toggle_visibility', ['imageId' => $image->id]) !!}" class="btn btn-default">Toggle visibility</a>
                             </td>
                         </tr>
