@@ -75,7 +75,7 @@ class PeasantController extends Controller
         $peasantData = $peasantCreateRequest->all();
         $peasantData['city'] = strtolower($peasantData['city']);
 
-        try  {
+        try {
             $this->peasantManager->createPeasant($peasantData);
 
             $alerts[] = [

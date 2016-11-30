@@ -19,16 +19,16 @@ class CreateUserMetaTable extends Migration
             $table->text('looking_for')->nullable();
             $table->text('about_me')->nullable();
             $table->date('dob')->nullable();
-            $table->string('gender', 20)->nullable();
-            $table->string('relationship_status', 20)->nullable();
+            $table->tinyInteger('gender')->nullable();
+            $table->tinyInteger('relationship_status')->nullable();
             $table->string('city', 50)->nullable();
-            $table->string('province', 50)->nullable();
-            $table->string('height', 7)->nullable();
-            $table->string('body_type', 20)->nullable();
-            $table->string('eye_color', 20)->nullable();
-            $table->string('hair_color', 20)->nullable();
-            $table->string('smoking_habits', 20)->nullable();
-            $table->string('drinking_habits', 20)->nullable();
+            $table->tinyInteger('province')->nullable();
+            $table->tinyInteger('height')->nullable();
+            $table->tinyInteger('body_type')->nullable();
+            $table->tinyInteger('eye_color')->nullable();
+            $table->tinyInteger('hair_color')->nullable();
+            $table->tinyInteger('smoking_habits')->nullable();
+            $table->tinyInteger('drinking_habits')->nullable();
             $table->string('country', 2)->nullable();
             $table->timestamps();
 

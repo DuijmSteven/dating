@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Managers\StorageManager;
 use App\Managers\UserImageManager;
 use App\UserImage;

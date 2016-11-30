@@ -75,7 +75,7 @@ class BotController extends Controller
         $botData = $botCreateRequest->all();
         $botData['city'] = strtolower($botData['city']);
 
-        try  {
+        try {
             $this->botManager->createBot($botData);
 
             $alerts[] = [

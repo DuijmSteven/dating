@@ -31,7 +31,6 @@ class StorageManager
             } catch (\Exception $exception) {
                 throw $exception;
             }
-
         } else {
             throw (new \Exception);
         }
@@ -67,7 +66,7 @@ class StorageManager
      */
     public function deleteImage(int $userId, string $filename)
     {
-        if(Storage::disk('cloud')->exists(\StorageHelper::$userImagesPath . $userId . '/' . $filename)) {
+        if (Storage::disk('cloud')->exists(\StorageHelper::$userImagesPath . $userId . '/' . $filename)) {
             $deleted = Storage::disk('cloud')->delete(\StorageHelper::$userImagesPath . $userId . '/' . $filename);
             return $deleted;
         }

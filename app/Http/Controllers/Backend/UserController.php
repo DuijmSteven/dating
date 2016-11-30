@@ -30,7 +30,6 @@ class UserController extends Controller
         try {
             $this->userManager->deleteUser($userId);
             return redirect()->back();
-
         } catch (\Exception $exception) {
             throw $exception;
         }

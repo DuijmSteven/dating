@@ -174,12 +174,8 @@ class UserManager
         return $updatedUser;
     }
 
-
     /**
-     * Only used in development to insert rows in the sessions
-     * table for an amount of users
-     *
-     * @param $peasantAmount
+     * @param $userAmount
      * @return mixed
      */
     public function setRandomUsersOnline($userAmount)

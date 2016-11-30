@@ -25,10 +25,9 @@ trait RegistersUsers
     }
 
     /**
-     * Handle a registration request for the application.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Exception
      */
     public function register(Request $request)
     {
@@ -39,11 +38,11 @@ trait RegistersUsers
         try {
             /** @var User $createdUser */
             $createdUser = $this->create($request->all());
-
         } catch (\Exception $exception) {
             DB::rollBack();
             throw $exception;
         }
+
         try {
             /** @var UserMeta $userMetaInstance */
             $userMetaInstance = new UserMeta([
@@ -56,6 +55,7 @@ trait RegistersUsers
             DB::rollBack();
             throw $exception;
         }
+
         try {
             /** @var RoleUser $roleUserInstance */
             $roleUserInstance = new RoleUser([

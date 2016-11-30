@@ -3,7 +3,6 @@
 
 namespace App\Managers;
 
-
 use App\UserImage;
 use Illuminate\Support\Facades\DB;
 

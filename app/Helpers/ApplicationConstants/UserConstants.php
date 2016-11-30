@@ -1632,8 +1632,11 @@ class UserConstants
      * @return mixed|null
      * @throws \Exception
      */
-    public static function selectableField(string $fieldName, string $userType = 'bot', string $arrayManipulationMethodName = '')
-    {
+    public static function selectableField(
+        string $fieldName,
+        string $userType = 'bot',
+        string $arrayManipulationMethodName = ''
+    ) {
         $data = self::getSelectableFieldData($fieldName, $userType);
 
         if ($arrayManipulationMethodName != '') {
