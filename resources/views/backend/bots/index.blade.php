@@ -24,6 +24,7 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>Profile image</th>
                                 <th>User data</th>
                                 <th>Meta data</th>
                                 <th>Actions</th>
@@ -33,6 +34,13 @@
                             @foreach($bots as $bot)
                                 <tr>
                                     <td>{!! $bot->id !!}</td>
+                                    <td>
+                                        @if(count($bot->profileImage))
+                                            <img width="120" src="{!! \StorageHelper::userImageUrl($bot->id, $bot->profileImage[0]->filename) !!}" alt="">
+                                        @else
+                                            No profile image set
+                                        @endif
+                                    </td>
                                     <td>
                                         <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $bot->username !!} <br>
                                         <strong>{!! @trans('user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($bot->meta->dob) !!} <br>
@@ -46,7 +54,7 @@
                                         @endforeach
 
                                         @foreach(array_merge(\UserConstants::textFields('bot'), \UserConstants::textInputs('bot')) as $fieldName)
-                                            @if(isset($bot->meta->{$fieldName}))
+                                            @if(isset($bot->meta->{$fieldName}) && $bot->meta->{$fieldName} != '')
                                                 <strong>{!! @trans('user_constants.' . $fieldName) !!}:
                                                 </strong> {!! $bot->meta->{$fieldName} !!}<br>
                                             @endif

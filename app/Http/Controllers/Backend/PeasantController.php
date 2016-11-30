@@ -31,7 +31,7 @@ class PeasantController extends Controller
      */
     public function index()
     {
-        $peasants = User::with(['meta', 'roles'])->whereHas('roles', function ($query) {
+        $peasants = User::with(['meta', 'roles', 'profileImage'])->whereHas('roles', function ($query) {
             $query->where('name', 'peasant');
         })->paginate(10);
 
