@@ -132,9 +132,21 @@ class BotController extends Controller
         $botUpdateRequest->formatInput();
         $botData = $botUpdateRequest->all();
 
-        $this->botManager->updateBot($botData, $botUpdateRequest->route('id'));
+        try {
+            $this->botManager->updateBot($botData, $botUpdateRequest->route('id'));
 
-        return redirect()->back();
+            $alerts[] = [
+                'type' => 'success',
+                'message' => 'The bot was updated successfully'
+            ];
+        } catch (\Exception $exception) {
+            $alerts[] = [
+                'type' => 'alert',
+                'message' => 'The bot was not updated due to an exception.'
+            ];
+        }
+
+        return redirect()->back()->with('alerts', $alerts);
     }
 
     /**

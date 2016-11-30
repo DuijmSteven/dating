@@ -132,9 +132,21 @@ class PeasantController extends Controller
         $peasantUpdateRequest->formatInput();
         $peasantData = $peasantUpdateRequest->all();
 
-        $this->peasantManager->updatePeasant($peasantData, $peasantUpdateRequest->route('id'));
+        try {
+            $this->peasantManager->updatePeasant($peasantData, $peasantUpdateRequest->route('id'));
 
-        return redirect()->back();
+            $alerts[] = [
+                'type' => 'success',
+                'message' => 'The peasant was updated successfully'
+            ];
+        } catch (\Exception $exception) {
+            $alerts[] = [
+                'type' => 'alert',
+                'message' => 'The peasant was not updated due to an exception.'
+            ];
+        }
+
+        return redirect()->back()->with('alerts', $alerts);
     }
 
     /**
