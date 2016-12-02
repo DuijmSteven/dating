@@ -8,13 +8,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{!! route('home') !!}">Dating</a>
+            <a class="navbar-brand" href="{!! route('home') !!}">{!! config('app.name') !!}</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            @if(isset($authenticatedUser))
-                <ul class="nav navbar-nav">
+
+            <ul class="nav navbar-nav">
+                @if(isset($authenticatedUser))
                     <li class="{!! \Request::route()->getName() == 'users.retrieve' ? 'active' : '' !!}">
                         <a href="{{ route('users.retrieve') }}">
                             {{ @trans('profiles.main_heading') }}
@@ -25,8 +26,10 @@
                     </li>
                     <li class="{!! \Request::route()->getName() == 'users.online' ? 'active' : '' !!}"><a href="{{ route('users.online') }}">Online users</a>
                     </li>
-                </ul>
-            @endif
+                @endif
+                <li class="{!! \Request::route()->getName() == 'contact.get' ? 'active' : '' !!}"><a href="{{ route('contact.get') }}">Contact us</a>
+                </li>
+            </ul>
 
             <ul class="nav navbar-nav navbar-right">
                 @if(isset($authenticatedUser))
@@ -57,13 +60,23 @@
                         </ul>
                     </li>
                 @else
-                    <li>
-                        <a href="{!! route('register.get') !!}">
-                            Register
-                        </a>
-                    </li>
+                    @if(\Request::route()->getName() !== 'register.get')
+                        <li>
+                            <a href="{!! route('register.get') !!}">
+                                Register
+                            </a>
+                        </li>
+                    @endif
+
+                    @if(\Request::route()->getName() !== 'login.get')
+                        <li>
+                            <a href="{!! route('login.get') !!}">
+                                Login
+                            </a>
+                        </li>
+                    @endif
                 @endif
             </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
+        </div>
+    </div>
 </nav>

@@ -28,10 +28,14 @@ Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm'
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')
     ->name('password.reset.post');
 
+Route::get('contact', 'Frontend\HomeController@showContact')
+    ->name('contact.get');
+
+
 Route::get('/', 'Frontend\HomeController@index')
-    ->name('root');
-Route::get('/home', 'Frontend\HomeController@index')
-    ->name('home');
+    ->name('root')->middleware(['auth']);
+Route::get('home', 'Frontend\HomeController@index')
+    ->name('home')->middleware(['auth']);
 
 /* User routes */
 Route::group([
