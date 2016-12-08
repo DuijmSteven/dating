@@ -9,10 +9,20 @@ class Conversation extends Model
     public $table = 'conversations';
 
     /**
-     * Get all the messages of a conversation
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function messages()
     {
         return $this->hasMany('App\ConversationMessage');
+    }
+
+    public function userA()
+    {
+        return $this->belongsTo('App\User', 'id', 'user_a_id')->with(['meta', 'roles', 'images']);
+    }
+
+    public function userB()
+    {
+        return $this->belongsTo('App\User', 'id', 'user_a_id')->with(['meta', 'roles', 'images']);
     }
 }

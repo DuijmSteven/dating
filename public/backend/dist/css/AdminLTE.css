@@ -4939,3 +4939,44 @@ table .action-buttons .btn {
   margin-bottom: 5px;
   width: 100%;
 }
+
+img {
+  margin-right:10px;
+}
+
+.convo-tile {
+  display: flex;
+  flex-direction: row;
+  height: 70px;
+  background-color: #f39c12;
+}
+
+.convo-tile_text {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.convo-tile_text .date, .convo-tile_text .username {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color:#fff;
+}
+
+.convo-tile_text .date {
+  font-size: 13px;
+  color: #ccc;
+}
+
+.convo-tile_text .username {
+  font-size: 16px;
+}
+
+.text-summary {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 5px;
+}

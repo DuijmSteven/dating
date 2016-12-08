@@ -13,7 +13,7 @@ class CreateConversationMessagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('conversations_messages', function (Blueprint $table) {
+        Schema::create('conversation_messages', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('conversation_id')->unsigned();
             $table->integer('sender_id')->unsigned();
@@ -30,6 +30,6 @@ class CreateConversationMessagesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('conversations_messages');
+        Schema::drop('conversation_messages');
     }
 }

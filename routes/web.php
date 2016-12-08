@@ -132,6 +132,14 @@ Route::group([
 });
 
 Route::group([
+    'prefix' => 'operator-platform',
+    'middleware' => ['operator']
+], function () {
+    Route::get('dashboard', 'Operators\HomeController@showDashboard')
+    ->name('operators_platform.dashboard');
+});
+
+Route::group([
     'prefix' => 'test'
 ], function () {
 });

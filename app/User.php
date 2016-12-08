@@ -75,6 +75,15 @@ class User extends Authenticatable
         return in_array('admin', $userRoles);
     }
 
+    public function isOperator()
+    {
+        $userRoles = [];
+        foreach ($this->roles as $role) {
+            $userRoles[] = $role['name'];
+        }
+        return in_array('operator', $userRoles);
+    }
+
     /**
      * Get the meta associated with the user.
      */
@@ -118,12 +127,12 @@ class User extends Authenticatable
 
     public function receivedFlirts()
     {
-        return $this->hasMany('App\Flirts', 'recipient_id');
+        return $this->hasMany('App\Flirt', 'recipient_id');
     }
 
     public function sentFlirts()
     {
-        return $this->hasMany('App\Flirts', 'sender_id');
+        return $this->hasMany('App\Flirt', 'sender_id');
     }
 
     public function setEmailAttribute($email)
@@ -133,5 +142,10 @@ class User extends Authenticatable
         } else {
             $this->attributes['email'] = $email;
         }
+    }
+
+    public function conversations()
+    {
+        return Conversation::with(['messages'])->where('user_a_id', $this->id)->orWhere('user_b_id', $this->id)->get();
     }
 }
