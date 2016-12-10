@@ -243,6 +243,7 @@ return [
         'PaginationConstants'   => App\Helpers\ApplicationConstants\PaginationConstants::class,
         'StorageHelper'   => App\Helpers\StorageHelper::class,
         'Activity' => Kim\Activity\ActivityFacade::class,
+        'ChromePhp' => App\Helpers\ccampbell\ChromePhp\ChromePhp::class
 
     ],
 

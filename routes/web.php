@@ -137,6 +137,13 @@ Route::group([
 ], function () {
     Route::get('dashboard', 'Operators\HomeController@showDashboard')
     ->name('operators_platform.dashboard');
+
+    Route::group([
+        'prefix' => 'conversations'
+    ], function () {
+        Route::get('{conversationId}', 'Backend\ConversationController@show')
+            ->name('operators_platform.conversations.show');
+    });
 });
 
 Route::group([

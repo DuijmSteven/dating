@@ -19,7 +19,7 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-4 col-md-3">
                             <!-- Widget: user widget style 1 -->
-                            <div class="box box-widget widget-user-2">
+                            <div class="box box-widget widget-user-2 default-border">
                                 <!-- Add the bg color to the header using any of the bg-* classes -->
                                 <div class="convo-tile">
                                     <img src="http://placehold.it/70x50">

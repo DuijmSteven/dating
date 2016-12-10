@@ -4980,3 +4980,16 @@ img {
   white-space: nowrap;
   padding: 5px;
 }
+
+.default-border {
+  border: 1px solid #d2d6de!important;
+}
+
+@media (min-width: 768px) {
+  .sm_min_pad0 {
+    padding: 0!important;
+  }
+  .direct-chat-messages {
+    min-height: 500px!important;
+  }
+}

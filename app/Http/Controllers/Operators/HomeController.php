@@ -14,7 +14,7 @@ class HomeController extends \App\Http\Controllers\Controller
      */
     public function showDashboard()
     {
-        Conversation::with(['messages', 'userA', 'userB'])->whereHas('userA', function($query) {
+        Conversation::with(['messages', 'userA', 'userB'])->whereHas('userA', function ($query) {
             $query->where('');
         });
 

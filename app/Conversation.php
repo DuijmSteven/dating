@@ -13,16 +13,16 @@ class Conversation extends Model
      */
     public function messages()
     {
-        return $this->hasMany('App\ConversationMessage');
+        return $this->hasMany('App\ConversationMessage')->orderBy('created_at', 'asc');
     }
 
     public function userA()
     {
-        return $this->belongsTo('App\User', 'id', 'user_a_id')->with(['meta', 'roles', 'images']);
+        return $this->belongsTo('App\User', 'user_a_id', 'id')->with(['meta', 'roles', 'images']);
     }
 
     public function userB()
     {
-        return $this->belongsTo('App\User', 'id', 'user_a_id')->with(['meta', 'roles', 'images']);
+        return $this->belongsTo('App\User', 'user_b_id', 'id')->with(['meta', 'roles', 'images']);
     }
 }
