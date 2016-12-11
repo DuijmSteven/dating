@@ -10,35 +10,46 @@
             <div class="panel-heading" role="tab" id="headingOne">
                 <h4 class="panel-title">
                     <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        New Conversations <span class="label label-success">4</span>
+                        New Conversations <span class="label label-success">{!! count($newConversations) !!}</span>
                     </a>
                 </h4>
             </div>
             <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-xs-12 col-sm-4 col-md-3">
-                            <!-- Widget: user widget style 1 -->
-                            <div class="box box-widget widget-user-2 default-border">
-                                <!-- Add the bg color to the header using any of the bg-* classes -->
-                                <div class="convo-tile">
-                                    <img src="http://placehold.it/70x50">
-                                    <div class="convo-tile_text">
-                                        <div class="username">Nicolas Yorki</div>
-                                        <div class="date">12/12/2016</div>
+                        @foreach($newConversations as $conversation)
+                            @php
+                                $message = $conversation->messages->last();
+
+                                if ($message->sender_id === $conversation->userA->id) {
+                                    $user = $conversation->userA;
+                                } else {
+                                    $user = $conversation->userB;
+                                }
+                            @endphp
+                            <div class="col-xs-12 col-sm-4 col-md-3">
+                                <!-- Widget: user widget style 1 -->
+                                <div class="box box-widget widget-user-2 default-border">
+                                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                                    <div class="convo-tile">
+                                        <img src="http://placehold.it/70x50">
+                                        <div class="convo-tile_text">
+                                            <div class="username">{!! $user->username !!}</div>
+                                            <div class="date">{!! $message->created_at !!}</div>
+                                        </div>
+                                        <!-- /.widget-user-image -->
                                     </div>
-                                    <!-- /.widget-user-image -->
-                                </div>
-                                <div class="box-footer no-padding">
-                                    <div class="text-summary">
-                                        Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.
+                                    <div class="box-footer no-padding">
+                                        <div class="text-summary">
+                                            {!! $message->body !!}
+                                        </div>
                                     </div>
-                                </div>
-                                <div>
-                                    <button class="btn btn-primary btn-flat btn-block">View Conversation</button>
+                                    <div>
+                                        <a href="conversations/{!! $conversation->id !!}" class="btn btn-primary btn-flat btn-block">View Conversation</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

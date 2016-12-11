@@ -14,15 +14,28 @@ class HomeController extends \App\Http\Controllers\Controller
      */
     public function showDashboard()
     {
-        Conversation::with(['messages', 'userA', 'userB'])->whereHas('userA', function ($query) {
-            $query->where('');
-        });
+        $newConversationsIds = \DB::table('conversation_messages')
+                            ->select('conversation_id')
+                            ->groupBy('conversation_id')
+                            ->havingRaw('count(distinct sender_id) < 2')
+                            ->get();
+
+        $newConversations = $this->getNewConversations($newConversationsIds);
 
         return view(
             'operators.dashboard',
             [
-                'newConversations' => Conversation::with('messages')->get()
+                'newConversations' => $newConversations
             ]
         );
+    }
+
+    public function getNewConversations($newConversationsIds)
+    {
+        foreach ($newConversationsIds as $id) {
+            $allIds[] = $id->conversation_id;
+        }
+
+        return Conversation::with(['messages', 'userA', 'userB'])->find($allIds);
     }
 }
