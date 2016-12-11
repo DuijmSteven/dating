@@ -2751,10 +2751,10 @@ table.text-center th {
   border-radius: 5px;
   position: relative;
   padding: 5px 10px;
-  background: #d2d6de;
-  border: 1px solid #d2d6de;
+  background: #f39c12;
+  border: 1px solid #f39c12;
   margin: 5px 0 0 50px;
-  color: #444444;
+  color: #fff;
 }
 .direct-chat-text:after,
 .direct-chat-text:before {
@@ -2762,7 +2762,7 @@ table.text-center th {
   right: 100%;
   top: 15px;
   border: solid transparent;
-  border-right-color: #d2d6de;
+  border-right-color: #f39c12;
   content: ' ';
   height: 0;
   width: 0;
@@ -4940,7 +4940,7 @@ table .action-buttons .btn {
   width: 100%;
 }
 
-img {
+.convo-tile img {
   margin-right:10px;
 }
 
