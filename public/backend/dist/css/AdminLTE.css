@@ -4974,6 +4974,36 @@ table .action-buttons .btn {
   font-size: 16px;
 }
 
+/*
+ * Component: Users List for Flirts
+ * ---------------------
+ */
+.users-list-flirts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.users-list-flirts > li {
+  width: 33.33%;
+  float: left;
+  padding: 10px;
+  text-align: center;
+}
+.users-list-flirts > li:nth-child(2) {
+  height: 130px;
+  line-height: 130px;
+}
+.users-list-flirts > li img {
+  border-radius: 50%;
+  max-width: 100%;
+  height: auto;
+}
+.users-list-flirts > li > a:hover,
+.users-list-flirts > li > a:hover .users-list-name {
+  color: #999;
+}
+
+
 .text-summary {
   overflow: hidden;
   text-overflow: ellipsis;

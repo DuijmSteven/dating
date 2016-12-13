@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Operators;
 
 use App\Conversation;
+use App\Flirt;
 use Illuminate\Http\Request;
 
 class HomeController extends \App\Http\Controllers\Controller
@@ -14,6 +15,7 @@ class HomeController extends \App\Http\Controllers\Controller
      */
     public function showDashboard()
     {
+        //Select the ids of the new conversations
         $newConversationsIds = \DB::table('conversation_messages')
                             ->select('conversation_id')
                             ->groupBy('conversation_id')
@@ -22,6 +24,7 @@ class HomeController extends \App\Http\Controllers\Controller
 
         $newConversationsIdsArray = $this->getConversationsOrArrayOfIds($newConversationsIds, 1);
 
+        //Select the ids of the new messages (excluding new conversations)
         $conversationsWithNewMessagesIds = \DB::table('conversation_messages')
                         ->join('role_user', function ($join) {
                             $join->on('conversation_messages.sender_id', '=', 'role_user.user_id')
@@ -33,6 +36,9 @@ class HomeController extends \App\Http\Controllers\Controller
                         ->take(1)
                         ->get();
 
+        //Select all unseen flirts
+        $newFlirts = Flirt::with(['sender', 'recipient'])->where('seen', 0)->get();
+
         $newConversations = $this->getConversationsOrArrayOfIds($newConversationsIds);
 
         $conversationsWithNewMessages = $this->getConversationsOrArrayOfIds($conversationsWithNewMessagesIds);
@@ -41,7 +47,8 @@ class HomeController extends \App\Http\Controllers\Controller
             'operators.dashboard',
             [
                 'newConversations' => $newConversations,
-                'conversationsWithNewMessages' => $conversationsWithNewMessages
+                'conversationsWithNewMessages' => $conversationsWithNewMessages,
+                'newFlirts' => $newFlirts
             ]
         );
     }

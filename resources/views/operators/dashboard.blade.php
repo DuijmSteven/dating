@@ -106,13 +106,38 @@
             <div class="panel-heading" role="tab" id="headingThree">
                 <h4 class="panel-title">
                     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        Flirts <span class="label label-success">4</span>
+                        Flirts <span class="label label-success">{!! count($newFlirts) !!}</span>
                     </a>
                 </h4>
             </div>
             <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                 <div class="panel-body">
-
+                    <div class="row">
+                        @foreach($newFlirts as $flirt)
+                            <div class="col-xs-12 col-sm-4 col-md-3">
+                                <div class="box box-primary">
+                                    <div class="box-body no-padding">
+                                        <ul class="users-list-flirts clearfix">
+                                            <li>
+                                                <img src="https://almsaeedstudio.com/themes/AdminLTE/dist/img/user1-128x128.jpg" alt="User Image">
+                                                <a class="users-list-name" href="#">{!! $flirt->sender->username !!}</a>
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-arrow-circle-o-right" style="font-size: 4em; color: #dd4b39"></i>
+                                            </li>
+                                            <li>
+                                                <img src="https://almsaeedstudio.com/themes/AdminLTE/dist/img/user7-128x128.jpg" alt="User Image">
+                                                <a class="users-list-name" href="#">{!! $flirt->recipient->username !!}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <a href="" class="btn btn-primary btn-flat btn-block">View</a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>

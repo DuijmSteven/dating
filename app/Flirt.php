@@ -15,7 +15,7 @@ class Flirt extends Model
      */
     public function sender()
     {
-        return $this->hasOne('App/User', 'id', 'sender_id');
+        return $this->hasOne('App\User', 'id', 'sender_id');
     }
 
     /**
@@ -23,6 +23,6 @@ class Flirt extends Model
      */
     public function recipient()
     {
-        return $this->hasOne('App/User', 'id', 'recipient_id');
+        return $this->hasOne('App\User', 'id', 'recipient_id');
     }
 }
