@@ -8,9 +8,17 @@ class StorageHelper
 {
     public static $userImagesPath = 'users/images/';
 
+    public static $conversationImagesPath = 'conversations/images/';
+
     public static function userImageUrl(int $userId, string $filename)
     {
         $filePath = self::$userImagesPath . $userId . '/' . $filename;
+        return self::fileUrl($filePath);
+    }
+
+    public static function conversationImageUrl(int $conversationId, string $filename)
+    {
+        $filePath = self::$conversationImagesPath . $conversationId . '/' . $filename;
         return self::fileUrl($filePath);
     }
 

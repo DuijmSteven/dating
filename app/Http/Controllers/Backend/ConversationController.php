@@ -2,12 +2,21 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Http\Requests\Backend\Conversations\MessageCreateRequest;
 use App\Conversation;
+use App\Managers\ConversationManager;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 
 class ConversationController extends Controller
 {
+    private $conversationManager;
+
+    public function __construct(ConversationManager $conversationManager)
+    {
+        $this->conversationManager = $conversationManager;
+    }
+
     public function show(int $conversationId)
     {
         $conversation = Conversation::with(['userA', 'userB', 'messages'])->find($conversationId);
@@ -27,6 +36,31 @@ class ConversationController extends Controller
                 'conversation' => $conversation
             ]
         );
+    }
+
+    public function store(MessageCreateRequest $messageCreateRequest)
+    {
+        if($messageCreateRequest->hasFile('attachment')) {
+            $attachment = true;
+        }
+
+        $messageData = $messageCreateRequest->all();
+
+        try {
+            $this->conversationManager->createMessage($messageData, $attachment);
+
+            $alerts[] = [
+                'type' => 'success',
+                'message' => 'The message was created successfully'
+            ];
+        } catch (\Exception $exception) {
+            $alerts[] = [
+                'type' => 'error',
+                'message' => 'The message was not created due to an exception.'
+            ];
+        }
+
+        return redirect()->back()->with('alerts', $alerts);
     }
 
     /**

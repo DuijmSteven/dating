@@ -59,6 +59,11 @@ class StorageManager
         return $this->saveFile($uploadedFile, \StorageHelper::$userImagesPath . $userId, $location);
     }
 
+    public function saveConversationImage(UploadedFile $uploadedFile, int $conversationId, $location = 'cloud')
+    {
+        return $this->saveFile($uploadedFile, \StorageHelper::$conversationImagesPath . $conversationId, $location);
+    }
+
     /**
      * @param int $userId
      * @param string $filename

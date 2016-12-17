@@ -8,6 +8,13 @@ class ConversationMessage extends Model
 {
     public $table = 'conversation_messages';
 
+    protected $fillable = [
+        'conversation_id',
+        'sender_id',
+        'recipient_id',
+        'body'
+    ];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

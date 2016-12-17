@@ -90,12 +90,24 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-                <form action="#" method="post">
-                    <div class="input-group">
-                        <input type="text" name="message" placeholder="Type Message ..." class="form-control">
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-success btn-flat">Send</button>
+                <form role="form" method="POST" action="{!! route('operators_platform.conversations.store') !!}" enctype="multipart/form-data">
+                    {!! csrf_field() !!}
+                    <input type="hidden" value="{!! $conversation->id !!}" name="conversation_id">
+                    <input type="hidden" value="{!! $conversation->userA->id !!}" name="sender_id">
+                    <input type="hidden" value="{!! $conversation->userB->id !!}" name="recipient_id">
+                    <div style="float: left; padding: 0 10px 0 10px;">
+                        <label style="margin-bottom: 0; cursor: pointer">
+                            <i class="fa fa-paperclip" style="font-size: 20px; line-height: 34px;"></i>
+                            <input type="file" id="attachment" name="attachment" style="display: none;">
+                        </label>
+                    </div>
+                    <div>
+                        <div class="input-group">
+                            <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                            <span class="input-group-btn">
+                            <button type="submit" class="btn btn-success btn-flat">Send</button>
                           </span>
+                        </div>
                     </div>
                 </form>
             </div>
