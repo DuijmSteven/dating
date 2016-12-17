@@ -40,7 +40,7 @@ class ConversationController extends Controller
 
     public function store(MessageCreateRequest $messageCreateRequest)
     {
-        if($messageCreateRequest->hasFile('attachment')) {
+        if ($messageCreateRequest->hasFile('attachment')) {
             $attachment = true;
         }
 

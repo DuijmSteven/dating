@@ -22,9 +22,16 @@ class ConversationManager
 
     public function createMessage(array $messageData, bool $attachment = false)
     {
-        if($attachment) {
-            $uploadedImageFilename = $this->storageManager->saveConversationImage($messageData['attachment'], $messageData['conversation_id']);
-            $messageData['message'] = '<img src="' . \StorageHelper::conversationImageUrl($messageData['conversation_id'], $uploadedImageFilename) . '" class="img-responsive" />';
+        if ($attachment) {
+            $uploadedImageFilename = $this->storageManager->saveConversationImage(
+                $messageData['attachment'],
+                $messageData['conversation_id']
+            );
+            $messageData['message'] = '<img src="' .
+                \StorageHelper::conversationImageUrl(
+                    $messageData['conversation_id'],
+                    $uploadedImageFilename
+                ) . '" class="img-responsive" />';
         }
         DB::beginTransaction();
         try {
