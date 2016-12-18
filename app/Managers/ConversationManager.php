@@ -20,9 +20,10 @@ class ConversationManager
         $this->storageManager = $storageManager;
     }
 
-    public function createMessage(array $messageData, bool $attachment = false)
+    public function createMessage(array $messageData)
     {
-        if ($attachment) {
+
+        if (isset($messageData['attachment'])) {
             $uploadedImageFilename = $this->storageManager->saveConversationImage(
                 $messageData['attachment'],
                 $messageData['conversation_id']

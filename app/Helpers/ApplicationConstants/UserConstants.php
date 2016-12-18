@@ -96,7 +96,8 @@ class UserConstants
                 'role' => [
                     1 => 'admin',
                     2 => 'peasant',
-                    3 => 'bot'
+                    3 => 'bot',
+                    4 => 'operator'
                 ]
             ]
         ]

@@ -17,10 +17,16 @@ class HomeController extends \App\Http\Controllers\Controller
     {
         //Select the ids of the new conversations
         $newConversationsIds = \DB::table('conversation_messages')
-                            ->select('conversation_id')
-                            ->groupBy('conversation_id')
-                            ->havingRaw('count(distinct sender_id) < 2')
+                            ->join('role_user', function ($join) {
+                                $join->on('conversation_messages.sender_id', '=', 'role_user.user_id')
+                                    ->where('role_user.role_id', '=', 2);
+                            })
+                            ->select('conversation_messages.conversation_id')
+                            ->groupBy('conversation_messages.conversation_id')
+                            ->havingRaw('count(distinct conversation_messages.sender_id) < 2')
                             ->get();
+
+        \Log::info($newConversationsIds);
 
         $newConversationsIdsArray = $this->getConversationsOrArrayOfIds($newConversationsIds, 1);
 
@@ -33,7 +39,6 @@ class HomeController extends \App\Http\Controllers\Controller
                         ->select('conversation_id')
                         ->whereNotIn('conversation_id', $newConversationsIdsArray)
                         ->orderBy('conversation_messages.created_at', 'desc')
-                        ->take(1)
                         ->get();
 
         //Select all unseen flirts
@@ -58,10 +63,10 @@ class HomeController extends \App\Http\Controllers\Controller
      * @param int $getArrayOfIds
      * @return array|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|null|static|static[]
      */
-    public function getConversationsOrArrayOfIds($Ids, int $getArrayOfIds = 0)
+    public function getConversationsOrArrayOfIds($ids, int $getArrayOfIds = 0)
     {
-        if ($Ids->count()) {
-            foreach ($Ids as $id) {
+        if ($ids->count()) {
+            foreach ($ids as $id) {
                 $allIds[] = $id->conversation_id;
             }
         } else {

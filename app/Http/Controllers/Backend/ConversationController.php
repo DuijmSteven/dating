@@ -40,14 +40,10 @@ class ConversationController extends Controller
 
     public function store(MessageCreateRequest $messageCreateRequest)
     {
-        if ($messageCreateRequest->hasFile('attachment')) {
-            $attachment = true;
-        }
-
         $messageData = $messageCreateRequest->all();
 
         try {
-            $this->conversationManager->createMessage($messageData, $attachment);
+            $this->conversationManager->createMessage($messageData);
 
             $alerts[] = [
                 'type' => 'success',
