@@ -17,14 +17,24 @@ class HomeController extends \App\Http\Controllers\Controller
     public function showDashboard()
     {
         //Select the ids of the new conversations
-        $newConversationsIds = \DB::table('conversation_messages')
-                            ->select('conversation_messages.conversation_id')
-                            ->whereIn('conversation_messages.conversation_id', function ($query) {
-                                $query->select('role_user.user_id')->from(with(new RoleUser)->getTable())->where('role_user.role_id', 2);
-                            })
-                            ->groupBy('conversation_messages.conversation_id')
-                            ->havingRaw('count(distinct conversation_messages.sender_id) = 1')
-                            ->get();
+        $newConversationsIds = \DB::select('SELECT 
+                                                conversations.id
+                                            FROM
+                                                conversations
+                                            JOIN
+                                                (
+                                                    SELECT conversation_messages.conversation_id,
+                                                           conversation_messages.sender_id
+                                                    FROM conversation_messages
+                                                    GROUP BY conversation_messages.conversation_id
+                                                    HAVING COUNT(DISTINCT (conversation_messages.sender_id)) = 1
+                                                ) 
+                                                AS messages ON messages.conversation_id = conversations.id
+                                            JOIN role_user ON role_user.user_id = messages.sender_id
+                                                           AND role_user.role_id = 2
+                                            GROUP BY conversations.id');
+
+        \Log::info($newConversationsIds);
 
         $newConversationsIdsArray = $this->getConversationsOrArrayOfIds($newConversationsIds, 1);
 
@@ -32,7 +42,11 @@ class HomeController extends \App\Http\Controllers\Controller
         $unrepliedConversationsIds = \DB::table('conversation_messages')
                                 ->select('conversation_messages.conversation_id')
                                 ->whereIn('conversation_messages.conversation_id', function ($query) {
-                                    $query->select('role_user.user_id')->from(with(new RoleUser)->getTable())->where('role_user.role_id', 2);
+                                    $query
+                                        ->select('role_user.user_id')
+                                        ->from(with(new RoleUser)
+                                            ->getTable())
+                                        ->where('role_user.role_id', 2);
                                 })
                                 ->groupBy('conversation_messages.conversation_id')
                                 ->havingRaw('count(distinct conversation_messages.sender_id) = 1')
