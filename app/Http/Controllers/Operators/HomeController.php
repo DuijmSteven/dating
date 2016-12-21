@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Operators;
 
 use App\Conversation;
 use App\Flirt;
+use App\RoleUser;
 use Illuminate\Http\Request;
 
 class HomeController extends \App\Http\Controllers\Controller
@@ -17,36 +18,32 @@ class HomeController extends \App\Http\Controllers\Controller
     {
         //Select the ids of the new conversations
         $newConversationsIds = \DB::table('conversation_messages')
-                            ->join('role_user', function ($join) {
-                                $join->on('conversation_messages.sender_id', '=', 'role_user.user_id')
-                                    ->where('role_user.role_id', '=', 2);
-                            })
                             ->select('conversation_messages.conversation_id')
+                            ->whereIn('conversation_messages.conversation_id', function ($query) {
+                                $query->select('role_user.user_id')->from(with(new RoleUser)->getTable())->where('role_user.role_id', 2);
+                            })
                             ->groupBy('conversation_messages.conversation_id')
-                            ->havingRaw('count(distinct conversation_messages.sender_id) < 2')
+                            ->havingRaw('count(distinct conversation_messages.sender_id) = 1')
                             ->get();
-
-        \Log::info($newConversationsIds);
 
         $newConversationsIdsArray = $this->getConversationsOrArrayOfIds($newConversationsIds, 1);
 
         //Select the ids of the new messages (excluding new conversations)
-        $conversationsWithNewMessagesIds = \DB::table('conversation_messages')
-                        ->join('role_user', function ($join) {
-                            $join->on('conversation_messages.sender_id', '=', 'role_user.user_id')
-                                 ->where('role_user.role_id', '=', 2);
-                        })
-                        ->select('conversation_id')
-                        ->whereNotIn('conversation_id', $newConversationsIdsArray)
-                        ->orderBy('conversation_messages.created_at', 'desc')
-                        ->get();
+        $unrepliedConversationsIds = \DB::table('conversation_messages')
+                                ->select('conversation_messages.conversation_id')
+                                ->whereIn('conversation_messages.conversation_id', function ($query) {
+                                    $query->select('role_user.user_id')->from(with(new RoleUser)->getTable())->where('role_user.role_id', 2);
+                                })
+                                ->groupBy('conversation_messages.conversation_id')
+                                ->havingRaw('count(distinct conversation_messages.sender_id) = 1')
+                                ->get();
 
         //Select all unseen flirts
         $newFlirts = Flirt::with(['sender', 'recipient'])->where('seen', 0)->get();
 
         $newConversations = $this->getConversationsOrArrayOfIds($newConversationsIds);
 
-        $conversationsWithNewMessages = $this->getConversationsOrArrayOfIds($conversationsWithNewMessagesIds);
+        $conversationsWithNewMessages = $this->getConversationsOrArrayOfIds($unrepliedConversationsIds);
 
         return view(
             'operators.dashboard',
