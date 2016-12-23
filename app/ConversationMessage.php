@@ -28,11 +28,11 @@ class ConversationMessage extends Model
      */
     public function sender()
     {
-        return $this->belongsTo('App\User', 'id', 'sender_id')->with(['meta', 'roles', 'images']);
+        return $this->belongsTo('App\User', 'sender_id', 'id')->with(['meta', 'roles', 'images']);
     }
 
     public function recipient()
     {
-        return $this->belongsTo('App\User', 'id', 'recipient_id')->with(['meta', 'roles', 'images']);
+        return $this->belongsTo('App\User', 'recipient_id', 'id')->with(['meta', 'roles', 'images']);
     }
 }

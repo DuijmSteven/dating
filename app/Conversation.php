@@ -13,7 +13,7 @@ class Conversation extends Model
      */
     public function messages()
     {
-        return $this->hasMany('App\ConversationMessage')->orderBy('created_at', 'asc');
+        return $this->hasMany('App\ConversationMessage')->with(['sender', 'recipient'])->orderBy('created_at', 'asc');
     }
 
     public function userA()

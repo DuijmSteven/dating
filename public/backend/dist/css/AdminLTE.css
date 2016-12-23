@@ -4947,13 +4947,23 @@ table .action-buttons .btn {
 .convo-tile {
   display: flex;
   flex-direction: row;
-  height: 70px;
-  background-color: #f39c12;
+  height: 30px;
+  background-color: #b96d6d;
+}
+
+.convo-tile img {
+  width: 40px;
+}
+
+.convo-tile.bot {
+  background-color: #378186;
 }
 
 .convo-tile_text {
   display: flex;
   min-width: 0;
+  padding-left: 10px;
+  padding-right: 10px;
   flex-direction: column;
   justify-content: center;
 }
@@ -5022,4 +5032,38 @@ table .action-buttons .btn {
   .direct-chat-messages {
     min-height: 500px!important;
   }
+}
+
+.box-userA {
+  border-top: 3px solid #b96d6d;
+}
+
+.box-userB {
+  border-top: 3px solid #378186;
+}
+
+.label-peasant {
+  background-color: #b96d6d;
+}
+
+.label-bot {
+  background-color: #378186;
+}
+
+.direct-chat-text.userA {
+  background-color: #b96d6d!important;
+  border: 1px solid #b96d6d!important;
+}
+
+.direct-chat-text.userB {
+  background-color: #378186!important;
+  border: 1px solid #378186!important;
+}
+
+.direct-chat-text.userA:before, .direct-chat-text.userA:after {
+  display: none!important;
+}
+
+.direct-chat-text.userB:before, .direct-chat-text.userB:after {
+  display: none!important;
 }

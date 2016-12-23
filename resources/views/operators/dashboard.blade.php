@@ -14,38 +14,43 @@
                     </a>
                 </h4>
             </div>
-            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                 <div class="panel-body">
                     <div class="row">
                         @foreach($newConversations as $conversation)
-                            @php
-                                $message = $conversation->messages->last();
+                            <?php
+                                $lastMessage = $conversation->messages->last();
 
-                                if ($message->sender_id === $conversation->userA->id) {
-                                    $user = $conversation->userA;
-                                } else {
-                                    $user = $conversation->userB;
+                                if ($conversation->userB->roles[0]->id === 3) {
+                                    $userA = $conversation->userA;
+
+                                    $conversation->userA = $conversation->userB;
+                                    $conversation->userB = $userA;
                                 }
-                            @endphp
+                            ?>
                             <div class="col-xs-12 col-sm-4 col-md-3">
                                 <!-- Widget: user widget style 1 -->
                                 <div class="box box-widget widget-user-2 default-border">
                                     <!-- Add the bg color to the header using any of the bg-* classes -->
-                                    <div class="convo-tile">
-                                        <img src="http://placehold.it/70x50">
+                                    <div class="convo-tile {!! \UserConstants::selectableField('role')[$conversation->userA->roles[0]->id] !!}">
                                         <div class="convo-tile_text">
-                                            <div class="username">{!! $user->username !!}</div>
-                                            <div class="date">{!! $message->created_at !!}</div>
+                                            <div class="username">{!! $conversation->userA->username !!} (ID: {!! $conversation->userA->id !!})</div>
+                                        </div>
+                                        <!-- /.widget-user-image -->
+                                    </div>
+                                    <div class="convo-tile {!! \UserConstants::selectableField('role')[$conversation->userB->roles[0]->id] !!}">
+                                        <div class="convo-tile_text">
+                                            <div class="username">{!! $conversation->userB->username !!} (ID: {!! $conversation->userB->id !!})</div>
                                         </div>
                                         <!-- /.widget-user-image -->
                                     </div>
                                     <div class="box-footer no-padding">
                                         <div class="text-summary">
-                                            {!! $message->body !!}
+                                            <em>"{!! $lastMessage->body !!}"</em>
                                         </div>
                                     </div>
                                     <div>
-                                        <a href="conversations/{!! $conversation->id !!}" class="btn btn-primary btn-flat btn-block">View Conversation</a>
+                                        <a href="conversations/{!! $conversation->id !!}" class="btn btn-default btn-flat btn-block">View Conversation</a>
                                     </div>
                                 </div>
                             </div>
@@ -58,42 +63,47 @@
             <div class="panel-heading" role="tab" id="headingTwo">
                 <h4 class="panel-title">
                     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        New Messages <span class="label label-success">{!! count($conversationsWithNewMessages) !!}</span>
+                        Unreplied Conversations <span class="label label-success">{!! count($unrepliedConversations) !!}</span>
                     </a>
                 </h4>
             </div>
             <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                 <div class="panel-body">
                     <div class="row">
-                        @foreach($conversationsWithNewMessages as $conversation)
-                            @php
-                                $message = $conversation->messages->last();
+                        @foreach($unrepliedConversations as $conversation)
+                            <?php
+                            $lastMessage = $conversation->messages->last();
 
-                                if ($message->sender_id === $conversation->userA->id) {
-                                    $user = $conversation->userA;
-                                } else {
-                                    $user = $conversation->userB;
-                                }
-                            @endphp
+                            if ($conversation->userB->roles[0]->id === 3) {
+                                $userA = $conversation->userA;
+
+                                $conversation->userA = $conversation->userB;
+                                $conversation->userB = $userA;
+                            }
+                            ?>
                             <div class="col-xs-12 col-sm-4 col-md-3">
                                 <!-- Widget: user widget style 1 -->
                                 <div class="box box-widget widget-user-2 default-border">
                                     <!-- Add the bg color to the header using any of the bg-* classes -->
-                                    <div class="convo-tile">
-                                        <img src="http://placehold.it/70x50">
+                                    <div class="convo-tile {!! \UserConstants::selectableField('role')[$conversation->userA->roles[0]->id] !!}">
                                         <div class="convo-tile_text">
-                                            <div class="username">{!! $user->username !!}</div>
-                                            <div class="date">{!! $message->created_at !!}</div>
+                                            <div class="username">{!! $conversation->userA->username !!} (ID: {!! $conversation->userA->id !!})</div>
+                                        </div>
+                                        <!-- /.widget-user-image -->
+                                    </div>
+                                    <div class="convo-tile {!! \UserConstants::selectableField('role')[$conversation->userB->roles[0]->id] !!}">
+                                        <div class="convo-tile_text">
+                                            <div class="username">{!! $conversation->userB->username !!} (ID: {!! $conversation->userB->id !!})</div>
                                         </div>
                                         <!-- /.widget-user-image -->
                                     </div>
                                     <div class="box-footer no-padding">
                                         <div class="text-summary">
-                                            {!! $message->body !!}
+                                            <em>"{!! $lastMessage->body !!}"</em>
                                         </div>
                                     </div>
                                     <div>
-                                        <a href="conversations/{!! $conversation->id !!}" class="btn btn-primary btn-flat btn-block">View Conversation</a>
+                                        <a href="conversations/{!! $conversation->id !!}" class="btn btn-default btn-flat btn-block">View Conversation</a>
                                     </div>
                                 </div>
                             </div>

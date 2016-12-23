@@ -2,7 +2,10 @@
 
 namespace App\Managers;
 
+use App\Conversation;
 use App\ConversationMessage;
+use App\Helpers\ApplicationConstants\UserConstants;
+use App\Helpers\ccampbell\ChromePhp\ChromePhp;
 use Illuminate\Support\Facades\DB;
 
 class ConversationManager
@@ -49,5 +52,87 @@ class ConversationManager
             throw $exception;
         }
         DB::commit();
+    }
+
+    public function newPeasantBotConversations()
+    {
+        $newConversations = $this->newConversations();
+
+        $newPeasantBotConversations = $this->filterConversationsByParticipantType($newConversations);
+
+        return $newPeasantBotConversations;
+    }
+
+    public function unrepliedPeasantBotConversations()
+    {
+        $unrepliedPeasantBotConversations = $this->nonNewConversations();
+
+        $unrepliedPeasantBotConversations = $this->filterConversationsByParticipantType($unrepliedPeasantBotConversations);
+
+        return $unrepliedPeasantBotConversations;
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function newConversations()
+    {
+        $newConversationsIds = \DB::table('conversations')->distinct()->select('id')
+            ->join(\DB::raw('(SELECT conversation_messages.conversation_id,
+                                     conversation_messages.sender_id
+                              FROM conversation_messages
+                              GROUP BY conversation_messages.conversation_id
+                              HAVING COUNT(DISTINCT (conversation_messages.sender_id)) = 1)
+                              AS messages'
+            ), function ($join) {
+                $join->on('conversations.id', '=', 'messages.conversation_id');
+            })
+            ->pluck('id');
+
+        return Conversation::with(['userA', 'userB', 'messages'])
+            ->whereIn('id', $newConversationsIds)
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function nonNewConversations()
+    {
+        $nonNewConversationsIds = \DB::table('conversations')->distinct()->select('id')
+            ->join(\DB::raw('(SELECT conversation_messages.conversation_id,
+                                     conversation_messages.sender_id
+                              FROM conversation_messages
+                              GROUP BY conversation_messages.conversation_id
+                              HAVING COUNT(DISTINCT (conversation_messages.sender_id)) = 2)
+                              AS messages'
+            ), function ($join) {
+                $join->on('conversations.id', '=', 'messages.conversation_id');
+            })
+            ->pluck('id');
+
+        return Conversation::with(['userA', 'userB', 'messages'])
+            ->whereIn('id', $nonNewConversationsIds)
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
+
+    private function filterConversationsByParticipantType(\Illuminate\Support\Collection $conversations)
+    {
+        $results = [];
+        foreach ($conversations as $conversation) {
+
+            $lastUserType = $conversation->messages->first()->sender->roles[0]->id;
+            $otherUserType = $conversation->messages->first()->recipient->roles[0]->id;
+
+            if (
+                $lastUserType == UserConstants::selectableField('role', 'common', 'array_flip')['peasant'] &&
+                $otherUserType == UserConstants::selectableField('role', 'common', 'array_flip')['bot']
+            ) {
+                $results[] = $conversation;
+            }
+        }
+        return $results;
     }
 }
