@@ -77,7 +77,8 @@ class ConversationManager
     {
         $unrepliedPeasantBotConversations = $this->nonNewConversations();
 
-        $unrepliedPeasantBotConversations = $this->filterConversationsByParticipantType($unrepliedPeasantBotConversations);
+        $unrepliedPeasantBotConversations = $this->
+            filterConversationsByParticipantType($unrepliedPeasantBotConversations);
 
         return $unrepliedPeasantBotConversations;
     }
@@ -93,9 +94,10 @@ class ConversationManager
                               FROM conversation_messages
                               GROUP BY conversation_messages.conversation_id
                               HAVING COUNT(DISTINCT (conversation_messages.sender_id)) = 1)
-                              AS messages'), function ($join) {
-                $join->on('conversations.id', '=', 'messages.conversation_id');
-            })
+                              AS messages'),
+                function ($join) {
+                    $join->on('conversations.id', '=', 'messages.conversation_id');
+                })
             ->pluck('id');
 
         return Conversation::with(['userA', 'userB', 'messages'])
