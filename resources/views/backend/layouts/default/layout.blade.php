@@ -20,7 +20,8 @@
          * can be defined here
          */
         var DP = {
-            baseUrl: '{!! url('/') !!}'
+            baseUrl: '{!! url('/') !!}',
+            currentRoute: '{!! request()->route()->getName() !!}'
         };
     </script>
 

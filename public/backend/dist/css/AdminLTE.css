@@ -5067,3 +5067,8 @@ table .action-buttons .btn {
 .direct-chat-text.userB:before, .direct-chat-text.userB:after {
   display: none!important;
 }
+
+.attachment-path-container {
+  display: none;
+  margin-top: 10px;
+}

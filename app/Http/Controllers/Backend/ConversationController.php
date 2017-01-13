@@ -47,12 +47,12 @@ class ConversationController extends Controller
 
             $alerts[] = [
                 'type' => 'success',
-                'message' => 'The message was created successfully'
+                'message' => 'The message was sent successfully'
             ];
         } catch (\Exception $exception) {
             $alerts[] = [
                 'type' => 'error',
-                'message' => 'The message was not created due to an exception.'
+                'message' => 'The message was not sent due to an exception.'
             ];
         }
 

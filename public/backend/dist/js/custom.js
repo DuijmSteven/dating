@@ -20,5 +20,27 @@ $(window).load(function () {
             console.log("Error: Ajax call to users/cities endpoint failed");
         });
     }
+
+    // scrolls all the elements on the page with a class "scroll-bottom" to the bottom
+    if ($('.scroll-bottom').length > 0) {
+        $('.scroll-bottom').each(function(index, element) {
+            $(element).scrollTop(element.scrollHeight);
+        });
+    }
+
+    if (DP.currentRoute === 'operators_platform.conversations.show') {
+
+        $(document).on('change','#attachment' , function(){
+            var filename = $('#attachment').val().split('\\').pop();
+
+            if (filename) {
+                $('.attachment-path-container .attachment-path').text(filename);
+                $('.attachment-path-container').show();
+            } else {
+                $('.attachment-path-container').hide();
+            }
+
+        })
+    }
 });
 

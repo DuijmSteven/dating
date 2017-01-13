@@ -169,24 +169,22 @@
                     </td>
                 </tr>
                 <?php $botProfileImage = $bot->profileImage; ?>
-                @if(count($botProfileImage) > 0)
-                    @foreach($botProfileImage as $image)
-                        <tr>
-                            <td>
-                                <img width="200" src="{!! \StorageHelper::userImageUrl($bot->id, $image['filename']) !!}"/>
-                            </td>
-                            <td>
-                                <?= ($image->visible) ? 'Yes' : 'No' ; ?>
-                            </td>
-                            <td class="action-buttons">
-                                <form method="POST" action="{!! route('images.destroy', ['imageId' => $image->id]) !!}">
-                                    {!! csrf_field() !!}
-                                    {!! method_field('DELETE') !!}
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
+                @if($botProfileImage)
+                    <tr>
+                        <td>
+                            <img width="200" src="{!! \StorageHelper::userImageUrl($bot->id, $botProfileImage['filename']) !!}"/>
+                        </td>
+                        <td>
+                            <?= ($botProfileImage->visible) ? 'Yes' : 'No' ; ?>
+                        </td>
+                        <td class="action-buttons">
+                            <form method="POST" action="{!! route('images.destroy', ['imageId' => $botProfileImage->id]) !!}">
+                                {!! csrf_field() !!}
+                                {!! method_field('DELETE') !!}
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
                 @else
                     <tr>
                         <td colspan="<?= $tableColumnAmount; ?>">

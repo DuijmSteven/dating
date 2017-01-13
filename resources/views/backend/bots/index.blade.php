@@ -35,8 +35,8 @@
                                 <tr>
                                     <td>{!! $bot->id !!}</td>
                                     <td>
-                                        @if(count($bot->profileImage))
-                                            <img width="120" src="{!! \StorageHelper::userImageUrl($bot->id, $bot->profileImage[0]->filename) !!}" alt="">
+                                        @if($bot->profileImage)
+                                            <img width="120" src="{!! \StorageHelper::userImageUrl($bot->id, $bot->profileImage->filename) !!}" alt="">
                                         @else
                                             No profile image set
                                         @endif

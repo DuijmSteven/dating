@@ -60,9 +60,9 @@
             <!-- /.box-header -->
             <div class="box-body">
                 <!-- Conversations are loaded here -->
-                <div class="direct-chat-messages">
+                <div class="direct-chat-messages scroll-bottom">
                     @foreach($conversation->messages as $message)
-                        @php
+                        <?php
                             if ($message->sender_id === $conversation->userA->id) {
                                 $user = $conversation->userA;
                                 $alignment = '';
@@ -70,7 +70,7 @@
                                 $user = $conversation->userB;
                                 $alignment = 'right';
                             }
-                        @endphp
+                        ?>
                         <!-- Message. Default to the left -->
                         <div class="direct-chat-msg {!! $alignment !!}">
                             <div class="direct-chat-info clearfix">
@@ -78,7 +78,7 @@
                                 <span class="direct-chat-timestamp pull-{!! ($alignment === 'right') ? 'left' : 'right' !!}">{!! $message->created_at->diffForHumans() !!}</span>
                             </div>
                             <!-- /.direct-chat-info -->
-                            <img class="direct-chat-img" src="http://placehold.it/128x128" alt="message user image"><!-- /.direct-chat-img -->
+                            <img class="direct-chat-img" src="{!! $user->profileImage ? \StorageHelper::userImageUrl($user->id, $user->profileImage->filename) : 'http://placehold.it/100x100' !!}" alt="message user image"><!-- /.direct-chat-img -->
                             <div class="direct-chat-text {!! ($alignment === 'right') ? 'userB' : 'userA' !!}">
                                 {!! $message->body !!}
                             </div>
@@ -108,6 +108,9 @@
                             <button type="submit" class="btn btn-success btn-flat">Send</button>
                           </span>
                         </div>
+                    </div>
+                    <div class="attachment-path-container">
+                        Selected image name: <span class="attachment-path"></span>
                     </div>
                 </form>
             </div>

@@ -122,7 +122,7 @@ class User extends Authenticatable
 
     public function profileImage()
     {
-        return $this->hasMany('App\UserImage')->where('profile', 1);
+        return $this->hasOne('App\UserImage')->where('profile', 1);
     }
 
     public function receivedFlirts()
