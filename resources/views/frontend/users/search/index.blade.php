@@ -41,9 +41,9 @@
                                 id="{!! $field !!}"
                                 class="form-control"
                         >
-                            @foreach(array_merge(['any'], $possibleOptions) as $key => $value)
-                                <option value="{{ $key == 'any' ? null : $key }}"
-                                        {{ (old($field) == $key) ? 'selected' : '' }}
+                            @foreach(array_merge(['' => ''], $possibleOptions) as $key => $value)
+                                <option value="{{ $key }}"
+                                        {{ (old($field) === $key) ? 'selected' : '' }}
                                 >
                                     {{ ucfirst($value) }}
                                 </option>
