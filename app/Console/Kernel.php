@@ -13,8 +13,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\SetRandomUsersOnline::class,
     ];
+
 
     /**
      * Define the application's command schedule.
