@@ -4,9 +4,11 @@
 namespace App\Managers;
 
 use App\RoleUser;
+use App\Session;
 use App\User;
 use App\UserImage;
 use App\UserMeta;
+use Illuminate\Database\Eloquent\Model;
 use Kim\Activity\Activity;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Illuminate\Support\Facades\DB;
@@ -213,7 +215,7 @@ class UserManager
     {
         $latestIds = Activity::users($minutes)->pluck('user_id')->toArray();
 
-        return User::whereIn('id', $latestIds)->limit(\UserConstants::MAX_AMOUNT_ONLINE_TO_SHOW)->get();
+        return User::with('meta')->whereIn('id', $latestIds)->limit(\UserConstants::MAX_AMOUNT_ONLINE_TO_SHOW)->get();
     }
 
     public function deleteUser(int $userId)

@@ -14,6 +14,9 @@ class HomeController extends \App\Http\Controllers\Controller
     /** @var ConversationManager */
     private $conversationManager;
 
+    /**
+     * @param ConversationManager $conversationManager
+     */
     public function __construct(ConversationManager $conversationManager)
     {
         $this->conversationManager = $conversationManager;

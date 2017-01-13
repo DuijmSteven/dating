@@ -23,6 +23,10 @@ class ConversationManager
         $this->storageManager = $storageManager;
     }
 
+    /**
+     * @param array $messageData
+     * @throws \Exception
+     */
     public function createMessage(array $messageData)
     {
 
@@ -54,6 +58,9 @@ class ConversationManager
         DB::commit();
     }
 
+    /**
+     * @return array
+     */
     public function newPeasantBotConversations()
     {
         $newConversations = $this->newConversations();
@@ -63,6 +70,9 @@ class ConversationManager
         return $newPeasantBotConversations;
     }
 
+    /**
+     * @return array|\Illuminate\Support\Collection
+     */
     public function unrepliedPeasantBotConversations()
     {
         $unrepliedPeasantBotConversations = $this->nonNewConversations();
@@ -83,8 +93,7 @@ class ConversationManager
                               FROM conversation_messages
                               GROUP BY conversation_messages.conversation_id
                               HAVING COUNT(DISTINCT (conversation_messages.sender_id)) = 1)
-                              AS messages'
-            ), function ($join) {
+                              AS messages'), function ($join) {
                 $join->on('conversations.id', '=', 'messages.conversation_id');
             })
             ->pluck('id');
@@ -106,10 +115,9 @@ class ConversationManager
                               FROM conversation_messages
                               GROUP BY conversation_messages.conversation_id
                               HAVING COUNT(DISTINCT (conversation_messages.sender_id)) = 2)
-                              AS messages'
-            ), function ($join) {
+                              AS messages'), function ($join) {
                 $join->on('conversations.id', '=', 'messages.conversation_id');
-            })
+})
             ->pluck('id');
 
         return Conversation::with(['userA', 'userB', 'messages'])
@@ -118,16 +126,18 @@ class ConversationManager
             ->get();
     }
 
+    /**
+     * @param \Illuminate\Support\Collection $conversations
+     * @return array
+     */
     private function filterConversationsByParticipantType(\Illuminate\Support\Collection $conversations)
     {
         $results = [];
         foreach ($conversations as $conversation) {
-
             $lastUserType = $conversation->messages->first()->sender->roles[0]->id;
             $otherUserType = $conversation->messages->first()->recipient->roles[0]->id;
 
-            if (
-                $lastUserType == UserConstants::selectableField('role', 'common', 'array_flip')['peasant'] &&
+            if ($lastUserType == UserConstants::selectableField('role', 'common', 'array_flip')['peasant'] &&
                 $otherUserType == UserConstants::selectableField('role', 'common', 'array_flip')['bot']
             ) {
                 $results[] = $conversation;
