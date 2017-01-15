@@ -15,6 +15,7 @@ class CreateMessageAttachmentsTable extends Migration
     {
         Schema::create('message_attachments', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('conversation_id')->unsigned();
             $table->integer('message_id')->unsigned();
             $table->string('filename', 100);
             $table->timestamps();

@@ -7,10 +7,16 @@ use Illuminate\Support\Facades\Storage;
 class StorageHelper
 {
     /** @var string */
-    public static $userImagesPath = 'users/images/';
+    public static $usersDir = 'users/';
 
     /** @var string */
-    public static $conversationImagesPath = 'conversations/images/';
+    public static $userImagesDir = 'images/';
+
+    /** @var string */
+    public static $conversationsDir = 'conversations/';
+
+    /** @var string */
+    public static $conversationAttachmentsDir = 'attachments/';
 
     /**
      * @param int $userId
@@ -19,8 +25,17 @@ class StorageHelper
      */
     public static function userImageUrl(int $userId, string $filename)
     {
-        $filePath = self::$userImagesPath . $userId . '/' . $filename;
+        $filePath = self::$usersDir . $userId . '/' . self::$userImagesDir . $filename;
         return self::fileUrl($filePath);
+    }
+
+    /**
+     * @param int $userId
+     * @return string
+     */
+    public static function userImagesPath(int $userId)
+    {
+        return self::$usersDir . $userId . '/' . self::$userImagesDir;
     }
 
     /**
@@ -28,10 +43,19 @@ class StorageHelper
      * @param string $filename
      * @return mixed
      */
-    public static function conversationImageUrl(int $conversationId, string $filename)
+    public static function messageAttachmentUrl(int $conversationId, string $filename)
     {
-        $filePath = self::$conversationImagesPath . $conversationId . '/' . $filename;
+        $filePath = self::$conversationsDir . $conversationId . '/' . self::$conversationAttachmentsDir . $filename;
         return self::fileUrl($filePath);
+    }
+
+    /**
+     * @param int $conversationId
+     * @return string
+     */
+    public static function messageAttachmentsPath(int $conversationId)
+    {
+        return self::$conversationsDir . $conversationId . '/' . self::$conversationAttachmentsDir;
     }
 
     /**

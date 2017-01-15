@@ -143,8 +143,8 @@ Route::group([
     ], function () {
         Route::get('{conversationId}', 'Backend\ConversationController@show')
             ->name('operators_platform.conversations.show');
-        Route::post('/create', 'Backend\ConversationController@store')
-            ->name('operators_platform.conversations.store');
+        Route::post('/create', 'ConversationController@store')
+            ->name('conversations.store');
     });
 });
 

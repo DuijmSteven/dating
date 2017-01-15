@@ -12,7 +12,8 @@ class ConversationMessage extends Model
         'conversation_id',
         'sender_id',
         'recipient_id',
-        'body'
+        'body',
+        'has_attachment'
     ];
 
     /**
@@ -34,5 +35,10 @@ class ConversationMessage extends Model
     public function recipient()
     {
         return $this->belongsTo('App\User', 'recipient_id', 'id')->with(['meta', 'roles', 'images']);
+    }
+
+    public function attachment()
+    {
+        return $this->hasOne('App\MessageAttachment', 'message_id', 'id');
     }
 }

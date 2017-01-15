@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Helpers\ccampbell\ChromePhp\ChromePhp;
 use App\Http\Requests\Backend\Conversations\MessageCreateRequest;
 use App\Conversation;
 use App\Managers\ConversationManager;
@@ -36,27 +37,6 @@ class ConversationController extends Controller
                 'conversation' => $conversation
             ]
         );
-    }
-
-    public function store(MessageCreateRequest $messageCreateRequest)
-    {
-        $messageData = $messageCreateRequest->all();
-
-        try {
-            $this->conversationManager->createMessage($messageData);
-
-            $alerts[] = [
-                'type' => 'success',
-                'message' => 'The message was sent successfully'
-            ];
-        } catch (\Exception $exception) {
-            $alerts[] = [
-                'type' => 'error',
-                'message' => 'The message was not sent due to an exception.'
-            ];
-        }
-
-        return redirect()->back()->with('alerts', $alerts);
     }
 
     /**

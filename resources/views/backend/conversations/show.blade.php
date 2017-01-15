@@ -2,13 +2,20 @@
 
 @section('content')
 
+    <?php
+        $userARole = ($conversation->userA->roles[0]->id == 2)  ? 'peasant' : 'bot';
+        $userBRole = ($conversation->userB->roles[0]->id == 2)  ? 'peasant' : 'bot';
+    ?>
+
 <div class="row">
     <div class="col-xs-12 col-sm-3">
         <div class="box box-userA">
             <div class="box-header with-border">
                 <h3 class="box-title">
                     {!! $conversation->userA->username !!}
-                    <span class="label label-{!! ($conversation->userA->roles[0]->id == 2)  ? 'peasant' : 'bot' !!}">{!! \UserConstants::selectableField('role')[$conversation->userA->roles[0]->id] !!}</span>
+                    <span class="label label-userA">
+                        {!! $userARole !!}
+                    </span>
                 </h3>
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -80,7 +87,19 @@
                             <!-- /.direct-chat-info -->
                             <img class="direct-chat-img" src="{!! $user->profileImage ? \StorageHelper::userImageUrl($user->id, $user->profileImage->filename) : 'http://placehold.it/100x100' !!}" alt="message user image"><!-- /.direct-chat-img -->
                             <div class="direct-chat-text {!! ($alignment === 'right') ? 'userB' : 'userA' !!}">
-                                {!! $message->body !!}
+                                <?php if ($message->has_attachment): ?>
+                                    <div>
+                                        <img height="100" src="{!! \StorageHelper::messageAttachmentUrl(
+                                            $conversation->id,
+                                            $message->attachment->filename
+                                        ) !!}"
+                                             alt="">
+                                    </div>
+                                <?php endif; ?>
+
+                                <?php if ($message->body): ?>
+                                    {!! $message->body !!}
+                                <?php endif; ?>
                             </div>
                             <!-- /.direct-chat-text -->
                         </div>
@@ -90,7 +109,7 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-                <form role="form" method="POST" action="{!! route('operators_platform.conversations.store') !!}" enctype="multipart/form-data">
+                <form role="form" method="POST" action="{!! route('conversations.store') !!}" enctype="multipart/form-data">
                     {!! csrf_field() !!}
                     <input type="hidden" value="{!! $conversation->id !!}" name="conversation_id">
                     <input type="hidden" value="{!! $conversation->userA->id !!}" name="sender_id">
@@ -122,7 +141,7 @@
             <div class="box-header with-border">
                 <h3 class="box-title">
                     {!! $conversation->userB->username !!}
-                    <span class="label label-peasant">{!! \UserConstants::selectableField('role')[$conversation->userB->roles[0]->id] !!}</span>
+                    <span class="label label-userB">{!! \UserConstants::selectableField('role')[$conversation->userB->roles[0]->id] !!}</span>
                 </h3>
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>

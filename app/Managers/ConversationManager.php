@@ -6,10 +6,13 @@ use App\Conversation;
 use App\ConversationMessage;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Helpers\ccampbell\ChromePhp\ChromePhp;
+use App\MessageAttachment;
 use Illuminate\Support\Facades\DB;
 
 class ConversationManager
 {
+    /** @var Conversation */
+    private $conversation;
 
     /** @var StorageManager */
     private $storageManager;
@@ -18,8 +21,9 @@ class ConversationManager
      * ConversationManager constructor.
      * @param StorageManager $storageManager
      */
-    public function __construct(StorageManager $storageManager)
+    public function __construct(Conversation $conversation, StorageManager $storageManager)
     {
+        $this->conversation = $conversation;
         $this->storageManager = $storageManager;
     }
 
@@ -29,31 +33,56 @@ class ConversationManager
      */
     public function createMessage(array $messageData)
     {
+        $hasAttachment = isset($messageData['attachment']);
 
-        if (isset($messageData['attachment'])) {
+        if ($hasAttachment) {
             $uploadedImageFilename = $this->storageManager->saveConversationImage(
                 $messageData['attachment'],
                 $messageData['conversation_id']
             );
-            $messageData['message'] = '<img src="' .
-                \StorageHelper::conversationImageUrl(
-                    $messageData['conversation_id'],
-                    $uploadedImageFilename
-                ) . '" class="img-responsive" />';
         }
-        DB::beginTransaction();
-        try {
-            $messageInstance = new ConversationMessage([
-                "conversation_id" => $messageData['conversation_id'],
-                "sender_id" => $messageData['sender_id'],
-                "recipient_id" => $messageData['recipient_id'],
-                "body" => $messageData['message']
-            ]);
 
-            $messageInstance->save();
+        DB::beginTransaction();
+
+        try {
+            $conversation = $this->createOrRetrieveConversation(
+                $messageData['sender_id'],
+                $messageData['recipient_id']
+            );
         } catch (\Exception $exception) {
             DB::rollBack();
             throw $exception;
+        }
+
+        try {
+            $messageInstance = new ConversationMessage([
+                'conversation_id' => $messageData['conversation_id'],
+                'sender_id' => $messageData['sender_id'],
+                'recipient_id' => $messageData['recipient_id'],
+                'body' => $messageData['message'],
+                'has_attachment' => $hasAttachment,
+            ]);
+
+            $messageInstance->save();
+
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
+
+        if ($hasAttachment) {
+            try {
+                $messageAttachment = new MessageAttachment([
+                    'conversation_id' => $messageData['conversation_id'],
+                    'message_id' => $messageInstance->id,
+                    'filename' => $uploadedImageFilename,
+                ]);
+
+                $messageAttachment->save();
+            } catch (\Exception $exception) {
+                DB::rollBack();
+                throw $exception;
+            }
         }
         DB::commit();
     }
@@ -146,5 +175,33 @@ class ConversationManager
             }
         }
         return $results;
+    }
+
+    /**
+     * @param int $userAId
+     * @param int $userBId
+     * @return Conversation
+     */
+    private function createOrRetrieveConversation(int $userAId, int $userBId)
+    {
+        $conversation = $this->conversation
+            ->where('user_a_id', $userAId)
+            ->where('user_b_id', $userBId)
+            ->orWhere(function($query) use ($userAId, $userBId) {
+                $query->where('user_a_id', $userBId);
+                $query->where('user_b_id', $userAId);
+            })
+            ->first();
+
+        if (!($conversation instanceof Conversation)) {
+            $conversation = new Conversation([
+                'user_a_id' => $userAId,
+                'user_b_id' => $userBId
+            ]);
+
+            $conversation->save();
+        }
+
+        return $conversation;
     }
 }

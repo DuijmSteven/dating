@@ -56,12 +56,19 @@ class StorageManager
      */
     public function saveUserPhoto(UploadedFile $uploadedFile, int $userId, $location = 'cloud')
     {
-        return $this->saveFile($uploadedFile, \StorageHelper::$userImagesPath . $userId, $location);
+        return $this->saveFile(
+            $uploadedFile,
+            \StorageHelper::userImagesPath($userId),
+            $location);
     }
 
     public function saveConversationImage(UploadedFile $uploadedFile, int $conversationId, $location = 'cloud')
     {
-        return $this->saveFile($uploadedFile, \StorageHelper::$conversationImagesPath . $conversationId, $location);
+        return $this->saveFile(
+            $uploadedFile,
+            \StorageHelper::messageAttachmentsPath($conversationId),
+            $location
+        );
     }
 
     /**
@@ -71,8 +78,8 @@ class StorageManager
      */
     public function deleteImage(int $userId, string $filename)
     {
-        if (Storage::disk('cloud')->exists(\StorageHelper::$userImagesPath . $userId . '/' . $filename)) {
-            $deleted = Storage::disk('cloud')->delete(\StorageHelper::$userImagesPath . $userId . '/' . $filename);
+        if (Storage::disk('cloud')->exists(\StorageHelper::userImagesPath($userId) . $filename)) {
+            $deleted = Storage::disk('cloud')->delete(\StorageHelper::userImagesPath($userId) . $filename);
             return $deleted;
         }
         return false;

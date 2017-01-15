@@ -5042,12 +5042,12 @@ table .action-buttons .btn {
   border-top: 3px solid #378186;
 }
 
-.label-peasant {
-  background-color: #b96d6d;
+.label-userB {
+  background-color: #378186;
 }
 
-.label-bot {
-  background-color: #378186;
+.label-userA {
+  background-color: #b96d6d;
 }
 
 .direct-chat-text.userA {

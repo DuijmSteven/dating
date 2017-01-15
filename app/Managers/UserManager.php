@@ -182,10 +182,15 @@ class UserManager
      */
     public function setRandomUsersOnline($userAmount)
     {
-        $randomUsers = $this->user->with(['roles' => function ($query) {
-            $query->where('name', 'user');
-            $query->select('name', 'user_id');
-        }])->orderByRaw('RAND()')->take($userAmount)->get();
+        $randomUsers = $this->user->with('roles')
+            ->whereHas('roles', function ($query) {
+                $query->where('id', 3);
+            })
+            ->orderByRaw('RAND()')->take($userAmount)
+            ->get();
+
+        \Log::info($randomUsers->toArray());
+        die();
 
         // This method is nly used in dev env so it is ok to do this
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
