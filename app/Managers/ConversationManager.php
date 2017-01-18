@@ -146,8 +146,8 @@ class ConversationManager
                               FROM conversation_messages
                               GROUP BY conversation_messages.conversation_id
                               HAVING COUNT(DISTINCT (conversation_messages.sender_id)) = 2)
-                              AS messages')
-                , function ($join) {
+                              AS messages'),
+                function ($join) {
                     $join->on('conversations.id', '=', 'messages.conversation_id');
                 }
             )
@@ -234,11 +234,13 @@ class ConversationManager
 
     public function conversationsByIds(array $conversationIds)
     {
-        $conversations = \DB::select('SELECT conversations.id, conversations.user_a_id, conversations.user_b_id, conversations.created_at,
-                                        notes.user_id, notes.category, notes.title, notes.body
-                                        FROM conversations
-                                        JOIN conversation_notes notes ON notes.conversation_id = conversations.id
-                                        ');
+        $conversations = \DB::select('SELECT 
+                                          conversations.id, conversations.user_a_id, 
+                                          conversations.user_b_id, conversations.created_at,
+                                          notes.user_id, notes.category, notes.title, notes.body
+                                    FROM conversations
+                                    JOIN conversation_notes notes ON notes.conversation_id = conversations.id
+                                    ');
 
         \Log::info($conversations);
         die();
