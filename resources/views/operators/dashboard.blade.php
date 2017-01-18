@@ -14,7 +14,7 @@
                     </a>
                 </h4>
             </div>
-            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+            <div id="collapseOne" class="panel-collapse" role="tabpanel" aria-labelledby="headingOne">
                 <div class="panel-body">
                     <div class="row">
                         @foreach($newConversations as $conversation)
@@ -45,8 +45,17 @@
                                         <!-- /.widget-user-image -->
                                     </div>
                                     <div class="box-footer no-padding">
-                                        <div class="text-summary">
-                                            <em>"{!! $lastMessage->body !!}"</em>
+                                        <div class="text-summary text-center">
+                                            @if($lastMessage->type === 'flirt')
+                                                <i class="fa fa-heart" style="color:red"></i>
+                                            @else
+                                                @if($lastMessage->has_attachment)
+                                                    <i class="fa fa-fw fa-paperclip"></i>
+                                                @endif
+                                                @if($lastMessage->body)
+                                                    <em>"{!! $lastMessage->body !!}"</em>
+                                                @endif
+                                            @endif
                                         </div>
                                     </div>
                                     <div>
@@ -98,8 +107,12 @@
                                         <!-- /.widget-user-image -->
                                     </div>
                                     <div class="box-footer no-padding">
-                                        <div class="text-summary">
-                                            <em>"{!! $lastMessage->body !!}"</em>
+                                        <div class="text-summary text-center">
+                                            @if($lastMessage->type === 'flirt')
+                                                <i class="fa fa-heart" style="color:red"></i>
+                                            @else
+                                                <em>"{!! $lastMessage->body !!}"</em>
+                                            @endif
                                         </div>
                                     </div>
                                     <div>
@@ -116,28 +129,40 @@
             <div class="panel-heading" role="tab" id="headingThree">
                 <h4 class="panel-title">
                     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        Flirts <span class="label label-success">{!! count($newFlirts) !!}</span>
+                        Flirts <span class="label label-success">{!! count($newFlirtConversations) !!}</span>
                     </a>
                 </h4>
             </div>
             <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                 <div class="panel-body">
                     <div class="row">
-                        @foreach($newFlirts as $flirt)
+                        @foreach($newFlirtConversations as $conversation)
+
+                            <?php
+                                $lastMessage = $conversation->messages->last();
+
+                                if ($conversation->userB->roles[0]->id === 3) {
+                                    $userA = $conversation->userA;
+
+                                    $conversation->userA = $conversation->userB;
+                                    $conversation->userB = $userA;
+                                }
+                            ?>
+
                             <div class="col-xs-12 col-sm-4 col-md-3">
                                 <div class="box box-primary">
                                     <div class="box-body no-padding">
                                         <ul class="users-list-flirts clearfix">
                                             <li>
                                                 <img src="https://almsaeedstudio.com/themes/AdminLTE/dist/img/user1-128x128.jpg" alt="User Image">
-                                                <a class="users-list-name" href="#">{!! $flirt->sender->username !!}</a>
+                                                <a class="users-list-name" href="#">{!! $lastMessage->sender->username !!}</a>
                                             </li>
                                             <li>
                                                 <i class="fa fa-arrow-circle-o-right" style="font-size: 4em; color: #dd4b39"></i>
                                             </li>
                                             <li>
                                                 <img src="https://almsaeedstudio.com/themes/AdminLTE/dist/img/user7-128x128.jpg" alt="User Image">
-                                                <a class="users-list-name" href="#">{!! $flirt->recipient->username !!}</a>
+                                                <a class="users-list-name" href="#">{!! $lastMessage->recipient->username !!}</a>
                                             </li>
                                         </ul>
                                     </div>

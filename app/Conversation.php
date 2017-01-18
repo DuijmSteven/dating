@@ -13,7 +13,12 @@ class Conversation extends Model
      */
     public function messages()
     {
-        return $this->hasMany('App\ConversationMessage')->with(['sender', 'recipient', 'attachment'])->orderBy('created_at', 'asc');
+        return $this->hasMany('App\ConversationMessage')->with([
+            'sender',
+            'recipient',
+            'attachment'
+        ])
+        ->orderBy('created_at', 'asc');
     }
 
     /**
@@ -21,7 +26,7 @@ class Conversation extends Model
      */
     public function attachments()
     {
-        return $this->hasMany('App\ConversationAttachment', 'conversation_id')->orderBy('created_at', 'asc');
+        return $this->hasMany('App\MessageAttachment', 'conversation_id')->orderBy('created_at', 'asc');
     }
 
     /**

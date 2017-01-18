@@ -23,7 +23,6 @@ class ConversationsMessagesFlirtsSeeder extends Seeder
         //disable foreign key check for this connection before running seeders
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table('conversations')->truncate();
-        DB::table('flirts')->truncate();
         DB::table('conversation_messages')->truncate();
 
         $botIds = User::whereHas('roles', function ($query) {
@@ -51,11 +50,15 @@ class ConversationsMessagesFlirtsSeeder extends Seeder
 
                 $conversation->save();
 
+                $messageIsFlirt = rand(0, 1);
+                $messageType = $messageIsFlirt ? 'flirt' : 'generic';
+
                 $userToBotMessage = new \App\ConversationMessage([
                     'conversation_id' => $conversation->id,
+                    'type' => $messageType,
                     'sender_id' => $realUserId,
                     'recipient_id' => $botId,
-                    'body' => $this->faker->text(200),
+                    'body' => $messageIsFlirt ? null : $this->faker->text(200),
                 ]);
 
                 $conversation->messages()->save($userToBotMessage);
@@ -66,18 +69,25 @@ class ConversationsMessagesFlirtsSeeder extends Seeder
                     $conversationIsNew = rand(0, 1);
 
                     if (!$conversationIsNew) {
+                        $messageIsFlirt = rand(0, 1);
+                        $messageType = $messageIsFlirt ? 'flirt' : 'generic';
+
                         $userToBotMessage = new \App\ConversationMessage([
                             'conversation_id' => $conversation->id,
+                            'type' => $messageType,
                             'sender_id' => $botId,
                             'recipient_id' => $realUserId,
                             'body' => $this->faker->text(200),
                         ]);
 
                         $conversation->messages()->save($userToBotMessage);
-
                     } else {
+                        $messageIsFlirt = rand(0, 1);
+                        $messageType = $messageIsFlirt ? 'flirt' : 'generic';
+
                         $userToBotMessage = new \App\ConversationMessage([
                             'conversation_id' => $conversation->id,
+                            'type' => $messageType,
                             'sender_id' => $realUserId,
                             'recipient_id' => $botId,
                             'body' => $this->faker->text(200),
@@ -88,12 +98,6 @@ class ConversationsMessagesFlirtsSeeder extends Seeder
                 }
 
             }
-
-            $flirt = new \App\Flirt([
-                'sender_id' => $botId
-            ]);
-
-            User::find($realUserId)->receivedFlirts()->save($flirt);
         }
 
         // supposed to only apply to a single connection and reset it's self

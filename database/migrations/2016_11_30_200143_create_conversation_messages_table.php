@@ -16,10 +16,11 @@ class CreateConversationMessagesTable extends Migration
         Schema::create('conversation_messages', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('conversation_id')->unsigned();
+            $table->string('type', 20);
             $table->integer('sender_id')->unsigned();
             $table->integer('recipient_id')->unsigned();
-            $table->string('body', 3000);
-            $table->boolean('has_attachment');
+            $table->string('body', 3000)->nullable();
+            $table->boolean('has_attachment')->default(false);
             $table->timestamps();
         });
     }

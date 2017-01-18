@@ -21,7 +21,6 @@ class ConversationController extends Controller
     public function show(int $conversationId)
     {
         $conversation = Conversation::with(['userA', 'userB', 'messages'])->find($conversationId);
-
         $conversation = $this->prepareConversationObject($conversation);
 
         return view(

@@ -87,19 +87,23 @@
                             <!-- /.direct-chat-info -->
                             <img class="direct-chat-img" src="{!! $user->profileImage ? \StorageHelper::userImageUrl($user->id, $user->profileImage->filename) : 'http://placehold.it/100x100' !!}" alt="message user image"><!-- /.direct-chat-img -->
                             <div class="direct-chat-text {!! ($alignment === 'right') ? 'userB' : 'userA' !!}">
-                                <?php if ($message->has_attachment): ?>
-                                    <div>
-                                        <img height="100" src="{!! \StorageHelper::messageAttachmentUrl(
-                                            $conversation->id,
-                                            $message->attachment->filename
-                                        ) !!}"
-                                             alt="">
-                                    </div>
-                                <?php endif; ?>
+                                @if($message->type === 'flirt')
+                                    <i class="fa fa-heart" style="color:red"></i>
+                                @else
+                                    @if($message->has_attachment)
+                                        <div>
+                                            <img height="100" src="{!! \StorageHelper::messageAttachmentUrl(
+                                                $conversation->id,
+                                                $message->attachment->filename
+                                            ) !!}"
+                                                 alt="">
+                                        </div>
+                                    @endif
 
-                                <?php if ($message->body): ?>
-                                    {!! $message->body !!}
-                                <?php endif; ?>
+                                    @if($message->body)
+                                        {!! $message->body !!}
+                                    @endif
+                                @endif
                             </div>
                             <!-- /.direct-chat-text -->
                         </div>

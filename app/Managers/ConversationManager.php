@@ -57,6 +57,7 @@ class ConversationManager
         try {
             $messageInstance = new ConversationMessage([
                 'conversation_id' => $messageData['conversation_id'],
+                'type' => 'generic',
                 'sender_id' => $messageData['sender_id'],
                 'recipient_id' => $messageData['recipient_id'],
                 'body' => $messageData['message'],
@@ -64,7 +65,6 @@ class ConversationManager
             ]);
 
             $messageInstance->save();
-
         } catch (\Exception $exception) {
             DB::rollBack();
             throw $exception;
@@ -94,7 +94,7 @@ class ConversationManager
     {
         $newConversations = $this->newConversations();
 
-        $newPeasantBotConversations = $this->filterConversationsByParticipantType($newConversations);
+        $newPeasantBotConversations = $this->filterConversationsByUserType($newConversations);
 
         return $newPeasantBotConversations;
     }
@@ -107,7 +107,7 @@ class ConversationManager
         $unrepliedPeasantBotConversations = $this->nonNewConversations();
 
         $unrepliedPeasantBotConversations = $this->
-            filterConversationsByParticipantType($unrepliedPeasantBotConversations);
+            filterConversationsByUserType($unrepliedPeasantBotConversations);
 
         return $unrepliedPeasantBotConversations;
     }
@@ -118,7 +118,8 @@ class ConversationManager
     public function newConversations()
     {
         $newConversationsIds = \DB::table('conversations')->distinct()->select('id')
-            ->join(\DB::raw('(SELECT conversation_messages.conversation_id,
+            ->join(
+                \DB::raw('(SELECT conversation_messages.conversation_id,
                                      conversation_messages.sender_id
                               FROM conversation_messages
                               GROUP BY conversation_messages.conversation_id
@@ -126,13 +127,11 @@ class ConversationManager
                               AS messages'),
                 function ($join) {
                     $join->on('conversations.id', '=', 'messages.conversation_id');
-                })
-            ->pluck('id');
+                }
+            )
+            ->pluck('id')->toArray();
 
-        return Conversation::with(['userA', 'userB', 'messages'])
-            ->whereIn('id', $newConversationsIds)
-            ->orderBy('created_at', 'desc')
-            ->get();
+        return self::conversationsByIds($newConversationsIds);
     }
 
     /**
@@ -141,27 +140,55 @@ class ConversationManager
     public function nonNewConversations()
     {
         $nonNewConversationsIds = \DB::table('conversations')->distinct()->select('id')
-            ->join(\DB::raw('(SELECT conversation_messages.conversation_id,
+            ->join(
+                \DB::raw('(SELECT conversation_messages.conversation_id,
                                      conversation_messages.sender_id
                               FROM conversation_messages
                               GROUP BY conversation_messages.conversation_id
                               HAVING COUNT(DISTINCT (conversation_messages.sender_id)) = 2)
-                              AS messages'), function ($join) {
-                $join->on('conversations.id', '=', 'messages.conversation_id');
-})
-            ->pluck('id');
+                              AS messages')
+                , function ($join) {
+                    $join->on('conversations.id', '=', 'messages.conversation_id');
+                }
+            )
+            ->pluck('id')->toArray();
 
-        return Conversation::with(['userA', 'userB', 'messages'])
-            ->whereIn('id', $nonNewConversationsIds)
-            ->orderBy('created_at', 'desc')
-            ->get();
+        return self::conversationsByIds($nonNewConversationsIds);
+    }
+
+    public function newFlirts()
+    {
+        $allConversations = Conversation::with(['messages'])->get();
+        return self::filterConversationsByUserAndLastMessageType($allConversations);
+    }
+
+    private function filterConversationsByUserAndLastMessageType(\Illuminate\Support\Collection $conversations)
+    {
+        $results = [];
+        foreach ($conversations as $conversation) {
+            $lastMessage = $conversation->messages->first();
+
+            $lastUserType = $lastMessage->sender->roles[0]->id;
+            $otherUserType = $lastMessage->recipient->roles[0]->id;
+
+            $lastMessageType = $conversation->messages->first()->type;
+
+            if ($lastUserType == UserConstants::selectableField('role', 'common', 'array_flip')['peasant'] &&
+                $otherUserType == UserConstants::selectableField('role', 'common', 'array_flip')['bot'] &&
+                $lastMessageType === 'flirt'
+            ) {
+                $results[] = $conversation;
+            }
+        }
+
+        return $results;
     }
 
     /**
      * @param \Illuminate\Support\Collection $conversations
      * @return array
      */
-    private function filterConversationsByParticipantType(\Illuminate\Support\Collection $conversations)
+    private function filterConversationsByUserType(\Illuminate\Support\Collection $conversations)
     {
         $results = [];
         foreach ($conversations as $conversation) {
@@ -177,7 +204,14 @@ class ConversationManager
         return $results;
     }
 
-    /**
+    /**\DB::table('conversations')->distinct()->select('id')
+            ->join(
+                \DB::raw('(SELECT conversation_messages.conversation_id,
+                                     conversation_messages.sender_id
+                              FROM conversation_messages
+                              GROUP BY conversation_messages.conversation_id
+                              HAVING COUNT(DISTINCT (conversation_messages.sender_id)) = 1)
+                              AS messages')
      * @param int $userAId
      * @param int $userBId
      * @return Conversation
@@ -187,7 +221,7 @@ class ConversationManager
         $conversation = $this->conversation
             ->where('user_a_id', $userAId)
             ->where('user_b_id', $userBId)
-            ->orWhere(function($query) use ($userAId, $userBId) {
+            ->orWhere(function ($query) use ($userAId, $userBId) {
                 $query->where('user_a_id', $userBId);
                 $query->where('user_b_id', $userAId);
             })
@@ -203,5 +237,17 @@ class ConversationManager
         }
 
         return $conversation;
+    }
+
+    public function conversationsByIds(array $conversationIds)
+    {
+        return \DB::table('conversations')->distinct()->select('id')
+            ->join(
+                \DB::raw('(SELECT conversation_messages.conversation_id,
+                                     conversation_messages.sender_id
+                              FROM conversation_messages
+                              GROUP BY conversation_messages.conversation_id
+                              HAVING COUNT(DISTINCT (conversation_messages.sender_id)) = 1)
+                              AS messages')
     }
 }

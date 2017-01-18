@@ -35,7 +35,7 @@ class HomeController extends \App\Http\Controllers\Controller
             [
                 'newConversations' => $this->conversationManager->newPeasantBotConversations(),
                 'unrepliedConversations' => $this->conversationManager->unrepliedPeasantBotConversations(),
-                'newFlirts' => Flirt::with(['sender', 'recipient'])->where('seen', 0)->get()
+                'newFlirtConversations' => $this->conversationManager->newFlirts(),
             ]
         );
     }
