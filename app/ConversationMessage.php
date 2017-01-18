@@ -41,4 +41,9 @@ class ConversationMessage extends Model
     {
         return $this->hasOne('App\MessageAttachment', 'message_id', 'id');
     }
+
+    public function notes()
+    {
+        return $this->hasMany('App\ConversationNote', 'conversation_id', 'id');
+    }
 }

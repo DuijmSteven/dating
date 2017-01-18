@@ -24,6 +24,7 @@ class ConversationsMessagesFlirtsSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table('conversations')->truncate();
         DB::table('conversation_messages')->truncate();
+        DB::table('conversation_notes')->truncate();
 
         $botIds = User::whereHas('roles', function ($query) {
             $query->where('id', 3);
@@ -62,6 +63,36 @@ class ConversationsMessagesFlirtsSeeder extends Seeder
                 ]);
 
                 $conversation->messages()->save($userToBotMessage);
+
+                $randomCategories = [
+                    $this->faker->word,
+                    $this->faker->word,
+                    $this->faker->word,
+                    $this->faker->word,
+                    $this->faker->word,
+                ];
+
+                foreach ([$realUserId, $botId] as $userId) {
+                    $categoriesAmount = rand(1, 3);
+
+                    for ($i = 0; $i < $categoriesAmount; $i++) {
+                        $category = $this->faker->randomElement($randomCategories);
+
+                        $notesAmount = rand(1, 5);
+
+                        for ($j = 0; $j < $notesAmount; $j++) {
+                            $conversationNote = new \App\ConversationNote([
+                                'conversation_id' => $conversation->id,
+                                'category' => $category,
+                                'user_id' => $userId,
+                                'title' => $this->faker->text(rand(5, 20)),
+                                'body' => $this->faker->text(rand(15, 250)),
+                            ]);
+
+                            $conversationNote->save();
+                        }
+                    }
+                }
 
                 $conversationHasOneMessage = rand(0, 1);
 

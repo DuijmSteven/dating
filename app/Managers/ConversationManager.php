@@ -204,14 +204,7 @@ class ConversationManager
         return $results;
     }
 
-    /**\DB::table('conversations')->distinct()->select('id')
-            ->join(
-                \DB::raw('(SELECT conversation_messages.conversation_id,
-                                     conversation_messages.sender_id
-                              FROM conversation_messages
-                              GROUP BY conversation_messages.conversation_id
-                              HAVING COUNT(DISTINCT (conversation_messages.sender_id)) = 1)
-                              AS messages')
+    /**
      * @param int $userAId
      * @param int $userBId
      * @return Conversation
@@ -241,13 +234,13 @@ class ConversationManager
 
     public function conversationsByIds(array $conversationIds)
     {
-        return \DB::table('conversations')->distinct()->select('id')
-            ->join(
-                \DB::raw('(SELECT conversation_messages.conversation_id,
-                                     conversation_messages.sender_id
-                              FROM conversation_messages
-                              GROUP BY conversation_messages.conversation_id
-                              HAVING COUNT(DISTINCT (conversation_messages.sender_id)) = 1)
-                              AS messages')
+        $conversations = \DB::select('SELECT conversations.id, conversations.user_a_id, conversations.user_b_id, conversations.created_at,
+                                        notes.user_id, notes.category, notes.title, notes.body
+                                        FROM conversations
+                                        JOIN conversation_notes notes ON notes.conversation_id = conversations.id
+                                        ');
+
+        \Log::info($conversations);
+        die();
     }
 }
