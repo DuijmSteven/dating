@@ -34,8 +34,8 @@ class HomeController extends \App\Http\Controllers\Controller
             'operators.dashboard',
             [
                 'newConversations' => $this->conversationManager->newPeasantBotConversations(),
-                'unrepliedConversations' => $this->conversationManager->unrepliedPeasantBotConversations(),
-                'newFlirtConversations' => $this->conversationManager->newFlirts(),
+                //'unrepliedConversations' => $this->conversationManager->unrepliedPeasantBotConversations(),
+                //'newFlirtConversations' => $this->conversationManager->newFlirts(),
             ]
         );
     }

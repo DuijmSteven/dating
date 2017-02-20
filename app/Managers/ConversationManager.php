@@ -92,11 +92,9 @@ class ConversationManager
      */
     public function newPeasantBotConversations()
     {
-        $newConversations = $this->newConversations();
+        $newConversationIds = $this->newConversationIds();
 
-        $newPeasantBotConversations = $this->filterConversationsByUserType($newConversations);
-
-        return $newPeasantBotConversations;
+        return self::conversationsByIds($newConversationIds, true);
     }
 
     /**
@@ -115,9 +113,9 @@ class ConversationManager
     /**
      * @return \Illuminate\Support\Collection
      */
-    public function newConversations()
+    public function newConversationIds()
     {
-        $newConversationsIds = \DB::table('conversations')->distinct()->select('id')
+        $newConversationIds = \DB::table('conversations')->distinct()->select('id')
             ->join(
                 \DB::raw('(SELECT conversation_messages.conversation_id,
                                      conversation_messages.sender_id
@@ -131,7 +129,7 @@ class ConversationManager
             )
             ->pluck('id')->toArray();
 
-        return self::conversationsByIds($newConversationsIds);
+        return $newConversationIds;
     }
 
     /**
@@ -188,7 +186,7 @@ class ConversationManager
      * @param \Illuminate\Support\Collection $conversations
      * @return array
      */
-    private function filterConversationsByUserType(\Illuminate\Support\Collection $conversations)
+    private function filterConversationsByUserType(array $conversations)
     {
         $results = [];
         foreach ($conversations as $conversation) {
@@ -232,10 +230,14 @@ class ConversationManager
         return $conversation;
     }
 
-    public function conversationsByIds(array $conversationIds)
+    public function conversationsByIds(array $conversationIds, $excludeRealConversations = true)
     {
-        $conversations = \DB::select('SELECT  c.id as conversation_id,
-                                              m.id as last_message_id, m.body as last_message_body, m.type as last_message_type,
+        $excludeRealConversationsQuery = $excludeRealConversations ?
+            ' AND ((user_a_role.role_id = 2 AND user_b_role.role_id = 3) OR (user_a_role.role_id = 3 AND user_b_role.role_id = 2)) ' :
+            '';
+
+        $results = \DB::select('SELECT  c.id as conversation_id,
+                                              m.id as last_message_id, m.created_at as last_message_created_at, m.body as last_message_body, m.has_attachment as last_message_has_attachment, m.type as last_message_type,
                                               m.sender_id as last_message_sender_id, m.recipient_id as last_message_recipient_id,
                                               user_a.id as user_a_id, user_b.id as user_b_id, user_a.username as user_a_username, user_b.username as user_b_username,
                                               user_a_images.filename as user_a_img, user_b_images.filename as user_b_img, user_a_role.role_id as user_a_role_id,
@@ -270,13 +272,42 @@ class ConversationManager
                                                 WHERE   ui.profile = 1 AND ui.user_id = user_b.id
                                                 LIMIT 1
                                             )
-                                        WHERE c.id IN (' . implode(',', $conversationIds) . ')
-                                        AND user_a_role.role_id = 1
-                                        ORDER BY c.created_at DESC
+                                        WHERE c.id IN (' . implode(',', $conversationIds) . ')' .
+                                        $excludeRealConversationsQuery .
+                                        'ORDER BY c.created_at DESC
                                     ');
 
+        $conversations = [];
+
+        foreach ($results as $result) {
+            $conversation = [];
+
+            $conversation['user_a']['id'] = $result->user_a_id;
+            $conversation['user_a']['username'] = $result->user_a_username;
+            $conversation['user_a']['profile_image_url'] = $result->user_a_img;
+            $conversation['user_a']['role_id'] = $result->user_a_role_id;
+
+            $conversation['user_b']['id'] = $result->user_b_id;
+            $conversation['user_b']['username'] = $result->user_b_username;
+            $conversation['user_b']['profile_image_url'] = $result->user_b_img;
+            $conversation['user_b']['role_id'] = $result->user_b_role_id;
+
+            $conversation['last_message']['id'] = $result->last_message_id;
+            $conversation['last_message']['sender_id'] = $result->last_message_sender_id;
+            $conversation['last_message']['recipient_id'] = $result->last_message_recipient_id;
+            $conversation['last_message']['body'] = $result->last_message_body;
+            $conversation['last_message']['has_attachment'] = $result->last_message_has_attachment;
+            $conversation['last_message']['type'] = $result->last_message_type;
+            $conversation['last_message']['created_at'] = $result->last_message_created_at;
+
+            $conversation['id'] = $result->conversation_id;
+            $conversation['id'] = $result->conversation_id;
+            $conversation['id'] = $result->conversation_id;
+
+            $conversations[$result->conversation_id] = $conversation;
+        }
+
         \Log::info($conversations);
-        die();
         return $conversations;
     }
 }
