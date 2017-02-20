@@ -234,15 +234,49 @@ class ConversationManager
 
     public function conversationsByIds(array $conversationIds)
     {
-        $conversations = \DB::select('SELECT 
-                                          conversations.id, conversations.user_a_id, 
-                                          conversations.user_b_id, conversations.created_at,
-                                          notes.user_id, notes.category, notes.title, notes.body
-                                    FROM conversations
-                                    JOIN conversation_notes notes ON notes.conversation_id = conversations.id
+        $conversations = \DB::select('SELECT  c.id as conversation_id,
+                                              m.id as last_message_id, m.body as last_message_body, m.type as last_message_type,
+                                              m.sender_id as last_message_sender_id, m.recipient_id as last_message_recipient_id,
+                                              user_a.id as user_a_id, user_b.id as user_b_id, user_a.username as user_a_username, user_b.username as user_b_username,
+                                              user_a_images.filename as user_a_img, user_b_images.filename as user_b_img, user_a_role.role_id as user_a_role_id,
+                                              user_b_role.role_id as user_b_role_id
+                                        FROM    conversations c
+                                        JOIN    conversation_messages m
+                                            ON      m.id =
+                                                    (
+                                                        SELECT  mi.id
+                                                        FROM    conversation_messages mi
+                                                        WHERE   mi.conversation_id = c.id
+                                                        ORDER BY mi.created_at DESC
+                                                        LIMIT 1
+                                                    )
+                                        JOIN    users user_a ON user_a.id = c.user_a_id
+                                        JOIN    role_user user_a_role ON c.user_a_id = user_a_role.user_id
+                                        JOIN    role_user user_b_role ON c.user_b_id = user_b_role.user_id
+                                        JOIN    users user_b ON user_b.id = c.user_b_id
+                                        LEFT JOIN    user_images user_a_images
+                                            ON      user_a_images.id =
+                                                        (
+                                                            SELECT  ui.id
+                                                            FROM    user_images ui
+                                                            WHERE   ui.profile = 1 AND ui.user_id = user_a.id
+                                                            LIMIT 1
+                                                        )
+                                        LEFT JOIN    user_images user_b_images
+                                          ON      user_b_images.id =
+                                            (
+                                                SELECT  ui.id
+                                                FROM    user_images ui
+                                                WHERE   ui.profile = 1 AND ui.user_id = user_b.id
+                                                LIMIT 1
+                                            )
+                                        WHERE c.id IN (' . implode(',', $conversationIds) . ')
+                                        AND user_a_role.role_id = 1
+                                        ORDER BY c.created_at DESC
                                     ');
 
         \Log::info($conversations);
         die();
+        return $conversations;
     }
 }

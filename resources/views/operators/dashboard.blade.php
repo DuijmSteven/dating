@@ -19,8 +19,6 @@
                     <div class="row">
                         @foreach($newConversations as $conversation)
                             <?php
-                                $lastMessage = $conversation->messages->last();
-
                                 if ($conversation->userB->roles[0]->id === 3) {
                                     $userA = $conversation->userA;
 
@@ -46,7 +44,7 @@
                                     </div>
                                     <div class="box-footer no-padding">
                                         <div class="text-summary text-center">
-                                            @if($lastMessage->type === 'flirt')
+                                            @if($conversation->last_message_type === 'flirt')
                                                 <i class="fa fa-heart" style="color:red"></i>
                                             @else
                                                 @if($lastMessage->has_attachment)
