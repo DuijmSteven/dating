@@ -245,6 +245,12 @@ class ConversationManager
 
     public function conversationsByIds(array $conversationIds, $excludeRealConversations = true, int $limit = 0, int $offset = 0)
     {
+        $conversations = [];
+
+        if (empty($conversationIds)) {
+            return $conversations;
+        }
+
         $excludeRealConversationsQuery = $excludeRealConversations ?
             ' AND ((user_a_role.role_id = 2 AND user_b_role.role_id = 3) OR (user_a_role.role_id = 3 AND user_b_role.role_id = 2)) ' :
             '';
