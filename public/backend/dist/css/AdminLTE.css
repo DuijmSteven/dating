@@ -4948,7 +4948,7 @@ table .action-buttons .btn {
   display: flex;
   flex-direction: row;
   height: 30px;
-  background-color: #b96d6d;
+  background-color: #378186;
 }
 
 .convo-tile img {
@@ -4956,7 +4956,7 @@ table .action-buttons .btn {
 }
 
 .convo-tile.bot {
-  background-color: #378186;
+  background-color: #b96d6d;
 }
 
 .convo-tile_text {

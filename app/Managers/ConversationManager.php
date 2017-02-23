@@ -92,33 +92,34 @@ class ConversationManager
      */
     public function newPeasantBotConversations()
     {
-        $newConversationIds = $this->newConversationIds();
+        \Log::info($this->newConversationIds());
 
-        return self::conversationsByIds($newConversationIds, true);
+        return self::conversationsByIds(
+            $this->newConversationIds(),
+            true
+        );
     }
 
     /**
-     * @return array|\Illuminate\Support\Collection
+     * @return array
      */
     public function unrepliedPeasantBotConversations()
     {
-        $unrepliedPeasantBotConversations = $this->nonNewConversations();
-
-        $unrepliedPeasantBotConversations = $this->
-            filterConversationsByUserType($unrepliedPeasantBotConversations);
-
-        return $unrepliedPeasantBotConversations;
+        return self::conversationsByIds(
+            $this->nonNewConversations(),
+            true
+        );
     }
 
     /**
-     * @return \Illuminate\Support\Collection
+     * @return array
      */
     public function newConversationIds()
     {
         $newConversationIds = \DB::table('conversations')->distinct()->select('id')
             ->join(
                 \DB::raw('(SELECT conversation_messages.conversation_id,
-                                     conversation_messages.sender_id
+                                  conversation_messages.sender_id
                               FROM conversation_messages
                               GROUP BY conversation_messages.conversation_id
                               HAVING COUNT(DISTINCT (conversation_messages.sender_id)) = 1)
@@ -133,14 +134,14 @@ class ConversationManager
     }
 
     /**
-     * @return \Illuminate\Support\Collection
+     * @return array
      */
     public function nonNewConversations()
     {
         $nonNewConversationsIds = \DB::table('conversations')->distinct()->select('id')
             ->join(
                 \DB::raw('(SELECT conversation_messages.conversation_id,
-                                     conversation_messages.sender_id
+                                  conversation_messages.sender_id
                               FROM conversation_messages
                               GROUP BY conversation_messages.conversation_id
                               HAVING COUNT(DISTINCT (conversation_messages.sender_id)) = 2)
@@ -151,15 +152,21 @@ class ConversationManager
             )
             ->pluck('id')->toArray();
 
-        return self::conversationsByIds($nonNewConversationsIds);
+        return $nonNewConversationsIds;
     }
 
+    /**
+     * @return array
+     */
     public function newFlirts()
     {
-        $allConversations = Conversation::with(['messages'])->get();
-        return self::filterConversationsByUserAndLastMessageType($allConversations);
+        return self::filterConversationsByUserAndLastMessageType(Conversation::with(['messages'])->get());
     }
 
+    /**
+     * @param \Illuminate\Support\Collection $conversations
+     * @return array
+     */
     private function filterConversationsByUserAndLastMessageType(\Illuminate\Support\Collection $conversations)
     {
         $results = [];
@@ -179,26 +186,6 @@ class ConversationManager
             }
         }
 
-        return $results;
-    }
-
-    /**
-     * @param \Illuminate\Support\Collection $conversations
-     * @return array
-     */
-    private function filterConversationsByUserType(array $conversations)
-    {
-        $results = [];
-        foreach ($conversations as $conversation) {
-            $lastUserType = $conversation->messages->first()->sender->roles[0]->id;
-            $otherUserType = $conversation->messages->first()->recipient->roles[0]->id;
-
-            if ($lastUserType == UserConstants::selectableField('role', 'common', 'array_flip')['peasant'] &&
-                $otherUserType == UserConstants::selectableField('role', 'common', 'array_flip')['bot']
-            ) {
-                $results[] = $conversation;
-            }
-        }
         return $results;
     }
 
@@ -230,13 +217,13 @@ class ConversationManager
         return $conversation;
     }
 
-    public function conversationsByIds(array $conversationIds, $excludeRealConversations = true)
+    public function conversationsByIds(array $conversationIds, $excludeRealConversations = true, int $limit = 0, int $offset = 0)
     {
         $excludeRealConversationsQuery = $excludeRealConversations ?
             ' AND ((user_a_role.role_id = 2 AND user_b_role.role_id = 3) OR (user_a_role.role_id = 3 AND user_b_role.role_id = 2)) ' :
             '';
 
-        $results = \DB::select('SELECT  c.id as conversation_id,
+        $query = 'SELECT  c.id as conversation_id,
                                               m.id as last_message_id, m.created_at as last_message_created_at, m.body as last_message_body, m.has_attachment as last_message_has_attachment, m.type as last_message_type,
                                               m.sender_id as last_message_sender_id, m.recipient_id as last_message_recipient_id,
                                               user_a.id as user_a_id, user_b.id as user_b_id, user_a.username as user_a_username, user_b.username as user_b_username,
@@ -245,38 +232,60 @@ class ConversationManager
                                         FROM    conversations c
                                         JOIN    conversation_messages m
                                             ON      m.id =
-                                                    (
-                                                        SELECT  mi.id
-                                                        FROM    conversation_messages mi
-                                                        WHERE   mi.conversation_id = c.id
-                                                        ORDER BY mi.created_at DESC
-                                                        LIMIT 1
-                                                    )
+                                                (
+                                                    SELECT  mi.id
+                                                    FROM    conversation_messages mi
+                                                    WHERE   mi.conversation_id = c.id
+                                                    ORDER BY mi.created_at DESC
+                                                    LIMIT 1
+                                                )
                                         JOIN    users user_a ON user_a.id = c.user_a_id
                                         JOIN    role_user user_a_role ON c.user_a_id = user_a_role.user_id
                                         JOIN    role_user user_b_role ON c.user_b_id = user_b_role.user_id
                                         JOIN    users user_b ON user_b.id = c.user_b_id
                                         LEFT JOIN    user_images user_a_images
                                             ON      user_a_images.id =
-                                                        (
-                                                            SELECT  ui.id
-                                                            FROM    user_images ui
-                                                            WHERE   ui.profile = 1 AND ui.user_id = user_a.id
-                                                            LIMIT 1
-                                                        )
+                                                (
+                                                    SELECT  ui.id
+                                                    FROM    user_images ui
+                                                    WHERE   ui.profile = 1 AND ui.user_id = user_a.id
+                                                    LIMIT 1
+                                                )
                                         LEFT JOIN    user_images user_b_images
                                           ON      user_b_images.id =
-                                            (
-                                                SELECT  ui.id
-                                                FROM    user_images ui
-                                                WHERE   ui.profile = 1 AND ui.user_id = user_b.id
-                                                LIMIT 1
-                                            )
+                                              (
+                                                  SELECT  ui.id
+                                                  FROM    user_images ui
+                                                  WHERE   ui.profile = 1 AND ui.user_id = user_b.id
+                                                  LIMIT 1
+                                              )
                                         WHERE c.id IN (' . implode(',', $conversationIds) . ')' .
-                                        $excludeRealConversationsQuery .
-                                        'ORDER BY c.created_at DESC
-                                    ');
+            $excludeRealConversationsQuery . '
+                                        ORDER BY c.created_at DESC
+                                    ';
 
+
+        if ($limit) {
+            $query .= ' LIMIT = ' . $limit;
+        }
+
+        if ($offset) {
+            $query .= ' LIMIT = ' . $offset;
+        }
+
+
+        $results = \DB::select($query);
+        $conversations = $this->formatConversations($results);
+
+        return $conversations;
+    }
+
+    /**
+     * @param $results
+     * @return array
+     */
+    protected function formatConversations($results)
+    {
         $conversations = [];
 
         foreach ($results as $result) {
@@ -306,8 +315,6 @@ class ConversationManager
 
             $conversations[$result->conversation_id] = $conversation;
         }
-
-        \Log::info($conversations);
         return $conversations;
     }
 }
