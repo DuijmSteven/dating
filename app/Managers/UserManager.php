@@ -189,9 +189,6 @@ class UserManager
             ->orderByRaw('RAND()')->take($userAmount)
             ->get();
 
-        \Log::info($randomUsers->toArray());
-        die();
-
         // This method is nly used in dev env so it is ok to do this
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Model::unguard();
