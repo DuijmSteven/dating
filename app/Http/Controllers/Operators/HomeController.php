@@ -35,7 +35,7 @@ class HomeController extends \App\Http\Controllers\Controller
             [
                 'newConversations' => $this->conversationManager->newPeasantBotConversations(),
                 'unrepliedConversations' => $this->conversationManager->unrepliedPeasantBotConversations(),
-                //'newFlirtConversations' => $this->conversationManager->newFlirts(),
+                'newFlirtConversations' => $this->conversationManager->conversationsWithNewFlirt(),
             ]
         );
     }
