@@ -105,10 +105,12 @@ class ConversationManager
      */
     public function unrepliedPeasantBotConversations()
     {
-        return self::filterConversationsByUserAndLastMessageType(self::conversationsByIds(
-            $this->conversationIds('only_old', 'peasant_bot'),
-            true
-        ));
+        return self::filterConversationsByUserAndLastMessageType(
+            self::conversationsByIds(
+                $this->conversationIds('only_old', 'peasant_bot'),
+                true
+            )
+        );
     }
 
     /**
@@ -119,9 +121,14 @@ class ConversationManager
      */
     public function conversationIds(string $age = 'any', string $lastMessageUserRoles = 'any')
     {
-        list($anyRole, $senderId, $recipientId, $ageQuery) = $this->resolveConversationTypeOptions($age, $lastMessageUserRoles);
+        list($anyRole, $senderRole, $recipientRole, $ageQuery) = $this->resolveConversationTypeOptions(
+            $age,
+            $lastMessageUserRoles
+        );
 
-        $newConversationIds = \DB::table('conversation_messages')->distinct()->select('conversation_messages.conversation_id')
+        $newConversationIds = \DB::table('conversation_messages')
+            ->distinct()
+            ->select('conversation_messages.conversation_id')
             ->join(
                 \DB::raw('(SELECT conversation_messages.id,
                                   conversation_messages.sender_id
@@ -134,10 +141,17 @@ class ConversationManager
             )
             ->join('role_user as sender_role', 'sender_role.user_id', 'conversation_messages.sender_id')
             ->join('role_user as recipient_role', 'recipient_role.user_id', 'conversation_messages.recipient_id')
-            ->where(function($query) use ($anyRole, $senderId, $recipientId) {
+            ->where(function ($query) use ($anyRole, $senderRole, $recipientRole) {
                 if (!$anyRole) {
-                    $query->where('sender_role.role_id', UserConstants::selectableField('role', 'common', 'array_flip')[$senderId]);
-                    $query->where('recipient_role.role_id', UserConstants::selectableField('role', 'common', 'array_flip')[$recipientId]);
+                    $query->where(
+                        'sender_role.role_id',
+                        UserConstants::selectableField('role', 'common', 'array_flip')[$senderRole]
+                    );
+
+                    $query->where(
+                        'recipient_role.role_id',
+                        UserConstants::selectableField('role', 'common', 'array_flip')[$recipientRole]
+                    );
                 } else {
                     $query->whereRaw(' 1=1 ');
                 }
@@ -150,34 +164,14 @@ class ConversationManager
     /**
      * @return array
      */
-    public function nonNewConversationIds()
-    {
-        $nonNewConversationsIds = \DB::table('conversations')->distinct()->select('id')
-            ->join(
-                \DB::raw('(SELECT conversation_messages.conversation_id,
-                                  conversation_messages.sender_id
-                              FROM conversation_messages
-                              GROUP BY conversation_messages.conversation_id
-                              HAVING COUNT(DISTINCT (conversation_messages.sender_id)) = 2)
-                              AS messages'),
-                function ($join) {
-                    $join->on('conversations.id', '=', 'messages.conversation_id');
-                }
-            )
-            ->pluck('id')->toArray();
-
-        return $nonNewConversationsIds;
-    }
-
-    /**
-     * @return array
-     */
     public function conversationsWithNewFlirt()
     {
-        $conversationsWithFlirtIds = \DB::table('conversation_messages')->distinct()->select('conversation_messages.conversation_id')
+        $conversationsWithFlirtIds = \DB::table('conversation_messages')
+            ->distinct()
+            ->select('conversation_messages.conversation_id')
             ->join('role_user as sender_role', 'sender_role.user_id', 'conversation_messages.sender_id')
             ->join('role_user as recipient_role', 'recipient_role.user_id', 'conversation_messages.recipient_id')
-            ->where(function($query) {
+            ->where(function ($query) {
                 $query->where('sender_role.role_id', 2);
                 $query->where('recipient_role.role_id', 3);
             })->pluck('conversation_messages.conversation_id')->toArray();
@@ -193,7 +187,7 @@ class ConversationManager
 
     /**
      * @param array $conversations
-     * @param string $lastMessageType
+     * @param array $lastMessageTypes
      * @return array
      */
     private function filterConversationsByUserAndLastMessageType(array $conversations, array $lastMessageTypes = [])
@@ -315,6 +309,7 @@ class ConversationManager
     /**
      * @param $results
      * @return array
+     * @throws \Exception
      */
     protected function formatConversations($results)
     {
@@ -368,10 +363,9 @@ class ConversationManager
      */
     private function resolveConversationTypeOptions(string $age, string $lastMessageUserRoles)
     {
-        $anyAge = false;
         $anyRole = false;
-        $senderId = 0;
-        $recipientId = 0;
+        $senderRole = null;
+        $recipientRole = null;
 
         $allowedUserRoles = [
             'peasant_bot', // last message-sender is peasant / recipient is bot
@@ -398,20 +392,19 @@ class ConversationManager
         if ($lastMessageUserRoles === 'any') {
             $anyRole = true;
         } else {
-            list($senderId, $recipientId) = explode('_', $lastMessageUserRoles);
+            list($senderRole, $recipientRole) = explode('_', $lastMessageUserRoles);
         }
 
         // resolve messages to return based on new/old/any
         if ($age === 'any') {
-            $anyAge = true;
             $ageQuery = '';
-            return array($anyRole, $senderId, $recipientId, $ageQuery);
+            return array($anyRole, $senderRole, $recipientRole, $ageQuery);
         } else {
             $requiredDistinctCount = (explode('_', $age)[1] === 'new') ? 1 : 2;
 
             $ageQuery = ' GROUP BY conversation_messages.conversation_id
                          HAVING COUNT(DISTINCT (conversation_messages.sender_id)) = ' . $requiredDistinctCount . ') ';
-            return array($anyRole, $senderId, $recipientId, $ageQuery);
+            return array($anyRole, $senderRole, $recipientRole, $ageQuery);
         }
     }
 }

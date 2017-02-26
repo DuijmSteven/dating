@@ -32,7 +32,7 @@ class ConversationController extends Controller
             'backend.conversations.show',
             [
                 'title' => 'Conversation (id: ' . $conversationId . ') - ' . \MetaConstants::SITE_NAME,
-                'headingLarge' => 'Conversation',
+                'headingLarge' => 'Conversation (ID: ' . $conversationId . ')',
                 'headingSmall' => $conversation->userA->username .
                     ' (id: ' . $conversation->userA->id . ') - ' .
                     $conversation->userB->username .
