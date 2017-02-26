@@ -8,6 +8,7 @@ use App\Helpers\ApplicationConstants\UserConstants;
 use App\Helpers\ccampbell\ChromePhp\ChromePhp;
 use App\Managers\ConversationManager;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends \App\Http\Controllers\Controller
 {
@@ -33,6 +34,9 @@ class HomeController extends \App\Http\Controllers\Controller
         return view(
             'operators.dashboard',
             [
+                'title' => 'Operator dashboard - ' . Auth::user()->username,
+                'headingLarge' => 'Operator dashboard',
+                'headingSmall' => Auth::user()->username,
                 'newConversations' => $this->conversationManager->newPeasantBotConversations(),
                 'unrepliedConversations' => $this->conversationManager->unrepliedPeasantBotConversations(),
                 'newFlirtConversations' => $this->conversationManager->conversationsWithNewFlirt(),

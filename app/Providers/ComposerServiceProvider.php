@@ -13,7 +13,7 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->composeNavbar();
+        $this->injectAuthenticatedUser();
     }
 
     /**
@@ -26,8 +26,8 @@ class ComposerServiceProvider extends ServiceProvider
         //
     }
 
-    private function composeNavbar()
+    private function injectAuthenticatedUser()
     {
-        view()->composer('frontend.navbar', 'App\ViewComposers\NavbarComposer');
+        view()->composer('frontend.layouts.default.layout', 'App\ViewComposers\BaseComposer');
     }
 }
