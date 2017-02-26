@@ -99,7 +99,7 @@
                         <div class="direct-chat-msg {!! $alignment !!}">
                             <div class="direct-chat-info clearfix">
                                 <span class="direct-chat-name pull-{!! ($alignment === 'right') ? 'right' : 'left' !!}">{!! $user->username !!}</span>
-                                <span class="direct-chat-timestamp pull-{!! ($alignment === 'right') ? 'left' : 'right' !!}">{!! $message->created_at->diffForHumans() !!}</span>
+                                <span class="direct-chat-timestamp pull-{!! ($alignment === 'right') ? 'left' : 'right' !!}">{!! $message->created_at->diffForHumans() !!} ({!! $message->created_at->format('d-m-Y H:i:s') !!})</span>
                             </div>
                             <!-- /.direct-chat-info -->
                             <img class="direct-chat-img" src="{!! $user->profileImage ? \StorageHelper::userImageUrl($user->id, $user->profileImage->filename) : 'http://placehold.it/100x100' !!}" alt="message user image"><!-- /.direct-chat-img -->

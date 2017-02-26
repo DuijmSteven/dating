@@ -41,12 +41,16 @@ class ConversationsMessagesFlirtsSeeder extends Seeder
             $botId = $tempBotIds[$botIdKey];
             unset($tempBotIds[$botIdKey]);
 
-            $conversationAmount = 1;
+            $startDate = \Carbon\Carbon::create(rand(2015, 2017), rand(1, 12), rand(1, 28), rand(1, 22), rand(1, 59), rand(1, 59));
+
+            $conversationAmount = rand(1, 2);
 
             for ($i = 0; $i < $conversationAmount; $i++) {
                 $conversation = new \App\Conversation([
                     'user_a_id' => $realUserId,
-                    'user_b_id' => $botId
+                    'user_b_id' => $botId,
+                    'created_at' => $startDate->toDateTimeString(),
+                    'updated_at' => $startDate->toDateTimeString()
                 ]);
 
                 $conversation->save();
@@ -60,6 +64,8 @@ class ConversationsMessagesFlirtsSeeder extends Seeder
                     'sender_id' => $realUserId,
                     'recipient_id' => $botId,
                     'body' => $messageIsFlirt ? null : $this->faker->text(200),
+                    'created_at' => $startDate->toDateTimeString(),
+                    'updated_at' => $startDate->toDateTimeString()
                 ]);
 
                 $conversation->messages()->save($userToBotMessage);
@@ -99,8 +105,12 @@ class ConversationsMessagesFlirtsSeeder extends Seeder
                 if (!$conversationHasOneMessage) {
                     $conversationIsNew = rand(0, 1);
 
+                    // determines if message is going to be a flirt
+                    $messageIsFlirt = rand(0, 1);
+
+                    $dateTime = $startDate->addMinutes(rand(1, 30))->addSeconds(rand(1, 59))->toDateTimeString();
+
                     if (!$conversationIsNew) {
-                        $messageIsFlirt = rand(0, 1);
                         $messageType = $messageIsFlirt ? 'flirt' : 'generic';
 
                         $userToBotMessage = new \App\ConversationMessage([
@@ -109,11 +119,12 @@ class ConversationsMessagesFlirtsSeeder extends Seeder
                             'sender_id' => $botId,
                             'recipient_id' => $realUserId,
                             'body' => $this->faker->text(200),
+                            'created_at' => $dateTime,
+                            'updated_at' => $dateTime
                         ]);
 
                         $conversation->messages()->save($userToBotMessage);
                     } else {
-                        $messageIsFlirt = rand(0, 1);
                         $messageType = $messageIsFlirt ? 'flirt' : 'generic';
 
                         $userToBotMessage = new \App\ConversationMessage([
@@ -122,6 +133,8 @@ class ConversationsMessagesFlirtsSeeder extends Seeder
                             'sender_id' => $realUserId,
                             'recipient_id' => $botId,
                             'body' => $this->faker->text(200),
+                            'created_at' => $dateTime,
+                            'updated_at' => $dateTime
                         ]);
 
                         $conversation->messages()->save($userToBotMessage);
