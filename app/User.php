@@ -205,7 +205,8 @@ class User extends Authenticatable
     /**
      * @return $this
      */
-    public function format() {
+    public function format()
+    {
         return $this->formatImages();
     }
 
@@ -214,6 +215,9 @@ class User extends Authenticatable
      */
     private function formatImages()
     {
+        $this->profile_image = null;
+        $this->other_images = null;
+
         $this->categorizeImages();
 
         // unset original images property, no longer needed
@@ -227,7 +231,8 @@ class User extends Authenticatable
      * @return bool
      * @throws \Exception
      */
-    private function hasImageTypeSet($type) {
+    private function hasImageTypeSet($type)
+    {
         if (!in_array($type, $this->allowedImageTypes)) {
             throw new \Exception;
         }
@@ -284,14 +289,10 @@ class User extends Authenticatable
      */
     private function categorizeImages()
     {
-        $this->profile_image = null;
-        $this->other_images = null;
-
         foreach ($this->images as $image) {
             if ($image->profile) {
                 $this->assignImage($image);
             } else {
-
                 $this->assignImage($image);
             }
         }
