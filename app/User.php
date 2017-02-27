@@ -36,26 +36,46 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected $allowedImageTypes = [
+        'profile',
+        'other'
+    ];
+
+    /**
+     * @return mixed
+     */
     public function getUsername()
     {
         return $this->username;
     }
 
+    /**
+     * @param string $username
+     */
     public function setUsername($username = '')
     {
         $this->username = $username;
     }
 
+    /**
+     * @return mixed
+     */
     public function getEmail()
     {
         return $this->email;
     }
 
+    /**
+     * @param string $email
+     */
     public function setEmail($email = '')
     {
         $this->email = $email;
     }
 
+    /**
+     * @return mixed
+     */
     public function getCreatedAt()
     {
         return $this->createAt;
@@ -66,6 +86,9 @@ class User extends Authenticatable
         return $this->updated_at;
     }
 
+    /**
+     * @return bool
+     */
     public function isAdmin()
     {
         $userRoles = [];
@@ -75,6 +98,9 @@ class User extends Authenticatable
         return in_array('admin', $userRoles);
     }
 
+    /**
+     * @return bool
+     */
     public function isOperator()
     {
         $userRoles = [];
@@ -100,41 +126,65 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Role');
     }
 
+    /**
+     * @return mixed
+     */
     public function images()
     {
         return $this->hasMany('App\UserImage')->orderBy('visible', 'desc');
     }
 
+    /**
+     * @return mixed
+     */
     public function visibleImages()
     {
         return $this->hasMany('App\UserImage')->where('visible', 1);
     }
 
+    /**
+     * @return mixed
+     */
     public function imagesNotProfile()
     {
         return $this->hasMany('App\UserImage')->where('profile', 0)->orderBy('visible', 'desc');
     }
 
+    /**
+     * @return mixed
+     */
     public function visibleImagesNotProfile()
     {
         return $this->hasMany('App\UserImage')->where('visible', 1)->where('profile', 0);
     }
 
+    /**
+     * @return mixed
+     */
     public function profileImage()
     {
         return $this->hasOne('App\UserImage')->where('profile', 1);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function receivedFlirts()
     {
         return $this->hasMany('App\Flirt', 'recipient_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function sentFlirts()
     {
         return $this->hasMany('App\Flirt', 'sender_id');
     }
 
+    /**
+     * @param $email
+     */
     public function setEmailAttribute($email)
     {
         if (empty($email)) { // will check for empty string, null values, see php.net about it
@@ -144,8 +194,108 @@ class User extends Authenticatable
         }
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
     public function conversations()
     {
         return Conversation::with(['messages'])->where('user_a_id', $this->id)->orWhere('user_b_id', $this->id)->get();
+    }
+
+    /**
+     * @return $this
+     */
+    public function format() {
+        return $this->formatImages();
+    }
+
+    /**
+     * Formats the images on the User object
+     */
+    private function formatImages()
+    {
+        $this->categorizeImages();
+
+        // unset original images property, no longer needed
+        unset($this->images);
+
+        return $this;
+    }
+
+    /**
+     * @param $type
+     * @return bool
+     * @throws \Exception
+     */
+    private function hasImageTypeSet($type) {
+        if (!in_array($type, $this->allowedImageTypes)) {
+            throw new \Exception;
+        }
+
+        return (isset($this->{$type . '_images'}));
+    }
+
+    /**
+     * @param $image
+     * @throws \Exception
+     */
+    private function assignImage($image)
+    {
+        if ($image->profile === 1) {
+            $this->assignProfileImage($image);
+        } else {
+            $this->assignOtherImage($image);
+        }
+    }
+
+    /**
+     * @param $image
+     * @throws \Exception
+     */
+    private function assignOtherImage($image)
+    {
+        if ($this->hasImageTypeSet('other')) {
+            $this->other_images->push($image);
+        } else {
+            $this->other_images = collect([$image]);
+        }
+    }
+
+    /**
+     * @param $image
+     */
+    private function assignProfileImage($image)
+    {
+        $this->profile_image = $image;
+    }
+
+    /**
+     * @param array $allowedImageTypes
+     * @return User
+     */
+    public function setAllowedImageTypes($allowedImageTypes)
+    {
+        $this->allowedImageTypes = $allowedImageTypes;
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    private function categorizeImages()
+    {
+        $this->profile_image = null;
+        $this->other_images = null;
+
+        foreach ($this->images as $image) {
+            if ($image->profile) {
+                $this->assignImage($image);
+            } else {
+
+                $this->assignImage($image);
+            }
+        }
+
+        return $this;
     }
 }

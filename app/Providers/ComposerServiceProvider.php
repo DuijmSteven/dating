@@ -28,6 +28,6 @@ class ComposerServiceProvider extends ServiceProvider
 
     private function injectAuthenticatedUser()
     {
-        view()->composer('frontend.layouts.default.layout', 'App\ViewComposers\BaseComposer');
+        view()->composer('*', 'App\ViewComposers\BaseComposer');
     }
 }

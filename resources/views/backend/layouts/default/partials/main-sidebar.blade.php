@@ -4,7 +4,12 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="{!! asset('backend/dist/img/user2-160x160.jpg') !!}" class="img-circle" alt="User Image">
+                <img src="{{ \StorageHelper::userImageUrl(
+                                        $authenticatedUser->id,
+                                        $authenticatedUser->profile_image->filename
+                                    ) }}"
+                     class="img-rounded"
+                     alt="User Image">
             </div>
             <div class="pull-left info">
                 <p>{{ Auth::user()->username }}</p>

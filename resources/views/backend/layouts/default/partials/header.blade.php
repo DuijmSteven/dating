@@ -211,16 +211,26 @@
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="<?= asset('backend/dist/img/user2-160x160.jpg'); ?>" class="user-image" alt="User Image">
-                        <span class="hidden-xs">{!! Auth::user()->username !!}</span>
+                        <img src="{{ \StorageHelper::userImageUrl(
+                                    $authenticatedUser->id,
+                                    $authenticatedUser->profile_image->filename
+                                ) }}"
+                             class="user-image"
+                             alt="User Image">
+                        <span class="hidden-xs">{!! $authenticatedUser->username !!}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="<?= asset('backend/dist/img/user2-160x160.jpg'); ?>" class="img-circle" alt="User Image">
+                            <img src="{{ \StorageHelper::userImageUrl(
+                                        $authenticatedUser->id,
+                                        $authenticatedUser->profile_image->filename
+                                    ) }}"
+                                 class="img-circle"
+                                 alt="User Image">
 
                             <p>
-                                {!! Auth::user()->username !!} - Web Developer
+                                {!! $authenticatedUser->username !!} - Web Developer
                                 <small>Member since Nov. 2012</small>
                             </p>
                         </li>

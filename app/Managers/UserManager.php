@@ -9,6 +9,7 @@ use App\User;
 use App\UserImage;
 use App\UserMeta;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Kim\Activity\Activity;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Illuminate\Support\Facades\DB;
@@ -32,6 +33,10 @@ class UserManager
         $this->storageManager = $storageManager;
     }
 
+    /**
+     * @param array $userData
+     * @throws \Exception
+     */
     public function persistUser(array $userData)
     {
         $createdUser = $this->persistUserDetails($userData);
@@ -45,6 +50,11 @@ class UserManager
         }
     }
 
+    /**
+     * @param array $userData
+     * @param int $userId
+     * @throws \Exception
+     */
     public function updateUser(array $userData, int $userId)
     {
         $this->updateUserDetails($userData, $userId);
@@ -78,6 +88,10 @@ class UserManager
         }
     }
 
+    /**
+     * @param UploadedFile $userProfileImage
+     * @param int $userId
+     */
     private function persistUserProfileImage(UploadedFile $userProfileImage, int $userId)
     {
         UserImage::where('user_id', $userId)->get();
@@ -223,6 +237,10 @@ class UserManager
         return User::with('meta')->whereIn('id', $latestIds)->limit(\UserConstants::MAX_AMOUNT_ONLINE_TO_SHOW)->get();
     }
 
+    /**
+     * @param int $userId
+     * @throws \Exception
+     */
     public function deleteUser(int $userId)
     {
         $user = $this->user->with(['images'])->findOrFail($userId);
@@ -253,5 +271,17 @@ class UserManager
         foreach ($user->images as $image) {
             $this->storageManager->deleteImage($image->user_id, $image->filename);
         }
+    }
+
+    public static function getAndFormatAuthenticatedUser()
+    {
+        if (!(Auth::user() instanceof User)) {
+            return null;
+        }
+
+        $authenticatedUser = User::with(['meta', 'images', 'roles'])
+            ->where('id', Auth::user()->id)->first();
+
+        return $authenticatedUser->format();
     }
 }

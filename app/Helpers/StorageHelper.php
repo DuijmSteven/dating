@@ -25,6 +25,9 @@ class StorageHelper
      */
     public static function userImageUrl(int $userId, string $filename)
     {
+        if (is_null($filename)) {
+            throw new \Exception;
+        }
         $filePath = self::$usersDir . $userId . '/' . self::$userImagesDir . $filename;
         return self::fileUrl($filePath);
     }
