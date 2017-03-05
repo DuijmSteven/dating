@@ -19,6 +19,7 @@ class UserSearchController extends Controller
     public function __construct(UserSearchManager $userSearchManager)
     {
         $this->userSearchManager = $userSearchManager;
+        parent::__construct();
     }
 
     /**

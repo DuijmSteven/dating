@@ -203,9 +203,6 @@ class UserManager
             ->orderByRaw('RAND()')->take($userAmount)
             ->get();
 
-        \Log::info($randomUsers->toArray());
-        die();
-
         // This method is nly used in dev env so it is ok to do this
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Model::unguard();
@@ -273,15 +270,43 @@ class UserManager
         }
     }
 
-    public static function getAndFormatAuthenticatedUser()
+    public static function getAndFormatAuthenticatedUserTest()
     {
         if (!(Auth::user() instanceof User)) {
             return null;
         }
 
-        $authenticatedUser = User::with(['meta', 'images', 'roles'])
+        $result = User::with(['meta', 'images', 'roles'])
             ->where('id', Auth::user()->id)->first();
 
-        return $authenticatedUser->format();
+        if (!($result instanceof User)) {
+            throw new \Exception;
+        }
+
+        return $result->format();
+    }
+
+
+    public function getAndFormatAuthenticatedUser()
+    {
+        $authenticatedUser = Auth::user();
+
+        if (!($authenticatedUser instanceof User)) {
+            return null;
+        }
+
+        return $this->formatUser($authenticatedUser);
+    }
+
+    public function formatUser(User $user)
+    {
+        $result = User::with(['meta', 'images', 'roles'])
+            ->where('id', $user->id)->first();
+
+        if (!($result instanceof User)) {
+            throw new \Exception;
+        }
+
+        return $result->format();
     }
 }

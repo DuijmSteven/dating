@@ -23,6 +23,7 @@ class BotController extends Controller
     public function __construct(BotManager $botManager)
     {
         $this->botManager = $botManager;
+        parent::__construct();
     }
     /**
      * Display a listing of the resource.

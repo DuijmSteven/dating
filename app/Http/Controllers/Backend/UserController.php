@@ -18,6 +18,7 @@ class UserController extends Controller
     public function __construct(UserManager $userManager)
     {
         $this->userManager = $userManager;
+        parent::__construct();
     }
 
     /**

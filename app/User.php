@@ -290,13 +290,21 @@ class User extends Authenticatable
     private function categorizeImages()
     {
         foreach ($this->images as $image) {
-            if ($image->profile) {
-                $this->assignImage($image);
-            } else {
-                $this->assignImage($image);
-            }
+            $this->assignImage($image);
         }
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasProfileImage()
+    {
+        if (!isset($this->profile_image) || is_null($this->profile_image)) {
+            return false;
+        }
+
+        return true;
     }
 }

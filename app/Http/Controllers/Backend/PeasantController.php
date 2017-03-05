@@ -23,6 +23,7 @@ class PeasantController extends Controller
     public function __construct(PeasantManager $peasantManager)
     {
         $this->peasantManager = $peasantManager;
+        parent::__construct();
     }
     /**
      * Display a listing of the resource.

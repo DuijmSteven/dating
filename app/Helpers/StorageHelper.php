@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\User;
 use Illuminate\Support\Facades\Storage;
 
 class StorageHelper
@@ -23,12 +24,17 @@ class StorageHelper
      * @param string $filename
      * @return mixed
      */
-    public static function userImageUrl(int $userId, string $filename)
+    public static function userImageUrl(User $user)
     {
-        if (is_null($filename)) {
+        if (!$user->hasProfileImage()) {
+            // TODO
+            return 'http://placehold.it/100x150';
+        }
+
+        if (is_null($user->profile_image->filename)) {
             throw new \Exception;
         }
-        $filePath = self::$usersDir . $userId . '/' . self::$userImagesDir . $filename;
+        $filePath = self::userImagesPath($user->id) . $user->profile_image->filename;
         return self::fileUrl($filePath);
     }
 

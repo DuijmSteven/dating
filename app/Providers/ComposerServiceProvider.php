@@ -13,7 +13,7 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->injectAuthenticatedUser();
+        //
     }
 
     /**
@@ -24,10 +24,5 @@ class ComposerServiceProvider extends ServiceProvider
     public function register()
     {
         //
-    }
-
-    private function injectAuthenticatedUser()
-    {
-        view()->composer('*', 'App\ViewComposers\BaseComposer');
     }
 }

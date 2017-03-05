@@ -16,6 +16,7 @@ class ConversationController extends Controller
     public function __construct(ConversationManager $conversationManager)
     {
         $this->conversationManager = $conversationManager;
+        parent::__construct();
     }
 
     public function show(int $conversationId)
