@@ -92,12 +92,9 @@ class ConversationManager
      */
     public function newPeasantBotConversations()
     {
-        return self::filterConversationsByUserAndLastMessageType(
-            self::conversationsByIds(
-                $this->conversationIds('only_new', 'peasant_bot'),
-                true
-            )
-        );
+        return self::conversationsByIds(
+                $this->conversationIds('only_new', 'peasant_bot')
+            );
     }
 
     /**
@@ -105,12 +102,9 @@ class ConversationManager
      */
     public function unrepliedPeasantBotConversations()
     {
-        return self::filterConversationsByUserAndLastMessageType(
-            self::conversationsByIds(
-                $this->conversationIds('only_old', 'peasant_bot'),
-                true
-            )
-        );
+        return self::conversationsByIds(
+                $this->conversationIds('only_old', 'peasant_bot')
+            );
     }
 
     /**
@@ -119,46 +113,41 @@ class ConversationManager
      * @return array
      * @throws \Exception
      */
-    public function conversationIds(string $age = 'any', string $lastMessageUserRoles = 'any')
+    public function conversationIds(string $age = 'any', string $lastMessageUserRoles = 'any', array $types = [])
     {
-        list($roleQuery, $ageQuery) = $this->resolveConversationTypeOptions(
+        $conversationIds = [];
+        list($roleQuery, $ageQuery, $typesQuery) = $this->resolveConversationTypeOptions(
             $age,
-            $lastMessageUserRoles
+            $lastMessageUserRoles,
+            $types
         );
 
-
-        $query = 'SELECT DISTINCT(cm.conversation_id) as conversation_id,
-                         cm.created_at,
-                         lm.id as lm_id,
-                         lm.body as lm_body,
-                         lm.type as lm_type,
-                         sender.id as lm_sender_id,
-                         recipient.id as lm_recipient_id,
-                         sender_role.role_id as lm_sender_role_id,
-                         recipient_role.role_id as lm_recipient_role_id
-                  FROM conversation_messages as cm
-                  JOIN conversation_messages lm
-                    ON  lm.id =
+        $query = 'SELECT DISTINCT(cm.conversation_id) as conversation_id
+                    FROM conversation_messages as cm
+                    JOIN conversation_messages lm
+                        ON lm.id =
                         (
-                            SELECT  mi.id
-                            FROM    conversation_messages mi
-                            WHERE   mi.conversation_id = cm.conversation_id
+                            SELECT mi.id
+                            FROM conversation_messages mi
+                            WHERE mi.conversation_id = cm.conversation_id
                             ORDER BY mi.created_at DESC
                             LIMIT 1
                         )
-                  JOIN users sender ON sender.id = lm.sender_id
-                  JOIN users recipient ON recipient.id = lm.recipient_id
-                  JOIN role_user sender_role ON sender_role.user_id = lm.sender_id
-                  JOIN role_user recipient_role ON recipient_role.user_id = lm.recipient_id
-                  ' . $roleQuery . '
-                  ORDER BY cm.created_at DESC
-        ';
+                    JOIN users sender ON sender.id = lm.sender_id
+                    JOIN users recipient ON recipient.id = lm.recipient_id
+                    JOIN role_user sender_role ON sender_role.user_id = lm.sender_id
+                    JOIN role_user recipient_role ON recipient_role.user_id = lm.recipient_id
+                    ' . $roleQuery .
+                    $typesQuery .
+                    $ageQuery;
 
         $results = \DB::select($query);
 
-        \Log::info($results);
-        die();
-        return $newConversationIds;
+        foreach ($results as $result) {
+            $conversationIds[] = $result->conversation_id;
+        }
+        
+        return $conversationIds;
     }
 
     /**
@@ -166,23 +155,9 @@ class ConversationManager
      */
     public function conversationsWithNewFlirt()
     {
-        $conversationsWithFlirtIds = \DB::table('conversation_messages')
-            ->distinct()
-            ->select('conversation_messages.conversation_id')
-            ->join('role_user as sender_role', 'sender_role.user_id', 'conversation_messages.sender_id')
-            ->join('role_user as recipient_role', 'recipient_role.user_id', 'conversation_messages.recipient_id')
-            ->where(function ($query) {
-                $query->where('sender_role.role_id', 2);
-                $query->where('recipient_role.role_id', 3);
-            })->pluck('conversation_messages.conversation_id')->toArray();
-
-        return self::filterConversationsByUserAndLastMessageType(
-            self::conversationsByIds(
-                $conversationsWithFlirtIds,
-                true
-            ),
-            ['flirt']
-        );
+        return self::conversationsByIds(
+                $this->conversationIds('any', 'peasant_bot', ['flirt'])
+            );
     }
 
     /**
@@ -237,7 +212,7 @@ class ConversationManager
         return $conversation;
     }
 
-    public function conversationsByIds(array $conversationIds, $excludeRealConversations = true, int $limit = 0, int $offset = 0)
+    public function conversationsByIds(array $conversationIds, int $limit = 0, int $offset = 0)
     {
         $conversations = [];
 
@@ -245,62 +220,56 @@ class ConversationManager
             return $conversations;
         }
 
-        $excludeRealConversationsQuery = $excludeRealConversations ?
-            ' AND ((user_a_role.role_id = 2 AND user_b_role.role_id = 3) OR (user_a_role.role_id = 3 AND user_b_role.role_id = 2)) ' :
-            '';
-
         $query = 'SELECT  c.id as conversation_id,
-                                              m.id as last_message_id, m.created_at as last_message_created_at, m.body as last_message_body, m.has_attachment as last_message_has_attachment, m.type as last_message_type,
-                                              m.sender_id as last_message_sender_id, m.recipient_id as last_message_recipient_id,
-                                              user_a.id as user_a_id, user_b.id as user_b_id, user_a.username as user_a_username, user_b.username as user_b_username,
-                                              user_a_images.filename as user_a_img, user_b_images.filename as user_b_img, user_a_role.role_id as user_a_role_id,
-                                              user_b_role.role_id as user_b_role_id
-                                        FROM    conversations c
-                                        JOIN    conversation_messages m
-                                            ON      m.id =
-                                                (
-                                                    SELECT  mi.id
-                                                    FROM    conversation_messages mi
-                                                    WHERE   mi.conversation_id = c.id
-                                                    ORDER BY mi.created_at DESC
-                                                    LIMIT 1
-                                                )
-                                        JOIN    users user_a ON user_a.id = c.user_a_id
-                                        JOIN    role_user user_a_role ON c.user_a_id = user_a_role.user_id
-                                        JOIN    role_user user_b_role ON c.user_b_id = user_b_role.user_id
-                                        JOIN    users user_b ON user_b.id = c.user_b_id
-                                        LEFT JOIN    user_images user_a_images
-                                            ON      user_a_images.id =
-                                                (
-                                                    SELECT  ui.id
-                                                    FROM    user_images ui
-                                                    WHERE   ui.profile = 1 AND ui.user_id = user_a.id
-                                                    LIMIT 1
-                                                )
-                                        LEFT JOIN    user_images user_b_images
-                                          ON      user_b_images.id =
-                                              (
-                                                  SELECT  ui.id
-                                                  FROM    user_images ui
-                                                  WHERE   ui.profile = 1 AND ui.user_id = user_b.id
-                                                  LIMIT 1
-                                              )
-                                        WHERE c.id IN (' . implode(',', $conversationIds) . ')' .
-            $excludeRealConversationsQuery . '
-                                        ORDER BY c.created_at DESC
-                                    ';
-
+                          m.id as last_message_id, m.created_at as last_message_created_at, m.body as last_message_body, m.has_attachment as last_message_has_attachment, m.type as last_message_type,
+                          m.sender_id as last_message_sender_id, m.recipient_id as last_message_recipient_id,
+                          user_a.id as user_a_id, user_b.id as user_b_id, user_a.username as user_a_username, user_b.username as user_b_username,
+                          user_a_images.filename as user_a_img, user_b_images.filename as user_b_img, user_a_role.role_id as user_a_role_id,
+                          user_b_role.role_id as user_b_role_id
+                    FROM    conversations c
+                    JOIN    conversation_messages m
+                        ON      m.id =
+                            (
+                                SELECT  mi.id
+                                FROM    conversation_messages mi
+                                WHERE   mi.conversation_id = c.id
+                                ORDER BY mi.created_at DESC
+                                LIMIT 1
+                            )
+                    JOIN    users user_a ON user_a.id = c.user_a_id
+                    JOIN    role_user user_a_role ON c.user_a_id = user_a_role.user_id
+                    JOIN    role_user user_b_role ON c.user_b_id = user_b_role.user_id
+                    JOIN    users user_b ON user_b.id = c.user_b_id
+                    LEFT JOIN    user_images user_a_images
+                        ON      user_a_images.id =
+                            (
+                                SELECT  ui.id
+                                FROM    user_images ui
+                                WHERE   ui.profile = 1 AND ui.user_id = user_a.id
+                                LIMIT 1
+                            )
+                    LEFT JOIN    user_images user_b_images
+                      ON      user_b_images.id =
+                          (
+                              SELECT  ui.id
+                              FROM    user_images ui
+                              WHERE   ui.profile = 1 AND ui.user_id = user_b.id
+                              LIMIT 1
+                          )
+                    WHERE c.id IN (' . implode(',', $conversationIds) . ')
+                    ORDER BY c.created_at DESC ';
 
         if ($limit) {
-            $query .= ' LIMIT = ' . $limit;
+            $query .= ' LIMIT ' . $limit . ' ';
         }
 
         if ($offset) {
-            $query .= ' LIMIT = ' . $offset;
+            $query .= ' OFFSET ' . $offset . ' ';
         }
 
 
         $results = \DB::select($query);
+
         $conversations = $this->formatConversations($results);
 
         return $conversations;
@@ -361,11 +330,14 @@ class ConversationManager
      * @return array
      * @throws \Exception
      */
-    private function resolveConversationTypeOptions(string $age, string $lastMessageUserRoles)
+    private function resolveConversationTypeOptions(string $age, string $lastMessageUserRoles, array $types)
     {
-        $anyRole = false;
         $senderRole = null;
         $recipientRole = null;
+
+        $roleQuery = '';
+        $typesQuery = '';
+        $ageQuery = '';
 
         $allowedUserRoles = [
             'peasant_bot', // last message-sender is peasant / recipient is bot
@@ -388,28 +360,35 @@ class ConversationManager
             throw new \Exception;
         }
 
+        // gets set to true if WHERE clause already exists
+        $andRequired = false;
+
         // resolve messages to return based on lastMessage sender/recipient types
-        if ($lastMessageUserRoles === 'any') {
-            $roleQuery = '';
-        } else {
+        if ($lastMessageUserRoles !== 'any') {
             list($senderRole, $recipientRole) = explode('_', $lastMessageUserRoles);
 
             $senderRoleId = UserConstants::selectableField('role', 'common', 'array_flip')[$senderRole];
             $recipientRoleId = UserConstants::selectableField('role', 'common', 'array_flip')[$recipientRole];
 
             $roleQuery = ' WHERE sender_role.role_id = ' . $senderRoleId  . ' AND recipient_role.role_id = '.  $recipientRoleId . ' ';
+            $andRequired = true;
+        }
+
+        if (!empty($types)) {
+            $typesQuery = " WHERE cm.type IN ('" . implode("','", $types) . "') ";
+            if ($andRequired) {
+                $typesQuery = str_replace('WHERE', 'AND', $typesQuery);
+            }
         }
 
         // resolve messages to return based on new/old/any
-        if ($age === 'any') {
-            $ageQuery = '';
-        } else {
+        if ($age !== 'any') {
             $requiredDistinctCount = (explode('_', $age)[1] === 'new') ? 1 : 2;
 
-            $ageQuery = ' GROUP BY conversation_messages.conversation_id
-                         HAVING COUNT(DISTINCT (conversation_messages.sender_id)) = ' . $requiredDistinctCount . ') ';
+            $ageQuery = ' GROUP BY cm.conversation_id
+                         HAVING COUNT(DISTINCT(cm.sender_id)) = ' . $requiredDistinctCount . ' ';
         }
 
-        return array($roleQuery, $ageQuery);
+        return array($roleQuery, $ageQuery, $typesQuery);
     }
 }

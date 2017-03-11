@@ -16,6 +16,11 @@ class ConversationMessage extends Model
         'has_attachment'
     ];
 
+    public static $allowedMessageTypes = [
+        'generic',
+        'flirt'
+    ];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

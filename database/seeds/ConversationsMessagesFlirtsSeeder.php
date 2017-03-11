@@ -141,6 +141,47 @@ class ConversationsMessagesFlirtsSeeder extends Seeder
                     }
                 }
 
+                $conversationHasTwoMessages = rand(0, 1);
+
+                if (!$conversationHasTwoMessages) {
+                    // determines if message is going to be a flirt
+                    $messageIsFlirt = rand(0, 1);
+
+                    $dateTime = $startDate->addMinutes(rand(1, 30))->addSeconds(rand(1, 59))->toDateTimeString();
+
+                    $botToUser = rand(0,1);
+
+                    if (!$botToUser) {
+                        $messageType = $messageIsFlirt ? 'flirt' : 'generic';
+
+                        $userToBotMessage = new \App\ConversationMessage([
+                            'conversation_id' => $conversation->id,
+                            'type' => $messageType,
+                            'sender_id' => $botId,
+                            'recipient_id' => $realUserId,
+                            'body' => $this->faker->text(200),
+                            'created_at' => $dateTime,
+                            'updated_at' => $dateTime
+                        ]);
+
+                        $conversation->messages()->save($userToBotMessage);
+                    } else {
+                        $messageType = $messageIsFlirt ? 'flirt' : 'generic';
+
+                        $userToBotMessage = new \App\ConversationMessage([
+                            'conversation_id' => $conversation->id,
+                            'type' => $messageType,
+                            'sender_id' => $realUserId,
+                            'recipient_id' => $botId,
+                            'body' => $this->faker->text(200),
+                            'created_at' => $dateTime,
+                            'updated_at' => $dateTime
+                        ]);
+
+                        $conversation->messages()->save($userToBotMessage);
+                    }
+                }
+
             }
         }
 
