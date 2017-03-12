@@ -19,6 +19,23 @@ class ConversationController extends Controller
         parent::__construct();
     }
 
+    public function index()
+    {
+        $conversations = $this->conversationManager->getAll();
+        \Log::info($conversations);
+        die();
+        return view(
+            'backend.conversations.index',
+            [
+                'title' => 'Conversations Overview - ' . \MetaConstants::SITE_NAME,
+                'headingLarge' => 'Conversations',
+                'headingSmall' => 'Overview',
+                'carbonNow' => Carbon::now(),
+                'conversations' => $conversations
+            ]
+        );
+    }
+
     public function show(int $conversationId)
     {
         $conversation = Conversation::with(['userA', 'userB', 'messages'])->find($conversationId);

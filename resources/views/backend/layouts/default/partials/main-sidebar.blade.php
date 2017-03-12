@@ -96,6 +96,23 @@
                         </li>
                     </ul>
                 </li>
+                <li class="treeview {!! str_contains(\Request::route()->getName(), 'backend.conversations') ? 'active' : '' !!}">
+                    <a href="#">
+                        <i class="fa fa-list"></i>
+                        <span>Conversations</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="{!! \Request::route()->getName() == 'backend.peasants.retrieve' ? 'active' : '' !!}">
+                            <a href="{!! route('backend.conversations.index') !!}">
+                                <i class="fa fa-list"></i>
+                                Overview
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="treeview {!! str_contains(\Request::route()->getName(), 'operators_platform') ? 'active' : '' !!}">
                     <a href="#">
                         <i class="fa fa-users"></i>

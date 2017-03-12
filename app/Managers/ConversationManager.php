@@ -87,6 +87,14 @@ class ConversationManager
         DB::commit();
     }
 
+    public function getAll(int $limit = 0, int $offset = 0)
+    {
+        return self::conversationsByIds(
+            $this->conversationIds('any', 'any'), $limit, $offset
+        );
+    }
+
+
     /**
      * @return array
      */
