@@ -47,13 +47,27 @@
                                     <!-- Add the bg color to the header using any of the bg-* classes -->
                                     <div class="convo-tile {!! \UserConstants::selectableField('role')[$conversation['user_a']['role_id']] !!}">
                                         <div class="convo-tile_text">
-                                            <div class="username">{!! $conversation['user_a']['username'] !!} (ID: {!! $conversation['user_a']['id'] !!})</div>
+                                            <div class="username">
+                                                @if(isset($conversation['user_a']['profile_image_url']))
+                                                    <img height="25" src="{!! $conversation['user_a']['profile_image_url'] !!}" />
+                                                @endif
+                                                <a href="{!! route('backend.' . \UserConstants::selectableField('role')[$conversation['user_a']['role_id']] . 's.edit.get', ['id' => $conversation['user_a']['id']]) !!}">
+                                                    {!! $conversation['user_a']['username'] !!} (ID: {!! $conversation['user_a']['id'] !!})
+                                                </a>
+                                            </div>
                                         </div>
                                         <!-- /.widget-user-image -->
                                     </div>
                                     <div class="convo-tile {!! \UserConstants::selectableField('role')[$conversation['user_b']['role_id']] !!}">
                                         <div class="convo-tile_text">
-                                            <div class="username">{!! $conversation['user_b']['username'] !!} (ID: {!! $conversation['user_b']['id'] !!})</div>
+                                            <div class="username">
+                                                @if(isset($conversation['user_b']['profile_image_url']))
+                                                    <img height="25" src="{!! $conversation['user_b']['profile_image_url'] !!}" />
+                                                @endif
+                                                <a href="{!! route('backend.' . \UserConstants::selectableField('role')[$conversation['user_b']['role_id']] . 's.edit.get', ['id' => $conversation['user_b']['id']]) !!}">
+                                                    {!! $conversation['user_b']['username'] !!} (ID: {!! $conversation['user_b']['id'] !!})
+                                                </a>
+                                            </div>
                                         </div>
                                         <!-- /.widget-user-image -->
                                     </div>

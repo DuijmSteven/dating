@@ -36,7 +36,7 @@
                                 <td>{!! $peasant->id !!}</td>
                                 <td>
                                     @if(count($peasant->profileImage))
-                                        <img width="120" src="{!! \StorageHelper::userImageUrl($peasant->id, $peasant->profileImage[0]->filename) !!}" alt="">
+                                        <img width="120" src="{!! \StorageHelper::profileImageUrl($peasant) !!}" alt="">
                                     @else
                                         No profile image set
                                     @endif

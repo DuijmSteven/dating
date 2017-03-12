@@ -110,7 +110,7 @@ class PeasantController extends Controller
      */
     public function edit(Request $request)
     {
-        $peasant = User::with('meta')->where('id', $request->route('id'))->get()[0];
+        $peasant = User::with('meta')->where('id', $request->route('id'))->get()[0]->format();
 
         return view(
             'backend.peasants.edit',

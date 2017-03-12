@@ -168,11 +168,11 @@
                         Profile Image
                     </td>
                 </tr>
-                <?php $botProfileImage = $bot->profileImage; ?>
-                @if($botProfileImage)
+                <?php $botProfileImage = $bot->profile_image; ?>
+                @if(isset($botProfileImage))
                     <tr>
                         <td>
-                            <img width="200" src="{!! \StorageHelper::userImageUrl($bot->id, $botProfileImage['filename']) !!}"/>
+                            <img width="200" src="{!! \StorageHelper::profileImageUrl($bot) !!}"/>
                         </td>
                         <td>
                             <?= ($botProfileImage->visible) ? 'Yes' : 'No' ; ?>
@@ -198,12 +198,12 @@
                     </td>
                 </tr>
 
-                <?php $botImagesNotProfile = $bot->imagesNotProfile; ?>
-                @if(count($botImagesNotProfile) > 0)
+                <?php $botImagesNotProfile = $bot->other_images;  ?>
+                @if(!is_null($botImagesNotProfile))
                     @foreach($botImagesNotProfile as $image)
                         <tr>
                             <td>
-                                <img width="200" src="{!! \StorageHelper::userImageUrl($bot->id, $image['filename']) !!}"/>
+                                <img width="200" src="{!! \StorageHelper::userImageUrl($bot->id, $image->filename) !!}"/>
                             </td>
                             <td>
                                 <?= ($image->visible) ? 'Yes' : 'No' ; ?>

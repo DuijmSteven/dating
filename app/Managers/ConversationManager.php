@@ -100,8 +100,12 @@ class ConversationManager
      */
     public function newPeasantBotConversations()
     {
+        \Log::info(self::conversationsByIds(
+            $this->conversationIds('only_new', 'peasant_bot'), 0, 0, ['user_meta']
+        ));
+        die();
         return self::conversationsByIds(
-                $this->conversationIds('only_new', 'peasant_bot')
+                $this->conversationIds('only_new', 'peasant_bot'), ['user_meta']
             );
     }
 
@@ -159,81 +163,37 @@ class ConversationManager
     }
 
     /**
+     * @param array $conversationIds
+     * @param int $limit
+     * @param int $offset
+     * @param array $options
      * @return array
      */
-    public function conversationsWithNewFlirt()
+    public function conversationsByIds(array $conversationIds, int $limit = 0, int $offset = 0, $options = [])
     {
-        return self::conversationsByIds(
-                $this->conversationIds('any', 'peasant_bot', ['flirt'])
-            );
-    }
+        $allowedOptions = ['user_meta', 'profile_image', 'other_images'];
 
-    /**
-     * @param array $conversations
-     * @param array $lastMessageTypes
-     * @return array
-     */
-    private function filterConversationsByUserAndLastMessageType(array $conversations, array $lastMessageTypes = [])
-    {
-        $results = [];
-
-        foreach ($conversations as $conversation) {
-            $senderRoleId = $conversation['last_message']['sender_role_id'];
-            $recipientRoleId = $conversation['last_message']['recipient_role_id'];
-
-            if (
-                empty($lastMessageTypes) ||
-                in_array($conversation['last_message']['type'], $lastMessageTypes) !== false
-            ) {
-                $results[] = $conversation;
-            }
-        }
-
-        return $results;
-    }
-
-    /**
-     * @param int $userAId
-     * @param int $userBId
-     * @return Conversation
-     */
-    private function createOrRetrieveConversation(int $userAId, int $userBId)
-    {
-        $conversation = $this->conversation
-            ->where('user_a_id', $userAId)
-            ->where('user_b_id', $userBId)
-            ->orWhere(function ($query) use ($userAId, $userBId) {
-                $query->where('user_a_id', $userBId);
-                $query->where('user_b_id', $userAId);
-            })
-            ->first();
-
-        if (!($conversation instanceof Conversation)) {
-            $conversation = new Conversation([
-                'user_a_id' => $userAId,
-                'user_b_id' => $userBId
-            ]);
-
-            $conversation->save();
-        }
-
-        return $conversation;
-    }
-
-    public function conversationsByIds(array $conversationIds, int $limit = 0, int $offset = 0)
-    {
         $conversations = [];
 
         if (empty($conversationIds)) {
             return $conversations;
         }
 
+        $userMetaFields = '';
+        $userMetaJoin = '';
+        if (in_array('user_meta', $options)) {
+            $userMetaFields = ' user_a_meta.gender as user_a_gender, user_b_meta.gender as user_b_gender ';
+            $userMetaJoin = ' JOIN user_meta user_a_meta ON user_a_meta.user_id = c.user_a_id
+                              JOIN user_meta user_b_meta ON user_b_meta.user_id = c.user_b_id';
+        }
+
         $query = 'SELECT  c.id as conversation_id,
                           m.id as last_message_id, m.created_at as last_message_created_at, m.body as last_message_body, m.has_attachment as last_message_has_attachment, m.type as last_message_type,
                           m.sender_id as last_message_sender_id, m.recipient_id as last_message_recipient_id,
                           user_a.id as user_a_id, user_b.id as user_b_id, user_a.username as user_a_username, user_b.username as user_b_username,
-                          user_a_images.filename as user_a_img, user_b_images.filename as user_b_img, user_a_role.role_id as user_a_role_id,
-                          user_b_role.role_id as user_b_role_id
+                          user_a_images.filename as user_a_profile_img, user_b_images.filename as user_b_profile_img, 
+                          user_a_role.role_id as user_a_role_id, user_b_role.role_id as user_b_role_id,
+                          ' . $userMetaFields . '
                     FROM    conversations c
                     JOIN    conversation_messages m
                         ON      m.id =
@@ -248,6 +208,7 @@ class ConversationManager
                     JOIN    role_user user_a_role ON c.user_a_id = user_a_role.user_id
                     JOIN    role_user user_b_role ON c.user_b_id = user_b_role.user_id
                     JOIN    users user_b ON user_b.id = c.user_b_id
+                    ' . $userMetaJoin . '
                     LEFT JOIN    user_images user_a_images
                         ON      user_a_images.id =
                             (
@@ -278,9 +239,47 @@ class ConversationManager
 
         $results = \DB::select($query);
 
-        $conversations = $this->formatConversations($results);
+        $conversations = $this->formatConversations($results, $options);
 
         return $conversations;
+    }
+
+    /**
+     * @return array
+     */
+    public function conversationsWithNewFlirt()
+    {
+        return self::conversationsByIds(
+                $this->conversationIds('any', 'peasant_bot', ['flirt'])
+            );
+    }
+
+    /**
+     * @param int $userAId
+     * @param int $userBId
+     * @return Conversation
+     */
+    private function createOrRetrieveConversation(int $userAId, int $userBId)
+    {
+        $conversation = $this->conversation
+            ->where('user_a_id', $userAId)
+            ->where('user_b_id', $userBId)
+            ->orWhere(function ($query) use ($userAId, $userBId) {
+                $query->where('user_a_id', $userBId);
+                $query->where('user_b_id', $userAId);
+            })
+            ->first();
+
+        if (!($conversation instanceof Conversation)) {
+            $conversation = new Conversation([
+                'user_a_id' => $userAId,
+                'user_b_id' => $userBId
+            ]);
+
+            $conversation->save();
+        }
+
+        return $conversation;
     }
 
     /**
@@ -288,7 +287,7 @@ class ConversationManager
      * @return array
      * @throws \Exception
      */
-    protected function formatConversations($results)
+    protected function formatConversations($results, array $options = [])
     {
         $conversations = [];
 
@@ -307,13 +306,18 @@ class ConversationManager
 
             $conversation['user_a']['id'] = $result->user_a_id;
             $conversation['user_a']['username'] = $result->user_a_username;
-            $conversation['user_a']['profile_image_url'] = $result->user_a_img;
+            $conversation['user_a']['profile_image_url'] = \StorageHelper::userImageUrl($conversation['user_a']['id'], $result->user_a_profile_img);
             $conversation['user_a']['role_id'] = $result->user_a_role_id;
 
             $conversation['user_b']['id'] = $result->user_b_id;
             $conversation['user_b']['username'] = $result->user_b_username;
-            $conversation['user_b']['profile_image_url'] = $result->user_b_img;
+            $conversation['user_b']['profile_image_url'] = \StorageHelper::userImageUrl($conversation['user_b']['id'], $result->user_b_profile_img);
             $conversation['user_b']['role_id'] = $result->user_b_role_id;
+
+            if (in_array('user_meta', $options)) {
+                $conversation['user_a']['meta']['gender'] = \UserConstants::selectableField('gender', 'common')[(int) $result->user_a_gender];
+                $conversation['user_b']['meta']['gender'] = \UserConstants::selectableField('gender', 'common')[(int) $result->user_b_gender];
+            }
 
             $conversation['last_message']['id'] = $result->last_message_id;
             $conversation['last_message']['sender_id'] = $result->last_message_sender_id;
@@ -383,7 +387,7 @@ class ConversationManager
         }
 
         if (!empty($types)) {
-            $typesQuery = " WHERE cm.type IN ('" . implode("','", $types) . "') ";
+            $typesQuery = " WHERE lm.type IN ('" . implode("','", $types) . "') ";
             if ($andRequired) {
                 $typesQuery = str_replace('WHERE', 'AND', $typesQuery);
             }

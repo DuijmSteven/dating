@@ -168,25 +168,24 @@
                         Profile Image
                     </td>
                 </tr>
-                <?php $peasantProfileImage = $peasant->profileImage; ?>
-                @if(count($peasantProfileImage) > 0)
-                    @foreach($peasantProfileImage as $image)
-                        <tr>
-                            <td>
-                                <img width="200" src="{!! \StorageHelper::userImageUrl($peasant->id, $image['filename']) !!}"/>
-                            </td>
-                            <td>
-                                <?= ($image->visible) ? 'Yes' : 'No' ; ?>
-                            </td>
-                            <td class="action-buttons">
-                                <form method="POST" action="{!! route('images.destroy', ['imageId' => $image->id]) !!}">
-                                    {!! csrf_field() !!}
-                                    {!! method_field('DELETE') !!}
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
+                <?php $peasantProfileImage = $peasant->profileImage;
+                ?>
+                @if($peasant->hasProfileImage())
+                    <tr>
+                        <td>
+                            <img width="200" src="{!! \StorageHelper::profileImageUrl($peasant) !!}"/>
+                        </td>
+                        <td>
+                            <?= ($peasant->profile_image->visible) ? 'Yes' : 'No' ; ?>
+                        </td>
+                        <td class="action-buttons">
+                            <form method="POST" action="{!! route('images.destroy', ['imageId' => $peasant->profile_image->id]) !!}">
+                                {!! csrf_field() !!}
+                                {!! method_field('DELETE') !!}
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
                 @else
                     <tr>
                         <td colspan="<?= $tableColumnAmount; ?>">
@@ -200,12 +199,12 @@
                     </td>
                 </tr>
 
-                <?php $peasantImagesNotProfile = $peasant->imagesNotProfile; ?>
-                @if(count($peasantImagesNotProfile) > 0)
+                <?php $peasantImagesNotProfile = $peasant->other_images; ?>
+                @if(!is_null($peasantImagesNotProfile))
                     @foreach($peasantImagesNotProfile as $image)
                         <tr>
                             <td>
-                                <img width="200" src="{!! \StorageHelper::userImageUrl($peasant->id, $image['filename']) !!}"/>
+                                <img width="200" src="{!! \StorageHelper::userImageUrl($peasant->id, $image->filename) !!}"/>
                             </td>
                             <td>
                                 <?= ($image->visible) ? 'Yes' : 'No' ; ?>

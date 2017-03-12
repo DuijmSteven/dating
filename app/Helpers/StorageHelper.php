@@ -19,22 +19,38 @@ class StorageHelper
     /** @var string */
     public static $conversationAttachmentsDir = 'attachments/';
 
-    /**
-     * @param int $userId
-     * @param string $filename
-     * @return mixed
-     */
-    public static function userImageUrl(User $user)
+    public static function profileImageUrl($user)
     {
-        if (!$user->hasProfileImage()) {
+        if (is_null($user)) {
+            throw new \Exception();
+        }
+
+        if (is_null($user->profile_image)) {
+            return 'http://placehold.it/100x150';
+        }
+
+        $filePath = self::userImagesPath($user->id) . $user->profile_image->filename;
+
+        if (!Storage::disk('cloud')->exists($filePath)) {
             // TODO
             return 'http://placehold.it/100x150';
         }
 
-        if (is_null($user->profile_image->filename)) {
-            throw new \Exception;
+        return self::fileUrl($filePath);
+    }
+
+    public static function userImageUrl(int $userId, $filename)
+    {
+        if (is_null($filename)) {
+            return 'http://placehold.it/100x150';
         }
-        $filePath = self::userImagesPath($user->id) . $user->profile_image->filename;
+        $filePath = self::userImagesPath($userId) . $filename;
+
+        if (!Storage::disk('cloud')->exists($filePath)) {
+            // TODO
+            return 'http://placehold.it/100x150';
+        }
+
         return self::fileUrl($filePath);
     }
 

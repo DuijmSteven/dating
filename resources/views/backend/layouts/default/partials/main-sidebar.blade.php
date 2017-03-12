@@ -4,7 +4,7 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="{{ \StorageHelper::userImageUrl($authenticatedUser) }}"
+                <img src="{{ \StorageHelper::profileImageUrl($authenticatedUser) }}"
                      class="img-rounded"
                      alt="User Image">
             </div>

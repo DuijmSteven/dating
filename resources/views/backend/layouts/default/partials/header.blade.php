@@ -212,7 +212,7 @@
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="{{ \StorageHelper::userImageUrl($authenticatedUser) }}"
+                        <img src="{{ \StorageHelper::profileImageUrl($authenticatedUser) }}"
                              class="user-image"
                              alt="User Image">
                         <span class="hidden-xs">{!! $authenticatedUser->username !!}</span>
@@ -220,7 +220,7 @@
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="{{ \StorageHelper::userImageUrl($authenticatedUser) }}"
+                            <img src="{{ \StorageHelper::profileImageUrl($authenticatedUser) }}"
                                  class="img-circle"
                                  alt="User Image">
                             <p>
