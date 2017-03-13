@@ -44,7 +44,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <div class="box-group" id="accordion">
+                <div class="box-group" id="accordionA">
                     <!-- we are adding the .panel class so bootstrap.js collapse plugin detects it -->
                     @php
                         $current_cat = null;
@@ -62,7 +62,7 @@
                             <div class="panel box">
                                 <div class="box-header with-border">
                                     <h4 class="box-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseA{!! $loop->index !!}" aria-expanded="false" class="collapsed">
+                                        <a data-toggle="collapse" data-parent="#accordionA" href="#collapseA{!! $loop->index !!}" aria-expanded="false" class="collapsed">
                                             {!! $note->category !!}
                                         </a>
                                     </h4>
@@ -199,7 +199,7 @@
                 <h3 class="box-title">Notes</h3>
             </div>
             <div class="box-body">
-                <div class="box-group" id="accordion">
+                <div class="box-group" id="accordionB">
                     <!-- we are adding the .panel class so bootstrap.js collapse plugin detects it -->
                     @php
                         $current_cat = null;
@@ -217,7 +217,7 @@
                             <div class="panel box">
                                 <div class="box-header with-border">
                                     <h4 class="box-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseB{!! $loop->index !!}" aria-expanded="false" class="collapsed">
+                                        <a data-toggle="collapse" data-parent="#accordionB" href="#collapseB{!! $loop->index !!}" aria-expanded="false" class="collapsed">
                                             {!! $note->category !!}
                                         </a>
                                     </h4>
