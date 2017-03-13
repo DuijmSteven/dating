@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\ConversationNote;
 use App\Helpers\ccampbell\ChromePhp\ChromePhp;
 use App\Http\Requests\Backend\Conversations\MessageCreateRequest;
 use App\Conversation;
@@ -46,6 +47,10 @@ class ConversationController extends Controller
 
         $conversation = $this->prepareConversationObject($conversation);
 
+        $userANotes = ConversationNote::where('user_id', $conversation->userA->id)->where('conversation_id', $conversation->id)->get();
+
+        $userBNotes = ConversationNote::where('user_id', $conversation->userB->id)->where('conversation_id', $conversation->id)->get();
+
         return view(
             'backend.conversations.show',
             [
@@ -56,7 +61,9 @@ class ConversationController extends Controller
                     $conversation->userB->username .
                     ' (id:' . $conversation->userB->id . ')',
                 'carbonNow' => Carbon::now(),
-                'conversation' => $conversation
+                'conversation' => $conversation,
+                'userANotes' => $userANotes,
+                'userBNotes' => $userBNotes
             ]
         );
     }

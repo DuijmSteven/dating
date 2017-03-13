@@ -94,18 +94,13 @@ class ConversationManager
         );
     }
 
-
     /**
      * @return array
      */
     public function newPeasantBotConversations()
     {
-        \Log::info(self::conversationsByIds(
-            $this->conversationIds('only_new', 'peasant_bot'), 0, 0, ['user_meta']
-        ));
-        die();
         return self::conversationsByIds(
-                $this->conversationIds('only_new', 'peasant_bot'), ['user_meta']
+                $this->conversationIds('only_new', 'peasant_bot'), 0, 0, ['user_meta']
             );
     }
 
@@ -182,7 +177,7 @@ class ConversationManager
         $userMetaFields = '';
         $userMetaJoin = '';
         if (in_array('user_meta', $options)) {
-            $userMetaFields = ' user_a_meta.gender as user_a_gender, user_b_meta.gender as user_b_gender ';
+            $userMetaFields = ' ,user_a_meta.gender as user_a_gender, user_b_meta.gender as user_b_gender ';
             $userMetaJoin = ' JOIN user_meta user_a_meta ON user_a_meta.user_id = c.user_a_id
                               JOIN user_meta user_b_meta ON user_b_meta.user_id = c.user_b_id';
         }
@@ -192,7 +187,7 @@ class ConversationManager
                           m.sender_id as last_message_sender_id, m.recipient_id as last_message_recipient_id,
                           user_a.id as user_a_id, user_b.id as user_b_id, user_a.username as user_a_username, user_b.username as user_b_username,
                           user_a_images.filename as user_a_profile_img, user_b_images.filename as user_b_profile_img, 
-                          user_a_role.role_id as user_a_role_id, user_b_role.role_id as user_b_role_id,
+                          user_a_role.role_id as user_a_role_id, user_b_role.role_id as user_b_role_id
                           ' . $userMetaFields . '
                     FROM    conversations c
                     JOIN    conversation_messages m
@@ -235,7 +230,6 @@ class ConversationManager
         if ($offset) {
             $query .= ' OFFSET ' . $offset . ' ';
         }
-
 
         $results = \DB::select($query);
 

@@ -46,23 +46,35 @@
             <div class="box-body">
                 <div class="box-group" id="accordion">
                     <!-- we are adding the .panel class so bootstrap.js collapse plugin detects it -->
-                    <div class="panel box">
-                        <div class="box-header with-border">
-                            <h4 class="box-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" class="collapsed">
-                                    Family
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapseOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-                            <div class="box-body">
-                                <textarea class="form-control" style="max-width: 100%; height: 180px">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.</textarea>
+                    @php
+                        $current_cat = null;
+                    @endphp
+                    @foreach($userANotes as $note)
+                        @if($current_cat != $note->category)
+                            @if($current_cat != null)
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                            @php
+                                $current_cat = $note->category;
+                            @endphp
+                            <div class="panel box">
+                                <div class="box-header with-border">
+                                    <h4 class="box-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseA{!! $loop->index !!}" aria-expanded="false" class="collapsed">
+                                            {!! $note->category !!}
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseA{!! $loop->index !!}" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                    <div class="box-body">
+                        @endif
+                                    <p> {!! $note->body !!} </p>
+                    @endforeach
+                                    </div>
+                                </div>
                             </div>
-                            <div style="text-align: center">
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
             <!-- /.box-body -->
@@ -184,17 +196,41 @@
         </div>
         <div class="box box-userB">
             <div class="box-header with-border">
-                <h3 class="box-title">
-                    Notes
-                </h3>
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                    </button>
-                </div>
+                <h3 class="box-title">Notes</h3>
             </div>
             <div class="box-body">
-                Gryphon replied very politely, 'for I can't put it right; 'not that it was talking in a piteous tone.
-                And the Eaglet bent down its head down, and was a large mustard-mine near here. And the moral of.
+                <div class="box-group" id="accordion">
+                    <!-- we are adding the .panel class so bootstrap.js collapse plugin detects it -->
+                    @php
+                        $current_cat = null;
+                    @endphp
+                    @foreach($userBNotes as $note)
+                        @if($current_cat != $note->category)
+                            @if($current_cat != null)
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+                            @php
+                                $current_cat = $note->category;
+                            @endphp
+                            <div class="panel box">
+                                <div class="box-header with-border">
+                                    <h4 class="box-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseB{!! $loop->index !!}" aria-expanded="false" class="collapsed">
+                                            {!! $note->category !!}
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseB{!! $loop->index !!}" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                    <div class="box-body">
+                        @endif
+                                        <p> {!! $note->body !!} </p>
+                    @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                </div>
             </div>
         </div>
     </div>
