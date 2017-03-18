@@ -23,8 +23,7 @@ class ConversationController extends Controller
     public function index()
     {
         $conversations = $this->conversationManager->getAll();
-        \Log::info($conversations);
-        die();
+
         return view(
             'backend.conversations.index',
             [

@@ -150,8 +150,15 @@ Route::group([
     ], function () {
         Route::get('{conversationId}', 'Backend\ConversationController@show')
             ->name('operators_platform.conversations.show');
-        Route::post('/create', 'ConversationController@store')
+        Route::post('/', 'ConversationController@store')
             ->name('conversations.store');
+
+        Route::group([
+            'prefix' => 'notes'
+        ], function () {
+            Route::post('/', 'Backend\ConversationNoteController@postNote')
+                ->name('backend.conversations.notes.store');
+        });
     });
 });
 

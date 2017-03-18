@@ -38,47 +38,15 @@
                 @endforeach
             </div>
         </div>
-        <div class="box box-userA">
-            <div class="box-header with-border">
-                <h3 class="box-title">Notes</h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-                <div class="box-group" id="accordionA">
-                    <!-- we are adding the .panel class so bootstrap.js collapse plugin detects it -->
-                    @php
-                        $current_cat = null;
-                    @endphp
-                    @foreach($userANotes as $note)
-                        @if($current_cat != $note->category)
-                            @if($current_cat != null)
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
-                            @php
-                                $current_cat = $note->category;
-                            @endphp
-                            <div class="panel box">
-                                <div class="box-header with-border">
-                                    <h4 class="box-title">
-                                        <a data-toggle="collapse" data-parent="#accordionA" href="#collapseA{!! $loop->index !!}" aria-expanded="false" class="collapsed">
-                                            {!! $note->category !!}
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapseA{!! $loop->index !!}" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-                                    <div class="box-body">
-                        @endif
-                                    <p> {!! $note->body !!} </p>
-                    @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                </div>
-            </div>
-            <!-- /.box-body -->
-        </div>
+
+        {{-- Include Notes module for user B --}}
+        @include('backend.conversations.partials.notes', [
+            'moduleId' => 'A',
+            'userClassName' => 'userA',
+            'notes' => $userANotes,
+            'userId' => $conversation->userA->id
+        ])
+
     </div>
     <div class="col-xs-12 col-sm-6 sm_min_pad0">
         <div class="box direct-chat direct-chat-primary">
@@ -194,46 +162,19 @@
                 @endforeach
             </div>
         </div>
-        <div class="box box-userB">
-            <div class="box-header with-border">
-                <h3 class="box-title">Notes</h3>
-            </div>
-            <div class="box-body">
-                <div class="box-group" id="accordionB">
-                    <!-- we are adding the .panel class so bootstrap.js collapse plugin detects it -->
-                    @php
-                        $current_cat = null;
-                    @endphp
-                    @foreach($userBNotes as $note)
-                        @if($current_cat != $note->category)
-                            @if($current_cat != null)
-                                    </div>
-                                </div>
-                            </div>
-                            @endif
-                            @php
-                                $current_cat = $note->category;
-                            @endphp
-                            <div class="panel box">
-                                <div class="box-header with-border">
-                                    <h4 class="box-title">
-                                        <a data-toggle="collapse" data-parent="#accordionB" href="#collapseB{!! $loop->index !!}" aria-expanded="false" class="collapsed">
-                                            {!! $note->category !!}
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapseB{!! $loop->index !!}" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-                                    <div class="box-body">
-                        @endif
-                                        <p> {!! $note->body !!} </p>
-                    @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                </div>
-            </div>
-        </div>
+
+        {{-- Include Notes module for user B --}}
+        @include('backend.conversations.partials.notes', [
+            'moduleId' => 'B',
+            'userClassName' => 'userB',
+            'notes' => $userBNotes,
+            'userId' => $conversation->userB->id
+        ])
     </div>
 </div>
+
+@include('backend.conversations.partials.notes-modal', [
+    'conversationId' => $conversation->id
+])
 
 @endsection

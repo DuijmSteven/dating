@@ -42,5 +42,13 @@ $(window).load(function () {
 
         })
     }
+
+    /* Conversation notes */
+    // Set user_id on modal form on click depending on user th note is intended for
+    $('#toggle-note-modal').click(function() {
+        var userId = $(this).attr('userId');
+
+        console.log(userId);
+    });
 });
 
