@@ -23,7 +23,6 @@ class NoteCreateRequest extends Request
      */
     public function rules()
     {
-
         $rules = [
             'user_id' => 'required|integer',
             'conversation_id' => 'required|integer',

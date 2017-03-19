@@ -3,9 +3,14 @@
 namespace App\Managers;
 
 use App\ConversationNote;
+use Illuminate\Support\Facades\DB;
 
 class ConversationNoteManager
 {
+    /**
+     * @param array $noteData
+     * @throws \Exception
+     */
     public function createNote(array $noteData)
     {
         DB::beginTransaction();
@@ -15,7 +20,7 @@ class ConversationNoteManager
                 'user_id' => $noteData['user_id'],
                 'conversation_id' => $noteData['conversation_id'],
                 'title' => $noteData['title'],
-                'category' => $noteData[''],
+                'category' => $noteData['category'],
                 'body' => $noteData['body']
             ]);
 

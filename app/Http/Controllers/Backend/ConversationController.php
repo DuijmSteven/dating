@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Backend;
 
 use App\ConversationNote;
-use App\Helpers\ccampbell\ChromePhp\ChromePhp;
-use App\Http\Requests\Backend\Conversations\MessageCreateRequest;
 use App\Conversation;
 use App\Managers\ConversationManager;
 use Carbon\Carbon;
@@ -20,6 +18,9 @@ class ConversationController extends Controller
         parent::__construct();
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         $conversations = $this->conversationManager->getAll();
@@ -36,19 +37,16 @@ class ConversationController extends Controller
         );
     }
 
+    /**
+     * @param int $conversationId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function show(int $conversationId)
     {
-        $conversation = Conversation::with(['userA', 'userB', 'messages'])->find($conversationId);
-
-        if (!($conversation instanceof Conversation)) {
-            throw new \Exception;
-        }
-
+        $conversation = Conversation::with(['userA', 'userB', 'messages'])->findOrFail($conversationId);
         $conversation = $this->prepareConversationObject($conversation);
 
-        $userANotes = ConversationNote::where('user_id', $conversation->userA->id)->where('conversation_id', $conversation->id)->get();
-
-        $userBNotes = ConversationNote::where('user_id', $conversation->userB->id)->where('conversation_id', $conversation->id)->get();
+        list($userANotes, $userBNotes) = $this->getParticipantNotes($conversation);
 
         return view(
             'backend.conversations.show',
@@ -82,5 +80,25 @@ class ConversationController extends Controller
         }
 
         return $conversation;
+    }
+
+    /**
+     * @param $conversation
+     * @return array
+     */
+    private function getParticipantNotes($conversation)
+    {
+        $userANotes = ConversationNote::where('user_id', $conversation->userA->id)
+            ->where('conversation_id', $conversation->id)
+            ->orderBy('category', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $userBNotes = ConversationNote::where('user_id', $conversation->userB->id)
+            ->where('conversation_id', $conversation->id)
+            ->orderBy('category', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return array($userANotes, $userBNotes);
     }
 }

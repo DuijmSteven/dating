@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Faker\Generator as Faker;
+use Carbon\Carbon;
 
 class ConversationsMessagesFlirtsSeeder extends Seeder
 {
@@ -41,7 +42,7 @@ class ConversationsMessagesFlirtsSeeder extends Seeder
             $botId = $tempBotIds[$botIdKey];
             unset($tempBotIds[$botIdKey]);
 
-            $startDate = \Carbon\Carbon::create(rand(2015, 2017), rand(1, 12), rand(1, 28), rand(1, 22), rand(1, 59), rand(1, 59));
+                $startDate = Carbon::create(rand(Carbon::now()->year - 4, Carbon::now()->year - 1), rand(1, 12), rand(1, 28), rand(1, 22), rand(1, 59), rand(1, 59));
 
             $conversationAmount = rand(1, 2);
 

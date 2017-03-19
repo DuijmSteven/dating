@@ -126,7 +126,7 @@ Route::group([
     Route::group([
         'prefix' => 'users'
     ], function () {
-        Route::delete('{userId}/delete', 'Backend\UserController@destroy')
+        Route::delete('{userId}', 'Backend\UserController@destroy')
             ->name('backend.users.destroy');
     });
 
@@ -135,6 +135,13 @@ Route::group([
     ], function () {
         Route::get('/', 'Backend\ConversationController@index')
             ->name('backend.conversations.index');
+    });
+
+    Route::group([
+        'prefix' => 'notes'
+    ], function () {
+        Route::delete('/{noteId}', 'Backend\ConversationNoteController@destroyNote')
+            ->name('backend.conversations.notes.destroy');
     });
 });
 

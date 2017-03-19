@@ -12,7 +12,11 @@
                     <input type="hidden" value="{!! $conversationId !!}" name="conversation_id">
                     <input type="hidden" value="" id="note_user_id" name="user_id">
                     <div class="form-group">
-                        <label for="title">Category</label>
+                        <label for="category">Category</label>
+                        <input class="form-control" type="text" id="category" name="category">
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Title</label>
                         <input class="form-control" type="text" id="title" name="title">
                     </div>
                     <div class="form-group">

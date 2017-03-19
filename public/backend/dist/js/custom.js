@@ -45,10 +45,10 @@ $(window).load(function () {
 
     /* Conversation notes */
     // Set user_id on modal form on click depending on user th note is intended for
-    $('#toggle-note-modal').click(function() {
-        var userId = $(this).attr('userId');
+    $('.js_toggle-note-modal').click(function() {
+        var userId = $(this).data('userid');
 
-        console.log(userId);
+        $('#note_user_id').val(userId);
     });
 });
 

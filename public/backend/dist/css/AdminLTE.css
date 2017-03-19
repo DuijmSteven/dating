@@ -5107,9 +5107,27 @@ table .action-buttons .btn {
 }
 
 .note_body.first {
-  padding-top: 0;
+  padding-top: 0;note_delete-fa
 }
 
 .note_body.last {
   border-bottom: 0;
+}
+
+.note_title {
+  margin-top: 0;
+}
+
+.note_delete-fa {
+  color: #888;
+}
+
+.note_form-delete {
+  display: inline-block;
+  float: right;
+}
+
+.note_form-delete:hover .note_delete-fa {
+  color: red;
+  cursor: pointer;
 }
