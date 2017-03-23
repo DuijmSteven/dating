@@ -7,6 +7,7 @@ use App\ConversationMessage;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Helpers\ccampbell\ChromePhp\ChromePhp;
 use App\MessageAttachment;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 
 class ConversationManager
@@ -87,10 +88,10 @@ class ConversationManager
         DB::commit();
     }
 
-    public function getAll(int $limit = 0, int $offset = 0)
+    public function getPaginated(string $age = 'any', string $lastMessageUserRoles = 'any', int $limit = 0, int $offset = 0)
     {
         return self::conversationsByIds(
-            $this->conversationIds('any', 'any'), $limit, $offset
+            $this->conversationIds($age, $lastMessageUserRoles, [],$limit, $offset)
         );
     }
 
@@ -100,7 +101,7 @@ class ConversationManager
     public function newPeasantBotConversations()
     {
         return self::conversationsByIds(
-                $this->conversationIds('only_new', 'peasant_bot'), 0, 0, ['user_meta']
+                $this->conversationIds('only_new', 'peasant_bot'), ['user_meta']
             );
     }
 
@@ -114,13 +115,7 @@ class ConversationManager
             );
     }
 
-    /**
-     * @param string $age
-     * @param string $lastMessageUserRoles
-     * @return array
-     * @throws \Exception
-     */
-    public function conversationIds(string $age = 'any', string $lastMessageUserRoles = 'any', array $types = [])
+    public function conversationIds(string $age = 'any', string $lastMessageUserRoles = 'any', array $types = [], int $limit = 0, int $offset = 0)
     {
         $conversationIds = [];
         list($roleQuery, $ageQuery, $typesQuery) = $this->resolveConversationTypeOptions(
@@ -129,14 +124,15 @@ class ConversationManager
             $types
         );
 
-        $query = 'SELECT DISTINCT(cm.conversation_id) as conversation_id
-                    FROM conversation_messages as cm
+        $query = 'SELECT c.id as conversation_id
+                    FROM conversations as c
+                    JOIN conversation_messages cm ON cm.conversation_id = c.id
                     JOIN conversation_messages lm
                         ON lm.id =
                         (
                             SELECT mi.id
                             FROM conversation_messages mi
-                            WHERE mi.conversation_id = cm.conversation_id
+                            WHERE mi.conversation_id = c.id
                             ORDER BY mi.created_at DESC
                             LIMIT 1
                         )
@@ -146,7 +142,16 @@ class ConversationManager
                     JOIN role_user recipient_role ON recipient_role.user_id = lm.recipient_id
                     ' . $roleQuery .
                     $typesQuery .
-                    $ageQuery;
+                    $ageQuery .
+                    ' ORDER BY c.created_at DESC ';
+
+        if ($limit) {
+            $query .= ' LIMIT ' . $limit . ' ';
+        }
+
+        if ($offset) {
+            $query .= ' OFFSET ' . $offset . ' ';
+        }
 
         $results = \DB::select($query);
 
@@ -157,14 +162,7 @@ class ConversationManager
         return $conversationIds;
     }
 
-    /**
-     * @param array $conversationIds
-     * @param int $limit
-     * @param int $offset
-     * @param array $options
-     * @return array
-     */
-    public function conversationsByIds(array $conversationIds, int $limit = 0, int $offset = 0, $options = [])
+    public function conversationsByIds(array $conversationIds, $options = [])
     {
         $allowedOptions = ['user_meta', 'profile_image', 'other_images'];
 
@@ -182,7 +180,7 @@ class ConversationManager
                               JOIN user_meta user_b_meta ON user_b_meta.user_id = c.user_b_id';
         }
 
-        $query = 'SELECT  c.id as conversation_id,
+        $query = 'SELECT  c.id as conversation_id, c.created_at as conversation_created_at,
                           m.id as last_message_id, m.created_at as last_message_created_at, m.body as last_message_body, m.has_attachment as last_message_has_attachment, m.type as last_message_type,
                           m.sender_id as last_message_sender_id, m.recipient_id as last_message_recipient_id,
                           user_a.id as user_a_id, user_b.id as user_b_id, user_a.username as user_a_username, user_b.username as user_b_username,
@@ -222,14 +220,6 @@ class ConversationManager
                           )
                     WHERE c.id IN (' . implode(',', $conversationIds) . ')
                     ORDER BY c.created_at DESC ';
-
-        if ($limit) {
-            $query .= ' LIMIT ' . $limit . ' ';
-        }
-
-        if ($offset) {
-            $query .= ' OFFSET ' . $offset . ' ';
-        }
 
         $results = \DB::select($query);
 
@@ -288,15 +278,10 @@ class ConversationManager
         foreach ($results as $result) {
             $conversation = [];
 
-            if ($result->user_a_id === $result->last_message_sender_id) {
-                $senderRoleId = $result->user_a_role_id;
-                $recipientRoleId = $result->user_b_role_id;
-            } elseif ($result->user_a_id === $result->last_message_recipient_id) {
-                $senderRoleId = $result->user_b_role_id;
-                $recipientRoleId = $result->user_a_role_id;
-            } else {
-                throw new \Exception;
-            }
+            list($senderRoleId, $recipientRoleId) = $this->determineParticipantIds($result);
+
+            $conversation['id'] = $result->conversation_id;
+            $conversation['created_at'] = $result->conversation_created_at;
 
             $conversation['user_a']['id'] = $result->user_a_id;
             $conversation['user_a']['username'] = $result->user_a_username;
@@ -323,11 +308,9 @@ class ConversationManager
             $conversation['last_message']['type'] = $result->last_message_type;
             $conversation['last_message']['created_at'] = $result->last_message_created_at;
 
-            $conversation['id'] = $result->conversation_id;
-
-            $conversations[$result->conversation_id] = $conversation;
+            $conversations[] = $conversation;
         }
-        return $conversations;
+        return collect($conversations);
     }
 
     /**
@@ -391,10 +374,30 @@ class ConversationManager
         if ($age !== 'any') {
             $requiredDistinctCount = (explode('_', $age)[1] === 'new') ? 1 : 2;
 
-            $ageQuery = ' GROUP BY cm.conversation_id
+            $ageQuery = ' GROUP BY conversation_id
                          HAVING COUNT(DISTINCT(cm.sender_id)) = ' . $requiredDistinctCount . ' ';
         }
 
         return array($roleQuery, $ageQuery, $typesQuery);
+    }
+
+    /**
+     * @param $result
+     * @return array
+     * @throws \Exception
+     */
+    protected function determineParticipantIds($result): array
+    {
+        if ($result->user_a_id === $result->last_message_sender_id) {
+            $senderRoleId = $result->user_a_role_id;
+            $recipientRoleId = $result->user_b_role_id;
+            return array($senderRoleId, $recipientRoleId);
+        } elseif ($result->user_a_id === $result->last_message_recipient_id) {
+            $senderRoleId = $result->user_b_role_id;
+            $recipientRoleId = $result->user_a_role_id;
+            return array($senderRoleId, $recipientRoleId);
+        } else {
+            throw new \Exception;
+        }
     }
 }

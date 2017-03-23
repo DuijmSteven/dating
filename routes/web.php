@@ -133,7 +133,7 @@ Route::group([
     Route::group([
         'prefix' => 'conversations'
     ], function () {
-        Route::get('/', 'Backend\ConversationController@index')
+        Route::get('/{page}', 'Backend\ConversationController@index')
             ->name('backend.conversations.index');
     });
 

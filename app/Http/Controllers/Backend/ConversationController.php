@@ -7,6 +7,7 @@ use App\Conversation;
 use App\Managers\ConversationManager;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ConversationController extends Controller
 {
@@ -18,12 +19,13 @@ class ConversationController extends Controller
         parent::__construct();
     }
 
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index()
+    public function index(int $page)
     {
-        $conversations = $this->conversationManager->getAll();
+        $conversations = $this->conversationManager->getPaginated('any', 'any', 20, ($page - 1) * 20);
+
+        $paginator = new LengthAwarePaginator($conversations, 100, 20, $page);
+
+        dd($paginator);
 
         return view(
             'backend.conversations.index',
@@ -32,7 +34,7 @@ class ConversationController extends Controller
                 'headingLarge' => 'Conversations',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
-                'conversations' => $conversations
+                'conversations' => $paginator
             ]
         );
     }
