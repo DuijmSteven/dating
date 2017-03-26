@@ -149,6 +149,8 @@ Route::group([
     ], function () {
         Route::get('/', 'Backend\ArticleController@index')
             ->name('backend.articles.index');
+        Route::delete('/{articleId}', 'Backend\ArticleController@destroy')
+            ->name('backend.articles.destroy');
     });
 });
 

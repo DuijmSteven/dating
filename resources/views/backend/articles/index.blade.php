@@ -36,7 +36,7 @@
                                     <td>{{ $article->body }}</td>
                                     <td class="no-wrap">{{ $article->created_at->format('d-m-Y H:i:s') }}</td>
                                     <td class="action-buttons">
-                                        <form method="POST" action="">
+                                        <form method="POST" action="{{ route('backend.articles.destroy', ['articleId' => $article->id]) }}">
                                             {!! csrf_field() !!}
                                             {!! method_field('DELETE') !!}
                                             <button type="submit"
