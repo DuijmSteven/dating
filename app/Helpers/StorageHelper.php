@@ -42,13 +42,13 @@ class StorageHelper
     public static function userImageUrl(int $userId, $filename)
     {
         if (is_null($filename)) {
-            return 'http://placehold.it/100x150';
+            return 'http://placehold.it/100x100';
         }
         $filePath = self::userImagesPath($userId) . $filename;
 
         if (!Storage::disk('cloud')->exists($filePath)) {
             // TODO
-            return 'http://placehold.it/100x150';
+            return 'http://placehold.it/100x100';
         }
 
         return self::fileUrl($filePath);

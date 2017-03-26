@@ -7,6 +7,7 @@ use App\ConversationMessage;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Helpers\ccampbell\ChromePhp\ChromePhp;
 use App\MessageAttachment;
+use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 
@@ -91,7 +92,7 @@ class ConversationManager
     public function getPaginated(string $age = 'any', string $lastMessageUserRoles = 'any', int $limit = 0, int $offset = 0)
     {
         return self::conversationsByIds(
-            $this->conversationIds($age, $lastMessageUserRoles, [],$limit, $offset)
+            $this->conversationIds($age, $lastMessageUserRoles, [],$limit, $offset), ['user_meta']
         );
     }
 
@@ -238,6 +239,41 @@ class ConversationManager
             );
     }
 
+    public function countConversations(string $age = 'any', string $lastMessageUserRoles = 'any', array $types = [])
+    {
+        list($roleQuery, $ageQuery, $typesQuery) = $this->resolveConversationTypeOptions(
+            $age,
+            $lastMessageUserRoles,
+            $types
+        );
+
+        $query = 'SELECT count(c.id) as total
+                    FROM conversations as c
+                    JOIN conversation_messages cm ON cm.conversation_id = c.id
+                    JOIN conversation_messages lm
+                        ON lm.id =
+                        (
+                            SELECT mi.id
+                            FROM conversation_messages mi
+                            WHERE mi.conversation_id = c.id
+                            ORDER BY mi.created_at DESC
+                            LIMIT 1
+                        )
+                    JOIN users sender ON sender.id = lm.sender_id
+                    JOIN users recipient ON recipient.id = lm.recipient_id
+                    JOIN role_user sender_role ON sender_role.user_id = lm.sender_id
+                    JOIN role_user recipient_role ON recipient_role.user_id = lm.recipient_id
+                    ' . $roleQuery .
+            $typesQuery .
+            $ageQuery .
+            ' ORDER BY c.created_at DESC ';
+
+        $results = \DB::select($query);
+
+        return (int)current($results)->total;
+
+    }
+
     /**
      * @param int $userAId
      * @param int $userBId
@@ -271,43 +307,13 @@ class ConversationManager
      * @return array
      * @throws \Exception
      */
-    protected function formatConversations($results, array $options = [])
+    private function formatConversations($results, array $options = [])
     {
         $conversations = [];
 
         foreach ($results as $result) {
             $conversation = [];
-
-            list($senderRoleId, $recipientRoleId) = $this->determineParticipantIds($result);
-
-            $conversation['id'] = $result->conversation_id;
-            $conversation['created_at'] = $result->conversation_created_at;
-
-            $conversation['user_a']['id'] = $result->user_a_id;
-            $conversation['user_a']['username'] = $result->user_a_username;
-            $conversation['user_a']['profile_image_url'] = \StorageHelper::userImageUrl($conversation['user_a']['id'], $result->user_a_profile_img);
-            $conversation['user_a']['role_id'] = $result->user_a_role_id;
-
-            $conversation['user_b']['id'] = $result->user_b_id;
-            $conversation['user_b']['username'] = $result->user_b_username;
-            $conversation['user_b']['profile_image_url'] = \StorageHelper::userImageUrl($conversation['user_b']['id'], $result->user_b_profile_img);
-            $conversation['user_b']['role_id'] = $result->user_b_role_id;
-
-            if (in_array('user_meta', $options)) {
-                $conversation['user_a']['meta']['gender'] = \UserConstants::selectableField('gender', 'common')[(int) $result->user_a_gender];
-                $conversation['user_b']['meta']['gender'] = \UserConstants::selectableField('gender', 'common')[(int) $result->user_b_gender];
-            }
-
-            $conversation['last_message']['id'] = $result->last_message_id;
-            $conversation['last_message']['sender_id'] = $result->last_message_sender_id;
-            $conversation['last_message']['sender_role_id'] = $senderRoleId;
-            $conversation['last_message']['recipient_id'] = $result->last_message_recipient_id;
-            $conversation['last_message']['recipient_role_id'] = $recipientRoleId;
-            $conversation['last_message']['body'] = $result->last_message_body;
-            $conversation['last_message']['has_attachment'] = $result->last_message_has_attachment;
-            $conversation['last_message']['type'] = $result->last_message_type;
-            $conversation['last_message']['created_at'] = $result->last_message_created_at;
-
+            $this->formatConversation($result, $conversation, $options);
             $conversations[] = $conversation;
         }
         return collect($conversations);
@@ -399,5 +405,80 @@ class ConversationManager
         } else {
             throw new \Exception;
         }
+    }
+
+    /**
+     * @param $result
+     * @param $conversation
+     */
+    private function setConversationFields($result, &$conversation): void
+    {
+        $conversation['id'] = $result->conversation_id;
+        $conversation['created_at'] = new Carbon($result->conversation_created_at);
+    }
+
+    /**
+     * @param $result
+     * @param $conversation
+     */
+    private function setUserAFields($result, &$conversation, $options = []): void
+    {
+        $conversation['user_a']['id'] = $result->user_a_id;
+        $conversation['user_a']['username'] = $result->user_a_username;
+        $conversation['user_a']['profile_image_url'] = \StorageHelper::userImageUrl($conversation['user_a']['id'], $result->user_a_profile_img);
+        $conversation['user_a']['role'] = (int) $result->user_a_role_id;
+
+        if (in_array('user_meta', $options)) {
+            $conversation['user_a']['meta']['gender'] = (int) $result->user_a_gender;
+        }
+    }
+
+    /**
+     * @param $result
+     * @param $conversation
+     */
+    private function setUserBFields($result, &$conversation, $options = []): void
+    {
+        $conversation['user_b']['id'] = $result->user_b_id;
+        $conversation['user_b']['username'] = $result->user_b_username;
+        $conversation['user_b']['profile_image_url'] = \StorageHelper::userImageUrl($conversation['user_b']['id'], $result->user_b_profile_img);
+        $conversation['user_b']['role'] = (int) $result->user_b_role_id;
+
+        if (in_array('user_meta', $options)) {
+            $conversation['user_b']['meta']['gender'] = (int) $result->user_b_gender;
+        }
+    }
+
+    /**
+     * @param $result
+     * @param $conversation
+     * @param $senderRoleId
+     * @param $recipientRoleId
+     */
+    private function setLastMessageFields($result, &$conversation, $senderRoleId, $recipientRoleId): void
+    {
+        $conversation['last_message']['id'] = $result->last_message_id;
+        $conversation['last_message']['sender_id'] = $result->last_message_sender_id;
+        $conversation['last_message']['sender_role_id'] = $senderRoleId;
+        $conversation['last_message']['recipient_id'] = $result->last_message_recipient_id;
+        $conversation['last_message']['recipient_role_id'] = $recipientRoleId;
+        $conversation['last_message']['body'] = $result->last_message_body;
+        $conversation['last_message']['has_attachment'] = $result->last_message_has_attachment;
+        $conversation['last_message']['type'] = $result->last_message_type;
+        $conversation['last_message']['created_at'] = new Carbon($result->last_message_created_at);
+    }
+
+    /**
+     * @param $result
+     * @param $conversation
+     */
+    private function formatConversation($result, &$conversation, $options = []): void
+    {
+        list($senderRoleId, $recipientRoleId) = $this->determineParticipantIds($result);
+
+        $this->setConversationFields($result, $conversation);
+        $this->setUserAFields($result, $conversation, $options);
+        $this->setUserBFields($result, $conversation, $options);
+        $this->setLastMessageFields($result, $conversation, $senderRoleId, $recipientRoleId);
     }
 }

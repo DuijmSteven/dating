@@ -3,9 +3,9 @@
 return [
 
     'role' => [
-        0 => 'Admin',
-        1 => 'Peasant',
-        2 => 'Bot'
+        1 => 'Admin',
+        2 => 'Peasant',
+        3 => 'Bot'
     ],
     'gender' => [
         0 => 'Male',

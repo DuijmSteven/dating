@@ -106,7 +106,7 @@
                     </a>
                     <ul class="treeview-menu">
                         <li class="{!! \Request::route()->getName() == 'backend.peasants.retrieve' ? 'active' : '' !!}">
-                            <a href="{!! route('backend.conversations.index') !!}">
+                            <a href="{!! route('backend.conversations.index', ['page' => 1]) !!}">
                                 <i class="fa fa-list"></i>
                                 Overview
                             </a>

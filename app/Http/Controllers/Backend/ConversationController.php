@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\ConversationNote;
 use App\Conversation;
+use App\ConversationNote;
+use App\Http\Controllers\Controller;
 use App\Managers\ConversationManager;
 use Carbon\Carbon;
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class ConversationController extends Controller
@@ -19,14 +20,16 @@ class ConversationController extends Controller
         parent::__construct();
     }
 
-    public function index(int $page)
+    public function index(Request $request)
     {
+        $page = $this->resolveCurrentPage($request);
+
+        $conversationsTotalCount = $this->conversationManager->countConversations();
+
         $conversations = $this->conversationManager->getPaginated('any', 'any', 20, ($page - 1) * 20);
 
-        $paginator = new LengthAwarePaginator($conversations, 100, 20, $page);
-
-        dd($paginator);
-
+        $paginator = new LengthAwarePaginator($conversations, $conversationsTotalCount, 20, $page);
+        $paginator->setPath('/backend/conversations');
         return view(
             'backend.conversations.index',
             [
@@ -102,5 +105,15 @@ class ConversationController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
         return array($userANotes, $userBNotes);
+    }
+
+    /**
+     * @param Request $request
+     * @return int|mixed
+     */
+    protected function resolveCurrentPage(Request $request)
+    {
+        $page = ($request->get('page') === 1 || is_null($request->get('page'))) ? 1 : $request->get('page');
+        return $page;
     }
 }
