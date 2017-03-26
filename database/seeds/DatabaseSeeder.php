@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(UserTablesSeeder::class);
         $this->call(ConversationsMessagesFlirtsSeeder::class);
+        $this->call(ArticlesSeeder::class);
 
         Model::reguard();
     }

@@ -143,6 +143,13 @@ Route::group([
         Route::delete('/{noteId}', 'Backend\ConversationNoteController@destroyNote')
             ->name('backend.conversations.notes.destroy');
     });
+
+    Route::group([
+        'prefix' => 'articles'
+    ], function () {
+        Route::get('/', 'Backend\ArticleController@index')
+            ->name('backend.articles.index');
+    });
 });
 
 Route::group([

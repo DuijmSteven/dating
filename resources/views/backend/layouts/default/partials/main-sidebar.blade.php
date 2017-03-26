@@ -113,6 +113,23 @@
                         </li>
                     </ul>
                 </li>
+                <li class="treeview {!! str_contains(\Request::route()->getName(), 'backend.articles') ? 'active' : '' !!}">
+                    <a href="#">
+                        <i class="fa fa-list"></i>
+                        <span>Articles</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="{!! \Request::route()->getName() == 'backend.articles.index' ? 'active' : '' !!}">
+                            <a href="{!! route('backend.articles.index', ['page' => 1]) !!}">
+                                <i class="fa fa-list"></i>
+                                Overview
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="treeview {!! str_contains(\Request::route()->getName(), 'operators_platform') ? 'active' : '' !!}">
                     <a href="#">
                         <i class="fa fa-users"></i>
