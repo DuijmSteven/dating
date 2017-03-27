@@ -224,6 +224,18 @@ class ConversationManager
 
         $results = \DB::select($query);
 
+        $query = DB::table('conversations')->select('conversations.id as conversation_id', 'conversations.created_at as conversation_created_at',
+                          'conversation_messages.id as last_message_id', 'conversation_messages.created_at as last_message_created_at', 'conversation_messages.body as last_message_body', 'conversation_messages.has_attachment as last_message_has_attachment', 'conversation_messages.type as last_message_type', 'conversation_messages.recipient_id as last_message_recipient_id')
+                        ->join('conversation_messages', function ($join) {
+                            $join->on('conversation_messages.id', '=', DB::raw('(SELECT  mi.id
+                                FROM    conversation_messages mi
+                                WHERE   mi.conversation_id = conversations.id
+                                ORDER BY mi.created_at DESC
+                                LIMIT 1)'));
+                        })->get();
+
+        dd($query);
+
         $conversations = $this->formatConversations($results, $options);
 
         return $conversations;

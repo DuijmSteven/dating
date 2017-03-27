@@ -98,7 +98,7 @@
                 </li>
                 <li class="treeview {!! str_contains(\Request::route()->getName(), 'backend.conversations') ? 'active' : '' !!}">
                     <a href="#">
-                        <i class="fa fa-list"></i>
+                        <i class="fa fa-comments"></i>
                         <span>Conversations</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
@@ -115,7 +115,7 @@
                 </li>
                 <li class="treeview {!! str_contains(\Request::route()->getName(), 'backend.articles') ? 'active' : '' !!}">
                     <a href="#">
-                        <i class="fa fa-list"></i>
+                        <i class="fa fa-newspaper-o"></i>
                         <span>Articles</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
@@ -126,6 +126,12 @@
                             <a href="{!! route('backend.articles.index', ['page' => 1]) !!}">
                                 <i class="fa fa-list"></i>
                                 Overview
+                            </a>
+                        </li>
+                        <li class="{!! \Request::route()->getName() == 'backend.articles.create' ? 'active' : '' !!}">
+                            <a href="{!! route('backend.articles.create') !!}">
+                                <i class="fa fa-plus"></i>
+                                Create
                             </a>
                         </li>
                     </ul>

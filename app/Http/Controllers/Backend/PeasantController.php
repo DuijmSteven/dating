@@ -142,7 +142,7 @@ class PeasantController extends Controller
             ];
         } catch (\Exception $exception) {
             $alerts[] = [
-                'type' => 'alert',
+                'type' => 'error',
                 'message' => 'The peasant was not updated due to an exception.'
             ];
         }

@@ -14,7 +14,10 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Articles (Total: <strong>{!! $articles->total() !!}</strong>)</h3>
+                    <div class="pull-left">
+                        <h3 class="box-title">Articles (Total: <strong>{!! $articles->total() !!}</strong>)</h3>
+                    </div>
+                    <a class="pull-right btn btn-success" href="{{ route('backend.articles.create') }}">Create article</a>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body table-responsive no-padding">
@@ -24,6 +27,7 @@
                                 <th>ID</th>
                                 <th>Title</th>
                                 <th>Body</th>
+                                <th>Status</th>
                                 <th class="no-wrap">Created at</th>
                                 <th>Actions</th>
                             </tr>
@@ -34,8 +38,13 @@
                                     <td>{!! $article->id !!}</td>
                                     <td>{{ $article->title }}</td>
                                     <td>{{ $article->body }}</td>
+                                    <td>{{ \App\Article::$statuses[$article->status] }}</td>
                                     <td class="no-wrap">{{ $article->created_at->format('d-m-Y H:i:s') }}</td>
                                     <td class="action-buttons">
+                                        <a href="{{ route('backend.articles.edit', ['articleId' => $article->id]) }}"
+                                           class="btn btn-default">
+                                            Edit
+                                        </a>
                                         <form method="POST" action="{{ route('backend.articles.destroy', ['articleId' => $article->id]) }}">
                                             {!! csrf_field() !!}
                                             {!! method_field('DELETE') !!}

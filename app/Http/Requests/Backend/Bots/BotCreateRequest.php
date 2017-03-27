@@ -5,6 +5,10 @@ namespace App\Http\Requests\Backend\Bots;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Http\Requests\Request;
 
+/**
+ * Class BotCreateRequest
+ * @package App\Http\Requests\Backend\Bots
+ */
 class BotCreateRequest extends Request
 {
     /**

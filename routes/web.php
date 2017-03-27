@@ -149,8 +149,19 @@ Route::group([
     ], function () {
         Route::get('/', 'Backend\ArticleController@index')
             ->name('backend.articles.index');
+
         Route::delete('/{articleId}', 'Backend\ArticleController@destroy')
             ->name('backend.articles.destroy');
+
+        Route::get('/create', 'Backend\ArticleController@getCreate')
+            ->name('backend.articles.create');
+        Route::post('/', 'Backend\ArticleController@post')
+            ->name('backend.articles.post');
+
+        Route::get('/{articleId}', 'Backend\ArticleController@getUpdate')
+            ->name('backend.articles.edit');
+        Route::put('/{articleId}', 'Backend\ArticleController@update')
+            ->name('backend.articles.update');
     });
 });
 

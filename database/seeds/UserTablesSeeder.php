@@ -29,6 +29,7 @@ class UserTablesSeeder extends Seeder
         /* -- Create admin user -- */
         $createdAdmin = factory(App\User::class)->create([
             'username' => 'admin',
+            'email' => 'admin@gmail.com',
             'password' => Hash::make('12qwaszx')
         ]);
 

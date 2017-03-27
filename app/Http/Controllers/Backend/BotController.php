@@ -142,7 +142,7 @@ class BotController extends Controller
             ];
         } catch (\Exception $exception) {
             $alerts[] = [
-                'type' => 'alert',
+                'type' => 'error',
                 'message' => 'The bot was not updated due to an exception.'
             ];
         }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Article;
+use App\Http\Requests\Backend\Articles\ArticleCreateRequest;
 use Carbon\Carbon;
 
 /**
@@ -29,6 +30,10 @@ class ArticleController extends Controller
         );
     }
 
+    /**
+     * @param int $articleId
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy(int $articleId)
     {
         try {
@@ -40,8 +45,88 @@ class ArticleController extends Controller
             ];
         } catch (\Exception $exception) {
             $alerts[] = [
-                'type' => 'alert',
+                'type' => 'error',
                 'message' => 'The article was not deleted due to an exception.'
+            ];
+        }
+
+        return redirect()->back()->with('alerts', $alerts);
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getCreate()
+    {
+        return view(
+            'backend.articles.create',
+            [
+                'title' => 'Create article - ' . \MetaConstants::SITE_NAME,
+                'headingLarge' => 'Articles',
+                'headingSmall' => 'Create'
+            ]
+        );
+    }
+
+    /**
+     * @param int $articleId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getUpdate(int $articleId)
+    {
+        return view(
+            'backend.articles.edit',
+            [
+                'title' => 'Edit article - ' . \MetaConstants::SITE_NAME,
+                'headingLarge' => 'Articles',
+                'headingSmall' => 'Edit',
+                'article' => Article::find($articleId)
+            ]
+        );
+    }
+
+    /**
+     * @param ArticleCreateRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function post(ArticleCreateRequest $request)
+    {
+        try {
+            Article::create($request->all());
+
+            $alerts[] = [
+                'type' => 'success',
+                'message' => 'The article was created.'
+            ];
+        } catch (\Exception $exception) {
+            $alerts[] = [
+                'type' => 'error',
+                'message' => 'The article was not created due to an exception.'
+            ];
+        }
+
+        return redirect()->back()->with('alerts', $alerts);
+    }
+
+    /**
+     * @param ArticleCreateRequest $request
+     * @param int $articleId
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(ArticleCreateRequest $request, int $articleId)
+    {
+        try {
+            $article = Article::find($articleId);
+            $article->update($request->all());
+
+            $alerts[] = [
+                'type' => 'success',
+                'message' => 'The article was updated.'
+            ];
+        } catch (\Exception $exception) {
+            $alerts[] = [
+                'type' => 'error',
+                'message' => 'The article was not updated due to an exception.'
             ];
         }
 
