@@ -28,18 +28,15 @@ class StorageManager
                     . '.' . $uploadedFile->extension();
 
                 $fileNameThumb = md5(microtime()
-                        . $uploadedFile->getClientOriginalName()
-                        . $uploadedFile->getClientSize())
-                        .'_thumb'
-                        . '.' . $uploadedFile->extension();
+                    . $uploadedFile->getClientOriginalName()
+                    . $uploadedFile->getClientSize())
+                    .'_thumb'
+                    . '.' . $uploadedFile->extension();
 
-                $thumb = Image::make($uploadedFile)->resize(50, 100);
+                $resource = $this->imageResize($uploadedFile, 100);
 
-                $thumb->save(public_path($fileNameThumb));
-
-                $thumbUpload = Storage::disk($location)->putFileAs($path, new File(public_path($fileNameThumb)), $fileNameThumb);
-
-                unlink(public_path($fileNameThumb));
+                $uploadThumb = Storage::disk($location)->put($path . $fileNameThumb, $resource);
+                die();
 
                 $uploadedFile->storeAs($path, $fileName, $location);
 
@@ -100,5 +97,20 @@ class StorageManager
             return $deleted;
         }
         return false;
+    }
+
+    private function imageResize(UploadedFile $uploadedFile, int $height, int $width = null)
+    {
+        $img = Image::make($uploadedFile);
+
+        if($width == null) {
+            $img->resize(null, $height, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+        }
+        else {
+            $img->resize($width, $height);
+        }
+        return $resource = $img->stream()->detach();
     }
 }
