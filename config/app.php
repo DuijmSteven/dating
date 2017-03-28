@@ -183,6 +183,7 @@ return [
          */
         Kim\Activity\ActivityServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
         /*
          * Ours
@@ -243,7 +244,8 @@ return [
         'PaginationConstants'   => App\Helpers\ApplicationConstants\PaginationConstants::class,
         'StorageHelper'   => App\Helpers\StorageHelper::class,
         'Activity' => Kim\Activity\ActivityFacade::class,
-        'ChromePhp' => App\Helpers\ccampbell\ChromePhp\ChromePhp::class
+        'ChromePhp' => App\Helpers\ccampbell\ChromePhp\ChromePhp::class,
+        'Image' => Intervention\Image\Facades\Image::class
 
     ],
 

@@ -4,6 +4,8 @@ namespace App\Managers;
 
 use App\UserImage;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class StorageManager
@@ -24,6 +26,20 @@ class StorageManager
                     . $uploadedFile->getClientOriginalName()
                     . $uploadedFile->getClientSize())
                     . '.' . $uploadedFile->extension();
+
+                $fileNameThumb = md5(microtime()
+                        . $uploadedFile->getClientOriginalName()
+                        . $uploadedFile->getClientSize())
+                        .'_thumb'
+                        . '.' . $uploadedFile->extension();
+
+                $thumb = Image::make($uploadedFile)->resize(50, 100);
+
+                $thumb->save(public_path($fileNameThumb));
+
+                $thumbUpload = Storage::disk($location)->putFileAs($path, new File(public_path($fileNameThumb)), $fileNameThumb);
+
+                unlink(public_path($fileNameThumb));
 
                 $uploadedFile->storeAs($path, $fileName, $location);
 
