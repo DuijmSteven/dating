@@ -102,12 +102,11 @@ class StorageManager
     {
         $img = Image::make($uploadedFile);
 
-        if($width == null) {
+        if ($width == null) {
             $img->resize(null, $height, function ($constraint) {
                 $constraint->aspectRatio();
             });
-        }
-        else {
+        } else {
             $img->resize($width, $height);
         }
         return $resource = $img->stream()->detach();
