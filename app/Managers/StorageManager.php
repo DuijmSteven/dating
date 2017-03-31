@@ -36,7 +36,6 @@ class StorageManager
                 $resource = $this->imageResize($uploadedFile, 100);
 
                 $uploadThumb = Storage::disk($location)->put($path . $fileNameThumb, $resource);
-                die();
 
                 $uploadedFile->storeAs($path, $fileName, $location);
 

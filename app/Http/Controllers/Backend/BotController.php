@@ -9,8 +9,11 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Input;
 
+/**
+ * Class BotController
+ * @package App\Http\Controllers\Backend
+ */
 class BotController extends Controller
 {
     /** @var BotManager  */
@@ -146,7 +149,6 @@ class BotController extends Controller
                 'message' => 'The bot was not updated due to an exception.'
             ];
         }
-
         return redirect()->back()->with('alerts', $alerts);
     }
 

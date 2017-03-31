@@ -36,13 +36,13 @@ class BotManager extends UserManager
     public function createBot(array $botData)
     {
         $botData = $this->buildBotArrayToPersist($botData, 'create');
+
         $this->persistUser($botData);
     }
 
     public function updateBot(array $botData, int $botId)
     {
         $botData = $this->buildBotArrayToPersist($botData, 'update');
-
         $this->updateUser($botData, $botId);
     }
 

@@ -5,7 +5,7 @@ namespace App\Http\Requests\Backend\Bots;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Http\Requests\Request;
 
-class BotUpdateRequest extends Request
+class ArticleUpdateRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.

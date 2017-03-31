@@ -14,6 +14,10 @@ use Kim\Activity\Activity;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Class UserManager
+ * @package App\Managers
+ */
 class UserManager
 {
     /** @var User */
@@ -39,15 +43,17 @@ class UserManager
      */
     public function persistUser(array $userData)
     {
+        DB::beginTransaction();
         $createdUser = $this->persistUserDetails($userData);
 
         if (isset($userData['profile_image']) && ($userData['profile_image'] instanceof UploadedFile)) {
-            $this->persistUserProfileImage($userData['profile_image'], $createdUser->id);
+            $this->persistProfileImage($userData['profile_image'], $createdUser->id);
         }
 
         if (isset($userData['user_images'])) {
-            $this->persistUserImages($userData['user_images'], $createdUser->id);
+            $this->persistImages($userData['user_images'], $createdUser->id);
         }
+        DB::commit();
     }
 
     /**
@@ -57,11 +63,13 @@ class UserManager
      */
     public function updateUser(array $userData, int $userId)
     {
+        DB::beginTransaction();
         $this->updateUserDetails($userData, $userId);
 
         if (isset($userData['user_images'])) {
-            $this->persistUserImages($userData['user_images'], $userId);
+            $this->persistImages($userData['user_images'], $userId);
         }
+        DB::commit();
     }
 
     /**
@@ -69,22 +77,31 @@ class UserManager
      * @param int $userId
      * @return array
      */
-    private function persistUserImages(array $userImages, $userId = 1)
+    private function persistImages(array $userImages, $userId = 1)
     {
-        if (empty($userImages)) {
-            return [];
-        }
+        if (!empty($userImages)) {
+            try {
+                $imageFilenames = $this->uploadImages($userImages, $userId);
+            } catch (\Exception $exception) {
+                DB::rollBack();
+                throw $exception;
+            }
 
-        $uploadedUserImagesFilenames = $this->uploadUserImagesToCloud($userImages, $userId);
+            foreach ($imageFilenames as $filename) {
+                $userImage = new UserImage([
+                    'user_id' => $userId,
+                    'filename' => $filename,
+                    'visible' => 1,
+                    'profile' => 0
+                ]);
 
-        foreach ($uploadedUserImagesFilenames as $filename) {
-            $userImage = new UserImage([
-                'user_id' => $userId,
-                'filename' => $filename,
-                'visible' => 1
-            ]);
-
-            $userImage->save();
+                try {
+                    $userImage->save();
+                } catch (\Exception $exception) {
+                    DB::rollBack();
+                    throw $exception;
+                }
+            }
         }
     }
 
@@ -92,11 +109,16 @@ class UserManager
      * @param UploadedFile $userProfileImage
      * @param int $userId
      */
-    private function persistUserProfileImage(UploadedFile $userProfileImage, int $userId)
+    private function persistProfileImage(UploadedFile $userProfileImage, int $userId)
     {
         UserImage::where('user_id', $userId)->get();
 
-        $uploadedUserImageFilename = $this->storageManager->saveUserPhoto($userProfileImage, $userId);
+        try {
+            $uploadedUserImageFilename = $this->storageManager->saveUserPhoto($userProfileImage, $userId);
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
 
         $userImage = new UserImage([
             'user_id' => $userId,
@@ -105,15 +127,25 @@ class UserManager
             'profile' => 1
         ]);
 
-        $userImage->save();
+        try {
+            $userImage->save();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
     }
 
-    private function uploadUserImagesToCloud(array $userImages, int $userId)
+    private function uploadImages(array $userImages, int $userId)
     {
         $imageFilenames = [];
 
         foreach ($userImages as $image) {
-            $imageFilenames[] = $this->storageManager->saveUserPhoto($image, $userId);
+            try {
+                $imageFilenames[] = $this->storageManager->saveUserPhoto($image, $userId);
+            } catch (\Exception $exception) {
+                DB::rollBack();
+                throw $exception;
+            }
         }
         return $imageFilenames;
     }
@@ -125,7 +157,6 @@ class UserManager
      */
     private function persistUserDetails(array $userData)
     {
-        DB::beginTransaction();
         try {
             $createdUser = $this->user->create($userData['user']);
         } catch (\Exception $exception) {
@@ -157,7 +188,6 @@ class UserManager
             DB::rollBack();
             throw $exception;
         }
-        DB::commit();
         return $createdUser;
     }
 
@@ -169,7 +199,6 @@ class UserManager
      */
     private function updateUserDetails(array $userData, int $userId)
     {
-        DB::beginTransaction();
         try {
             $updatedUser = $this->user->where('id', $userId)->update($userData['user']);
         } catch (\Exception $exception) {
@@ -179,15 +208,13 @@ class UserManager
 
         try {
             $userMetaInstance = UserMeta::where('user_id', $userId)->first();
-
             $userMetaInstance->update($userData['user_meta']);
         } catch (\Exception $exception) {
             DB::rollBack();
             throw $exception;
         }
-        DB::commit();
 
-        return $updatedUser;
+        return true;
     }
 
     /**
