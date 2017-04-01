@@ -490,7 +490,7 @@ class ConversationManager
             $conversation['user_b']['id'],
             $result->user_b_profile_img
         );
-        
+
         $conversation['user_b']['role'] = (int) $result->user_b_role_id;
 
         if (in_array('user_meta', $options)) {
