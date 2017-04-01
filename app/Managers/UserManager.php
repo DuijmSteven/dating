@@ -72,6 +72,7 @@ class UserManager
         DB::commit();
     }
 
+    
     /**
      * @param array $userImages
      * @param int $userId
