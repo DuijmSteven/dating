@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Article;
 use App\Http\Requests\Backend\Articles\ArticleCreateRequest;
 use Carbon\Carbon;
+use GrahamCampbell\Markdown\Facades\Markdown;
 
 /**
  * Class ArticleController
@@ -18,6 +19,12 @@ class ArticleController extends Controller
      */
     public function index()
     {
+        $articles = Article::orderBy('created_at', 'desc')->paginate(5);
+
+        foreach ($articles as $article) {
+            $article->body = Markdown::convertToHtml($article->body);
+        }
+
         return view(
             'backend.articles.index',
             [
@@ -25,7 +32,7 @@ class ArticleController extends Controller
                 'headingLarge' => 'Articles',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
-                'articles' => Article::orderBy('created_at', 'desc')->paginate(5)
+                'articles' => $articles
             ]
         );
     }

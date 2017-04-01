@@ -184,6 +184,7 @@ return [
         Kim\Activity\ActivityServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        GrahamCampbell\Markdown\MarkdownServiceProvider::class,
 
         /*
          * Ours
@@ -245,7 +246,8 @@ return [
         'StorageHelper'   => App\Helpers\StorageHelper::class,
         'Activity' => Kim\Activity\ActivityFacade::class,
         'ChromePhp' => App\Helpers\ccampbell\ChromePhp\ChromePhp::class,
-        'Image' => Intervention\Image\Facades\Image::class
+        'Image' => Intervention\Image\Facades\Image::class,
+        'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class
 
     ],
 

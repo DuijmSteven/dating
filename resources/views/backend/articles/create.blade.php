@@ -53,6 +53,7 @@
                                       name="body"
                                       required
                                       rows="20"
+                                      data-provide="markdown"
                             ></textarea>
                             @if ($errors->has('body'))
                                 {!! $errors->first('body', '<small class="form-error">:message</small>') !!}
