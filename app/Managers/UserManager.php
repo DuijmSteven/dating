@@ -201,7 +201,7 @@ class UserManager
     private function updateUserDetails(array $userData, int $userId)
     {
         try {
-            $updatedUser = $this->user->where('id', $userId)->update($userData['user']);
+            $this->user->where('id', $userId)->update($userData['user']);
         } catch (\Exception $exception) {
             DB::rollBack();
             throw $exception;

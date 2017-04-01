@@ -89,10 +89,15 @@ class ConversationManager
         DB::commit();
     }
 
-    public function getPaginated(string $age = 'any', string $lastMessageUserRoles = 'any', int $limit = 0, int $offset = 0)
-    {
+    public function getPaginated(
+        string $age = 'any',
+        string $lastMessageUserRoles = 'any',
+        int $limit = 0,
+        int $offset = 0
+    ) {
         return self::conversationsByIds(
-            $this->conversationIds($age, $lastMessageUserRoles, [],$limit, $offset), ['user_meta']
+            $this->conversationIds($age, $lastMessageUserRoles, [], $limit, $offset),
+            ['user_meta']
         );
     }
 
@@ -102,8 +107,9 @@ class ConversationManager
     public function newPeasantBotConversations()
     {
         return self::conversationsByIds(
-                $this->conversationIds('only_new', 'peasant_bot'), ['user_meta']
-            );
+            $this->conversationIds('only_new', 'peasant_bot'),
+            ['user_meta']
+        );
     }
 
     /**
@@ -112,12 +118,17 @@ class ConversationManager
     public function unrepliedPeasantBotConversations()
     {
         return self::conversationsByIds(
-                $this->conversationIds('only_old', 'peasant_bot')
-            );
+            $this->conversationIds('only_old', 'peasant_bot')
+        );
     }
 
-    public function conversationIds(string $age = 'any', string $lastMessageUserRoles = 'any', array $types = [], int $limit = 0, int $offset = 0)
-    {
+    public function conversationIds(
+        string $age = 'any',
+        string $lastMessageUserRoles = 'any',
+        array $types = [],
+        int $limit = 0,
+        int $offset = 0
+    ) {
         $conversationIds = [];
         list($roleQuery, $ageQuery, $typesQuery) = $this->resolveConversationTypeOptions(
             $age,
@@ -182,9 +193,11 @@ class ConversationManager
         }
 
         $query = 'SELECT  c.id as conversation_id, c.created_at as conversation_created_at,
-                          m.id as last_message_id, m.created_at as last_message_created_at, m.body as last_message_body, m.has_attachment as last_message_has_attachment, m.type as last_message_type,
+                          m.id as last_message_id, m.created_at as last_message_created_at, m.body as last_message_body,
+                          m.has_attachment as last_message_has_attachment, m.type as last_message_type,
                           m.sender_id as last_message_sender_id, m.recipient_id as last_message_recipient_id,
-                          user_a.id as user_a_id, user_b.id as user_b_id, user_a.username as user_a_username, user_b.username as user_b_username,
+                          user_a.id as user_a_id, user_b.id as user_b_id, user_a.username as user_a_username,
+                          user_b.username as user_b_username,
                           user_a_images.filename as user_a_profile_img, user_b_images.filename as user_b_profile_img, 
                           user_a_role.role_id as user_a_role_id, user_b_role.role_id as user_b_role_id
                           ' . $userMetaFields . '
@@ -224,17 +237,23 @@ class ConversationManager
 
         $results = \DB::select($query);
 
-        $query = DB::table('conversations')->select('conversations.id as conversation_id', 'conversations.created_at as conversation_created_at',
-                          'conversation_messages.id as last_message_id', 'conversation_messages.created_at as last_message_created_at', 'conversation_messages.body as last_message_body', 'conversation_messages.has_attachment as last_message_has_attachment', 'conversation_messages.type as last_message_type', 'conversation_messages.recipient_id as last_message_recipient_id')
-                        ->join('conversation_messages', function ($join) {
-                            $join->on('conversation_messages.id', '=', DB::raw('(SELECT  mi.id
-                                FROM    conversation_messages mi
-                                WHERE   mi.conversation_id = conversations.id
-                                ORDER BY mi.created_at DESC
-                                LIMIT 1)'));
-                        })->get();
-
-        dd($query);
+        $query = DB::table('conversations')->select(
+            'conversations.id as conversation_id',
+            'conversations.created_at as conversation_created_at',
+            'conversation_messages.id as last_message_id',
+            'conversation_messages.created_at as last_message_created_at',
+            'conversation_messages.body as last_message_body',
+            'conversation_messages.has_attachment as last_message_has_attachment',
+            'conversation_messages.type as last_message_type',
+            'conversation_messages.recipient_id as last_message_recipient_id'
+        )
+        ->join('conversation_messages', function ($join) {
+            $join->on('conversation_messages.id', '=', DB::raw('(SELECT  mi.id
+                FROM    conversation_messages mi
+                WHERE   mi.conversation_id = conversations.id
+                ORDER BY mi.created_at DESC
+                LIMIT 1)'));
+        })->get();
 
         $conversations = $this->formatConversations($results, $options);
 
@@ -247,8 +266,12 @@ class ConversationManager
     public function conversationsWithNewFlirt()
     {
         return self::conversationsByIds(
-                $this->conversationIds('any', 'peasant_bot', ['flirt'])
-            );
+            $this->conversationIds(
+                'any',
+                'peasant_bot',
+                ['flirt']
+            )
+        );
     }
 
     public function countConversations(string $age = 'any', string $lastMessageUserRoles = 'any', array $types = [])
@@ -283,7 +306,6 @@ class ConversationManager
         $results = \DB::select($query);
 
         return (int)current($results)->total;
-
     }
 
     /**
@@ -374,10 +396,17 @@ class ConversationManager
         if ($lastMessageUserRoles !== 'any') {
             list($senderRole, $recipientRole) = explode('_', $lastMessageUserRoles);
 
-            $senderRoleId = UserConstants::selectableField('role', 'common', 'array_flip')[$senderRole];
+            $senderRoleId = UserConstants::selectableField(
+                'role',
+                'common',
+                'array_flip'
+            )[$senderRole];
             $recipientRoleId = UserConstants::selectableField('role', 'common', 'array_flip')[$recipientRole];
 
-            $roleQuery = ' WHERE sender_role.role_id = ' . $senderRoleId  . ' AND recipient_role.role_id = '.  $recipientRoleId . ' ';
+            $roleQuery = ' WHERE sender_role.role_id = ' .
+            $senderRoleId  .
+            ' AND recipient_role.role_id = ' .
+            $recipientRoleId . ' ';
             $andRequired = true;
         }
 
@@ -437,7 +466,11 @@ class ConversationManager
     {
         $conversation['user_a']['id'] = $result->user_a_id;
         $conversation['user_a']['username'] = $result->user_a_username;
-        $conversation['user_a']['profile_image_url'] = \StorageHelper::userImageUrl($conversation['user_a']['id'], $result->user_a_profile_img);
+        $conversation['user_a']['profile_image_url'] = \StorageHelper::userImageUrl(
+            $conversation['user_a']['id'],
+            $result->user_a_profile_img
+        );
+
         $conversation['user_a']['role'] = (int) $result->user_a_role_id;
 
         if (in_array('user_meta', $options)) {
@@ -453,7 +486,11 @@ class ConversationManager
     {
         $conversation['user_b']['id'] = $result->user_b_id;
         $conversation['user_b']['username'] = $result->user_b_username;
-        $conversation['user_b']['profile_image_url'] = \StorageHelper::userImageUrl($conversation['user_b']['id'], $result->user_b_profile_img);
+        $conversation['user_b']['profile_image_url'] = \StorageHelper::userImageUrl(
+            $conversation['user_b']['id'],
+            $result->user_b_profile_img
+        );
+        
         $conversation['user_b']['role'] = (int) $result->user_b_role_id;
 
         if (in_array('user_meta', $options)) {

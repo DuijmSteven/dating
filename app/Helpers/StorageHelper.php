@@ -19,7 +19,12 @@ class StorageHelper
     /** @var string */
     public static $conversationAttachmentsDir = 'attachments/';
 
-    public static function profileImageUrl($user)
+    /**
+     * @param $user
+     * @return mixed|string
+     * @throws \Exception
+     */
+    public static function profileImageUrl(User $user, bool $thumb = false)
     {
         if (is_null($user)) {
             throw new \Exception();
@@ -36,10 +41,16 @@ class StorageHelper
             return 'http://placehold.it/100x150';
         }
 
+        if ($thumb) {
+            $explodedFilename = explode('.', $filePath);
+
+            $thumbFilePath = $explodedFilename[0] . '_thumb' . '.' . $explodedFilename[1];
+            return self::fileUrl($thumbFilePath);
+        }
         return self::fileUrl($filePath);
     }
 
-    public static function userImageUrl(int $userId, $filename)
+    public static function userImageUrl(int $userId, string $filename)
     {
         if (is_null($filename)) {
             return 'http://placehold.it/100x100';

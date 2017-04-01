@@ -39,6 +39,10 @@ class BotController extends Controller
             $query->where('name', 'bot');
         })->paginate(10);
 
+        foreach ($bots as &$bot) {
+            $bot->format();
+        }
+
         return view(
             'backend.bots.index',
             [

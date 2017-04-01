@@ -35,8 +35,10 @@
                                 <tr>
                                     <td>{!! $bot->id !!}</td>
                                     <td>
-                                        @if(isset($bot->profile_image))
-                                            <img width="120" src="{!! \StorageHelper::profileImageUrl($bot) !!}" alt="">
+                                        @if($bot->hasProfileImage())
+                                            <a href="">
+                                                <img width="120" src="{!! \StorageHelper::profileImageUrl($bot, true) !!}" alt="">
+                                            </a>
                                         @else
                                             No profile image set
                                         @endif
