@@ -11,6 +11,10 @@ use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Class ConversationManager
+ * @package App\Managers
+ */
 class ConversationManager
 {
     /** @var Conversation */
@@ -89,6 +93,13 @@ class ConversationManager
         DB::commit();
     }
 
+    /**
+     * @param string $age
+     * @param string $lastMessageUserRoles
+     * @param int $limit
+     * @param int $offset
+     * @return array
+     */
     public function getPaginated(
         string $age = 'any',
         string $lastMessageUserRoles = 'any',
@@ -122,6 +133,14 @@ class ConversationManager
         );
     }
 
+    /**
+     * @param string $age
+     * @param string $lastMessageUserRoles
+     * @param array $types
+     * @param int $limit
+     * @param int $offset
+     * @return array
+     */
     public function conversationIds(
         string $age = 'any',
         string $lastMessageUserRoles = 'any',
@@ -466,9 +485,10 @@ class ConversationManager
     {
         $conversation['user_a']['id'] = $result->user_a_id;
         $conversation['user_a']['username'] = $result->user_a_username;
-        $conversation['user_a']['profile_image_url'] = \StorageHelper::userImageUrl(
+        $conversation['user_a']['profile_image_url'] = \StorageHelper::profileImageUrlFromId(
             $conversation['user_a']['id'],
-            $result->user_a_profile_img
+            $result->user_a_profile_img,
+            $result->user_a_gender
         );
 
         $conversation['user_a']['role'] = (int) $result->user_a_role_id;
@@ -486,9 +506,10 @@ class ConversationManager
     {
         $conversation['user_b']['id'] = $result->user_b_id;
         $conversation['user_b']['username'] = $result->user_b_username;
-        $conversation['user_b']['profile_image_url'] = \StorageHelper::userImageUrl(
+        $conversation['user_b']['profile_image_url'] = \StorageHelper::profileImageUrlFromId(
             $conversation['user_b']['id'],
-            $result->user_b_profile_img
+            $result->user_b_profile_img,
+            $result->user_b_gender
         );
 
         $conversation['user_b']['role'] = (int) $result->user_b_role_id;

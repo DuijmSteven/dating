@@ -37,7 +37,7 @@
                                 <tr>
                                     <td>{!! $article->id !!}</td>
                                     <td>{{ $article->title }}</td>
-                                    <td>{{ $article->body }}</td>
+                                    <td>{!! $article->body !!}</td>
                                     <td>{{ \App\Article::$statuses[$article->status] }}</td>
                                     <td class="no-wrap">{{ $article->created_at->format('d-m-Y H:i:s') }}</td>
                                     <td class="action-buttons">
