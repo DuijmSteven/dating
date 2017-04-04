@@ -50,7 +50,7 @@ class StorageHelper
         return self::fileUrl($filePath);
     }
 
-    public static function userImageUrl(int $userId, string $filename)
+    public static function userImageUrl(int $userId, string $filename = null)
     {
         if (is_null($filename)) {
             return 'http://placehold.it/100x100';
