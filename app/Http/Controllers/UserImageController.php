@@ -43,6 +43,13 @@ class UserImageController extends Controller
 
         $this->storageManager->deleteImage($image->user_id, $image->filename);
 
+        $thumbFilename = explode('.', $image->filename);
+        $thumbFilename = $thumbFilename[0] . '_thumb' . '.' . $thumbFilename[1];
+
+        if ($this->storageManager->fileExists($thumbFilename, \StorageHelper::userImagesPath($image->user_id))) {
+            $this->storageManager->deleteImage($image->user_id, $thumbFilename);
+        }
+
         return Redirect::to(URL::previous() . "#images-section");
     }
 

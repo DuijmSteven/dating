@@ -50,3 +50,11 @@ $factory->define(App\UserMeta::class, function (FakerGenerator $faker) {
         'province' => array_rand($selectableProfileFields['province'])
     ];
 });
+
+$factory->define(App\Article::class, function (FakerGenerator $faker) {
+    return [
+        'title' => $faker->unique()->sentence(6, true),
+        'body' => $faker->text(rand(500, 5000)),
+        'status' => rand(0, 1)
+    ];
+});

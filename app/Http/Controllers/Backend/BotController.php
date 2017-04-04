@@ -9,8 +9,11 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Input;
 
+/**
+ * Class BotController
+ * @package App\Http\Controllers\Backend
+ */
 class BotController extends Controller
 {
     /** @var BotManager  */
@@ -23,6 +26,7 @@ class BotController extends Controller
     public function __construct(BotManager $botManager)
     {
         $this->botManager = $botManager;
+        parent::__construct();
     }
     /**
      * Display a listing of the resource.
@@ -34,6 +38,10 @@ class BotController extends Controller
         $bots = User::with(['meta', 'roles', 'profileImage'])->whereHas('roles', function ($query) {
             $query->where('name', 'bot');
         })->paginate(10);
+
+        foreach ($bots as &$bot) {
+            $bot->format();
+        }
 
         return view(
             'backend.bots.index',
@@ -109,7 +117,7 @@ class BotController extends Controller
      */
     public function edit(Request $request)
     {
-        $bot = User::with(['meta'])->findOrFail($request->route('id'));
+        $bot = User::with(['meta'])->findOrFail($request->route('id'))->format();
 
         return view(
             'backend.bots.edit',
@@ -141,11 +149,10 @@ class BotController extends Controller
             ];
         } catch (\Exception $exception) {
             $alerts[] = [
-                'type' => 'alert',
+                'type' => 'error',
                 'message' => 'The bot was not updated due to an exception.'
             ];
         }
-
         return redirect()->back()->with('alerts', $alerts);
     }
 

@@ -38,38 +38,15 @@
                 @endforeach
             </div>
         </div>
-        <div class="box box-userA">
-            <div class="box-header with-border">
-                <h3 class="box-title">Notes</h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-                <div class="box-group" id="accordion">
-                    <!-- we are adding the .panel class so bootstrap.js collapse plugin detects it -->
-                    <div class="panel box">
-                        <div class="box-header with-border">
-                            <h4 class="box-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" class="collapsed">
-                                    Family
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapseOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-                            <div class="box-body">
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
-                                wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum
-                                eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
-                                assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-                                nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
-                                farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
-                                labore sustainable VHS.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /.box-body -->
-        </div>
+
+        {{-- Include Notes module for user B --}}
+        @include('backend.conversations.partials.notes', [
+            'moduleId' => 'A',
+            'userClassName' => 'userA',
+            'notes' => $userANotes,
+            'userId' => $conversation->userA->id
+        ])
+
     </div>
     <div class="col-xs-12 col-sm-6 sm_min_pad0">
         <div class="box direct-chat direct-chat-primary">
@@ -99,10 +76,10 @@
                         <div class="direct-chat-msg {!! $alignment !!}">
                             <div class="direct-chat-info clearfix">
                                 <span class="direct-chat-name pull-{!! ($alignment === 'right') ? 'right' : 'left' !!}">{!! $user->username !!}</span>
-                                <span class="direct-chat-timestamp pull-{!! ($alignment === 'right') ? 'left' : 'right' !!}">{!! $message->created_at->diffForHumans() !!}</span>
+                                <span class="direct-chat-timestamp pull-{!! ($alignment === 'right') ? 'left' : 'right' !!}">{!! $message->created_at->diffForHumans() !!} ({!! $message->created_at->format('d-m-Y H:i:s') !!})</span>
                             </div>
                             <!-- /.direct-chat-info -->
-                            <img class="direct-chat-img" src="{!! $user->profileImage ? \StorageHelper::userImageUrl($user->id, $user->profileImage->filename) : 'http://placehold.it/100x100' !!}" alt="message user image"><!-- /.direct-chat-img -->
+                            <img class="direct-chat-img" src="{!! \StorageHelper::profileImageUrl($user) !!}" alt="message user image"><!-- /.direct-chat-img -->
                             <div class="direct-chat-text {!! ($alignment === 'right') ? 'userB' : 'userA' !!}">
                                 @if($message->type === 'flirt')
                                     <i class="fa fa-heart" style="color:red"></i>
@@ -185,22 +162,19 @@
                 @endforeach
             </div>
         </div>
-        <div class="box box-userB">
-            <div class="box-header with-border">
-                <h3 class="box-title">
-                    Notes
-                </h3>
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="box-body">
-                Gryphon replied very politely, 'for I can't put it right; 'not that it was talking in a piteous tone.
-                And the Eaglet bent down its head down, and was a large mustard-mine near here. And the moral of.
-            </div>
-        </div>
+
+        {{-- Include Notes module for user B --}}
+        @include('backend.conversations.partials.notes', [
+            'moduleId' => 'B',
+            'userClassName' => 'userB',
+            'notes' => $userBNotes,
+            'userId' => $conversation->userB->id
+        ])
     </div>
 </div>
+
+@include('backend.conversations.partials.notes-modal', [
+    'conversationId' => $conversation->id
+])
 
 @endsection

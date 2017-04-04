@@ -3,7 +3,11 @@
 namespace App\Managers;
 
 use App\UserImage;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\View;
+use Intervention\Image\Facades\Image;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class StorageManager
@@ -20,14 +24,24 @@ class StorageManager
         //Check if uploaded file is valid and upload it to cloud or save it locally
         if ($uploadedFile->isValid()) {
             try {
-                $fileName = md5(microtime()
+                $fileNameRoot = md5(microtime()
                     . $uploadedFile->getClientOriginalName()
-                    . $uploadedFile->getClientSize())
+                    . $uploadedFile->getClientSize());
+
+                $fileNameMain = $fileNameRoot
                     . '.' . $uploadedFile->extension();
 
-                $uploadedFile->storeAs($path, $fileName, $location);
+                $fileNameThumb = $fileNameRoot
+                    .'_thumb'
+                    . '.' . $uploadedFile->extension();
 
-                return $fileName;
+                $resource = $this->imageResize($uploadedFile, 180);
+
+                $uploadThumb = Storage::disk($location)->put($path . $fileNameThumb, $resource);
+
+                $uploadedFile->storeAs($path, $fileNameMain, $location);
+
+                return $fileNameMain;
             } catch (\Exception $exception) {
                 throw $exception;
             }
@@ -43,6 +57,18 @@ class StorageManager
         //Check if file exists and return url
         if ($disk->has($path . $fileName)) {
             return $disk->url($path . $fileName);
+        } else {
+            return false;
+        }
+    }
+
+    public function fileExists(string $fileName, string $path, $location = 'cloud')
+    {
+        $disk = Storage::disk($location);
+
+        //Check if file exists and return url
+        if ($disk->exists($path . $fileName)) {
+            return true;
         } else {
             return false;
         }
@@ -84,5 +110,25 @@ class StorageManager
             return $deleted;
         }
         return false;
+    }
+
+    /**
+     * @param UploadedFile $uploadedFile
+     * @param int $height
+     * @param int|null $width
+     * @return mixed
+     */
+    private function imageResize(UploadedFile $uploadedFile, int $height, int $width = null)
+    {
+        $img = Image::make($uploadedFile);
+
+        if (is_null($width)) {
+            $img->resize(null, $height, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+        } else {
+            $img->resize($width, $height);
+        }
+        return $resource = $img->stream()->detach();
     }
 }

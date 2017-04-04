@@ -23,6 +23,7 @@ class PeasantController extends Controller
     public function __construct(PeasantManager $peasantManager)
     {
         $this->peasantManager = $peasantManager;
+        parent::__construct();
     }
     /**
      * Display a listing of the resource.
@@ -109,7 +110,7 @@ class PeasantController extends Controller
      */
     public function edit(Request $request)
     {
-        $peasant = User::with('meta')->where('id', $request->route('id'))->get()[0];
+        $peasant = User::with('meta')->where('id', $request->route('id'))->get()[0]->format();
 
         return view(
             'backend.peasants.edit',
@@ -141,7 +142,7 @@ class PeasantController extends Controller
             ];
         } catch (\Exception $exception) {
             $alerts[] = [
-                'type' => 'alert',
+                'type' => 'error',
                 'message' => 'The peasant was not updated due to an exception.'
             ];
         }

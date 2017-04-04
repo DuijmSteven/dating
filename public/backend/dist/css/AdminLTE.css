@@ -5072,3 +5072,66 @@ table .action-buttons .btn {
   display: none;
   margin-top: 10px;
 }
+
+.convo-tile .username a {
+  color: #ffffff;
+}
+
+.convo-tile .username a:hover {
+  text-decoration: underline;
+}
+
+/* Notes */
+.notes_body {
+  padding: 0;
+}
+
+.notes_category-title {
+  font-size: 15px !important;
+}
+
+.notes_category-header {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.note_date {
+  text-align: right;
+  color: #777777;
+}
+
+.note_body {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.note_body.first {
+  padding-top: 0;
+}
+
+.note_body.last {
+  border-bottom: 0;
+}
+
+.note_title {
+  margin-top: 0;
+}
+
+.note_delete-fa {
+  color: #888;
+}
+
+.note_form-delete {
+  display: inline-block;
+  float: right;
+}
+
+.note_form-delete:hover .note_delete-fa {
+  color: red;
+  cursor: pointer;
+}
+
+.no-wrap {
+  white-space: nowrap;
+}

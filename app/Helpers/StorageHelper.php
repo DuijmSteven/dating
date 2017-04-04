@@ -2,8 +2,13 @@
 
 namespace App\Helpers;
 
+use App\User;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * Class StorageHelper
+ * @package App\Helpers
+ */
 class StorageHelper
 {
     /** @var string */
@@ -19,13 +24,61 @@ class StorageHelper
     public static $conversationAttachmentsDir = 'attachments/';
 
     /**
+     * @param $user
+     * @return mixed|string
+     * @throws \Exception
+     */
+    public static function profileImageUrl(User $user, bool $thumb = false)
+    {
+        if (is_null($user->profile_image)) {
+            return asset('img/avatars/' . \UserConstants::selectableField('gender')[$user->meta->gender] . '.png');
+        }
+
+        $filePath = self::userImagesPath($user->id) . $user->profile_image->filename;
+
+        if (!Storage::disk('cloud')->exists($filePath)) {
+            // TODO
+            return 'http://placehold.it/100x150';
+        }
+
+        if ($thumb) {
+            $explodedFilename = explode('.', $filePath);
+
+            $thumbFilePath = $explodedFilename[0] . '_thumb' . '.' . $explodedFilename[1];
+            return self::fileUrl($thumbFilePath);
+        }
+        return self::fileUrl($filePath);
+    }
+
+    /**
+     * @param int $userId
+     * @param string $gender
+     * @param string|null $filename
+     * @return mixed|string
+     */
+    public static function profileImageUrlFromId(int $userId, string $gender, string $filename = null)
+    {
+        if (is_null($filename)) {
+            return asset('img/avatars/' . $gender . '.png');
+        }
+        return self::userImageUrl($userId, $filename);
+    }
+
+    /**
      * @param int $userId
      * @param string $filename
-     * @return mixed
+     * @return mixed|string
      */
     public static function userImageUrl(int $userId, string $filename)
     {
-        $filePath = self::$usersDir . $userId . '/' . self::$userImagesDir . $filename;
+        $filePath = self::userImagesPath($userId) . $filename;
+
+        if (!Storage::disk('cloud')->exists($filePath)) {
+            \Log::error('Image does not exist on s3 bucket. User Id: ' . $userId. ', Filename: ' . $filename);
+            // TODO
+            return 'http://placehold.it/100x100';
+        }
+
         return self::fileUrl($filePath);
     }
 

@@ -16,7 +16,7 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Bots (Total: <strong>{!! $bots->total() !!}</strong>)</h3>
+                    <h3 class="box-title"> (Total: <strong>{!! $bots->total() !!}</strong>)</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body table-responsive no-padding">
@@ -35,11 +35,13 @@
                                 <tr>
                                     <td>{!! $bot->id !!}</td>
                                     <td>
-                                        @if($bot->profileImage)
-                                            <img width="120" src="{!! \StorageHelper::userImageUrl($bot->id, $bot->profileImage->filename) !!}" alt="">
-                                        @else
-                                            No profile image set
-                                        @endif
+                                        {{--@if($bot->hasProfileImage())--}}
+                                            <a href="">
+                                                <img width="120" src="{!! \StorageHelper::profileImageUrl($bot, true) !!}" alt="">
+                                            </a>
+                                        {{--@else--}}
+
+                                        {{--@endif--}}
                                     </td>
                                     <td>
                                         <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $bot->username !!} <br>

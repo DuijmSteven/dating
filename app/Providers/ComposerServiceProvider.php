@@ -13,7 +13,7 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->composeNavbar();
+        //
     }
 
     /**
@@ -24,10 +24,5 @@ class ComposerServiceProvider extends ServiceProvider
     public function register()
     {
         //
-    }
-
-    private function composeNavbar()
-    {
-        view()->composer('frontend.navbar', 'App\ViewComposers\NavbarComposer');
     }
 }

@@ -25,6 +25,7 @@ class UserController extends Controller
     {
         $this->user = $user;
         $this->userManager = $userManager;
+        parent::__construct();
     }
 
     /**

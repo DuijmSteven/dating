@@ -126,8 +126,42 @@ Route::group([
     Route::group([
         'prefix' => 'users'
     ], function () {
-        Route::delete('{userId}/delete', 'Backend\UserController@destroy')
+        Route::delete('{userId}', 'Backend\UserController@destroy')
             ->name('backend.users.destroy');
+    });
+
+    Route::group([
+        'prefix' => 'conversations'
+    ], function () {
+        Route::get('/', 'Backend\ConversationController@index')
+            ->name('backend.conversations.index');
+    });
+
+    Route::group([
+        'prefix' => 'notes'
+    ], function () {
+        Route::delete('/{noteId}', 'Backend\ConversationNoteController@destroyNote')
+            ->name('backend.conversations.notes.destroy');
+    });
+
+    Route::group([
+        'prefix' => 'articles'
+    ], function () {
+        Route::get('/', 'Backend\ArticleController@index')
+            ->name('backend.articles.index');
+
+        Route::delete('/{articleId}', 'Backend\ArticleController@destroy')
+            ->name('backend.articles.destroy');
+
+        Route::get('/create', 'Backend\ArticleController@getCreate')
+            ->name('backend.articles.create');
+        Route::post('/', 'Backend\ArticleController@post')
+            ->name('backend.articles.post');
+
+        Route::get('/{articleId}', 'Backend\ArticleController@getUpdate')
+            ->name('backend.articles.edit');
+        Route::put('/{articleId}', 'Backend\ArticleController@update')
+            ->name('backend.articles.update');
     });
 });
 
@@ -143,8 +177,15 @@ Route::group([
     ], function () {
         Route::get('{conversationId}', 'Backend\ConversationController@show')
             ->name('operators_platform.conversations.show');
-        Route::post('/create', 'ConversationController@store')
+        Route::post('/', 'ConversationController@store')
             ->name('conversations.store');
+
+        Route::group([
+            'prefix' => 'notes'
+        ], function () {
+            Route::post('/', 'Backend\ConversationNoteController@postNote')
+                ->name('backend.conversations.notes.store');
+        });
     });
 });
 

@@ -44,4 +44,12 @@ class Conversation extends Model
     {
         return $this->belongsTo('App\User', 'user_b_id', 'id')->with(['meta', 'roles', 'images']);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function notes()
+    {
+        return $this->hasMany('App\ConversationNote');
+    }
 }
