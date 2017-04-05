@@ -31,7 +31,7 @@ class StorageHelper
     public static function profileImageUrl(User $user, bool $thumb = false)
     {
         if (is_null($user->profile_image)) {
-            \Log::debug($user->meta->gender);
+            \Log::debug($user);
             return asset('img/avatars/' . \UserConstants::selectableField('gender')[$user->meta->gender] . '.png');
         }
 
