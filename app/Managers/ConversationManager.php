@@ -471,7 +471,7 @@ class ConversationManager
      * @param $result
      * @param $conversation
      */
-    private function setConversationFields($result, &$conversation): void
+    private function setConversationFields($result, &$conversation)
     {
         $conversation['id'] = $result->conversation_id;
         $conversation['created_at'] = new Carbon($result->conversation_created_at);
@@ -481,7 +481,7 @@ class ConversationManager
      * @param $result
      * @param $conversation
      */
-    private function setUserAFields($result, &$conversation, $options = []): void
+    private function setUserAFields($result, &$conversation, $options = [])
     {
         $conversation['user_a']['id'] = $result->user_a_id;
         $conversation['user_a']['username'] = $result->user_a_username;
@@ -502,7 +502,7 @@ class ConversationManager
      * @param $result
      * @param $conversation
      */
-    private function setUserBFields($result, &$conversation, $options = []): void
+    private function setUserBFields($result, &$conversation, $options = [])
     {
         $conversation['user_b']['id'] = $result->user_b_id;
         $conversation['user_b']['username'] = $result->user_b_username;
@@ -525,7 +525,7 @@ class ConversationManager
      * @param $senderRoleId
      * @param $recipientRoleId
      */
-    private function setLastMessageFields($result, &$conversation, $senderRoleId, $recipientRoleId): void
+    private function setLastMessageFields($result, &$conversation, $senderRoleId, $recipientRoleId)
     {
         $conversation['last_message']['id'] = $result->last_message_id;
         $conversation['last_message']['sender_id'] = $result->last_message_sender_id;
@@ -542,7 +542,7 @@ class ConversationManager
      * @param $result
      * @param $conversation
      */
-    private function formatConversation($result, &$conversation, $options = []): void
+    private function formatConversation($result, &$conversation, $options = [])
     {
         list($senderRoleId, $recipientRoleId) = $this->determineParticipantIds($result);
 
