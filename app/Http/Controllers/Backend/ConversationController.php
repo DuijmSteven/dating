@@ -48,6 +48,7 @@ class ConversationController extends Controller
      */
     public function show(int $conversationId)
     {
+        /** @var Conversation $conversation */
         $conversation = Conversation::with(['userA', 'userB', 'messages'])->findOrFail($conversationId);
         $conversation = $this->prepareConversationObject($conversation);
 
@@ -68,6 +69,25 @@ class ConversationController extends Controller
                 'userBNotes' => $userBNotes
             ]
         );
+    }
+
+    public function destroy(int $conversationId)
+    {
+        try {
+            Conversation::destroy($conversationId);
+
+            $alerts[] = [
+                'type' => 'success',
+                'message' => 'The article was deleted.'
+            ];
+        } catch (\Exception $exception) {
+            $alerts[] = [
+                'type' => 'error',
+                'message' => 'The article was not deleted due to an exception.'
+            ];
+        }
+
+        return redirect()->back()->with('alerts', $alerts);
     }
 
     /**

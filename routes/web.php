@@ -135,6 +135,8 @@ Route::group([
     ], function () {
         Route::get('/', 'Backend\ConversationController@index')
             ->name('backend.conversations.index');
+        Route::delete('/{conversationId}', 'Backend\ConversationController@destroy')
+            ->name('backend.conversations.destroy');
     });
 
     Route::group([

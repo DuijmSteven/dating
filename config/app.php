@@ -186,6 +186,8 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         GrahamCampbell\Markdown\MarkdownServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        TPWeb\TargetPay\TargetPayServiceProvider::class,
+
         /*
          * Ours
          */
@@ -244,10 +246,13 @@ return [
         'MetaConstants'   => App\Helpers\ApplicationConstants\MetaConstants::class,
         'PaginationConstants'   => App\Helpers\ApplicationConstants\PaginationConstants::class,
         'StorageHelper'   => App\Helpers\StorageHelper::class,
+
         'Activity' => Kim\Activity\ActivityFacade::class,
         'ChromePhp' => App\Helpers\ccampbell\ChromePhp\ChromePhp::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,
+        'TargetPay' => TPWeb\TargetPay\TargetPayFacade::class,
+
 
     ],
 

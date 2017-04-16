@@ -76,7 +76,7 @@
                                     <td class="action-buttons">
                                         <a href="{!! route('operators_platform.conversations.show', [$conversation['id']]) !!}" class="btn btn-default">View</a>
 
-                                        <form method="POST" action="">
+                                        <form method="POST" action="{{ route('backend.conversations.destroy', ['conversationId' => $conversation['id']]) }}">
                                             {!! csrf_field() !!}
                                             {!! method_field('DELETE') !!}
                                             <button type="submit"
