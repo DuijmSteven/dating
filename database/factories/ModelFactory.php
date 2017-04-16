@@ -1,6 +1,7 @@
 <?php
 
 use App\Helpers\ApplicationConstants\UserConstants;
+use App\Helpers\PaymentsHelper;
 use Faker\Generator as FakerGenerator;
 use Faker\Provider as FakerProvider;
 
@@ -23,6 +24,7 @@ $factory->define(App\User::class, function (FakerGenerator $faker) {
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('botpassword'),
         'active' => 1,
+        'account_type' => 1,
         'remember_token' => str_random(10),
     ];
 });
@@ -56,5 +58,16 @@ $factory->define(App\Article::class, function (FakerGenerator $faker) {
         'title' => $faker->unique()->sentence(6, true),
         'body' => $faker->text(rand(500, 5000)),
         'status' => rand(0, 1)
+    ];
+});
+
+$factory->define(App\Payment::class, function (FakerGenerator $faker) {
+    $statusesCount = count(PaymentsHelper::$statuses);
+    $paymentTypesCount = count(PaymentsHelper::$paymentTypes);
+
+    return [
+        'user_id' => 2,
+        'type' => rand(1, $paymentTypesCount),
+        'status' => rand(1, $statusesCount)
     ];
 });

@@ -28,7 +28,7 @@ class ArticleController extends Controller
         return view(
             'backend.articles.index',
             [
-                'title' => 'Articles Overview - ' . \MetaConstants::SITE_NAME,
+                'title' => 'Articles Overview - ' . \MetaConstants::$siteName,
                 'headingLarge' => 'Articles',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
@@ -68,7 +68,7 @@ class ArticleController extends Controller
         return view(
             'backend.articles.create',
             [
-                'title' => 'Create article - ' . \MetaConstants::SITE_NAME,
+                'title' => 'Create article - ' . \MetaConstants::$siteName,
                 'headingLarge' => 'Articles',
                 'headingSmall' => 'Create'
             ]
@@ -84,7 +84,7 @@ class ArticleController extends Controller
         return view(
             'backend.articles.edit',
             [
-                'title' => 'Edit article - ' . \MetaConstants::SITE_NAME,
+                'title' => 'Edit article - ' . \MetaConstants::$siteName,
                 'headingLarge' => 'Articles',
                 'headingSmall' => 'Edit',
                 'article' => Article::find($articleId)

@@ -46,7 +46,7 @@ class BotController extends Controller
         return view(
             'backend.bots.index',
             [
-                'title' => 'Bot Overview - ' . \MetaConstants::SITE_NAME,
+                'title' => 'Bot Overview - ' . \MetaConstants::$siteName,
                 'headingLarge' => 'Bot',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
@@ -65,7 +65,7 @@ class BotController extends Controller
         return view(
             'backend.bots.create',
             [
-                'title' => 'Create Bot - ' . \MetaConstants::SITE_NAME,
+                'title' => 'Create Bot - ' . \MetaConstants::$siteName,
                 'headingLarge' => 'Bot',
                 'headingSmall' => 'Create',
                 'carbonNow' => Carbon::now(),
@@ -122,7 +122,7 @@ class BotController extends Controller
         return view(
             'backend.bots.edit',
             [
-                'title' => 'Edit Bot - '. $bot['username'] . '(ID: '. $bot['id'] .') - ' . \MetaConstants::SITE_NAME,
+                'title' => 'Edit Bot - '. $bot['username'] . '(ID: '. $bot['id'] .') - ' . \MetaConstants::$siteName,
                 'headingLarge' => 'Bot',
                 'headingSmall' => 'Edit',
                 'carbonNow' => Carbon::now(),

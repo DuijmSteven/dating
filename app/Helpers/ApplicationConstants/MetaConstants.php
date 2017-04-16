@@ -2,5 +2,5 @@
 
 class MetaConstants
 {
-    const SITE_NAME = 'Dating platform';
+    public static $siteName = 'Dating platform';
 }

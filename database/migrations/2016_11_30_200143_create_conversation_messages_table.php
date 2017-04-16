@@ -32,6 +32,6 @@ class CreateConversationMessagesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('conversation_messages');
+        Schema::dropIfExists('conversation_messages');
     }
 }

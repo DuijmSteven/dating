@@ -298,7 +298,7 @@ class UserManager
         }
     }
 
-    public static function getAndFormatAuthenticatedUserTest()
+    public static function getAndFormatAuthenticatedUser()
     {
         if (!(Auth::user() instanceof User)) {
             return null;
@@ -306,30 +306,6 @@ class UserManager
 
         $result = User::with(['meta', 'images', 'roles'])
             ->where('id', Auth::user()->id)->first();
-
-        if (!($result instanceof User)) {
-            throw new \Exception;
-        }
-
-        return $result->format();
-    }
-
-
-    public function getAndFormatAuthenticatedUser()
-    {
-        $authenticatedUser = Auth::user();
-
-        if (!($authenticatedUser instanceof User)) {
-            return null;
-        }
-
-        return $this->formatUser($authenticatedUser);
-    }
-
-    public function formatUser(User $user)
-    {
-        $result = User::with(['meta', 'images', 'roles'])
-            ->where('id', $user->id)->first();
 
         if (!($result instanceof User)) {
             throw new \Exception;

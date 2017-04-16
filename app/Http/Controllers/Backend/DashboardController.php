@@ -23,7 +23,7 @@ class DashboardController extends Controller
         return view('backend.dashboard', array_merge(
             $viewData,
             [
-                'title' => 'Dashboard - ' . \MetaConstants::SITE_NAME,
+                'title' => 'Dashboard - ' . \MetaConstants::$siteName,
                 'headingLarge' => 'Dashboard',
             ]
         ));
