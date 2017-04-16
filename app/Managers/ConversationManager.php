@@ -9,6 +9,10 @@ use App\MessageAttachment;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Class ConversationManager
+ * @package App\Managers
+ */
 class ConversationManager
 {
     /** @var Conversation */
@@ -87,6 +91,13 @@ class ConversationManager
         DB::commit();
     }
 
+    /**
+     * @param string $age
+     * @param string $lastMessageUserRoles
+     * @param int $limit
+     * @param int $offset
+     * @return array
+     */
     public function getPaginated(
         string $age = 'any',
         string $lastMessageUserRoles = 'any',
@@ -120,6 +131,14 @@ class ConversationManager
         );
     }
 
+    /**
+     * @param string $age
+     * @param string $lastMessageUserRoles
+     * @param array $types
+     * @param int $limit
+     * @param int $offset
+     * @return array
+     */
     public function conversationIds(
         string $age = 'any',
         string $lastMessageUserRoles = 'any',
