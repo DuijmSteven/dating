@@ -5,6 +5,10 @@ namespace App\Helpers;
 use App\User;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * Class StorageHelper
+ * @package App\Helpers
+ */
 class StorageHelper
 {
     /** @var string */
@@ -26,12 +30,8 @@ class StorageHelper
      */
     public static function profileImageUrl(User $user, bool $thumb = false)
     {
-        if (is_null($user)) {
-            throw new \Exception();
-        }
-
         if (is_null($user->profile_image)) {
-            return 'http://placehold.it/100x150';
+            return asset('img/avatars/' . \UserConstants::selectableField('gender')[$user->meta->gender] . '.png');
         }
 
         $filePath = self::userImagesPath($user->id) . $user->profile_image->filename;
@@ -50,14 +50,39 @@ class StorageHelper
         return self::fileUrl($filePath);
     }
 
+    /**
+     * @param int $userId
+     * @param string $gender
+     * @param string|null $filename
+     * @return mixed|string
+     */
+    public static function profileImageUrlFromId(int $userId, string $filename = null, $gender)
+    {
+        if (!in_array($gender, [0, 1, '0', '1', 'male', 'female'])) {
+            \Log::warning(__FUNCTION__ . ' in ' . __CLASS__ . ' : Wrong gender parameter passed (' . $gender . ')');
+        }
+
+        if ($gender == '0' || $gender == '1') {
+            $gender = \UserConstants::selectableField('gender')[(int) $gender];
+        }
+
+        if (is_null($filename)) {
+            return asset('img/avatars/' . $gender . '.png');
+        }
+        return self::userImageUrl($userId, $filename);
+    }
+
+    /**
+     * @param int $userId
+     * @param string $filename
+     * @return mixed|string
+     */
     public static function userImageUrl(int $userId, string $filename = null)
     {
-        if (is_null($filename)) {
-            return 'http://placehold.it/100x100';
-        }
         $filePath = self::userImagesPath($userId) . $filename;
 
         if (!Storage::disk('cloud')->exists($filePath)) {
+            \Log::error('Image does not exist on s3 bucket. User Id: ' . $userId. ', Filename: ' . $filename);
             // TODO
             return 'http://placehold.it/100x100';
         }

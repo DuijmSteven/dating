@@ -35,8 +35,8 @@ class ConversationsMessagesFlirtsSeeder extends Seeder
             $query->where('id', 2);
         })->pluck('id')->toArray();
 
-        /* -- Add convos, messages and flirts for all peasants and admins -- */
-        foreach (array_merge([1], $peasantIds) as $realUserId) {
+        /* -- Add conversations, messages and flirts for all peasants and admins -- */
+        foreach ($peasantIds as $realUserId) {
             $tempBotIds = $botIds;
             $botIdKey = array_rand($tempBotIds);
             $botId = $tempBotIds[$botIdKey];
