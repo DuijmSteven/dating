@@ -17,7 +17,7 @@ class Controller extends BaseController
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            $this->authenticatedUser = UserManager::getAndFormatAuthenticatedUserTest();
+            $this->authenticatedUser = UserManager::getAndFormatAuthenticatedUser();
 
             view()->share('authenticatedUser', $this->authenticatedUser);
 

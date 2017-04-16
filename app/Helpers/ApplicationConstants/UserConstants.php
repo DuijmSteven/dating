@@ -11,7 +11,8 @@ class UserConstants
                 'active'
             ],
             'private' => [
-                'password'
+                'password',
+                'account_type'
             ],
         ],
         'peasant' => [
@@ -98,6 +99,12 @@ class UserConstants
                     2 => 'peasant',
                     3 => 'bot',
                     4 => 'operator'
+                ],
+                'account_type' => [
+                    1 => 'free',
+                    2 => 'premium_1',
+                    3 => 'premium_2',
+                    4 => 'premium_3',
                 ]
             ]
         ]

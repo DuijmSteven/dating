@@ -57,7 +57,7 @@ class UserSearchManager
             $results = $query->get();
             return $results;
         }
-        $results = $query->paginate(PaginationConstants::PER_PAGE['user_profiles'], ['*'], 'page', $page);
+        $results = $query->paginate(PaginationConstants::$perPage['user_profiles'], ['*'], 'page', $page);
 
         return $results;
     }

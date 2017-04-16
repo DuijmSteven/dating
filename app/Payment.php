@@ -10,6 +10,6 @@ class Payment extends Model
 
     public function peasant()
     {
-        $this->belongsTo('App\User');
+        return $this->belongsTo('App\User', 'user_id', 'id');
     }
 }

@@ -85,6 +85,13 @@ Route::get('cities/{countryCode}', 'Backend\UserController@getCities')
     ->name('cities.retrieve');
 
 Route::group([
+    'prefix' => 'payments'
+], function () {
+    Route::post('/', 'Frontend\PaymentController@postPayment')
+    ->name('payments.post');
+});
+
+Route::group([
     'prefix' => 'backend',
     'middleware' => ['admin']
 ], function () {
@@ -165,6 +172,14 @@ Route::group([
         Route::put('/{articleId}', 'Backend\ArticleController@update')
             ->name('backend.articles.update');
     });
+
+    Route::group([
+        'prefix' => 'payments'
+    ], function () {
+        Route::get('/', 'Backend\PaymentController@index')
+            ->name('backend.payments.index');
+    });
+
 });
 
 Route::group([

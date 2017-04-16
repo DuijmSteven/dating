@@ -96,6 +96,23 @@
                         </li>
                     </ul>
                 </li>
+                <li class="treeview {!! str_contains(\Request::route()->getName(), 'backend.payments') ? 'active' : '' !!}">
+                    <a href="#">
+                        <i class="fa fa-money"></i>
+                        <span>Payments</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="{!! \Request::route()->getName() == 'backend.payments.index' ? 'active' : '' !!}">
+                            <a href="{!! route('backend.payments.index', ['page' => 1]) !!}">
+                                <i class="fa fa-list"></i>
+                                Overview
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="treeview {!! str_contains(\Request::route()->getName(), 'backend.conversations') ? 'active' : '' !!}">
                     <a href="#">
                         <i class="fa fa-comments"></i>

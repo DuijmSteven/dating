@@ -26,6 +26,9 @@ class UserTablesSeeder extends Seeder
         DB::table('users')->truncate();
         DB::table('user_meta')->truncate();
 
+        $accountTypes = UserConstants::selectableField('account_type');
+        $accountTypesCount = count($accountTypes);
+
         /* -- Create admin user -- */
         $createdAdmin = factory(App\User::class)->create([
             'username' => 'admin',
@@ -51,7 +54,15 @@ class UserTablesSeeder extends Seeder
                 $userAmount = 25;
 
                 for ($count = 0; $count < $userAmount; $count++) {
-                    $createdUser = factory(App\User::class)->create();
+                    if ($role == 'bot') {
+                        $accountType = 3;
+                    } else {
+                        $accountType = rand(1, $accountTypesCount);
+                    }
+
+                    $createdUser = factory(App\User::class)->create([
+                        'account_type' => $accountType
+                    ]);
 
                     $createdUser->meta()->save(factory(App\UserMeta::class)->make([
                         'user_id' => $createdUser->id,
