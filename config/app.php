@@ -247,7 +247,7 @@ return [
         'Activity' => Kim\Activity\ActivityFacade::class,
         'ChromePhp' => App\Helpers\ccampbell\ChromePhp\ChromePhp::class,
         'Image' => Intervention\Image\Facades\Image::class,
-        'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class
+        'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,
 
     ],
 

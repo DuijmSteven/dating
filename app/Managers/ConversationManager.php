@@ -5,10 +5,8 @@ namespace App\Managers;
 use App\Conversation;
 use App\ConversationMessage;
 use App\Helpers\ApplicationConstants\UserConstants;
-use App\Helpers\ccampbell\ChromePhp\ChromePhp;
 use App\MessageAttachment;
 use Carbon\Carbon;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 
 /**

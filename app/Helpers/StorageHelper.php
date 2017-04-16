@@ -56,8 +56,16 @@ class StorageHelper
      * @param string|null $filename
      * @return mixed|string
      */
-    public static function profileImageUrlFromId(int $userId, string $gender, string $filename = null)
+    public static function profileImageUrlFromId(int $userId, string $filename = null, $gender)
     {
+        if (!in_array($gender, [0, 1, '0', '1', 'male', 'female'])) {
+            \Log::warning(__FUNCTION__ . ' in ' . __CLASS__ . ' : Wrong gender parameter passed (' . $gender . ')');
+        }
+
+        if ($gender == '0' || $gender == '1') {
+            $gender = \UserConstants::selectableField('gender')[(int) $gender];
+        }
+
         if (is_null($filename)) {
             return asset('img/avatars/' . $gender . '.png');
         }
@@ -69,7 +77,7 @@ class StorageHelper
      * @param string $filename
      * @return mixed|string
      */
-    public static function userImageUrl(int $userId, string $filename)
+    public static function userImageUrl(int $userId, string $filename = null)
     {
         $filePath = self::userImagesPath($userId) . $filename;
 
