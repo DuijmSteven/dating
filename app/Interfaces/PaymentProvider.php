@@ -4,5 +4,5 @@ namespace App\DatingInterfaces;
 
 interface PaymentProvider
 {
-
+    
 }
