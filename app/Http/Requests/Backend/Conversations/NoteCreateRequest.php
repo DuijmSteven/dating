@@ -26,8 +26,7 @@ class NoteCreateRequest extends Request
         $rules = [
             'user_id' => 'required|integer',
             'conversation_id' => 'required|integer',
-            'title' => 'string|max:20',
-            'category' => 'required|string|max:20',
+            'category_id' => 'required|integer',
             'body' => 'required|string|max:255'
         ];
 

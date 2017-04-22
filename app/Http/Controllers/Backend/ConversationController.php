@@ -115,13 +115,13 @@ class ConversationController extends Controller
     {
         $userANotes = ConversationNote::where('user_id', $conversation->userA->id)
             ->where('conversation_id', $conversation->id)
-            ->orderBy('category', 'desc')
+            ->orderBy('category_id', 'desc')
             ->orderBy('created_at', 'desc')
             ->get();
 
         $userBNotes = ConversationNote::where('user_id', $conversation->userB->id)
             ->where('conversation_id', $conversation->id)
-            ->orderBy('category', 'desc')
+            ->orderBy('category_id', 'desc')
             ->orderBy('created_at', 'desc')
             ->get();
         return array($userANotes, $userBNotes);

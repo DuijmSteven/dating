@@ -11,7 +11,7 @@ class ConversationNote extends Model
     protected $fillable = [
         'user_id',
         'conversation_id',
-        'category',
+        'category_id',
         'title',
         'body',
     ];
@@ -19,5 +19,10 @@ class ConversationNote extends Model
     public function conversation()
     {
         return $this->belongsTo('App\Conversation');
+    }
+
+    public function noteCategory()
+    {
+        return $this->belongsTo('App\NoteCategory', 'category_id', 'id');
     }
 }

@@ -12,8 +12,15 @@
                     <input type="hidden" value="{!! $conversationId !!}" name="conversation_id">
                     <input type="hidden" value="" id="note_user_id" name="user_id">
                     <div class="form-group">
-                        <label for="category">Category</label>
-                        <input class="form-control" type="text" id="category" name="category">
+                        <label for="category_id">Category</label>
+                        <select class="form-control" id="category_id" name="category_id">
+                            @php
+                                $noteCategories = App\NoteCategory::all();
+                            @endphp
+                            @foreach($noteCategories as $noteCategory)
+                                <option value="{!! $noteCategory->id !!}">{!! $noteCategory->name !!}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="body">Body</label>

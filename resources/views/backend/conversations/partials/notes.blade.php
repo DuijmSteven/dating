@@ -16,20 +16,20 @@
                 </div>
             @else
                 @foreach($notes as $note)
-                    @if(ucfirst($currentCategory) !== ucfirst($note->category))
+                    @if(ucfirst($currentCategory) !== ucfirst($note->category_id))
                         @if(!is_null($currentCategory))
                                 </div>
                             </div>
                         </div>
                         @endif
                         @php
-                            $currentCategory = $note->category;
+                            $currentCategory = $note->category_id;
                         @endphp
                         <div class="panel box">
                             <div class="box-header with-border notes_category-header">
                                 <h4 class="notes_category-title box-title">
                                     <a data-toggle="collapse" data-parent="#accordion{!! $moduleId !!}" href="#collapse{!! $moduleId !!}{!! $loop->index !!}" aria-expanded="false" class="collapsed">
-                                        <i class="fa fa-fw fa-angle-down"></i>{!! ucfirst($note->category) !!}
+                                        <i class="fa fa-fw fa-angle-down"></i>{!! ucfirst($note->noteCategory->name) !!}
                                     </a>
                                 </h4>
                             </div>
