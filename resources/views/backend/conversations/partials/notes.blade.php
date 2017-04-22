@@ -38,8 +38,6 @@
                     @endif
                                     <div class="note_body {!! ($loop->index == 0) ? 'first' : '' !!} {!! ($loop->index == $notesAmount - 1) ? 'last' : '' !!}">
                                         <div>
-                                            <span class="note_title"> <strong>{!! $note->title !!}</strong> </span>
-
                                             <form class="note_form-delete" action="{!! route('backend.conversations.notes.destroy', ['noteId' => $note->id]) !!}" method="POST">
                                                 {!! csrf_field() !!}
                                                 <input type="hidden" name="_method" value="DELETE">

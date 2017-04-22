@@ -92,7 +92,6 @@ class ConversationsMessagesFlirtsSeeder extends Seeder
                                 'conversation_id' => $conversation->id,
                                 'category' => $category,
                                 'user_id' => $userId,
-                                'title' => $this->faker->text(rand(5, 20)),
                                 'body' => $this->faker->text(rand(15, 250)),
                             ]);
 
