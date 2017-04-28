@@ -37,7 +37,7 @@ class BotController extends Controller
     {
         $bots = User::with(['meta', 'roles', 'profileImage'])->whereHas('roles', function ($query) {
             $query->where('name', 'bot');
-        })->paginate(10);
+        })->orderBy('created_at', 'desc')->paginate(10);
 
         foreach ($bots as &$bot) {
             $bot->format();
