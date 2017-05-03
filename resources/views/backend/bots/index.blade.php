@@ -16,7 +16,8 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title"> (Total: <strong>{!! $bots->total() !!}</strong>)</h3>
+                    <h3 class="box-title pull-left"> (Total: <strong>{!! $bots->total() !!}</strong>)</h3>
+                    <a href="{!! route('backend.bots.create.get') !!}" class="btn btn-success pull-right"><i class="fa fa-fw fa-plus"></i>New Bot</a>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body table-responsive no-padding">
@@ -35,13 +36,9 @@
                                 <tr>
                                     <td>{!! $bot->id !!}</td>
                                     <td>
-                                        {{--@if($bot->hasProfileImage())--}}
-                                            <a href="">
-                                                <img width="120" src="{!! \StorageHelper::profileImageUrl($bot, true) !!}" alt="">
-                                            </a>
-                                        {{--@else--}}
-
-                                        {{--@endif--}}
+                                        <a href="">
+                                            <img width="120" src="{!! \StorageHelper::profileImageUrl($bot, true) !!}" alt="">
+                                        </a>
                                     </td>
                                     <td>
                                         <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $bot->username !!} <br>

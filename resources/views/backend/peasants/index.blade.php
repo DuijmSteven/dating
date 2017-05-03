@@ -35,11 +35,10 @@
                             <tr>
                                 <td>{!! $peasant->id !!}</td>
                                 <td>
-                                    @if(count($peasant->profileImage))
-                                        <img width="120" src="{!! \StorageHelper::profileImageUrl($peasant) !!}" alt="">
-                                    @else
-                                        No profile image set
-                                    @endif
+                                    <a href="">
+                                        <img width="120" src="{!! \StorageHelper::profileImageUrl($peasant, true) !!}"
+                                             alt="">
+                                    </a>
                                 </td>
                                 <td>
                                     <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $peasant->username !!} <br>

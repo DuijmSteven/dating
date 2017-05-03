@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.4.19 on 2017-04-16.
+ * Generated for Laravel 5.4.19 on 2017-05-03.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -13628,6 +13628,13 @@ namespace GrahamCampbell\Markdown\Facades {
     }         
 }
     
+namespace TPWeb\TargetPay {
+
+    class TargetPay {
+        
+    }         
+}
+    
     
 namespace {
 
@@ -15681,6 +15688,8 @@ namespace {
     class Image extends \Intervention\Image\Facades\Image {}
     
     class Markdown extends \GrahamCampbell\Markdown\Facades\Markdown {}
+    
+    class TargetPay extends \TPWeb\TargetPay\TargetPay {}
     
 }
 
