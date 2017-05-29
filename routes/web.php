@@ -89,6 +89,8 @@ Route::group([
 ], function () {
     Route::post('/', 'Frontend\PaymentController@postPayment')
     ->name('payments.post');
+    Route::get('initiate', 'Frontend\PaymentController@initiatePayment')
+    ->name('payments.initiate');
 });
 
 Route::group([

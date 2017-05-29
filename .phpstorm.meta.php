@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2017-05-03.
+    * Generated on 2017-05-28.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -49,6 +49,7 @@ namespace PHPSTORM_META {
             'markdown.environment' instanceof \League\CommonMark\Environment,
             'markdown' instanceof \League\CommonMark\Converter,
             'markdown.compiler' instanceof \GrahamCampbell\Markdown\Compilers\MarkdownCompiler,
+            'TargetPay' instanceof \TPWeb\TargetPay\TargetPay,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
             'cache' instanceof \Illuminate\Cache\CacheManager,
             'cache.store' instanceof \Illuminate\Cache\Repository,
@@ -176,6 +177,7 @@ namespace PHPSTORM_META {
             'markdown.environment' instanceof \League\CommonMark\Environment,
             'markdown' instanceof \League\CommonMark\Converter,
             'markdown.compiler' instanceof \GrahamCampbell\Markdown\Compilers\MarkdownCompiler,
+            'TargetPay' instanceof \TPWeb\TargetPay\TargetPay,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
             'cache' instanceof \Illuminate\Cache\CacheManager,
             'cache.store' instanceof \Illuminate\Cache\Repository,
@@ -303,6 +305,7 @@ namespace PHPSTORM_META {
             'markdown.environment' instanceof \League\CommonMark\Environment,
             'markdown' instanceof \League\CommonMark\Converter,
             'markdown.compiler' instanceof \GrahamCampbell\Markdown\Compilers\MarkdownCompiler,
+            'TargetPay' instanceof \TPWeb\TargetPay\TargetPay,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
             'cache' instanceof \Illuminate\Cache\CacheManager,
             'cache.store' instanceof \Illuminate\Cache\Repository,
@@ -430,6 +433,7 @@ namespace PHPSTORM_META {
             'markdown.environment' instanceof \League\CommonMark\Environment,
             'markdown' instanceof \League\CommonMark\Converter,
             'markdown.compiler' instanceof \GrahamCampbell\Markdown\Compilers\MarkdownCompiler,
+            'TargetPay' instanceof \TPWeb\TargetPay\TargetPay,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
             'cache' instanceof \Illuminate\Cache\CacheManager,
             'cache.store' instanceof \Illuminate\Cache\Repository,
