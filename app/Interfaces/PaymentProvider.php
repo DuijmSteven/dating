@@ -8,7 +8,7 @@ interface PaymentProvider
 
     public function idealPayment(string $bank, int $amount, string $description);
 
-    public function paysafePayment(string $bank, int $amount, string $description);
+    public function paysafePayment(int $amount, string $description);
 
     public function ivrPayment(string $bank, int $amount, string $description);
 }

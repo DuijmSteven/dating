@@ -10,8 +10,10 @@ namespace App\Services;
 
 
 use App\DatingInterfaces\PaymentProvider;
-use TPWeb\TargetPay\TargetPay;
+
 use TPWeb\TargetPay\Transaction\IDeal;
+use TPWeb\TargetPay\Transaction\IVR;
+use TPWeb\TargetPay\Transaction\Paysafecard;
 
 class PaymentService implements PaymentProvider
 {
@@ -29,7 +31,7 @@ class PaymentService implements PaymentProvider
                 $this->idealPayment($bank, $amount, $description);
                 break;
             case 'paysafe':
-                $this->paysafePayment($bank, $amount, $description);
+                $this->paysafePayment($amount, $description);
                 break;
             case 'ivr':
                 $this->ivrPayment($bank, $amount, $description);
@@ -41,10 +43,10 @@ class PaymentService implements PaymentProvider
 
     public function idealPayment(string $bank, int $amount, string $description)
     {
-        $targetPay = new TargetPay(new IDeal());
+        $targetPay = new \TargetPay(new IDeal());
 
         $targetPay->transaction->setBank($bank);
-        $targetPay->transaction->setAmount($amount);
+        $targetPay->setAmount($amount);
         $targetPay->transaction->setDescription($description);
         $targetPay->transaction->setReturnUrl($this->returnUrl);
 
@@ -52,20 +54,39 @@ class PaymentService implements PaymentProvider
 
         $redirectUrl = $targetPay->transaction->getIdealUrl();
         $transactionId = $targetPay->transaction->getTransactionId();
-
-        var_dump($redirectUrl);
-        var_dump($transactionId);
-        var_dump($this->returnUrl);
-        die;
     }
 
-    public function paysafePayment(string $bank, int $amount, string $description)
+    public function paysafePayment(int $amount, string $description)
     {
-        return 'pay';
+        $targetPay = new \TargetPay(new Paysafecard());
+
+        $targetPay->setAmount($amount);
+        $targetPay->transaction->setDescription($description);
+        $targetPay->transaction->setReturnUrl($this->returnUrl);
+
+        $targetPay->getPaymentInfo();
+
+        $redirectUrl = $targetPay->transaction->getPaysafecardUrl();
+        $transactionId = $targetPay->transaction->getTransactionId();
     }
 
     public function ivrPayment(string $bank, int $amount, string $description)
     {
-        return 'ivr';
+        $targetPay = new \TargetPay(new IVR());
+
+        $targetPay->transaction->setCountry(IVR::NETHERLAND);
+        $targetPay->setAmount($amount);
+        $targetPay->transaction->setMode('PC');
+        $targetPay->transaction->setAdult(false);
+
+        $targetPay->getPaymentInfo();
+
+        $currency = $targetPay->transaction->getCurrency();
+        $amount = $targetPay->getAmount();
+        $serviceNumber = $targetPay->transaction->getServiceNumber();
+        $payCode = $targetPay->transaction->getPayCode();
+        $mode = $targetPay->transaction->getMode();
+        $callCost = $targetPay->transaction->getAmountPerAction();
+        $duration = $targetPay->transaction->getMode() == "PM" ? $targetPay->transaction->getDuration() . "s" : "";
     }
 }
