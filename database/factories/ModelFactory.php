@@ -63,11 +63,30 @@ $factory->define(App\Article::class, function (FakerGenerator $faker) {
 
 $factory->define(App\Payment::class, function (FakerGenerator $faker) {
     $statusesCount = count(PaymentsHelper::$statuses);
-    $paymentTypesCount = count(PaymentsHelper::$paymentTypes);
+    $paymentMethodsCount = count(PaymentsHelper::$methods);
 
     return [
         'user_id' => 2,
-        'type' => rand(1, $paymentTypesCount),
-        'status' => rand(1, $statusesCount)
+        'method' => rand(1, $paymentMethodsCount),
+        'status' => rand(1, $statusesCount),
+        'transactionId' => $faker->creditCardNumber,
+        'description' => $faker->realText($maxNbChars = 100, $indexSize = 1)
+    ];
+});
+
+$factory->define(App\Creditpack::class, function (FakerGenerator $faker) {
+    return [
+        'name' => 'random',
+        'credits' => 2,
+        'price' => 20,
+        'description' => $faker->realText($maxNbChars = 100, $indexSize = 1),
+        'image_url' => 'Dummy'
+    ];
+});
+
+$factory->define(App\UserAccount::class, function () {
+    return [
+        'user_id' => 1,
+        'credits' => rand(0, 100)
     ];
 });

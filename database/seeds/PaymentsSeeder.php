@@ -28,9 +28,11 @@ class PaymentsSeeder extends Seeder
         })->where('account_type', '!=', 1)->get();
 
         foreach ($peasants as $peasant) {
-            factory(App\Payment::class)->create([
-                'user_id' => $peasant->id
-            ]);
+            if (rand(0, 1)) {
+                factory(App\Payment::class)->create([
+                    'user_id' => $peasant->id
+                ]);
+            }
         }
 
         // supposed to only apply to a single connection and reset it's self

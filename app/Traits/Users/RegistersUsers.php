@@ -3,6 +3,7 @@
 namespace App\Traits\Users;
 
 use App\User;
+use App\UserAccount;
 use App\UserMeta;
 use Illuminate\Foundation\Auth\RedirectsUsers;
 use App\RoleUser;
@@ -51,6 +52,19 @@ trait RegistersUsers
             ]);
 
             $userMetaInstance->save();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
+
+        try {
+            /** @var UserAccount $userAccountInstance */
+            $userAccountInstance = new UserAccount([
+                'user_id' => $createdUser->id,
+                'credits' => 2
+            ]);
+
+            $userAccountInstance->save();
         } catch (\Exception $exception) {
             DB::rollBack();
             throw $exception;

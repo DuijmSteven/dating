@@ -69,6 +69,12 @@ class UserTablesSeeder extends Seeder
                         'gender' => $key,
                     ]));
 
+                    if ($role == 'peasant') {
+                        $createdUser->account()->save(factory(App\UserAccount::class)->make([
+                            'user_id' => $createdUser->id
+                        ]));
+                    }
+
                     $roleUserInstance = new RoleUser([
                         'user_id' => $createdUser->id,
                         'role_id' => UserConstants::selectableField('role', $role, 'array_flip')[$role]

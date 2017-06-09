@@ -24,7 +24,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'password', 'active'
+        'username',
+        'email',
+        'password',
+        'active'
     ];
 
     /**
@@ -33,7 +36,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token'
     ];
 
     protected $allowedImageTypes = [
@@ -306,5 +310,10 @@ class User extends Authenticatable
         }
 
         return true;
+    }
+
+    public function account()
+    {
+        return $this->hasOne('App\UserAccount');
     }
 }

@@ -8,7 +8,7 @@ namespace App\Helpers;
  */
 class PaymentsHelper
 {
-    public static $paymentTypes = [
+    public static $methods = [
         1 => 'ideal',
         2 => 'paysafe',
         3 => 'ivr'

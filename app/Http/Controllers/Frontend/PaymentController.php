@@ -27,6 +27,6 @@ class PaymentController extends Controller
 
     public function initiatePayment()
     {
-        $this->paymentProvider->initiatePayment('RABONL2U', 'ideal', 15, 'sdsdsds');
+        $this->paymentProvider->initiatePayment('RABONL2U', 'ideal', 1, 'sdsdsds');
     }
 }
