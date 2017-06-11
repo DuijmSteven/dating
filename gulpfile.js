@@ -21,4 +21,6 @@ elixir(function (mix) {
             'public/css/app.css'
         ]);
 
+    mix.copy('resources/assets/img', 'public/img', false);
+
 });

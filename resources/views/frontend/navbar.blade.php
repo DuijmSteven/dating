@@ -8,7 +8,9 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{!! route('home') !!}">{!! config('app.name') !!}</a>
+            <a class="navbar-brand" href="{!! route('home') !!}">
+                <img src="{!! asset('img/site_logos/Altijdsex_LogoMark_Unpadded@1x.png') !!}">
+            </a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->

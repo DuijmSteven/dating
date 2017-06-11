@@ -1,0 +1,31 @@
+// Setup of Navbar
+$navbarHeight: 70;
+$navbarBorderWith: 1;
+$navbarLineHeight: 22;
+
+$logoHeight: round($navbarHeight * 0.7);
+
+.navbar-default {
+    border: $navbarBorderWith + px solid #d3e0e9;
+}
+
+.navbar-nav {
+    > li {
+        > a {
+            line-height: $navbarLineHeight + px;
+            padding-top: ($navbarHeight - $navbarLineHeight - 2 * $navbarBorderWith) / 2 + px;
+            padding-bottom: ($navbarHeight - $navbarLineHeight - 2 * $navbarBorderWith) / 2 + px;
+        }
+    }
+}
+
+.navbar-brand {
+    display: inline-block;
+    height: auto;
+    padding-top: ($navbarHeight - $logoHeight) / 2 + px;
+    padding-bottom: ($navbarHeight - $logoHeight) / 2 + px;
+
+    > img {
+        height: $logoHeight + px;
+    }
+}
