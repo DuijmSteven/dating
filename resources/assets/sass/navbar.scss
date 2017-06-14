@@ -1,20 +1,29 @@
 // Setup of Navbar
-$navbarHeight: 70;
+$navbarHeight: 100;
 $navbarBorderWith: 1;
 $navbarLineHeight: 22;
 
-$logoHeight: round($navbarHeight * 0.7);
+$logoHeight: round($navbarHeight * 0.55);
 
 .navbar-default {
     border: $navbarBorderWith + px solid #d3e0e9;
-}
+    background-color: $mainColor;
 
-.navbar-nav {
-    > li {
-        > a {
-            line-height: $navbarLineHeight + px;
-            padding-top: ($navbarHeight - $navbarLineHeight - 2 * $navbarBorderWith) / 2 + px;
-            padding-bottom: ($navbarHeight - $navbarLineHeight - 2 * $navbarBorderWith) / 2 + px;
+    .navbar-nav {
+        > li {
+            > a {
+                line-height: $navbarLineHeight + px;
+                padding-top: ($navbarHeight - $navbarLineHeight - 2 * $navbarBorderWith) / 2 + px;
+                padding-bottom: ($navbarHeight - $navbarLineHeight - 2 * $navbarBorderWith) / 2 + px;
+                color: $navbarLinkColor;
+                font-size: 18px;
+                font-weight: 200;
+
+                &:hover {
+                    color: darken($navbarLinkColor, 15%);
+                    cursor: pointer;
+                }
+            }
         }
     }
 }

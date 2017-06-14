@@ -46,7 +46,7 @@ class UserController extends Controller
                 $viewData,
                 [
                     'title' => 'Profiles',
-                    'hasSidebar' => true
+                    'hasLeftSidebar' => true
                 ]
             )
         );

@@ -3,17 +3,31 @@
     @include('frontend.layouts.default.partials.head')
 
 <body>
-    <div class="container">
-        @include('frontend.layouts.default.partials.header')
+    @include('frontend.layouts.default.partials.header')
 
-        @if(isset($hasSidebar) && $hasSidebar)
+    <div class="container">
+        @php
+            $leftSidebar = isset($hasLeftSidebar) && $hasLeftSidebar;
+            $rightSidebar = isset($hasRightSidebar) && $hasRightSidebar;
+            $sidebarCount = (int) $leftSidebar + (int) $rightSidebar;
+        @endphp
+        @if($leftSidebar || $rightSidebar)
             <div class="row">
-                <div class="col-md-9">
+                @if($leftSidebar)
+                    <div class="col-md-3 hidden-xs hidden-sm">
+                        @include('frontend.layouts.default.partials.left-sidebar')
+                    </div>
+                @endif
+
+                <div class="col-md-{!! $sidebarCount == 1 ? '9' : '6' !!}">
                     @include('frontend.layouts.default.partials.main')
                 </div>
-                <div class="col-md-3 hidden-xs hidden-sm">
-                    @include('frontend.layouts.default.partials.sidebar')
-                </div>
+
+                @if($rightSidebar)
+                    <div class="col-md-3 hidden-xs hidden-sm">
+                        @include('frontend.layouts.default.partials.right-sidebar')
+                    </div>
+                @endif
             </div>
         @else
             @include('frontend.layouts.default.partials.main')
