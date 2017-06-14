@@ -2,6 +2,8 @@
 $slate: #4f5d75;
 $tomato: #ef4f2b;
 $sugar: #e6e6e6;
+$earlGrey: #f3f3f3;
+$white: #fff;
 
 // brand colors
 $mainColor: $slate;
@@ -9,3 +11,14 @@ $secondaryColor: $tomato;
 
 // layout items
 $navbarLinkColor: $sugar;
+$bodyBgColor: $earlGrey;
+$tileBgColor: $white;
+
+// layout tweaks
+$borderRadiusDefault: 2;
+
+// font tweaks
+$fontSize: (
+    'body-mobile': 16,
+    'body-desktop': 18
+);

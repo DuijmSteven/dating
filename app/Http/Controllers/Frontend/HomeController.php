@@ -18,7 +18,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('frontend/home');
+        return view('frontend.home');
     }
 
     /**
@@ -29,7 +29,7 @@ class HomeController extends Controller
     public function showContact()
     {
         return view(
-            'frontend/contact',
+            'frontend.contact',
             [
                 'title' => 'Contact - ' . config('app.name'),
                 'hasSidebar' => true

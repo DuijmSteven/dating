@@ -1,0 +1,23 @@
+$tileHeading: (
+    'padding': 15
+);
+
+$tileBody: (
+    'padding': 20
+);
+
+.Tile {
+    margin-bottom: 20px;
+    border-radius: $borderRadiusDefault + px;
+
+    background-color: $tileBgColor;
+    box-shadow: 0 1px 2px 0 rgba(45, 49, 66, 0.25);
+}
+
+.Tile_heading {
+    padding: map_get($tileHeading, padding) + px;
+}
+
+.Tile_body {
+    padding: map_get($tileBody, padding) + px;
+}

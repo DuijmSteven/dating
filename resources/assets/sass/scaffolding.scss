@@ -4,4 +4,12 @@
 body {
     font-family: 'Fira Sans', sans-serif !important;
     font-weight: 400;
+    background-color: $bodyBgColor;
+    font-size: map_get($fontSize, body-mobile) + px;
+}
+
+@media (min-width: $screen-sm-min) {
+    body {
+        font-size: map_get($fontSize, body-desktop) + px;
+    }
 }
