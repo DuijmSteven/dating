@@ -18,7 +18,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('frontend.home');
+        return view('frontend.home', [
+            'title' => 'Homepage - ' . config('app.name'),
+            'hasRightSidebar' => true
+        ]);
     }
 
     /**
@@ -32,7 +35,7 @@ class HomeController extends Controller
             'frontend.contact',
             [
                 'title' => 'Contact - ' . config('app.name'),
-                'hasSidebar' => true
+                'hasRightSidebar' => true
             ]
         );
     }
