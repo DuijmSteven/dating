@@ -8,20 +8,19 @@ use Illuminate\Database\Eloquent\Model;
  * Class Module
  * @package App
  */
-class Module extends Model
+class LayoutPart extends Model
 {
-    public $table = 'modules';
+    public $table = 'layout_parts';
 
     public $fillable = [
-        'name',
-        'description'
+        'name'
     ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function layoutParts()
+    public function modules()
     {
-        return $this->belongsToMany('App\LayoutPart');
+        return $this->belongsToMany('App\Module');
     }
 }

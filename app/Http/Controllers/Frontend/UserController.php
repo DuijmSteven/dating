@@ -6,9 +6,12 @@ use App\Managers\UserManager;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
-class UserController extends Controller
+/**
+ * Class UserController
+ * @package App\Http\Controllers\Frontend
+ */
+class UserController extends FrontendController
 {
     /** @var User */
     private $user;

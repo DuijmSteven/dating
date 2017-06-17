@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Managers\PeasantManager;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
-class PeasantController extends Controller
+/**
+ * Class PeasantController
+ * @package App\Http\Controllers\Frontend
+ */
+class PeasantController extends FrontendController
 {
     /** @var PeasantManager  */
     private $peasantManager;
@@ -19,6 +22,7 @@ class PeasantController extends Controller
     public function __construct(PeasantManager $peasantManager)
     {
         $this->peasantManager = $peasantManager;
+        parent::__construct();
     }
 
     /**

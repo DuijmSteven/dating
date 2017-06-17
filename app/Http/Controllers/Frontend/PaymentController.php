@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\DatingInterfaces\PaymentProvider;
-use App\Http\Controllers\Controller;
 use App\Managers\PaymentManager;
 
-class PaymentController extends Controller
+/**
+ * Class PaymentController
+ * @package App\Http\Controllers\Frontend
+ */
+class PaymentController extends FrontendController
 {
     /** @var PaymentManager */
     private $paymentManager;
@@ -23,6 +26,7 @@ class PaymentController extends Controller
     {
         $this->paymentManager = $paymentManager;
         $this->paymentProvider = $paymentProvider;
+        parent::__construct();
     }
 
     public function initiatePayment()

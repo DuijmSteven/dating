@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
-
 /**
  * Class HomeController
  * @package App\Http\Controllers\Frontend
  */
-class HomeController extends Controller
+class HomeController extends FrontendController
 {
     /**
      * HomeController constructor.
@@ -26,9 +24,7 @@ class HomeController extends Controller
     public function index()
     {
         return view('frontend.home', [
-            'title' => 'Homepage - ' . config('app.name'),
-            'hasRightSidebar' => true,
-            'hasLeftSidebar' => true,
+            'title' => 'Homepage - ' . config('app.name')
         ]);
     }
 

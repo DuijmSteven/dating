@@ -1,14 +1,14 @@
 <?php
 
-use App\Module;
+use App\LayoutPart;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 /**
- * Class CreateModuleInstancesTable
+ * Class CreateLayoutPartsTable
  */
-class CreateModuleInstancesTable extends Migration
+class CreateLayoutPartsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,12 +17,15 @@ class CreateModuleInstancesTable extends Migration
      */
     public function up()
     {
-        Schema::create('module_instances', function (Blueprint $table) {
+        Schema::create('layout_parts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('layout_location', 100);
-            $table->smallInteger('order')->unsigned();
-            $table->timestamps();
+            $table->string('name');
         });
+
+        LayoutPart::insert([
+            ['name' => 'left-sidebar'],
+            ['name' => 'right-sidebar'],
+        ]);
     }
 
     /**
@@ -32,6 +35,6 @@ class CreateModuleInstancesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('module_instances');
+        Schema::dropIfExists('layout_parts');
     }
 }
