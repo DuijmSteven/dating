@@ -22,5 +22,5 @@ elixir(function (mix) {
         ]);
 
     mix.copy('resources/assets/img', 'public/img', false);
-
+    mix.copy('node_modules/font-awesome/fonts', 'public/build/fonts');
 });

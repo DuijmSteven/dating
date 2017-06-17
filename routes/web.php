@@ -182,6 +182,25 @@ Route::group([
             ->name('backend.payments.index');
     });
 
+    Route::group([
+        'prefix' => 'modules'
+    ], function () {
+        Route::get('/', 'Backend\ModuleController@index')
+            ->name('backend.modules.index');
+
+        Route::delete('/{moduleId}', 'Backend\ModuleController@destroy')
+            ->name('backend.modules.destroy');
+
+        Route::get('/create', 'Backend\ModuleController@getCreate')
+            ->name('backend.modules.create');
+        Route::post('/', 'Backend\ModuleController@post')
+            ->name('backend.modules.post');
+
+        Route::get('/{moduleId}', 'Backend\ModuleController@getUpdate')
+            ->name('backend.modules.edit');
+        Route::put('/{moduleId}', 'Backend\ModuleController@update')
+            ->name('backend.modules.update');
+    });
 });
 
 Route::group([

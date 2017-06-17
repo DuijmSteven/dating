@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Requests\Backend\Articles;
+namespace App\Http\Requests\Backend\Modules;
 
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Http\Requests\Request;
 
 /**
- * Class ArticleUpdateRequest
- * @package App\Http\Requests\Backend\Bots
+ * Class ModuleUpdateRequest
+ * @package App\Http\Requests\Backend\Modules
  */
-class ArticleUpdateRequest extends Request
+class ModuleUpdateRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,9 +29,8 @@ class ArticleUpdateRequest extends Request
     public function rules()
     {
         return [
-            'title' => 'string|required',
-            'body' => 'required',
-            'status' => 'integer|required'
+            'name' => 'string|required',
+            'description' => 'string|max:256'
         ];
     }
 }

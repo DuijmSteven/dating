@@ -18,6 +18,9 @@
 
             <ul class="nav navbar-nav navbar-right">
                 @if(isset($authenticatedUser))
+                    <li class="{!! str_contains(\Request::route()->getName(), 'users.search') ? 'active' : '' !!}"><a
+                                href="{{ route('home') }}"><i class="fa fa-fw fa-newspaper-o"></i>Newsfeed</a>
+                    </li>
                     <li class="{!! \Request::route()->getName() == 'users.retrieve' ? 'active' : '' !!}">
                         <a href="{{ route('users.retrieve') }}">
                             {{ @trans('profiles.main_heading') }}

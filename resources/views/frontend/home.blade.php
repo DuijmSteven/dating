@@ -2,7 +2,7 @@
 
 @section('content')
 
-    @include('frontend.modules.user-activity', [
+    @include('frontend.components.user-activity', [
         'title' => 'Newsfeed',
         'body' => 'Body!'
     ])

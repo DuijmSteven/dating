@@ -7,7 +7,7 @@
 
         <div class="col-xs-12">
             <div class="pagination__container text-right">
-                {!! $articles->render() !!}
+                {!! $modules->render() !!}
             </div>
         </div>
 
@@ -15,7 +15,7 @@
             <div class="box">
                 <div class="box-header">
                     <div class="pull-left">
-                        <h3 class="box-title">Articles (Total: <strong>{!! $articles->total() !!}</strong>)</h3>
+                        <h3 class="box-title">Articles (Total: <strong>{!! $modules->total() !!}</strong>)</h3>
                     </div>
                     <a class="pull-right btn btn-success" href="{{ route('backend.articles.create') }}">Create article</a>
                 </div>
@@ -25,32 +25,28 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Title</th>
-                                <th>Body</th>
-                                <th>Status</th>
-                                <th class="no-wrap">Created at</th>
+                                <th>Name</th>
+                                <th>Description</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($articles as $article)
+                            @foreach($modules as $module)
                                 <tr>
-                                    <td>{!! $article->id !!}</td>
-                                    <td>{{ $article->title }}</td>
-                                    <td>{!! $article->body !!}</td>
-                                    <td>{{ \App\Article::$statuses[$article->status] }}</td>
-                                    <td class="no-wrap">{{ $article->created_at->format('d-m-Y H:i:s') }}</td>
+                                    <td>{!! $module->id !!}</td>
+                                    <td>{{ $module->name }}</td>
+                                    <td>{!! $module->description !!}</td>
                                     <td class="action-buttons">
-                                        <a href="{{ route('backend.articles.edit', ['articleId' => $article->id]) }}"
+                                        <a href="{{ route('backend.modules.edit', ['moduleId' => $module->id]) }}"
                                            class="btn btn-default">
                                             Edit
                                         </a>
-                                        <form method="POST" action="{{ route('backend.articles.destroy', ['articleId' => $article->id]) }}">
+                                        <form method="POST" action="{{ route('backend.modules.destroy', ['moduleId' => $module->id]) }}">
                                             {!! csrf_field() !!}
                                             {!! method_field('DELETE') !!}
                                             <button type="submit"
                                                     class="btn btn-danger"
-                                                    onclick="confirm('Are you sure you want to delete this article?')">
+                                                    onclick="confirm('Are you sure you want to delete this module?')">
                                                 Delete
                                             </button>
                                         </form>
@@ -67,7 +63,7 @@
 
         <div class="col-xs-12">
             <div class="pagination__container text-right">
-                {!! $articles->render() !!}
+                {!! $modules->render() !!}
             </div>
         </div>
 

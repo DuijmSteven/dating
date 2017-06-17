@@ -170,6 +170,23 @@
                         </li>
                     </ul>
                 </li>
+                <li class="treeview {!! str_contains(\Request::route()->getName(), 'backend.modules') ? 'active' : '' !!}">
+                    <a href="#">
+                        <i class="fa fa-money"></i>
+                        <span>Modules</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="{!! \Request::route()->getName() == 'backend.modules.index' ? 'active' : '' !!}">
+                            <a href="{!! route('backend.modules.index', ['page' => 1]) !!}">
+                                <i class="fa fa-list"></i>
+                                Overview
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="treeview">
                     <a href="{!! route('home') !!}">
                         <i class="fa fa-globe"></i>
