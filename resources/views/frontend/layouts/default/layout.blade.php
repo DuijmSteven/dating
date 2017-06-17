@@ -11,7 +11,7 @@
             $rightSidebar = isset($hasRightSidebar) && $hasRightSidebar;
             $sidebarCount = (int) $leftSidebar + (int) $rightSidebar;
         @endphp
-        @if($leftSidebar || $rightSidebar)
+        @if($sidebarCount > 0)
             <div class="row">
                 @if($leftSidebar)
                     <div class="col-md-3 hidden-xs hidden-sm">

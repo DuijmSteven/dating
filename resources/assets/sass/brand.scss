@@ -4,18 +4,23 @@ $tomato: #ef4f2b;
 $sugar: #e6e6e6;
 $earlGrey: #f3f3f3;
 $white: #fff;
+$black: #333;
 
 // brand colors
 $mainColor: $slate;
 $secondaryColor: $tomato;
+$textColor: $black;
 
 // layout items
 $navbarLinkColor: $sugar;
-$bodyBgColor: $earlGrey;
 $tileBgColor: $white;
+$bodyBgColor: $earlGrey;
+$borderColor: $bodyBgColor;
+
+$borderWidth: 1;
 
 // layout tweaks
-$borderRadiusDefault: 2;
+$borderRadius: 2;
 
 // font tweaks
 $fontSize: (

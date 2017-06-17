@@ -1,20 +1,20 @@
 // Setup of Navbar
 $navbarHeight: 100;
-$navbarBorderWith: 1;
+$navbarBorderWidth: 1;
 $navbarLineHeight: 22;
 
 $logoHeight: round($navbarHeight * 0.55);
 
 .navbar-default {
-    border: $navbarBorderWith + px solid #d3e0e9;
+    border: $navbarBorderWidth + px solid #d3e0e9;
     background-color: $mainColor;
 
     .navbar-nav {
         > li {
             > a {
                 line-height: $navbarLineHeight + px;
-                padding-top: ($navbarHeight - $navbarLineHeight - 2 * $navbarBorderWith) / 2 + px;
-                padding-bottom: ($navbarHeight - $navbarLineHeight - 2 * $navbarBorderWith) / 2 + px;
+                padding-top: ($navbarHeight - $navbarLineHeight - 2 * $navbarBorderWidth) / 2 + px;
+                padding-bottom: ($navbarHeight - $navbarLineHeight - 2 * $navbarBorderWidth) / 2 + px;
                 color: $navbarLinkColor;
                 font-size: 18px;
                 font-weight: 200;
@@ -31,8 +31,8 @@ $logoHeight: round($navbarHeight * 0.55);
 .navbar-brand {
     display: inline-block;
     height: auto;
-    padding-top: ($navbarHeight - $logoHeight) / 2 + px;
-    padding-bottom: ($navbarHeight - $logoHeight) / 2 + px;
+    padding-top: ($navbarHeight - $logoHeight - 2 * $navbarBorderWidth) / 2 + px;
+    padding-bottom: ($navbarHeight - $logoHeight - 2 * $navbarBorderWidth) / 2 + px;
 
     > img {
         height: $logoHeight + px;

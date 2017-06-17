@@ -20,7 +20,8 @@ class HomeController extends Controller
     {
         return view('frontend.home', [
             'title' => 'Homepage - ' . config('app.name'),
-            'hasRightSidebar' => true
+            'hasRightSidebar' => true,
+            'hasLeftSidebar' => true,
         ]);
     }
 
