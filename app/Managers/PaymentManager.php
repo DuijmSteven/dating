@@ -2,7 +2,7 @@
 
 namespace App\Managers;
 
-use App\DatingInterfaces\PaymentProvider;
+use App\Interfaces\PaymentProvider;
 
 class PaymentManager
 {
@@ -12,9 +12,8 @@ class PaymentManager
     /**
      * @param PaymentProvider $paymentProvider
      */
-    public function __construct(PaymentProvider $paymentProvider) {
+    public function __construct(PaymentProvider $paymentProvider)
+    {
         $this->paymentProvider = $paymentProvider;
     }
-
-
 }

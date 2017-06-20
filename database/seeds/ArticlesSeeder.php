@@ -7,6 +7,10 @@ use Faker\Generator as Faker;
 
 class ArticlesSeeder extends Seeder
 {
+    /**
+     * ArticlesSeeder constructor.
+     * @param Faker $faker
+     */
     public function __construct(Faker $faker) {
         $this->faker = $faker;
     }

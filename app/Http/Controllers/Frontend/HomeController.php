@@ -24,7 +24,8 @@ class HomeController extends FrontendController
     public function index()
     {
         return view('frontend.home', [
-            'title' => 'Homepage - ' . config('app.name')
+            'title' => 'Homepage - ' . config('app.name'),
+            'rightSideBar' => false,
         ]);
     }
 

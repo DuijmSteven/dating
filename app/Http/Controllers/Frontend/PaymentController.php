@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\DatingInterfaces\PaymentProvider;
+use App\Interfaces\PaymentProvider;
 use App\Managers\PaymentManager;
+use App\Services\PaymentService;
 
 /**
  * Class PaymentController
@@ -14,13 +15,13 @@ class PaymentController extends FrontendController
     /** @var PaymentManager */
     private $paymentManager;
 
-    /** @var PaymentProvider */
+    /** @var PaymentService */
     private $paymentProvider;
 
     /**
      * PaymentController constructor.
      * @param PaymentManager $paymentManager
-     * @param PaymentProvider $paymentProvider
+     * @param PaymentService $paymentProvider
      */
     public function __construct(PaymentManager $paymentManager, PaymentProvider $paymentProvider)
     {

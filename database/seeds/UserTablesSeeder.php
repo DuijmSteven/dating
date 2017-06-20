@@ -2,14 +2,20 @@
 
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\RoleUser;
-use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Faker\Generator as Faker;
 
+/**
+ * Class UserTablesSeeder
+ */
 class UserTablesSeeder extends Seeder
 {
+    /**
+     * UserTablesSeeder constructor.
+     * @param Faker $faker
+     */
     public function __construct(Faker $faker) {
         $this->faker = $faker;
     }

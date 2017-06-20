@@ -1,29 +1,37 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: opalampo
- * Date: 16-4-17
- * Time: 22:00
- */
 
 namespace App\Services;
 
+use App\Interfaces\PaymentProvider;
 
-use App\DatingInterfaces\PaymentProvider;
-
+use TPWeb\TargetPay\TargetPay;
 use TPWeb\TargetPay\Transaction\IDeal;
 use TPWeb\TargetPay\Transaction\IVR;
 use TPWeb\TargetPay\Transaction\Paysafecard;
 
+/**
+ * Class PaymentService
+ * @package App\Services
+ */
 class PaymentService implements PaymentProvider
 {
     private $returnUrl;
 
+    /**
+     * PaymentService constructor.
+     */
     public function __construct()
     {
         $this->returnUrl = route('home');
     }
 
+    /**
+     * @param string $bank
+     * @param string $paymentMethod
+     * @param int $amount
+     * @param string $description
+     * @throws \Exception
+     */
     public function initiatePayment(string $bank, string $paymentMethod, int $amount, string $description)
     {
         switch ($paymentMethod) {
@@ -41,52 +49,78 @@ class PaymentService implements PaymentProvider
         }
     }
 
+    /**
+     * @param string $bank
+     * @param int $amount
+     * @param string $description
+     */
     public function idealPayment(string $bank, int $amount, string $description)
     {
+        /** @var TargetPay $targetPay */
         $targetPay = new \TargetPay(new IDeal());
 
-        $targetPay->transaction->setBank($bank);
+        /** @var IDeal $transaction */
+        $transaction = $targetPay->transaction;
+
+        $transaction->setBank($bank);
         $targetPay->setAmount($amount);
-        $targetPay->transaction->setDescription($description);
-        $targetPay->transaction->setReturnUrl($this->returnUrl);
+        $transaction->setDescription($description);
+        $transaction->setReturnUrl($this->returnUrl);
 
         $targetPay->getPaymentInfo();
 
-        $redirectUrl = $targetPay->transaction->getIdealUrl();
-        $transactionId = $targetPay->transaction->getTransactionId();
+        $redirectUrl = $transaction->getIdealUrl();
+        $transactionId = $transaction->getTransactionId();
     }
 
+    /**
+     * @param int $amount
+     * @param string $description
+     */
     public function paysafePayment(int $amount, string $description)
     {
+        /** @var TargetPay $targetPay */
         $targetPay = new \TargetPay(new Paysafecard());
 
+        /** @var Paysafecard $transaction */
+        $transaction = $targetPay->transaction;
+
         $targetPay->setAmount($amount);
-        $targetPay->transaction->setDescription($description);
-        $targetPay->transaction->setReturnUrl($this->returnUrl);
+        $transaction->setDescription($description);
+        $transaction->setReturnUrl($this->returnUrl);
 
         $targetPay->getPaymentInfo();
 
-        $redirectUrl = $targetPay->transaction->getPaysafecardUrl();
-        $transactionId = $targetPay->transaction->getTransactionId();
+        $redirectUrl = $transaction->getPaysafecardUrl();
+        $transactionId = $transaction->getTransactionId();
     }
 
+    /**
+     * @param string $bank
+     * @param int $amount
+     * @param string $description
+     */
     public function ivrPayment(string $bank, int $amount, string $description)
     {
+        /** @var TargetPay $targetPay */
         $targetPay = new \TargetPay(new IVR());
 
-        $targetPay->transaction->setCountry(IVR::NETHERLAND);
+        /** @var IVR $transaction */
+        $transaction = $targetPay->transaction;
+
+        $transaction->setCountry(IVR::NETHERLAND);
         $targetPay->setAmount($amount);
-        $targetPay->transaction->setMode('PC');
-        $targetPay->transaction->setAdult(false);
+        $transaction->setMode('PC');
+        $transaction->setAdult(false);
 
         $targetPay->getPaymentInfo();
 
-        $currency = $targetPay->transaction->getCurrency();
+        $currency = $transaction->getCurrency();
         $amount = $targetPay->getAmount();
-        $serviceNumber = $targetPay->transaction->getServiceNumber();
-        $payCode = $targetPay->transaction->getPayCode();
-        $mode = $targetPay->transaction->getMode();
-        $callCost = $targetPay->transaction->getAmountPerAction();
-        $duration = $targetPay->transaction->getMode() == "PM" ? $targetPay->transaction->getDuration() . "s" : "";
+        $serviceNumber = $transaction->getServiceNumber();
+        $payCode = $transaction->getPayCode();
+        $mode = $transaction->getMode();
+        $callCost = $transaction->getAmountPerAction();
+        $duration = $transaction->getMode() == "PM" ? $transaction->getDuration() . "s" : "";
     }
 }

@@ -4,6 +4,10 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Class AppServiceProvider
+ * @package App\Providers
+ */
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -27,6 +31,6 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
 
-        $this->app->bind('App\DatingInterfaces\PaymentProvider', 'App\Services\PaymentService');
+        $this->app->bind('App\Interfaces\PaymentProvider', 'App\Services\PaymentService');
     }
 }

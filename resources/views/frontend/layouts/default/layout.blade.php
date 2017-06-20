@@ -6,12 +6,7 @@
     @include('frontend.layouts.default.partials.header')
 
     <div class="container">
-        @php
-            $leftSidebar = isset($hasLeftSidebar) && $hasLeftSidebar;
-            $rightSidebar = isset($hasRightSidebar) && $hasRightSidebar;
-            $sidebarCount = (int) $leftSidebar + (int) $rightSidebar;
-        @endphp
-        @if($sidebarCount > 0)
+        @if(isset($sidebarCount) && $sidebarCount > 0)
             <div class="row">
                 @if($leftSidebar)
                     <div class="col-md-3 hidden-xs hidden-sm">
