@@ -19,11 +19,12 @@ class CreateModuleLayoutPart extends Migration
         Schema::create('module_layout_part', function (Blueprint $table) {
             $table->increments('layout_part_id');
             $table->string('module_id');
+            $table->smallInteger('priority');
         });
     }
 
     /**
-     * Reverse the migrations.
+     * Reverse the migrations
      *
      * @return void
      */

@@ -11,9 +11,9 @@ $fa-font-path : "node_modules/font-awesome/fonts" !default;
 
 @import "scaffolding";
 @import "navbar";
-@import "tile";
 @import "forms";
 @import "footer";
 
-// Modules
-@import "user-activity";
+// Components
+@import "components/tile";
+@import "components/user-activity";
