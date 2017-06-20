@@ -1,16 +1,20 @@
 <?php
 
+use App\LayoutPart;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Faker\Generator as Faker;
-use App\User;
 
 /**
- * Class PaymentsSeeder
+ * Class ModuleLayoutPartsSeeder
  */
-class PaymentsSeeder extends Seeder
+class ModuleLayoutPartsSeeder extends Seeder
 {
+    /**
+     * ArticlesSeeder constructor.
+     * @param Faker $faker
+     */
     public function __construct(Faker $faker) {
         $this->faker = $faker;
     }
@@ -24,16 +28,18 @@ class PaymentsSeeder extends Seeder
         Model::unguard();
         //disable foreign key check for this connection before running seeders
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        DB::table('payments')->truncate();
+        DB::table('articles')->truncate();
 
-        $peasants = User::with('roles')->whereHas('roles', function ($query) {
-            $query->where('name', '=', 'peasant');
-        })->where('account_type', '!=', 1)->get();
+        $layoutParts = LayoutPart::all()->toArray();
 
-        foreach ($peasants as $peasant) {
-            if (rand(0, 1)) {
-                factory(App\Payment::class)->create([
-                    'user_id' => $peasant->id
+        $moduleAmountToAssign = rand(2, 4);
+
+        foreach ($layoutParts as $layoutPart) {
+            for ($i = 0; $i < $moduleAmountToAssign; $i++) {
+                factory(App\LayoutPartModule::class)->create([
+                    'layout_part_id' => $layoutPart['id'],
+                    'module_id' => min($i + 1, 3),
+                    'priority' => $i + 1
                 ]);
             }
         }
@@ -41,6 +47,5 @@ class PaymentsSeeder extends Seeder
         // supposed to only apply to a single connection and reset it's self
         // but I like to explicitly undo what I've done for clarity
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-
     }
 }

@@ -2,6 +2,8 @@
 
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Helpers\PaymentsHelper;
+use App\LayoutPart;
+use App\Module;
 use Faker\Generator as FakerGenerator;
 use Faker\Provider as FakerProvider;
 
@@ -89,5 +91,16 @@ $factory->define(App\UserAccount::class, function () {
     return [
         'user_id' => 1,
         'credits' => rand(0, 100)
+    ];
+});
+
+$factory->define(App\LayoutPartModule::class, function () {
+    $moduleIds = Module::all()->pluck('id')->toArray();
+    $layoutPartIds = LayoutPart::all()->pluck('id')->toArray();
+
+    return [
+        'module_id' => $moduleIds[array_rand($moduleIds)],
+        'layout_part_id' => $moduleIds[array_rand($layoutPartIds)],
+        'priority' => 1,
     ];
 });

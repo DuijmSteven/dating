@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\DB;
 use Faker\Generator as Faker;
 use Carbon\Carbon;
 
+/**
+ * Class ConversationsMessagesFlirtsSeeder
+ */
 class ConversationsMessagesFlirtsSeeder extends Seeder
 {
     public function __construct(Faker $faker) {

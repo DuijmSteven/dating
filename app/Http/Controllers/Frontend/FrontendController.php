@@ -13,6 +13,7 @@ class FrontendController extends Controller
     private $leftSidebar;
     private $rightSidebar;
     private $sidebarCount;
+    private $test;
 
     /**
      * Controller constructor.
@@ -27,19 +28,20 @@ class FrontendController extends Controller
      * @param bool $leftSidebar
      * @param bool $rightSidebar
      */
-    private function setupSidebars(bool $leftSidebar = false, bool $rightSidebar = true): void
+    private function setupSidebars(bool $leftSidebar = true, bool $rightSidebar = true): void
     {
         $this->leftSidebar = $leftSidebar;
         $this->rightSidebar = $rightSidebar;
         $this->sidebarCount = (int) $this->leftSidebar + (int) $this->rightSidebar;
 
-        $this->shareSidebarVarsToViews();
+        $this->shareSidebarsToViews();
     }
 
-    private function shareSidebarVarsToViews(): void
+    private function shareSidebarsToViews(): void
     {
         \View::share('leftSidebar', $this->leftSidebar);
         \View::share('rightSidebar', $this->rightSidebar);
         \View::share('sidebarCount', $this->sidebarCount);
+        \View::share('test', $this->test);
     }
 }

@@ -3,6 +3,9 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class DatabaseSeeder
+ */
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -18,6 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ConversationsMessagesFlirtsSeeder::class);
         $this->call(ArticlesSeeder::class);
         $this->call(PaymentsSeeder::class);
+        $this->call(ModuleLayoutPartsSeeder::class);
 
         Model::reguard();
     }

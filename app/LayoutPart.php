@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Module
+ * Class LayoutPart
  * @package App
  */
 class LayoutPart extends Model
@@ -21,6 +21,6 @@ class LayoutPart extends Model
      */
     public function modules()
     {
-        return $this->belongsToMany('App\Module');
+        return $this->belongsToMany('App\Module')->withPivot('priority');
     }
 }

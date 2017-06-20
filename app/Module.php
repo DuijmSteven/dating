@@ -22,6 +22,6 @@ class Module extends Model
      */
     public function layoutParts()
     {
-        return $this->belongsToMany('App\LayoutPart');
+        return $this->belongsToMany('App\LayoutPart')->withPivot('priority');
     }
 }
