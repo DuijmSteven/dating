@@ -4,6 +4,10 @@ namespace App\Managers;
 
 use App\Interfaces\PaymentProvider;
 
+/**
+ * Class PaymentManager
+ * @package App\Managers
+ */
 class PaymentManager
 {
     /** @var PaymentProvider $paymentProvider */

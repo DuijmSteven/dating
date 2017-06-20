@@ -57,6 +57,7 @@ $factory->define(App\Article::class, function (FakerGenerator $faker) {
     return [
         'title' => $faker->unique()->sentence(6, true),
         'body' => $faker->text(rand(500, 5000)),
+        'meta_description' => $faker->text(rand(100, 200)),
         'status' => rand(0, 1)
     ];
 });

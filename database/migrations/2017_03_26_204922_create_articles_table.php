@@ -17,6 +17,7 @@ class CreateArticlesTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->text('body');
+            $table->text('meta_description');
             $table->smallInteger('status');
             $table->timestamps();
         });
