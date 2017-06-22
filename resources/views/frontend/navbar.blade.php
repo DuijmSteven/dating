@@ -46,7 +46,7 @@
                         <ul class="dropdown-menu">
                             @if($authenticatedUser->isAdmin())
                                 <li>
-                                    <a href="{!! route('backend.dashboard') !!}">
+                                    <a href="{!! route('admin.dashboard') !!}">
                                         Administration
                                     </a>
                                 </li>

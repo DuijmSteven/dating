@@ -13,7 +13,8 @@ class Article extends Model
     public $fillable = [
         'title',
         'body',
-        'status'
+        'status',
+        'meta_description'
     ];
 
     public static $statuses = [

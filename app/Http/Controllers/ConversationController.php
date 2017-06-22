@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Backend\Conversations\MessageCreateRequest;
+use App\Http\Requests\Admin\Conversations\MessageCreateRequest;
 use App\Managers\ConversationManager;
 use App\Http\Controllers\Controller;
 

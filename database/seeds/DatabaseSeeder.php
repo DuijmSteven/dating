@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ConversationsMessagesFlirtsSeeder::class);
         $this->call(ArticlesSeeder::class);
         $this->call(PaymentsSeeder::class);
-        $this->call(ModuleLayoutPartsSeeder::class);
+        $this->call(LayoutPartModuleSeeder::class);
 
         Model::reguard();
     }

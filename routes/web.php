@@ -78,10 +78,10 @@ Route::group([
 Route::group([
     'prefix' => 'flirts'
 ], function () {
-    Route::get('/{senderId}/{recipientId}', 'Frontend\FlirtController@send');
+    Route::get('{senderId}/{recipientId}', 'Frontend\FlirtController@send');
 });
 
-Route::get('cities/{countryCode}', 'Backend\UserController@getCities')
+Route::get('cities/{countryCode}', 'Admin\UserController@getCities')
     ->name('cities.retrieve');
 
 Route::group([
@@ -94,112 +94,112 @@ Route::group([
 });
 
 Route::group([
-    'prefix' => 'backend',
+    'prefix' => 'admin',
     'middleware' => ['admin']
 ], function () {
-    Route::get('/dashboard', 'Backend\DashboardController@dashboard')
-        ->name('backend.dashboard');
+    Route::get('dashboard', 'Admin\DashboardController@dashboard')
+        ->name('admin.dashboard');
 
     Route::group([
         'prefix' => 'bots'
     ], function () {
-        Route::get('/', 'Backend\BotController@index')
-            ->name('backend.bots.retrieve');
-        Route::get('/create', 'Backend\BotController@create')
-            ->name('backend.bots.create.get');
-        Route::post('/create', 'Backend\BotController@store')
-            ->name('backend.bots.store');
+        Route::get('/', 'Admin\BotController@index')
+            ->name('admin.bots.retrieve');
+        Route::get('/create', 'Admin\BotController@create')
+            ->name('admin.bots.create.get');
+        Route::post('/create', 'Admin\BotController@store')
+            ->name('admin.bots.store');
 
-        Route::get('/edit/{id}', 'Backend\BotController@edit')
-            ->name('backend.bots.edit.get');
-        Route::put('/edit/{id}', 'Backend\BotController@update')
-            ->name('backend.bots.update');
+        Route::get('/edit/{id}', 'Admin\BotController@edit')
+            ->name('admin.bots.edit.get');
+        Route::put('/edit/{id}', 'Admin\BotController@update')
+            ->name('admin.bots.update');
     });
 
     Route::group([
         'prefix' => 'peasants'
     ], function () {
-        Route::get('/', 'Backend\PeasantController@index')
-            ->name('backend.peasants.retrieve');
-        Route::get('/create', 'Backend\PeasantController@create')
-            ->name('backend.peasants.create.get');
-        Route::post('/create', 'Backend\PeasantController@store')
-            ->name('backend.peasants.store');
+        Route::get('/', 'Admin\PeasantController@index')
+            ->name('admin.peasants.retrieve');
+        Route::get('create', 'Admin\PeasantController@create')
+            ->name('admin.peasants.create.get');
+        Route::post('create', 'Admin\PeasantController@store')
+            ->name('admin.peasants.store');
 
-        Route::get('/edit/{id}', 'Backend\PeasantController@edit')
-            ->name('backend.peasants.edit.get');
-        Route::put('/edit/{id}', 'Backend\PeasantController@update')
-            ->name('backend.peasants.update');
+        Route::get('edit/{id}', 'Admin\PeasantController@edit')
+            ->name('admin.peasants.edit.get');
+        Route::put('edit/{id}', 'Admin\PeasantController@update')
+            ->name('admin.peasants.update');
     });
 
     Route::group([
         'prefix' => 'users'
     ], function () {
-        Route::delete('{userId}', 'Backend\UserController@destroy')
-            ->name('backend.users.destroy');
+        Route::delete('{userId}', 'Admin\UserController@destroy')
+            ->name('admin.users.destroy');
     });
 
     Route::group([
         'prefix' => 'conversations'
     ], function () {
-        Route::get('/', 'Backend\ConversationController@index')
-            ->name('backend.conversations.index');
-        Route::delete('/{conversationId}', 'Backend\ConversationController@destroy')
-            ->name('backend.conversations.destroy');
+        Route::get('/', 'Admin\ConversationController@index')
+            ->name('admin.conversations.index');
+        Route::delete('{conversationId}', 'Admin\ConversationController@destroy')
+            ->name('admin.conversations.destroy');
     });
 
     Route::group([
         'prefix' => 'notes'
     ], function () {
-        Route::delete('/{noteId}', 'Backend\ConversationNoteController@destroyNote')
-            ->name('backend.conversations.notes.destroy');
+        Route::delete('{noteId}', 'Admin\ConversationNoteController@destroyNote')
+            ->name('admin.conversations.notes.destroy');
     });
 
     Route::group([
         'prefix' => 'articles'
     ], function () {
-        Route::get('/', 'Backend\ArticleController@index')
-            ->name('backend.articles.index');
+        Route::get('/', 'Admin\ArticleController@index')
+            ->name('admin.articles.index');
 
-        Route::delete('/{articleId}', 'Backend\ArticleController@destroy')
-            ->name('backend.articles.destroy');
+        Route::delete('{articleId}', 'Admin\ArticleController@destroy')
+            ->name('admin.articles.destroy');
 
-        Route::get('/create', 'Backend\ArticleController@getCreate')
-            ->name('backend.articles.create');
-        Route::post('/', 'Backend\ArticleController@post')
-            ->name('backend.articles.post');
+        Route::get('create', 'Admin\ArticleController@getCreate')
+            ->name('admin.articles.create');
+        Route::post('/', 'Admin\ArticleController@post')
+            ->name('admin.articles.post');
 
-        Route::get('/{articleId}', 'Backend\ArticleController@getUpdate')
-            ->name('backend.articles.edit');
-        Route::put('/{articleId}', 'Backend\ArticleController@update')
-            ->name('backend.articles.update');
+        Route::get('{articleId}', 'Admin\ArticleController@getUpdate')
+            ->name('admin.articles.edit');
+        Route::put('{articleId}', 'Admin\ArticleController@update')
+            ->name('admin.articles.update');
     });
 
     Route::group([
         'prefix' => 'payments'
     ], function () {
-        Route::get('/', 'Backend\PaymentController@index')
-            ->name('backend.payments.index');
+        Route::get('/', 'Admin\PaymentController@index')
+            ->name('admin.payments.index');
     });
 
     Route::group([
         'prefix' => 'modules'
     ], function () {
-        Route::get('/', 'Backend\ModuleController@index')
-            ->name('backend.modules.index');
+        Route::get('/', 'Admin\ModuleController@index')
+            ->name('admin.modules.index');
 
-        Route::delete('/{moduleId}', 'Backend\ModuleController@destroy')
-            ->name('backend.modules.destroy');
+        Route::delete('{moduleId}', 'Admin\ModuleController@destroy')
+            ->name('admin.modules.destroy');
 
-        Route::get('/create', 'Backend\ModuleController@getCreate')
-            ->name('backend.modules.create');
-        Route::post('/', 'Backend\ModuleController@post')
-            ->name('backend.modules.post');
+        Route::get('create', 'Admin\ModuleController@getCreate')
+            ->name('admin.modules.create');
+        Route::post('', 'Admin\ModuleController@post')
+            ->name('admin.modules.post');
 
-        Route::get('/{moduleId}', 'Backend\ModuleController@getUpdate')
-            ->name('backend.modules.edit');
-        Route::put('/{moduleId}', 'Backend\ModuleController@update')
-            ->name('backend.modules.update');
+        Route::get('{moduleId}', 'Admin\ModuleController@getUpdate')
+            ->name('admin.modules.edit');
+        Route::put('{moduleId}', 'Admin\ModuleController@update')
+            ->name('admin.modules.update');
     });
 });
 
@@ -213,7 +213,7 @@ Route::group([
     Route::group([
         'prefix' => 'conversations'
     ], function () {
-        Route::get('{conversationId}', 'Backend\ConversationController@show')
+        Route::get('{conversationId}', 'Admin\ConversationController@show')
             ->name('operators_platform.conversations.show');
         Route::post('/', 'ConversationController@store')
             ->name('conversations.store');
@@ -221,8 +221,8 @@ Route::group([
         Route::group([
             'prefix' => 'notes'
         ], function () {
-            Route::post('/', 'Backend\ConversationNoteController@postNote')
-                ->name('backend.conversations.notes.store');
+            Route::post('/', 'Admin\ConversationNoteController@postNote')
+                ->name('admin.conversations.notes.store');
         });
     });
 });

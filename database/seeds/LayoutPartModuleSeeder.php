@@ -1,14 +1,15 @@
 <?php
 
+use App\LayoutPart;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Faker\Generator as Faker;
 
 /**
- * Class ArticlesSeeder
+ * Class LayoutPartModuleSeeder
  */
-class ArticlesSeeder extends Seeder
+class LayoutPartModuleSeeder extends Seeder
 {
     /**
      * ArticlesSeeder constructor.
@@ -27,15 +28,24 @@ class ArticlesSeeder extends Seeder
         Model::unguard();
         //disable foreign key check for this connection before running seeders
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        DB::table('articles')->truncate();
+        DB::table('layout_part_module')->truncate();
 
-        $articleAmount = 50;
+        $layoutParts = LayoutPart::all()->toArray();
 
-        factory(App\Article::class, $articleAmount)->create();
+        $moduleAmountToAssign = rand(2, 4);
+
+        foreach ($layoutParts as $layoutPart) {
+            for ($i = 0; $i < $moduleAmountToAssign; $i++) {
+                factory(App\LayoutPartModule::class)->create([
+                    'layout_part_id' => $layoutPart['id'],
+                    'module_id' => min($i + 1, 3),
+                    'priority' => $i + 1
+                ]);
+            }
+        }
 
         // supposed to only apply to a single connection and reset it's self
         // but I like to explicitly undo what I've done for clarity
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-
     }
 }
