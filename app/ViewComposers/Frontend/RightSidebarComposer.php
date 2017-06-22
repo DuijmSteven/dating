@@ -2,14 +2,13 @@
 
 namespace App\ViewComposers\Frontend;
 
-use App\Module;
 use Illuminate\View\View;
 
 /**
  * Class RightSidebarComposer
  * @package App\ViewComposers\Frontend
  */
-class RightSidebarComposer
+class RightSidebarComposer extends LayoutPartComposer
 {
     /** @var string */
     private $rightSidebarHtml;
@@ -19,15 +18,7 @@ class RightSidebarComposer
      */
     public function __construct()
     {
-        $modules = Module::with('layoutParts')
-            ->whereHas('layoutParts', function ($query) {
-                $query->where('name', 'right-sidebar');
-            })
-            ->orderBy('layout_part_module.priority', 'asc')
-            ->get()
-            ->toArray();
-
-        $this->rightSidebarHtml = \View::make('frontend.components.user-activity')->render();
+        $this->rightSidebarHtml = $this->layoutPartHtml('right-sidebar');
     }
 
     /**

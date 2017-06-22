@@ -8,7 +8,7 @@ use Illuminate\View\View;
  * Class LeftSidebarComposer
  * @package App\ViewComposers\Frontend
  */
-class LeftSidebarComposer
+class LeftSidebarComposer extends LayoutPartComposer
 {
     /** @var string */
     private $leftSidebarHtml;
@@ -18,7 +18,7 @@ class LeftSidebarComposer
      */
     public function __construct()
     {
-        $this->leftSidebarHtml = \View::make('frontend.components.user-activity')->render();
+        $this->leftSidebarHtml = $this->layoutPartHtml('left-sidebar');
     }
 
     /**

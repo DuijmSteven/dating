@@ -32,17 +32,10 @@ class CreateModulesTable extends Migration
             $modules[] = $moduleName;
         }
 
-        $descriptions = [
-            'online_users' => 'Description 1',
-            'user_account' => 'Description 2',
-            'shoutbox' => 'Description 3',
-        ];
-
         foreach ($modules as $module) {
             Module::insert(
                 [
-                    'name' => $module,
-                    'description' => $descriptions[$module]
+                    'name' => $module
                 ]
             );
         }
