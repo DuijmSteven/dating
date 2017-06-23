@@ -2,7 +2,6 @@
 
 namespace App\ViewComposers\Frontend;
 
-use App\Managers\UserManager;
 use Illuminate\View\View;
 
 /**
@@ -14,16 +13,12 @@ class LeftSidebarComposer extends LayoutPartComposer
     /** @var string */
     private $leftSidebarHtml;
 
-    /** @var UserManager */
-    private $userManager;
-
     /**
      * LeftSidebarComposer constructor.
      */
     public function __construct()
     {
         $this->leftSidebarHtml = $this->layoutPartHtml('left-sidebar');
-        //parent::__construct();
     }
 
     /**

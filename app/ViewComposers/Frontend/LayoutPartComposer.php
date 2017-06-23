@@ -38,7 +38,6 @@ class LayoutPartComposer
             switch ($module) {
                 case 'online-users':
                     $onlineUsers = (new UserManager(new User(), new StorageManager()))->latestOnline(20);
-                    dd($onlineUsers);
 
                     $viewData = [
                         'onlineUsers' => $onlineUsers->slice(0, 5)
@@ -48,7 +47,10 @@ class LayoutPartComposer
                     $viewData = [];
             }
 
-            $layoutPartHtml = $layoutPartHtml . '<div class="Module Module_' . $layoutPart . '">' . \View::make('frontend.modules.' . $module, $viewData)->render() . '</div>';
+            $layoutPartHtml = $layoutPartHtml .
+                '<div class="Module Module_' . $layoutPart . '">' .
+                    \View::make('frontend.modules.' . $module, $viewData)->render() .
+                '</div>';
         }
 
         return $layoutPartHtml;
