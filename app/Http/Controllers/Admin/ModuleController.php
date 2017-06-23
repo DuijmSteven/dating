@@ -34,6 +34,44 @@ class ModuleController extends Controller
     }
 
     /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showLeftSidebar()
+    {
+        $modules = Module::orderBy('name', 'desc')->get()->toArray();
+
+        return view(
+            'admin.modules.left-sidebar',
+            [
+                'title' => 'Modules Overview - ' . \MetaConstants::$siteName,
+                'headingLarge' => 'Modules',
+                'headingSmall' => 'Left Sidebar',
+                'carbonNow' => Carbon::now(),
+                'modules' => $modules
+            ]
+        );
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showRightSidebar()
+    {
+        $modules = Module::orderBy('name', 'desc');
+
+        return view(
+            'admin.modules.right-sidebar',
+            [
+                'title' => 'Modules Overview - ' . \MetaConstants::$siteName,
+                'headingLarge' => 'Modules',
+                'headingSmall' => 'Right Sidebar',
+                'carbonNow' => Carbon::now(),
+                'modules' => $modules
+            ]
+        );
+    }
+
+    /**
      * @param int $moduleId
      * @return \Illuminate\Http\RedirectResponse
      */

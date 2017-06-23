@@ -187,6 +187,10 @@ Route::group([
     ], function () {
         Route::get('/', 'Admin\ModuleController@index')
             ->name('admin.modules.index');
+        Route::get('/left-sidebar', 'Admin\ModuleController@showLeftSidebar')
+            ->name('admin.modules.left-sidebar.show');
+        Route::get('/right-sidebar', 'Admin\ModuleController@showRightSidebar')
+            ->name('admin.modules.right-sidebar.show');
 
         Route::delete('{moduleId}', 'Admin\ModuleController@destroy')
             ->name('admin.modules.destroy');

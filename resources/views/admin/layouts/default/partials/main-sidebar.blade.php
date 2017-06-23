@@ -185,6 +185,18 @@
                                 Overview
                             </a>
                         </li>
+                        <li class="{!! \Request::route()->getName() == 'admin.modules.left-sidebar.show' ? 'active' : '' !!}">
+                            <a href="{!! route('admin.modules.left-sidebar.show') !!}">
+                                <i class="fa fa-list"></i>
+                                Left sidebar
+                            </a>
+                        </li>
+                        <li class="{!! \Request::route()->getName() == 'admin.modules.right-sidebar.show' ? 'active' : '' !!}">
+                            <a href="{!! route('admin.modules.right-sidebar.show') !!}">
+                                <i class="fa fa-list"></i>
+                                Right sidebar
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="treeview">

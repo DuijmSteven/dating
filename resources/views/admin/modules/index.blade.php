@@ -15,7 +15,7 @@
             <div class="box">
                 <div class="box-header">
                     <div class="pull-left">
-                        <h3 class="box-title">Articles (Total: <strong>{!! $modules->total() !!}</strong>)</h3>
+                        <h3 class="box-title">Modules (Total: <strong>{!! $modules->total() !!}</strong>)</h3>
                     </div>
                     <a class="pull-right btn btn-success" href="{{ route('admin.articles.create') }}">Create article</a>
                 </div>
