@@ -18,7 +18,7 @@ class LayoutPartComposer
         $modules = $this->getLayoutPartModules($layoutPart);
 
         foreach ($modules as $module) {
-            $layoutPartHtml = $layoutPartHtml . '<div class="Module Module_' . $layoutPart . '">' . \View::make('frontend.components.user-activity')->render() . '</div>';
+            $layoutPartHtml = $layoutPartHtml . '<div class="Module Module_' . $layoutPart . '">' . \View::make('frontend.modules.' . $module)->render() . '</div>';
         }
 
         return $layoutPartHtml;
