@@ -5135,3 +5135,7 @@ table .action-buttons .btn {
 .no-wrap {
   white-space: nowrap;
 }
+
+.main-header .logo img {
+  width: 150px;
+}
