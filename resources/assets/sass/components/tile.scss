@@ -1,11 +1,3 @@
-$tileHeading: (
-    'padding': 15
-);
-
-$tileBody: (
-    'padding': 15
-);
-
 .Tile {
     margin-bottom: 20px;
     border-radius: $borderRadius + px;
@@ -15,6 +7,10 @@ $tileBody: (
 
     &__heading {
         padding: map_get($tileHeading, padding) + px;
+        font-size: map_get($tileHeading, fontSize) + px;
+        color: map_get($tileHeading, fontColor);
+        text-align: map_get($tileHeading, textAlign);
+        border-bottom: map_get($tileHeading, borderWidth) + px solid $borderColor;
     }
 
     &__body {

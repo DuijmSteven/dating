@@ -23,9 +23,10 @@ class HomeController extends FrontendController
      */
     public function index()
     {
+        $this->setupSidebars(true);
+
         return view('frontend.home', [
             'title' => 'Homepage - ' . config('app.name'),
-            'rightSideBar' => false,
         ]);
     }
 
@@ -40,7 +41,6 @@ class HomeController extends FrontendController
             'frontend.contact',
             [
                 'title' => 'Contact - ' . config('app.name'),
-                'hasRightSidebar' => true
             ]
         );
     }

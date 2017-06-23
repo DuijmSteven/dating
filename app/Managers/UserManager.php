@@ -72,11 +72,10 @@ class UserManager
         DB::commit();
     }
 
-
     /**
      * @param array $userImages
      * @param int $userId
-     * @return array
+     * @throws \Exception
      */
     private function persistImages(array $userImages, $userId = 1)
     {
@@ -109,6 +108,7 @@ class UserManager
     /**
      * @param UploadedFile $userProfileImage
      * @param int $userId
+     * @throws \Exception
      */
     private function persistProfileImage(UploadedFile $userProfileImage, int $userId)
     {
@@ -252,13 +252,22 @@ class UserManager
      * Retrieves collection of users that were online in the most recent
      * specified amount of minutes
      *
-     * @param $minutes
+     * @param int $minutes
+     * @param string $gender
      * @return User Collection
+     * @internal param $
      */
-    public function latestOnline(int $minutes)
+    public function latestOnline(int $minutes, string $gender = 'any')
     {
         $latestIds = Activity::users($minutes)->pluck('user_id')->toArray();
 
+        $query = User::with('meta')->whereIn('id', $latestIds);
+
+        if ($gender !== 'any') {
+            $query = $query->whereHas('meta', function ($query) {
+                $query->where('gender', \UserConstants::selectableField('gender', 'common', 'array_flip')[$gender]);
+            });
+        }
         return User::with('meta')->whereIn('id', $latestIds)->limit(\UserConstants::MAX_AMOUNT_ONLINE_TO_SHOW)->get();
     }
 

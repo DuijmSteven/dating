@@ -17,3 +17,6 @@ $fa-font-path : "node_modules/font-awesome/fonts" !default;
 // Components
 @import "components/tile";
 @import "components/user-activity";
+
+//Modules
+@import "modules/online-users";

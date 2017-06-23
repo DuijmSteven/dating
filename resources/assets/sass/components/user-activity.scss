@@ -9,7 +9,7 @@
         -webkit-align-items: center;
         align-items: center;
 
-        border-bottom: $borderWidth + px solid $borderColor;
+        text-align: map_get($userActivityHeading, textAlign);
     }
 
     &__profile-image {

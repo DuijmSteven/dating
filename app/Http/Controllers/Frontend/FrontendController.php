@@ -10,10 +10,9 @@ use App\Http\Controllers\Controller;
  */
 class FrontendController extends Controller
 {
-    private $leftSidebar;
-    private $rightSidebar;
-    private $sidebarCount;
-    private $test;
+    protected $leftSidebar;
+    protected $rightSidebar;
+    protected $sidebarCount;
 
     /**
      * Controller constructor.
@@ -28,7 +27,7 @@ class FrontendController extends Controller
      * @param bool $leftSidebar
      * @param bool $rightSidebar
      */
-    private function setupSidebars(bool $leftSidebar = true, bool $rightSidebar = true): void
+    protected function setupSidebars(bool $leftSidebar = false, bool $rightSidebar = true): void
     {
         $this->leftSidebar = $leftSidebar;
         $this->rightSidebar = $rightSidebar;
@@ -42,6 +41,5 @@ class FrontendController extends Controller
         \View::share('leftSidebar', $this->leftSidebar);
         \View::share('rightSidebar', $this->rightSidebar);
         \View::share('sidebarCount', $this->sidebarCount);
-        \View::share('test', $this->test);
     }
 }

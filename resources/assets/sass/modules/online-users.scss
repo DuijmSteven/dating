@@ -1,0 +1,39 @@
+.Online-users {
+    &__item {
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+        -webkit-justify-content: flex-start;
+        justify-content: flex-start;
+        -webkit-align-items: center;
+        align-items: center;
+
+        text-align: map_get($onlineUsersItem, textAlign);
+        margin-bottom: map_get($onlineUsersItem, marginBottom) + px;
+
+        &:last-of-type {
+            margin-bottom: 0
+        }
+    }
+
+    &__profile-image {
+        -webkit-flex: 1 0 0;
+        flex: 1 0 0;
+
+        img {
+            width: 85%;
+            border-radius: 50%;
+        }
+
+        margin-right: map_get($onlineUsersProfileImage, marginRight) + px;
+    }
+
+    &__username {
+        -webkit-flex: 5 0 0;
+        flex: 5 0 0;
+
+        font-size: map_get($onlineUsersItem, fontSize) + px;
+    }
+}
+

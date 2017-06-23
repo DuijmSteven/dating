@@ -20,9 +20,9 @@ class UserController extends FrontendController
     private $userManager;
 
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * UserController constructor.
+     * @param User $user
+     * @param UserManager $userManager
      */
     public function __construct(User $user, UserManager $userManager)
     {
@@ -48,8 +48,7 @@ class UserController extends FrontendController
             array_merge(
                 $viewData,
                 [
-                    'title' => 'Profiles',
-                    'hasLeftSidebar' => true
+                    'title' => 'Profiles'
                 ]
             )
         );
@@ -58,8 +57,9 @@ class UserController extends FrontendController
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param $userId
      * @return \Illuminate\Http\Response
+     * @internal param $
      */
     public function show($userId)
     {

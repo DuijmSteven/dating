@@ -2,13 +2,30 @@
 
 namespace App\ViewComposers\Frontend;
 
+use App\Managers\StorageManager;
+use App\Managers\UserManager;
+use App\User;
+
 /**
  * Class LayoutPartComposer
  * @package App\ViewComposers\Frontend
  */
 class LayoutPartComposer
 {
+    /** @var UserManager */
+    private $userManager;
+
     /**
+     * LayoutPartComposer constructor.
+     * @param UserManager $userManager
+     */
+    public function __construct(UserManager $userManager)
+    {
+        $this->userManager = $userManager;
+    }
+
+    /**
+     * @param string $layoutPart
      * @return string
      */
     protected function layoutPartHtml(string $layoutPart)
@@ -18,7 +35,20 @@ class LayoutPartComposer
         $modules = $this->getLayoutPartModules($layoutPart);
 
         foreach ($modules as $module) {
-            $layoutPartHtml = $layoutPartHtml . '<div class="Module Module_' . $layoutPart . '">' . \View::make('frontend.modules.' . $module)->render() . '</div>';
+            switch ($module) {
+                case 'online-users':
+                    $onlineUsers = (new UserManager(new User(), new StorageManager()))->latestOnline(20);
+                    dd($onlineUsers);
+
+                    $viewData = [
+                        'onlineUsers' => $onlineUsers->slice(0, 5)
+                    ];
+                    break;
+                default:
+                    $viewData = [];
+            }
+
+            $layoutPartHtml = $layoutPartHtml . '<div class="Module Module_' . $layoutPart . '">' . \View::make('frontend.modules.' . $module, $viewData)->render() . '</div>';
         }
 
         return $layoutPartHtml;

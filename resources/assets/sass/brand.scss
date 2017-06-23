@@ -17,13 +17,43 @@ $tileBgColor: $white;
 $bodyBgColor: $earlGrey;
 $borderColor: $bodyBgColor;
 
-$borderWidth: 1;
-
 // layout tweaks
 $borderRadius: 2;
+$borderWidth: 1;
 
 // font tweaks
 $fontSize: (
     'body-mobile': 16,
     'body-desktop': 17
 );
+
+// ---------------- Components & Modules ---------------
+
+// Tile
+$tileHeading: (
+    'padding': 15,
+    'fontSize': 14,
+    'fontColor': $mainColor,
+    'textAlign': center,
+    'borderWidth': 2
+);
+
+$tileBody: (
+    'padding': 15
+);
+
+// User-activity
+$userActivityHeading: (
+    'textAlign': left
+);
+
+// Online-users
+$onlineUsersItem: (
+    'textAlign': left,
+    'fontSize': 12,
+    'marginBottom': 10,
+);
+
+$onlineUsersProfileImage: (
+    'marginRight': 5
+)

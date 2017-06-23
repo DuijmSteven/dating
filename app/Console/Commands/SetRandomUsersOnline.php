@@ -23,15 +23,15 @@ class SetRandomUsersOnline extends Command
 
     /** @var UserManager  */
     private $userManager;
+
+
     /**
-     * Create a new command instance.
-     *
-     * @return void
+     * SetRandomUsersOnline constructor.
+     * @param UserManager $userManager
      */
     public function __construct(UserManager $userManager)
     {
         parent::__construct();
-
         $this->userManager = $userManager;
     }
 
