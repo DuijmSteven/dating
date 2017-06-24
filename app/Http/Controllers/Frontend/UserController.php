@@ -26,9 +26,9 @@ class UserController extends FrontendController
      */
     public function __construct(User $user, UserManager $userManager)
     {
+        parent::__construct();
         $this->user = $user;
         $this->userManager = $userManager;
-        parent::__construct();
     }
 
     /**
@@ -39,7 +39,10 @@ class UserController extends FrontendController
     public function index()
     {
         $viewData = [
-            'users' => $this->user->with(['meta', 'roles'])->paginate(15),
+            'users' => $this->user->with(['meta', 'roles'])->whereHas('roles', function ($query) {
+                $query->where('name', 'peasant');
+                $query->orWhere('name', 'bot');
+            })->paginate(15),
             'carbonNow' => Carbon::now()
         ];
 
