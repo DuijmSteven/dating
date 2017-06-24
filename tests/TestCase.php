@@ -14,6 +14,32 @@ abstract class TestCase extends BaseTestCase
      */
     protected $baseUrl = 'http://localhost';
 
+    public function setUp()
+    {
+        parent::setUp();
+
+        factory(\App\User::class, 2)
+            ->create()
+            ->each(function (\App\User $user) {
+                $user->meta()->save(factory(\App\UserMeta::class)->make());
+                $user->roles()->attach(1);
+            });
+
+        factory(\App\User::class, 20)
+            ->create()
+            ->each(function (\App\User $user) {
+                $user->meta()->save(factory(\App\UserMeta::class)->make());
+                $user->roles()->attach(2);
+            });
+
+        factory(\App\User::class, 20)
+            ->create()
+            ->each(function (\App\User $user) {
+                $user->meta()->save(factory(\App\UserMeta::class)->make());
+                $user->roles()->attach(3);
+            });
+    }
+
     /**
      * Creates the application.
      *

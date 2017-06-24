@@ -19,7 +19,7 @@ class HomeControllerTest extends TestCase
     /** @test */
     public function showsHomepage()
     {
-        $this->withoutMiddleware();
+        $this->be(\App\User::find(1));
         $response = $this->get(url('/'));
         $response->assertSee('Homepage');
     }
@@ -27,8 +27,9 @@ class HomeControllerTest extends TestCase
     /** @test */
     public function showsContactPage()
     {
-        $this->withoutMiddleware();
+        $this->be(\App\User::find(1));
         $response = $this->get(url('/contact'));
         $response->assertSee('Contact');
+        $response->assertSee('Contact -');
     }
 }

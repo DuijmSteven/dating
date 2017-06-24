@@ -94,6 +94,13 @@ $factory->define(App\UserAccount::class, function () {
     ];
 });
 
+$factory->define(App\Role::class, function () {
+    $roleNames = \App\Role::all()->pluck('name');
+    return [
+        'name' => $roleNames[rand(0, count($roleNames) - 1)],
+    ];
+});
+
 $factory->define(App\LayoutPartModule::class, function () {
     $moduleIds = Module::all()->pluck('id')->toArray();
     $layoutPartIds = LayoutPart::all()->pluck('id')->toArray();

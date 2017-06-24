@@ -85,6 +85,9 @@ class User extends Authenticatable
         return $this->createAt;
     }
 
+    /**
+     * @return mixed
+     */
     public function getUpdatedAt()
     {
         return $this->updated_at;
