@@ -9,6 +9,13 @@ class HomeControllerTest extends TestCase
 {
     use DatabaseMigrations;
 
+    public function setUp()
+    {
+        parent::setUp();
+        $this->createUsers();
+
+    }
+
     /** @test */
     public function unauthenticatedRedirectsToLogin()
     {
@@ -20,6 +27,7 @@ class HomeControllerTest extends TestCase
     public function showsHomepage()
     {
         $this->be(\App\User::find(1));
+
         $response = $this->get(url('/'));
         $response->assertSee('Homepage');
     }
@@ -28,6 +36,7 @@ class HomeControllerTest extends TestCase
     public function showsContactPage()
     {
         $this->be(\App\User::find(1));
+
         $response = $this->get(url('/contact'));
         $response->assertSee('Contact');
         $response->assertSee('Contact -');

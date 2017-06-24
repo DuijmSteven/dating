@@ -14,32 +14,6 @@ abstract class TestCase extends BaseTestCase
      */
     protected $baseUrl = 'http://localhost';
 
-    public function setUp()
-    {
-        parent::setUp();
-
-        factory(\App\User::class, 2)
-            ->create()
-            ->each(function (\App\User $user) {
-                $user->meta()->save(factory(\App\UserMeta::class)->make());
-                $user->roles()->attach(1);
-            });
-
-        factory(\App\User::class, 20)
-            ->create()
-            ->each(function (\App\User $user) {
-                $user->meta()->save(factory(\App\UserMeta::class)->make());
-                $user->roles()->attach(2);
-            });
-
-        factory(\App\User::class, 20)
-            ->create()
-            ->each(function (\App\User $user) {
-                $user->meta()->save(factory(\App\UserMeta::class)->make());
-                $user->roles()->attach(3);
-            });
-    }
-
     /**
      * Creates the application.
      *
@@ -54,5 +28,20 @@ abstract class TestCase extends BaseTestCase
         $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
         return $app;
+    }
+
+    /**
+     * @param int $amount
+     * @param int $roleId
+     * @return mixed
+     */
+    protected function createUsers(int $amount = 1, int $roleId = 2)
+    {
+        return factory(\App\User::class, $amount)
+            ->create()
+            ->each(function (\App\User $user) use ($roleId) {
+                $user->meta()->save(factory(\App\UserMeta::class)->make());
+                $user->roles()->attach($roleId);
+            });
     }
 }
