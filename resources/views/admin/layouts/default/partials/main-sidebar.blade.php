@@ -185,13 +185,13 @@
                                 Overview
                             </a>
                         </li>
-                        <li class="{!! \Request::route()->getName() == 'admin.modules.left-sidebar.show' ? 'active' : '' !!}">
+                        <li class="{!! \Request::route()->getName() == 'admin.modules.layout-part.show' && \Request::route()->parameter('layoutPartId') == 1 ? 'active' : '' !!}">
                             <a href="{!! route('admin.modules.layout-part.show', ['layoutPartId' => 1]) !!}">
                                 <i class="fa fa-list"></i>
                                 Left sidebar
                             </a>
                         </li>
-                        <li class="{!! \Request::route()->getName() == 'admin.modules.right-sidebar.show' ? 'active' : '' !!}">
+                        <li class="{!! \Request::route()->getName() == 'admin.modules.layout-part.show' && \Request::route()->parameter('layoutPartId') == 2 ? 'active' : '' !!}">
                             <a href="{!! route('admin.modules.layout-part.show', ['layoutPartId' => 2]) !!}">
                                 <i class="fa fa-list"></i>
                                 Right sidebar
