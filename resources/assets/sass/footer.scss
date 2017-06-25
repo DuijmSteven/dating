@@ -1,0 +1,8 @@
+.Footer {
+    background-color: $footerBgColor;
+    color: $white;
+
+    &__logo img {
+        height: map_get($footerLogo, height);
+    }
+}

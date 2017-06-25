@@ -6,7 +6,7 @@
         @foreach($onlineUsers as $user)
             <div class="Online-users__item">
                 <div class="Online-users__profile-image">
-                    <img src="http://lorempixel.com/100/100/people" alt="">
+                    <img src="{!! \StorageHelper::profileImageUrl($user, true) !!}" alt="">
                 </div>
                 <div class="Online-users__username">
                     {{ $user->username }}

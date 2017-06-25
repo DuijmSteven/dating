@@ -3,17 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\LayoutParts\LayoutPartModulesUpdateRequest;
 use App\Http\Requests\Admin\Modules\ModuleUpdateRequest;
 use App\LayoutPart;
 use App\Module;
 use App\Http\Requests\Admin\Modules\ModuleCreateRequest;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Input;
 
 /**
- * Class ModuleController
+ * Class LayoutPartController
  * @package App\Http\Controllers\Admin
  */
-class ModuleController extends Controller
+class LayoutPartController extends Controller
 {
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -35,39 +37,37 @@ class ModuleController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param LayoutPartModulesUpdateRequest $request
+     * @param int $layoutPartId
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function showLayoutPart(int $layoutPartId)
+    public function updateModules(LayoutPartModulesUpdateRequest $request, int $layoutPartId)
     {
-        $layoutPart = LayoutPart::find($layoutPartId);
-
-        if (!($layoutPart instanceof LayoutPart)) {
-            $alerts = [
-                [
-                    'type' => 'info',
-                    'message' => 'No layout part with that ID exists'
-                ]
+        $modules = [];
+        foreach ($request->get('modules') as $moduleId => $module) {
+            $modules[$moduleId] = [
+                'active' => isset($module['active']) ? 1 : 0,
+                'priority' => $module['priority']
             ];
-
-            return redirect()->back()->with('alerts', $alerts);
         }
 
-        $filterLeftSidebar = $this->filterLayoutPart($layoutPartId);
+        foreach ($modules as $moduleId => $module) {
+            if ($module['active']) {
+                LayoutPart::findOrFail($layoutPartId)->modules()->sync([$moduleId], false);
+                LayoutPart::findOrFail($layoutPartId)->modules()->updateExistingPivot($moduleId, [
+                    'priority' => $module['priority']
+                ]);
+            } else {
+                LayoutPart::findOrFail($layoutPartId)->modules()->detach($moduleId);
+            }
+        }
 
-        $modules = Module::with(['layoutParts' => $filterLeftSidebar])->orderBy('name', 'asc')->get();
-        $layoutPart = LayoutPart::find($layoutPartId);
+        $alerts[] = [
+            'type' => 'success',
+            'message' => 'The modules were updated successfully.'
+        ];
 
-        return view(
-            'admin.modules.layout-part',
-            [
-                'title' => ' - ' . \MetaConstants::$siteName,
-                'headingLarge' => 'Modules',
-                'headingSmall' => ucfirst(str_replace('-', ' ', $layoutPart->name)),
-                'carbonNow' => Carbon::now(),
-                'modules' => $modules,
-                'layoutPart' => $layoutPart
-            ]
-        );
+        return redirect()->back()->with('alerts', $alerts);
     }
 
     /**
@@ -196,10 +196,11 @@ class ModuleController extends Controller
     /**
      * @return \Closure
      */
-    private function filterLayoutPart(string $layoutPartId): \Closure
+    private function filterModuleName(string $moduleName): \Closure
     {
-        return function ($query) use ($layoutPartId) {
-            $query->where('id', $layoutPartId);
+        $filterModuleName = function ($query) use ($moduleName) {
+            $query->where('name', $moduleName);
         };
+        return $filterModuleName;
     }
 }

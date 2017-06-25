@@ -1,0 +1,56 @@
+.User-account {
+    &__heading {
+       padding: 0;
+    }
+
+    &__profile-image {
+        padding-top: map_get($userAccountProfileImage, padding-top) + px;
+
+        img {
+            width: map_get($userAccountProfileImage, width) + px;
+            height: map_get($userAccountProfileImage, height) + px;
+            border-radius: map_get($userAccountProfileImage, border-radius);
+        }
+    }
+
+    &__username {
+        padding-top: map_get($userAccountUsername, padding-top) + px;
+        padding-bottom: map_get($userAccountUsername, padding-bottom) + px;
+
+        font-size: map_get($userAccountUsername, fontSize) + px;
+        color: map_get($userAccountUsername, fontColor);
+    }
+
+    &__body {
+        padding: 10px 0;
+    }
+
+    &__item {
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+        -webkit-align-items: center;
+        align-items: center;
+
+        &__icon {
+            -webkit-flex: 1 0 0;
+            flex: 1 0 0;
+            -webkit-justify-content: center;
+            justify-content: center;
+            text-align: center;
+
+            color: $slate;
+        }
+
+        &__text {
+            -webkit-flex: 4 0 0;
+            flex: 4 0 0;
+            -webkit-justify-content: flex-start;
+            justify-content: flex-start;
+
+            font-size: 12px;
+        }
+    }
+}
+

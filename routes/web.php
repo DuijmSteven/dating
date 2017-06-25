@@ -187,11 +187,8 @@ Route::group([
     ], function () {
         Route::get('/', 'Admin\ModuleController@index')
             ->name('admin.modules.index');
-        Route::get('/left-sidebar', 'Admin\ModuleController@showLeftSidebar')
-            ->name('admin.modules.left-sidebar.show');
-        Route::get('/right-sidebar', 'Admin\ModuleController@showRightSidebar')
-            ->name('admin.modules.right-sidebar.show');
-
+        Route::get('/layout-part/{layoutPartId}', 'Admin\ModuleController@showLayoutPart')
+            ->name('admin.modules.layout-part.show');
         Route::delete('{moduleId}', 'Admin\ModuleController@destroy')
             ->name('admin.modules.destroy');
 
@@ -204,6 +201,14 @@ Route::group([
             ->name('admin.modules.edit');
         Route::put('{moduleId}', 'Admin\ModuleController@update')
             ->name('admin.modules.update');
+    });
+
+
+    Route::group([
+        'prefix' => 'layout-parts'
+    ], function () {
+        Route::post('update/{layoutPartId}', 'Admin\LayoutPartController@updateModules')
+            ->name('admin.layout-parts.modules.update');
     });
 });
 

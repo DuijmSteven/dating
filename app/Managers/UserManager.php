@@ -224,9 +224,9 @@ class UserManager
      */
     public function setRandomUsersOnline($userAmount)
     {
-        $randomUsers = $this->user->with('roles')
+        $randomUsers = $this->user->with(['roles', 'meta'])
             ->whereHas('roles', function ($query) {
-                $query->where('id', 3);
+                $query->whereIn('id', [2, 3]);
             })
             ->orderByRaw('RAND()')->take($userAmount)
             ->get();

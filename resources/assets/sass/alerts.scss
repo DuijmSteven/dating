@@ -1,0 +1,45 @@
+.alert {
+    .close {
+        text-decoration: none
+    }
+}
+
+.alert-success {
+    background-color: map_get($alertSuccess, bgColor);
+    color: map_get($alertSuccess, fontColor);
+    border: 1px solid map_get($alertSuccess, borderColor);
+
+    .close {
+        color: map_get($alertSuccess, dismissColor)
+    }
+}
+
+.alert-info {
+    background-color: map_get($alertInfo, bgColor);
+    color: map_get($alertInfo, fontColor);
+    border: 1px solid map_get($alertInfo, borderColor);
+
+    .close {
+        color: map_get($alertInfo, dismissColor)
+    }
+}
+
+.alert-warning {
+    background-color: map_get($alertWarning, bgColor);
+    color: map_get($alertWarning, fontColor);
+    border: 1px solid map_get($alertWarning, borderColor);
+
+    .close {
+        color: map_get($alertWarning, dismissColor)
+    }
+}
+
+.alert-danger {
+    background-color: map_get($alertDanger, bgColor);
+    color: map_get($alertDanger, fontColor);
+    border: 1px solid map_get($alertDanger, borderColor);
+
+    .close {
+        color: map_get($alertDanger, dismissColor)
+    }
+}

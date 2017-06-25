@@ -17,7 +17,8 @@
         flex: 1 0 0;
 
         img {
-            width: 85%;
+            width: map_get($userActivityProfileImage, width) + px;
+            height: map_get($userActivityProfileImage, height) + px;
             border-radius: 50%;
         }
     }

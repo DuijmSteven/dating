@@ -6,6 +6,8 @@
     @include('frontend.layouts.default.partials.header')
 
     <div class="container">
+        @include('frontend.layouts.default.partials.alerts')
+
         @if(isset($sidebarCount) && $sidebarCount > 0)
             <div class="row">
                 @if($leftSidebar)
@@ -27,9 +29,9 @@
         @else
             @include('frontend.layouts.default.partials.main')
         @endif
-        
-        @include('frontend.layouts.default.partials.footer')
     </div>
+
+    @include('frontend.layouts.default.partials.footer')
 
     <script>
         /*

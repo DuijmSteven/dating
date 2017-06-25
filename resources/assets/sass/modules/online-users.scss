@@ -1,4 +1,11 @@
 .Online-users {
+    &__heading {
+        .fa-circle {
+            font-size: 10px;
+            color: #00a65a;
+        }
+    }
+
     &__item {
         display: -webkit-flex;
         display: flex;

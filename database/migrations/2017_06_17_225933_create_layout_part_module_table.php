@@ -19,7 +19,7 @@ class CreateLayoutPartModuleTable extends Migration
         Schema::create('layout_part_module', function (Blueprint $table) {
             $table->integer('layout_part_id')->unsigned();
             $table->integer('module_id')->unsigned();
-            $table->smallInteger('priority')->unsigned();
+            $table->smallInteger('priority')->unsigned()->default(100);
         });
     }
 

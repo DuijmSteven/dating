@@ -186,13 +186,13 @@
                             </a>
                         </li>
                         <li class="{!! \Request::route()->getName() == 'admin.modules.left-sidebar.show' ? 'active' : '' !!}">
-                            <a href="{!! route('admin.modules.left-sidebar.show') !!}">
+                            <a href="{!! route('admin.modules.layout-part.show', ['layoutPartId' => 1]) !!}">
                                 <i class="fa fa-list"></i>
                                 Left sidebar
                             </a>
                         </li>
                         <li class="{!! \Request::route()->getName() == 'admin.modules.right-sidebar.show' ? 'active' : '' !!}">
-                            <a href="{!! route('admin.modules.right-sidebar.show') !!}">
+                            <a href="{!! route('admin.modules.layout-part.show', ['layoutPartId' => 2]) !!}">
                                 <i class="fa fa-list"></i>
                                 Right sidebar
                             </a>
