@@ -1,18 +1,25 @@
 // colors
 $slate: #4f5d75;
+$slateLight: #617493;
 $dark: #2d3142;
 $tomato: #ef4f2b;
+$tomatoLight: #ee796d;
 $salmon: #f3a69e;
 $sugar: #e6e6e6;
+$lightGrey: #e5e5e5;
 $earlGrey: #f3f3f3;
 $white: #fff;
 $black: #333;
 $light-teal: #b6e9df;
 $topaz: #1abc9c;
-$sky-blue: #9acced;
-$dark-sky-blue: #3498db;
+$topazLight: #25d8b4;
+$skyBlue: #9acced;
+$darkSkyBlue: #3498db;
+$babyBlue: #67b2e5;
+$babyBlueLight: #9acced;
 $squash: #f39c12;
-$squash-light: #f9ce89;
+$squashLight: #f7b54e;
+$yellowLight: #f9ce89;
 
 // brand colors
 $mainColor: $slate;
@@ -117,14 +124,14 @@ $alertSuccess: (
 );
 
 $alertInfo: (
-    'bgColor': $sky-blue,
-    'fontColor': $dark-sky-blue,
-    'borderColor': $dark-sky-blue,
-    'dismissColor': $dark-sky-blue
+    'bgColor': $skyBlue,
+    'fontColor': $darkSkyBlue,
+    'borderColor': $darkSkyBlue,
+    'dismissColor': $darkSkyBlue
 );
 
 $alertWarning: (
-    'bgColor': $squash-light,
+    'bgColor': $yellowLight,
     'fontColor': $squash,
     'borderColor': $squash,
     'dismissColor': $squash
@@ -137,3 +144,51 @@ $alertDanger: (
     'dismissColor': $tomato
 );
 
+// Buttons
+$button: (
+    'font-color': $white,
+    'height': 44,
+    'border-radius': 2,
+    'border-width': 1,
+    'border-color': #ccc,
+    'font-size': 14,
+    'line-height': 1.5,
+    'box-shadow__active': inset 0 1px 3px 0 rgba(0, 0, 0, 0.25)
+);
+
+$defaultButton: (
+    'background-color': $white,
+    'font-color': #555,
+    'background-color__hover': $lightGrey,
+    'background-color__active': $lightGrey
+);
+
+$primaryButton: (
+    'background-color': $slate,
+    'background-color__hover': $slateLight,
+    'background-color__active': $slate
+);
+
+$successButton: (
+    'background-color': $topaz,
+    'background-color__hover': $topazLight,
+    'background-color__active': $topaz
+);
+
+$infoButton: (
+    'background-color': $babyBlue,
+    'background-color__hover': $babyBlueLight,
+    'background-color__active': $babyBlue
+);
+
+$warningButton: (
+    'background-color': $squash,
+    'background-color__hover': $squashLight,
+    'background-color__active': $squash
+);
+
+$dangerButton: (
+    'background-color': $tomato,
+    'background-color__hover': $tomatoLight,
+    'background-color__active': $tomato
+);

@@ -62,9 +62,9 @@
             <div class="col-xs-12">
                <div class="form-group text-right">
                    <button type="submit"
-                           class="btn btn-default"
+                           class="Button Button--primary"
                    >
-                       Submit</button>
+                       <span class="Button__content">SUBMIT</span></button>
                </div>
             </div>
         </div>
