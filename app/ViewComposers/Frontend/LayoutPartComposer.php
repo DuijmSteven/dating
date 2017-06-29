@@ -5,6 +5,8 @@ namespace App\ViewComposers\Frontend;
 use App\Managers\StorageManager;
 use App\Managers\UserManager;
 use App\User;
+use Faker\Generator;
+use Faker\Provider\en_US\Text;
 
 /**
  * Class LayoutPartComposer
@@ -34,6 +36,9 @@ class LayoutPartComposer
 
         $modules = $this->getLayoutPartModules($layoutPart);
 
+        $faker = new Generator();
+        $faker->addProvider(new Text($faker));
+
         foreach ($modules as $module) {
             switch ($module) {
                 case 'online-users':
@@ -41,6 +46,34 @@ class LayoutPartComposer
 
                     $viewData = [
                         'onlineUsers' => $onlineUsers->slice(0, 5)
+                    ];
+                    break;
+                case 'shoutbox':
+                    $latestMessages = [
+                        [
+                            'user' => User::find(2),
+                            'text' => $faker->realText(100)
+                        ],
+                        [
+                            'user' => User::find(3),
+                            'text' => $faker->realText(100)
+                        ],
+                        [
+                            'user' => User::find(4),
+                            'text' => $faker->realText(100)
+                        ],
+                        [
+                            'user' => User::find(5),
+                            'text' => $faker->realText(100)
+                        ],
+                        [
+                            'user' => User::find(6),
+                            'text' => $faker->realText(100)
+                        ],
+                    ];
+
+                    $viewData = [
+                        'messages' => $latestMessages
                     ];
                     break;
                 default:

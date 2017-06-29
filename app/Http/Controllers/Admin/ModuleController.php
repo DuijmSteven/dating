@@ -8,6 +8,7 @@ use App\LayoutPart;
 use App\Module;
 use App\Http\Requests\Admin\Modules\ModuleCreateRequest;
 use Carbon\Carbon;
+use Intervention\Image\Exception\NotFoundException;
 
 /**
  * Class ModuleController
@@ -39,23 +40,28 @@ class ModuleController extends Controller
      */
     public function showLayoutPart(int $layoutPartId)
     {
-        $layoutPart = LayoutPart::find($layoutPartId);
-
-        if (!($layoutPart instanceof LayoutPart)) {
-            $alerts = [
-                [
-                    'type' => 'info',
-                    'message' => 'No layout part with that ID exists'
-                ]
-            ];
-
+        try {
+            $layoutPart = LayoutPart::findOrFail($layoutPartId);
+        } catch (\Exception $exception) {
+            if ($exception instanceof NotFoundException) {
+                $alerts = [
+                    [
+                        'type' => 'info',
+                        'message' => 'No layout part with that ID exists'
+                    ]
+                ];
+            } else {
+                $alerts = [
+                    'type' => 'error',
+                    'message' => $exception->getMessage()
+                ];
+            }
             return redirect()->back()->with('alerts', $alerts);
         }
 
         $filterLeftSidebar = $this->filterLayoutPart($layoutPartId);
 
         $modules = Module::with(['layoutParts' => $filterLeftSidebar])->orderBy('name', 'asc')->get();
-        $layoutPart = LayoutPart::find($layoutPartId);
 
         return view(
             'admin.modules.layout-part',

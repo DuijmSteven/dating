@@ -32,7 +32,7 @@ class LayoutPartModuleSeeder extends Seeder
 
         $layoutParts = LayoutPart::all()->toArray();
 
-        $moduleAmountToAssign = rand(2, 4);
+        $moduleAmountToAssign = rand(1, 2);
 
         foreach ($layoutParts as $layoutPart) {
             for ($i = 0; $i < $moduleAmountToAssign; $i++) {

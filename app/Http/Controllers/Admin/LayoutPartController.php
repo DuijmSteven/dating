@@ -54,11 +54,11 @@ class LayoutPartController extends Controller
         foreach ($modules as $moduleId => $module) {
             if ($module['active']) {
                 LayoutPart::findOrFail($layoutPartId)->modules()->sync([$moduleId], false);
-                LayoutPart::findOrFail($layoutPartId)->modules()->updateExistingPivot($moduleId, [
+                LayoutPart::find($layoutPartId)->modules()->updateExistingPivot($moduleId, [
                     'priority' => $module['priority']
                 ]);
             } else {
-                LayoutPart::findOrFail($layoutPartId)->modules()->detach($moduleId);
+                LayoutPart::find($layoutPartId)->modules()->detach($moduleId);
             }
         }
 
