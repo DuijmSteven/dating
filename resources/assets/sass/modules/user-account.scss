@@ -17,8 +17,8 @@
         padding-top: map_get($userAccountUsername, padding-top) + px;
         padding-bottom: map_get($userAccountUsername, padding-bottom) + px;
 
-        font-size: map_get($userAccountUsername, fontSize) + px;
-        color: map_get($userAccountUsername, fontColor);
+        font-size: map_get($userAccountUsername, font-size) + px;
+        color: map_get($userAccountUsername, font-color);
     }
 
     &__body {

@@ -2,7 +2,7 @@
     <div class="Tile__heading Shoutbox__heading">
         Shoutbox
     </div>
-    <div class="Tile__body Shoutbox__body">
+    <div class="Tile__body Shoutbox__body JS--Shoutbox__body">
         <div class="Shoutbox__items">
             @foreach($messages as $message)
                 <div class="Shoutbox__item">
@@ -17,19 +17,19 @@
                 </div>
             @endforeach
         </div>
-        <div class="Shoutbox__controls">
-            <form action="">
-                <div class="form-group">
+    </div>
+    <div class="Shoutbox__controls">
+        <form action="">
+            <div class="form-group">
                     <textarea name="message"
                               id="message"
                               rows="4"
                               placeholder="Type something!"
                               class="form-control"></textarea>
-                </div>
-                <div class="text-right">
-                    <button type="submit" class="Button Button--primary"><span class="Button__content">POST</span></button>
-                </div>
-            </form>
-        </div>
+            </div>
+            <div class="text-right">
+                <button type="submit" class="Button Button--primary"><span class="Button__content">POST</span></button>
+            </div>
+        </form>
     </div>
 </div>

@@ -5,6 +5,10 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * Class User
+ * @package App
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -296,7 +300,9 @@ class User extends Authenticatable
      */
     private function categorizeImages()
     {
-        foreach ($this->images as $image) {
+        $images = $this->images();
+
+        foreach ($images as $image) {
             $this->assignImage($image);
         }
 
@@ -315,6 +321,9 @@ class User extends Authenticatable
         return true;
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function account()
     {
         return $this->hasOne('App\UserAccount');

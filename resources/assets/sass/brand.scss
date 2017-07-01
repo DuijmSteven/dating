@@ -90,6 +90,41 @@ $onlineUsersItem: (
     'marginBottom': 10,
 );
 
+// Shoutbox
+$shoutboxHeight: 600;
+
+$shoutboxItem: (
+    'text-align': left,
+    'font-size': 12,
+    'margin-bottom': 10,
+);
+
+$shoutboxControls: (
+    'border-top': 2px solid #f2f2f2,
+    'background-color': #fff,
+    'height': 156
+);
+
+$shoutboxItemTextarea: (
+    'background-color': #f2f2f2,
+    'border-radius': $borderRadius,
+    'font-color': $slate,
+    'font-size': 12
+);
+
+$shoutboxItemProfileImage: (
+    width: map_get($roundImageDimensions, xs),
+    height: map_get($roundImageDimensions, xs)
+);
+
+$shoutboxItemBubble: (
+    background-color: #f2f2f2,
+    border-radius: $borderRadius,
+    padding: 5px 7px 9px 7px,
+    border: 1px solid #e6e6e6,
+    font-size: 12
+);
+
 // User-account
 $userAccountProfileImage: (
     'width': map_get($roundImageDimensions, sm),
@@ -99,8 +134,8 @@ $userAccountProfileImage: (
 );
 
 $userAccountUsername: (
-    'fontSize': 14,
-    'fontColor': $mainColor,
+    'font-size': 14,
+    'font-color': $mainColor,
     'padding-top': 10,
     'padding-bottom': 10
 );
@@ -114,30 +149,30 @@ $footerLogo: (
 // Alerts
 $alertSuccess: (
     'bgColor': $light-teal,
-    'fontColor': $topaz,
-    'borderColor': $topaz,
-    'dismissColor': $topaz
+    'font-color': $topaz,
+    'border-color': $topaz,
+    'dismiss-color': $topaz
 );
 
 $alertInfo: (
     'bgColor': $skyBlue,
-    'fontColor': $darkSkyBlue,
-    'borderColor': $darkSkyBlue,
-    'dismissColor': $darkSkyBlue
+    'font-color': $darkSkyBlue,
+    'border-color': $darkSkyBlue,
+    'dismiss-color': $darkSkyBlue
 );
 
 $alertWarning: (
     'bgColor': $yellowLight,
-    'fontColor': $squash,
-    'borderColor': $squash,
-    'dismissColor': $squash
+    'font-color': $squash,
+    'border-color': $squash,
+    'dismiss-color': $squash
 );
 
 $alertDanger: (
     'bgColor': $salmon,
-    'fontColor': $tomato,
-    'borderColor': $tomato,
-    'dismissColor': $tomato
+    'font-color': $tomato,
+    'border-color': $tomato,
+    'dismiss-color': $tomato
 );
 
 // Buttons

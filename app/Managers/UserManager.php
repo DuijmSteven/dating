@@ -254,8 +254,8 @@ class UserManager
      *
      * @param int $minutes
      * @param string $gender
-     * @return User Collection
      * @internal param $
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
     public function latestOnline(int $minutes, string $gender = 'any')
     {
@@ -307,19 +307,11 @@ class UserManager
         }
     }
 
+    /**
+     * @return User
+     */
     public static function getAndFormatAuthenticatedUser()
     {
-        if (!(Auth::user() instanceof User)) {
-            return null;
-        }
-
-        $result = User::with(['meta', 'images', 'roles'])
-            ->where('id', Auth::user()->id)->first();
-
-        if (!($result instanceof User)) {
-            throw new \Exception;
-        }
-
-        return $result->format();
+        return Auth::user()->format();
     }
 }

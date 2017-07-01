@@ -6,40 +6,40 @@
 
 .alert-success {
     background-color: map_get($alertSuccess, bgColor);
-    color: map_get($alertSuccess, fontColor);
-    border: 1px solid map_get($alertSuccess, borderColor);
+    color: map_get($alertSuccess, font-color);
+    border: 1px solid map_get($alertSuccess, border-color);
 
     .close {
-        color: map_get($alertSuccess, dismissColor)
+        color: map_get($alertSuccess, dismiss-color)
     }
 }
 
 .alert-info {
     background-color: map_get($alertInfo, bgColor);
-    color: map_get($alertInfo, fontColor);
-    border: 1px solid map_get($alertInfo, borderColor);
+    color: map_get($alertInfo, font-color);
+    border: 1px solid map_get($alertInfo, border-color);
 
     .close {
-        color: map_get($alertInfo, dismissColor)
+        color: map_get($alertInfo, dismiss-color)
     }
 }
 
 .alert-warning {
     background-color: map_get($alertWarning, bgColor);
-    color: map_get($alertWarning, fontColor);
-    border: 1px solid map_get($alertWarning, borderColor);
+    color: map_get($alertWarning, font-color);
+    border: 1px solid map_get($alertWarning, border-color);
 
     .close {
-        color: map_get($alertWarning, dismissColor)
+        color: map_get($alertWarning, dismiss-color)
     }
 }
 
 .alert-danger {
     background-color: map_get($alertDanger, bgColor);
-    color: map_get($alertDanger, fontColor);
-    border: 1px solid map_get($alertDanger, borderColor);
+    color: map_get($alertDanger, font-color);
+    border: 1px solid map_get($alertDanger, border-color);
 
     .close {
-        color: map_get($alertDanger, dismissColor)
+        color: map_get($alertDanger, dismiss-color)
     }
 }

@@ -49,25 +49,27 @@ class LayoutPartComposer
                     ];
                     break;
                 case 'shoutbox':
+                    $users = User::whereIn('id', [2, 3, 4, 5, 6])->get();
+
                     $latestMessages = [
                         [
-                            'user' => User::find(2),
+                            'user' => $users[0],
                             'text' => $faker->realText(100)
                         ],
                         [
-                            'user' => User::find(3),
+                            'user' => $users[1],
                             'text' => $faker->realText(100)
                         ],
                         [
-                            'user' => User::find(4),
+                            'user' => $users[2],
                             'text' => $faker->realText(100)
                         ],
                         [
-                            'user' => User::find(5),
+                            'user' => $users[3],
                             'text' => $faker->realText(100)
                         ],
                         [
-                            'user' => User::find(6),
+                            'user' => $users[4],
                             'text' => $faker->realText(100)
                         ],
                     ];

@@ -1,6 +1,6 @@
 .Shoutbox {
     position: relative;
-    height: 600px;
+    height: $shoutboxHeight + px;
 
     &__item {
         display: -webkit-flex;
@@ -12,8 +12,8 @@
         -webkit-align-items: flex-start;
         align-items: flex-start;
 
-        text-align: map_get($onlineUsersItem, textAlign);
-        margin-bottom: map_get($onlineUsersItem, marginBottom) + px;
+        text-align: map_get($shoutboxItem, text-align);
+        margin-bottom: map_get($shoutboxItem, margin-bottom) + px;
 
         &:last-of-type {
             margin-bottom: 0
@@ -25,7 +25,9 @@
     }
 
     &__items {
-        padding: 10px 10px 10px 0;
+        padding: 10px 10px 0 0;
+        height: 391px;
+        overflow-y: scroll;
     }
 
     &__controls {
@@ -35,13 +37,16 @@
         right: 0;
         bottom: 0;
         padding: 10px;
-        border-top: 2px solid #f2f2f2;
-        background-color: #fff;
+        border-top: map_get($shoutboxControls, border-top);
+        background-color: map_get($shoutboxControls, background-color);
+        height: map_get($shoutboxControls, height) + px;
 
         textarea {
-            background-color: #f2f2f2;
-            border-radius: 2px;
             resize: none;
+            background-color: map_get($shoutboxItemTextarea, background-color);
+            border-radius: map_get($shoutboxItemTextarea, border-radius) + px;
+            color: map_get($shoutboxItemTextarea, font-color);
+            font-size: map_get($shoutboxItemTextarea, font-size) + px;
         }
     }
 
@@ -51,8 +56,8 @@
         text-align: center;
 
         img {
-            width: map_get($roundImageDimensions, xs) + px;
-            height: map_get($roundImageDimensions, xs) + px;
+            width: map_get($shoutboxItemProfileImage, width) + px;
+            height: map_get($shoutboxItemProfileImage, height) + px;
             border-radius: 50%;
         }
     }
@@ -61,16 +66,11 @@
         -webkit-flex: 4 0 0;
         flex: 4 0 0;
         text-align: left;
-        border-radius: 2px;
-        background-color: #f2f2f2;
-        border: solid 1px #e6e6e6;
-        padding: 5px 7px 9px 7px;
-
-        font-size: map_get($onlineUsersItem, fontSize) + px;
-        a {
-            color: #333;
-            text-decoration: none;
-        }
+        border-radius: map_get($shoutboxItemBubble, border-radius) + px;
+        background-color: map_get($shoutboxItemBubble, background-color);
+        border: map_get($shoutboxItemBubble, border);
+        padding: map_get($shoutboxItemBubble, padding);
+        font-size: map_get($shoutboxItemBubble, font-size) + px;
     }
 }
 
