@@ -5,7 +5,9 @@
             <div class="Tile__heading">
                 {{ $user->username }}{{ isset($user->meta->dob) ? ', ' . $user->meta->dob->diffInYears($carbonNow) : '' }}
             </div>
-            <img style="width: 100%;" src="{{ \StorageHelper::profileImageUrl($user) }}" alt="user image">
+            <div class="Tile__body">
+                <img style="width: 100%;" src="{{ \StorageHelper::profileImageUrl($user) }}" alt="user image">
+            </div>
         </div>
     </div>
     <?php $count++; ?>
