@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Activity;
+
 /**
  * Class HomeController
  * @package App\Http\Controllers\Frontend
@@ -21,12 +23,13 @@ class HomeController extends FrontendController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Activity $activity)
     {
         $this->setupSidebars(true);
 
         return view('frontend.home', [
             'title' => 'Homepage - ' . config('app.name'),
+            'activity' => $activity->latest()->get()
         ]);
     }
 

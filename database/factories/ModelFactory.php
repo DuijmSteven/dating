@@ -111,3 +111,16 @@ $factory->define(App\LayoutPartModule::class, function () {
         'priority' => 1,
     ];
 });
+
+$factory->define(App\Activity::class, function (FakerGenerator $faker) {
+    $faker->addProvider(new FakerProvider\Image($faker));
+    $faker->addProvider(new FakerProvider\Lorem($faker));
+    return [
+        'type' => 'user',
+        'thumbnail_url' => 'http://placehold.it/60x60',
+        'title' => $faker->text(30),
+        'text' => rand(0, 1) ? $faker->text(120) : null,
+        'image_url' => rand(0, 1) ? 'http://placehold.it/400x300' : null,
+        'user_id' => 1,
+    ];
+});

@@ -1,7 +1,7 @@
 <div class="Tile Activity">
     <div class="Tile__heading Activity__heading">
         <div class="Activity__profile-image">
-            <img src="{{ $activityThumbUrl }}" alt="">
+            <img src="{{ $activityThumbnailUrl }}" alt="">
         </div>
         <div class="Activity__user-details">
             <div class="Activity__title">{{ $activityTitle }}</div>
