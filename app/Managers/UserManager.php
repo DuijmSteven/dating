@@ -3,6 +3,7 @@
 
 namespace App\Managers;
 
+use App\Facades\Helpers\ApplicationConstants\UserConstants;
 use App\RoleUser;
 use App\Session;
 use App\User;
@@ -268,7 +269,7 @@ class UserManager
                 $query->where('gender', \UserConstants::selectableField('gender', 'common', 'array_flip')[$gender]);
             });
         }
-        return User::with('meta')->whereIn('id', $latestIds)->limit(\UserConstants::MAX_AMOUNT_ONLINE_TO_SHOW)->get();
+        return User::with('meta')->whereIn('id', $latestIds)->limit(\UserConstants::getMaxAmountOnline())->get();
     }
 
     /**
@@ -312,6 +313,11 @@ class UserManager
      */
     public static function getAndFormatAuthenticatedUser()
     {
-        return Auth::user()->format();
+        $user = Auth::user();
+        if (!($user instanceof User)) {
+            return null;
+        }
+
+        return $user->format();
     }
 }

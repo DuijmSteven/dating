@@ -1,5 +1,9 @@
 <?php namespace App\Helpers\ApplicationConstants;
 
+/**
+ * Class PaginationConstants
+ * @package App\Helpers\ApplicationConstants
+ */
 class PaginationConstants
 {
     public static $perPage = [

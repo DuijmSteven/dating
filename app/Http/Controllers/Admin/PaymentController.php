@@ -25,7 +25,7 @@ class PaymentController extends Controller
         return view(
             'admin.payments.index',
             [
-                'title' => 'Payments Overview - ' . MetaConstants::$siteName,
+                'title' => 'Payments Overview - ' . config('app.name'),
                 'headingLarge' => 'Payments',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),

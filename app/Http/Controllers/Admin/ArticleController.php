@@ -29,7 +29,7 @@ class ArticleController extends Controller
         return view(
             'admin.articles.index',
             [
-                'title' => 'Articles Overview - ' . \MetaConstants::$siteName,
+                'title' => 'Articles Overview - ' . \config('app.name'),
                 'headingLarge' => 'Articles',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
@@ -69,7 +69,7 @@ class ArticleController extends Controller
         return view(
             'admin.articles.create',
             [
-                'title' => 'Create article - ' . \MetaConstants::$siteName,
+                'title' => 'Create article - ' . \config('app.name'),
                 'headingLarge' => 'Articles',
                 'headingSmall' => 'Create'
             ]
@@ -85,7 +85,7 @@ class ArticleController extends Controller
         return view(
             'admin.articles.edit',
             [
-                'title' => 'Edit article - ' . \MetaConstants::$siteName,
+                'title' => 'Edit article - ' . \config('app.name'),
                 'headingLarge' => 'Articles',
                 'headingSmall' => 'Edit',
                 'article' => Article::find($articleId)

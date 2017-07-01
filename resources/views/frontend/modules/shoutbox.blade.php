@@ -28,7 +28,12 @@
                               class="form-control"></textarea>
             </div>
             <div class="text-right">
-                <button type="submit" class="Button Button--primary"><span class="Button__content">POST</span></button>
+                @include('frontend.components.button', [
+                    'buttonContext' => 'form',
+                    'buttonType' => 'submit',
+                    'buttonState' => 'primary',
+                    'buttonText' => 'POST'
+                ])
             </div>
         </form>
     </div>

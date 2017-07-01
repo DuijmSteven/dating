@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.4.25 on 2017-06-11.
+ * Generated for Laravel 5.4.25 on 2017-07-01.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -11470,13 +11470,122 @@ namespace Illuminate\Support\Facades {
     }         
 }
     
-namespace App\Helpers\ApplicationConstants {
+namespace App\Facades\Helpers\ApplicationConstants {
 
     class UserConstants {
+        
+        /**
+         * 
+         *
+         * @return int 
+         * @static 
+         */
+        public static function getMaxAmountOnline()
+        {
+            return \App\Helpers\ApplicationConstants\UserConstants::getMaxAmountOnline();
+        }
+        
+        /**
+         * 
+         *
+         * @param string $userType
+         * @param string $visibility
+         * @return array|null 
+         * @static 
+         */
+        public static function selectableFields($userType = 'bot', $visibility = 'public')
+        {
+            return \App\Helpers\ApplicationConstants\UserConstants::selectableFields($userType, $visibility);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $fieldName
+         * @param string $userType
+         * @param string $arrayManipulationMethodName
+         * @return mixed|null 
+         * @throws \Exception
+         * @static 
+         */
+        public static function selectableField($fieldName, $userType = 'bot', $arrayManipulationMethodName = '')
+        {
+            return \App\Helpers\ApplicationConstants\UserConstants::selectableField($fieldName, $userType, $arrayManipulationMethodName);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $userType
+         * @param string $visibility
+         * @return array|null 
+         * @static 
+         */
+        public static function userTableFields($userType = 'bot', $visibility = 'public')
+        {
+            return \App\Helpers\ApplicationConstants\UserConstants::userTableFields($userType, $visibility);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $userType
+         * @param string $visibility
+         * @return array|null 
+         * @static 
+         */
+        public static function textFields($userType = 'bot', $visibility = 'public')
+        {
+            return \App\Helpers\ApplicationConstants\UserConstants::textFields($userType, $visibility);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function textInputs($userType = 'bot', $visibility = 'public')
+        {
+            return \App\Helpers\ApplicationConstants\UserConstants::textInputs($userType, $visibility);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $userType
+         * @return array 
+         * @static 
+         */
+        public static function publicFieldNames($userType = 'bot')
+        {
+            return \App\Helpers\ApplicationConstants\UserConstants::publicFieldNames($userType);
+        }
+        
+        /**
+         * 
+         *
+         * @return array 
+         * @static 
+         */
+        public static function getCities($countryCode = 'nl')
+        {
+            return \App\Helpers\ApplicationConstants\UserConstants::getCities($countryCode);
+        }
         
     }         
 
     class MetaConstants {
+        
+        /**
+         * 
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getSiteName()
+        {
+            return \App\Helpers\ApplicationConstants\MetaConstants::getSiteName();
+        }
         
     }         
 
@@ -11485,9 +11594,99 @@ namespace App\Helpers\ApplicationConstants {
     }         
 }
     
-namespace App\Helpers {
+namespace App\Facades\Helpers {
 
     class StorageHelper {
+        
+        /**
+         * 
+         *
+         * @param $user
+         * @return mixed|string 
+         * @throws \Exception
+         * @static 
+         */
+        public static function profileImageUrl($user, $thumb = false)
+        {
+            return \App\Helpers\StorageHelper::profileImageUrl($user, $thumb);
+        }
+        
+        /**
+         * 
+         *
+         * @param int $userId
+         * @param string $gender
+         * @param string|null $filename
+         * @return mixed|string 
+         * @static 
+         */
+        public static function profileImageUrlFromId($userId, $filename, $gender)
+        {
+            return \App\Helpers\StorageHelper::profileImageUrlFromId($userId, $filename, $gender);
+        }
+        
+        /**
+         * 
+         *
+         * @param int $userId
+         * @param string $filename
+         * @return mixed|string 
+         * @static 
+         */
+        public static function userImageUrl($userId, $filename = null)
+        {
+            return \App\Helpers\StorageHelper::userImageUrl($userId, $filename);
+        }
+        
+        /**
+         * 
+         *
+         * @param int $userId
+         * @return string 
+         * @static 
+         */
+        public static function userImagesPath($userId)
+        {
+            return \App\Helpers\StorageHelper::userImagesPath($userId);
+        }
+        
+        /**
+         * 
+         *
+         * @param int $conversationId
+         * @param string $filename
+         * @return mixed 
+         * @static 
+         */
+        public static function messageAttachmentUrl($conversationId, $filename)
+        {
+            return \App\Helpers\StorageHelper::messageAttachmentUrl($conversationId, $filename);
+        }
+        
+        /**
+         * 
+         *
+         * @param int $conversationId
+         * @return string 
+         * @static 
+         */
+        public static function messageAttachmentsPath($conversationId)
+        {
+            return \App\Helpers\StorageHelper::messageAttachmentsPath($conversationId);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $filePath
+         * @param string $location
+         * @return mixed 
+         * @static 
+         */
+        public static function fileUrl($filePath, $location = 'cloud')
+        {
+            return \App\Helpers\StorageHelper::fileUrl($filePath, $location);
+        }
         
     }         
 }
@@ -15818,13 +16017,13 @@ namespace {
         }
         }
     
-    class UserConstants extends \App\Helpers\ApplicationConstants\UserConstants {}
+    class UserConstants extends \App\Facades\Helpers\ApplicationConstants\UserConstants {}
     
-    class MetaConstants extends \App\Helpers\ApplicationConstants\MetaConstants {}
+    class MetaConstants extends \App\Facades\Helpers\ApplicationConstants\MetaConstants {}
     
-    class PaginationConstants extends \App\Helpers\ApplicationConstants\PaginationConstants {}
+    class PaginationConstants extends \App\Facades\Helpers\ApplicationConstants\PaginationConstants {}
     
-    class StorageHelper extends \App\Helpers\StorageHelper {}
+    class StorageHelper extends \App\Facades\Helpers\StorageHelper {}
     
     class Activity extends \Kim\Activity\ActivityFacade {}
     

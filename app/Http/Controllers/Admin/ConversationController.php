@@ -33,7 +33,7 @@ class ConversationController extends Controller
         return view(
             'admin.conversations.index',
             [
-                'title' => 'Conversations Overview - ' . \MetaConstants::$siteName,
+                'title' => 'Conversations Overview - ' . \config('app.name'),
                 'headingLarge' => 'Conversations',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
@@ -57,7 +57,7 @@ class ConversationController extends Controller
         return view(
             'admin.conversations.show',
             [
-                'title' => 'Conversation (id: ' . $conversationId . ') - ' . \MetaConstants::$siteName,
+                'title' => 'Conversation (id: ' . $conversationId . ') - ' . \config('app.name'),
                 'headingLarge' => 'Conversation (ID: ' . $conversationId . ')',
                 'headingSmall' => $conversation->userA->username .
                     ' (id: ' . $conversation->userA->id . ') - ' .

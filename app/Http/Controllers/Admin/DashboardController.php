@@ -23,7 +23,7 @@ class DashboardController extends Controller
         return view('admin.dashboard', array_merge(
             $viewData,
             [
-                'title' => 'Dashboard - ' . \MetaConstants::$siteName,
+                'title' => 'Dashboard - ' . \config('app.name'),
                 'headingLarge' => 'Dashboard',
             ]
         ));

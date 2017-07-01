@@ -192,7 +192,8 @@ return [
          * Ours
          */
         Illuminate\View\ViewServiceProvider::class,
-        App\Providers\ComposerServiceProvider::class
+        App\Providers\ComposerServiceProvider::class,
+        App\Providers\FacadeServiceProvider::class
 
     ],
 
@@ -242,10 +243,10 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
-        'UserConstants'   => App\Helpers\ApplicationConstants\UserConstants::class,
-        'MetaConstants'   => App\Helpers\ApplicationConstants\MetaConstants::class,
-        'PaginationConstants'   => App\Helpers\ApplicationConstants\PaginationConstants::class,
-        'StorageHelper'   => App\Helpers\StorageHelper::class,
+        'UserConstants'   => App\Facades\Helpers\ApplicationConstants\UserConstants::class,
+        'MetaConstants'   => App\Facades\Helpers\ApplicationConstants\MetaConstants::class,
+        'PaginationConstants'   => App\Facades\Helpers\ApplicationConstants\PaginationConstants::class,
+        'StorageHelper'   => App\Facades\Helpers\StorageHelper::class,
 
         'Activity' => Kim\Activity\ActivityFacade::class,
         'ChromePhp' => App\Helpers\ccampbell\ChromePhp\ChromePhp::class,

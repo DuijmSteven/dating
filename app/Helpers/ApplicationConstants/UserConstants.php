@@ -1,8 +1,21 @@
 <?php namespace App\Helpers\ApplicationConstants;
 
+/**
+ * Class UserConstants
+ * @package App\Helpers\ApplicationConstants
+ */
 class UserConstants
 {
-    const MAX_AMOUNT_ONLINE_TO_SHOW = 30;
+    public static $maxAmountOnline = 30;
+
+    /**
+     * @return int
+     */
+    public static function getMaxAmountOnline()
+    {
+        return self::$maxAmountOnline;
+    }
+
 
     public static $userTableFields = [
         'common' => [

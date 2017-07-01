@@ -39,7 +39,7 @@ class PeasantController extends Controller
         return view(
             'admin.peasants.index',
             [
-                'title' => 'Peasant Overview - ' . \MetaConstants::$siteName,
+                'title' => 'Peasant Overview - ' . \config('app.name'),
                 'headingLarge' => 'Peasant',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
@@ -58,7 +58,7 @@ class PeasantController extends Controller
         return view(
             'admin.peasants.create',
             [
-                'title' => 'Create Peasant - ' . \MetaConstants::$siteName,
+                'title' => 'Create Peasant - ' . \config('app.name'),
                 'headingLarge' => 'Peasant',
                 'headingSmall' => 'Create',
                 'carbonNow' => Carbon::now(),
@@ -115,7 +115,7 @@ class PeasantController extends Controller
         return view(
             'admin.peasants.edit',
             [
-                'title' => 'Edit Peasant - '. $peasant['username'] . '(ID: '. $peasant['id'] .') - ' . \MetaConstants::$siteName,
+                'title' => 'Edit Peasant - '. $peasant['username'] . '(ID: '. $peasant['id'] .') - ' . \config('app.name'),
                 'headingLarge' => 'Peasant',
                 'headingSmall' => 'Edit',
                 'carbonNow' => Carbon::now(),

@@ -26,7 +26,7 @@ class ModuleController extends Controller
         return view(
             'admin.modules.index',
             [
-                'title' => 'Modules Overview - ' . \MetaConstants::$siteName,
+                'title' => 'Modules Overview - ' . \config('app.name'),
                 'headingLarge' => 'Modules',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
@@ -66,7 +66,7 @@ class ModuleController extends Controller
         return view(
             'admin.modules.layout-part',
             [
-                'title' => ' - ' . \MetaConstants::$siteName,
+                'title' => ' - ' . \config('app.name'),
                 'headingLarge' => 'Modules',
                 'headingSmall' => ucfirst(str_replace('-', ' ', $layoutPart->name)),
                 'carbonNow' => Carbon::now(),
@@ -86,7 +86,7 @@ class ModuleController extends Controller
         return view(
             'admin.modules.right-sidebar',
             [
-                'title' => 'Modules Overview - ' . \MetaConstants::$siteName,
+                'title' => 'Modules Overview - ' . \config('app.name'),
                 'headingLarge' => 'Modules',
                 'headingSmall' => 'Right Sidebar',
                 'carbonNow' => Carbon::now(),
@@ -126,7 +126,7 @@ class ModuleController extends Controller
         return view(
             'admin.modules.create',
             [
-                'title' => 'Create module - ' . \MetaConstants::$siteName,
+                'title' => 'Create module - ' . \config('app.name'),
                 'headingLarge' => 'Modules',
                 'headingSmall' => 'Create'
             ]
@@ -142,7 +142,7 @@ class ModuleController extends Controller
         return view(
             'admin.modules.edit',
             [
-                'title' => 'Edit module - ' . \MetaConstants::$siteName,
+                'title' => 'Edit module - ' . \config('app.name'),
                 'headingLarge' => 'Modules',
                 'headingSmall' => 'Edit',
                 'module' => Module::find($moduleId)
