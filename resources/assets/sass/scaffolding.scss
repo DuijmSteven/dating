@@ -7,6 +7,7 @@ body {
     background-color: $bodyBgColor;
     font-size: map_get($fontSize, body-mobile) + px;
     color: $textColor;
+    width: 100%;
 }
 
 @media (min-width: $screen-sm-min) {

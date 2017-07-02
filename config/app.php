@@ -193,7 +193,8 @@ return [
          */
         Illuminate\View\ViewServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
-        App\Providers\FacadeServiceProvider::class
+        App\Providers\FacadeServiceProvider::class,
+        App\Providers\ValidationServiceProvider::class,
 
     ],
 

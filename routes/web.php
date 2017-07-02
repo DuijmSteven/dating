@@ -210,6 +210,28 @@ Route::group([
         Route::post('update/{layoutPartId}', 'Admin\LayoutPartController@updateModules')
             ->name('admin.layout-parts.modules.update');
     });
+
+    Route::group([
+        'prefix' => 'views'
+    ], function () {
+        Route::get('/', 'Admin\ViewController@overview')
+            ->name('admin.views.overview');
+        Route::get('/create', 'Admin\ViewController@showCreate')
+            ->name('admin.views.create.show');
+        Route::post('/create', 'Admin\ViewController@create')
+            ->name('admin.views.create');
+
+        Route::delete('/{viewId}', 'Admin\ViewController@destroy')
+            ->name('admin.views.delete');
+
+        Route::get('/{viewId}', 'Admin\ViewController@showUpdate')
+            ->name('admin.views.update.show');
+        Route::put('/{viewId}', 'Admin\ViewController@update')
+            ->name('admin.views.update');
+
+        Route::get('{viewId}/layout', 'Admin\ViewController@showLayout')
+            ->name('admin.views.layout.show');
+    });
 });
 
 Route::group([

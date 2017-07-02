@@ -1,10 +1,14 @@
 function disableBodyScrollOnShoutboxHover() {
+    var bodySelector = $('body');
+
     $('.JS--Shoutbox__body').hover(
         function () {
-            $('body').css('overflow', 'hidden');
+            bodySelector.css('position', 'fixed');
+            bodySelector.css('overflow-y', 'scroll');
         },
         function () {
-            $('body').css('overflow', 'auto');
+            bodySelector.css('position', 'static');
+            bodySelector.css('overflow-y', 'auto');
         }
     );
 }

@@ -9,7 +9,6 @@ use App\LayoutPart;
 use App\Module;
 use App\Http\Requests\Admin\Modules\ModuleCreateRequest;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Input;
 
 /**
  * Class LayoutPartController

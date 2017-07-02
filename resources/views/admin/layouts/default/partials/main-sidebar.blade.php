@@ -199,6 +199,29 @@
                         </li>
                     </ul>
                 </li>
+                <li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.views') ? 'active' : '' !!}">
+                    <a href="#">
+                        <i class="fa fa-money"></i>
+                        <span>Views</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="{!! \Request::route()->getName() == 'admin.views.overview' ? 'active' : '' !!}">
+                            <a href="{!! route('admin.views.overview', ['page' => 1]) !!}">
+                                <i class="fa fa-list"></i>
+                                Overview
+                            </a>
+                        </li>
+                        <li class="{!! \Request::route()->getName() == 'admin.views.create.show' !!}">
+                            <a href="{!! route('admin.views.create.show') !!}">
+                                <i class="fa fa-plus"></i>
+                                Create
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="treeview">
                     <a href="{!! route('home') !!}">
                         <i class="fa fa-globe"></i>
