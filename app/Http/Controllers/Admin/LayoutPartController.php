@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\LayoutParts\LayoutPartModulesUpdateRequest;
 use App\Http\Requests\Admin\Modules\ModuleUpdateRequest;
-use App\LayoutPart;
 use App\Module;
 use App\Http\Requests\Admin\Modules\ModuleCreateRequest;
 use Carbon\Carbon;
@@ -29,59 +27,6 @@ class LayoutPartController extends Controller
                 'title' => 'Modules Overview - ' . \config('app.name'),
                 'headingLarge' => 'Modules',
                 'headingSmall' => 'Overview',
-                'carbonNow' => Carbon::now(),
-                'modules' => $modules
-            ]
-        );
-    }
-
-    /**
-     * @param LayoutPartModulesUpdateRequest $request
-     * @param int $layoutPartId
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function updateModules(LayoutPartModulesUpdateRequest $request, int $layoutPartId)
-    {
-        $modules = [];
-        foreach ($request->get('modules') as $moduleId => $module) {
-            $modules[$moduleId] = [
-                'active' => isset($module['active']) ? 1 : 0,
-                'priority' => $module['priority']
-            ];
-        }
-
-        foreach ($modules as $moduleId => $module) {
-            if ($module['active']) {
-                LayoutPart::findOrFail($layoutPartId)->modules()->sync([$moduleId], false);
-                LayoutPart::find($layoutPartId)->modules()->updateExistingPivot($moduleId, [
-                    'priority' => $module['priority']
-                ]);
-            } else {
-                LayoutPart::find($layoutPartId)->modules()->detach($moduleId);
-            }
-        }
-
-        $alerts[] = [
-            'type' => 'success',
-            'message' => 'The modules were updated successfully.'
-        ];
-
-        return redirect()->back()->with('alerts', $alerts);
-    }
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function showRightSidebar()
-    {
-        $modules = Module::orderBy('name', 'desc');
-
-        return view(
-            'admin.modules.right-sidebar',
-            [
-                'title' => 'Modules Overview - ' . \config('app.name'),
-                'headingLarge' => 'Modules',
-                'headingSmall' => 'Right Sidebar',
                 'carbonNow' => Carbon::now(),
                 'modules' => $modules
             ]

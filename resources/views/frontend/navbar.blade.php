@@ -29,7 +29,16 @@
                     </li>
                     <li class="{!! str_contains(\Request::route()->getName(), 'users.search') ? 'active' : '' !!}"><a href="{{ route('users.search.get') }}">Search for users</a>
                     </li>
-                    <li class="{!! \Request::route()->getName() == 'users.online' ? 'active' : '' !!}"><a href="{{ route('users.online') }}">Online users</a>
+                    <li>
+                        <a href="{!!  route('logout.post') !!}"
+                           onclick="event.preventDefault();
+                           document.getElementById('logout-form').submit();">Logout
+                        </a>
+
+                        <form id="logout-form" action="{!!  route('logout.post') !!}" method="POST"
+                              style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
                     </li>
                 @endif
                 <li class="{!! \Request::route()->getName() == 'contact.get' ? 'active' : '' !!}"><a href="{{ route('contact.get') }}">Contact us</a>

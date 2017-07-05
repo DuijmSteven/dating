@@ -28,7 +28,8 @@ class ViewUpdateRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'string|without_spaces|required|unique:views',
+            'name' => 'string|required|unique:views',
+            'route_name' => 'string|without_spaces|required|unique:views',
         ];
     }
 
@@ -38,5 +39,13 @@ class ViewUpdateRequest extends Request
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRouteName()
+    {
+        return $this->route_name;
     }
 }

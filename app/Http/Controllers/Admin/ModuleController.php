@@ -3,11 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\LayoutParts\ModuleInstancesUpdateRequest;
 use App\Http\Requests\Admin\Modules\ModuleUpdateRequest;
 use App\LayoutPart;
+use App\LayoutPartView;
 use App\Module;
 use App\Http\Requests\Admin\Modules\ModuleCreateRequest;
+use App\ModuleInstance;
+use App\View;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Input;
 use Intervention\Image\Exception\NotFoundException;
 
 /**
@@ -38,42 +43,87 @@ class ModuleController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function showLayoutPart(int $layoutPartId)
+    public function showLayout()
     {
-        try {
-            $layoutPart = LayoutPart::findOrFail($layoutPartId);
-        } catch (\Exception $exception) {
-            if ($exception instanceof NotFoundException) {
-                $alerts = [
-                    [
-                        'type' => 'info',
-                        'message' => 'No layout part with that ID exists'
-                    ]
-                ];
-            } else {
-                $alerts = [
-                    'type' => 'error',
-                    'message' => $exception->getMessage()
-                ];
-            }
-            return redirect()->back()->with('alerts', $alerts);
-        }
-
-        $filterLeftSidebar = $this->filterLayoutPart($layoutPartId);
-
-        $modules = Module::with(['layoutParts' => $filterLeftSidebar])->orderBy('name', 'asc')->get();
+        $views = View::with(['moduleInstances', 'layoutParts', 'moduleInstances.module'])->get();
+        $modules = Module::all();
+        $layoutParts = LayoutPart::all();
 
         return view(
-            'admin.modules.layout-part',
+            'admin.modules.layout',
             [
                 'title' => ' - ' . \config('app.name'),
-                'headingLarge' => 'Modules',
-                'headingSmall' => ucfirst(str_replace('-', ' ', $layoutPart->name)),
+                'headingLarge' => 'Layout',
+                'headingSmall' => '',
                 'carbonNow' => Carbon::now(),
+                'views' => $views,
                 'modules' => $modules,
-                'layoutPart' => $layoutPart
+                'layoutParts' => $layoutParts
             ]
         );
+    }
+
+    /**
+     * @param ModuleInstancesUpdateRequest $request
+     * @param int $layoutPartId
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateModules(ModuleInstancesUpdateRequest $request)
+    {
+        $request->removeNull();
+
+        \DB::beginTransaction();
+
+        try {
+            \DB::table('module_instances')->delete();
+            \DB::table('layout_part_view')->delete();
+
+            foreach ($request->get('views') as $viewId => $layoutParts) {
+                foreach ($layoutParts as $layoutPartId => $modules) {
+                    $layoutPartActiveOnView = isset($modules['active']) && $modules['active'] == 'on' ? true : false;
+
+                    if ($layoutPartActiveOnView) {
+                        unset($modules['active']);
+                        LayoutPartView::create([
+                            'view_id' => $viewId,
+                            'layout_part_id' => $layoutPartId,
+                        ]);
+                    }
+
+                    foreach ($modules as $moduleId => $module) {
+                        $moduleIsActiveOnLayoutPart = isset($module['active']) && $module['active'] == 'on' ? true : false;
+
+                        if ($moduleIsActiveOnLayoutPart) {
+                            ModuleInstance::create([
+                                'view_id' => $viewId,
+                                'layout_part_id' => $layoutPartId,
+                                'module_id' => $moduleId,
+                                'priority' => $module['priority']
+                            ]);
+                        }
+                    }
+                }
+            }
+            \DB::commit();
+        } catch (\Exception $exception) {
+            \DB::rollBack();
+
+            $alerts[] = [
+                'type' => 'error',
+                'message' => 'The modules could not be updated due to an exception.'
+            ];
+
+            \Log::error($exception->getMessage());
+
+            return redirect()->back()->with('alerts', $alerts)->withInput(Input::all());
+        }
+
+        $alerts[] = [
+            'type' => 'success',
+            'message' => 'The modules were updated successfully.'
+        ];
+
+        return redirect()->back()->with('alerts', $alerts);
     }
 
     /**

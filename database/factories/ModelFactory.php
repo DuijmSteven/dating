@@ -101,7 +101,7 @@ $factory->define(App\Role::class, function () {
     ];
 });
 
-$factory->define(App\LayoutPartModule::class, function () {
+$factory->define(App\ModuleInstance::class, function () {
     $moduleIds = Module::all()->pluck('id')->toArray();
     $layoutPartIds = LayoutPart::all()->pluck('id')->toArray();
 

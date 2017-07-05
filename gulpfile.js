@@ -23,4 +23,11 @@ elixir(function (mix) {
 
     mix.copy('resources/assets/img', 'public/img', false);
     mix.copy('node_modules/font-awesome/fonts', 'public/build/fonts');
+
+    mix.stylesIn('admin-lte/css');
+        //.version(['public/admin/css/plugins.css']);
+
+    mix.scriptsIn('admin-lte/js');
+        //.version('public/admin/js/plugins.js');
+
 });

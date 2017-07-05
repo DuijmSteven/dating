@@ -21,7 +21,7 @@ class UserControllerTest extends TestCase
         $this->be(\App\User::find(1));
 
         $response = $this->get(url('/'));
-        
+
         $response->assertSee('Homepage');
     }
 }

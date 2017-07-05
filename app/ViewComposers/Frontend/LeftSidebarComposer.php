@@ -2,6 +2,7 @@
 
 namespace App\ViewComposers\Frontend;
 
+use App\LayoutPart;
 use Illuminate\View\View;
 
 /**
@@ -13,12 +14,17 @@ class LeftSidebarComposer extends LayoutPartComposer
     /** @var string */
     private $leftSidebarHtml;
 
+    /** @var LayoutPart */
+    private $layoutPart;
+
     /**
      * LeftSidebarComposer constructor.
      */
-    public function __construct()
+    public function __construct(LayoutPart $layoutPart)
     {
-        $this->leftSidebarHtml = $this->layoutPartHtml('left-sidebar');
+        // TODO:trivial
+        $this->layoutPart = $layoutPart->find(1);
+        $this->leftSidebarHtml = $this->layoutPartHtml($this->layoutPart->getId());
     }
 
     /**

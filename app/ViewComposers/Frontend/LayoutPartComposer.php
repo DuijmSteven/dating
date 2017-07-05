@@ -4,7 +4,10 @@ namespace App\ViewComposers\Frontend;
 
 use App\Managers\StorageManager;
 use App\Managers\UserManager;
+use App\Module;
+use App\ModuleInstance;
 use App\User;
+use App\View;
 use Faker\Generator;
 use Faker\Provider\en_US\Text;
 
@@ -30,17 +33,17 @@ class LayoutPartComposer
      * @param string $layoutPart
      * @return string
      */
-    protected function layoutPartHtml(string $layoutPart)
+    protected function layoutPartHtml(int $layoutPartId)
     {
         $layoutPartHtml = '';
 
-        $modules = $this->getLayoutPartModules($layoutPart);
+        $modules = $this->getLayoutPartModules($layoutPartId);
 
         $faker = new Generator();
         $faker->addProvider(new Text($faker));
 
-        foreach ($modules as $module) {
-            switch ($module) {
+        foreach ($modules as $name) {
+            switch ($name) {
                 case 'online-users':
                     $onlineUsers = (new UserManager(new User(), new StorageManager()))->latestOnline(20);
 
@@ -83,8 +86,8 @@ class LayoutPartComposer
             }
 
             $layoutPartHtml = $layoutPartHtml .
-                '<div class="Module Module_' . $layoutPart . '">' .
-                    \View::make('frontend.modules.' . $module, $viewData)->render() .
+                '<div class="Module Module_' . $name . '">' .
+                    \View::make('frontend.modules.' . $name, $viewData)->render() .
                 '</div>';
         }
 
@@ -97,18 +100,20 @@ class LayoutPartComposer
      *
      * @return array
      */
-    private function getLayoutPartModules($layoutPart): array
+    private function getLayoutPartModules(int $layoutPartId)
     {
-        /** @var array $modules */
-        $modules = \DB::table('modules')->select(['modules.name as name'])
-            ->join('layout_part_module', 'layout_part_module.module_id', 'modules.id')
-            ->join('layout_parts', 'layout_parts.id', 'layout_part_module.layout_part_id')
-            ->where('layout_parts.name', $layoutPart)
-            ->orderBy('layout_part_module.priority', 'asc')
-            ->get()
-            ->pluck('name')
-            ->toArray();
+        $views = View::all()->pluck('route_name', 'id')->flip();
 
-        return $modules;
+        if (in_array(request()->route()->getName(), array_keys($views->toArray()))) {
+            $viewId = $views[request()->route()->getName()];
+        } else {
+            throw new \Exception('View name is not in the database');
+        }
+
+        return ModuleInstance::with('module')->where('view_id', $viewId)
+            ->where('layout_part_id', $layoutPartId)
+            ->orderBy('priority', 'asc')
+            ->get()
+            ->pluck('module.name')->toArray();
     }
 }

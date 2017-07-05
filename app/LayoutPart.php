@@ -17,10 +17,42 @@ class LayoutPart extends Model
     ];
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function moduleInstances()
+    {
+        return $this->hasMany('App\ModuleInstance');
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function modules()
+    public function views()
     {
-        return $this->belongsToMany('App\Module')->withPivot('priority');
+        return $this->belongsToMany('App\View', 'layout_part_view');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name)
+    {
+        $this->name = $name;
     }
 }

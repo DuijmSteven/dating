@@ -15,6 +15,9 @@ class User extends Authenticatable
 
     protected $primaryKey = 'id';
 
+    protected $profile_image = null;
+    protected $other_images = null;
+
     /**
      * The database table used by the model.
      *

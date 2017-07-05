@@ -18,7 +18,7 @@ class RightSidebarComposer extends LayoutPartComposer
      */
     public function __construct()
     {
-        $this->rightSidebarHtml = $this->layoutPartHtml('right-sidebar');
+        $this->rightSidebarHtml = $this->layoutPartHtml(2);
     }
 
     /**

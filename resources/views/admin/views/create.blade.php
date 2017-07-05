@@ -28,6 +28,20 @@
                                 {!! $errors->first('name', '<small class="form-error">:message</small>') !!}
                             @endif
                         </div>
+                        <div class="form-group">
+                            <label for="title">Route name</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="route_name"
+                                   name="route_name"
+                                   required
+                                   value="{{ old('route_name', '') }}"
+                            >
+                            </input>
+                            @if ($errors->has('route_name'))
+                                {!! $errors->first('route_name', '<small class="form-error">:message</small>') !!}
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>

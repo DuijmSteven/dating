@@ -56,7 +56,8 @@ class ViewController extends Controller
     {
         try {
             View::create([
-                'name' => $request->getName()
+                'name' => $request->getName(),
+                'route_name' => $request->getRouteName()
             ]);
 
             $alerts[] = [
@@ -105,7 +106,8 @@ class ViewController extends Controller
     {
         try {
             View::find($viewId)->update([
-                'name' => $request->getName()
+                'name' => $request->getName(),
+                'route_name' => $request->getRouteName(),
             ]);
 
             $alerts[] = [

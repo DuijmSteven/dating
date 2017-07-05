@@ -18,24 +18,50 @@ class Module extends Model
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function layoutParts()
+    public function moduleInstances()
     {
-        return $this->belongsToMany('App\LayoutPart')->withPivot('priority');
+        return $this->hasMany('App\ModuleInstance');
     }
 
     /**
-     * @param string $layoutPartName
+     * @return mixed
      */
-    public function isActiveOnLayoutPart(string $layoutPartName)
+    public function getId()
     {
-        $layoutParts = LayoutPart::where('name', $layoutPartName)
-            ->whereHas('modules', function ($query) use ($layoutPartName) {
-                $query->where('name', $this->name);
-            })
-            ->get()->toArray();
+        return $this->id;
+    }
 
-        return !empty($layoutParts);
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription(string $description)
+    {
+        $this->description = $description;
     }
 }

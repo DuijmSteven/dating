@@ -25,8 +25,6 @@ class HomeController extends FrontendController
      */
     public function index(Activity $activity)
     {
-        $this->setupSidebars(true);
-
         return view('frontend.home', [
             'title' => 'Homepage - ' . config('app.name'),
             'activity' => $activity->latest()->get()

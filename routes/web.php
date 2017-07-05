@@ -31,10 +31,7 @@ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::get('contact', 'Frontend\HomeController@showContact')
     ->name('contact.get');
 
-
 Route::get('/', 'Frontend\HomeController@index')
-    ->name('root')->middleware(['auth']);
-Route::get('home', 'Frontend\HomeController@index')
     ->name('home')->middleware(['auth']);
 
 /* User routes */
@@ -187,8 +184,12 @@ Route::group([
     ], function () {
         Route::get('/', 'Admin\ModuleController@index')
             ->name('admin.modules.index');
-        Route::get('/layout-part/{layoutPartId}', 'Admin\ModuleController@showLayoutPart')
-            ->name('admin.modules.layout-part.show');
+        Route::get('/layout', 'Admin\ModuleController@showLayout')
+            ->name('admin.modules.layout.show');
+
+        Route::post('update', 'Admin\ModuleController@updateModules')
+            ->name('admin.modules.layout.update');
+
         Route::delete('{moduleId}', 'Admin\ModuleController@destroy')
             ->name('admin.modules.destroy');
 
@@ -201,14 +202,6 @@ Route::group([
             ->name('admin.modules.edit');
         Route::put('{moduleId}', 'Admin\ModuleController@update')
             ->name('admin.modules.update');
-    });
-
-
-    Route::group([
-        'prefix' => 'layout-parts'
-    ], function () {
-        Route::post('update/{layoutPartId}', 'Admin\LayoutPartController@updateModules')
-            ->name('admin.layout-parts.modules.update');
     });
 
     Route::group([
