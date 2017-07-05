@@ -18,16 +18,24 @@
             @endforeach
         </div>
     </div>
-    <div class="Shoutbox__controls">
+    <div class="Shoutbox__controls JS--Shoutbox__controls">
         <form action="">
             <div class="form-group">
                     <textarea name="message"
                               id="message"
                               rows="4"
+                              maxlength="140"
                               placeholder="Type something!"
                               class="form-control"></textarea>
             </div>
             <div class="text-right">
+                <div class="Shoutbox__textarea-counter">
+                    <span class="Shoutbox__textarea-counter__count
+                        JS--Shoutbox__textarea-counter__count
+                    ">
+                        0</span>/140
+                </div>
+
                 @include('frontend.components.button', [
                     'buttonContext' => 'form',
                     'buttonType' => 'submit',

@@ -72,5 +72,10 @@
         padding: map_get($shoutboxItemBubble, padding);
         font-size: map_get($shoutboxItemBubble, font-size) + px;
     }
+
+    &__textarea-counter {
+        float: left;
+        color: #999;
+    }
 }
 
