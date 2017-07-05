@@ -18,10 +18,6 @@ disableBodyScrollOnShoutboxHover();
 function initiateTextareaCounter()
 {
     $('.JS--Shoutbox__controls textarea').keyup(function () {
-        if ($(this).val().length >=140) {
-
-        }
-
         $('.JS--Shoutbox__textarea-counter__count').text($(this).val().length);
     });
 }
