@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class LayoutPart extends Model
 {
     public $table = 'layout_parts';
+    public $timestamps = false;
 
     public $fillable = [
         'name'

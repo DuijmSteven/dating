@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\LayoutParts\ModuleInstancesUpdateRequest;
-use App\Http\Requests\Admin\Modules\ModuleUpdateRequest;
+use App\Http\Requests\Admin\ModuleInstances\ModuleInstancesUpdateRequest;
+use App\Http\Requests\Admin\Modules\LayoutPartUpdateRequest;
 use App\LayoutPart;
 use App\LayoutPartView;
 use App\Module;
-use App\Http\Requests\Admin\Modules\ModuleCreateRequest;
+use App\Http\Requests\Admin\Modules\LayoutPartCreateRequest;
 use App\ModuleInstance;
 use App\View;
 use Carbon\Carbon;
@@ -201,10 +201,10 @@ class ModuleController extends Controller
     }
 
     /**
-     * @param ModuleCreateRequest $request
+     * @param LayoutPartCreateRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function post(ModuleCreateRequest $request)
+    public function post(LayoutPartCreateRequest $request)
     {
         try {
             Module::create($request->all());
@@ -224,11 +224,11 @@ class ModuleController extends Controller
     }
 
     /**
-     * @param ModuleCreateRequest $request
+     * @param LayoutPartCreateRequest $request
      * @param int $moduleId
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(ModuleUpdateRequest $request, int $moduleId)
+    public function update(LayoutPartUpdateRequest $request, int $moduleId)
     {
         try {
             $module = Module::find($moduleId);

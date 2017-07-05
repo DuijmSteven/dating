@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Modules\ModuleUpdateRequest;
-use App\Module;
-use App\Http\Requests\Admin\Modules\ModuleCreateRequest;
+use App\Http\Requests\Admin\LayoutParts\LayoutPartUpdateRequest;
+use App\LayoutPart;
+use App\Http\Requests\Admin\LayoutParts\LayoutPartCreateRequest;
 use Carbon\Carbon;
 
 /**
@@ -19,37 +19,37 @@ class LayoutPartController extends Controller
      */
     public function index()
     {
-        $modules = Module::orderBy('name', 'desc')->paginate(10);
+        $layoutParts = LayoutPart::orderBy('id', 'asc')->paginate(10);
 
         return view(
-            'admin.modules.index',
+            'admin.layout-parts.index',
             [
-                'title' => 'Modules Overview - ' . \config('app.name'),
-                'headingLarge' => 'Modules',
+                'title' => 'Layout Parts Overview - ' . \config('app.name'),
+                'headingLarge' => 'Layout Parts',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
-                'modules' => $modules
+                'layoutParts' => $layoutParts
             ]
         );
     }
 
     /**
-     * @param int $moduleId
+     * @param int $layoutPartId
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(int $moduleId)
+    public function destroy(int $layoutPartId)
     {
         try {
-            Module::destroy($moduleId);
+            LayoutPart::destroy($layoutPartId);
 
             $alerts[] = [
                 'type' => 'success',
-                'message' => 'The module was deleted.'
+                'message' => 'The layout part was deleted.'
             ];
         } catch (\Exception $exception) {
             $alerts[] = [
                 'type' => 'error',
-                'message' => 'The module was not deleted due to an exception.'
+                'message' => 'The layout part was not deleted due to an exception.'
             ];
         }
 
@@ -62,10 +62,10 @@ class LayoutPartController extends Controller
     public function getCreate()
     {
         return view(
-            'admin.modules.create',
+            'admin.layout-parts.create',
             [
-                'title' => 'Create module - ' . \config('app.name'),
-                'headingLarge' => 'Modules',
+                'title' => 'Create layout Part - ' . \config('app.name'),
+                'headingLarge' => 'Layout Part',
                 'headingSmall' => 'Create'
             ]
         );
@@ -78,33 +78,33 @@ class LayoutPartController extends Controller
     public function getUpdate(int $moduleId)
     {
         return view(
-            'admin.modules.edit',
+            'admin.layout-parts.edit',
             [
-                'title' => 'Edit module - ' . \config('app.name'),
+                'title' => 'Edit Layout Part - ' . \config('app.name'),
                 'headingLarge' => 'Modules',
                 'headingSmall' => 'Edit',
-                'module' => Module::find($moduleId)
+                'module' => LayoutPart::find($moduleId)
             ]
         );
     }
 
     /**
-     * @param ModuleCreateRequest $request
+     * @param LayoutPartCreateRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function post(ModuleCreateRequest $request)
+    public function post(LayoutPartCreateRequest $request)
     {
         try {
-            Module::create($request->all());
+            LayoutPart::create($request->all());
 
             $alerts[] = [
                 'type' => 'success',
-                'message' => 'The module was created.'
+                'message' => 'The layout part was created.'
             ];
         } catch (\Exception $exception) {
             $alerts[] = [
                 'type' => 'error',
-                'message' => 'The module was not created due to an exception.'
+                'message' => 'The layout part was not created due to an exception.'
             ];
         }
 
@@ -112,39 +112,28 @@ class LayoutPartController extends Controller
     }
 
     /**
-     * @param ModuleCreateRequest $request
+     * @param LayoutPartUpdateRequest $request
      * @param int $moduleId
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(ModuleUpdateRequest $request, int $moduleId)
+    public function update(LayoutPartUpdateRequest $request, int $layoutPartId)
     {
         try {
-            $module = Module::find($moduleId);
+            $layoutPart = LayoutPart::find($layoutPartId);
 
-            $module->update($request->all());
+            $layoutPart->update($request->all());
 
             $alerts[] = [
                 'type' => 'success',
-                'message' => 'The module was updated.'
+                'message' => 'The layout part was updated.'
             ];
         } catch (\Exception $exception) {
             $alerts[] = [
                 'type' => 'error',
-                'message' => 'The module was not updated due to an exception.'
+                'message' => 'The layout part was not updated due to an exception.'
             ];
         }
 
         return redirect()->back()->with('alerts', $alerts);
-    }
-
-    /**
-     * @return \Closure
-     */
-    private function filterModuleName(string $moduleName): \Closure
-    {
-        $filterModuleName = function ($query) use ($moduleName) {
-            $query->where('name', $moduleName);
-        };
-        return $filterModuleName;
     }
 }

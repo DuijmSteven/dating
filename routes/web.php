@@ -225,6 +225,26 @@ Route::group([
         Route::get('{viewId}/layout', 'Admin\ViewController@showLayout')
             ->name('admin.views.layout.show');
     });
+
+    Route::group([
+        'prefix' => 'layout-parts'
+    ], function () {
+        Route::get('/', 'Admin\LayoutPartController@index')
+            ->name('admin.layout-parts.overview');
+
+        Route::delete('{moduleId}', 'Admin\LayoutPartController@destroy')
+            ->name('admin.layout-parts.destroy');
+
+        Route::get('create', 'Admin\LayoutPartController@getCreate')
+            ->name('admin.layout-parts.create');
+        Route::post('', 'Admin\LayoutPartController@post')
+            ->name('admin.layout-parts.post');
+
+        Route::get('{moduleId}', 'Admin\LayoutPartController@getUpdate')
+            ->name('admin.layout-parts.edit');
+        Route::put('{moduleId}', 'Admin\LayoutPartController@update')
+            ->name('admin.layout-parts.update');
+    });
 });
 
 Route::group([

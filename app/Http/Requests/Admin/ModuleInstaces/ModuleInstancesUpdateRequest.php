@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Admin\LayoutParts;
+namespace App\Http\Requests\Admin\ModuleInstances;
 
 use App\Http\Requests\Request;
 

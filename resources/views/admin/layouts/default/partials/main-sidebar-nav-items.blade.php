@@ -118,52 +118,97 @@
         </li>
     </ul>
 </li>
-<li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.modules') ? 'active' : '' !!}">
+@php
+    $routeName = \Request::route()->getName();
+    $cmsRoutesTruthArray = array_map(function ($value) use ($routeName) {
+        return str_contains($routeName, $value);
+    }, [
+        'admin.modules',
+        'admin.views',
+        'admin.layout-parts',
+    ]);
+@endphp
+<li class="treeview {!! in_array(true, $cmsRoutesTruthArray) ? 'active' : '' !!}">
     <a href="#">
-        <i class="fa fa-money"></i>
-        <span>Modules</span>
+        <i class="fa fa-list"></i>
+        <span>CMS</span>
         <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
     </a>
     <ul class="treeview-menu">
-        <li class="{!! \Request::route()->getName() == 'admin.modules.index' ? 'active' : '' !!}">
-            <a href="{!! route('admin.modules.index', ['page' => 1]) !!}">
-                <i class="fa fa-list"></i>
-                Overview
-            </a>
-        </li>
-        <li class="{!! \Request::route()->getName() == 'admin.modules.layout.show' ? 'active' : '' !!}">
-            <a href="{!! route('admin.modules.layout.show') !!}">
-                <i class="fa fa-list"></i>
-                Layout
-            </a>
-        </li>
-    </ul>
-</li>
-<li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.views') ? 'active' : '' !!}">
-    <a href="#">
-        <i class="fa fa-money"></i>
-        <span>Views</span>
-        <span class="pull-right-container">
+        <li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.modules') ? 'active' : '' !!}">
+            <a href="#">
+                <i class="fa fa-money"></i>
+                <span>Modules</span>
+                <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
-    </a>
-    <ul class="treeview-menu">
-        <li class="{!! \Request::route()->getName() == 'admin.views.overview' ? 'active' : '' !!}">
-            <a href="{!! route('admin.views.overview', ['page' => 1]) !!}">
-                <i class="fa fa-list"></i>
-                Overview
             </a>
+            <ul class="treeview-menu">
+                <li class="{!! \Request::route()->getName() == 'admin.modules.index' ? 'active' : '' !!}">
+                    <a href="{!! route('admin.modules.index', ['page' => 1]) !!}">
+                        <i class="fa fa-list"></i>
+                        Overview
+                    </a>
+                </li>
+                <li class="{!! \Request::route()->getName() == 'admin.modules.layout.show' ? 'active' : '' !!}">
+                    <a href="{!! route('admin.modules.layout.show') !!}">
+                        <i class="fa fa-list"></i>
+                        Layout
+                    </a>
+                </li>
+            </ul>
         </li>
-        <li class="{!! \Request::route()->getName() == 'admin.views.create.show' !!}">
-            <a href="{!! route('admin.views.create.show') !!}">
-                <i class="fa fa-plus"></i>
-                Create
+        <li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.views') ? 'active' : '' !!}">
+            <a href="#">
+                <i class="fa fa-money"></i>
+                <span>Views</span>
+                <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
             </a>
+            <ul class="treeview-menu">
+                <li class="{!! \Request::route()->getName() == 'admin.views.overview' ? 'active' : '' !!}">
+                    <a href="{!! route('admin.views.overview', ['page' => 1]) !!}">
+                        <i class="fa fa-list"></i>
+                        Overview
+                    </a>
+                </li>
+                <li class="{!! \Request::route()->getName() == 'admin.views.create.show' !!}">
+                    <a href="{!! route('admin.views.create.show') !!}">
+                        <i class="fa fa-plus"></i>
+                        Create
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.layout-parts') ? 'active' : '' !!}">
+            <a href="#">
+                <i class="fa fa-money"></i>
+                <span>Layout Parts</span>
+                <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+            </a>
+            <ul class="treeview-menu">
+                <li class="{!! \Request::route()->getName() == 'admin.layout-parts.overview' ? 'active' : '' !!}">
+                    <a href="{!! route('admin.layout-parts.overview', ['page' => 1]) !!}">
+                        <i class="fa fa-list"></i>
+                        Overview
+                    </a>
+                </li>
+                <li class="{!! \Request::route()->getName() == 'admin.layout-parts.create' ? 'active' : '' !!}">
+                    <a href="{!! route('admin.layout-parts.create') !!}">
+                        <i class="fa fa-plus"></i>
+                        Create
+                    </a>
+                </li>
+            </ul>
         </li>
     </ul>
 </li>
+
 <li>
     <a href="{!! route('home') !!}">
         <i class="fa fa-globe"></i>

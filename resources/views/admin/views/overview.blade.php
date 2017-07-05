@@ -17,7 +17,7 @@
                     <div class="pull-left">
                         <h3 class="box-title">Views (Total: <strong>{!! $views->total() !!}</strong>)</h3>
                     </div>
-                    <a class="pull-right btn btn-success" href="{{ route('admin.views.create.show') }}">Create View</a>
+                    <a class="pull-right btn btn-info" href="{{ route('admin.views.create.show') }}">Create View</a>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body table-responsive no-padding">
