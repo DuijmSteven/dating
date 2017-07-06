@@ -9,6 +9,9 @@
 @import "node_modules/font-awesome/scss/font-awesome";
 $fa-font-path : "node_modules/font-awesome/fonts" !default;
 
+//Jquery UI
+@import "node_modules/jquery-ui-dist/jquery-ui";
+
 @import "scaffolding";
 @import "navbar";
 @import "forms";

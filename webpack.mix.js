@@ -35,7 +35,7 @@ mix.styles([
 mix.scripts([
     'resources/assets/admin-lte/js/jquery-3.1.1.min.js',
     'resources/assets/admin-lte/js/jquery-ui.min.js',
-   'resources/assets/admin-lte/js/adminlte.min.js',
+    'resources/assets/admin-lte/js/adminlte.min.js',
     'resources/assets/admin-lte/js/bootstrap.min.js',
     'resources/assets/admin-lte/js/bootstrap-markdown.js',
     'resources/assets/admin-lte/js/bootstrap3-wysihtml5.all.min.js',

@@ -139,7 +139,7 @@
     <ul class="treeview-menu">
         <li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.modules') ? 'active' : '' !!}">
             <a href="#">
-                <i class="fa fa-money"></i>
+                <i class="fa fa-cubes"></i>
                 <span>Modules</span>
                 <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
@@ -162,7 +162,7 @@
         </li>
         <li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.views') ? 'active' : '' !!}">
             <a href="#">
-                <i class="fa fa-money"></i>
+                <i class="fa fa-eye"></i>
                 <span>Views</span>
                 <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
@@ -185,7 +185,7 @@
         </li>
         <li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.layout-parts') ? 'active' : '' !!}">
             <a href="#">
-                <i class="fa fa-money"></i>
+                <i class="fa fa-object-group"></i>
                 <span>Layout Parts</span>
                 <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
