@@ -1,7 +1,7 @@
 window.jQuery = require('jquery');
 window.$ = window.jQuery;
 require('bootstrap-sass');
-require('jquery-ui-dist/jquery-ui.js');
+require('jquery-autocomplete/jquery.autocomplete.js');
 
 $(document).ready(function() {
     //console.log($.fn.tooltip.Constructor.VERSION);

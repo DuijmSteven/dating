@@ -3,7 +3,7 @@ function searchDutchCities() {
         $.getJSON(DP.baseUrl + '/cities/nl')
             .done(function (response) {
                 $(".JS--Search__autoCompleteDutchCites").autocomplete({
-                    source: response.cities
+                    source: [response.cities]
                 })
             }).fail(function () {
             console.log("Error: Ajax call to users/cities endpoint failed");
