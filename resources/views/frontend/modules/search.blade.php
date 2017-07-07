@@ -7,7 +7,7 @@
             <div class="form-group">
                 <label for="">City</label>
                 <input type="text"
-                       class="JS--Search__autoCompleteDutchCites form-control"
+                       class="JS--Search__autoCompleteCites form-control"
                        name="city"
                 >
             </div>

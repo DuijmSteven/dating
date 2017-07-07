@@ -74,7 +74,7 @@
                         <div class="form-group">
                             <label for="password">City</label>
                             <input type="text"
-                                   class="js-autoCompleteDutchCites form-control"
+                                   class="js-autoCompleteCites form-control"
                                    name="city"
                                    value="{!! ucfirst($peasant->meta->city) !!}"
                             >

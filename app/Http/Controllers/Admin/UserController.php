@@ -6,6 +6,10 @@ use App\Helpers\ApplicationConstants\UserConstants;
 use App\Http\Controllers\Controller;
 use App\Managers\UserManager;
 
+/**
+ * Class UserController
+ * @package App\Http\Controllers\Admin
+ */
 class UserController extends Controller
 {
     /** @var UserManager $userManager */
@@ -34,16 +38,5 @@ class UserController extends Controller
         } catch (\Exception $exception) {
             throw $exception;
         }
-    }
-
-    /**
-     * @param $countryCode
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getCities($countryCode)
-    {
-        return response()->json([
-            'cities' => UserConstants::getCities($countryCode)
-        ]);
     }
 }

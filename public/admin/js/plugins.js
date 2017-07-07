@@ -18060,11 +18060,11 @@ $(window).load(function () {
         'format': 'yyyy-mm-dd'
     });
 
-    if ($('.js-autoCompleteDutchCites').length > 0) {
+    if ($('.js-autoCompleteCites').length > 0) {
         // Auto-completes Dutch cities in bot creation view text field
-        $.getJSON(DP.baseUrl + '/cities/nl')
+        $.getJSON(DP.baseUrl + '/api/cities/nl')
             .done(function (response) {
-                $(".js-autoCompleteDutchCites").autocomplete({
+                $(".js-autoCompleteCites").autocomplete({
                     source: response.cities
                 })
             }).fail(function () {
