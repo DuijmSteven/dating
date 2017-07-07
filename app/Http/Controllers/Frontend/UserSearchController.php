@@ -54,7 +54,7 @@ class UserSearchController extends FrontendController
         $viewData = [
         ];
         return view(
-            'frontend.users.search.index',
+            'frontend.users.search.overview',
             array_merge(
                 $viewData,
                 [

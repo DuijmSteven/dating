@@ -31,7 +31,7 @@ class ConversationController extends Controller
         $paginator = new LengthAwarePaginator($conversations, $conversationsTotalCount, 20, $page);
         $paginator->setPath('/backend/conversations');
         return view(
-            'admin.conversations.index',
+            'admin.conversations.overview',
             [
                 'title' => 'Conversations Overview - ' . \config('app.name'),
                 'headingLarge' => 'Conversations',

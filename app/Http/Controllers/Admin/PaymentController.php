@@ -23,7 +23,7 @@ class PaymentController extends Controller
             ->orderBy('created_at', 'desc')->paginate(PaginationConstants::$perPage['backend']['default']);
 
         return view(
-            'admin.payments.index',
+            'admin.payments.overview',
             [
                 'title' => 'Payments Overview - ' . config('app.name'),
                 'headingLarge' => 'Payments',

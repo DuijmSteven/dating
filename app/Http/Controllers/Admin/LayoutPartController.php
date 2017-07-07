@@ -22,7 +22,7 @@ class LayoutPartController extends Controller
         $layoutParts = LayoutPart::orderBy('id', 'asc')->paginate(10);
 
         return view(
-            'admin.layout-parts.index',
+            'admin.layout-parts.overview',
             [
                 'title' => 'Layout Parts Overview - ' . \config('app.name'),
                 'headingLarge' => 'Layout Parts',

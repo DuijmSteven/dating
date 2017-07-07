@@ -26,14 +26,16 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
+                                <th>Route name</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($views as $view)
                                 <tr>
-                                    <td>{!! $view->id !!}</td>
-                                    <td>{{ $view->name }}</td>
+                                    <td>{!! $view->getId() !!}</td>
+                                    <td>{{ $view->getName() }}</td>
+                                    <td>{{ $view->getRouteName() }}</td>
                                     <td class="action-buttons">
                                         <a href="{{ route('admin.views.delete', ['viewId' => $view->id]) }}"
                                            class="btn btn-default">

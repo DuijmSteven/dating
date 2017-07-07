@@ -44,7 +44,7 @@ class BotController extends Controller
         }
 
         return view(
-            'admin.bots.index',
+            'admin.bots.overview',
             [
                 'title' => 'Bot Overview - ' . \MetaConstants::getSiteName(),
                 'headingLarge' => 'Bot',

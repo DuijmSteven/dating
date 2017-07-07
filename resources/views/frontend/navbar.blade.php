@@ -21,8 +21,8 @@
                     <li class="{!! str_contains(\Request::route()->getName(), 'home') ? 'active' : '' !!}"><a
                                 href="{{ route('home') }}"><i class="fa fa-fw fa-newspaper-o"></i>Newsfeed</a>
                     </li>
-                    <li class="{!! \Request::route()->getName() == 'users.retrieve' ? 'active' : '' !!}">
-                        <a href="{{ route('users.retrieve') }}">
+                    <li class="{!! \Request::route()->getName() == 'users.overview' ? 'active' : '' !!}">
+                        <a href="{{ route('users.overview') }}">
                             {{ @trans('profiles.main_heading') }}
                             <span class="sr-only">(current)</span>
                         </a>

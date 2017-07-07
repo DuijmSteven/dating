@@ -24,8 +24,11 @@ class CreateViewsTable extends Migration
         });
 
         $views = [
-            'home' => 'home',
-            'contact' => 'contact.get'
+            'Home' => 'home',
+            'Contact' => 'contact.get',
+            'Users Search' => 'contact.get',
+            'Users Overview' => 'contact.get',
+            'User profile' => 'contact.get',
         ];
 
         foreach ($views as $viewName => $routeName) {

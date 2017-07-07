@@ -53,8 +53,8 @@
                     </span>
     </a>
     <ul class="treeview-menu">
-        <li class="{!! \Request::route()->getName() == 'admin.payments.index' ? 'active' : '' !!}">
-            <a href="{!! route('admin.payments.index', ['page' => 1]) !!}">
+        <li class="{!! \Request::route()->getName() == 'admin.payments.overview' ? 'active' : '' !!}">
+            <a href="{!! route('admin.payments.overview', ['page' => 1]) !!}">
                 <i class="fa fa-list"></i>
                 Overview
             </a>
@@ -71,7 +71,7 @@
     </a>
     <ul class="treeview-menu">
         <li class="{!! \Request::route()->getName() == 'admin.peasants.retrieve' ? 'active' : '' !!}">
-            <a href="{!! route('admin.conversations.index', ['page' => 1]) !!}">
+            <a href="{!! route('admin.conversations.overview', ['page' => 1]) !!}">
                 <i class="fa fa-list"></i>
                 Overview
             </a>
@@ -87,8 +87,8 @@
                     </span>
     </a>
     <ul class="treeview-menu">
-        <li class="{!! \Request::route()->getName() == 'admin.articles.index' ? 'active' : '' !!}">
-            <a href="{!! route('admin.articles.index', ['page' => 1]) !!}">
+        <li class="{!! \Request::route()->getName() == 'admin.articles.overview' ? 'active' : '' !!}">
+            <a href="{!! route('admin.articles.overview', ['page' => 1]) !!}">
                 <i class="fa fa-list"></i>
                 Overview
             </a>
@@ -146,8 +146,8 @@
                     </span>
             </a>
             <ul class="treeview-menu">
-                <li class="{!! \Request::route()->getName() == 'admin.modules.index' ? 'active' : '' !!}">
-                    <a href="{!! route('admin.modules.index', ['page' => 1]) !!}">
+                <li class="{!! \Request::route()->getName() == 'admin.modules.overview' ? 'active' : '' !!}">
+                    <a href="{!! route('admin.modules.overview', ['page' => 1]) !!}">
                         <i class="fa fa-list"></i>
                         Overview
                     </a>

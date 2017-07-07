@@ -19,7 +19,7 @@ class ViewController extends Controller
      */
     public function overview()
     {
-        $views = View::orderBy('name', 'desc')->paginate(10);
+        $views = View::orderBy('route_name', 'asc')->paginate(10);
 
         return view(
             'admin.views.overview',

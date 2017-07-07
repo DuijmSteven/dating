@@ -37,7 +37,7 @@ class PeasantController extends Controller
         })->paginate(10);
 
         return view(
-            'admin.peasants.index',
+            'admin.peasants.overview',
             [
                 'title' => 'Peasant Overview - ' . \config('app.name'),
                 'headingLarge' => 'Peasant',

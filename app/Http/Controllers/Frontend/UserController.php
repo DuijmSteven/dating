@@ -47,7 +47,7 @@ class UserController extends FrontendController
         ];
 
         return view(
-            'frontend/users/index',
+            'frontend.users.overview',
             array_merge(
                 $viewData,
                 [
@@ -74,7 +74,7 @@ class UserController extends FrontendController
         ];
 
         return view(
-            'frontend/users/profile',
+            'frontend.users.profile',
             array_merge(
                 $viewData,
                 [
@@ -97,7 +97,7 @@ class UserController extends FrontendController
             'carbonNow' => Carbon::now()
         ];
         return view(
-            'frontend/users/online',
+            'frontend.users.online',
             array_merge(
                 $viewData,
                 [

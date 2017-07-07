@@ -40,7 +40,7 @@ Route::group([
     'middleware' => ['auth']
 ], function () {
     Route::get('/', 'Frontend\UserController@index')
-        ->name('users.retrieve');
+        ->name('users.overview');
     Route::get('/search', 'Frontend\UserSearchController@getSearch')
         ->name('users.search.get');
     Route::post('/search', 'Frontend\UserSearchController@postSearch')
@@ -140,7 +140,7 @@ Route::group([
         'prefix' => 'conversations'
     ], function () {
         Route::get('/', 'Admin\ConversationController@index')
-            ->name('admin.conversations.index');
+            ->name('admin.conversations.overview');
         Route::delete('{conversationId}', 'Admin\ConversationController@destroy')
             ->name('admin.conversations.destroy');
     });
@@ -156,7 +156,7 @@ Route::group([
         'prefix' => 'articles'
     ], function () {
         Route::get('/', 'Admin\ArticleController@index')
-            ->name('admin.articles.index');
+            ->name('admin.articles.overview');
 
         Route::delete('{articleId}', 'Admin\ArticleController@destroy')
             ->name('admin.articles.destroy');
@@ -176,14 +176,14 @@ Route::group([
         'prefix' => 'payments'
     ], function () {
         Route::get('/', 'Admin\PaymentController@index')
-            ->name('admin.payments.index');
+            ->name('admin.payments.overview');
     });
 
     Route::group([
         'prefix' => 'modules'
     ], function () {
         Route::get('/', 'Admin\ModuleController@index')
-            ->name('admin.modules.index');
+            ->name('admin.modules.overview');
         Route::get('/layout', 'Admin\ModuleController@showLayout')
             ->name('admin.modules.layout.show');
 

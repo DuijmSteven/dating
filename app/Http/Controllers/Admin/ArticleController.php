@@ -27,7 +27,7 @@ class ArticleController extends Controller
         }
 
         return view(
-            'admin.articles.index',
+            'admin.articles.overview',
             [
                 'title' => 'Articles Overview - ' . \config('app.name'),
                 'headingLarge' => 'Articles',

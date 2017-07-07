@@ -29,7 +29,7 @@ class ModuleController extends Controller
         $modules = Module::orderBy('id', 'asc')->paginate(10);
 
         return view(
-            'admin.modules.index',
+            'admin.modules.overview',
             [
                 'title' => 'Modules Overview - ' . \config('app.name'),
                 'headingLarge' => 'Modules',

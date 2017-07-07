@@ -11,7 +11,7 @@
                     </a>
                 </div>
                 <div class="Online-users__username">
-                    <a href="{!! route('users.show', ['userId']) !!}">
+                    <a href="{!! route('users.show', ['userId' => $user->id]) !!}">
                         {{ $user->username }}
                     </a>
                 </div>
