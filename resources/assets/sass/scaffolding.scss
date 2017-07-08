@@ -1,0 +1,17 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,500,500i,600,600i');
+
+body {
+    font-family: 'Fira Sans', sans-serif !important;
+    font-weight: 400;
+    background-color: $bodyBgColor;
+    font-size: map_get($fontSize, body-mobile) + px;
+    color: $textColor;
+    width: 100%;
+}
+
+@media (min-width: $screen-sm-min) {
+    body {
+        font-size: map_get($fontSize, body-desktop) + px;
+    }
+}

@@ -17,8 +17,7 @@ class CreateConversationNotesTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('conversation_id')->unsigned();
-            $table->string('title', 20);
-            $table->string('category', 20);
+            $table->integer('category_id')->unsigned();
             $table->string('body');
             $table->timestamps();
         });

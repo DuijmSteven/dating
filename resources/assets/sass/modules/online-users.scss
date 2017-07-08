@@ -1,0 +1,55 @@
+// Online Users
+//
+// Markup: online-users.hbs
+//
+// The Online Users module
+//
+// Style guide: Modules.Online Users
+.Online-users {
+    &__item {
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+        -webkit-justify-content: flex-start;
+        justify-content: flex-start;
+        -webkit-align-items: center;
+        align-items: center;
+
+        text-align: map_get($onlineUsersItem, textAlign);
+        margin-bottom: map_get($onlineUsersItem, marginBottom) + px;
+
+        &:last-of-type {
+            margin-bottom: 0
+        }
+    }
+
+    &__body {
+        padding: 10px 0;
+    }
+
+    &__profile-image {
+        -webkit-flex: 1 0 0;
+        flex: 1 0 0;
+        text-align: center;
+
+        img {
+            width: map_get($roundImageDimensions, xs) + px;
+            height: map_get($roundImageDimensions, xs) + px;
+            border-radius: 50%;
+        }
+    }
+
+    &__username {
+        -webkit-flex: 4 0 0;
+        flex: 4 0 0;
+        text-align: left;
+
+        font-size: map_get($onlineUsersItem, fontSize) + px;
+        a {
+            color: #333;
+            text-decoration: none;
+        }
+    }
+}
+

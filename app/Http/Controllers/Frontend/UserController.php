@@ -6,9 +6,12 @@ use App\Managers\UserManager;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
-class UserController extends Controller
+/**
+ * Class UserController
+ * @package App\Http\Controllers\Frontend
+ */
+class UserController extends FrontendController
 {
     /** @var User */
     private $user;
@@ -17,15 +20,15 @@ class UserController extends Controller
     private $userManager;
 
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * UserController constructor.
+     * @param User $user
+     * @param UserManager $userManager
      */
     public function __construct(User $user, UserManager $userManager)
     {
+        parent::__construct();
         $this->user = $user;
         $this->userManager = $userManager;
-        parent::__construct();
     }
 
     /**
@@ -36,17 +39,19 @@ class UserController extends Controller
     public function index()
     {
         $viewData = [
-            'users' => $this->user->with(['meta', 'roles'])->paginate(15),
+            'users' => $this->user->with(['meta', 'roles'])->whereHas('roles', function ($query) {
+                $query->where('name', 'peasant');
+                $query->orWhere('name', 'bot');
+            })->paginate(15),
             'carbonNow' => Carbon::now()
         ];
 
         return view(
-            'frontend/users/index',
+            'frontend.users.overview',
             array_merge(
                 $viewData,
                 [
-                    'title' => 'Profiles',
-                    'hasSidebar' => true
+                    'title' => 'Profiles'
                 ]
             )
         );
@@ -55,8 +60,9 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param $userId
      * @return \Illuminate\Http\Response
+     * @internal param $
      */
     public function show($userId)
     {
@@ -68,7 +74,7 @@ class UserController extends Controller
         ];
 
         return view(
-            'frontend/users/profile',
+            'frontend.users.profile',
             array_merge(
                 $viewData,
                 [
@@ -91,7 +97,7 @@ class UserController extends Controller
             'carbonNow' => Carbon::now()
         ];
         return view(
-            'frontend/users/online',
+            'frontend.users.online',
             array_merge(
                 $viewData,
                 [

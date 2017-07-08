@@ -4,7 +4,9 @@
     <meta name="description" content="Dating app">
     <meta name="author" content="Dating">
     <meta name="csrf" value="{{ csrf_token() }}">
-    <link rel="stylesheet" href="{{ elixir('css/app.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+
+    @include('frontend.layouts.default.partials.favicons')
 
     <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>

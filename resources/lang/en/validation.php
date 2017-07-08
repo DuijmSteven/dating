@@ -84,6 +84,8 @@ return [
     'uploaded'             => 'The :attribute failed to upload.',
     'url'                  => 'The :attribute format is invalid.',
 
+    'without_spaces' => 'The :attribute can have no spaces',
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

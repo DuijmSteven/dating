@@ -1,0 +1,61 @@
+// Alert
+//
+// Markup: alert.hbs
+//
+// The component use to announce any kind of feedback to the user
+//
+// .Alert--success   - The success alert
+// .Alert--warning   - The warning alert
+// .Alert--info      - The info alert
+// .Alert--danger    - The error alert
+//
+// Style guide: Components.Alert
+.Alert {
+    border-radius: 2px;
+    padding: 5px 10px;
+    font-size: 14px;
+
+    .close {
+        text-decoration: none
+    }
+
+    &--success {
+        background-color: map_get($alertSuccess, bgColor);
+        color: map_get($alertSuccess, font-color);
+        border: 1px solid map_get($alertSuccess, border-color);
+
+        .close {
+            color: map_get($alertSuccess, dismiss-color)
+        }
+    }
+
+    &--info {
+        background-color: map_get($alertInfo, bgColor);
+        color: map_get($alertInfo, font-color);
+        border: 1px solid map_get($alertInfo, border-color);
+
+        .close {
+            color: map_get($alertInfo, dismiss-color)
+        }
+    }
+
+    &--warning {
+        background-color: map_get($alertWarning, bgColor);
+        color: map_get($alertWarning, font-color);
+        border: 1px solid map_get($alertWarning, border-color);
+
+        .close {
+            color: map_get($alertWarning, dismiss-color)
+        }
+    }
+
+    &--danger {
+        background-color: map_get($alertDanger, bgColor);
+        color: map_get($alertDanger, font-color);
+        border: 1px solid map_get($alertDanger, border-color);
+
+        .close {
+            color: map_get($alertDanger, dismiss-color)
+        }
+    }
+}

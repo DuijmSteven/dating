@@ -1,0 +1,61 @@
+// Activity
+//
+// Markup: activity.hbs
+//
+// The component use to announce any kind or user-related or other activity on the news-feed
+//
+// Style guide: Components.Activity
+.Activity {
+    &__heading {
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+        -webkit-justify-content: flex-start;
+        justify-content: flex-start;
+        -webkit-align-items: center;
+        align-items: center;
+
+        text-align: map_get($userActivityHeading, textAlign);
+    }
+
+    &__profile-image {
+        -webkit-flex: 1 0 0;
+        flex: 1 0 0;
+
+        img {
+            width: map_get($userActivityProfileImage, width) + px;
+            height: map_get($userActivityProfileImage, height) + px;
+            border-radius: 50%;
+        }
+    }
+
+    &__user-details {
+        -webkit-flex: 9 0 0;
+        flex: 9 0 0;
+    }
+
+    &__title {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.21;
+        color: $mainColor;
+    }
+
+    &__date {
+        font-size: 12px;
+        line-height: 1.42;
+        text-align: left;
+        color: $textColor;
+    }
+
+    &__body {
+        img {
+            width: 100%;
+        }
+    }
+
+    &__text {
+        padding-top: 10px;
+    }
+}

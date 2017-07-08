@@ -4,6 +4,10 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Class ComposerServiceProvider
+ * @package App\Providers
+ */
 class ComposerServiceProvider extends ServiceProvider
 {
     /**
@@ -13,7 +17,7 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->composeSidebars();
     }
 
     /**
@@ -24,5 +28,25 @@ class ComposerServiceProvider extends ServiceProvider
     public function register()
     {
         //
+    }
+
+    private function composeSidebars(): void
+    {
+        $this->composeRightSidebar();
+        $this->composeLeftSidebar();
+    }
+
+    private function composeLeftSidebar(): void
+    {
+        \View::composer(
+            'frontend.layouts.default.partials.left-sidebar', 'App\ViewComposers\Frontend\LeftSidebarComposer'
+        );
+    }
+
+    private function composeRightSidebar(): void
+    {
+        \View::composer(
+            'frontend.layouts.default.partials.right-sidebar', 'App\ViewComposers\Frontend\RightSidebarComposer'
+        );
     }
 }

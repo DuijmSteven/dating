@@ -4,6 +4,10 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Class AppServiceProvider
+ * @package App\Providers
+ */
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -13,7 +17,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        if (config('app.env') == 'local') {
+            \DB::enableQueryLog();
+        }
     }
 
     /**
@@ -26,5 +32,7 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment() !== 'production') {
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
+
+        $this->app->bind('App\Interfaces\PaymentProvider', 'App\Services\PaymentService');
     }
 }

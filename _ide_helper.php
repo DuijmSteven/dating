@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.4.18 on 2017-04-15.
+ * Generated for Laravel 5.4.25 on 2017-07-01.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -423,6 +423,21 @@ namespace Illuminate\Support\Facades {
         public static function registerDeferredProvider($provider, $service = null)
         {
             \Illuminate\Foundation\Application::registerDeferredProvider($provider, $service);
+        }
+        
+        /**
+         * Resolve the given type from the container.
+         * 
+         * (Overriding Container::makeWith)
+         *
+         * @param string $abstract
+         * @param array $parameters
+         * @return mixed 
+         * @static 
+         */
+        public static function makeWith($abstract, $parameters)
+        {
+            return \Illuminate\Foundation\Application::makeWith($abstract, $parameters);
         }
         
         /**
@@ -1091,20 +1106,6 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Resolve the given type with the given parameter overrides.
-         *
-         * @param string $abstract
-         * @param array $parameters
-         * @return mixed 
-         * @static 
-         */
-        public static function makeWith($abstract, $parameters)
-        {
-            //Method inherited from \Illuminate\Container\Container            
-            return \Illuminate\Foundation\Application::makeWith($abstract, $parameters);
-        }
-        
-        /**
          * Instantiate a concrete instance of the given type.
          *
          * @param string $concrete
@@ -1170,6 +1171,19 @@ namespace Illuminate\Support\Facades {
         {
             //Method inherited from \Illuminate\Container\Container            
             return \Illuminate\Foundation\Application::getAlias($abstract);
+        }
+        
+        /**
+         * Remove all of the extender callbacks for a given type.
+         *
+         * @param string $abstract
+         * @return void 
+         * @static 
+         */
+        public static function forgetExtenders($abstract)
+        {
+            //Method inherited from \Illuminate\Container\Container            
+            \Illuminate\Foundation\Application::forgetExtenders($abstract);
         }
         
         /**
@@ -1354,13 +1368,13 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $command
          * @param array $parameters
-         * @return void 
+         * @return \Illuminate\Foundation\Bus\PendingDispatch 
          * @static 
          */
         public static function queue($command, $parameters = array())
         {
             //Method inherited from \Illuminate\Foundation\Console\Kernel            
-            \App\Console\Kernel::queue($command, $parameters);
+            return \App\Console\Kernel::queue($command, $parameters);
         }
         
         /**
@@ -1913,6 +1927,31 @@ namespace Illuminate\Support\Facades {
         public static function guest()
         {
             return \Illuminate\Auth\SessionGuard::guest();
+        }
+        
+        /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param callable $macro
+         * @return void 
+         * @static 
+         */
+        public static function macro($name, $macro)
+        {
+            \Illuminate\Auth\SessionGuard::macro($name, $macro);
+        }
+        
+        /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */
+        public static function hasMacro($name)
+        {
+            return \Illuminate\Auth\SessionGuard::hasMacro($name);
         }
         
     }         
@@ -2869,6 +2908,86 @@ namespace Illuminate\Support\Facades {
         public static function getQueuedCookies()
         {
             return \Illuminate\Cookie\CookieJar::getQueuedCookies();
+        }
+        
+    }         
+
+    class Crypt {
+        
+        /**
+         * Determine if the given key and cipher combination is valid.
+         *
+         * @param string $key
+         * @param string $cipher
+         * @return bool 
+         * @static 
+         */
+        public static function supported($key, $cipher)
+        {
+            return \Illuminate\Encryption\Encrypter::supported($key, $cipher);
+        }
+        
+        /**
+         * Encrypt the given value.
+         *
+         * @param mixed $value
+         * @param bool $serialize
+         * @return string 
+         * @throws \Illuminate\Contracts\Encryption\EncryptException
+         * @static 
+         */
+        public static function encrypt($value, $serialize = true)
+        {
+            return \Illuminate\Encryption\Encrypter::encrypt($value, $serialize);
+        }
+        
+        /**
+         * Encrypt a string without serialization.
+         *
+         * @param string $value
+         * @return string 
+         * @static 
+         */
+        public static function encryptString($value)
+        {
+            return \Illuminate\Encryption\Encrypter::encryptString($value);
+        }
+        
+        /**
+         * Decrypt the given value.
+         *
+         * @param mixed $payload
+         * @param bool $unserialize
+         * @return string 
+         * @throws \Illuminate\Contracts\Encryption\DecryptException
+         * @static 
+         */
+        public static function decrypt($payload, $unserialize = true)
+        {
+            return \Illuminate\Encryption\Encrypter::decrypt($payload, $unserialize);
+        }
+        
+        /**
+         * Decrypt the given string without unserialization.
+         *
+         * @param string $payload
+         * @return string 
+         * @static 
+         */
+        public static function decryptString($payload)
+        {
+            return \Illuminate\Encryption\Encrypter::decryptString($payload);
+        }
+        
+        /**
+         * Get the encryption key.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getKey()
+        {
+            return \Illuminate\Encryption\Encrypter::getKey();
         }
         
     }         
@@ -3887,7 +4006,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string|\Closure $listener
          * @param bool $wildcard
-         * @return mixed 
+         * @return \Closure 
          * @static 
          */
         public static function makeListener($listener, $wildcard = false)
@@ -4008,6 +4127,18 @@ namespace Illuminate\Support\Facades {
         public static function requireOnce($file)
         {
             return \Illuminate\Filesystem\Filesystem::requireOnce($file);
+        }
+        
+        /**
+         * Get the MD5 hash of the file at the given path.
+         *
+         * @param string $path
+         * @return string 
+         * @static 
+         */
+        public static function hash($path)
+        {
+            return \Illuminate\Filesystem\Filesystem::hash($path);
         }
         
         /**
@@ -4434,6 +4565,20 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
+         * Define abilities for a resource.
+         *
+         * @param string $name
+         * @param string $class
+         * @param array $abilities
+         * @return $this 
+         * @static 
+         */
+        public static function resource($name, $class, $abilities = null)
+        {
+            return \Illuminate\Auth\Access\Gate::resource($name, $class, $abilities);
+        }
+        
+        /**
          * Define a policy class for a given class type.
          *
          * @param string $class
@@ -4557,6 +4702,17 @@ namespace Illuminate\Support\Facades {
         public static function forUser($user)
         {
             return \Illuminate\Auth\Access\Gate::forUser($user);
+        }
+        
+        /**
+         * Get all of the defined abilities.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function abilities()
+        {
+            return \Illuminate\Auth\Access\Gate::abilities();
         }
         
     }         
@@ -5384,6 +5540,31 @@ namespace Illuminate\Support\Facades {
             return \Illuminate\Mail\Mailer::setQueue($queue);
         }
         
+        /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param callable $macro
+         * @return void 
+         * @static 
+         */
+        public static function macro($name, $macro)
+        {
+            \Illuminate\Mail\Mailer::macro($name, $macro);
+        }
+        
+        /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */
+        public static function hasMacro($name)
+        {
+            return \Illuminate\Mail\Mailer::hasMacro($name);
+        }
+        
     }         
 
     class Notification {
@@ -6048,6 +6229,19 @@ namespace Illuminate\Support\Facades {
             return \Illuminate\Redis\RedisManager::connection($name);
         }
         
+        /**
+         * Resolve the given connection by name.
+         *
+         * @param string|null $name
+         * @return \Illuminate\Redis\Connections\Connection 
+         * @throws \InvalidArgumentException
+         * @static 
+         */
+        public static function resolve($name = null)
+        {
+            return \Illuminate\Redis\RedisManager::resolve($name);
+        }
+        
     }         
 
     class Request {
@@ -6185,6 +6379,18 @@ namespace Illuminate\Support\Facades {
         public static function is()
         {
             return \Illuminate\Http\Request::is();
+        }
+        
+        /**
+         * Check if the route name matches the given string.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */
+        public static function routeIs($name)
+        {
+            return \Illuminate\Http\Request::routeIs($name);
         }
         
         /**
@@ -6587,6 +6793,8 @@ namespace Illuminate\Support\Facades {
          * You should only list the reverse proxies that you manage directly.
          *
          * @param array $proxies A list of trusted proxies
+         * @param int $trustedHeaderSet A bit field of Request::HEADER_*, to set which headers to trust from your proxies
+         * @throws \InvalidArgumentException When $trustedHeaderSet is invalid
          * @static 
          */
         public static function setTrustedProxies($proxies)
@@ -6605,6 +6813,18 @@ namespace Illuminate\Support\Facades {
         {
             //Method inherited from \Symfony\Component\HttpFoundation\Request            
             return \Illuminate\Http\Request::getTrustedProxies();
+        }
+        
+        /**
+         * Gets the set of trusted headers from trusted proxies.
+         *
+         * @return int A bit field of Request::HEADER_* that defines which headers are trusted from your proxies
+         * @static 
+         */
+        public static function getTrustedHeaderSet()
+        {
+            //Method inherited from \Symfony\Component\HttpFoundation\Request            
+            return \Illuminate\Http\Request::getTrustedHeaderSet();
         }
         
         /**
@@ -6649,6 +6869,7 @@ namespace Illuminate\Support\Facades {
          * @param string $key The header key
          * @param string $value The header name
          * @throws \InvalidArgumentException
+         * @deprecated since version 3.3, to be removed in 4.0. Use the $trustedHeaderSet argument of the Request::setTrustedProxies() method instead.
          * @static 
          */
         public static function setTrustedHeaderName($key, $value)
@@ -6663,6 +6884,7 @@ namespace Illuminate\Support\Facades {
          * @param string $key The header key
          * @return string The header name
          * @throws \InvalidArgumentException
+         * @deprecated since version 3.3, to be removed in 4.0. Use the Request::getTrustedHeaderSet() method instead.
          * @static 
          */
         public static function getTrustedHeaderName($key)
@@ -6820,10 +7042,10 @@ namespace Illuminate\Support\Facades {
          * adding the IP address where it received the request from.
          * 
          * If your reverse proxy uses a different header name than "X-Forwarded-For",
-         * ("Client-Ip" for instance), configure it via "setTrustedHeaderName()" with
-         * the "client-ip" key.
+         * ("Client-Ip" for instance), configure it via the $trustedHeaderSet
+         * argument of the Request::setTrustedProxies() method instead.
          *
-         * @return string The client IP address
+         * @return string|null The client IP address
          * @see getClientIps()
          * @see http://en.wikipedia.org/wiki/X-Forwarded-For
          * @static 
@@ -6924,9 +7146,10 @@ namespace Illuminate\Support\Facades {
          * The "X-Forwarded-Port" header must contain the client port.
          * 
          * If your reverse proxy uses a different header name than "X-Forwarded-Port",
-         * configure it via "setTrustedHeaderName()" with the "client-port" key.
+         * configure it via via the $trustedHeaderSet argument of the
+         * Request::setTrustedProxies() method instead.
          *
-         * @return string 
+         * @return int|string can be a string if fetched from the server bag
          * @static 
          */
         public static function getPort()
@@ -7087,8 +7310,8 @@ namespace Illuminate\Support\Facades {
          * The "X-Forwarded-Proto" header must contain the protocol: "https" or "http".
          * 
          * If your reverse proxy uses a different header name than "X-Forwarded-Proto"
-         * ("SSL_HTTPS" for instance), configure it via "setTrustedHeaderName()" with
-         * the "client-proto" key.
+         * ("SSL_HTTPS" for instance), configure it via the $trustedHeaderSet
+         * argument of the Request::setTrustedProxies() method instead.
          *
          * @return bool 
          * @static 
@@ -7108,10 +7331,11 @@ namespace Illuminate\Support\Facades {
          * The "X-Forwarded-Host" header must contain the client host name.
          * 
          * If your reverse proxy uses a different header name than "X-Forwarded-Host",
-         * configure it via "setTrustedHeaderName()" with the "client-host" key.
+         * configure it via the $trustedHeaderSet argument of the
+         * Request::setTrustedProxies() method instead.
          *
          * @return string 
-         * @throws \UnexpectedValueException when the host name is invalid
+         * @throws SuspiciousOperationException when the host name is invalid or not trusted
          * @static 
          */
         public static function getHost()
@@ -8225,6 +8449,20 @@ namespace Illuminate\Support\Facades {
         public static function resource($name, $controller, $options = array())
         {
             \Illuminate\Routing\Router::resource($name, $controller, $options);
+        }
+        
+        /**
+         * Route an api resource to a controller.
+         *
+         * @param string $name
+         * @param string $controller
+         * @param array $options
+         * @return void 
+         * @static 
+         */
+        public static function apiResource($name, $controller, $options = array())
+        {
+            \Illuminate\Routing\Router::apiResource($name, $controller, $options);
         }
         
         /**
@@ -9750,7 +9988,7 @@ namespace Illuminate\Support\Facades {
          * Store the uploaded file on the disk.
          *
          * @param string $path
-         * @param \Illuminate\Http\UploadedFile $file
+         * @param \Illuminate\Http\File|\Illuminate\Http\UploadedFile $file
          * @param array $options
          * @return string|false 
          * @static 
@@ -10414,7 +10652,7 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Register a custom implicit validator extension.
+         * Register a custom dependent validator extension.
          *
          * @param string $rule
          * @param \Closure|string $extension
@@ -10428,7 +10666,7 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Register a custom implicit validator message replacer.
+         * Register a custom validator message replacer.
          *
          * @param string $rule
          * @param \Closure|string $replacer
@@ -11042,6 +11280,19 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
+         * Get the contents of a section.
+         *
+         * @param string $name
+         * @param string $default
+         * @return mixed 
+         * @static 
+         */
+        public static function getSection($name, $default = null)
+        {
+            return \Illuminate\View\Factory::getSection($name, $default);
+        }
+        
+        /**
          * Get the entire array of sections.
          *
          * @return array 
@@ -11219,13 +11470,122 @@ namespace Illuminate\Support\Facades {
     }         
 }
     
-namespace App\Helpers\ApplicationConstants {
+namespace App\Facades\Helpers\ApplicationConstants {
 
     class UserConstants {
+        
+        /**
+         * 
+         *
+         * @return int 
+         * @static 
+         */
+        public static function getMaxAmountOnline()
+        {
+            return \App\Helpers\ApplicationConstants\UserConstants::getMaxAmountOnline();
+        }
+        
+        /**
+         * 
+         *
+         * @param string $userType
+         * @param string $visibility
+         * @return array|null 
+         * @static 
+         */
+        public static function selectableFields($userType = 'bot', $visibility = 'public')
+        {
+            return \App\Helpers\ApplicationConstants\UserConstants::selectableFields($userType, $visibility);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $fieldName
+         * @param string $userType
+         * @param string $arrayManipulationMethodName
+         * @return mixed|null 
+         * @throws \Exception
+         * @static 
+         */
+        public static function selectableField($fieldName, $userType = 'bot', $arrayManipulationMethodName = '')
+        {
+            return \App\Helpers\ApplicationConstants\UserConstants::selectableField($fieldName, $userType, $arrayManipulationMethodName);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $userType
+         * @param string $visibility
+         * @return array|null 
+         * @static 
+         */
+        public static function userTableFields($userType = 'bot', $visibility = 'public')
+        {
+            return \App\Helpers\ApplicationConstants\UserConstants::userTableFields($userType, $visibility);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $userType
+         * @param string $visibility
+         * @return array|null 
+         * @static 
+         */
+        public static function textFields($userType = 'bot', $visibility = 'public')
+        {
+            return \App\Helpers\ApplicationConstants\UserConstants::textFields($userType, $visibility);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function textInputs($userType = 'bot', $visibility = 'public')
+        {
+            return \App\Helpers\ApplicationConstants\UserConstants::textInputs($userType, $visibility);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $userType
+         * @return array 
+         * @static 
+         */
+        public static function publicFieldNames($userType = 'bot')
+        {
+            return \App\Helpers\ApplicationConstants\UserConstants::publicFieldNames($userType);
+        }
+        
+        /**
+         * 
+         *
+         * @return array 
+         * @static 
+         */
+        public static function getCities($countryCode = 'nl')
+        {
+            return \App\Helpers\ApplicationConstants\UserConstants::getCities($countryCode);
+        }
         
     }         
 
     class MetaConstants {
+        
+        /**
+         * 
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getSiteName()
+        {
+            return \App\Helpers\ApplicationConstants\MetaConstants::getSiteName();
+        }
         
     }         
 
@@ -11234,9 +11594,99 @@ namespace App\Helpers\ApplicationConstants {
     }         
 }
     
-namespace App\Helpers {
+namespace App\Facades\Helpers {
 
     class StorageHelper {
+        
+        /**
+         * 
+         *
+         * @param $user
+         * @return mixed|string 
+         * @throws \Exception
+         * @static 
+         */
+        public static function profileImageUrl($user, $thumb = false)
+        {
+            return \App\Helpers\StorageHelper::profileImageUrl($user, $thumb);
+        }
+        
+        /**
+         * 
+         *
+         * @param int $userId
+         * @param string $gender
+         * @param string|null $filename
+         * @return mixed|string 
+         * @static 
+         */
+        public static function profileImageUrlFromId($userId, $filename, $gender)
+        {
+            return \App\Helpers\StorageHelper::profileImageUrlFromId($userId, $filename, $gender);
+        }
+        
+        /**
+         * 
+         *
+         * @param int $userId
+         * @param string $filename
+         * @return mixed|string 
+         * @static 
+         */
+        public static function userImageUrl($userId, $filename = null)
+        {
+            return \App\Helpers\StorageHelper::userImageUrl($userId, $filename);
+        }
+        
+        /**
+         * 
+         *
+         * @param int $userId
+         * @return string 
+         * @static 
+         */
+        public static function userImagesPath($userId)
+        {
+            return \App\Helpers\StorageHelper::userImagesPath($userId);
+        }
+        
+        /**
+         * 
+         *
+         * @param int $conversationId
+         * @param string $filename
+         * @return mixed 
+         * @static 
+         */
+        public static function messageAttachmentUrl($conversationId, $filename)
+        {
+            return \App\Helpers\StorageHelper::messageAttachmentUrl($conversationId, $filename);
+        }
+        
+        /**
+         * 
+         *
+         * @param int $conversationId
+         * @return string 
+         * @static 
+         */
+        public static function messageAttachmentsPath($conversationId)
+        {
+            return \App\Helpers\StorageHelper::messageAttachmentsPath($conversationId);
+        }
+        
+        /**
+         * 
+         *
+         * @param string $filePath
+         * @param string $location
+         * @return mixed 
+         * @static 
+         */
+        public static function fileUrl($filePath, $location = 'cloud')
+        {
+            return \App\Helpers\StorageHelper::fileUrl($filePath, $location);
+        }
         
     }         
 }
@@ -11610,6 +12060,18 @@ namespace Kim\Activity {
         {
             //Method inherited from \Illuminate\Database\Eloquent\Model            
             return \Kim\Activity\Activity::fresh($with);
+        }
+        
+        /**
+         * Reload the current model instance with fresh attributes from the database.
+         *
+         * @return void 
+         * @static 
+         */
+        public static function refresh()
+        {
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            \Kim\Activity\Activity::refresh();
         }
         
         /**
@@ -13498,6 +13960,13 @@ namespace GrahamCampbell\Markdown\Facades {
     }         
 }
     
+namespace TPWeb\TargetPay {
+
+    class TargetPay {
+        
+    }         
+}
+    
     
 namespace {
 
@@ -13516,6 +13985,8 @@ namespace {
     class Config extends \Illuminate\Support\Facades\Config {}
     
     class Cookie extends \Illuminate\Support\Facades\Cookie {}
+    
+    class Crypt extends \Illuminate\Support\Facades\Crypt {}
     
     class DB extends \Illuminate\Support\Facades\DB {}
     
@@ -13562,6 +14033,18 @@ namespace {
     class View extends \Illuminate\Support\Facades\View {}
     
     class Eloquent extends \Illuminate\Database\Eloquent\Model {    
+        /**
+         * Create and return an un-saved model instance.
+         *
+         * @param array $attributes
+         * @return \Illuminate\Database\Eloquent\Model 
+         * @static 
+         */
+        public static function make($attributes = array())
+        {
+            return \Illuminate\Database\Eloquent\Builder::make($attributes);
+        }
+        
         /**
          * Register a new global scope.
          *
@@ -13625,7 +14108,7 @@ namespace {
         /**
          * Add a basic where clause to the query.
          *
-         * @param string|\Closure $column
+         * @param string|array|\Closure $column
          * @param string $operator
          * @param mixed $value
          * @param string $boolean
@@ -13984,6 +14467,18 @@ namespace {
         }
         
         /**
+         * Create a new instance of the model being queried.
+         *
+         * @param array $attributes
+         * @return \Illuminate\Database\Eloquent\Model 
+         * @static 
+         */
+        public static function newModelInstance($attributes = array())
+        {
+            return \Illuminate\Database\Eloquent\Builder::newModelInstance($attributes);
+        }
+        
+        /**
          * Get the underlying query builder instance.
          *
          * @return \Illuminate\Database\Query\Builder 
@@ -14117,8 +14612,8 @@ namespace {
          * Apply the callback's query changes if the given "value" is true.
          *
          * @param mixed $value
-         * @param \Closure $callback
-         * @param \Closure $default
+         * @param callable $callback
+         * @param callable $default
          * @return mixed 
          * @static 
          */
@@ -15522,13 +16017,13 @@ namespace {
         }
         }
     
-    class UserConstants extends \App\Helpers\ApplicationConstants\UserConstants {}
+    class UserConstants extends \App\Facades\Helpers\ApplicationConstants\UserConstants {}
     
-    class MetaConstants extends \App\Helpers\ApplicationConstants\MetaConstants {}
+    class MetaConstants extends \App\Facades\Helpers\ApplicationConstants\MetaConstants {}
     
-    class PaginationConstants extends \App\Helpers\ApplicationConstants\PaginationConstants {}
+    class PaginationConstants extends \App\Facades\Helpers\ApplicationConstants\PaginationConstants {}
     
-    class StorageHelper extends \App\Helpers\StorageHelper {}
+    class StorageHelper extends \App\Facades\Helpers\StorageHelper {}
     
     class Activity extends \Kim\Activity\ActivityFacade {}
     
@@ -15537,6 +16032,8 @@ namespace {
     class Image extends \Intervention\Image\Facades\Image {}
     
     class Markdown extends \GrahamCampbell\Markdown\Facades\Markdown {}
+    
+    class TargetPay extends \TPWeb\TargetPay\TargetPay {}
     
 }
 

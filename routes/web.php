@@ -31,10 +31,7 @@ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::get('contact', 'Frontend\HomeController@showContact')
     ->name('contact.get');
 
-
 Route::get('/', 'Frontend\HomeController@index')
-    ->name('root')->middleware(['auth']);
-Route::get('home', 'Frontend\HomeController@index')
     ->name('home')->middleware(['auth']);
 
 /* User routes */
@@ -43,7 +40,7 @@ Route::group([
     'middleware' => ['auth']
 ], function () {
     Route::get('/', 'Frontend\UserController@index')
-        ->name('users.retrieve');
+        ->name('users.overview');
     Route::get('/search', 'Frontend\UserSearchController@getSearch')
         ->name('users.search.get');
     Route::post('/search', 'Frontend\UserSearchController@postSearch')
@@ -78,90 +75,195 @@ Route::group([
 Route::group([
     'prefix' => 'flirts'
 ], function () {
-    Route::get('/{senderId}/{recipientId}', 'Frontend\FlirtController@send');
+    Route::get('{senderId}/{recipientId}', 'Frontend\FlirtController@send');
 });
 
-Route::get('cities/{countryCode}', 'Backend\UserController@getCities')
+Route::get('cities/{countryCode}', 'Admin\UserController@getCities')
     ->name('cities.retrieve');
 
 Route::group([
-    'prefix' => 'backend',
+    'prefix' => 'payments'
+], function () {
+    Route::post('/', 'Frontend\PaymentController@postPayment')
+    ->name('payments.post');
+    Route::get('initiate', 'Frontend\PaymentController@initiatePayment')
+    ->name('payments.initiate');
+});
+
+Route::group([
+    'prefix' => 'admin',
     'middleware' => ['admin']
 ], function () {
-    Route::get('/dashboard', 'Backend\DashboardController@dashboard')
-        ->name('backend.dashboard');
+    Route::get('dashboard', 'Admin\DashboardController@dashboard')
+        ->name('admin.dashboard');
 
     Route::group([
         'prefix' => 'bots'
     ], function () {
-        Route::get('/', 'Backend\BotController@index')
-            ->name('backend.bots.retrieve');
-        Route::get('/create', 'Backend\BotController@create')
-            ->name('backend.bots.create.get');
-        Route::post('/create', 'Backend\BotController@store')
-            ->name('backend.bots.store');
+        Route::get('/', 'Admin\BotController@index')
+            ->name('admin.bots.retrieve');
+        Route::get('/create', 'Admin\BotController@create')
+            ->name('admin.bots.create.get');
+        Route::post('/create', 'Admin\BotController@store')
+            ->name('admin.bots.store');
 
-        Route::get('/edit/{id}', 'Backend\BotController@edit')
-            ->name('backend.bots.edit.get');
-        Route::put('/edit/{id}', 'Backend\BotController@update')
-            ->name('backend.bots.update');
+        Route::get('/edit/{id}', 'Admin\BotController@edit')
+            ->name('admin.bots.edit.get');
+        Route::put('/edit/{id}', 'Admin\BotController@update')
+            ->name('admin.bots.update');
     });
 
     Route::group([
         'prefix' => 'peasants'
     ], function () {
-        Route::get('/', 'Backend\PeasantController@index')
-            ->name('backend.peasants.retrieve');
-        Route::get('/create', 'Backend\PeasantController@create')
-            ->name('backend.peasants.create.get');
-        Route::post('/create', 'Backend\PeasantController@store')
-            ->name('backend.peasants.store');
+        Route::get('/', 'Admin\PeasantController@index')
+            ->name('admin.peasants.retrieve');
+        Route::get('create', 'Admin\PeasantController@create')
+            ->name('admin.peasants.create.get');
+        Route::post('create', 'Admin\PeasantController@store')
+            ->name('admin.peasants.store');
 
-        Route::get('/edit/{id}', 'Backend\PeasantController@edit')
-            ->name('backend.peasants.edit.get');
-        Route::put('/edit/{id}', 'Backend\PeasantController@update')
-            ->name('backend.peasants.update');
+        Route::get('edit/{id}', 'Admin\PeasantController@edit')
+            ->name('admin.peasants.edit.get');
+        Route::put('edit/{id}', 'Admin\PeasantController@update')
+            ->name('admin.peasants.update');
     });
 
     Route::group([
         'prefix' => 'users'
     ], function () {
-        Route::delete('{userId}', 'Backend\UserController@destroy')
-            ->name('backend.users.destroy');
+        Route::delete('{userId}', 'Admin\UserController@destroy')
+            ->name('admin.users.destroy');
     });
 
     Route::group([
         'prefix' => 'conversations'
     ], function () {
-        Route::get('/', 'Backend\ConversationController@index')
-            ->name('backend.conversations.index');
+        Route::get('/', 'Admin\ConversationController@index')
+            ->name('admin.conversations.overview');
+        Route::delete('{conversationId}', 'Admin\ConversationController@destroy')
+            ->name('admin.conversations.destroy');
     });
 
     Route::group([
         'prefix' => 'notes'
     ], function () {
-        Route::delete('/{noteId}', 'Backend\ConversationNoteController@destroyNote')
-            ->name('backend.conversations.notes.destroy');
+        Route::delete('{noteId}', 'Admin\ConversationNoteController@destroyNote')
+            ->name('admin.conversations.notes.destroy');
     });
 
     Route::group([
         'prefix' => 'articles'
     ], function () {
-        Route::get('/', 'Backend\ArticleController@index')
-            ->name('backend.articles.index');
+        Route::get('/', 'Admin\ArticleController@index')
+            ->name('admin.articles.overview');
 
-        Route::delete('/{articleId}', 'Backend\ArticleController@destroy')
-            ->name('backend.articles.destroy');
+        Route::delete('{articleId}', 'Admin\ArticleController@destroy')
+            ->name('admin.articles.destroy');
 
-        Route::get('/create', 'Backend\ArticleController@getCreate')
-            ->name('backend.articles.create');
-        Route::post('/', 'Backend\ArticleController@post')
-            ->name('backend.articles.post');
+        Route::get('create', 'Admin\ArticleController@getCreate')
+            ->name('admin.articles.create');
+        Route::post('/', 'Admin\ArticleController@post')
+            ->name('admin.articles.post');
 
-        Route::get('/{articleId}', 'Backend\ArticleController@getUpdate')
-            ->name('backend.articles.edit');
-        Route::put('/{articleId}', 'Backend\ArticleController@update')
-            ->name('backend.articles.update');
+        Route::get('{articleId}', 'Admin\ArticleController@getUpdate')
+            ->name('admin.articles.edit');
+        Route::put('{articleId}', 'Admin\ArticleController@update')
+            ->name('admin.articles.update');
+    });
+
+    Route::group([
+        'prefix' => 'testimonials'
+    ], function () {
+        Route::get('/', 'Admin\TestimonialController@index')
+            ->name('admin.testimonials.overview');
+
+        Route::delete('{testimonialId}', 'Admin\TestimonialController@destroy')
+            ->name('admin.testimonials.destroy');
+
+        Route::get('create', 'Admin\TestimonialController@getCreate')
+            ->name('admin.testimonials.create');
+        Route::post('/', 'Admin\TestimonialController@post')
+            ->name('admin.testimonials.post');
+
+        Route::get('{testimonialId}', 'Admin\TestimonialController@getUpdate')
+            ->name('admin.testimonials.edit');
+        Route::put('{testimonialId}', 'Admin\TestimonialController@update')
+            ->name('admin.testimonials.update');
+    });
+
+    Route::group([
+        'prefix' => 'payments'
+    ], function () {
+        Route::get('/', 'Admin\PaymentController@index')
+            ->name('admin.payments.overview');
+    });
+
+    Route::group([
+        'prefix' => 'modules'
+    ], function () {
+        Route::get('/', 'Admin\ModuleController@index')
+            ->name('admin.modules.overview');
+        Route::get('/layout', 'Admin\ModuleController@showLayout')
+            ->name('admin.modules.layout.show');
+
+        Route::post('update', 'Admin\ModuleController@updateModules')
+            ->name('admin.modules.layout.update');
+
+        Route::delete('{moduleId}', 'Admin\ModuleController@destroy')
+            ->name('admin.modules.destroy');
+
+        Route::get('create', 'Admin\ModuleController@getCreate')
+            ->name('admin.modules.create');
+        Route::post('', 'Admin\ModuleController@post')
+            ->name('admin.modules.post');
+
+        Route::get('{moduleId}', 'Admin\ModuleController@getUpdate')
+            ->name('admin.modules.edit');
+        Route::put('{moduleId}', 'Admin\ModuleController@update')
+            ->name('admin.modules.update');
+    });
+
+    Route::group([
+        'prefix' => 'views'
+    ], function () {
+        Route::get('/', 'Admin\ViewController@overview')
+            ->name('admin.views.overview');
+        Route::get('/create', 'Admin\ViewController@showCreate')
+            ->name('admin.views.create.show');
+        Route::post('/create', 'Admin\ViewController@create')
+            ->name('admin.views.create');
+
+        Route::delete('/{viewId}', 'Admin\ViewController@destroy')
+            ->name('admin.views.delete');
+
+        Route::get('/{viewId}', 'Admin\ViewController@showUpdate')
+            ->name('admin.views.update.show');
+        Route::put('/{viewId}', 'Admin\ViewController@update')
+            ->name('admin.views.update');
+
+        Route::get('{viewId}/layout', 'Admin\ViewController@showLayout')
+            ->name('admin.views.layout.show');
+    });
+
+    Route::group([
+        'prefix' => 'layout-parts'
+    ], function () {
+        Route::get('/', 'Admin\LayoutPartController@index')
+            ->name('admin.layout-parts.overview');
+
+        Route::delete('{moduleId}', 'Admin\LayoutPartController@destroy')
+            ->name('admin.layout-parts.destroy');
+
+        Route::get('create', 'Admin\LayoutPartController@getCreate')
+            ->name('admin.layout-parts.create');
+        Route::post('', 'Admin\LayoutPartController@post')
+            ->name('admin.layout-parts.post');
+
+        Route::get('{moduleId}', 'Admin\LayoutPartController@getUpdate')
+            ->name('admin.layout-parts.edit');
+        Route::put('{moduleId}', 'Admin\LayoutPartController@update')
+            ->name('admin.layout-parts.update');
     });
 });
 
@@ -175,7 +277,7 @@ Route::group([
     Route::group([
         'prefix' => 'conversations'
     ], function () {
-        Route::get('{conversationId}', 'Backend\ConversationController@show')
+        Route::get('{conversationId}', 'Admin\ConversationController@show')
             ->name('operators_platform.conversations.show');
         Route::post('/', 'ConversationController@store')
             ->name('conversations.store');
@@ -183,8 +285,8 @@ Route::group([
         Route::group([
             'prefix' => 'notes'
         ], function () {
-            Route::post('/', 'Backend\ConversationNoteController@postNote')
-                ->name('backend.conversations.notes.store');
+            Route::post('/', 'Admin\ConversationNoteController@postNote')
+                ->name('admin.conversations.notes.store');
         });
     });
 });

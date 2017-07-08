@@ -127,7 +127,8 @@ class ConversationManager
     public function unrepliedPeasantBotConversations()
     {
         return self::conversationsByIds(
-            $this->conversationIds('only_old', 'peasant_bot')
+            $this->conversationIds('only_old', 'peasant_bot'),
+            ['user_meta']
         );
     }
 
@@ -287,7 +288,8 @@ class ConversationManager
                 'any',
                 'peasant_bot',
                 ['flirt']
-            )
+            ),
+            ['user_meta']
         );
     }
 

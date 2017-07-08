@@ -1,6 +1,18 @@
 <?php namespace App\Helpers\ApplicationConstants;
 
+/**
+ * Class MetaConstants
+ * @package App\Helpers\ApplicationConstants
+ */
 class MetaConstants
 {
-    const SITE_NAME = 'Dating platform';
+    public static $siteName = 'Dating platform';
+
+    /**
+     * @return string
+     */
+    public static function getSiteName()
+    {
+        return self::$siteName;
+    }
 }

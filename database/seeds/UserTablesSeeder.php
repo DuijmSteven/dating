@@ -2,14 +2,20 @@
 
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\RoleUser;
-use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Faker\Generator as Faker;
 
+/**
+ * Class UserTablesSeeder
+ */
 class UserTablesSeeder extends Seeder
 {
+    /**
+     * UserTablesSeeder constructor.
+     * @param Faker $faker
+     */
     public function __construct(Faker $faker) {
         $this->faker = $faker;
     }
@@ -25,6 +31,9 @@ class UserTablesSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table('users')->truncate();
         DB::table('user_meta')->truncate();
+
+        $accountTypes = UserConstants::selectableField('account_type');
+        $accountTypesCount = count($accountTypes);
 
         /* -- Create admin user -- */
         $createdAdmin = factory(App\User::class)->create([
@@ -51,12 +60,26 @@ class UserTablesSeeder extends Seeder
                 $userAmount = 25;
 
                 for ($count = 0; $count < $userAmount; $count++) {
-                    $createdUser = factory(App\User::class)->create();
+                    if ($role == 'bot') {
+                        $accountType = 3;
+                    } else {
+                        $accountType = rand(1, $accountTypesCount);
+                    }
+
+                    $createdUser = factory(App\User::class)->create([
+                        'account_type' => $accountType
+                    ]);
 
                     $createdUser->meta()->save(factory(App\UserMeta::class)->make([
                         'user_id' => $createdUser->id,
                         'gender' => $key,
                     ]));
+
+                    if ($role == 'peasant') {
+                        $createdUser->account()->save(factory(App\UserAccount::class)->make([
+                            'user_id' => $createdUser->id
+                        ]));
+                    }
 
                     $roleUserInstance = new RoleUser([
                         'user_id' => $createdUser->id,

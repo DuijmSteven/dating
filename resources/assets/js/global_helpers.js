@@ -1,3 +1,3 @@
-$('.js--prevent-default__click').click(function(event) {
+$('.JS--prevent-default__click').click(function(event) {
     event.preventDefault();
 });

@@ -1,6 +1,9 @@
 <?php
 
 use App\Helpers\ApplicationConstants\UserConstants;
+use App\Helpers\PaymentsHelper;
+use App\LayoutPart;
+use App\Module;
 use Faker\Generator as FakerGenerator;
 use Faker\Provider as FakerProvider;
 
@@ -23,6 +26,7 @@ $factory->define(App\User::class, function (FakerGenerator $faker) {
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('botpassword'),
         'active' => 1,
+        'account_type' => 1,
         'remember_token' => str_random(10),
     ];
 });
@@ -53,8 +57,91 @@ $factory->define(App\UserMeta::class, function (FakerGenerator $faker) {
 
 $factory->define(App\Article::class, function (FakerGenerator $faker) {
     return [
-        'title' => $faker->unique()->sentence(6, true),
-        'body' => $faker->text(rand(500, 5000)),
+        'title' => $faker->sentence(6, true),
+        'body' => $faker->realText($maxNbChars = 10000, $indexSize = 2),
+        'meta_description' => $faker->realText($maxNbChars = 200, $indexSize = 2),
         'status' => rand(0, 1)
+    ];
+});
+
+$factory->define(App\Payment::class, function (FakerGenerator $faker) {
+    $statusesCount = count(PaymentsHelper::$statuses);
+    $paymentMethodsCount = count(PaymentsHelper::$methods);
+
+    return [
+        'user_id' => 2,
+        'method' => rand(1, $paymentMethodsCount),
+        'status' => rand(1, $statusesCount),
+        'transactionId' => $faker->creditCardNumber,
+        'description' => $faker->realText($maxNbChars = 100, $indexSize = 1)
+    ];
+});
+
+$factory->define(App\Creditpack::class, function (FakerGenerator $faker) {
+    return [
+        'name' => 'random',
+        'credits' => 2,
+        'price' => 20,
+        'description' => $faker->realText($maxNbChars = 100, $indexSize = 1),
+        'image_url' => 'Dummy'
+    ];
+});
+
+$factory->define(App\UserAccount::class, function () {
+    return [
+        'user_id' => 1,
+        'credits' => rand(0, 100)
+    ];
+});
+
+$factory->define(App\Role::class, function () {
+    $roleNames = \App\Role::all()->pluck('name');
+    return [
+        'name' => $roleNames[rand(0, count($roleNames) - 1)],
+    ];
+});
+
+$factory->define(App\ModuleInstance::class, function () {
+    $moduleIds = Module::all()->pluck('id')->toArray();
+    $layoutPartIds = LayoutPart::all()->pluck('id')->toArray();
+
+    return [
+        'module_id' => $moduleIds[array_rand($moduleIds)],
+        'layout_part_id' => $moduleIds[array_rand($layoutPartIds)],
+        'priority' => 1,
+    ];
+});
+
+$factory->define(App\Activity::class, function (FakerGenerator $faker) {
+    $faker->addProvider(new FakerProvider\Image($faker));
+    $faker->addProvider(new FakerProvider\Lorem($faker));
+    return [
+        'type' => 'user',
+        'thumbnail_url' => 'http://placehold.it/60x60',
+        'title' => $faker->text(30),
+        'text' => rand(0, 1) ? $faker->text(120) : null,
+        'image_url' => rand(0, 1) ? 'http://placehold.it/400x300' : null,
+        'user_id' => 1,
+    ];
+});
+
+$factory->define(App\Testimonial::class, function (FakerGenerator $faker) {
+    return [
+        'title' => rand(0, 1) ? $faker->sentence(6, true) : null,
+        'body' => $faker->realText($maxNbChars = 300, $indexSize = 1),
+        'status' => rand(0, 1),
+        'pretend_at' => $faker->dateTimeBetween('-2 years', '-1 years', date_default_timezone_get())->format('Y-m-d'),
+    ];
+});
+
+
+$factory->define(App\TestimonialUser::class, function (FakerGenerator $faker) {
+    return [
+        'name' => $faker->name,
+        'testimonial_id' => 1,
+        'username' => $faker->unique()->userName,
+        'image_filename' => null,
+        'dob' => $faker->dateTimeBetween('-35 years', '-27 years', date_default_timezone_get())->format('Y-m-d'),
+        'gender' => rand(0, 1)
     ];
 });

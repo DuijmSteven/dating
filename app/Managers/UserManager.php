@@ -3,6 +3,7 @@
 
 namespace App\Managers;
 
+use App\Facades\Helpers\ApplicationConstants\UserConstants;
 use App\RoleUser;
 use App\Session;
 use App\User;
@@ -72,11 +73,10 @@ class UserManager
         DB::commit();
     }
 
-
     /**
      * @param array $userImages
      * @param int $userId
-     * @return array
+     * @throws \Exception
      */
     private function persistImages(array $userImages, $userId = 1)
     {
@@ -109,6 +109,7 @@ class UserManager
     /**
      * @param UploadedFile $userProfileImage
      * @param int $userId
+     * @throws \Exception
      */
     private function persistProfileImage(UploadedFile $userProfileImage, int $userId)
     {
@@ -224,9 +225,9 @@ class UserManager
      */
     public function setRandomUsersOnline($userAmount)
     {
-        $randomUsers = $this->user->with('roles')
+        $randomUsers = $this->user->with(['roles', 'meta'])
             ->whereHas('roles', function ($query) {
-                $query->where('id', 3);
+                $query->whereIn('id', [2, 3]);
             })
             ->orderByRaw('RAND()')->take($userAmount)
             ->get();
@@ -252,14 +253,23 @@ class UserManager
      * Retrieves collection of users that were online in the most recent
      * specified amount of minutes
      *
-     * @param $minutes
-     * @return User Collection
+     * @param int $minutes
+     * @param string $gender
+     * @internal param $
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function latestOnline(int $minutes)
+    public function latestOnline(int $minutes, string $gender = 'any')
     {
         $latestIds = Activity::users($minutes)->pluck('user_id')->toArray();
 
-        return User::with('meta')->whereIn('id', $latestIds)->limit(\UserConstants::MAX_AMOUNT_ONLINE_TO_SHOW)->get();
+        $query = User::with('meta')->whereIn('id', $latestIds);
+
+        if ($gender !== 'any') {
+            $query = $query->whereHas('meta', function ($query) {
+                $query->where('gender', \UserConstants::selectableField('gender', 'common', 'array_flip')[$gender]);
+            });
+        }
+        return User::with('meta')->whereIn('id', $latestIds)->limit(\UserConstants::getMaxAmountOnline())->get();
     }
 
     /**
@@ -298,43 +308,16 @@ class UserManager
         }
     }
 
-    public static function getAndFormatAuthenticatedUserTest()
+    /**
+     * @return User
+     */
+    public static function getAndFormatAuthenticatedUser()
     {
-        if (!(Auth::user() instanceof User)) {
+        $user = Auth::user();
+        if (!($user instanceof User)) {
             return null;
         }
 
-        $result = User::with(['meta', 'images', 'roles'])
-            ->where('id', Auth::user()->id)->first();
-
-        if (!($result instanceof User)) {
-            throw new \Exception;
-        }
-
-        return $result->format();
-    }
-
-
-    public function getAndFormatAuthenticatedUser()
-    {
-        $authenticatedUser = Auth::user();
-
-        if (!($authenticatedUser instanceof User)) {
-            return null;
-        }
-
-        return $this->formatUser($authenticatedUser);
-    }
-
-    public function formatUser(User $user)
-    {
-        $result = User::with(['meta', 'images', 'roles'])
-            ->where('id', $user->id)->first();
-
-        if (!($result instanceof User)) {
-            throw new \Exception;
-        }
-
-        return $result->format();
+        return $user->format();
     }
 }

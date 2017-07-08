@@ -3,5 +3,6 @@
 .idea
 public/css
 public/js
+public/img
 public/build
 .env

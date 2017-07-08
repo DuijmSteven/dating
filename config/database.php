@@ -46,9 +46,9 @@ return [
 
     'connections' => [
 
-        'sqlite' => [
-            'driver' => 'sqlite',
-            'database' => env('DB_DATABASE', database_path('database.sqlite')),
+        'sqlite_testing' => [
+            'driver' => env('DB_TEST_DRIVER', 'sqlite'),
+            'database' => env('DB_DATABASE_TESTING', ':memory:'),
             'prefix' => '',
         ],
 
@@ -65,6 +65,21 @@ return [
             'strict' => true,
             'engine' => null,
             'modes' => []
+        ],
+
+        'testing' => [
+            'driver' => env('DB_TEST_DRIVER'),
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '3306'),
+            'database' => env('DB_DATABASE_TEST', 'dating_test'),
+            'username' => env('DB_USERNAME', 'laravel'),
+            'password' => env('DB_PASSWORD', 'laravel'),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
         ],
 
         'pgsql' => [

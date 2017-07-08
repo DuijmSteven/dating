@@ -1,12 +1,29 @@
-
-// Fonts
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
-
 // Variables
 @import "variables";
+@import "brand";
 
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
+//Font awesome
+@import "node_modules/font-awesome/scss/font-awesome";
+$fa-font-path : "node_modules/font-awesome/fonts" !default;
+
+//Jquery Autocomplete
+@import "node_modules/jquery-autocomplete/jquery.autocomplete";
+
+@import "scaffolding";
+@import "navbar";
 @import "forms";
 @import "footer";
+
+// Components
+@import "components/tile";
+@import "components/button";
+@import "components/activity";
+@import "components/alert";
+
+//Modules
+@import "modules/online-users";
+@import "modules/user-account";
+@import "modules/shoutbox";

@@ -5,8 +5,15 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Faker\Generator as Faker;
 
+/**
+ * Class ArticlesSeeder
+ */
 class ArticlesSeeder extends Seeder
 {
+    /**
+     * ArticlesSeeder constructor.
+     * @param Faker $faker
+     */
     public function __construct(Faker $faker) {
         $this->faker = $faker;
     }
@@ -24,9 +31,7 @@ class ArticlesSeeder extends Seeder
 
         $articleAmount = 50;
 
-        for ($i = 0; $i < $articleAmount; $i++) {
-            factory(App\Article::class)->create();
-        }
+        factory(App\Article::class, $articleAmount)->create();
 
         // supposed to only apply to a single connection and reset it's self
         // but I like to explicitly undo what I've done for clarity

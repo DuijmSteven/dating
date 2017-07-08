@@ -1,0 +1,28 @@
+//  Tile
+//
+// Markup: tile.hbs
+//
+// The main layout component which all the modules and other components are based upon
+//
+// Style guide: Components.Tile
+.Tile {
+    overflow: hidden;
+
+    margin-bottom: 20px;
+    border-radius: $borderRadius + px;
+
+    background-color: $tileBgColor;
+    box-shadow: 0 1px 2px 0 rgba(45, 49, 66, 0.25);
+
+    &__heading {
+        padding: map_get($tileHeading, padding) + px;
+        font-size: map_get($tileHeading, fontSize) + px;
+        color: map_get($tileHeading, fontColor);
+        text-align: map_get($tileHeading, textAlign);
+        border-bottom: map_get($tileHeading, borderWidth) + px solid $borderColor;
+    }
+
+    &__body {
+        padding: map_get($tileBody, padding) + px;
+    }
+}

@@ -1,0 +1,9 @@
+{
+  "source": [
+    "resources/assets/sass"
+  ],
+  "destination": "resources/assets/styleguide/",
+  "css": [
+    "../../css/app.css"
+  ]
+}

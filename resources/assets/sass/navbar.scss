@@ -1,0 +1,105 @@
+// Navbar
+//
+// Markup: navbar.hbs
+//
+// The Navbar
+//
+// Style guide: Layout.Navbar
+.navbar-default {
+    border: $navbarBorderWidth + px solid #d3e0e9;
+    background-color: $navbarBgColor;
+
+    .navbar-nav {
+        > li {
+            > a {
+                line-height: $navbarLineHeight + px;
+                padding-top: ($navbarHeight - $navbarLineHeight - 2 * $navbarBorderWidth) / 2 + px;
+                padding-bottom: ($navbarHeight - $navbarLineHeight - 2 * $navbarBorderWidth) / 2 + px;
+                color: $navbarLinkColor;
+                font-size: 18px;
+                font-weight: 200;
+
+                &:hover {
+                    color: darken($navbarLinkColor, 15%);
+                    cursor: pointer;
+                }
+
+                &:focus {
+                    background-color: transparent;
+                    color: $sugar;
+                }
+            }
+        }
+
+        > .active {
+            > a {
+                background-color: transparent;
+                color: $white;
+                font-weight: 500;
+            }
+
+            &:hover {
+                > a {
+                    background-color: transparent;
+                    color: $sugar;
+                }
+            }
+
+            &:focus {
+                > a {
+                    background-color: transparent;
+                    color: $sugar;
+                }
+            }
+        }
+    }
+}
+
+.navbar-brand {
+    display: inline-block;
+    height: auto;
+    padding-top: ($navbarHeight - $logoHeight - 2 * $navbarBorderWidth) / 2 + px;
+    padding-bottom: ($navbarHeight - $logoHeight - 2 * $navbarBorderWidth) / 2 + px;
+
+    > img {
+        height: $logoHeight + px;
+    }
+}
+
+// change navbar collapse breakpoint
+@media (max-width: $screen-sm-max) {
+    .navbar-header {
+        float: none;
+    }
+    .navbar-left, .navbar-right {
+        float: none !important;
+    }
+    .navbar-toggle {
+        display: block;
+    }
+    .navbar-collapse {
+        border-top: 1px solid transparent;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+    .navbar-fixed-top {
+        top: 0;
+        border-width: 0 0 1px;
+    }
+    .navbar-collapse.collapse {
+        display: none !important;
+    }
+    .navbar-nav {
+        float: none !important;
+        margin-top: 7.5px;
+    }
+    .navbar-nav > li {
+        float: none;
+    }
+    .navbar-nav > li > a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .collapse.in {
+        display: block !important;
+    }
+}

@@ -13,7 +13,8 @@
         "barryvdh/laravel-debugbar": "^2.3",
         "fzaninotto/faker": "~1.4",
         "intervention/image": "^2.3",
-        "graham-campbell/markdown": "^7.1"
+        "graham-campbell/markdown": "^7.1",
+        "tpweb/targetpay": "1.3.0"
     },
     "require-dev": {
         "mockery/mockery": "0.9.*",

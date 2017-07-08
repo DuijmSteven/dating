@@ -4,6 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Conversation
+ * @package App
+ */
 class Conversation extends Model
 {
     public $table = 'conversations';

@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\DB;
 use Faker\Generator as Faker;
 use Carbon\Carbon;
 
+/**
+ * Class ConversationsMessagesFlirtsSeeder
+ */
 class ConversationsMessagesFlirtsSeeder extends Seeder
 {
     public function __construct(Faker $faker) {
@@ -71,28 +74,30 @@ class ConversationsMessagesFlirtsSeeder extends Seeder
 
                 $conversation->messages()->save($userToBotMessage);
 
-                $randomCategories = [
-                    $this->faker->word,
-                    $this->faker->word,
-                    $this->faker->word,
-                    $this->faker->word,
-                    $this->faker->word,
+                $randomCategoryId = [
+                    '1',
+                    '2',
+                    '3',
+                    '4',
+                    '5',
+                    '6',
+                    '7',
+                    '8'
                 ];
 
                 foreach ([$realUserId, $botId] as $userId) {
                     $categoriesAmount = rand(1, 3);
 
                     for ($i = 0; $i < $categoriesAmount; $i++) {
-                        $category = $this->faker->randomElement($randomCategories);
+                        $category = $this->faker->randomElement($randomCategoryId);
 
                         $notesAmount = rand(1, 5);
 
                         for ($j = 0; $j < $notesAmount; $j++) {
                             $conversationNote = new \App\ConversationNote([
                                 'conversation_id' => $conversation->id,
-                                'category' => $category,
+                                'category_id' => $category,
                                 'user_id' => $userId,
-                                'title' => $this->faker->text(rand(5, 20)),
                                 'body' => $this->faker->text(rand(15, 250)),
                             ]);
 

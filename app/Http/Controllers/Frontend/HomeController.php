@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
+use App\Activity;
 
-class HomeController extends Controller
+/**
+ * Class HomeController
+ * @package App\Http\Controllers\Frontend
+ */
+class HomeController extends FrontendController
 {
+    /**
+     * HomeController constructor.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -16,9 +23,12 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Activity $activity)
     {
-        return view('frontend/home');
+        return view('frontend.home', [
+            'title' => 'Homepage - ' . config('app.name'),
+            'activity' => $activity->latest()->get()
+        ]);
     }
 
     /**
@@ -29,10 +39,9 @@ class HomeController extends Controller
     public function showContact()
     {
         return view(
-            'frontend/contact',
+            'frontend.contact',
             [
                 'title' => 'Contact - ' . config('app.name'),
-                'hasSidebar' => true
             ]
         );
     }

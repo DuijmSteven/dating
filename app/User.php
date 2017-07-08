@@ -5,11 +5,18 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * Class User
+ * @package App
+ */
 class User extends Authenticatable
 {
     use Notifiable;
 
     protected $primaryKey = 'id';
+
+    protected $profile_image = null;
+    protected $other_images = null;
 
     /**
      * The database table used by the model.
@@ -24,7 +31,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'password', 'active'
+        'username',
+        'email',
+        'password',
+        'active'
     ];
 
     /**
@@ -33,13 +43,22 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token'
     ];
 
     protected $allowedImageTypes = [
         'profile',
         'other'
     ];
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * @return mixed
@@ -81,6 +100,9 @@ class User extends Authenticatable
         return $this->createAt;
     }
 
+    /**
+     * @return mixed
+     */
     public function getUpdatedAt()
     {
         return $this->updated_at;
@@ -289,7 +311,9 @@ class User extends Authenticatable
      */
     private function categorizeImages()
     {
-        foreach ($this->images as $image) {
+        $images = $this->images();
+
+        foreach ($images as $image) {
             $this->assignImage($image);
         }
 
@@ -306,5 +330,21 @@ class User extends Authenticatable
         }
 
         return true;
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function account()
+    {
+        return $this->hasOne('App\UserAccount');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function activity()
+    {
+        return $this->hasMany('App\Activity');
     }
 }

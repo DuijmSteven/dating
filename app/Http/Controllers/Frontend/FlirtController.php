@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Managers\FlirtManager;
-use App\Http\Controllers\Controller;
 
-class FlirtController extends Controller
+
+/**
+ * Class FlirtController
+ * @package App\Http\Controllers\Frontend
+ */
+class FlirtController extends FrontendController
 {
     private $flirtManager;
 
@@ -16,6 +20,7 @@ class FlirtController extends Controller
     public function __construct(FlirtManager $flirtManager)
     {
         $this->flirtManager = $flirtManager;
+        parent::__construct();
     }
 
     /**

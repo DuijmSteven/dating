@@ -29,6 +29,6 @@ class CreateMessageAttachmentsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('message_attachments');
+        Schema::dropIfExists('message_attachments');
     }
 }

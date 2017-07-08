@@ -6,9 +6,12 @@ use App\Managers\UserSearchManager;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequests\UserSearchRequest;
-use App\Http\Controllers\Controller;
 
-class UserSearchController extends Controller
+/**
+ * Class UserSearchController
+ * @package App\Http\Controllers\Frontend
+ */
+class UserSearchController extends FrontendController
 {
     private $userSearchManager;
 
@@ -51,7 +54,7 @@ class UserSearchController extends Controller
         $viewData = [
         ];
         return view(
-            'frontend.users.search.index',
+            'frontend.users.search.overview',
             array_merge(
                 $viewData,
                 [

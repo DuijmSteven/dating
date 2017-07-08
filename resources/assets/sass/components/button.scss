@@ -1,0 +1,114 @@
+// Button
+//
+// The buttons are built from the same base class.
+//
+// Markup: button.hbs
+//
+// .Button--default   - The default button
+// .Button--primary   - The primary button
+// .Button--success   - The success button
+// .Button--warning   - The warning button
+// .Button--info      - The info button
+// .Button--danger    - The danger button
+//
+// Style guide: Components.Button
+.Button {
+    display: inline-block;
+    padding: 0px 13px;
+    border-radius: map_get($button, border-radius) + px;
+    border-width: map_get($button, border-width) + px;
+    border: map_get($button, border-width) + px solid map_get($button, border-color);
+    color: map_get($button, font-color);
+
+    &:active {
+        box-shadow: map_get($button, box-shadow__active);
+    }
+
+    &:focus {
+        outline: 0;
+    }
+
+    .Button__content {
+        line-height: map_get($button, line-height);
+        font-size: map_get($button, font-size) + px;
+        font-weight: 200;
+    }
+}
+
+.Button--default {
+    background-color: map_get($defaultButton, background-color);
+    color: map_get($defaultButton, font-color);
+
+    &:hover {
+        background-color: map_get($defaultButton, background-color__hover);
+    }
+
+    &:active {
+        background-color: map_get($defaultButton, background-color__active);
+    }
+}
+
+.Button--primary {
+    background-color: map_get($primaryButton, background-color);
+    color: map_get($primaryButton, font-color);
+
+    &:hover {
+        background-color: map_get($primaryButton, background-color__hover);
+    }
+
+    &:active {
+        background-color: map_get($primaryButton, background-color__active);
+    }
+}
+
+.Button--success {
+    background-color: map_get($successButton, background-color);
+    color: map_get($successButton, font-color);
+
+    &:hover {
+        background-color: map_get($successButton, background-color__hover);
+    }
+
+    &:active {
+        background-color: map_get($successButton, background-color__active);
+    }
+}
+
+.Button--info {
+    background-color: map_get($infoButton, background-color);
+    color: map_get($infoButton, font-color);
+
+    &:hover {
+        background-color: map_get($infoButton, background-color__hover);
+    }
+
+    &:active {
+        background-color: map_get($infoButton, background-color__active);
+    }
+}
+
+.Button--warning {
+    background-color: map_get($warningButton, background-color);
+    color: map_get($warningButton, font-color);
+
+    &:hover {
+        background-color: map_get($warningButton, background-color__hover);
+    }
+
+    &:active {
+        background-color: map_get($warningButton, background-color__active);
+    }
+}
+
+.Button--danger {
+    background-color: map_get($dangerButton, background-color);
+    color: map_get($dangerButton, font-color);
+
+    &:hover {
+        background-color: map_get($dangerButton, background-color__hover);
+    }
+
+    &:active {
+        background-color: map_get($dangerButton, background-color__active);
+    }
+}

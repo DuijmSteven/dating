@@ -19,8 +19,7 @@ class ConversationNoteManager
             $note = new ConversationNote([
                 'user_id' => $noteData['user_id'],
                 'conversation_id' => $noteData['conversation_id'],
-                'title' => $noteData['title'],
-                'category' => $noteData['category'],
+                'category_id' => $noteData['category_id'],
                 'body' => $noteData['body']
             ]);
 

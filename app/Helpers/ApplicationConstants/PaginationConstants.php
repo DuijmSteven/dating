@@ -1,9 +1,16 @@
 <?php namespace App\Helpers\ApplicationConstants;
 
+/**
+ * Class PaginationConstants
+ * @package App\Helpers\ApplicationConstants
+ */
 class PaginationConstants
 {
-    const PER_PAGE = [
+    public static $perPage = [
         'default' => 10,
-        'user_profiles' => 5
+        'user_profiles' => 5,
+        'backend' => [
+            'default' => 20
+        ]
     ];
 }

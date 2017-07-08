@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'Seksvriend.nl',
+    'name' => 'dev-Altijdsex.nl',
 
     /*
     |--------------------------------------------------------------------------
@@ -186,11 +186,15 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         GrahamCampbell\Markdown\MarkdownServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        TPWeb\TargetPay\TargetPayServiceProvider::class,
+
         /*
          * Ours
          */
         Illuminate\View\ViewServiceProvider::class,
-        App\Providers\ComposerServiceProvider::class
+        App\Providers\ComposerServiceProvider::class,
+        App\Providers\FacadeServiceProvider::class,
+        App\Providers\ValidationServiceProvider::class,
 
     ],
 
@@ -240,14 +244,17 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
-        'UserConstants'   => App\Helpers\ApplicationConstants\UserConstants::class,
-        'MetaConstants'   => App\Helpers\ApplicationConstants\MetaConstants::class,
-        'PaginationConstants'   => App\Helpers\ApplicationConstants\PaginationConstants::class,
-        'StorageHelper'   => App\Helpers\StorageHelper::class,
+        'UserConstants'   => App\Facades\Helpers\ApplicationConstants\UserConstants::class,
+        'MetaConstants'   => App\Facades\Helpers\ApplicationConstants\MetaConstants::class,
+        'PaginationConstants'   => App\Facades\Helpers\ApplicationConstants\PaginationConstants::class,
+        'StorageHelper'   => App\Facades\Helpers\StorageHelper::class,
+
         'Activity' => Kim\Activity\ActivityFacade::class,
         'ChromePhp' => App\Helpers\ccampbell\ChromePhp\ChromePhp::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,
+        'TargetPay' => TPWeb\TargetPay\TargetPayFacade::class,
+
 
     ],
 
