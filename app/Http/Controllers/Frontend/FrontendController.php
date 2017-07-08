@@ -30,7 +30,7 @@ class FrontendController extends Controller
         if (!is_null(request()->route())) {
             $view = View::with('layoutParts')->where('route_name', request()->route()->getName())->get();
 
-            if (!empty($view)) {
+            if (isset($view) && !empty($view)) {
                 $layoutPartIds = $view[0]->layoutParts->pluck('id')->toArray();
                 $leftSidebar = in_array(1, $layoutPartIds);
                 $rightSidebar = in_array(2, $layoutPartIds);
