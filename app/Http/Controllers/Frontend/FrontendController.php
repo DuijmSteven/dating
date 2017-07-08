@@ -24,12 +24,18 @@ class FrontendController extends Controller
     {
         parent::__construct();
 
-        $view = View::with('layoutParts')->where('route_name', request()->route()->getName())->get();
+        $leftSidebar = false;
+        $rightSidebar = false;
 
-        $layoutPartIds = $view[0]->layoutParts->pluck('id')->toArray();
+        if (!is_null(request()->route())) {
+            $view = View::with('layoutParts')->where('route_name', request()->route()->getName())->get();
 
-        $leftSidebar = in_array(1, $layoutPartIds);
-        $rightSidebar = in_array(2, $layoutPartIds);
+            if (!is_null($view)) {
+                $layoutPartIds = $view[0]->layoutParts->pluck('id')->toArray();
+                $leftSidebar = in_array(1, $layoutPartIds);
+                $rightSidebar = in_array(2, $layoutPartIds);
+            }
+        }
 
         $this->setupSidebars($leftSidebar, $rightSidebar);
     }

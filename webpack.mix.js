@@ -17,6 +17,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
     .version();
 
 mix.copy('resources/assets/img', 'public/img');
+mix.copy('resources/assets/styleguide', 'public/styleguide');
 mix.copy('node_modules/font-awesome/fonts', 'public/build/fonts');
 
 mix.styles([
