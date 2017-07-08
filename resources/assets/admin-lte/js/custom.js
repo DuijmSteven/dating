@@ -5,8 +5,7 @@ $(window).load(function () {
      */
     // Instantiate date picker in  bot creation view
     $('.datepicker__date').datepicker({
-        'autoclose': true,
-        'format': 'yyyy-mm-dd'
+        'dateFormat': 'dd-mm-y'
     });
 
     if ($('.js-autoCompleteCites').length > 0) {

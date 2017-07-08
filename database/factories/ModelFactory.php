@@ -124,3 +124,24 @@ $factory->define(App\Activity::class, function (FakerGenerator $faker) {
         'user_id' => 1,
     ];
 });
+
+$factory->define(App\Testimonial::class, function (FakerGenerator $faker) {
+    return [
+        'title' => rand(0, 1) ? $faker->sentence(6, true) : null,
+        'body' => $faker->realText($maxNbChars = 300, $indexSize = 1),
+        'status' => rand(0, 1),
+        'pretend_at' => $faker->dateTimeBetween('-2 years', '-1 years', date_default_timezone_get())->format('Y-m-d'),
+    ];
+});
+
+
+$factory->define(App\TestimonialUser::class, function (FakerGenerator $faker) {
+    return [
+        'name' => $faker->name,
+        'testimonial_id' => 1,
+        'username' => $faker->unique()->userName,
+        'image_filename' => null,
+        'dob' => $faker->dateTimeBetween('-35 years', '-27 years', date_default_timezone_get())->format('Y-m-d'),
+        'gender' => rand(0, 1)
+    ];
+});

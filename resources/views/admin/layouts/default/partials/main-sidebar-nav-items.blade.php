@@ -78,29 +78,6 @@
         </li>
     </ul>
 </li>
-<li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.articles') ? 'active' : '' !!}">
-    <a href="#">
-        <i class="fa fa-newspaper-o"></i>
-        <span>Articles</span>
-        <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-    </a>
-    <ul class="treeview-menu">
-        <li class="{!! \Request::route()->getName() == 'admin.articles.overview' ? 'active' : '' !!}">
-            <a href="{!! route('admin.articles.overview', ['page' => 1]) !!}">
-                <i class="fa fa-list"></i>
-                Overview
-            </a>
-        </li>
-        <li class="{!! \Request::route()->getName() == 'admin.articles.create' ? 'active' : '' !!}">
-            <a href="{!! route('admin.articles.create') !!}">
-                <i class="fa fa-plus"></i>
-                Create
-            </a>
-        </li>
-    </ul>
-</li>
 <li class="treeview {!! str_contains(\Request::route()->getName(), 'operators_platform') ? 'active' : '' !!}">
     <a href="#">
         <i class="fa fa-users"></i>
@@ -120,7 +97,7 @@
 </li>
 @php
     $routeName = \Request::route()->getName();
-    $cmsRoutesTruthArray = array_map(function ($value) use ($routeName) {
+    $lmsRoutesTruthArray = array_map(function ($value) use ($routeName) {
         return str_contains($routeName, $value);
     }, [
         'admin.modules',
@@ -128,10 +105,10 @@
         'admin.layout-parts',
     ]);
 @endphp
-<li class="treeview {!! in_array(true, $cmsRoutesTruthArray) ? 'active' : '' !!}">
+<li class="treeview {!! in_array(true, $lmsRoutesTruthArray) ? 'active' : '' !!}">
     <a href="#">
-        <i class="fa fa-list"></i>
-        <span>CMS</span>
+        <i class="fa fa-wordpress"></i>
+        <span>Layout Management</span>
         <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
@@ -200,6 +177,73 @@
                 </li>
                 <li class="{!! \Request::route()->getName() == 'admin.layout-parts.create' ? 'active' : '' !!}">
                     <a href="{!! route('admin.layout-parts.create') !!}">
+                        <i class="fa fa-plus"></i>
+                        Create
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</li>
+
+@php
+    $cmsRoutesTruthArray = array_map(function ($value) use ($routeName) {
+        return str_contains($routeName, $value);
+    }, [
+        'admin.articles',
+        'admin.testimonials',
+        'admin.testimonial-users',
+    ]);
+@endphp
+<li class="treeview {!! in_array(true, $cmsRoutesTruthArray) ? 'active' : '' !!}">
+    <a href="#">
+        <i class="fa fa-wordpress"></i>
+        <span>Content Management</span>
+        <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+    </a>
+    <ul class="treeview-menu">
+        <li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.articles') ? 'active' : '' !!}">
+            <a href="#">
+                <i class="fa fa-newspaper-o"></i>
+                <span>Articles</span>
+                <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+            </a>
+            <ul class="treeview-menu">
+                <li class="{!! \Request::route()->getName() == 'admin.articles.overview' ? 'active' : '' !!}">
+                    <a href="{!! route('admin.articles.overview', ['page' => 1]) !!}">
+                        <i class="fa fa-list"></i>
+                        Overview
+                    </a>
+                </li>
+                <li class="{!! \Request::route()->getName() == 'admin.articles.create' ? 'active' : '' !!}">
+                    <a href="{!! route('admin.articles.create') !!}">
+                        <i class="fa fa-plus"></i>
+                        Create
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.testimonials') ? 'active' : '' !!}">
+            <a href="#">
+                <i class="fa fa-quote-left"></i>
+                <span>Testimonials</span>
+                <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+            </a>
+            <ul class="treeview-menu">
+                <li class="{!! \Request::route()->getName() == 'admin.testimonials.overview' ? 'active' : '' !!}">
+                    <a href="{!! route('admin.testimonials.overview', ['page' => 1]) !!}">
+                        <i class="fa fa-list"></i>
+                        Overview
+                    </a>
+                </li>
+                <li class="{!! \Request::route()->getName() == 'admin.testimonials.create' ? 'active' : '' !!}">
+                    <a href="{!! route('admin.testimonials.create') !!}">
                         <i class="fa fa-plus"></i>
                         Create
                     </a>

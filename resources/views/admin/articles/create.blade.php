@@ -60,6 +60,21 @@
                             @endif
                         </div>
                     </div>
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label for="body">Meta Description</label>
+                            <textarea class="form-control"
+                                      id="meta_description"
+                                      name="meta_description"
+                                      required
+                                      rows="20"
+                                      data-provide="markdown"
+                            ></textarea>
+                            @if ($errors->has('meta_description'))
+                                {!! $errors->first('meta_description', '<small class="form-error">:message</small>') !!}
+                            @endif
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- /.box-body -->

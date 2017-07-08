@@ -173,6 +173,26 @@ Route::group([
     });
 
     Route::group([
+        'prefix' => 'testimonials'
+    ], function () {
+        Route::get('/', 'Admin\TestimonialController@index')
+            ->name('admin.testimonials.overview');
+
+        Route::delete('{testimonialId}', 'Admin\TestimonialController@destroy')
+            ->name('admin.testimonials.destroy');
+
+        Route::get('create', 'Admin\TestimonialController@getCreate')
+            ->name('admin.testimonials.create');
+        Route::post('/', 'Admin\TestimonialController@post')
+            ->name('admin.testimonials.post');
+
+        Route::get('{testimonialId}', 'Admin\TestimonialController@getUpdate')
+            ->name('admin.testimonials.edit');
+        Route::put('{testimonialId}', 'Admin\TestimonialController@update')
+            ->name('admin.testimonials.update');
+    });
+
+    Route::group([
         'prefix' => 'payments'
     ], function () {
         Route::get('/', 'Admin\PaymentController@index')

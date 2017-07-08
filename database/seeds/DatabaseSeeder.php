@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PaymentsSeeder::class);
         $this->call(ModuleInstancesSeeder::class);
         $this->call(ActivitySeeder::class);
+        $this->call(TestimonialsSeeder::class);
 
         Model::reguard();
     }

@@ -3,58 +3,53 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Article;
-use App\Http\Requests\Admin\Articles\ArticleCreateRequest;
+use App\Testimonial;
 use App\Http\Requests\Admin\Articles\TestimonialUpdateRequest;
+use App\Http\Requests\Admin\Testimonials\TestimonialCreateRequest;
 use Carbon\Carbon;
-use GrahamCampbell\Markdown\Facades\Markdown;
 
 /**
- * Class ArticleController
+ * Class TestimonialController
  * @package App\Http\Controllers\Admin
  */
-class ArticleController extends Controller
+class TestimonialController extends Controller
 {
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
-        $articles = Article::orderBy('created_at', 'desc')->paginate(5);
-
-        foreach ($articles as $article) {
-            $article->body = Markdown::convertToHtml($article->body);
-        }
+        $testimonials = Testimonial::with('users')->orderBy('pretend_at', 'desc')->paginate(20);
 
         return view(
-            'admin.articles.overview',
+            'admin.testimonials.overview',
             [
-                'title' => 'Articles Overview - ' . \config('app.name'),
-                'headingLarge' => 'Articles',
+                'title' => 'Testimonials Overview - ' . \config('app.name'),
+                'headingLarge' => 'Testimonials',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
-                'articles' => $articles
+                'testimonials' => $testimonials
             ]
         );
     }
 
     /**
-     * @param int $articleId
+     * @param int $testimonialId
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(int $articleId)
+    public function destroy(int $testimonialId)
     {
         try {
-            Article::destroy($articleId);
+            Testimonial::destroy($testimonialId);
 
             $alerts[] = [
                 'type' => 'success',
-                'message' => 'The article was deleted.'
+                'message' => 'The testimonial was deleted.'
             ];
         } catch (\Exception $exception) {
             $alerts[] = [
                 'type' => 'error',
-                'message' => 'The article was not deleted due to an exception.'
+                'message' => 'The testimonial was not deleted due to an exception.'
             ];
         }
 
@@ -67,49 +62,49 @@ class ArticleController extends Controller
     public function getCreate()
     {
         return view(
-            'admin.articles.create',
+            'admin.testimonials.create',
             [
-                'title' => 'Create article - ' . \config('app.name'),
-                'headingLarge' => 'Articles',
+                'title' => 'Create testimonial - ' . \config('app.name'),
+                'headingLarge' => 'Testimonials',
                 'headingSmall' => 'Create'
             ]
         );
     }
 
     /**
-     * @param int $articleId
+     * @param int $testimonialId
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getUpdate(int $articleId)
+    public function getUpdate(int $testimonialId)
     {
         return view(
-            'admin.articles.edit',
+            'admin.testimonials.edit',
             [
-                'title' => 'Edit article - ' . \config('app.name'),
-                'headingLarge' => 'Articles',
+                'title' => 'Edit testimonial - ' . \config('app.name'),
+                'headingLarge' => 'Testimonials',
                 'headingSmall' => 'Edit',
-                'article' => Article::find($articleId)
+                'testimonial' => Testimonial::find($testimonialId)
             ]
         );
     }
 
     /**
-     * @param ArticleCreateRequest $request
+     * @param TestimonialCreateRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function post(ArticleCreateRequest $request)
+    public function post(TestimonialCreateRequest $request)
     {
         try {
-            Article::create($request->all());
+            Testimonial::create($request->all());
 
             $alerts[] = [
                 'type' => 'success',
-                'message' => 'The article was created.'
+                'message' => 'The testimonial was created.'
             ];
         } catch (\Exception $exception) {
             $alerts[] = [
                 'type' => 'error',
-                'message' => 'The article was not created due to an exception.'
+                'message' => 'The testimonial was not created due to an exception.'
             ];
         }
 
@@ -118,23 +113,23 @@ class ArticleController extends Controller
 
     /**
      * @param TestimonialUpdateRequest $request
-     * @param int $articleId
+     * @param int $testimonialId
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(TestimonialUpdateRequest $request, int $articleId)
+    public function update(TestimonialUpdateRequest $request, int $testimonialId)
     {
         try {
-            $article = Article::find($articleId);
-            $article->update($request->all());
+            $testimonial = Testimonial::find($testimonialId);
+            $testimonial->update($request->all());
 
             $alerts[] = [
                 'type' => 'success',
-                'message' => 'The article was updated.'
+                'message' => 'The testimonial was updated.'
             ];
         } catch (\Exception $exception) {
             $alerts[] = [
                 'type' => 'error',
-                'message' => 'The article was not updated due to an exception.'
+                'message' => 'The testimonial was not updated due to an exception.'
             ];
         }
 
