@@ -83,7 +83,7 @@ class TestimonialController extends Controller
                 'title' => 'Edit testimonial - ' . \config('app.name'),
                 'headingLarge' => 'Testimonials',
                 'headingSmall' => 'Edit',
-                'testimonial' => Testimonial::find($testimonialId)
+                'testimonial' => Testimonial::with('users')->where('id', $testimonialId)->get()->toArray()
             ]
         );
     }
