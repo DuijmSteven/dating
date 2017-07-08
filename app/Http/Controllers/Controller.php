@@ -26,10 +26,6 @@ class Controller extends BaseController
      */
     public function __construct()
     {
-        if (app()->environment() !== 'production') {
-            \DebugBar::enable();
-        }
-
         $this->middleware(function ($request, $next) {
             $this->authenticatedUser = UserManager::getAndFormatAuthenticatedUser();
 
