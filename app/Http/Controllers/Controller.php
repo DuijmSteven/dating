@@ -27,7 +27,7 @@ class Controller extends BaseController
     public function __construct()
     {
         if (app()->environment() !== 'production') {
-            DebugBar::enable();
+            \DebugBar::enable();
         }
 
         $this->middleware(function ($request, $next) {
