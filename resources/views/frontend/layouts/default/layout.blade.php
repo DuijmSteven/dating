@@ -6,7 +6,7 @@
     @include('frontend.layouts.default.partials.header')
 
     <div class="container">
-        @include('frontend.layouts.default.partials.alerts')
+        @include('frontend.components.alert')
 
         @if(isset($sidebarCount) && $sidebarCount > 0)
             <div class="row">

@@ -1,0 +1,228 @@
+<pre>
+// colors
+$slate: #4f5d75;
+$slateLight: #617493;
+$dark: #2d3142;
+$tomato: #ef4f2b;
+$tomatoLight: #ee796d;
+$salmon: #f3a69e;
+$sugar: #e6e6e6;
+$lightGrey: #e5e5e5;
+$earlGrey: #f3f3f3;
+$mildGrey: #999999;
+$white: #fff;
+$black: #333;
+$light-teal: #b6e9df;
+$topaz: #1abc9c;
+$topazLight: #25d8b4;
+$skyBlue: #9acced;
+$darkSkyBlue: #3498db;
+$babyBlue: #67b2e5;
+$babyBlueLight: #9acced;
+$squash: #f39c12;
+$squashLight: #f7b54e;
+$yellowLight: #f9ce89;
+
+// brand colors
+$mainColor: $slate;
+$secondaryColor: $tomato;
+$textColor: $black;
+
+// layout colors
+$bodyBgColor: $earlGrey;
+$borderColor: $bodyBgColor;
+
+$roundImageDimensions: (
+'xs': 30,
+'sm': 40, // this is not to be changed
+'md': 80,
+'lg': 150,
+'xl': 250,
+);
+
+// layout tweaks
+$borderRadius: 2;
+$borderWidth: 1;
+
+// font tweaks
+$fontSize: (
+'body-mobile': 16,
+'body-desktop': 17
+);
+
+// ---------------- Components & Modules ---------------
+// Navbar
+$navbarLinkColor: $sugar;
+$navbarBgColor: $slate;
+
+$navbarHeight: 100;
+$navbarBorderWidth: 1;
+$navbarLineHeight: 22;
+
+$logoHeight: round($navbarHeight * 0.55);
+
+// Tile
+$tileBgColor: $white;
+$tileHeading: (
+'padding': 15,
+'fontSize': 14,
+'fontColor': $mainColor,
+'textAlign': center,
+'borderWidth': 2
+);
+
+$tileBody: (
+'padding': 15
+);
+
+// User-activity
+$userActivityHeading: (
+'textAlign': left
+);
+
+$userActivityProfileImage: (
+'width': map_get($roundImageDimensions, sm),
+'height': map_get($roundImageDimensions, sm)
+);
+
+// Online-users
+$onlineUsersItem: (
+'textAlign': left,
+'fontSize': 12,
+'marginBottom': 10,
+);
+
+// Shoutbox
+$shoutboxHeight: 600;
+
+$shoutboxItem: (
+'text-align': left,
+'font-size': 12,
+'margin-bottom': 10,
+);
+
+$shoutboxControls: (
+'border-top': 2px solid #f2f2f2,
+'background-color': #fff,
+'height': 156
+);
+
+$shoutboxItemTextarea: (
+'background-color': #f2f2f2,
+'border-radius': $borderRadius,
+'font-color': $slate,
+'font-size': 12
+);
+
+$shoutboxItemProfileImage: (
+width: map_get($roundImageDimensions, xs),
+height: map_get($roundImageDimensions, xs)
+);
+
+$shoutboxItemBubble: (
+background-color: #f2f2f2,
+border-radius: $borderRadius,
+padding: 5px 7px 9px 7px,
+border: 1px solid #e6e6e6,
+font-size: 12
+);
+
+// User-account
+$userAccountProfileImage: (
+'width': map_get($roundImageDimensions, sm),
+'height': map_get($roundImageDimensions, sm),
+'border-radius': 50%,
+'padding-top': 10
+);
+
+$userAccountUsername: (
+'font-size': 14,
+'font-color': $mainColor,
+'padding-top': 10,
+'padding-bottom': 10
+);
+
+// Footer
+$footerBgColor: $dark;
+$footerLogo: (
+'height': $logoHeight + px
+);
+
+// Alerts
+$alertSuccess: (
+'bgColor': $light-teal,
+'font-color': $topaz,
+'border-color': $topaz,
+'dismiss-color': $topaz
+);
+
+$alertInfo: (
+'bgColor': $skyBlue,
+'font-color': $darkSkyBlue,
+'border-color': $darkSkyBlue,
+'dismiss-color': $darkSkyBlue
+);
+
+$alertWarning: (
+'bgColor': $yellowLight,
+'font-color': $squash,
+'border-color': $squash,
+'dismiss-color': $squash
+);
+
+$alertDanger: (
+'bgColor': $salmon,
+'font-color': $tomato,
+'border-color': $tomato,
+'dismiss-color': $tomato
+);
+
+// Buttons
+$button: (
+'font-color': $white,
+'height': 44,
+'border-radius': 2,
+'border-width': 1,
+'border-color': #ccc,
+'font-size': 14,
+'line-height': 1.5,
+'box-shadow__active': inset 0 1px 3px 0 rgba(0, 0, 0, 0.25)
+);
+
+$defaultButton: (
+'background-color': $white,
+'font-color': #555,
+'background-color__hover': $lightGrey,
+'background-color__active': $lightGrey
+);
+
+$primaryButton: (
+'background-color': $slate,
+'background-color__hover': $slateLight,
+'background-color__active': $slate
+);
+
+$successButton: (
+'background-color': $topaz,
+'background-color__hover': $topazLight,
+'background-color__active': $topaz
+);
+
+$infoButton: (
+'background-color': $babyBlue,
+'background-color__hover': $babyBlueLight,
+'background-color__active': $babyBlue
+);
+
+$warningButton: (
+'background-color': $squash,
+'background-color__hover': $squashLight,
+'background-color__active': $squash
+);
+
+$dangerButton: (
+'background-color': $tomato,
+'background-color__hover': $tomatoLight,
+'background-color__active': $tomato
+);
+</pre>
