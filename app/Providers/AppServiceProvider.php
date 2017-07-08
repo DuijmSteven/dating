@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        dd($this->app->environment();
+        dd($this->app->environment());
         if ($this->app->environment() !== 'production') {
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
