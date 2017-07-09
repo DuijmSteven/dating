@@ -199,13 +199,14 @@ Route::group([
             ->name('admin.payments.overview');
     });
 
+    Route::get('layout', 'Admin\ModuleController@showLayout')
+        ->name('admin.layout.show');
+
     Route::group([
         'prefix' => 'modules'
     ], function () {
         Route::get('/', 'Admin\ModuleController@index')
             ->name('admin.modules.overview');
-        Route::get('/layout', 'Admin\ModuleController@showLayout')
-            ->name('admin.modules.layout.show');
 
         Route::post('update', 'Admin\ModuleController@updateModules')
             ->name('admin.modules.layout.update');

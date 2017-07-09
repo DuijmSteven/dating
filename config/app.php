@@ -249,6 +249,7 @@ return [
         'PaginationConstants'   => App\Facades\Helpers\ApplicationConstants\PaginationConstants::class,
         'StorageHelper'   => App\Facades\Helpers\StorageHelper::class,
 
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Activity' => Kim\Activity\ActivityFacade::class,
         'ChromePhp' => App\Helpers\ccampbell\ChromePhp\ChromePhp::class,
         'Image' => Intervention\Image\Facades\Image::class,

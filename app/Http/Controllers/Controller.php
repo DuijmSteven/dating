@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Managers\UserManager;
 use App\User;
+use DebugBar\DebugBar;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;

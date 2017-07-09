@@ -1,4 +1,4 @@
 <div class="pull-right hidden-xs">
-    Dorel Global Management Tool
+    Altijdsex.nl
 </div>
-<strong><a href="https://europe.doreljuvenile.com">Dorel Juvenile</a></strong>
+<strong><a href="{{ url('/') }}">Altijdsex.nl</a></strong>
