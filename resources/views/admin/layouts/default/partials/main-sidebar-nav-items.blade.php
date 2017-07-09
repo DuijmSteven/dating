@@ -101,6 +101,7 @@
         return str_contains($routeName, $value);
     }, [
         'admin.modules',
+        'admin.layout',
         'admin.views',
         'admin.layout-parts',
     ]);
@@ -114,6 +115,12 @@
                     </span>
     </a>
     <ul class="treeview-menu">
+        <li class="{!! \Request::route()->getName() == 'admin.layout.show' ? 'active' : '' !!}">
+            <a href="{!! route('admin.layout.show') !!}">
+                <i class="fa fa-list"></i>
+                Overview
+            </a>
+        </li>
         <li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.modules') ? 'active' : '' !!}">
             <a href="#">
                 <i class="fa fa-cubes"></i>
@@ -127,12 +134,6 @@
                     <a href="{!! route('admin.modules.overview', ['page' => 1]) !!}">
                         <i class="fa fa-list"></i>
                         Overview
-                    </a>
-                </li>
-                <li class="{!! \Request::route()->getName() == 'admin.modules.layout.show' ? 'active' : '' !!}">
-                    <a href="{!! route('admin.modules.layout.show') !!}">
-                        <i class="fa fa-list"></i>
-                        Layout
                     </a>
                 </li>
             </ul>
