@@ -23,6 +23,8 @@ class StorageHelper
     /** @var string */
     public static $conversationAttachmentsDir = 'attachments/';
 
+    public static $genderAvatarsDir = 'img/avatars/';
+
     /**
      * @param $user
      * @return mixed|string
@@ -30,11 +32,11 @@ class StorageHelper
      */
     public static function profileImageUrl(User $user, bool $thumb = false)
     {
-        if (is_null($user->profile_image)) {
-            return asset('img/avatars/' . \UserConstants::selectableField('gender')[$user->meta->gender] . '.png');
+        if (!$user->hasProfileImage()) {
+            return asset(self::$genderAvatarsDir . \UserConstants::selectableField('gender')[$user->meta->gender] . '.png');
         }
 
-        $filePath = self::userImagesPath($user->id) . $user->profile_image->filename;
+        $filePath = self::userImagesPath($user->id) . $user->profileImage->filename;
 
         if (!Storage::disk('cloud')->exists($filePath)) {
             // TODO
@@ -67,7 +69,7 @@ class StorageHelper
         }
 
         if (is_null($filename)) {
-            return asset('img/avatars/' . \UserConstants::selectableField('gender')[$gender] . '.png');
+            return asset(self::$genderAvatarsDir . $gender . '.png');
         }
         return self::userImageUrl($userId, $filename);
     }
