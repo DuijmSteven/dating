@@ -168,15 +168,13 @@
                         Profile Image
                     </td>
                 </tr>
-                <?php $peasantProfileImage = $peasant->profileImage;
-                ?>
                 @if($peasant->hasProfileImage())
                     <tr>
                         <td>
                             <img width="200" src="{!! \StorageHelper::profileImageUrl($peasant) !!}"/>
                         </td>
                         <td>
-                            <?= ($peasant->profile_image->visible) ? 'Yes' : 'No' ; ?>
+                            <?= ($peasant->profileImage->visible) ? 'Yes' : 'No' ; ?>
                         </td>
                         <td class="action-buttons">
                             <form method="POST" action="{!! route('images.destroy', ['imageId' => $peasant->profile_image->id]) !!}">
@@ -199,7 +197,7 @@
                     </td>
                 </tr>
 
-                <?php $peasantImagesNotProfile = $peasant->other_images; ?>
+                <?php $peasantImagesNotProfile = $peasant->images; ?>
                 @if(!is_null($peasantImagesNotProfile))
                     @foreach($peasantImagesNotProfile as $image)
                         <tr>

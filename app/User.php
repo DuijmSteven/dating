@@ -15,8 +15,10 @@ class User extends Authenticatable
 
     protected $primaryKey = 'id';
 
-    protected $profile_image = null;
-    protected $other_images = null;
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+    }
 
     /**
      * The database table used by the model.
@@ -189,6 +191,15 @@ class User extends Authenticatable
     }
 
     /**
+     * @return mixed
+     */
+    public function nonProfileImages()
+    {
+        return $this->hasMany('App\UserImage')->where('profile', 0);
+    }
+
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function receivedFlirts()
@@ -222,30 +233,6 @@ class User extends Authenticatable
     public function conversations()
     {
         return Conversation::with(['messages'])->where('user_a_id', $this->id)->orWhere('user_b_id', $this->id)->get();
-    }
-
-    /**
-     * @return $this
-     */
-    public function format()
-    {
-        return $this->formatImages();
-    }
-
-    /**
-     * Formats the images on the User object
-     */
-    private function formatImages()
-    {
-        $this->profile_image = null;
-        $this->other_images = null;
-
-        $this->categorizeImages();
-
-        // unset original images property, no longer needed
-        unset($this->images);
-
-        return $this;
     }
 
     /**
@@ -325,7 +312,7 @@ class User extends Authenticatable
      */
     public function hasProfileImage()
     {
-        if (!isset($this->profile_image) || is_null($this->profile_image)) {
+        if (!isset($this->profileImage) || is_null($this->profileImage)) {
             return false;
         }
 
