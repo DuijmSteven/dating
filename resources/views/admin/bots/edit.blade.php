@@ -92,7 +92,10 @@
                                         id="{!! $field !!}"
                                         class="form-control"
                                 >
-                                    @foreach(array_merge(['' => ''], $possibleOptions) as $key => $value)
+                                    <option value=""
+                                            {!! old($field) != '' ? 'selected' : '' !!}
+                                    ></option>
+                                    @foreach($possibleOptions as $key => $value)
                                         <option value="{!! $key == '' ? null : $key !!}"
                                                 {!! ($bot->meta->{$field} === $key) ? 'selected' : '' !!}
                                         >

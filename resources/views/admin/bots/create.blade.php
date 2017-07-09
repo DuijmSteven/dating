@@ -91,8 +91,9 @@
                         </div>
                     </div>
 
-                    <?php $counter = 0; ?>
-                    @foreach(\UserConstants::selectableFields() as $field => $possibleOptions)
+                    <?php $counter = 0;?>
+
+                    @foreach(\UserConstants::selectableFields() as $field =>  $possibleOptions)
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="{!! $field !!}">{!! ucfirst(str_replace('_', ' ', $field)) !!}</label>
@@ -101,7 +102,11 @@
                                         class="form-control"
                                         {!! ($field == 'gender') ? 'required' : '' !!}
                                 >
-                                    @foreach(array_merge(['' => ''], $possibleOptions) as $key => $value)
+                                    <option value=""
+                                            {!! old($field) != '' ? 'selected' : '' !!}
+                                    ></option>
+                                    @foreach($possibleOptions as $key => $value)
+
                                         <option value="{!! $key === '' ? null : $key !!}"
                                                 {!! (old($field) != '' && old($field) == $key) ? 'selected' : '' !!}
                                         >

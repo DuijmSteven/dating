@@ -39,19 +39,19 @@ $factory->define(App\UserMeta::class, function (FakerGenerator $faker) {
     return [
         'user_id'=> $faker->randomDigit,
         'dob' => $faker->dateTimeBetween('-60 years', '-18 years', date_default_timezone_get())->format('Y-m-d'),
-        'gender' => array_rand($selectableProfileFields['gender']),
-        'relationship_status' => array_rand($selectableProfileFields['relationship_status']),
+        'gender' => array_keys($selectableProfileFields['gender'])[rand(0, count($selectableProfileFields['gender']) - 1)],
+        'relationship_status' => array_keys($selectableProfileFields['relationship_status'])[rand(0, count($selectableProfileFields['relationship_status']) - 1)],
         'city' => $faker->city,
-        'height' => array_rand($selectableProfileFields['height']),
-        'body_type' => array_rand($selectableProfileFields['body_type']),
-        'eye_color' => array_rand($selectableProfileFields['eye_color']),
-        'hair_color' => array_rand($selectableProfileFields['hair_color']),
-        'smoking_habits' => array_rand($selectableProfileFields['smoking_habits']),
-        'drinking_habits' => array_rand($selectableProfileFields['drinking_habits']),
+        'height' => array_keys($selectableProfileFields['height'])[rand(0, count($selectableProfileFields['height']) - 1)],
+        'body_type' => array_keys($selectableProfileFields['body_type'])[rand(0, count($selectableProfileFields['body_type']) - 1)],
+        'eye_color' => array_keys($selectableProfileFields['eye_color'])[rand(0, count($selectableProfileFields['eye_color']) - 1)],
+        'hair_color' => array_keys($selectableProfileFields['hair_color'])[rand(0, count($selectableProfileFields['hair_color']) - 1)],
+        'smoking_habits' => array_keys($selectableProfileFields['smoking_habits'])[rand(0, count($selectableProfileFields['smoking_habits']) - 1)],
+        'drinking_habits' => array_keys($selectableProfileFields['drinking_habits'])[rand(0, count($selectableProfileFields['drinking_habits']) - 1)],
         'country' => 'nl',
         'about_me' => $faker->realText($maxNbChars = 200, $indexSize = 2),
         'looking_for' => $faker->realText($maxNbChars = 200, $indexSize = 2),
-        'province' => array_rand($selectableProfileFields['province'])
+        'province' => array_keys($selectableProfileFields['province'])[rand(0, count($selectableProfileFields['province']) - 1)]
     ];
 });
 

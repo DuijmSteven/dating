@@ -56,7 +56,6 @@ class UserTablesSeeder extends Seeder
         /* -- Create peasants and bots for all genders -- */
         foreach (['peasant', 'bot'] as $role) {
             foreach (UserConstants::selectableField('gender') as $key => $value) {
-
                 $userAmount = 25;
 
                 for ($count = 0; $count < $userAmount; $count++) {
@@ -69,8 +68,6 @@ class UserTablesSeeder extends Seeder
                     $createdUser = factory(App\User::class)->create([
                         'account_type' => $accountType
                     ]);
-
-                    var_dump($createdUser->toArray());
 
                     $createdUser->meta()->save(factory(App\UserMeta::class)->make([
                         'user_id' => $createdUser->id,
