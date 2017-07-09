@@ -168,17 +168,16 @@
                         Profile Image
                     </td>
                 </tr>
-                <?php $botProfileImage = $bot->profile_image; ?>
-                @if(isset($botProfileImage))
+                @if($bot->hasProfileImage())
                     <tr>
                         <td>
                             <img width="200" src="{!! \StorageHelper::profileImageUrl($bot) !!}"/>
                         </td>
                         <td>
-                            <?= ($botProfileImage->visible) ? 'Yes' : 'No' ; ?>
+                            <?= ($bot->profileImage->visible) ? 'Yes' : 'No' ; ?>
                         </td>
                         <td class="action-buttons">
-                            <form method="POST" action="{!! route('images.destroy', ['imageId' => $botProfileImage->id]) !!}">
+                            <form method="POST" action="{!! route('images.destroy', ['imageId' => $bot->profileImage->id]) !!}">
                                 {!! csrf_field() !!}
                                 {!! method_field('DELETE') !!}
                                 <button type="submit" class="btn btn-danger">Delete</button>
@@ -198,7 +197,7 @@
                     </td>
                 </tr>
 
-                <?php $botImagesNotProfile = $bot->other_images;  ?>
+                <?php $botImagesNotProfile = $bot->nonProfileImages; ?>
                 @if(!is_null($botImagesNotProfile))
                     @foreach($botImagesNotProfile as $image)
                         <tr>

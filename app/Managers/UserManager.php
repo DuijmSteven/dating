@@ -314,10 +314,13 @@ class UserManager
     public static function getAndFormatAuthenticatedUser()
     {
         $user = Auth::user();
+
         if (!($user instanceof User)) {
             return null;
         }
 
-        return $user->format();
+        $user = User::with('profileImage', 'images', 'meta')->where('id', $user->getId())->get()[0];
+
+        return $user;
     }
 }

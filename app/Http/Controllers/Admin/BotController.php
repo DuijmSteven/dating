@@ -9,6 +9,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Collection;
 
 /**
  * Class BotController
@@ -35,13 +36,10 @@ class BotController extends Controller
      */
     public function index()
     {
-        $bots = User::with(['meta', 'roles', 'profileImage'])->whereHas('roles', function ($query) {
+        /** @var Collection $bots */
+        $bots = User::with(['meta', 'roles', 'profileImage', 'images'])->whereHas('roles', function ($query) {
             $query->where('name', 'bot');
         })->orderBy('created_at', 'desc')->paginate(10);
-
-        foreach ($bots as &$bot) {
-            $bot->format();
-        }
 
         return view(
             'admin.bots.overview',
@@ -117,7 +115,7 @@ class BotController extends Controller
      */
     public function edit(Request $request)
     {
-        $bot = User::with(['meta'])->findOrFail($request->route('id'))->format();
+        $bot = User::with(['meta', 'profileImage', 'nonProfileImages'])->findOrFail($request->route('id'));
 
         return view(
             'admin.bots.edit',
