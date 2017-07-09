@@ -44,7 +44,7 @@ class UserTablesSeeder extends Seeder
 
         $adminUserMetaInstance = $createdAdmin->meta()->save(factory(App\UserMeta::class)->make([
             'user_id' => $createdAdmin->id,
-            'gender' => 0,
+            'gender' => 1,
         ]));
 
         $adminUserRoleInstance = new \App\RoleUser([
@@ -69,6 +69,8 @@ class UserTablesSeeder extends Seeder
                     $createdUser = factory(App\User::class)->create([
                         'account_type' => $accountType
                     ]);
+
+                    var_dump($createdUser->toArray());
 
                     $createdUser->meta()->save(factory(App\UserMeta::class)->make([
                         'user_id' => $createdUser->id,
