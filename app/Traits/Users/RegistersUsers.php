@@ -5,7 +5,6 @@ namespace App\Traits\Users;
 use App\User;
 use App\UserAccount;
 use App\UserMeta;
-use Illuminate\Foundation\Auth\RedirectsUsers;
 use App\RoleUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
