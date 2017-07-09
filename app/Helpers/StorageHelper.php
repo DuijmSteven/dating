@@ -32,11 +32,11 @@ class StorageHelper
      */
     public static function profileImageUrl(User $user, bool $thumb = false)
     {
-        if (is_null($user->profile_image)) {
+        if (!$user->hasProfileImage()) {
             return asset(self::$genderAvatarsDir . \UserConstants::selectableField('gender')[$user->meta->gender] . '.png');
         }
 
-        $filePath = self::userImagesPath($user->id) . $user->profile_image->filename;
+        $filePath = self::userImagesPath($user->id) . $user->profileImage->filename;
 
         if (!Storage::disk('cloud')->exists($filePath)) {
             // TODO
