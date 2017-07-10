@@ -3,7 +3,7 @@ window.$ = window.jQuery;
 require('bootstrap-sass');
 require('jquery-autocomplete/jquery.autocomplete.js');
 
-$(document).ready(function() {
+$(window).ready(function() {
     //console.log($.fn.tooltip.Constructor.VERSION);
 
     require('./global_helpers');
