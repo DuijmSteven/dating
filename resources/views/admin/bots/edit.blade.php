@@ -93,7 +93,7 @@
                                         class="form-control"
                                 >
                                     <option value=""
-                                            {!! old($field) != '' ? 'selected' : '' !!}
+                                            {!! old($field) == '' ? 'selected' : '' !!}
                                     ></option>
                                     @foreach($possibleOptions as $key => $value)
                                         <option value="{!! $key == '' ? null : $key !!}"

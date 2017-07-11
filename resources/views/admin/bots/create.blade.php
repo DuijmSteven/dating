@@ -103,7 +103,7 @@
                                         {!! ($field == 'gender') ? 'required' : '' !!}
                                 >
                                     <option value=""
-                                            {!! old($field) != '' ? 'selected' : '' !!}
+                                            {!! old($field) == '' ? 'selected' : '' !!}
                                     ></option>
                                     @foreach($possibleOptions as $key => $value)
 

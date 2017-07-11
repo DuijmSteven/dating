@@ -50,7 +50,7 @@ class ModuleController extends Controller
         return view(
             'admin.modules.layout',
             [
-                'title' => ' - ' . \config('app.name'),
+                'title' => 'Layout Overview - ' . \config('app.name'),
                 'headingLarge' => 'Layout',
                 'headingSmall' => '',
                 'carbonNow' => Carbon::now(),

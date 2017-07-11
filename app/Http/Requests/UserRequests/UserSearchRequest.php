@@ -5,6 +5,10 @@ namespace App\Http\Requests\UserRequests;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Http\Requests\Request;
 
+/**
+ * Class UserSearchRequest
+ * @package App\Http\Requests\UserRequests
+ */
 class UserSearchRequest extends Request
 {
     /**
@@ -24,7 +28,7 @@ class UserSearchRequest extends Request
      */
     public function rules()
     {
-        $userProfileFields = UserConstants::selectableFields('peasant', 'public', 'array_keys');
+        $userProfileFields = UserConstants::selectableFields('peasant', 'public');
 
         return [
             'query' => 'max:50',
