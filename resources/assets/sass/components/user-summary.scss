@@ -6,15 +6,28 @@
 //
 // Style guide: Components.User Summary
 .User-summary {
+    &__body {
+        position: relative;
+        width: 100%;
+        padding: 0;
+
+        &:before {
+            content: "";
+            display: block;
+            padding-top: 100%;
+        }
+    }
+
     &__user-image {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+
         img {
             width: 100%;
         }
-    }
-}
-
-@media (min-width: $screen-sm-min) {
-    .User-summary {
-        max-height: 316px;
     }
 }

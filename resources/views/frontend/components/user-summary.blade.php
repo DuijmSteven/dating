@@ -4,7 +4,7 @@
     </div>
     <div class="Tile__body User-summary__body">
         <div class="User-summary__user-image">
-            <img style="width: 100%;" src="{{ \StorageHelper::profileImageUrl($user) }}" alt="user image">
+            <img src="{{ \StorageHelper::profileImageUrl($user) }}" alt="user image">
         </div>
     </div>
 </div>
