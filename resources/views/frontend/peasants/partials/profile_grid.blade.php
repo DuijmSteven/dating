@@ -21,7 +21,6 @@
     <?php $count++; ?>
     @if($count % 3 == 0)
         <div class="col-xs-12">
-            <hr>
         </div>
     @endif
 @endforeach
