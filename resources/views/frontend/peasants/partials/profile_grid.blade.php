@@ -1,9 +1,7 @@
 <?php $count = 0; ?>
 @foreach($users as $user)
     <div class="col-sm-4">
-        @include('frontend.components.user-summary', [
-            'user' => $user
-        ])
+        @include('frontend.components.user-summary')
     </div>
     <?php $count++; ?>
     @if($count % 3 == 0)
