@@ -4,7 +4,7 @@
     <div class="Tile">
         <div class="Tile__heading">Search</div>
         <div class="Tile__body">
-            <form method="post" action="{{ route('users.search.post') }}">
+            <form method="get" action="{{ route('users.search.form.get') }}">
                 {{ csrf_field() }}
                 <div class="row">
                     <div class="col-sm-6">

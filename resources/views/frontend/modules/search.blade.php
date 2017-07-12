@@ -3,7 +3,7 @@
         Search
     </div>
     <div class="Tile__body Search__body">
-        <form method="POST" action="{{ route('users.search.post') }}">
+        <form method="GET" action="{{ route('users.search.form.get') }}">
             {{ csrf_field() }}
             <div class="form-group">
                 <label for="">City</label>

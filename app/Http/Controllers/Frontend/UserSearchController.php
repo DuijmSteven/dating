@@ -32,7 +32,7 @@ class UserSearchController extends FrontendController
      * @param UserSearchRequest $userSearchRequest
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function postSearch(UserSearchRequest $userSearchRequest)
+    public function search(UserSearchRequest $userSearchRequest)
     {
         $userSearchRequest->formatInput();
         $searchParameters = $userSearchRequest->all();
