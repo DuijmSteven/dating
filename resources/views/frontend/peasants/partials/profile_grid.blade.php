@@ -10,6 +10,7 @@
         <strong>Email: </strong>{{ $user->email }}<br>
 
         <h3>User meta</h3>
+        <strong>City: </strong>{{ $user->meta->city }}<br>
         <strong>Gender: </strong>{{ $user->meta->gender }}<br>
         <strong>Relationship status: </strong>{{ $user->meta->relationship_status }}<br>
         <strong>Body type: </strong>{{ $user->meta->body_type }}<br>

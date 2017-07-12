@@ -8,6 +8,10 @@ use App\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Class UserSearchManager
+ * @package App\Managers
+ */
 class UserSearchManager
 {
     /**
@@ -15,6 +19,10 @@ class UserSearchManager
      */
     private $user;
 
+    /**
+     * UserSearchManager constructor.
+     * @param User $user
+     */
     public function __construct(User $user)
     {
         $this->user = $user;
@@ -46,10 +54,23 @@ class UserSearchManager
             }
             foreach (UserConstants::selectableFields('peasant') as $field => $values) {
                 if (isset($parameters[$field])) {
-                    $query->whereHas('meta', function ($query) use ($parameters, $field) {
+                    $query = $query->whereHas('meta', function ($query) use ($parameters, $field) {
                         $query->where($field, $parameters[$field]);
                     });
                 }
+            }
+
+            if (isset($parameters['dob'])) {
+                $query = $query->whereHas('meta', function ($query) use ($parameters) {
+                    $query = $query->where('dob', '>=', $parameters['dob']['min']);
+                    $query = $query->where('dob', '<=', $parameters['dob']['max']);
+                });
+            }
+
+            if (isset($parameters['city'])) {
+                $query = $query->whereHas('meta', function ($query) use ($parameters) {
+                    $query = $query->where('city', 'like', '%' . $parameters['city'] . '%');
+                });
             }
         }
 
@@ -58,7 +79,6 @@ class UserSearchManager
             return $results;
         }
         $results = $query->paginate(PaginationConstants::$perPage['user_profiles'], ['*'], 'page', $page);
-
         return $results;
     }
 }

@@ -3,7 +3,8 @@
         Search
     </div>
     <div class="Tile__body Search__body">
-        <form action="">
+        <form method="POST" action="{{ route('users.search.post') }}">
+            {{ csrf_field() }}
             <div class="form-group">
                 <label for="">City</label>
                 <input type="text"
@@ -16,6 +17,8 @@
                 <select name="age" class="form-control">
                     <option value="18-25">18-25</option>
                     <option value="25-30">25-30</option>
+                    <option value="30-35">30-35</option>
+                    <option value="35-40">35-40</option>
                 </select>
             </div>
             <div class="text-right">

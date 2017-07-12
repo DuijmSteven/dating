@@ -37,6 +37,22 @@ class UserSearchController extends FrontendController
         $userSearchRequest->formatInput();
         $searchParameters = $userSearchRequest->all();
 
+        if (isset($searchParameters['age'])) {
+            [$ageMin, $ageMax] = explode('-', $searchParameters['age']);
+
+            $date = new \DateTime;
+            // The "Min" and "Max" are reversed on purpose in their usages, since the resulting date
+            // from the minimum age would be more recent than the one resulting from the maximum age
+            $formattedMaxDate = $date->modify('-' . $ageMin . ' years')->format('Y-m-d H:i:s');
+
+            $date = new \DateTime;
+            $formattedMinDate = $date->modify('-' . $ageMax . ' years')->format('Y-m-d H:i:s');
+
+            $searchParameters['dob'] = [];
+            $searchParameters['dob']['min'] = $formattedMinDate;
+            $searchParameters['dob']['max'] = $formattedMaxDate;
+        }
+
         // flash parameters to session so the next request can access them
         $userSearchRequest->session()->flash('searchParameters', $searchParameters);
 
