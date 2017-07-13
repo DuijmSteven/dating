@@ -6,6 +6,10 @@ use App\Helpers\ApplicationConstants\UserConstants;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 
+/**
+ * Class BotManager
+ * @package App\Managers
+ */
 class BotManager extends UserManager
 {
     /** @var StorageManager */
