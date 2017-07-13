@@ -40,6 +40,10 @@ class BotManager extends UserManager
         $this->persistUser($botData);
     }
 
+    /**
+     * @param array $botData
+     * @param int $botId
+     */
     public function updateBot(array $botData, int $botId)
     {
         $botData = $this->buildBotArrayToPersist($botData, 'update');

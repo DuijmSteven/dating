@@ -92,7 +92,7 @@ class UserManager
                 $userImage = new UserImage([
                     'user_id' => $userId,
                     'filename' => $filename,
-                    'visible' => 1,
+                    'visible' => 0,
                     'profile' => 0
                 ]);
 
