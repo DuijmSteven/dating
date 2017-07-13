@@ -10,16 +10,29 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
+/**
+ * Class ConversationController
+ * @package App\Http\Controllers\Admin
+ */
 class ConversationController extends Controller
 {
+    /** @var ConversationManager */
     private $conversationManager;
 
+    /**
+     * ConversationController constructor.
+     * @param ConversationManager $conversationManager
+     */
     public function __construct(ConversationManager $conversationManager)
     {
         $this->conversationManager = $conversationManager;
         parent::__construct();
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index(Request $request)
     {
         $page = $this->resolveCurrentPage($request);
@@ -71,6 +84,10 @@ class ConversationController extends Controller
         );
     }
 
+    /**
+     * @param int $conversationId
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy(int $conversationId)
     {
         try {
@@ -124,7 +141,8 @@ class ConversationController extends Controller
             ->orderBy('category_id', 'desc')
             ->orderBy('created_at', 'desc')
             ->get();
-        return array($userANotes, $userBNotes);
+
+        return [$userANotes, $userBNotes];
     }
 
     /**
