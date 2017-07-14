@@ -1,0 +1,15 @@
+// Search
+//
+// Markup: search.hbs
+//
+// The Search module
+//
+// Style guide: Modules.Search
+.Search {
+    &__body {
+        label {
+            font-size: map_get($searchItem, font-size) + px;
+            color: map_get($searchItem, font-color);
+        }
+    }
+}
