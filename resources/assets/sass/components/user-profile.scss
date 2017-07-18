@@ -1,0 +1,22 @@
+// User Profile
+//
+// Markup: user-profile.hbs
+//
+// The user profile component displays all the information of a user
+//
+// Style guide: Components.User Profile
+.User-profile {
+    &__body {
+        hr {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+    }
+
+    &__user-image {
+        margin-bottom: 10px;
+        img {
+            width: 100%;
+        }
+    }
+}

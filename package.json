@@ -21,7 +21,7 @@
   "devDependencies": {
     "admin-lte": "^2.3.11",
     "lodash": "^4.17.4",
-    "vue": "^2.1.10",
+    "vue": "^2.4.1",
     "vue-resource": "^1.0.3"
   }
 }

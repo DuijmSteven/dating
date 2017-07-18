@@ -2,12 +2,5 @@
 
 
 @section('content')
-
-    {{ $user->username }}, {{ $user->meta->dob->diffInYears($carbonNow)  }}
-
-    <br>
-    <br>
-
-    {{ $user->roles[0]->name }}
-
+    @include('frontend.components.user-profile')
 @endsection
