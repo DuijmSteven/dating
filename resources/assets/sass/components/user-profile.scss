@@ -11,6 +11,13 @@
             margin-top: 10px;
             margin-bottom: 10px;
         }
+        .fa {
+            color: map_get($userProfileItem, icon-color);
+        }
+
+        h5 {
+            color: map_get($userProfileItem, icon-color);
+        }
     }
 
     &__user-image {
@@ -18,5 +25,9 @@
         img {
             width: 100%;
         }
+    }
+
+    &__text {
+        font-size: map_get($userProfileItem, font-size) + px;
     }
 }
