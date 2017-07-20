@@ -94,6 +94,8 @@ Route::group([
     'prefix' => 'admin',
     'middleware' => ['admin']
 ], function () {
+    Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+
     Route::get('dashboard', 'Admin\DashboardController@dashboard')
         ->name('admin.dashboard');
 
