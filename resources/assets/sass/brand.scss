@@ -232,3 +232,15 @@ $dangerButton: (
     'background-color__hover': $tomatoLight,
     'background-color__active': $tomato
 );
+
+// Search
+$searchItem: (
+    'font-size': 14,
+    'font-color': $slate
+);
+
+// User-profile
+$userProfileItem: (
+    'icon-color': $slate,
+    'font-size': 14
+);

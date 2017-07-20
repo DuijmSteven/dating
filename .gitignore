@@ -9,3 +9,5 @@ public/build
 public/styleguide
 public/fonts
 .env
+_ide_helper.php
+.phpstorm.meta.php
