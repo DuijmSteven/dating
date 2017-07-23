@@ -20,6 +20,7 @@ class CreateUserMetaTable extends Migration
             $table->text('about_me')->nullable();
             $table->date('dob')->nullable();
             $table->tinyInteger('gender')->nullable();
+            $table->tinyInteger('looking_for_gender')->nullable();
             $table->tinyInteger('relationship_status')->nullable();
             $table->string('city', 50)->nullable();
             $table->tinyInteger('province')->nullable();

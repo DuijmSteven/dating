@@ -11,6 +11,10 @@ return [
         1 => 'Male',
         2 => 'Female'
     ],
+    'looking_for_gender' => [
+        1 => 'Male',
+        2 => 'Female'
+    ],
     'relationship_status' => [
         1 => 'Single',
         2 => 'In a relationship'

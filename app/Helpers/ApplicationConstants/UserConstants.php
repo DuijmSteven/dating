@@ -42,6 +42,10 @@ class UserConstants
                     1 => 'male',
                     2 => 'female'
                 ],
+                'looking_for_gender' => [
+                    1 => 'male',
+                    2 => 'female'
+                ],
                 'relationship_status' => [
                     1 => 'single',
                     2 => 'in_a_relationship'

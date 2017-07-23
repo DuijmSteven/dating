@@ -20,6 +20,14 @@
                         </div>
                     @endforeach
                 </div>
+                <div class="text-center User-profile__favorite-button">
+                    @include('frontend.components.button', [
+                        'buttonContext' => 'form',
+                        'buttonType' => 'submit',
+                        'buttonState' => 'primary',
+                        'buttonText' => 'Favorite'
+                    ])
+                </div>
             </div>
             <div class="col-xs-12 col-sm-9">
                 <h5><i class="fa fa-user"></i> Information</h5>

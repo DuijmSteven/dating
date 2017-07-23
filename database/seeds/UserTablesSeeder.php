@@ -71,7 +71,7 @@ class UserTablesSeeder extends Seeder
 
                     $createdUser->meta()->save(factory(App\UserMeta::class)->make([
                         'user_id' => $createdUser->id,
-                        'gender' => $key,
+                        'gender' => $key
                     ]));
 
                     if ($role == 'peasant') {

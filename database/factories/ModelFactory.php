@@ -40,6 +40,7 @@ $factory->define(App\UserMeta::class, function (FakerGenerator $faker) {
         'user_id'=> $faker->randomDigit,
         'dob' => $faker->dateTimeBetween('-60 years', '-18 years', date_default_timezone_get())->format('Y-m-d'),
         'gender' => array_keys($selectableProfileFields['gender'])[rand(0, count($selectableProfileFields['gender']) - 1)],
+        'looking_for_gender' => array_keys($selectableProfileFields['looking_for_gender'])[rand(0, count($selectableProfileFields['looking_for_gender']) - 1)],
         'relationship_status' => array_keys($selectableProfileFields['relationship_status'])[rand(0, count($selectableProfileFields['relationship_status']) - 1)],
         'city' => $faker->city,
         'height' => array_keys($selectableProfileFields['height'])[rand(0, count($selectableProfileFields['height']) - 1)],

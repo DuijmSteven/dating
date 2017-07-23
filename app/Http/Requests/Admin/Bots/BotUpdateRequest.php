@@ -35,6 +35,7 @@ class BotUpdateRequest extends Request
             'active' => 'boolean',
             'dob' => 'date_format:Y-m-d',
             'gender' => 'in:'. implode(array_keys($userProfileFields['gender']), ','),
+            'looking_for_gender' => 'in:'. implode(array_keys($userProfileFields['looking_for_gender']), ','),
             'relationship_status' => 'in:'. implode(array_keys($userProfileFields['relationship_status']), ','),
             'body_type' => 'in:'. implode(array_keys($userProfileFields['body_type']), ','),
             'eye_color' => 'in:'. implode(array_keys($userProfileFields['eye_color']), ','),
