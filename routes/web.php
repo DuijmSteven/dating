@@ -63,6 +63,17 @@ Route::group([
     });
 });
 
+/* Articles routes */
+Route::group([
+    'prefix' => 'articles',
+    'middleware' => ['auth']
+], function () {
+    Route::get('/', 'Frontend\ArticleController@index')
+        ->name('articles.overview');
+    Route::get('/{articleId}', 'Frontend\ArticleController@show')
+        ->name('articles.show');
+});
+
 Route::group([
     'prefix' => 'images'
 ], function () {
