@@ -74,6 +74,19 @@ Route::group([
         ->name('articles.show');
 });
 
+/* Conversations routes */
+Route::group([
+    'prefix' => 'conversations',
+    'middleware' => ['auth']
+], function () {
+    Route::get('/', 'ConversationController@index')
+        ->name('conversations.overview');
+    Route::get('/{conversationId}/messages', 'ConversationController@conversationMessages')
+        ->name('conversation.messages');
+    Route::post('/', 'ConversationController@store')
+        ->name('conversation.message.store');
+});
+
 Route::group([
     'prefix' => 'images'
 ], function () {

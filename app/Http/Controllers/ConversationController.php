@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\ConversationMessage;
+use App\Events\MessageSent;
 use App\Http\Requests\Admin\Conversations\MessageCreateRequest;
 use App\Managers\ConversationManager;
 use App\Http\Controllers\Controller;
+use App\User;
 
 class ConversationController extends Controller
 {
@@ -14,6 +17,11 @@ class ConversationController extends Controller
     {
         $this->conversationManager = $conversationManager;
         parent::__construct();
+    }
+
+    public function index()
+    {
+        return view('frontend.chat');
     }
 
     public function store(MessageCreateRequest $messageCreateRequest)
@@ -34,6 +42,23 @@ class ConversationController extends Controller
             ];
         }
 
+        $user = User::where('id', $messageData['sender_id'])->first();
+
+        $conversationMessage = ConversationMessage::where('conversation_id', $messageData['conversation_id'])->first();
+
+        broadcast(new MessageSent($user, $conversationMessage));
+
         return redirect()->back()->with('alerts', $alerts);
+    }
+
+    public function conversationMessages($conversationId)
+    {
+        try {
+            $messages = ConversationMessage::where('conversation_id', $conversationId)->with('sender')->get();
+
+            return $messages;
+        } catch (\Exception $exception) {
+            return $exception->getMessage();
+        }
     }
 }
