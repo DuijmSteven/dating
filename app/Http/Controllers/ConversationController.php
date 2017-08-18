@@ -44,7 +44,10 @@ class ConversationController extends Controller
 
         $user = User::where('id', $messageData['sender_id'])->first();
 
-        $conversationMessage = ConversationMessage::where('conversation_id', $messageData['conversation_id'])->first();
+        $conversationMessage = ConversationMessage
+            ::where('conversation_id', $messageData['conversation_id'])
+            ->latest()
+            ->first();
 
         broadcast(new MessageSent($user, $conversationMessage));
 

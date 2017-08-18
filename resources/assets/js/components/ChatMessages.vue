@@ -4,11 +4,11 @@
             <div class="chat-body clearfix">
                 <div class="header">
                     <strong class="primary-font">
-                        {{ message.sender.username }}
+                        {{ message.user }}
                     </strong>
                 </div>
                 <p>
-                    {{ message.body }}
+                    {{ message.message }}
                 </p>
             </div>
         </li>

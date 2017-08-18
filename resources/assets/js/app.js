@@ -29,19 +29,22 @@ const app = new Vue({
 
         Echo.private('chat')
             .listen('MessageSent', (e) => {
-                /*this.messages.push({
-                    message: e,
-                    user: e
-                });*/
-                console.log(e);
-                console.log(e.user.username);
+                this.messages.push({
+                    message: e.conversationMessage.body,
+                    user: e.user.username
+                });
             });
     },
 
     methods: {
         fetchMessages() {
             axios.get('/conversations/1/messages').then(response => {
-                this.messages = response.data;
+                for (var i = 0; i < response.data.length; i++) {
+                    this.messages.push({
+                        message: response.data[i].body,
+                        user: response.data[i].sender.username
+                    });
+                }
             });
         },
 
@@ -52,11 +55,6 @@ const app = new Vue({
                 sender_id: '44',
                 recipient_id: '83'
             })
-                .then(
-                    axios.get('/conversations/1/messages').then(response => {
-                        this.messages = response.data;
-                    })
-                );
         }
     }
 });
