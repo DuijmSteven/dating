@@ -2,5 +2,13 @@
 
 
 @section('content')
-    @include('frontend.components.user-profile')
+    <div class="User-profile">
+        <div class="col-md-3 hidden-xs hidden-sm">
+            @include('frontend.users.profile.sidebar-content')
+        </div>
+
+        <div class="col-md-9">
+            @include('frontend.users.profile.main-content')
+        </div>
+    </div>
 @endsection
