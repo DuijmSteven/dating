@@ -6,16 +6,28 @@ use App\Http\Requests\Admin\Conversations\MessageCreateRequest;
 use App\Managers\ConversationManager;
 use App\Http\Controllers\Controller;
 
+/**
+ * Class ConversationController
+ * @package App\Http\Controllers
+ */
 class ConversationController extends Controller
 {
     private $conversationManager;
 
+    /**
+     * ConversationController constructor.
+     * @param ConversationManager $conversationManager
+     */
     public function __construct(ConversationManager $conversationManager)
     {
         $this->conversationManager = $conversationManager;
         parent::__construct();
     }
 
+    /**
+     * @param MessageCreateRequest $messageCreateRequest
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(MessageCreateRequest $messageCreateRequest)
     {
         $messageData = $messageCreateRequest->all();

@@ -277,6 +277,9 @@ Route::group([
     Route::get('dashboard', 'Operators\HomeController@showDashboard')
     ->name('operators_platform.dashboard');
 
+    Route::get('send-message-as-bot', 'Operators\ConversationController@showSendMessageAsBot')
+        ->name('operators_platform.send_message_as_bot.show');
+
     Route::group([
         'prefix' => 'conversations'
     ], function () {
