@@ -34,5 +34,10 @@ class AppServiceProvider extends ServiceProvider
         }
 
         $this->app->bind('App\Interfaces\PaymentProvider', 'App\Services\PaymentService');
+
+        $this->app->bind('mailgun.client', function() {
+            return \Http\Adapter\Guzzle6\Client::createWithConfig([
+            ]);
+        });
     }
 }

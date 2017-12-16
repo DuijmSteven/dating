@@ -300,4 +300,16 @@ Route::group([
 Route::group([
     'prefix' => 'test'
 ], function () {
+    Route::group([
+        'prefix' => 'email'
+    ], function () {
+        Route::get('show-welcome', 'TestController@showWelcomeEmail')
+            ->name('test.email.welcome.show');
+
+        Route::get('show-message-received', 'TestController@showMessageReceivedEmail')
+            ->name('test.email.message-received.show');
+
+        Route::get('send-test', 'TestController@sendTestEmail')
+            ->name('test.email.send-test');
+    });
 });
