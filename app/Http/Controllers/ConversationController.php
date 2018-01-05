@@ -9,10 +9,18 @@ use App\Managers\ConversationManager;
 use App\Http\Controllers\Controller;
 use App\User;
 
+/**
+ * Class ConversationController
+ * @package App\Http\Controllers
+ */
 class ConversationController extends Controller
 {
     private $conversationManager;
 
+    /**
+     * ConversationController constructor.
+     * @param ConversationManager $conversationManager
+     */
     public function __construct(ConversationManager $conversationManager)
     {
         $this->conversationManager = $conversationManager;
@@ -24,6 +32,10 @@ class ConversationController extends Controller
         return view('frontend.chat');
     }
 
+    /**
+     * @param MessageCreateRequest $messageCreateRequest
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(MessageCreateRequest $messageCreateRequest)
     {
         $messageData = $messageCreateRequest->all();

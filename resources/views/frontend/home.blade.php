@@ -1,6 +1,7 @@
 @extends('frontend.layouts.default.layout')
 
 @section('content')
+
     @foreach($activity as $activityItem)
 
         @include('frontend.components.activity', [

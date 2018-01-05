@@ -16,7 +16,6 @@ class CreateUserMetaTable extends Migration
         Schema::create('user_meta', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->text('looking_for')->nullable();
             $table->text('about_me')->nullable();
             $table->date('dob')->nullable();
             $table->tinyInteger('gender')->nullable();

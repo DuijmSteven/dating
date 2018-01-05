@@ -51,7 +51,6 @@ $factory->define(App\UserMeta::class, function (FakerGenerator $faker) {
         'drinking_habits' => array_keys($selectableProfileFields['drinking_habits'])[rand(0, count($selectableProfileFields['drinking_habits']) - 1)],
         'country' => 'nl',
         'about_me' => $faker->realText($maxNbChars = 200, $indexSize = 2),
-        'looking_for' => $faker->realText($maxNbChars = 200, $indexSize = 2),
         'province' => array_keys($selectableProfileFields['province'])[rand(0, count($selectableProfileFields['province']) - 1)]
     ];
 });

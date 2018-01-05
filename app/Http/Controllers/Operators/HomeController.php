@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Operators;
 
-use App\Conversation;
-use App\Flirt;
-use App\Helpers\ApplicationConstants\UserConstants;
-use App\Helpers\ccampbell\ChromePhp\ChromePhp;
 use App\Managers\ConversationManager;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Class HomeController
+ * @package App\Http\Controllers\Operators
+ */
 class HomeController extends \App\Http\Controllers\Controller
 {
     /** @var ConversationManager */

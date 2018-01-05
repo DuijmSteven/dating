@@ -188,6 +188,7 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         TPWeb\TargetPay\TargetPayServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
+        Bogardo\Mailgun\MailgunServiceProvider::class,
 
         /*
          * Ours
@@ -258,8 +259,7 @@ return [
         'TargetPay' => TPWeb\TargetPay\TargetPayFacade::class,
         'Pusher' => Pusher\Pusher::class,
         'Broadcast' => Illuminate\Support\Facades\Broadcast::class,
-
-
+        'Mailgun' => Bogardo\Mailgun\Facades\Mailgun::class,
     ],
 
 ];

@@ -301,6 +301,9 @@ Route::group([
     Route::get('dashboard', 'Operators\HomeController@showDashboard')
     ->name('operators_platform.dashboard');
 
+    Route::get('send-message-as-bot', 'Operators\ConversationController@showSendMessageAsBot')
+        ->name('operators_platform.send_message_as_bot.show');
+
     Route::group([
         'prefix' => 'conversations'
     ], function () {
@@ -321,4 +324,16 @@ Route::group([
 Route::group([
     'prefix' => 'test'
 ], function () {
+    Route::group([
+        'prefix' => 'email'
+    ], function () {
+        Route::get('show-welcome', 'TestController@showWelcomeEmail')
+            ->name('test.email.welcome.show');
+
+        Route::get('show-message-received', 'TestController@showMessageReceivedEmail')
+            ->name('test.email.message-received.show');
+
+        Route::get('send-test', 'TestController@sendTestEmail')
+            ->name('test.email.send-test');
+    });
 });

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Welcome;
+use App\User;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redis;
 
 class TestController extends Controller
@@ -21,5 +24,38 @@ class TestController extends Controller
     public function deleteUserFavorite(int $userId, int $favoriteId)
     {
         return Redis::srem('users.favorites.' . $userId, [$favoriteId]);
+    }
+
+    public function showWelcomeEmail()
+    {
+        $user = User::find(3);
+
+        return view('emails.welcome', [
+            'user' => $user
+        ]);
+    }
+
+    public function showMessageReceivedEmail()
+    {
+        $sender = User::find(3);
+        $recipient = User::find(4);
+
+        return view('emails.message-received', [
+            'sender' => $sender,
+            'recipient' => $recipient,
+        ]);
+    }
+
+    public function sendTestEmail()
+    {
+        $user = User::find(5);
+        var_dump($user->getEmail());
+
+        $message = (new Welcome($user))->onQueue('emails');
+
+        $send = Mail::to($user)
+            ->queue($message);
+
+        dd($send);
     }
 }
