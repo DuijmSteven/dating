@@ -70,6 +70,8 @@ class ConversationManager
 
             $messageInstance->save();
         } catch (\Exception $exception) {
+
+            \Log::info($exception->getMessage());
             DB::rollBack();
             throw $exception;
         }

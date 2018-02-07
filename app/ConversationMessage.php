@@ -13,7 +13,8 @@ class ConversationMessage extends Model
         'sender_id',
         'recipient_id',
         'body',
-        'has_attachment'
+        'has_attachment',
+        'type'
     ];
 
     public static $allowedMessageTypes = [
