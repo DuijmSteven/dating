@@ -1,0 +1,89 @@
+.PrivateChatItem {
+    position: fixed;
+    right: 100px;
+    bottom: 0;
+    width: 250px;
+
+    &__head {
+        border-radius: 2px 2px 0 0;
+        padding: 10px;
+        background-color: $mainColor;
+
+        &__wrapper {
+            display: flex;
+            flex-direction: row;
+        }
+    }
+
+    &__user {
+        display: flex;
+    }
+
+    &__profile-image,
+    &__username,
+    &__close {
+        align-self: center;
+        color: $white;
+    }
+
+    &__profile-image {
+        margin-right: 10px;
+        border-radius: 50%;
+    }
+
+    &__username {
+        display: inline-block;
+        color: $white;
+        font-weight: bold;
+    }
+
+    &__close {
+        cursor: pointer;
+        margin-left: auto;
+    }
+
+    &__body {
+        font-size: 12px;
+
+        &__content {
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: scroll;
+            background-color: $white;
+        }
+    }
+
+    &__message {
+        position: relative;
+        padding: 10px;
+        min-height: 10px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+
+        &--user-a {
+            background: #FDE4CE;
+            margin-right: 10px;
+        }
+
+        &--user-b {
+            background: #EEF2E7;
+            margin-left: 10px;
+        }
+
+        &.last {
+            margin-bottom: 0;
+        }
+    }
+
+    &__textarea {
+        width: 100%;
+        height: 80px;
+        resize: none;
+        border: 0;
+        border-top: 1px solid #eee;
+
+        &:focus {
+            outline: 0;
+        }
+    }
+}

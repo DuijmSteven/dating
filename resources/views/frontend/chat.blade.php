@@ -1,64 +1,33 @@
 @extends('frontend.layouts.default.layout')
 
-<style>
-    .chat {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-    }
-
-    .chat li {
-        margin-bottom: 10px;
-        padding-bottom: 5px;
-        border-bottom: 1px dotted #B3A9A9;
-    }
-
-    .chat li .chat-body p {
-        margin: 0;
-        color: #777777;
-    }
-
-    .panel-body {
-        overflow-y: scroll;
-        height: 350px;
-    }
-
-    ::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-        background-color: #F5F5F5;
-    }
-
-    ::-webkit-scrollbar {
-        width: 12px;
-        background-color: #F5F5F5;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-        background-color: #555;
-    }
-</style>
 
 @section('content')
     <div id="app">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">Chats</div>
-
-                        <div class="panel-body">
-                            <chat-messages :messages="messages"></chat-messages>
-                        </div>
-                        <div class="panel-footer">
-                            <chat-form
-                                    v-on:messagesent="addMessage"
-                                    :user="{{ Auth::user() }}"
-                            ></chat-form>
-                        </div>
+        <div class="PrivateChatItem">
+            <div class="PrivateChatItem__head">
+                <div class="PrivateChatItem__head__wrapper">
+                    <div class="PrivateChatItem__user">
+                        <img class="PrivateChatItem__profile-image" src="http://placehold.it/40x40">
+                        <div class="PrivateChatItem__username">Jumanjo</div>
                     </div>
+
+                    <div class="PrivateChatItem__close"><i class="fa fa-close"></i></div>
                 </div>
             </div>
+
+            <div class="PrivateChatItem__body">
+                <div class="PrivateChatItem__body__wrapper">
+                    <div class="PrivateChatItem__body__content">
+                        <div class="PrivateChatItem__message PrivateChatItem__message--user-a">This is from A	</div>
+                        <div class="PrivateChatItem__message PrivateChatItem__message--user-b">This is from B, and its amazingly kool nah... i know it even i liked it :)</div>
+                        <div class="PrivateChatItem__message PrivateChatItem__message--user-a">This is from A	</div>
+                        <div class="PrivateChatItem__message PrivateChatItem__message--user-b">This is from B, and its amazingly kool nah... i know it even i liked it :)</div>
+                        <div class="PrivateChatItem__message PrivateChatItem__message--user-a last">Wow, Thats great to hear from you man </div>
+                    </div>
+                    <textarea class="PrivateChatItem__textarea" rows="4"></textarea>
+                </div>
+            </div>
+
         </div>
     </div>
 @endsection
