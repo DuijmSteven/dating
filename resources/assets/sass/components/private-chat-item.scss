@@ -21,7 +21,7 @@
 
     &__profile-image,
     &__username,
-    &__close {
+    &__clear {
         align-self: center;
         color: $white;
     }
@@ -37,9 +37,15 @@
         font-weight: bold;
     }
 
-    &__close {
+    &__clear {
+        display: flex;
         cursor: pointer;
         margin-left: auto;
+
+        .material-icon.clear {
+            align-self: center;
+            color: $white;
+        }
     }
 
     &__body {
@@ -47,7 +53,7 @@
 
         &__content {
             padding: 10px;
-            max-height: 200px;
+            height: 200px;
             overflow-y: scroll;
             background-color: $white;
         }

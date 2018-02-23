@@ -323,4 +323,15 @@ class UserManager
 
         return $user;
     }
+
+    public function getUserById(int $userId) {
+
+        $user =  User::with('profileImage', 'images', 'meta')->find($userId);
+
+        if (!($user instanceof User)) {
+            throw new \Exception('This user does not exist in the system');
+        }
+
+        return $user;
+    }
 }

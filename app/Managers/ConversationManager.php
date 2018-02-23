@@ -334,6 +334,30 @@ class ConversationManager
      * @param int $userBId
      * @return Conversation
      */
+    public function retrieveConversation(int $userAId, int $userBId)
+    {
+        $conversation = $this->conversation
+            ->with('messages')
+            ->where('user_a_id', $userAId)
+            ->where('user_b_id', $userBId)
+            ->orWhere(function ($query) use ($userAId, $userBId) {
+                $query->where('user_a_id', $userBId);
+                $query->where('user_b_id', $userAId);
+            })
+            ->first();
+
+        if (!($conversation instanceof Conversation)) {
+            return null;
+        }
+
+        return $conversation;
+    }
+
+    /**
+     * @param int $userAId
+     * @param int $userBId
+     * @return Conversation
+     */
     private function createOrRetrieveConversation(int $userAId, int $userBId)
     {
         $conversation = $this->conversation

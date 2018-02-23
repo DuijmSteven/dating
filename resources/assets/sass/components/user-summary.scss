@@ -5,7 +5,7 @@
 // The user summary module that is used to display the image and information of a user in the user profile grid
 //
 // Style guide: Components.User Summary
-.User-summary {
+.UserSummary {
     &__body {
         position: relative;
         width: 100%;
@@ -29,5 +29,16 @@
         img {
             width: 100%;
         }
+    }
+
+    &__footer {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+
+    &__sendMessage {
+        display: inline-block;
+        cursor: pointer;
     }
 }

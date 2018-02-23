@@ -3,31 +3,31 @@
 
 @section('content')
     <div id="app">
-        <div class="PrivateChatItem">
-            <div class="PrivateChatItem__head">
-                <div class="PrivateChatItem__head__wrapper">
-                    <div class="PrivateChatItem__user">
-                        <img class="PrivateChatItem__profile-image" src="http://placehold.it/40x40">
-                        <div class="PrivateChatItem__username">Jumanjo</div>
-                    </div>
+        @include('frontend.components.private-chat-item')
+    </div>
+@endsection
 
-                    <div class="PrivateChatItem__close"><i class="fa fa-close"></i></div>
+
+@section('content')
+    <div id="app">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Chats</div>
+
+                        <div class="panel-body">
+                            <chat-messages :messages="messages"></chat-messages>
+                        </div>
+                        <div class="panel-footer">
+                            <chat-form
+                                    v-on:messagesent="addMessage"
+                                    :user="{{ Auth::user() }}"
+                            ></chat-form>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="PrivateChatItem__body">
-                <div class="PrivateChatItem__body__wrapper">
-                    <div class="PrivateChatItem__body__content">
-                        <div class="PrivateChatItem__message PrivateChatItem__message--user-a">This is from A	</div>
-                        <div class="PrivateChatItem__message PrivateChatItem__message--user-b">This is from B, and its amazingly kool nah... i know it even i liked it :)</div>
-                        <div class="PrivateChatItem__message PrivateChatItem__message--user-a">This is from A	</div>
-                        <div class="PrivateChatItem__message PrivateChatItem__message--user-b">This is from B, and its amazingly kool nah... i know it even i liked it :)</div>
-                        <div class="PrivateChatItem__message PrivateChatItem__message--user-a last">Wow, Thats great to hear from you man </div>
-                    </div>
-                    <textarea class="PrivateChatItem__textarea" rows="4"></textarea>
-                </div>
-            </div>
-
         </div>
     </div>
 @endsection

@@ -14,19 +14,19 @@ window.Vue = require('vue/dist/vue.js');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('chat-messages', require('./components/ChatMessages.vue'));
-Vue.component('chat-form', require('./components/ChatForm.vue'));
+Vue.component('private-chat', require('./components/private-chat/PrivateChat.vue'));
+Vue.component('chat-messages', require('./components/private-chat/ChatMessages.vue'));
+Vue.component('chat-form', require('./components/private-chat/ChatForm.vue'));
 
 const app = new Vue({
     el: '#app',
 
     data: {
-        messages: []
+        messages: [],
+        conversationPartners: [],
     },
 
     created() {
-        this.fetchMessages();
-
         Echo.private('chat')
             .listen('MessageSent', (e) => {
                 this.messages.push({
@@ -37,25 +37,13 @@ const app = new Vue({
     },
 
     methods: {
-        fetchMessages() {
-            axios.get('/conversations/1/messages').then(response => {
-                for (var i = 0; i < response.data.length; i++) {
-                    this.messages.push({
-                        message: response.data[i].body,
-                        user: response.data[i].sender.username
-                    });
-                }
+        addChat: function (currentUserId, userBId) {
+            console.log('addChat()');
+
+            axios.get('/api/users/' + userBId).then(response => {
+                this.conversationPartners.push(response.data);
             });
         },
-
-        addMessage(message) {
-            axios.post('/conversations', {
-                message: message.message,
-                conversation_id: '1',
-                sender_id: '44',
-                recipient_id: '83'
-            })
-        }
     }
 });
 

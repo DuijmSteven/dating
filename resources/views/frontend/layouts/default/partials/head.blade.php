@@ -5,6 +5,8 @@
     <meta name="author" content="Dating">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ elixir('css/app.css') }}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
 
     @include('frontend.layouts.default.partials.favicons')
 

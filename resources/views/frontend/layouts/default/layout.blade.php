@@ -5,7 +5,7 @@
 <body>
     @include('frontend.layouts.default.partials.header')
 
-    <div class="container">
+    <div class="container" id="app">
         @include('frontend.components.alert')
 
         @if(isset($sidebarCount) && $sidebarCount > 0)
@@ -29,10 +29,16 @@
         @else
             @include('frontend.layouts.default.partials.main')
         @endif
+
+        <private-chat
+                v-model="conversationPartners"
+                v-for="partner in conversationPartners" :key="partner.id"
+                :user="{{ $authenticatedUser }}"
+                :partner="partner"></private-chat>
+
     </div>
 
     @include('frontend.layouts.default.partials.footer')
-
     <script>
         /*
          * Application namespace
