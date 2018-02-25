@@ -1,5 +1,5 @@
 <template>
-    <div class="PrivateChatItem">
+    <div :class="'PrivateChatItem PrivateChatItem--' + index">
         <div class="PrivateChatItem__head">
             <div class="PrivateChatItem__head__wrapper">
                 <div class="PrivateChatItem__user">
@@ -13,10 +13,15 @@
 
         <div class="PrivateChatItem__body">
             <div class="PrivateChatItem__body__wrapper">
-                <chat-messages :messages="messages"></chat-messages>
+                <div class="PrivateChatItem__body__content">
+                    <chat-message
+                        v-for="(message, index) in messages"
+                        :message="message">
+                    </chat-message>
+                </div>
                 <chat-form
-                        v-on:messagesent="addMessage"
-                        :user="user"
+                    v-on:message-sent="addMessage"
+                    :user="user"
                 ></chat-form>
             </div>
         </div>
@@ -27,53 +32,99 @@
     export default {
         props: [
             'user',
-            'partner'
+            'partner',
+            'index'
         ],
-
-        data: {
-
-        },
 
         data() {
             return {
-                newMessage: ''
-            }
+                listening: false,
+                messages: [],
+                conversation: undefined,
+                userAId: undefined,
+                userBId: undefined
+            };
         },
 
         created() {
-            this.fetchMessages();
+            this.userAId = this.user.id;
+            this.userBId = this.partner.id;
+
+            this.fetchMessagesAndListenToChannel();
         },
 
         methods: {
-            sendMessage() {
-                this.$emit('messagesent', {
-                    message: this.newMessage
-                });
+            fetchMessagesAndListenToChannel: function () {
+                axios.get('/api/conversations/' + this.userAId + '/' + this.userBId).then(response => {
+                    this.conversation = response.data;
 
-                this.newMessage = ''
-            },
+                    this.userBId = this.user.id === this.conversation.messages[0].sender_id ?
+                        this.conversation.messages[0].recipient_id :
+                        this.conversation.messages[0].sender_id;
 
-            fetchMessages: function () {
-                axios.get('/api/conversations/' + this.user.id + '/' + this.partner.id).then(response => {
-
-                    console.log(response);
-
-                    for (let i = 0; i < response.data.length; i++) {
+                    for (let i = 0; i < this.conversation.messages.length; i++) {
                         this.messages.push({
-                            message: response.data[i].body,
-                            user: response.data[i].sender.username
+                            id: this.conversation.messages[i].id,
+                            text: this.conversation.messages[i].body,
+                            user: this.conversation.messages[i].sender.id === this.user.id ? 'user-a' : 'user-b'
                         });
                     }
+
+                    Echo.private('chat.' + this.conversation.id)
+                        .listen('MessageSent', (e) => {
+                            this.messages.push({
+                                id: this.messages[this.messages.length - 1].id + 1,
+                                text: e.conversationMessage.body,
+                                user: 'user-a'
+                            });
+                        });
+                    this.listening = true;
+
+                }).catch(function (error) {
+                    console.log(error.response.status);
                 });
             },
 
             addMessage: function (message) {
-                axios.post('/conversations', {
-                    message: message.message,
-                    conversation_id: '1',
-                    sender_id: '44',
-                    recipient_id: '83'
-                })
+                if (!this.listening) {
+                    axios.post('/conversations', {
+                        message: message.text,
+                        sender_id: this.userAId,
+                        recipient_id: this.userBId
+                    }).then(function (response) {
+                        axios.get('/api/conversations/' + this.userAId + '/' + this.userBId).then(response => {
+                            this.conversation = response.data;
+
+                            for (let i = 0; i < this.conversation.messages.length; i++) {
+                                this.messages.push({
+                                    id:  this.conversation.messages[i].id,
+                                    text:  this.conversation.messages[i].body,
+                                    user:  this.conversation.messages[i].sender.id === this.userAId ? 'user-a' : 'user-b'
+                                });
+                            }
+
+                            Echo.private('chat.' + this.conversation.id)
+                                .listen('MessageSent', (e) => {
+                                    this.messages.push({
+                                        id: this.messages[this.messages.length - 1].id + 1,
+                                        text: e.conversationMessage.body,
+                                        user: 'user-a'
+                                    });
+                                });
+                            this.listening = true;
+                        });
+                    }.bind(this));
+                } else {
+                    axios.post('/conversations', {
+                        message: message.text,
+                        sender_id: this.userAId,
+                        recipient_id: this.userBId
+                    }).then(function (response) {
+                        console.log('Message sent');
+                    }).catch(function (error) {
+                        console.log(error.response.status);
+                    });
+                }
             }
         }
     }

@@ -61,4 +61,8 @@ class Conversation extends Model
     {
         return $this->hasMany('App\ConversationNote');
     }
+
+    public function getId() {
+        return $this->id;
+    }
 }

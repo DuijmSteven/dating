@@ -15,38 +15,26 @@ window.Vue = require('vue/dist/vue.js');
  */
 
 Vue.component('private-chat', require('./components/private-chat/PrivateChat.vue'));
-Vue.component('chat-messages', require('./components/private-chat/ChatMessages.vue'));
+Vue.component('chat-message', require('./components/private-chat/ChatMessage.vue'));
 Vue.component('chat-form', require('./components/private-chat/ChatForm.vue'));
 
 const app = new Vue({
     el: '#app',
 
     data: {
-        messages: [],
         conversationPartners: [],
-    },
-
-    created() {
-        Echo.private('chat')
-            .listen('MessageSent', (e) => {
-                this.messages.push({
-                    message: e.conversationMessage.body,
-                    user: e.user.username
-                });
-            });
     },
 
     methods: {
         addChat: function (currentUserId, userBId) {
-            console.log('addChat()');
-
             axios.get('/api/users/' + userBId).then(response => {
                 this.conversationPartners.push(response.data);
             });
+
+            console.log(this.conversationPartners);
         },
     }
 });
-
 
 /**
  * Other Javascript

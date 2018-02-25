@@ -17,16 +17,16 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
 
 Broadcast::channel('chat.{conversationId}', function ($user, $conversationId) {
     if (
-        ($user->id == \App\ConversationMessage::find($conversationId, ['conversation_id'])->first()->sender_id)
+        ($user->id == \App\Conversation::find($conversationId)->user_a_id)
         ||
-        ($user->id == \App\ConversationMessage::find($conversationId, ['conversation_id'])->first()->recipient_id)
+        ($user->id == \App\Conversation::find($conversationId)->user_b_id)
     ) {
         return true;
     }
     return false;
 });
 
-/*Broadcast::channel('chat', function ($user) {
+Broadcast::channel('chat', function ($user) {
     return Auth::check();
-});*/
+});
 

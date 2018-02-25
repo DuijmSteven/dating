@@ -1,8 +1,8 @@
 <template>
     <textarea class="PrivateChatItem__textarea" rows="4"
               placeholder="Type your message here..."
-              v-model="newMessage"
-              @keyup.enter="sendMessage"></textarea>
+              v-model.trim="text"
+              v-on:keyup.enter="sendMessage"></textarea>
 </template>
 
 <script>
@@ -11,17 +11,17 @@
 
         data() {
             return {
-                newMessage: ''
+                text: ''
             }
         },
 
         methods: {
             sendMessage() {
-                this.$emit('messagesent', {
-                    message: this.newMessage
+                this.$emit('message-sent', {
+                    text: this.text
                 });
 
-                this.newMessage = ''
+                this.text = ''
             }
         }
     }

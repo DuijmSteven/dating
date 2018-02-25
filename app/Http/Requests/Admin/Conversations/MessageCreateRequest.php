@@ -24,9 +24,7 @@ class MessageCreateRequest extends Request
      */
     public function rules()
     {
-
         $rules = [
-            'conversation_id' => 'integer',
             'sender_id' => 'integer',
             'recipient_id' => 'integer',
             'message' => 'string|max:1000',

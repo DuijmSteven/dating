@@ -20,15 +20,18 @@ class MessageSent implements ShouldBroadcast
 
     public $conversationMessage;
 
+    public $conversationId;
+
     /**
      * MessageSent constructor.
      * @param User $user
      * @param ConversationMessage $conversationMessage
      */
-    public function __construct(User $user, ConversationMessage $conversationMessage)
+    public function __construct(User $user, ConversationMessage $conversationMessage, $conversationId)
     {
         $this->user = $user;
         $this->conversationMessage = $conversationMessage;
+        $this->conversationId = $conversationId;
     }
 
     /**
@@ -38,6 +41,6 @@ class MessageSent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('chat.' . $this->conversationMessage->conversation_id);
+        return new PrivateChannel('chat.' . $this->conversationId);
     }
 }

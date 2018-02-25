@@ -33,18 +33,12 @@ class ConversationManager
 
     /**
      * @param array $messageData
+     * @return ConversationMessage
      * @throws \Exception
      */
     public function createMessage(array $messageData)
     {
         $hasAttachment = isset($messageData['attachment']);
-
-        if ($hasAttachment) {
-            $uploadedImageFilename = $this->storageManager->saveConversationImage(
-                $messageData['attachment'],
-                $messageData['conversation_id']
-            );
-        }
 
         DB::beginTransaction();
 
@@ -60,7 +54,7 @@ class ConversationManager
 
         try {
             $messageInstance = new ConversationMessage([
-                'conversation_id' => $messageData['conversation_id'],
+                'conversation_id' => $conversation->getId(),
                 'type' => 'generic',
                 'sender_id' => $messageData['sender_id'],
                 'recipient_id' => $messageData['recipient_id'],
@@ -78,6 +72,12 @@ class ConversationManager
 
         if ($hasAttachment) {
             try {
+
+                $uploadedImageFilename = $this->storageManager->saveConversationImage(
+                    $messageData['attachment'],
+                    $messageData['conversation_id']
+                );
+
                 $messageAttachment = new MessageAttachment([
                     'conversation_id' => $messageData['conversation_id'],
                     'message_id' => $messageInstance->id,
@@ -91,6 +91,8 @@ class ConversationManager
             }
         }
         DB::commit();
+
+        return $messageInstance;
     }
 
     /**

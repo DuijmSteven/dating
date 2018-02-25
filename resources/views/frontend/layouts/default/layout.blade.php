@@ -30,11 +30,16 @@
             @include('frontend.layouts.default.partials.main')
         @endif
 
-        <private-chat
+        @if($authenticatedUser != null)
+            <private-chat
                 v-model="conversationPartners"
-                v-for="partner in conversationPartners" :key="partner.id"
+                v-for="(partner, index) in conversationPartners"
+                :index="index"
+                :key="partner.id"
                 :user="{{ $authenticatedUser }}"
-                :partner="partner"></private-chat>
+                :partner="partner">
+            </private-chat>
+        @endif
 
     </div>
 

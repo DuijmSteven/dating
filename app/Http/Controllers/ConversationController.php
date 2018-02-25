@@ -15,15 +15,20 @@ use App\User;
  */
 class ConversationController extends Controller
 {
+    /** @var ConversationManager $conversationManager */
     private $conversationManager;
+
+    /** @var ConversationMessage $conversationMessage */
+    private $conversationMessage;
 
     /**
      * ConversationController constructor.
      * @param ConversationManager $conversationManager
      */
-    public function __construct(ConversationManager $conversationManager)
+    public function __construct(ConversationManager $conversationManager, ConversationMessage $conversationMessage)
     {
         $this->conversationManager = $conversationManager;
+        $this->conversationMessage = $conversationMessage;
         parent::__construct();
     }
 
@@ -40,8 +45,10 @@ class ConversationController extends Controller
     {
         $messageData = $messageCreateRequest->all();
 
+        \Log::info($messageData);
+
         try {
-            $this->conversationManager->createMessage($messageData);
+            $conversationMessage = $this->conversationManager->createMessage($messageData);
 
             $alerts[] = [
                 'type' => 'success',
@@ -56,13 +63,20 @@ class ConversationController extends Controller
 
         $user = User::where('id', $messageData['sender_id'])->first();
 
-        $conversationMessage = ConversationMessage
-            ::where('conversation_id', $messageData['conversation_id'])
+        $conversationMessage = $this->conversationMessage
+            ->where('sender_id', $messageData['sender_id'])
+            ->where(function ($query) use ($messageData) {
+                $query->where('sender_id', $messageData['sender_id'])
+                    ->where('recipient_id', $messageData['recipient_id']);
+            })
+            ->orWhere(function ($query) use ($messageData)  {
+                $query->where('recipient_id', $messageData['sender_id'])
+                    ->where('sender_id', $messageData['recipient_id']);
+            })
             ->latest()
             ->first();
 
-        $broadcast = broadcast(new MessageSent($user, $conversationMessage));
-
+        broadcast(new MessageSent($user, $conversationMessage, $conversationMessage->getConversationId()));
 
         return redirect()->back()->with('alerts', $alerts);
     }
