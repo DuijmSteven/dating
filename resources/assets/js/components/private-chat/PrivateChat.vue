@@ -130,7 +130,9 @@
             clear: function (event) {
                 $('#' + event.currentTarget.id).closest('.PrivateChatItem').remove();
                 Vue.delete(this.$parent.conversationPartners, this.index);
-                Echo.leave('chat.' + this.conversation.id);
+                if (this.listening === true) {
+                    Echo.leave('chat.' + this.conversation.id);
+                }
             }
         }
     }
