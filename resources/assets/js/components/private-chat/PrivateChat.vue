@@ -7,7 +7,7 @@
                     <div class="PrivateChatItem__username">{{ partner.username }}</div>
                 </div>
 
-                <div class="PrivateChatItem__clear"><i class="material-icons material-icon clear">clear</i></div>
+                <div :id="'PrivateChatItem__clear--' + index" class="PrivateChatItem__clear" v-on:click="clear"><i class="material-icons material-icon clear">clear</i></div>
             </div>
         </div>
 
@@ -125,6 +125,12 @@
                         console.log(error.response.status);
                     });
                 }
+            },
+            
+            clear: function (event) {
+                $('#' + event.currentTarget.id).closest('.PrivateChatItem').remove();
+                Vue.delete(this.$parent.conversationPartners, this.index);
+                Echo.leave('chat.' + this.conversation.id);
             }
         }
     }
