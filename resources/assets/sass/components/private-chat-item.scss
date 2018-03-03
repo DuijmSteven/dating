@@ -21,6 +21,10 @@
             display: flex;
             flex-direction: row;
         }
+
+        &__notify {
+            border-top: 5px solid $topaz;
+        }
     }
 
     &__user {
@@ -63,7 +67,7 @@
             padding: 10px;
             height: 200px;
             overflow-y: scroll;
-            background-color: $white;
+            background-color: $darkWhite;
         }
     }
 
@@ -91,14 +95,31 @@
     }
 
     &__textarea {
-        width: 100%;
-        height: 80px;
+        border-bottom: 1px solid $lightGrey !important;
+        height: 34px;
+        margin: 7px;
+        padding: 5px;
+        border: medium none;
+        width: 95%;
         resize: none;
-        border: 0;
-        border-top: 1px solid #eee;
 
         &:focus {
             outline: 0;
+        }
+
+        &__wrapper {
+            background-color: $white;
+        }
+
+        &__buttons {
+            overflow: hidden;
+            padding: 2px 5px 10px 6px;
+            width: 100%;
+            background-color: $white;
+        }
+
+        &__buttons .material-icons {
+            font-size: 20px;
         }
     }
 }

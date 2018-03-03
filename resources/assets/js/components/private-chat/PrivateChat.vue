@@ -1,6 +1,6 @@
 <template>
     <div :class="'PrivateChatItem PrivateChatItem--' + index">
-        <div class="PrivateChatItem__head">
+        <div :id="'PrivateChatItem__head--' + index" class="PrivateChatItem__head" v-on:click="toggle">
             <div class="PrivateChatItem__head__wrapper">
                 <div class="PrivateChatItem__user">
                     <img class="PrivateChatItem__profile-image" src="http://placehold.it/40x40">
@@ -11,7 +11,7 @@
             </div>
         </div>
 
-        <div class="PrivateChatItem__body">
+        <div :id="'PrivateChatItem__body--' + index" class="PrivateChatItem__body">
             <div class="PrivateChatItem__body__wrapper">
                 <div class="PrivateChatItem__body__content">
                     <chat-message
@@ -77,6 +77,14 @@
                                 text: e.conversationMessage.body,
                                 user: 'user-a'
                             });
+                            if (
+                                !$('#PrivateChatItem__head--' + this.index)
+                                    .hasClass('PrivateChatItem__head__notify')
+                                &&
+                                $('#PrivateChatItem__body--' + this.index).is(":hidden")
+                            ) {
+                                $('#PrivateChatItem__head--' + this.index).addClass('PrivateChatItem__head__notify');
+                            }
                         });
                     this.listening = true;
 
@@ -110,6 +118,14 @@
                                         text: e.conversationMessage.body,
                                         user: 'user-a'
                                     });
+                                    if (
+                                        !$('#PrivateChatItem__head--' + this.index)
+                                            .hasClass('PrivateChatItem__head__notify')
+                                        &&
+                                        $('#PrivateChatItem__body--' + this.index).is(":hidden")
+                                    ) {
+                                        $('#PrivateChatItem__head--' + this.index).addClass('PrivateChatItem__head__notify');
+                                    }
                                 });
                             this.listening = true;
                         });
@@ -127,12 +143,17 @@
                 }
             },
             
-            clear: function (event) {
-                $('#' + event.currentTarget.id).closest('.PrivateChatItem').remove();
+            clear: function () {
                 Vue.delete(this.$parent.conversationPartners, this.index);
+                $('.PrivateChatItem--' + this.index).remove();
                 if (this.listening === true) {
                     Echo.leave('chat.' + this.conversation.id);
                 }
+            },
+
+            toggle: function () {
+                $('#PrivateChatItem__head--' + this.index).removeClass('PrivateChatItem__head__notify');
+                $('#PrivateChatItem__body--' + this.index).slideToggle('fast');
             }
         }
     }

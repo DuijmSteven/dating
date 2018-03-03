@@ -1,8 +1,14 @@
 <template>
-    <textarea class="PrivateChatItem__textarea" rows="4"
-              placeholder="Type your message here..."
-              v-model.trim="text"
-              v-on:keyup.enter="sendMessage"></textarea>
+    <div class="PrivateChatItem__textarea__wrapper">
+        <textarea class="PrivateChatItem__textarea" rows="10" cols="40"
+                  placeholder="Type your message here..."
+                  v-model.trim="text"
+                  v-on:keyup.enter="sendMessage">
+        </textarea>
+        <div class="PrivateChatItem__textarea__buttons">
+            <i class="material-icons">attach_file</i>
+        </div>
+    </div>
 </template>
 
 <script>
