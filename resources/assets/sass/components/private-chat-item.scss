@@ -98,10 +98,9 @@
         border-bottom: 1px solid $lightGrey !important;
         height: 34px;
         margin: 7px;
-        padding: 5px;
         border: medium none;
         width: 95%;
-        resize: none;
+        overflow: hidden;
 
         &:focus {
             outline: 0;
@@ -113,13 +112,29 @@
 
         &__buttons {
             overflow: hidden;
-            padding: 2px 5px 10px 6px;
+            padding: 2px 0px 0px 5px;
             width: 100%;
             background-color: $white;
         }
 
         &__buttons .material-icons {
             font-size: 20px;
+            color: $mildGrey;
+        }
+
+        &__hiddenDiv {
+            display: none;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            width: 95%;
+            overflow: hidden;
+            min-height: 34px;
+        }
+
+        &__textStuff {
+            resize: none;
+            overflow: hidden;
         }
     }
 }
