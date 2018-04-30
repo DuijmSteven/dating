@@ -9,7 +9,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="{!! route('home') !!}">
-                {{--<img src="{!! asset('img/site_logos/Altijdsex_LogoSmall_Pos@1x.png') !!}">--}}
+                <img src="{!! asset('img/site_logos/Altijdsex_LogoSmall_Pos@1x.png') !!}">
             </a>
         </div>
 
@@ -45,6 +45,11 @@
                               style="display: none;">
                             {{ csrf_field() }}
                         </form>
+                    </li>
+                @else
+                    <li class="{!! \Request::route()->getName() == 'login.get' ? 'active' : '' !!}"><a href="{{ route('login.get') }}">Login</a>
+                    </li>
+                    <li class="{!! \Request::route()->getName() == 'landing-page.show' ? 'active' : '' !!}"><a href="{{ route('landing-page.show') }}">Register</a>
                     </li>
                 @endif
                 <li class="{!! \Request::route()->getName() == 'contact.get' ? 'active' : '' !!}"><a href="{{ route('contact.get') }}">Contact us</a>

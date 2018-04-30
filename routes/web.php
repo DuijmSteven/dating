@@ -12,14 +12,15 @@
 */
 
 Route::get('login', 'Auth\LoginController@showLoginForm')
-    ->name('login.get');
+    ->name('login.get')
+    ->middleware(['guest']);
 Route::post('login', 'Auth\LoginController@login')
-    ->name('login.post');
+    ->name('login.post')
+    ->middleware(['guest']);
 Route::post('logout', 'Auth\LoginController@logout')
     ->name('logout.post');
 
-Route::get('register', 'Auth\RegisterController@showRegistrationForm')
-    ->name('register.get');
+
 Route::post('register', 'Auth\RegisterController@register')
     ->name('register.post');
 
@@ -33,6 +34,16 @@ Route::get('contact', 'Frontend\HomeController@showContact')
 
 Route::get('/', 'Frontend\HomeController@index')
     ->name('home')->middleware(['auth']);
+
+
+Route::group([
+    'prefix' => 'register',
+    'middleware' => ['guest']
+], function () {
+    Route::get('/', 'Frontend\LandingPageController@show')
+        ->name('landing-page.show');
+});
+
 
 /* User routes */
 Route::group([

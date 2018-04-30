@@ -27,6 +27,9 @@ const app = new Vue({
 
     methods: {
         addChat: function (currentUserId, userBId) {
+
+            console.log('hello');
+
             axios.get('/api/users/' + userBId).then(response => {
                 this.conversationPartners.push(response.data);
             });

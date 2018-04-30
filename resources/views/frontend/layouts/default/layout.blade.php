@@ -30,7 +30,7 @@
             @include('frontend.layouts.default.partials.main')
         @endif
 
-        @if($authenticatedUser != null)
+        @if(isset($authenticatedUser) && $authenticatedUser != null)
             <private-chat
                 v-model="conversationPartners"
                 v-for="(partner, index) in conversationPartners"
