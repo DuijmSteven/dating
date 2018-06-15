@@ -78,7 +78,7 @@ class ConversationController extends Controller
 
         broadcast(new MessageSent($user, $conversationMessage, $conversationMessage->getConversationId()));
 
-        return redirect()->back()->with('alerts', $alerts);
+        //return redirect()->back()->with('alerts', $alerts);
     }
 
     public function conversationMessages($conversationId)

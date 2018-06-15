@@ -75,7 +75,7 @@
                             this.messages.push({
                                 id: this.messages[this.messages.length - 1].id + 1,
                                 text: e.conversationMessage.body,
-                                user: 'user-a'
+                                user: e.user.id === this.user.id ? 'user-a' : 'user-b'
                             });
                             if (
                                 !$('#PrivateChatItem__head--' + this.index)
@@ -94,53 +94,15 @@
             },
 
             addMessage: function (message) {
-                if (!this.listening) {
-                    axios.post('/conversations', {
-                        message: message.text,
-                        sender_id: this.userAId,
-                        recipient_id: this.userBId
-                    }).then(function (response) {
-                        axios.get('/api/conversations/' + this.userAId + '/' + this.userBId).then(response => {
-                            this.conversation = response.data;
-
-                            for (let i = 0; i < this.conversation.messages.length; i++) {
-                                this.messages.push({
-                                    id:  this.conversation.messages[i].id,
-                                    text:  this.conversation.messages[i].body,
-                                    user:  this.conversation.messages[i].sender.id === this.userAId ? 'user-a' : 'user-b'
-                                });
-                            }
-
-                            Echo.private('chat.' + this.conversation.id)
-                                .listen('MessageSent', (e) => {
-                                    this.messages.push({
-                                        id: this.messages[this.messages.length - 1].id + 1,
-                                        text: e.conversationMessage.body,
-                                        user: 'user-a'
-                                    });
-                                    if (
-                                        !$('#PrivateChatItem__head--' + this.index)
-                                            .hasClass('PrivateChatItem__head__notify')
-                                        &&
-                                        $('#PrivateChatItem__body--' + this.index).is(":hidden")
-                                    ) {
-                                        $('#PrivateChatItem__head--' + this.index).addClass('PrivateChatItem__head__notify');
-                                    }
-                                });
-                            this.listening = true;
-                        });
-                    }.bind(this));
-                } else {
-                    axios.post('/conversations', {
-                        message: message.text,
-                        sender_id: this.userAId,
-                        recipient_id: this.userBId
-                    }).then(function (response) {
-                        console.log('Message sent');
-                    }).catch(function (error) {
-                        console.log(error.response.status);
-                    });
-                }
+                axios.post('/conversations', {
+                    message: message.text,
+                    sender_id: this.userAId,
+                    recipient_id: this.userBId
+                }).then(function (response) {
+                    console.log('Message sent');
+                }).catch(function (error) {
+                    console.log(error.response.status);
+                });
             },
             
             clear: function () {
@@ -148,6 +110,7 @@
                 $('.PrivateChatItem--' + this.index).remove();
                 if (this.listening === true) {
                     Echo.leave('chat.' + this.conversation.id);
+                    this.listening = false;
                 }
             },
 
