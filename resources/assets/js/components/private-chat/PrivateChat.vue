@@ -1,13 +1,27 @@
 <template>
     <div :class="'PrivateChatItem PrivateChatItem--' + index">
-        <div :id="'PrivateChatItem__head--' + index" class="PrivateChatItem__head" v-on:click="toggle">
+        <div :id="'PrivateChatItem__head--' + index" class="PrivateChatItem__head">
             <div class="PrivateChatItem__head__wrapper">
                 <div class="PrivateChatItem__user">
                     <img class="PrivateChatItem__profile-image" src="http://placehold.it/40x40">
                     <div class="PrivateChatItem__username">{{ partner.username }}</div>
                 </div>
 
-                <div :id="'PrivateChatItem__clear--' + index" class="PrivateChatItem__clear" v-on:click="clear"><i class="material-icons material-icon clear">clear</i></div>
+                <div class="PrivateChatItem__actionIcons">
+                    <div v-on:click="toggle"
+                         :id="'PrivateChatItem__minimize--' + index"
+                         class="PrivateChatItem__minimize"
+
+                    >
+                        <i class="material-icons material-icon minimize">minimize</i>
+                    </div>
+                    <div v-on:click="clear"
+                         :id="'PrivateChatItem__clear--' + index"
+                         class="PrivateChatItem__clear"
+                    >
+                        <i class="material-icons material-icon clear">clear</i>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -16,8 +30,9 @@
                 <div class="PrivateChatItem__body__content">
                     <chat-message
                         v-for="(message, index) in messages"
-                        :message="message">
-                    </chat-message>
+                        :message="message"
+                        :key="message.id"
+                    ></chat-message>
                 </div>
                 <chat-form
                     v-on:message-sent="addMessage"

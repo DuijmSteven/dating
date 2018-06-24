@@ -6,6 +6,7 @@
                 <div class="PrivateChatItem__username">Jumanjo</div>
             </div>
 
+            <div class="PrivateChatItem__minimize"><i class="material-icons material-icon minimize">clear</i></div>
             <div class="PrivateChatItem__clear"><i class="material-icons material-icon clear">clear</i></div>
         </div>
     </div>

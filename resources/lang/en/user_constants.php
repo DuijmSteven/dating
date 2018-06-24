@@ -71,12 +71,12 @@ return [
         4 => 'Gelderland',
         5 => 'Groningen',
         6 => 'Limburg',
-        7 => 'Noord Brabant',
-        8 => 'Noord Holland',
+        7 => 'Noord-Brabant',
+        8 => 'Noord-Holland',
         9 => 'Overijssel',
         10 => 'Utrecht',
         11 => 'Zeeland',
-        12 => 'Zuid holland'
+        12 => 'Zuid-Holland'
     ],
     'about_me' => 'About me',
     'looking_for' => 'Looking for',

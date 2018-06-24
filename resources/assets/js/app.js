@@ -22,19 +22,41 @@ const app = new Vue({
     el: '#app',
 
     data: {
-        conversationPartners: [],
+        conversationPartners: []
     },
 
     methods: {
         addChat: function (currentUserId, userBId) {
+            console.log('Current user ID: ' + currentUserId);
+            console.log('Chat partner ID: ' + userBId);
 
-            console.log('hello');
+            let isConversationOpen = false;
+            let openConversationIndex;
 
-            axios.get('/api/users/' + userBId).then(response => {
-                this.conversationPartners.push(response.data);
+            this.conversationPartners.forEach(function (partner, index) {
+                if (partner.id === userBId) {
+                    isConversationOpen = true;
+                    openConversationIndex = index;
+                }
             });
 
-            console.log(this.conversationPartners);
+            if (!isConversationOpen) {
+                axios.get('/api/users/' + userBId).then(
+                    response => {
+                        this.conversationPartners.push(response.data);
+
+                        this.$nextTick(() => {
+                            $('.PrivateChatItem--' + (this.conversationPartners.length - 1) + ' textarea').focus();
+                            $('.PrivateChatItem').removeClass('focus');
+                            $('.PrivateChatItem--' + (this.conversationPartners.length - 1)).addClass('focus');
+                        });
+                    }
+                );
+            } else {
+                $('.PrivateChatItem--' + openConversationIndex + ' textarea').focus();
+                $('.PrivateChatItem').removeClass('focus');
+                $('.PrivateChatItem--' + openConversationIndex).addClass('focus');
+            }
         },
     }
 });
