@@ -130,8 +130,7 @@ class UserConstants
     public static $textFields = [
         'common' => [
             'public' => [
-                'about_me',
-                'looking_for'
+                'about_me'
             ]
         ]
     ];
