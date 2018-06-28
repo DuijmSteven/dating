@@ -80,6 +80,23 @@ class UserTablesSeeder extends Seeder
                         ]));
                     }
 
+                    if($role == 'bot') {
+                        $botCategories = UserConstants::selectableField('category', $role, 'array_values');
+                        \Log::info($botCategories);
+
+                        $categoryAmount = rand(1, 2);
+
+                        for ($index = 0; $index < $categoryAmount; $index++) {
+                            $categoryName = $botCategories[$index];
+                            $botCategoryUserInstance = new \App\BotCategoryUser([
+                                'user_id' => $createdUser->id,
+                                'bot_category_id' => UserConstants::selectableField('category', $role, 'array_flip')[$categoryName]
+                            ]);
+
+                            $botCategoryUserInstance->save();
+                        }
+                    }
+
                     $roleUserInstance = new RoleUser([
                         'user_id' => $createdUser->id,
                         'role_id' => UserConstants::selectableField('role', $role, 'array_flip')[$role]

@@ -124,6 +124,16 @@ class UserConstants
                     4 => 'premium_3',
                 ]
             ]
+        ],
+        'bot' => [
+            'private' => [
+                'category' => [
+                    1 => 'seniors',
+                    2 => 'teens',
+                    3 => 'naked',
+                    4 => 'dressed',
+                ]
+            ]
         ]
     ];
 

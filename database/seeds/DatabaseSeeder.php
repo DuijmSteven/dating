@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard();
 
+        $this->call(BotCategoriesSeeder::class);
         $this->call(UserTablesSeeder::class);
         $this->call(ConversationsMessagesFlirtsSeeder::class);
         $this->call(ArticlesSeeder::class);

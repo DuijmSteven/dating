@@ -151,6 +151,14 @@ class User extends Authenticatable
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function botCategories()
+    {
+        return $this->belongsToMany('App\BotCategory');
+    }
+
+    /**
      * @return mixed
      */
     public function images()
