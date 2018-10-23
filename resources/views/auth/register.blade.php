@@ -9,7 +9,7 @@
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('register.post') }}">
                         {{ csrf_field() }}
-                        {{--register123--}}
+
                         <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
                             <label for="name" class="col-md-4 control-label">Username</label>
 
