@@ -20,10 +20,6 @@ Route::post('login', 'Auth\LoginController@login')
 Route::post('logout', 'Auth\LoginController@logout')
     ->name('logout.post');
 
-
-Route::post('register', 'Auth\RegisterController@register')
-    ->name('register.post');
-
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')
     ->name('password.reset.get');
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')
@@ -40,8 +36,18 @@ Route::group([
     'prefix' => 'register',
     'middleware' => ['guest']
 ], function () {
+    Route::get('/', 'Auth\RegisterController@showRegistrationForm')
+        ->name('register.get');
+});
+
+Route::group([
+    'prefix' => 'LP',
+    'middleware' => ['guest']
+], function () {
     Route::get('/', 'Frontend\LandingPageController@show')
         ->name('landing-page.show');
+    Route::post('/', 'Auth\RegisterController@register')
+        ->name('register.post');
 });
 
 
