@@ -60,11 +60,11 @@ class StorageHelper
      */
     public static function profileImageUrlFromId(int $userId, string $filename = null, $gender)
     {
-        if (!in_array($gender, [0, 1, '0', '1', 'male', 'female'])) {
-            \Log::warning(__FUNCTION__ . ' in ' . __CLASS__ . ' : Wrong gender parameter passed (' . $gender . ')');
+        if (!in_array($gender, [1, 2, '1', '2', 'male', 'female'])) {
+            \Log::error(__FUNCTION__ . ' in ' . __CLASS__ . ' : Wrong gender parameter passed (' . $gender . ')');
         }
 
-        if ($gender == '0' || $gender == '1') {
+        if ($gender == '1' || $gender == '2') {
             $gender = \UserConstants::selectableField('gender')[(int) $gender];
         }
 

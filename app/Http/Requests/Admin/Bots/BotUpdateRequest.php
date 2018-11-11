@@ -49,9 +49,12 @@ class BotUpdateRequest extends Request
             'looking_for' => 'string|max:1000'
         ];
 
-        $imageCount = count($this->input('user_images')) - 1;
-        foreach (range(0, $imageCount) as $index) {
-            $rules['user_images.' . $index] = 'image|max:4000';
+        if (!is_null($this->files->get('user_images'))) {
+
+            $imageCount = count($this->files->get('user_images')) - 1;
+            foreach (range(0, $imageCount) as $index) {
+                $rules['user_images.' . $index] = 'image|max:4000';
+            }
         }
 
         return $rules;

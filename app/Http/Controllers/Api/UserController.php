@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Request;
 use App\Managers\UserManager;
 use Illuminate\Http\JsonResponse;
 
@@ -21,6 +22,11 @@ class UserController
     public function __construct(UserManager $userManager)
     {
         $this->userManager = $userManager;
+    }
+
+    public function getCurrentUser(Request $request)
+    {
+        return $request->user();
     }
 
     public function getUserById(int $userId)

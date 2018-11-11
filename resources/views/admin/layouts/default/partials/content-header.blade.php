@@ -1,4 +1,4 @@
 <h1>
-    {{ $headingLarge or '' }}
-    <small>{{ $headingSmall or '' }}</small>
+    {{ $headingLarge ?? '' }}
+    <small>{{ $headingSmall ?? '' }}</small>
 </h1>
