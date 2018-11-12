@@ -25,6 +25,7 @@ elixir(function (mix) {
 
     mix.copy('resources/assets/styleguide', 'public/styleguide', false);
 /*    mix.copy('node_modules/font-awesome/fonts', 'public/fonts');*/
+    mix.copy('node_modules/bootstrap-sass/assets/fonts/bootstrap', 'public/admin/fonts');
 
     mix.copy('resources/assets/img', 'public/img', false);
 

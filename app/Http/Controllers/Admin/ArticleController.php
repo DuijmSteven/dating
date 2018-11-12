@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Article;
 use App\Http\Requests\Admin\Articles\ArticleCreateRequest;
+use App\Http\Requests\Admin\Articles\ArticleUpdateRequest;
 use App\Http\Requests\Admin\Articles\TestimonialUpdateRequest;
 use Carbon\Carbon;
 use GrahamCampbell\Markdown\Facades\Markdown;
@@ -121,7 +122,7 @@ class ArticleController extends Controller
      * @param int $articleId
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(TestimonialUpdateRequest $request, int $articleId)
+    public function update(ArticleUpdateRequest $request, int $articleId)
     {
         try {
             $article = Article::find($articleId);
