@@ -107,7 +107,7 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-                <form role="form" method="POST" action="{!! route('conversations.store') !!}" enctype="multipart/form-data">
+                <form role="form" method="POST" action="{!! route('admin.conversations.store') !!}" enctype="multipart/form-data">
                     {!! csrf_field() !!}
                     <input type="hidden" value="{!! $conversation->id !!}" name="conversation_id">
                     <input type="hidden" value="{!! $conversation->userA->id !!}" name="sender_id">

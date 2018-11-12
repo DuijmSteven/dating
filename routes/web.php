@@ -329,6 +329,9 @@ Route::group([
         Route::post('/', 'ConversationController@store')
             ->name('conversations.store');
 
+        Route::post('/', 'Admin\ConversationController@store')
+            ->name('admin.conversations.store');
+
         Route::group([
             'prefix' => 'notes'
         ], function () {

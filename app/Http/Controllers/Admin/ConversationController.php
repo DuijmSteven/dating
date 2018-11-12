@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Conversation;
 use App\ConversationNote;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Conversations\MessageCreateRequest;
 use App\Managers\ConversationManager;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -82,6 +83,31 @@ class ConversationController extends Controller
                 'userBNotes' => $userBNotes
             ]
         );
+    }
+
+    /**
+     * @param MessageCreateRequest $messageCreateRequest
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(MessageCreateRequest $messageCreateRequest)
+    {
+        $messageData = $messageCreateRequest->all();
+
+        try {
+            $conversationMessage = $this->conversationManager->createMessage($messageData);
+
+            $alerts[] = [
+                'type' => 'success',
+                'message' => 'The message was sent successfully'
+            ];
+        } catch (\Exception $exception) {
+            $alerts[] = [
+                'type' => 'error',
+                'message' => 'The message was not sent due to an exception.'
+            ];
+        }
+
+        return redirect()->back()->with('alerts', $alerts);
     }
 
     /**
