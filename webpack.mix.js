@@ -45,7 +45,6 @@ mix.scripts([
     'resources/assets/js/admin/jquery.knob.js',
     'resources/assets/js/admin/jquery.slimscroll.min.js',
     'resources/assets/js/admin/jquery.sparkline.min.js',
-    'resources/assets/js/admin/morris.min.js',
     'resources/assets/js/admin/moment.min.js',
     'resources/assets/js/admin/raphael.min.js',
     'resources/assets/js/admin/custom.js',
