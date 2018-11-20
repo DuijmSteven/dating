@@ -1,13 +1,9 @@
 /vendor
 /node_modules
 .idea
-public/admin
-public/img
-public/css
-public/js
-public/build
 public/styleguide
-public/fonts
 .env
 _ide_helper.php
 .phpstorm.meta.php
+public/css/app.css.map
+public/js/app.js.map
