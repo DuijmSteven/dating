@@ -2,47 +2,47 @@ version: '3'
 services:
 
   #PHP Service
-  app:
+  dating-app:
     build:
       context: .
       dockerfile: Dockerfile
-    image: digitalocean.com/php
-    container_name: app
+    image: dating-app
+    container_name: dating-app
     restart: unless-stopped
     tty: true
     environment:
-      SERVICE_NAME: app
+      SERVICE_NAME: dating
       SERVICE_TAGS: staging
     working_dir: /var/www
     volumes:
       - ./:/var/www
       - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
-      - app-network
+      - dating-network
 
   #Nginx Service
-  webserver:
+  dating-nginx:
     image: nginx:alpine
-    container_name: webserver
+    container_name: dating-nginx
     restart: unless-stopped
     tty: true
     ports:
-      - "80:80"
-      - "443:443"
+      - "81:80"
+      - "444:443"
     volumes:
       - ./:/var/www
       - ./nginx/conf.d/:/etc/nginx/conf.d/
     networks:
-      - app-network
+      - dating-network
 
   #MySQL Service
-  db:
+  dating-mysql:
     image: mysql:5.7.22
-    container_name: db
+    container_name: dating-mysql
     restart: unless-stopped
     tty: true
     ports:
-      - "3306:3306"
+      - "3307:3306"
     environment:
       MYSQL_USER: dating
       MYSQL_PASSWORD: 12qwaszx
@@ -54,12 +54,26 @@ services:
       - dbdata:/var/lib/mysql/
       - ./mysql/my.cnf:/etc/mysql/my.cnf
     networks:
-      - app-network
+      - dating-network
+
+  #phpmyadmin service
+  dating-phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: dating-phpmyadmin
+    ports:
+      - "90:80"
+    environment:
+      PMA_HOST: dating-mysql
+    networks:
+      - dating-network
+    depends_on:
+      - dating-mysql
 
 #Docker Networks
 networks:
-  app-network:
+  dating-network:
     driver: bridge
+
 #Volumes
 volumes:
   dbdata:
