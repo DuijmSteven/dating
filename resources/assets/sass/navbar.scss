@@ -8,6 +8,7 @@
 .navbar-default {
     border: $navbarBorderWidth + px solid #d3e0e9;
     background-color: $navbarBgColor;
+    position: relative;
 
     .navbar-nav {
         > li {
@@ -51,6 +52,21 @@
                     color: $sugar;
                 }
             }
+        }
+    }
+
+    #goToAdmin {
+        position: absolute;
+        background-color: rgba(0,0,0,0.2);
+        border-radius: 0 0 10px 10px;
+        left: 20px;
+        border: 1px solid #fff;
+        border-top: 0;
+        text-align: center;
+        width: 100px;
+
+        a {
+            color: $white;
         }
     }
 }

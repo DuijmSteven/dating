@@ -150,6 +150,20 @@ class PeasantController extends Controller
         return redirect()->back()->with('alerts', $alerts);
     }
 
+    public function messagePeasantAsBot(int $peasantId)
+    {
+        return view(
+            'admin.peasants.message-as-bot',
+            [
+                'title' => 'Message Peasant as Bot- ' . \config('app.name'),
+                'headingLarge' => 'Peasant',
+                'headingSmall' => 'Message as bot',
+                'carbonNow' => Carbon::now(),
+                'peasant' => User::with('meta')->find($peasantId)
+            ]
+        );
+    }
+
     /**
      * Remove the specified resource from storage.
      *
