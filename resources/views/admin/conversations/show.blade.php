@@ -23,6 +23,13 @@
                 </div>
             </div>
             <div class="box-body">
+                <div style="text-align: center">
+                    <img style="max-width: 200px"
+                         src="{!! \StorageHelper::profileImageUrl($conversation->userA) !!}"
+                         alt="user image"
+                    >
+                </div>
+
                 @foreach(\UserConstants::selectableFields() as $fieldName => $a)
                     @if(isset($conversation->userA->meta->{$fieldName}))
                         <strong>{!! ucfirst(str_replace('_', ' ', $fieldName)) !!}:
@@ -39,13 +46,15 @@
             </div>
         </div>
 
-        {{-- Include Notes module for user B --}}
-        @include('admin.conversations.partials.notes', [
-            'moduleId' => 'A',
-            'userClassName' => 'userA',
-            'notes' => $userANotes,
-            'userId' => $conversation->userA->id
-        ])
+        @if($conversation->id)
+            {{-- Include Notes module for user B --}}
+            @include('admin.conversations.partials.notes', [
+                'moduleId' => 'A',
+                'userClassName' => 'userA',
+                'notes' => $userANotes,
+                'userId' => $conversation->userA->id
+            ])
+        @endif
 
     </div>
     <div class="col-xs-12 col-sm-6 sm_min_pad0">
@@ -147,6 +156,13 @@
                 </div>
             </div>
             <div class="box-body">
+                <div style="text-align: center">
+                    <img style="max-width: 200px"
+                         src="{!! \StorageHelper::profileImageUrl($conversation->userB) !!}"
+                         alt="user image"
+                    >
+                </div>
+
                 @foreach(\UserConstants::selectableFields() as $fieldName => $a)
                     @if(isset($conversation->userB->meta->{$fieldName}))
                         <strong>{!! ucfirst(str_replace('_', ' ', $fieldName)) !!}:
@@ -163,13 +179,15 @@
             </div>
         </div>
 
-        {{-- Include Notes module for user B --}}
-        @include('admin.conversations.partials.notes', [
-            'moduleId' => 'B',
-            'userClassName' => 'userB',
-            'notes' => $userBNotes,
-            'userId' => $conversation->userB->id
-        ])
+        @if($conversation->id)
+            {{-- Include Notes module for user B --}}
+            @include('admin.conversations.partials.notes', [
+                'moduleId' => 'B',
+                'userClassName' => 'userB',
+                'notes' => $userBNotes,
+                'userId' => $conversation->userB->id
+            ])
+        @endif
     </div>
 </div>
 

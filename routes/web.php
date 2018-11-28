@@ -319,16 +319,24 @@ Route::group([
     'middleware' => ['operator']
 ], function () {
     Route::get('dashboard', 'Operators\HomeController@showDashboard')
-    ->name('operators_platform.dashboard');
+    ->name('operator-platform.dashboard');
 
     Route::get('send-message-as-bot', 'Operators\ConversationController@showSendMessageAsBot')
-        ->name('operators_platform.send_message_as_bot.show');
+        ->name('operator-platform.send-message-as-bot.show');
 
     Route::group([
         'prefix' => 'conversations'
     ], function () {
         Route::get('{conversationId}', 'Admin\ConversationController@show')
-            ->name('operators_platform.conversations.show');
+            ->name('operator-platform.conversations.show');
+
+
+        Route::get('{userAId}/{userBId}', 'Admin\ConversationController@checkIfConversationExists')
+            ->name('admin.conversations.check-if-exists');
+
+        Route::get('{userAId}/{userBId}', 'Admin\ConversationController@showNew')
+            ->name('operator-platform.new-conversation.show');
+
         Route::post('/', 'ConversationController@store')
             ->name('conversations.store');
 

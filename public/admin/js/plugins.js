@@ -17976,7 +17976,7 @@ $(window).load(function () {
         });
     }
 
-    if (DP.currentRoute === 'operators_platform.conversations.show') {
+    if (DP.currentRoute === 'operator-platform.conversations.show') {
 
         $(document).on('change', '#attachment', function () {
             var filename = $('#attachment').val().split('\\').pop();
@@ -17998,5 +17998,36 @@ $(window).load(function () {
 
         $('#note_user_id').val(userId);
     });
+
+    // scrolls all the elements on the page with a class "scroll-bottom" to the bottom
+    if ($('#js-BotSelection').length > 0) {
+        $('.js-fillBotData').click(function () {
+            $('#js-goToConversation').attr(
+                'href',
+                DP.baseUrl +
+                '/' +
+                'operator-platform/conversations/' +
+                $(this).closest('li').data('bot-id') +
+                '/' +
+                $('#js-peasant-profile').data('peasant-id')
+            );
+
+            $('#js-botProfileImage').attr('src', $(this).closest('li').data('bot-profile-image'));
+
+            $('#js-botUsername').text($(this).closest('li').data('bot-username'));
+            $('#js-botAge').text($(this).closest('li').data('bot-age'));
+            $('#js-botStatus').text($(this).closest('li').data('bot-status'));
+            $('#js-botProvince').text($(this).closest('li').data('bot-province'));
+            $('#js-botCity').text($(this).closest('li').data('bot-city'));
+            $('#js-botHeight').text($(this).closest('li').data('bot-height'));
+            $('#js-botBodyType').text($(this).closest('li').data('bot-body-type'));
+            $('#js-botEyeColor').text($(this).closest('li').data('bot-eye-color'));
+            $('#js-botHairColor').text($(this).closest('li').data('bot-hair-color'));
+            $('#js-botSmoking').text($(this).closest('li').data('bot-smoking'));
+            $('#js-botDrinking').text($(this).closest('li').data('bot-drinking'));
+            $('#js-aboutMe').text($(this).closest('li').data('bot-about-me'));
+        });
+    }
+
 });
 

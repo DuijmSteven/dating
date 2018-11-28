@@ -156,10 +156,15 @@ class PeasantController extends Controller
             'admin.peasants.message-as-bot',
             [
                 'title' => 'Message Peasant as Bot- ' . \config('app.name'),
-                'headingLarge' => 'Peasant',
-                'headingSmall' => 'Message as bot',
+                'headingLarge' => 'Peasants',
+                'headingSmall' => 'Message peasant as bot',
                 'carbonNow' => Carbon::now(),
-                'peasant' => User::with('meta')->find($peasantId)
+                'peasant' => User::with('meta', 'profileImage')->find($peasantId),
+                'bots' => User::with('meta', 'roles')
+                    ->whereHas('roles', function ($query) {
+                        $query->where('id', 3);
+                    })
+                    ->get()
             ]
         );
     }

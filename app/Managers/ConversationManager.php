@@ -360,7 +360,7 @@ class ConversationManager
      * @param int $userBId
      * @return Conversation
      */
-    private function createOrRetrieveConversation(int $userAId, int $userBId)
+    public function createOrRetrieveConversation(int $userAId, int $userBId)
     {
         $conversation = $this->conversation
             ->where('user_a_id', $userAId)
