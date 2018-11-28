@@ -28,10 +28,10 @@
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
             <li class="treeview
-                       {!! Request::route()->getName() == 'operators_platform.dashboard' ?
+                       {!! Request::route()->getName() == 'operator-platform.dashboard' ?
                     'active' :
                     '' !!}">
-                <a href="{!! route('operators_platform.dashboard') !!}">
+                <a href="{!! route('operator-platform.dashboard') !!}">
                     <i class="fa fa-dashboard"></i>
                     <span>Dashboard</span>
                 </a>
