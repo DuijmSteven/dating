@@ -1,6 +1,6 @@
 <template>
-    <div :class="'PrivateChatItem PrivateChatItem--' + index">
-        <div :id="'PrivateChatItem__head--' + index" class="PrivateChatItem__head">
+    <div :class="'PrivateChatItem PrivateChatItem--' + index + ' ' + $mq">
+        <div v-on:click="toggle" :id="'PrivateChatItem__head--' + index" class="PrivateChatItem__head">
             <div class="PrivateChatItem__head__wrapper">
                 <div class="PrivateChatItem__user">
                     <img class="PrivateChatItem__profile-image" src="http://placehold.it/40x40">
@@ -8,13 +8,13 @@
                 </div>
 
                 <div class="PrivateChatItem__actionIcons">
-                    <div v-on:click="toggle"
-                         :id="'PrivateChatItem__minimize--' + index"
+                    <!--<div v-on:click="toggle"
+                         :id="'PrivateChatItem__minimize&#45;&#45;' + index"
                          class="PrivateChatItem__minimize"
 
                     >
                         <i class="material-icons material-icon minimize">minimize</i>
-                    </div>
+                    </div>-->
                     <div v-on:click="clear"
                          :id="'PrivateChatItem__clear--' + index"
                          class="PrivateChatItem__clear"
@@ -130,6 +130,12 @@
             },
 
             toggle: function () {
+                if($('#PrivateChatItem__body--' + this.index).is(":hidden")) {
+                    $('.PrivateChatItem.mobile').hide();
+                    $('.PrivateChatItem--' + this.index + '.mobile').show();
+                } else {
+                    $('.PrivateChatItem.mobile').show();
+                }
                 $('#PrivateChatItem__head--' + this.index).removeClass('PrivateChatItem__head__notify');
                 $('#PrivateChatItem__body--' + this.index).slideToggle('fast');
             }

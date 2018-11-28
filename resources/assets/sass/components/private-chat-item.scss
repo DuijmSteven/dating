@@ -5,7 +5,18 @@
     }
 }
 
+@mixin private-chat-list-mobile {
+    @for $i from 0 through 10 {
+        .PrivateChatItem--#{$i} {
+            &.mobile {
+                bottom: (60 * $i) + px;
+            }
+        }
+    }
+}
+
 @include private-chat-list;
+@include private-chat-list-mobile;
 
 .PrivateChatItem {
     position: fixed;
@@ -16,6 +27,7 @@
         border-radius: 2px 2px 0 0;
         padding: 10px;
         background-color: $mainColor;
+        cursor: pointer;
 
         &__wrapper {
             display: flex;
@@ -23,7 +35,7 @@
         }
 
         &__notify {
-            border-top: 5px solid $topaz;
+            background-color: $topaz;
         }
     }
 
@@ -154,5 +166,10 @@
 
     &.focus {
         box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    &.mobile {
+        width: 100%;
+        position: sticky;
     }
 }
