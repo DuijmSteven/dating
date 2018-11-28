@@ -93,12 +93,6 @@
                 <span>Dashboard</span>
             </a>
         </li>
-        <li class="{!! \Request::route()->getName() == 'operator-platform.send-message-as-bot.show' ? 'active' : '' !!}">
-            <a href="{!! route('operator-platform.send-message-as-bot.show') !!}">
-                <i class="fa fa-envelope-o"></i>
-                <span>Send Message as Bot</span>
-            </a>
-        </li>
     </ul>
 </li>
 @php

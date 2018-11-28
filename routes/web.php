@@ -321,9 +321,6 @@ Route::group([
     Route::get('dashboard', 'Operators\HomeController@showDashboard')
     ->name('operator-platform.dashboard');
 
-    Route::get('send-message-as-bot', 'Operators\ConversationController@showSendMessageAsBot')
-        ->name('operator-platform.send-message-as-bot.show');
-
     Route::group([
         'prefix' => 'conversations'
     ], function () {
@@ -334,7 +331,7 @@ Route::group([
         Route::get('{userAId}/{userBId}', 'Admin\ConversationController@checkIfConversationExists')
             ->name('admin.conversations.check-if-exists');
 
-        Route::get('{userAId}/{userBId}', 'Admin\ConversationController@showNew')
+        Route::get('new/{userAId}/{userBId}', 'Admin\ConversationController@showNew')
             ->name('operator-platform.new-conversation.show');
 
         Route::post('/', 'ConversationController@store')
