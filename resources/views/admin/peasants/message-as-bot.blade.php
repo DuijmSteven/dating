@@ -104,8 +104,10 @@
             </div>
         </div>
 
-            <div class="col-xs-12" style="text-align: right">
-                <a id="js-goToConversation" href="#" class="btn btn-default">
+            <div class="col-xs-12"
+                 style="text-align: right; margin-bottom: 20px"
+            >
+                <a id="js-goToConversation" href="#" class="btn btn-info">
                     Go to conversation
                 </a>
             </div>
