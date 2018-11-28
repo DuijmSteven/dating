@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -20,6 +21,9 @@ class AppServiceProvider extends ServiceProvider
         if (config('app.env') == 'local') {
             \DB::enableQueryLog();
         }
+
+        Carbon::setWeekStartsAt(Carbon::MONDAY);
+        Carbon::setWeekEndsAt(Carbon::SUNDAY);
     }
 
     /**

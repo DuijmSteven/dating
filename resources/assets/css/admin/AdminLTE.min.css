@@ -6105,3 +6105,13 @@ table .action-buttons .btn {
 .main-header .logo img {
     width: 150px;
 }
+
+/* Dashboard */
+.DashboardWidget_header {
+    padding: 20px;
+    font-size: 18px;
+}
+
+.DashboardWidget_count {
+    float: right;
+}
