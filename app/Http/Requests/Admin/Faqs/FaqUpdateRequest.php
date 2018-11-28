@@ -5,10 +5,10 @@ namespace App\Http\Requests\Admin\Faqs;
 use App\Http\Requests\Request;
 
 /**
- * Class ArticleCreateRequest
- * @package App\Http\Requests\Admin\Articles
+ * Class FaqUpdateRequest
+ * @package App\Http\Requests\Admin\Bots
  */
-class ArticleCreateRequest extends Request
+class FaqUpdateRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +28,6 @@ class ArticleCreateRequest extends Request
     public function rules()
     {
         return [
-            'section' => 'string|required',
             'title' => 'string|required',
             'body' => 'required',
             'status' => 'integer|required'

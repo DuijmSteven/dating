@@ -2,60 +2,59 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Faq;
 use App\Http\Controllers\Controller;
-use App\Article;
-use App\Http\Requests\Admin\Articles\FaqCreateRequest;
-use App\Http\Requests\Admin\Articles\FaqUpdateRequest;
-use App\Http\Requests\Admin\Articles\TestimonialUpdateRequest;
+use App\Http\Requests\Admin\Faqs\FaqUpdateRequest;
+use App\Http\Requests\Admin\Faqs\FaqCreateRequest;
 use Carbon\Carbon;
 use GrahamCampbell\Markdown\Facades\Markdown;
 
 /**
- * Class ArticleController
+ * Class FaqController
  * @package App\Http\Controllers\Admin
  */
-class ArticleController extends Controller
+class FaqController extends Controller
 {
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
-        $articles = Article::orderBy('created_at', 'desc')->paginate(5);
+        $faqs = Faq::orderBy('created_at', 'desc')->paginate(15);
 
-        foreach ($articles as $article) {
-            $article->body = Markdown::convertToHtml($article->body);
+        foreach ($faqs as $faq) {
+            $faq->body = Markdown::convertToHtml($faq->body);
         }
 
         return view(
-            'admin.articles.overview',
+            'admin.faqs.overview',
             [
-                'title' => 'Articles Overview - ' . \config('app.name'),
-                'headingLarge' => 'Articles',
+                'title' => 'Faq Overview - ' . \config('app.name'),
+                'headingLarge' => 'Faq',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
-                'articles' => $articles
+                'faqs' => $faqs
             ]
         );
     }
 
     /**
-     * @param int $articleId
+     * @param int $faqId
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(int $articleId)
+    public function destroy(int $faqId)
     {
         try {
-            Article::destroy($articleId);
+            Faq::destroy($faqId);
 
             $alerts[] = [
                 'type' => 'success',
-                'message' => 'The article was deleted.'
+                'message' => 'The faq was deleted.'
             ];
         } catch (\Exception $exception) {
             $alerts[] = [
                 'type' => 'error',
-                'message' => 'The article was not deleted due to an exception.'
+                'message' => 'The faq was not deleted due to an exception.'
             ];
         }
 
@@ -68,28 +67,28 @@ class ArticleController extends Controller
     public function getCreate()
     {
         return view(
-            'admin.articles.create',
+            'admin.faqs.create',
             [
-                'title' => 'Create article - ' . \config('app.name'),
-                'headingLarge' => 'Articles',
+                'title' => 'Create faq - ' . \config('app.name'),
+                'headingLarge' => 'Faqs',
                 'headingSmall' => 'Create'
             ]
         );
     }
 
     /**
-     * @param int $articleId
+     * @param int $faqId
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getUpdate(int $articleId)
+    public function getUpdate(int $faqId)
     {
         return view(
-            'admin.articles.edit',
+            'admin.faqs.edit',
             [
-                'title' => 'Edit article - ' . \config('app.name'),
-                'headingLarge' => 'Articles',
+                'title' => 'Edit faq - ' . \config('app.name'),
+                'headingLarge' => 'Faqs',
                 'headingSmall' => 'Edit',
-                'article' => Article::find($articleId)
+                'faq' => Faq::find($faqId)
             ]
         );
     }
@@ -101,16 +100,16 @@ class ArticleController extends Controller
     public function post(FaqCreateRequest $request)
     {
         try {
-            Article::create($request->all());
+            Faq::create($request->all());
 
             $alerts[] = [
                 'type' => 'success',
-                'message' => 'The article was created.'
+                'message' => 'The faq was created.'
             ];
         } catch (\Exception $exception) {
             $alerts[] = [
                 'type' => 'error',
-                'message' => 'The article was not created due to an exception.'
+                'message' => 'The faq was not created due to an exception.'
             ];
         }
 
@@ -118,24 +117,24 @@ class ArticleController extends Controller
     }
 
     /**
-     * @param TestimonialUpdateRequest $request
-     * @param int $articleId
+     * @param FaqUpdateRequest $request
+     * @param int $faqId
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(FaqUpdateRequest $request, int $articleId)
+    public function update(FaqUpdateRequest $request, int $faqId)
     {
         try {
-            $article = Article::find($articleId);
-            $article->update($request->all());
+            $faq = Faq::find($faqId);
+            $faq->update($request->all());
 
             $alerts[] = [
                 'type' => 'success',
-                'message' => 'The article was updated.'
+                'message' => 'The faq was updated.'
             ];
         } catch (\Exception $exception) {
             $alerts[] = [
                 'type' => 'error',
-                'message' => 'The article was not updated due to an exception.'
+                'message' => 'The faq was not updated due to an exception.'
             ];
         }
 
