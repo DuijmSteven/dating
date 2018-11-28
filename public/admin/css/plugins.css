@@ -6106,6 +6106,16 @@ table .action-buttons .btn {
 .main-header .logo img {
     width: 150px;
 }
+
+/* Dashboard */
+.DashboardWidget_header {
+    padding: 20px;
+    font-size: 18px;
+}
+
+.DashboardWidget_count {
+    float: right;
+}
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
  * Copyright 2011-2016 Twitter, Inc.

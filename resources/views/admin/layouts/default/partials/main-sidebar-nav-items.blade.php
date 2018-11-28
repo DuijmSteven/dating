@@ -1,3 +1,10 @@
+<li class="{!! \Request::route()->getName() == 'admin.dashboard' ? 'active' : '' !!}">
+    <a href="{!! route('admin.dashboard') !!}">
+        <i class="fa fa-dashboard"></i>
+        <span>Dashboard</span>
+    </a>
+</li>
+
 <li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.bots') ? 'active' : '' !!}">
     <a href="#">
         <i class="fa fa-android"></i>
