@@ -1,3 +1,3 @@
 <header>
-    @include('frontend/navbar')
+    @include('frontend.layouts.default.partials.navbar')
 </header>

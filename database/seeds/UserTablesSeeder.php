@@ -82,7 +82,6 @@ class UserTablesSeeder extends Seeder
 
                     if($role == 'bot') {
                         $botCategories = UserConstants::selectableField('category', $role, 'array_values');
-                        \Log::info($botCategories);
 
                         $categoryAmount = rand(1, 2);
 

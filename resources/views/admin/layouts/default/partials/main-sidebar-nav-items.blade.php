@@ -266,3 +266,16 @@
         <span>Frontend</span>
     </a>
 </li>
+<li>
+    <a href="{!!  route('logout.post') !!}"
+       onclick="event.preventDefault();
+        document.getElementById('logout-form').submit();">
+        <i class="fa fa-sign-out"></i>
+        <span>Log out</span>
+    </a>
+
+    <form id="logout-form" action="{!!  route('logout.post') !!}" method="POST"
+          style="display: none;">
+        {{ csrf_field() }}
+    </form>
+</li>

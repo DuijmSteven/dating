@@ -170,6 +170,9 @@ Route::group([
             ->name('admin.peasants.edit.get');
         Route::put('edit/{id}', 'Admin\PeasantController@update')
             ->name('admin.peasants.update');
+
+        Route::get('{peasantId}/message-as-bot', 'Admin\PeasantController@messagePeasantAsBot')
+            ->name('admin.peasants.message-as-bot.get');
     });
 
     Route::group([

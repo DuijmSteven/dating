@@ -324,6 +324,11 @@ class UserManager
         return $user;
     }
 
+    /**
+     * @param int $userId
+     * @return User|User[]|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|Model|null
+     * @throws \Exception
+     */
     public function getUserById(int $userId) {
 
         $user =  User::with('profileImage', 'images', 'meta')->find($userId);
