@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Seeder;
 
 /**
  * Class DatabaseSeeder
@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ModuleInstancesSeeder::class);
         $this->call(ActivitySeeder::class);
         $this->call(TestimonialsSeeder::class);
+        $this->call(FaqSeeder::class);
 
         Model::reguard();
     }

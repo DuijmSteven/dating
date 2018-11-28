@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Admin\Articles;
+namespace App\Http\Requests\Admin\Faqs;
 
 use App\Http\Requests\Request;
 
@@ -28,6 +28,7 @@ class ArticleCreateRequest extends Request
     public function rules()
     {
         return [
+            'section' => 'string|required',
             'title' => 'string|required',
             'body' => 'required',
             'status' => 'integer|required'

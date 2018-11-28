@@ -37,7 +37,7 @@
                                 <tr>
                                     <td>{!! $conversation['id'] !!}</td>
                                     <td>
-                                        <a href="{{ route('operators_platform.conversations.show', ['id' => $conversation['id']]) }}">
+                                        <a href="{{ route('operator-platform.conversations.show', ['id' => $conversation['id']]) }}">
                                             <img width="80"
                                                  src="{{ $userA['profile_image_url'] }}"
                                                  alt="User A profile image"><br>
@@ -55,7 +55,7 @@
                                         <b>Role</b>: {{ @trans('user_constants')['role'][$userA['role']] }} <br>
                                     </td>
                                     <td>
-                                        <a href="{{ route('operators_platform.conversations.show', ['id' => $conversation['id']]) }}">
+                                        <a href="{{ route('operator-platform.conversations.show', ['id' => $conversation['id']]) }}">
                                             <img width="80"
                                                  src="{{ $userB['profile_image_url'] }}"
                                                  alt="User B profile image"><br>
@@ -74,7 +74,7 @@
                                     </td>
                                     <td>{{ $conversation['created_at']->format('d-m-Y H:i:s') }}</td>
                                     <td class="action-buttons">
-                                        <a href="{!! route('operators_platform.conversations.show', [$conversation['id']]) !!}" class="btn btn-default">View</a>
+                                        <a href="{!! route('operator-platform.conversations.show', [$conversation['id']]) !!}" class="btn btn-default">View</a>
 
                                         <form method="POST" action="{{ route('admin.conversations.destroy', ['conversationId' => $conversation['id']]) }}">
                                             {!! csrf_field() !!}

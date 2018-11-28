@@ -12,6 +12,8 @@ class Conversation extends Model
 {
     public $table = 'conversations';
 
+
+
     protected $fillable = [
         'user_a_id',
         'user_b_id'

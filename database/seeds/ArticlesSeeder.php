@@ -17,6 +17,7 @@ class ArticlesSeeder extends Seeder
     public function __construct(Faker $faker) {
         $this->faker = $faker;
     }
+
     /**
      * Run the database seeds.
      *

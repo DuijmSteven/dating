@@ -170,6 +170,9 @@ Route::group([
             ->name('admin.peasants.edit.get');
         Route::put('edit/{id}', 'Admin\PeasantController@update')
             ->name('admin.peasants.update');
+
+        Route::get('{peasantId}/message-as-bot', 'Admin\PeasantController@messagePeasantAsBot')
+            ->name('admin.peasants.message-as-bot.get');
     });
 
     Route::group([
@@ -213,6 +216,26 @@ Route::group([
             ->name('admin.articles.edit');
         Route::put('{articleId}', 'Admin\ArticleController@update')
             ->name('admin.articles.update');
+    });
+
+    Route::group([
+        'prefix' => 'faqs'
+    ], function () {
+        Route::get('/', 'Admin\FaqController@index')
+            ->name('admin.faqs.overview');
+
+        Route::delete('{faqId}', 'Admin\FaqController@destroy')
+            ->name('admin.faqs.destroy');
+
+        Route::get('create', 'Admin\FaqController@getCreate')
+            ->name('admin.faqs.create');
+        Route::post('/', 'Admin\FaqController@post')
+            ->name('admin.faqs.post');
+
+        Route::get('{faqId}', 'Admin\FaqController@getUpdate')
+            ->name('admin.faqs.edit');
+        Route::put('{faqId}', 'Admin\FaqController@update')
+            ->name('admin.faqs.update');
     });
 
     Route::group([
@@ -316,16 +339,21 @@ Route::group([
     'middleware' => ['operator']
 ], function () {
     Route::get('dashboard', 'Operators\HomeController@showDashboard')
-    ->name('operators_platform.dashboard');
-
-    Route::get('send-message-as-bot', 'Operators\ConversationController@showSendMessageAsBot')
-        ->name('operators_platform.send_message_as_bot.show');
+    ->name('operator-platform.dashboard');
 
     Route::group([
         'prefix' => 'conversations'
     ], function () {
         Route::get('{conversationId}', 'Admin\ConversationController@show')
-            ->name('operators_platform.conversations.show');
+            ->name('operator-platform.conversations.show');
+
+
+        Route::get('{userAId}/{userBId}', 'Admin\ConversationController@checkIfConversationExists')
+            ->name('admin.conversations.check-if-exists');
+
+        Route::get('new/{userAId}/{userBId}', 'Admin\ConversationController@showNew')
+            ->name('operator-platform.new-conversation.show');
+
         Route::post('/', 'ConversationController@store')
             ->name('conversations.store');
 

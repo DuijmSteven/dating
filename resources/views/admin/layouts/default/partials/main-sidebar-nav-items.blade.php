@@ -1,3 +1,10 @@
+<li class="{!! \Request::route()->getName() == 'admin.dashboard' ? 'active' : '' !!}">
+    <a href="{!! route('admin.dashboard') !!}">
+        <i class="fa fa-dashboard"></i>
+        <span>Dashboard</span>
+    </a>
+</li>
+
 <li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.bots') ? 'active' : '' !!}">
     <a href="#">
         <i class="fa fa-android"></i>
@@ -78,7 +85,7 @@
         </li>
     </ul>
 </li>
-<li class="treeview {!! str_contains(\Request::route()->getName(), 'operators_platform') ? 'active' : '' !!}">
+<li class="treeview {!! str_contains(\Request::route()->getName(), 'operator-platform') ? 'active' : '' !!}">
     <a href="#">
         <i class="fa fa-users"></i>
         <span>Operators</span>
@@ -87,16 +94,10 @@
                     </span>
     </a>
     <ul class="treeview-menu">
-        <li class="{!! \Request::route()->getName() == 'operators_platform.dashboard' ? 'active' : '' !!}">
-            <a href="{!! route('operators_platform.dashboard') !!}">
+        <li class="{!! \Request::route()->getName() == 'operator-platform.dashboard' ? 'active' : '' !!}">
+            <a href="{!! route('operator-platform.dashboard') !!}">
                 <i class="fa fa-dashboard"></i>
                 <span>Dashboard</span>
-            </a>
-        </li>
-        <li class="{!! \Request::route()->getName() == 'operators_platform.send_message_as_bot.show' ? 'active' : '' !!}">
-            <a href="{!! route('operators_platform.send_message_as_bot.show') !!}">
-                <i class="fa fa-envelope-o"></i>
-                <span>Send Message as Bot</span>
             </a>
         </li>
     </ul>
@@ -197,6 +198,7 @@
     $cmsRoutesTruthArray = array_map(function ($value) use ($routeName) {
         return str_contains($routeName, $value);
     }, [
+        'admin.faq',
         'admin.articles',
         'admin.testimonials',
         'admin.testimonial-users',
@@ -234,6 +236,29 @@
                 </li>
             </ul>
         </li>
+        <li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.faqs') ? 'active' : '' !!}">
+            <a href="#">
+                <i class="fa fa-newspaper-o"></i>
+                <span>Faqs</span>
+                <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+            </a>
+            <ul class="treeview-menu">
+                <li class="{!! \Request::route()->getName() == 'admin.faqs.overview' ? 'active' : '' !!}">
+                    <a href="{!! route('admin.faqs.overview', ['page' => 1]) !!}">
+                        <i class="fa fa-list"></i>
+                        Overview
+                    </a>
+                </li>
+                <li class="{!! \Request::route()->getName() == 'admin.faqs.create' ? 'active' : '' !!}">
+                    <a href="{!! route('admin.faqs.create') !!}">
+                        <i class="fa fa-plus"></i>
+                        Create
+                    </a>
+                </li>
+            </ul>
+        </li>
         <li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.testimonials') ? 'active' : '' !!}">
             <a href="#">
                 <i class="fa fa-quote-left"></i>
@@ -265,4 +290,17 @@
         <i class="fa fa-globe"></i>
         <span>Frontend</span>
     </a>
+</li>
+<li>
+    <a href="{!!  route('logout.post') !!}"
+       onclick="event.preventDefault();
+        document.getElementById('logout-form').submit();">
+        <i class="fa fa-sign-out"></i>
+        <span>Log out</span>
+    </a>
+
+    <form id="logout-form" action="{!!  route('logout.post') !!}" method="POST"
+          style="display: none;">
+        {{ csrf_field() }}
+    </form>
 </li>
