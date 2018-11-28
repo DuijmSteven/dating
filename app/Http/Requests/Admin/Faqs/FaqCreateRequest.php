@@ -5,10 +5,10 @@ namespace App\Http\Requests\Admin\Faqs;
 use App\Http\Requests\Request;
 
 /**
- * Class ArticleCreateRequest
+ * Class FaqCreateRequest
  * @package App\Http\Requests\Admin\Articles
  */
-class ArticleCreateRequest extends Request
+class FaqCreateRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.

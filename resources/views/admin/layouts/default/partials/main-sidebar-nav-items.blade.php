@@ -198,6 +198,7 @@
     $cmsRoutesTruthArray = array_map(function ($value) use ($routeName) {
         return str_contains($routeName, $value);
     }, [
+        'admin.faq',
         'admin.articles',
         'admin.testimonials',
         'admin.testimonial-users',
@@ -229,6 +230,29 @@
                 </li>
                 <li class="{!! \Request::route()->getName() == 'admin.articles.create' ? 'active' : '' !!}">
                     <a href="{!! route('admin.articles.create') !!}">
+                        <i class="fa fa-plus"></i>
+                        Create
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.faqs') ? 'active' : '' !!}">
+            <a href="#">
+                <i class="fa fa-newspaper-o"></i>
+                <span>Faqs</span>
+                <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+            </a>
+            <ul class="treeview-menu">
+                <li class="{!! \Request::route()->getName() == 'admin.faqs.overview' ? 'active' : '' !!}">
+                    <a href="{!! route('admin.faqs.overview', ['page' => 1]) !!}">
+                        <i class="fa fa-list"></i>
+                        Overview
+                    </a>
+                </li>
+                <li class="{!! \Request::route()->getName() == 'admin.faqs.create' ? 'active' : '' !!}">
+                    <a href="{!! route('admin.faqs.create') !!}">
                         <i class="fa fa-plus"></i>
                         Create
                     </a>

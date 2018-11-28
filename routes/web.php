@@ -219,6 +219,26 @@ Route::group([
     });
 
     Route::group([
+        'prefix' => 'faqs'
+    ], function () {
+        Route::get('/', 'Admin\FaqController@index')
+            ->name('admin.faqs.overview');
+
+        Route::delete('{faqId}', 'Admin\FaqController@destroy')
+            ->name('admin.faqs.destroy');
+
+        Route::get('create', 'Admin\FaqController@getCreate')
+            ->name('admin.faqs.create');
+        Route::post('/', 'Admin\FaqController@post')
+            ->name('admin.faqs.post');
+
+        Route::get('{faqId}', 'Admin\FaqController@getUpdate')
+            ->name('admin.faqs.edit');
+        Route::put('{faqId}', 'Admin\FaqController@update')
+            ->name('admin.faqs.update');
+    });
+
+    Route::group([
         'prefix' => 'testimonials'
     ], function () {
         Route::get('/', 'Admin\TestimonialController@index')

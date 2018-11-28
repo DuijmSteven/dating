@@ -6,12 +6,12 @@ use Illuminate\Support\Facades\DB;
 use Faker\Generator as Faker;
 
 /**
- * Class ArticlesSeeder
+ * Class FaqSeeder
  */
-class ArticlesSeeder extends Seeder
+class FaqSeeder extends Seeder
 {
     /**
-     * ArticlesSeeder constructor.
+     * FaqSeeder constructor.
      * @param Faker $faker
      */
     public function __construct(Faker $faker) {
@@ -30,9 +30,9 @@ class ArticlesSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table('articles')->truncate();
 
-        $articleAmount = 50;
+        $faqAmount = 50;
 
-        factory(App\Article::class, $articleAmount)->create();
+        factory(App\Faq::class, $faqAmount)->create();
 
         // supposed to only apply to a single connection and reset it's self
         // but I like to explicitly undo what I've done for clarity

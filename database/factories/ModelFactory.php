@@ -145,3 +145,20 @@ $factory->define(App\TestimonialUser::class, function (FakerGenerator $faker) {
         'gender' => rand(0, 1)
     ];
 });
+
+$factory->define(App\Faq::class, function (FakerGenerator $faker) {
+    $sections = [
+        'One',
+        'Two',
+        'Three',
+        'Four',
+        'Five'
+    ];
+
+    return [
+        'section' => $sections[rand(0, count($sections) - 1)],
+        'title' => $faker->sentence(6, true) . '?',
+        'body' => $faker->realText($maxNbChars = 2000, $indexSize = 2),
+        'status' => rand(0, 1)
+    ];
+});

@@ -6,7 +6,7 @@
         <div class="row">
             <div class="box box-widget DashboardWidget">
                 <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="bg-blue-gradient">
+                <div class="bg-olive">
                     <div class="widget-us DashboardWidget_header">
                         <i class="fa fa-users DashboardWidget_header-icon"></i>
                         <span class="DashboardWidget_header-title">Registrations</span>
