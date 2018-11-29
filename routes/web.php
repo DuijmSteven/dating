@@ -239,6 +239,26 @@ Route::group([
     });
 
     Route::group([
+        'prefix' => 'tacs'
+    ], function () {
+        Route::get('/', 'Admin\TacController@index')
+            ->name('admin.tacs.overview');
+
+        Route::delete('{tacId}', 'Admin\TacController@destroy')
+            ->name('admin.tacs.destroy');
+
+        Route::get('create', 'Admin\TacController@getCreate')
+            ->name('admin.tacs.create');
+        Route::post('/', 'Admin\TacController@post')
+            ->name('admin.tacs.post');
+
+        Route::get('{tacId}', 'Admin\TacController@getUpdate')
+            ->name('admin.tacs.edit');
+        Route::put('{tacId}', 'Admin\TacController@update')
+            ->name('admin.tacs.update');
+    });
+
+    Route::group([
         'prefix' => 'testimonials'
     ], function () {
         Route::get('/', 'Admin\TestimonialController@index')

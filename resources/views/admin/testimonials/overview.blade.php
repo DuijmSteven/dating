@@ -54,7 +54,7 @@
                                             {!! method_field('DELETE') !!}
                                             <button type="submit"
                                                     class="btn btn-danger"
-                                                    onclick="confirm('Are you sure you want to delete this testimonial?')">
+                                                    onclick="return confirm('Are you sure you want to delete this testimonial?')">
                                                 Delete
                                             </button>
                                         </form>

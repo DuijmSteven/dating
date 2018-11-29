@@ -44,7 +44,7 @@
                                             {!! method_field('DELETE') !!}
                                             <button type="submit"
                                                     class="btn btn-danger"
-                                                    onclick="confirm('Are you sure you want to delete this layout part?')">
+                                                    onclick="return confirm('Are you sure you want to delete this layout part?')">
                                                 Delete
                                             </button>
                                         </form>

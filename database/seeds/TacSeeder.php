@@ -6,12 +6,12 @@ use Illuminate\Support\Facades\DB;
 use Faker\Generator as Faker;
 
 /**
- * Class FaqSeeder
+ * Class TacSeeder
  */
-class FaqSeeder extends Seeder
+class TacSeeder extends Seeder
 {
     /**
-     * FaqSeeder constructor.
+     * TacSeeder constructor.
      * @param Faker $faker
      */
     public function __construct(Faker $faker) {
@@ -28,11 +28,18 @@ class FaqSeeder extends Seeder
         Model::unguard();
         //disable foreign key check for this connection before running seeders
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        DB::table('faqs')->truncate();
+        DB::table('tacs')->truncate();
 
-        $faqAmount = 50;
+        $languages = [
+            'en',
+            'nl'
+        ];
 
-        factory(App\Faq::class, $faqAmount)->create();
+        foreach ($languages as $language) {
+            factory(App\Tac::class)->create([
+                'language' => $language
+            ]);
+        }
 
         // supposed to only apply to a single connection and reset it's self
         // but I like to explicitly undo what I've done for clarity
