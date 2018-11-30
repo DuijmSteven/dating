@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Testimonial;
-use App\Http\Requests\Admin\Articles\TestimonialUpdateRequest;
 use App\Http\Requests\Admin\Testimonials\TestimonialCreateRequest;
+use App\Http\Requests\Admin\Testimonials\TestimonialUpdateRequest;
+use App\Testimonial;
 use Carbon\Carbon;
 
 /**
@@ -83,7 +83,7 @@ class TestimonialController extends Controller
                 'title' => 'Edit testimonial - ' . \config('app.name'),
                 'headingLarge' => 'Testimonials',
                 'headingSmall' => 'Edit',
-                'testimonial' => Testimonial::with('users')->where('id', $testimonialId)->get()->toArray()
+                'testimonial' => Testimonial::with('users')->find($testimonialId)
             ]
         );
     }
@@ -129,7 +129,7 @@ class TestimonialController extends Controller
         } catch (\Exception $exception) {
             $alerts[] = [
                 'type' => 'error',
-                'message' => 'The testimonial was not updated due to an exception.'
+                'message' => 'The testimonial was not updated due to an exception. ' . $exception->getMessage()
             ];
         }
 

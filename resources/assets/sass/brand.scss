@@ -27,6 +27,7 @@ $skyBlue: #9acced;
 $darkSkyBlue: #3498db;
 $babyBlue: #67b2e5;
 $babyBlueLight: #9acced;
+$lightBlueDull: #8eb4cb;
 $squash: #f39c12;
 $squashLight: #f7b54e;
 $yellowLight: #f9ce89;
@@ -68,6 +69,9 @@ $navbarBorderWidth: 1;
 $navbarLineHeight: 22;
 
 $logoHeight: round($navbarHeight * 0.55);
+
+//Footer
+$footerLinkTextColor: $lightBlueDull;
 
 // Tile
 $tileBgColor: $white;

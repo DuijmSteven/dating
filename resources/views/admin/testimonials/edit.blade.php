@@ -71,7 +71,7 @@
                                        class="form-control pull-right datepicker__date"
                                        name="pretend_at"
                                        required
-                                       value="{!! $testimonial->getPretendAt->format('d-m-Y') !!}"
+                                       value="{!! $testimonial->getPretendAt()->format('d-m-Y') !!}"
                                 >
                                 @if ($errors->has('pretend_at'))
                                     {!! $errors->first('pretend_at', '<small class="form-error">:message</small>') !!}
