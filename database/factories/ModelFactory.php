@@ -162,3 +162,15 @@ $factory->define(App\Faq::class, function (FakerGenerator $faker) {
         'status' => rand(0, 1)
     ];
 });
+
+$factory->define(App\Tac::class, function (FakerGenerator $faker) {
+    $languages = [
+        'en',
+        'nl'
+    ];
+
+    return [
+        'content' => $faker->realText($maxNbChars = 7000, $indexSize = 2),
+        'language' => $languages[rand(0, 1)]
+    ];
+});

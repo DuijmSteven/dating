@@ -6,10 +6,36 @@
 //
 // Style guide: Layout.Footer
 .Footer {
+    padding: 30px 0;
     background-color: $footerBgColor;
     color: $white;
 
-    &__logo img {
-        height: map_get($footerLogo, height);
+    &__logo {
+        img {
+            height: map_get($footerLogo, height);
+        }
+
+        &-container {
+            padding-top: 20px;
+        }
+    }
+
+    &__section {
+        &-list {
+            list-style: none;
+            padding: 0;
+
+        }
+
+        &-listItem {
+            a {
+                text-decoration: none;
+                color: $footerLinkTextColor;
+
+                &:hover {
+                    color: darken($footerLinkTextColor, 10%)
+                }
+            }
+        }
     }
 }

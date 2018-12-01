@@ -11,6 +11,8 @@
 |
 */
 
+Auth::routes();
+
 Route::get('login', 'Auth\LoginController@showLoginForm')
     ->name('login.get')
     ->middleware(['guest']);
@@ -23,7 +25,7 @@ Route::post('logout', 'Auth\LoginController@logout')
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')
     ->name('password.reset.get');
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')
-    ->name('password.reset.post');
+    ->name('password.reset');
 
 Route::get('contact', 'Frontend\HomeController@showContact')
     ->name('contact.get');
@@ -236,6 +238,26 @@ Route::group([
             ->name('admin.faqs.edit');
         Route::put('{faqId}', 'Admin\FaqController@update')
             ->name('admin.faqs.update');
+    });
+
+    Route::group([
+        'prefix' => 'tacs'
+    ], function () {
+        Route::get('/', 'Admin\TacController@index')
+            ->name('admin.tacs.overview');
+
+        Route::delete('{tacId}', 'Admin\TacController@destroy')
+            ->name('admin.tacs.destroy');
+
+        Route::get('create', 'Admin\TacController@getCreate')
+            ->name('admin.tacs.create');
+        Route::post('/', 'Admin\TacController@post')
+            ->name('admin.tacs.post');
+
+        Route::get('{tacId}', 'Admin\TacController@getUpdate')
+            ->name('admin.tacs.edit');
+        Route::put('{tacId}', 'Admin\TacController@update')
+            ->name('admin.tacs.update');
     });
 
     Route::group([

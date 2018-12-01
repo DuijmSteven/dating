@@ -36,12 +36,6 @@
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
-                    <li class="{!! \Request::route()->getName() == 'articles.overview' ? 'active' : '' !!}">
-                        <a href="{{ route('articles.overview') }}">
-                            {{ @trans('articles.main_heading') }}
-                            <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
                     <li class="{!! str_contains(\Request::route()->getName(), 'users.search') ? 'active' : '' !!}"><a href="{{ route('users.search.get') }}">Search for users</a>
                     </li>
                     <li>
