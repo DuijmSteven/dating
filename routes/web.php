@@ -11,6 +11,8 @@
 |
 */
 
+Auth::routes();
+
 Route::get('login', 'Auth\LoginController@showLoginForm')
     ->name('login.get')
     ->middleware(['guest']);
@@ -23,7 +25,7 @@ Route::post('logout', 'Auth\LoginController@logout')
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')
     ->name('password.reset.get');
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')
-    ->name('password.reset.post');
+    ->name('password.reset');
 
 Route::get('contact', 'Frontend\HomeController@showContact')
     ->name('contact.get');
