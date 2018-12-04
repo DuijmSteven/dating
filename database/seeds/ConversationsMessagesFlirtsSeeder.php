@@ -45,7 +45,14 @@ class ConversationsMessagesFlirtsSeeder extends Seeder
             $botId = $tempBotIds[$botIdKey];
             unset($tempBotIds[$botIdKey]);
 
-            $startDate = Carbon::create(rand(Carbon::now()->year - 4, Carbon::now()->year - 1), rand(1, 12), rand(1, 28), rand(1, 22), rand(1, 59), rand(1, 59));
+            $startDate = Carbon::create(
+                rand(Carbon::now()->year - 2, Carbon::now()->year),
+                rand(1, Carbon::now()->month),
+                rand(1, Carbon::now()->day - 1),
+                rand(1, 22),
+                rand(1, 59),
+                rand(1, 59)
+            );
 
             $conversationAmount = rand(1, 2);
 
