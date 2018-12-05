@@ -133,8 +133,11 @@
                 if($('#PrivateChatItem__body--' + this.index).is(":hidden")) {
                     $('.PrivateChatItem.mobile').hide();
                     $('.PrivateChatItem--' + this.index + '.mobile').show();
+                    var bottom = $('.PrivateChatItem--' + this.index + '.mobile').css('bottom');
+                    $('.PrivateChatItem--' + this.index + '.mobile').css('bottom', '0px');
                 } else {
                     $('.PrivateChatItem.mobile').show();
+                    $('.PrivateChatItem--' + this.index + '.mobile').css('bottom', '');
                 }
                 $('#PrivateChatItem__head--' + this.index).removeClass('PrivateChatItem__head__notify');
                 $('#PrivateChatItem__body--' + this.index).slideToggle('fast');
