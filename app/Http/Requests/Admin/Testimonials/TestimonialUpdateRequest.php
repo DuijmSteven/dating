@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Admin\Articles;
+namespace App\Http\Requests\Admin\Testimonials;
 
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Http\Requests\Request;

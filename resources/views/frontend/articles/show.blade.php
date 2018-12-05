@@ -2,9 +2,11 @@
 
 @section('content')
 
-<div class="row">
-    <h3> {{ $article->getTitle() }} </h3>
-    <div>
+<div class="Tile">
+    <div class="Tile__heading">
+        {!! $article->getTitle() !!}
+    </div>
+    <div class="Tile__body">
         {{ $article->getBody() }}
     </div>
 </div>

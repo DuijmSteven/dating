@@ -52,7 +52,7 @@
                                             {!! method_field('DELETE') !!}
                                             <button type="submit"
                                                     class="btn btn-danger"
-                                                    onclick="confirm('Are you sure you want to delete this faq?')">
+                                                    onclick="return confirm('Are you sure you want to delete this faq?')">
                                                 Delete
                                             </button>
                                         </form>
