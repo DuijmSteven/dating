@@ -48,7 +48,7 @@ class DashboardController extends Controller
             [
                 'title' => 'Dashboard - ' . \config('app.name'),
                 'headingLarge' => 'Dashboard',
-                'headingSmall' => 'Statistics',
+                'headingSmall' => 'Site Statistics',
             ]
         ));
     }
