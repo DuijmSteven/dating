@@ -5,7 +5,7 @@ services:
   dating-app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: DockerfileStaging
     image: dating-app
     container_name: dating-app
     restart: unless-stopped
@@ -16,6 +16,7 @@ services:
     working_dir: /var/www
     volumes:
       - ./storage/:/var/www/storage
+      - ./vendor/:/var/www/vendor
       - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
       - dating-network
