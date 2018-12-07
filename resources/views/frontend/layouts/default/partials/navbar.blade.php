@@ -28,7 +28,7 @@
             <ul class="nav navbar-nav navbar-right">
                 @if(isset($authenticatedUser))
                     <li class="{!! str_contains(\Request::route()->getName(), 'home') ? 'active' : '' !!}"><a
-                                href="{{ route('home') }}"><i class="fa fa-fw fa-newspaper-o"></i>Newsfeed</a>
+                                href="{{ route('home') }}"><i class="fa fa-fw fa-newspaper-o"></i>Home</a>
                     </li>
                     <li class="{!! \Request::route()->getName() == 'users.overview' ? 'active' : '' !!}">
                         <a href="{{ route('users.overview') }}">
