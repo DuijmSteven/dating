@@ -46,7 +46,7 @@ COPY . /var/www
 # Set ownership of dirs
 RUN chown -R www:www\
         /var/www/storage \
-        /var/www/bootstrap/cache
+        /var/www/bootstrap/cache \
         /var/www/vendor
 
 # Change current user to www
