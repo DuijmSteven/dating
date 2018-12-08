@@ -6,12 +6,12 @@
         <form method="GET" action="{{ route('users.search.form.get') }}">
             {{ csrf_field() }}
             <div class="form-group">
-                <label for="">City</label>
-                <input type="text"
-                       autocomplete="off"
-                       class="JS--Search__autoCompleteCites form-control"
-                       name="city"
-                >
+                <label for="">Province</label>
+                <select name="province" class="form-control">
+                    @foreach(\UserConstants::selectableField('province') as $key => $value)
+                        <option value="{{ $key }}">{{ @trans('user_constants.province.' . $key) }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group">
                 <label for="">Age</label>
@@ -25,7 +25,15 @@
                 <label for="">Body type</label>
                 <select name="body_type" class="form-control">
                     @foreach(\UserConstants::selectableField('body_type') as $key => $value)
-                        <option value="{{ $key }}">{{ ucfirst($value) }}</option>
+                        <option value="{{ $key }}">{{ @trans('user_constants.body_type.' . $key) }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="">Height</label>
+                <select name="height" class="form-control">
+                    @foreach(\UserConstants::selectableField('height') as $key => $value)
+                        <option value="{{ $key }}">{{ @trans('user_constants.height.' . $key) }}</option>
                     @endforeach
                 </select>
             </div>
