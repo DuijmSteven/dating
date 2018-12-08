@@ -6,7 +6,6 @@ use App\Helpers\ApplicationConstants\PaginationConstants;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\User;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
 
 /**
  * Class UserSearchManager
@@ -42,7 +41,7 @@ class UserSearchManager
     public function searchUsers(array $parameters, $paginated = false, $page = 1)
     {
         // initial part of query
-        $query = $this->user->with('meta');
+        $query = $this->user->with(['meta', 'roles']);
 
         // append to query
         if (isset($parameters['query'])) {
@@ -62,17 +61,21 @@ class UserSearchManager
 
             if (isset($parameters['dob'])) {
                 $query = $query->whereHas('meta', function ($query) use ($parameters) {
-                    $query = $query->where('dob', '>=', $parameters['dob']['min']);
-                    $query = $query->where('dob', '<=', $parameters['dob']['max']);
+                    $query->where('dob', '>=', $parameters['dob']['min']);
+                    $query->where('dob', '<=', $parameters['dob']['max']);
                 });
             }
 
             if (isset($parameters['city'])) {
                 $query = $query->whereHas('meta', function ($query) use ($parameters) {
-                    $query = $query->where('city', 'like', '%' . $parameters['city'] . '%');
+                    $query->where('city', 'like', '%' . $parameters['city'] . '%');
                 });
             }
         }
+
+        $query = $query->whereHas('roles', function ($query) {
+            $query->whereIn('id', [2, 3]);
+        });
 
         if (!$paginated) {
             $results = $query->get();

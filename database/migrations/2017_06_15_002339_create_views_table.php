@@ -27,6 +27,7 @@ class CreateViewsTable extends Migration
             'Home' => 'home',
             'Contact' => 'contact.get',
             'Users Search' => 'users.search.get',
+            'Users Search Results' => 'users.search.results.get',
             'Users Overview' => 'users.overview',
             'User profile' => 'users.show',
         ];

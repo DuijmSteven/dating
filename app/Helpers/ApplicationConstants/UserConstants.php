@@ -8,6 +8,17 @@ class UserConstants
 {
     public static $maxAmountOnline = 30;
 
+    public static $ageGroups = [
+        '18-25' => '18-25',
+        '25-30' => '26-35',
+        '30-35' => '36-45',
+        '46+' => '46+'
+    ];
+
+    public static function getAgeGroups() {
+        return self::$ageGroups;
+    }
+
     /**
      * @return int
      */

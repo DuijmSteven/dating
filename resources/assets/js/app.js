@@ -90,7 +90,7 @@ $(window).ready(function() {
         require('./modules/shoutbox');
     }
 
-    if ($('.Search').length > 0) {
+    if ($('.JS--Search__autoCompleteCites').length > 0) {
         require('./modules/search');
     }
 });

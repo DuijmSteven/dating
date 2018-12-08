@@ -71,12 +71,7 @@ class UserSearchController extends FrontendController
         ];
         return view(
             'frontend.users.search.overview',
-            array_merge(
-                $viewData,
-                [
-                    'hasSidebar' => true
-                ]
-            )
+            $viewData
         );
     }
 
@@ -102,12 +97,7 @@ class UserSearchController extends FrontendController
         ];
         return view(
             'frontend.users.search.results',
-            array_merge(
-                $viewData,
-                [
-                    'hasSidebar' => true
-                ]
-            )
+            $viewData
         );
     }
 }
