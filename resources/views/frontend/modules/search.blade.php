@@ -8,6 +8,7 @@
             <div class="form-group">
                 <label for="">City</label>
                 <input type="text"
+                       autocomplete="off"
                        class="JS--Search__autoCompleteCites form-control"
                        name="city"
                 >
@@ -15,10 +16,9 @@
             <div class="form-group">
                 <label for="">Age</label>
                 <select name="age" class="form-control">
-                    <option value="18-25">18-25</option>
-                    <option value="25-30">25-30</option>
-                    <option value="30-35">30-35</option>
-                    <option value="35-40">35-40</option>
+                    @foreach(\UserConstants::getAgeGroups() as $key => $value)
+                        <option value="{{ $key }}">{{ $value }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="text-right">

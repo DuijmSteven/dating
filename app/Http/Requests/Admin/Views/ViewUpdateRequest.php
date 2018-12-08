@@ -28,8 +28,8 @@ class ViewUpdateRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'string|required|unique:views',
-            'route_name' => 'string|without_spaces|required|unique:views',
+            'name' => 'string|required|unique:views,name,' . $this->route('viewId'),
+            'route_name' => 'string|without_spaces|required|unique:views,route_name,' . $this->route('viewId'),
         ];
     }
 

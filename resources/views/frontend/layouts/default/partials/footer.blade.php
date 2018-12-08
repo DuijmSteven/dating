@@ -25,7 +25,7 @@
                 <h4 class="Footer__section-title">Over ons</h4>
                 <ul class="Footer__section-list">
                     <li class="Footer__section-listItem">
-                        <a href="">Bedrijfsgegevens</a>
+                        <a href="{{ route('contact.get') }}">Bedrijfsgegevens</a>
                     </li>
                 </ul>
             </div>

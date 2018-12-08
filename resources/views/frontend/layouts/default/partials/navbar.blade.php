@@ -36,7 +36,8 @@
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
-                    <li class="{!! str_contains(\Request::route()->getName(), 'users.search') ? 'active' : '' !!}"><a href="{{ route('users.search.get') }}">Search for users</a>
+                    <li class="{!! str_contains(\Request::route()->getName(), 'users.search') ? 'active' : '' !!}">
+                        <a href="{{ route('users.search.get') }}">Search for users</a>
                     </li>
                     <li>
                         <a href="{!!  route('logout.post') !!}"
@@ -50,61 +51,14 @@
                         </form>
                     </li>
                 @else
-                    <li class="{!! \Request::route()->getName() == 'login.get' ? 'active' : '' !!}"><a href="{{ route('login.get') }}">Login</a>
+                    <li class="{!! \Request::route()->getName() == 'login.get' ? 'active' : '' !!}">
+                        <a href="{{ route('login.get') }}">Login</a>
                     </li>
-                    <li class="{!! \Request::route()->getName() == 'landing-page.show' ? 'active' : '' !!}"><a href="{{ route('landing-page.show') }}">Register</a>
+                    <li class="{!! \Request::route()->getName() == 'landing-page.show' ? 'active' : '' !!}">
+                        <a href="{{ route('landing-page.show') }}">Register</a>
                     </li>
                 @endif
-                <li class="{!! \Request::route()->getName() == 'contact.get' ? 'active' : '' !!}"><a href="{{ route('contact.get') }}">Contact us</a>
-                </li>
             </ul>
-
-            {{--<ul class="nav navbar-nav navbar-right">
-                @if(isset($authenticatedUser))
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            {{ $authenticatedUser['username'] }}
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            @if($authenticatedUser->isAdmin())
-                                <li>
-                                    <a href="{!! route('admin.dashboard') !!}">
-                                        Administration
-                                    </a>
-                                </li>
-                            @endif
-                            <li>
-                                <a href="{!!  route('logout.post') !!}"
-                                   onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
-                                    Logout
-                                </a>
-
-                                <form id="logout-form" action="{!!  route('logout.post') !!}" method="POST" style="display: none;">
-                                    {{ csrf_field() }}
-                                </form>
-                            </li>
-                        </ul>
-                    </li>
-                @else
-                    @if(\Request::route()->getName() !== 'register.get')
-                        <li>
-                            <a href="{!! route('register.get') !!}">
-                                Register
-                            </a>
-                        </li>
-                    @endif
-
-                    @if(\Request::route()->getName() !== 'login.get')
-                        <li>
-                            <a href="{!! route('login.get') !!}">
-                                Login
-                            </a>
-                        </li>
-                    @endif
-                @endif
-            </ul>--}}
         </div>
     </div>
 </nav>
