@@ -21,6 +21,14 @@
                     @endforeach
                 </select>
             </div>
+            <div class="form-group">
+                <label for="">Body type</label>
+                <select name="body_type" class="form-control">
+                    @foreach(\UserConstants::selectableField('body_type') as $key => $value)
+                        <option value="{{ $key }}">{{ ucfirst($value) }}</option>
+                    @endforeach
+                </select>
+            </div>
             <div class="text-right">
                 @include('frontend.components.button', [
                     'buttonContext' => 'form',
