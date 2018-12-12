@@ -40,8 +40,8 @@
 
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="">Age</label>
-                            <select name="age" class="form-control">
+                            <label for="age">Age</label>
+                            <select name="age"id="age" class="form-control">
                                 <option value=""
                                         {!! old('age') == '' ? 'selected' : '' !!}
                                 ></option>
@@ -61,6 +61,7 @@
                         <div class="form-group">
                             <label for="city">City</label>
                             <input type="text"
+                                   id="city"
                                    autocomplete="off"
                                    class="JS--Search__autoCompleteCites form-control"
                                    name="city"
@@ -73,7 +74,7 @@
                     @foreach(\UserConstants::selectableFields('peasant') as $field => $possibleFieldOptions)
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="query">{!! ucfirst(str_replace('_', ' ', $field)) !!}</label>
+                                <label for="{!! $field !!}">{!! ucfirst(str_replace('_', ' ', $field)) !!}</label>
                                 <select name="{!! $field !!}"
                                         id="{!! $field !!}"
                                         class="form-control"

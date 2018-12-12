@@ -40,7 +40,31 @@ class DashboardController extends Controller
                 'messagesSentCurrentMonth' => $this->statisticsManager->getMessagesSentCountCurrentMonth(),
                 'messagesSentPreviousMonth' => $this->statisticsManager->getMessagesSentCountPreviousMonth(),
                 'messagesSentCurrentYear' => $this->statisticsManager->getMessagesSentCountCurrentYear()
-            ]
+            ],
+            'peasantMessageStatistics' => [
+                'messagesSentToday' => $this->statisticsManager->getMessagesSentByUserTypeCountToday('peasant'),
+                'messagesSentYesterday' => $this->statisticsManager->getMessagesSentByUserTypeCountYesterday('peasant'),
+                'messagesSentCurrentWeek' => $this->statisticsManager->getMessagesSentByUserTypeCountCurrentWeek('peasant'),
+                'messagesSentCurrentMonth' => $this->statisticsManager->getMessagesSentByUserTypeCountCurrentMonth('peasant'),
+                'messagesSentPreviousMonth' => $this->statisticsManager->getMessagesSentByUserTypeCountPreviousMonth('peasant'),
+                'messagesSentCurrentYear' => $this->statisticsManager->getMessagesSentByUserTypeCountCurrentYear('peasant')
+            ],
+            'botMessageStatistics' => [
+                'messagesSentToday' => $this->statisticsManager->getMessagesSentByUserTypeCountToday('bot'),
+                'messagesSentYesterday' => $this->statisticsManager->getMessagesSentByUserTypeCountYesterday('bot'),
+                'messagesSentCurrentWeek' => $this->statisticsManager->getMessagesSentByUserTypeCountCurrentWeek('bot'),
+                'messagesSentCurrentMonth' => $this->statisticsManager->getMessagesSentByUserTypeCountCurrentMonth('bot'),
+                'messagesSentPreviousMonth' => $this->statisticsManager->getMessagesSentByUserTypeCountPreviousMonth('bot'),
+                'messagesSentCurrentYear' => $this->statisticsManager->getMessagesSentByUserTypeCountCurrentYear('bot')
+            ],
+            'peasantDeactivationStatistics' => [
+                'deactivationsToday' => $this->statisticsManager->getPeasantDeactivationsCountToday(),
+                'deactivationsYesterday' => $this->statisticsManager->getPeasantDeactivationsCountYesterday(),
+                'deactivationsCurrentWeek' => $this->statisticsManager->getPeasantDeactivationsCountCurrentWeek(),
+                'deactivationsCurrentMonth' => $this->statisticsManager->getPeasantDeactivationsCountCurrentMonth(),
+                'deactivationsPreviousMonth' => $this->statisticsManager->getPeasantDeactivationsCountPreviousMonth(),
+                'deactivationsCurrentYear' => $this->statisticsManager->getPeasantDeactivationsCountCurrentYear()
+            ],
         ];
 
         return view('admin.dashboard', array_merge(
