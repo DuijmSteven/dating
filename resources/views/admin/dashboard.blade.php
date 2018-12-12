@@ -30,7 +30,7 @@
                 <!-- Add the bg color to the header using any of the bg-* classes -->
                 <div class="bg-olive">
                     <div class="widget-us DashboardWidget_header">
-                        <i class="fa fa-users DashboardWidget_header-icon"></i>
+                        <i class="fa fa-envelope DashboardWidget_header-icon"></i>
                         <span class="DashboardWidget_header-title">Messages Sent</span>
                     </div>
                     <!-- /.widget-user-image -->
@@ -52,7 +52,8 @@
                 <!-- Add the bg color to the header using any of the bg-* classes -->
                 <div class="bg-olive">
                     <div class="widget-us DashboardWidget_header">
-                        <i class="fa fa-users DashboardWidget_header-icon"></i>
+                        <i class="fa fa-envelope DashboardWidget_header-icon"></i>
+                        <i class="fa fa-user DashboardWidget_header-icon"></i>
                         <span class="DashboardWidget_header-title">Peasant Messages Sent</span>
                     </div>
                     <!-- /.widget-user-image -->
@@ -74,7 +75,8 @@
                 <!-- Add the bg color to the header using any of the bg-* classes -->
                 <div class="bg-olive">
                     <div class="widget-us DashboardWidget_header">
-                        <i class="fa fa-users DashboardWidget_header-icon"></i>
+                        <i class="fa fa-envelope DashboardWidget_header-icon"></i>
+                        <i class="fa fa-android DashboardWidget_header-icon"></i>
                         <span class="DashboardWidget_header-title">Bot Messages Sent</span>
                     </div>
                     <!-- /.widget-user-image -->
@@ -96,7 +98,7 @@
                 <!-- Add the bg color to the header using any of the bg-* classes -->
                 <div class="bg-olive">
                     <div class="widget-us DashboardWidget_header">
-                        <i class="fa fa-users DashboardWidget_header-icon"></i>
+                        <i class="fa fa-close DashboardWidget_header-icon"></i>
                         <span class="DashboardWidget_header-title">Deactivations</span>
                     </div>
                     <!-- /.widget-user-image -->
