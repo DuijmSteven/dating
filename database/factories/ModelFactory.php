@@ -28,6 +28,7 @@ $factory->define(App\User::class, function (FakerGenerator $faker) {
         'active' => 1,
         'account_type' => 1,
         'remember_token' => str_random(10),
+        'deactivated_at' => null
     ];
 });
 
@@ -38,7 +39,7 @@ $factory->define(App\UserMeta::class, function (FakerGenerator $faker) {
 
     return [
         'user_id'=> $faker->randomDigit,
-        'dob' => $faker->dateTimeBetween('-60 years', '-18 years', date_default_timezone_get())->format('Y-m-d'),
+        'dob' => $faker->dateTimeBetween('-60 years', '-18 years')->format('Y-m-d'),
         'gender' => array_keys($selectableProfileFields['gender'])[rand(0, count($selectableProfileFields['gender']) - 1)],
         'looking_for_gender' => array_keys($selectableProfileFields['looking_for_gender'])[rand(0, count($selectableProfileFields['looking_for_gender']) - 1)],
         'relationship_status' => array_keys($selectableProfileFields['relationship_status'])[rand(0, count($selectableProfileFields['relationship_status']) - 1)],

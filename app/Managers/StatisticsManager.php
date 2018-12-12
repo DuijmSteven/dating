@@ -77,12 +77,20 @@ class StatisticsManager
     }
 
     public function getMessagesSentCountCurrentWeek() : int {
-        return ConversationMessage::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+        return ConversationMessage::whereBetween('created_at',
+            [
+                Carbon::now()->startOfWeek(),
+                Carbon::now()->endOfWeek()
+            ])
             ->count();
     }
 
     public function getMessagesSentCountCurrentMonth() : int {
-        return ConversationMessage::whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
+        return ConversationMessage::whereBetween('created_at',
+            [
+                Carbon::now()->startOfMonth(),
+                Carbon::now()->endOfMonth()
+            ])
             ->count();
     }
 
@@ -103,6 +111,118 @@ class StatisticsManager
                     Carbon::now()->startOfYear(),
                     Carbon::now()->endOfYear(),
                 ])
+            ->count();
+    }
+
+    public function getMessagesSentByUserTypeCountToday(string $userType) : int {
+        return ConversationMessage::whereHas('sender.roles', function($query) use ($userType) {
+            $query->where('name', $userType);
+        })->whereDate('created_at', Carbon::today())
+            ->count();
+    }
+
+    public function getMessagesSentByUserTypeCountYesterday(string $userType) : int {
+        return ConversationMessage::whereHas('sender.roles', function($query) use ($userType) {
+            $query->where('name', $userType);
+        })->whereDate('created_at', Carbon::yesterday())
+            ->count();
+    }
+
+    public function getMessagesSentByUserTypeCountCurrentWeek(string $userType) : int {
+        return ConversationMessage::whereHas('sender.roles', function($query) use ($userType) {
+            $query->where('name', $userType);
+        })->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+            ->count();
+    }
+
+    public function getMessagesSentByUserTypeCountCurrentMonth(string $userType) : int {
+        return ConversationMessage::whereHas('sender.roles', function($query) use ($userType) {
+            $query->where('name', $userType);
+        })->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
+            ->count();
+    }
+
+    public function getMessagesSentByUserTypeCountPreviousMonth(string $userType) : int {
+        return ConversationMessage::whereHas('sender.roles', function($query) use ($userType) {
+            $query->where('name', $userType);
+        })->whereBetween(
+            'created_at',
+            [
+                Carbon::now()->startOfMonth()->subMonth(),
+                Carbon::now()->subMonth()->endOfMonth(),
+            ])
+            ->count();
+    }
+
+    public function getMessagesSentByUserTypeCountCurrentYear(string $userType) : int {
+        return ConversationMessage::whereHas('sender.roles', function($query) use ($userType) {
+            $query->where('name', $userType);
+        })->whereBetween(
+            'created_at',
+            [
+                Carbon::now()->startOfYear(),
+                Carbon::now()->endOfYear(),
+            ])
+            ->count();
+    }
+
+    public function getPeasantDeactivationsCountToday() : int {
+        return User::whereHas('roles', function($query) {
+            $query->where('name', 'peasant');
+        })->whereDate('deactivated_at', Carbon::today())
+            ->count();
+    }
+
+    public function getPeasantDeactivationsCountYesterday() : int {
+        return User::whereHas('roles', function($query) {
+            $query->where('name', 'peasant');
+        })->whereDate('deactivated_at', Carbon::yesterday())
+            ->count();
+    }
+
+    public function getPeasantDeactivationsCountCurrentWeek() : int {
+        return User::whereHas('roles', function($query) {
+            $query->where('name', 'peasant');
+        })->whereBetween('deactivated_at',
+            [
+                Carbon::now()->startOfWeek(),
+                Carbon::now()->endOfWeek()
+            ])
+            ->count();
+    }
+
+    public function getPeasantDeactivationsCountCurrentMonth() : int {
+        return User::whereHas('roles', function($query) {
+            $query->where('name', 'peasant');
+        })->whereBetween('deactivated_at',
+            [
+                Carbon::now()->startOfMonth(),
+                Carbon::now()->endOfMonth()
+            ])
+            ->count();
+    }
+
+    public function getPeasantDeactivationsCountPreviousMonth() : int {
+        return User::whereHas('roles', function($query) {
+            $query->where('name', 'peasant');
+        })->whereBetween(
+            'deactivated_at',
+            [
+                Carbon::now()->startOfMonth()->subMonth(),
+                Carbon::now()->subMonth()->endOfMonth(),
+            ])
+            ->count();
+    }
+
+    public function getPeasantDeactivationsCountCurrentYear() : int {
+        return User::whereHas('roles', function($query) {
+            $query->where('name', 'peasant');
+        })->whereBetween(
+            'deactivated_at',
+            [
+                Carbon::now()->startOfYear(),
+                Carbon::now()->endOfYear(),
+            ])
             ->count();
     }
 }
