@@ -26,44 +26,124 @@ class DashboardController extends Controller
     {
         $viewData = [
             'registrationStatistics' => [
-                'registrationsToday' => $this->statisticsManager->getRegistrationsCountToday(),
-                'registrationsYesterday' => $this->statisticsManager->getRegistrationsCountYesterday(),
-                'registrationsCurrentWeek' => $this->statisticsManager->getRegistrationsCountCurrentWeek(),
-                'registrationsCurrentMonth' => $this->statisticsManager->getRegistrationsCountCurrentMonth(),
-                'registrationsPreviousMonth' => $this->statisticsManager->getRegistrationsCountPreviousMonth(),
-                'registrationsCurrentYear' => $this->statisticsManager->getRegistrationsCountCurrentYear()
+                'registrationsToday' => $this->statisticsManager->registrationsCountOnDay(Carbon::today()),
+                'registrationsYesterday' => $this->statisticsManager->registrationsCountOnDay(Carbon::yesterday()),
+                'registrationsCurrentWeek' => $this->statisticsManager->registrationsCountBetween(
+                    Carbon::now()->startOfWeek(),
+                    Carbon::now()->endOfWeek()
+                ),
+                'registrationsCurrentMonth' => $this->statisticsManager->registrationsCountBetween(
+                    Carbon::now()->startOfMonth(),
+                    Carbon::now()->endOfMonth()
+                ),
+                'registrationsPreviousMonth' => $this->statisticsManager->registrationsCountBetween(
+                    Carbon::now()->startOfMonth()->subMonth(),
+                    Carbon::now()->subMonth()->endOfMonth()
+                ),
+                'registrationsCurrentYear' => $this->statisticsManager->registrationsCountBetween(
+                    Carbon::now()->startOfYear(),
+                    Carbon::now()->endOfYear()
+                )
             ],
             'messageStatistics' => [
-                'messagesSentToday' => $this->statisticsManager->getMessagesSentCountToday(),
-                'messagesSentYesterday' => $this->statisticsManager->getMessagesSentCountYesterday(),
-                'messagesSentCurrentWeek' => $this->statisticsManager->getMessagesSentCountCurrentWeek(),
-                'messagesSentCurrentMonth' => $this->statisticsManager->getMessagesSentCountCurrentMonth(),
-                'messagesSentPreviousMonth' => $this->statisticsManager->getMessagesSentCountPreviousMonth(),
-                'messagesSentCurrentYear' => $this->statisticsManager->getMessagesSentCountCurrentYear()
+                'messagesSentToday' => $this->statisticsManager->messagesSentCountOnDay(Carbon::today()),
+                'messagesSentYesterday' => $this->statisticsManager->messagesSentCountOnDay(Carbon::yesterday()),
+                'messagesSentCurrentWeek' => $this->statisticsManager->messagesSentCountBetween(
+                    Carbon::now()->startOfWeek(),
+                    Carbon::now()->endOfWeek()
+                ),
+                'messagesSentCurrentMonth' => $this->statisticsManager->messagesSentCountBetween(
+                    Carbon::now()->startOfMonth(),
+                    Carbon::now()->endOfMonth()
+                ),
+                'messagesSentPreviousMonth' => $this->statisticsManager->messagesSentCountBetween(
+                    Carbon::now()->startOfMonth()->subMonth(),
+                    Carbon::now()->subMonth()->endOfMonth()
+                ),
+                'messagesSentCurrentYear' => $this->statisticsManager->messagesSentCountBetween(
+                    Carbon::now()->startOfYear(),
+                    Carbon::now()->endOfYear()
+                )
             ],
             'peasantMessageStatistics' => [
-                'messagesSentToday' => $this->statisticsManager->getMessagesSentByUserTypeCountToday('peasant'),
-                'messagesSentYesterday' => $this->statisticsManager->getMessagesSentByUserTypeCountYesterday('peasant'),
-                'messagesSentCurrentWeek' => $this->statisticsManager->getMessagesSentByUserTypeCountCurrentWeek('peasant'),
-                'messagesSentCurrentMonth' => $this->statisticsManager->getMessagesSentByUserTypeCountCurrentMonth('peasant'),
-                'messagesSentPreviousMonth' => $this->statisticsManager->getMessagesSentByUserTypeCountPreviousMonth('peasant'),
-                'messagesSentCurrentYear' => $this->statisticsManager->getMessagesSentByUserTypeCountCurrentYear('peasant')
+                'messagesSentToday' => $this->statisticsManager->messagesSentByUserTypeCountOnDay(
+                    'peasant',
+                    Carbon::today()
+                ),
+                'messagesSentYesterday' => $this->statisticsManager->messagesSentByUserTypeCountOnDay(
+                    'peasant',
+                    Carbon::yesterday()
+                ),
+                'messagesSentCurrentWeek' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
+                    'peasant',
+                    Carbon::now()->startOfWeek(),
+                    Carbon::now()->endOfWeek()
+                ),
+                'messagesSentCurrentMonth' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
+                    'peasant',
+                    Carbon::now()->startOfMonth(),
+                    Carbon::now()->endOfMonth()
+                ),
+                'messagesSentPreviousMonth' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
+                    'peasant',
+                    Carbon::now()->startOfMonth()->subMonth(),
+                    Carbon::now()->subMonth()->endOfMonth()
+                ),
+                'messagesSentCurrentYear' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
+                    'peasant',
+                    Carbon::now()->startOfYear(),
+                    Carbon::now()->endOfYear()
+                )
             ],
             'botMessageStatistics' => [
-                'messagesSentToday' => $this->statisticsManager->getMessagesSentByUserTypeCountToday('bot'),
-                'messagesSentYesterday' => $this->statisticsManager->getMessagesSentByUserTypeCountYesterday('bot'),
-                'messagesSentCurrentWeek' => $this->statisticsManager->getMessagesSentByUserTypeCountCurrentWeek('bot'),
-                'messagesSentCurrentMonth' => $this->statisticsManager->getMessagesSentByUserTypeCountCurrentMonth('bot'),
-                'messagesSentPreviousMonth' => $this->statisticsManager->getMessagesSentByUserTypeCountPreviousMonth('bot'),
-                'messagesSentCurrentYear' => $this->statisticsManager->getMessagesSentByUserTypeCountCurrentYear('bot')
+                'messagesSentToday' => $this->statisticsManager->messagesSentByUserTypeCountOnDay(
+                    'bot',
+                    Carbon::today()
+                ),
+                'messagesSentYesterday' => $this->statisticsManager->messagesSentByUserTypeCountOnDay(
+                    'bot',
+                    Carbon::yesterday()
+                ),
+                'messagesSentCurrentWeek' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
+                    'bot',
+                    Carbon::now()->startOfWeek(),
+                    Carbon::now()->endOfWeek()
+                ),
+                'messagesSentCurrentMonth' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
+                    'bot',
+                    Carbon::now()->startOfMonth(),
+                    Carbon::now()->endOfMonth()
+                ),
+                'messagesSentPreviousMonth' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
+                    'bot',
+                    Carbon::now()->startOfMonth()->subMonth(),
+                    Carbon::now()->subMonth()->endOfMonth()
+                ),
+                'messagesSentCurrentYear' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
+                    'bot',
+                    Carbon::now()->startOfYear(),
+                    Carbon::now()->endOfYear()
+                )
             ],
             'peasantDeactivationStatistics' => [
-                'deactivationsToday' => $this->statisticsManager->getPeasantDeactivationsCountToday(),
-                'deactivationsYesterday' => $this->statisticsManager->getPeasantDeactivationsCountYesterday(),
-                'deactivationsCurrentWeek' => $this->statisticsManager->getPeasantDeactivationsCountCurrentWeek(),
-                'deactivationsCurrentMonth' => $this->statisticsManager->getPeasantDeactivationsCountCurrentMonth(),
-                'deactivationsPreviousMonth' => $this->statisticsManager->getPeasantDeactivationsCountPreviousMonth(),
-                'deactivationsCurrentYear' => $this->statisticsManager->getPeasantDeactivationsCountCurrentYear()
+                'deactivationsToday' => $this->statisticsManager->peasantDeactivationsCountOnDay(Carbon::today()),
+                'deactivationsYesterday' => $this->statisticsManager->peasantDeactivationsCountOnDay(Carbon::yesterday()),
+                'deactivationsCurrentWeek' => $this->statisticsManager->peasantDeactivationsCountBetween(
+                    Carbon::now()->startOfWeek(),
+                    Carbon::now()->endOfWeek()
+                ),
+                'deactivationsCurrentMonth' => $this->statisticsManager->peasantDeactivationsCountBetween(
+                    Carbon::now()->startOfMonth(),
+                    Carbon::now()->endOfMonth()
+                ),
+                'deactivationsPreviousMonth' => $this->statisticsManager->peasantDeactivationsCountBetween(
+                    Carbon::now()->startOfMonth()->subMonth(),
+                    Carbon::now()->subMonth()->endOfMonth()
+                ),
+                'deactivationsCurrentYear' => $this->statisticsManager->peasantDeactivationsCountBetween(
+                    Carbon::now()->startOfYear(),
+                    Carbon::now()->endOfYear()
+                )
             ],
         ];
 
