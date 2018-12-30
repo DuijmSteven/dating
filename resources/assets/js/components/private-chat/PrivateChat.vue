@@ -70,6 +70,7 @@
 
         methods: {
             fetchMessagesAndListenToChannel: function () {
+                console.log('start fetch');
                 axios.get('/api/conversations/' + this.userAId + '/' + this.userBId).then(response => {
                     this.conversation = response.data;
 
@@ -85,8 +86,11 @@
                         });
                     }
 
+                    console.log(this.conversation.id);
+
                     Echo.private('chat.' + this.conversation.id)
                         .listen('MessageSent', (e) => {
+                            console.log('channel triggered');
                             this.messages.push({
                                 id: this.messages[this.messages.length - 1].id + 1,
                                 text: e.conversationMessage.body,
