@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Article;
-use App\Http\Requests\Admin\Articles\FaqCreateRequest;
-use App\Http\Requests\Admin\Articles\FaqUpdateRequest;
-use App\Http\Requests\Admin\Articles\TestimonialUpdateRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Articles\ArticleUpdateRequest;
+use App\Http\Requests\Admin\Faqs\ArticleCreateRequest;
 use Carbon\Carbon;
 use GrahamCampbell\Markdown\Facades\Markdown;
 
@@ -95,10 +94,10 @@ class ArticleController extends Controller
     }
 
     /**
-     * @param FaqCreateRequest $request
+     * @param ArticleCreateRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function post(FaqCreateRequest $request)
+    public function post(ArticleCreateRequest $request)
     {
         try {
             Article::create($request->all());
@@ -118,11 +117,11 @@ class ArticleController extends Controller
     }
 
     /**
-     * @param TestimonialUpdateRequest $request
+     * @param ArticleUpdateRequest $request
      * @param int $articleId
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(FaqUpdateRequest $request, int $articleId)
+    public function update(ArticleUpdateRequest $request, int $articleId)
     {
         try {
             $article = Article::find($articleId);
