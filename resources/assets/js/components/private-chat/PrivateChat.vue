@@ -1,6 +1,6 @@
 <template>
     <div :class="'PrivateChatItem PrivateChatItem--' + index + ' ' + $mq">
-        <div v-on:click="toggle" :id="'PrivateChatItem__head--' + index" class="PrivateChatItem__head">
+        <div :id="'PrivateChatItem__head--' + index" class="PrivateChatItem__head">
             <div class="PrivateChatItem__head__wrapper">
                 <div class="PrivateChatItem__user">
                     <img class="PrivateChatItem__profile-image" src="http://placehold.it/40x40">
@@ -8,13 +8,13 @@
                 </div>
 
                 <div class="PrivateChatItem__actionIcons">
-                    <!--<div v-on:click="toggle"
-                         :id="'PrivateChatItem__minimize&#45;&#45;' + index"
+                    <div v-on:click="toggle"
+                         :id="'PrivateChatItem__minimize--' + index"
                          class="PrivateChatItem__minimize"
 
                     >
                         <i class="material-icons material-icon minimize">minimize</i>
-                    </div>-->
+                    </div>
                     <div v-on:click="clear"
                          :id="'PrivateChatItem__clear--' + index"
                          class="PrivateChatItem__clear"
@@ -57,7 +57,7 @@
                 messages: [],
                 conversation: undefined,
                 userAId: undefined,
-                userBId: undefined
+                userBId: undefined,
             };
         },
 
@@ -70,7 +70,6 @@
 
         methods: {
             fetchMessagesAndListenToChannel: function () {
-                console.log('start fetch');
                 axios.get('/api/conversations/' + this.userAId + '/' + this.userBId).then(response => {
                     this.conversation = response.data;
 
@@ -86,11 +85,8 @@
                         });
                     }
 
-                    console.log(this.conversation.id);
-
                     Echo.private('chat.' + this.conversation.id)
                         .listen('MessageSent', (e) => {
-                            console.log('channel triggered');
                             this.messages.push({
                                 id: this.messages[this.messages.length - 1].id + 1,
                                 text: e.conversationMessage.body,
@@ -117,13 +113,13 @@
                     message: message.text,
                     sender_id: this.userAId,
                     recipient_id: this.userBId
-                }).then(function (response) {
-                    console.log('Message sent');
                 }).catch(function (error) {
                     console.log(error.response.status);
                 });
+
+                this.fetchUserConversations();
             },
-            
+
             clear: function () {
                 Vue.delete(this.$parent.conversationPartners, this.index);
                 $('.PrivateChatItem--' + this.index).remove();
@@ -134,17 +130,12 @@
             },
 
             toggle: function () {
-                if($('#PrivateChatItem__body--' + this.index).is(":hidden")) {
-                    $('.PrivateChatItem.mobile').hide();
-                    $('.PrivateChatItem--' + this.index + '.mobile').show();
-                    var bottom = $('.PrivateChatItem--' + this.index + '.mobile').css('bottom');
-                    $('.PrivateChatItem--' + this.index + '.mobile').css('bottom', '0px');
-                } else {
-                    $('.PrivateChatItem.mobile').show();
-                    $('.PrivateChatItem--' + this.index + '.mobile').css('bottom', '');
-                }
                 $('#PrivateChatItem__head--' + this.index).removeClass('PrivateChatItem__head__notify');
                 $('#PrivateChatItem__body--' + this.index).slideToggle('fast');
+            },
+
+            fetchUserConversations() {
+                console.log(this.$refs.privateChatManager);
             }
         }
     }

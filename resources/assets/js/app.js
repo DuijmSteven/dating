@@ -14,6 +14,7 @@ window.Vue = require('vue/dist/vue.js');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+Vue.component('private-chat-manager', require('./components/private-chat/PrivateChatManager.vue'));
 Vue.component('private-chat', require('./components/private-chat/PrivateChat.vue'));
 Vue.component('chat-message', require('./components/private-chat/ChatMessage.vue'));
 Vue.component('chat-form', require('./components/private-chat/ChatForm.vue'));

@@ -8888,48 +8888,179 @@ small.form-error {
   font-size: 14px;
 }
 
+.PrivateChatManager {
+  position: fixed;
+  bottom: 0;
+  width: 250px;
+  right: 50px;
+  -webkit-box-shadow: 0 0 24px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 24px rgba(0, 0, 0, 0.2);
+}
+
+.PrivateChatManager__head {
+  border-radius: 2px 2px 0 0;
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  height: 50px;
+  background-color: #4f5d75;
+  color: #e6e6e6;
+}
+
+.PrivateChatManager__head__title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-flex: 3;
+      -ms-flex: 3;
+          flex: 3;
+  padding-left: 15px;
+}
+
+.PrivateChatManager__head__actionIcons {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.PrivateChatManager__toggle {
+  cursor: pointer;
+  position: relative;
+  top: 5px;
+  left: 8px;
+}
+
+.PrivateChatManager__item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  cursor: pointer;
+  background-color: #fff;
+}
+
+.PrivateChatManager__item:first-child .PrivateChatManager__item__right {
+  border-top: 0;
+}
+
+.PrivateChatManager__item .PrivateChatManager__item__right {
+  border-top: 1px solid #eee;
+}
+
+.PrivateChatManager__item:hover {
+  background-color: #efefef;
+}
+
+.PrivateChatManager__item__left {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.PrivateChatManager__item__profilePicture {
+  border-radius: 50%;
+  width: 65px;
+  height: 65px;
+  padding: 10px;
+}
+
+.PrivateChatManager__item__right {
+  max-width: 185px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-flex: 4;
+      -ms-flex: 4;
+          flex: 4;
+  margin-right: 15px;
+}
+
+.PrivateChatManager__item__userName {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.PrivateChatManager__item__lastMessage {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  color: #888;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 15px;
+}
+
 .PrivateChatItem--0 {
-  right: 100px;
+  right: 320px;
 }
 
 .PrivateChatItem--1 {
-  right: 370px;
+  right: 590px;
 }
 
 .PrivateChatItem--2 {
-  right: 640px;
+  right: 860px;
 }
 
 .PrivateChatItem--3 {
-  right: 910px;
+  right: 1130px;
 }
 
 .PrivateChatItem--4 {
-  right: 1180px;
+  right: 1400px;
 }
 
 .PrivateChatItem--5 {
-  right: 1450px;
+  right: 1670px;
 }
 
 .PrivateChatItem--6 {
-  right: 1720px;
+  right: 1940px;
 }
 
 .PrivateChatItem--7 {
-  right: 1990px;
+  right: 2210px;
 }
 
 .PrivateChatItem--8 {
-  right: 2260px;
+  right: 2480px;
 }
 
 .PrivateChatItem--9 {
-  right: 2530px;
+  right: 2750px;
 }
 
 .PrivateChatItem--10 {
-  right: 2800px;
+  right: 3020px;
 }
 
 .PrivateChatItem--0.mobile {
@@ -8986,7 +9117,6 @@ small.form-error {
   border-radius: 2px 2px 0 0;
   padding: 10px;
   background-color: #4f5d75;
-  cursor: pointer;
 }
 
 .PrivateChatItem__head__wrapper {
@@ -9025,7 +9155,9 @@ small.form-error {
 .PrivateChatItem__username {
   display: inline-block;
   color: #fff;
-  font-weight: bold;
+  max-width: 132px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .PrivateChatItem__actionIcons {

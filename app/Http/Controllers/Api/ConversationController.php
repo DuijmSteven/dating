@@ -37,4 +37,15 @@ class ConversationController
             return JsonResponse::create($exception->getMessage(), 500);
         }
     }
+
+    public function getConversationsByUserId(int $userId)
+    {
+        try {
+            $conversations = $this->conversationManager->getConversationsByUserId($userId);
+
+            return JsonResponse::create($conversations);
+        } catch (\Exception $exception) {
+            return JsonResponse::create($exception->getMessage(), 500);
+        }
+    }
 }

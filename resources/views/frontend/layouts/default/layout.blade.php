@@ -37,8 +37,15 @@
                 :index="index"
                 :key="partner.id"
                 :user="{{ $authenticatedUser }}"
-                :partner="partner">
+                :partner="partner"
+            >
             </private-chat>
+
+            <private-chat-manager
+                ref="privateChatManager"
+                :user="{{ $authenticatedUser }}"
+            >
+            </private-chat-manager>
         @endif
 
     </div>

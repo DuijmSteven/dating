@@ -1,7 +1,7 @@
 
 @mixin private-chat-list {
     @for $i from 0 through 10 {
-        .PrivateChatItem--#{$i} { right: (100 + (map_get($privateChatItem, width) + 20) * $i) + px; }
+        .PrivateChatItem--#{$i} { right: (320 + (map_get($privateChatItem, width) + 20) * $i) + px; }
     }
 }
 
@@ -27,7 +27,6 @@
         border-radius: 2px 2px 0 0;
         padding: 10px;
         background-color: $mainColor;
-        cursor: pointer;
 
         &__wrapper {
             display: flex;
@@ -58,7 +57,10 @@
     &__username {
         display: inline-block;
         color: $white;
-        font-weight: bold;
+
+        max-width: 132px;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     &__actionIcons {

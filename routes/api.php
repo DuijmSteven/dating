@@ -29,6 +29,8 @@ Route::group([
 ], function () {
     Route::get('{userAId}/{userBId}', 'Api\ConversationController@getConversationByParticipantIds')
         ->name('conversations.get-user-ids');
+    Route::get('{userId}', 'Api\ConversationController@getConversationsByUserId')
+        ->name('conversations.get-user-conversations');
 });
 
 Route::get('cities/{countryCode}', 'Api\LocationController@getCities')
