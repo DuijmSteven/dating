@@ -13,17 +13,20 @@
                 </div>
             </div>
         </div>
-        <div id="PrivateChatManager__body" class="PrivateChatManager__body">
+        <div id="PrivateChatManager__body" class="PrivateChatManager__body" data-simplebar data-simplebar-auto-hide="false">
             <div v-for="(conversation, index) in conversations"
                  v-on:click="$parent.addChat(conversation.currentUser.id, conversation.otherUser.id)"
                  class="PrivateChatManager__item"
             >
                 <div class="PrivateChatManager__item__left">
-                    <img class="PrivateChatManager__item__profilePicture" src="http://placehold.it/70x70" alt="">
+                    <img class="PrivateChatManager__item__profilePicture"
+                         :src="conversation.otherUser.profileImageUrl"
+                    >
                 </div>
                 <div class="PrivateChatManager__item__right">
-                    <div class="PrivateChatManager__item__userName">
-                        {{ conversation.otherUser.username }}
+                    <div class="PrivateChatManager__item__right__topPart">
+                        <span class="PrivateChatManager__item__userName">{{ conversation.otherUser.username }}</span>
+                        <span class="PrivateChatManager__item__date">{{ conversation.updatedAtHumanReadable }}</span>
                     </div>
                     <div class="PrivateChatManager__item__lastMessage">
                         {{ conversation.messages[conversation.messages.length -1].type === 'generic' ?
@@ -68,8 +71,6 @@
                             conversation.otherUser = conversation.user_b;
                         }
                     });
-
-                    console.log(this.conversations);
                 }).catch(function (error) {
                     console.log(error);
                 });
@@ -79,5 +80,10 @@
                 $('#PrivateChatManager__body').slideToggle('fast');
             }
         },
+        mounted() {
+            this.$root.$on('fetchUserConversations', () => {
+                this.fetchUserConversations();
+            });
+        }
     }
 </script>

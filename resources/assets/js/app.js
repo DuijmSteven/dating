@@ -94,6 +94,7 @@ $(window).ready(function() {
     if ($('.JS--Search__autoCompleteCites').length > 0) {
         require('./modules/search');
     }
+
 });
 
 

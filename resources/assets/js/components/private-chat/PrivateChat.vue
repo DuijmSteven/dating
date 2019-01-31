@@ -3,7 +3,8 @@
         <div :id="'PrivateChatItem__head--' + index" class="PrivateChatItem__head">
             <div class="PrivateChatItem__head__wrapper">
                 <div class="PrivateChatItem__user">
-                    <img class="PrivateChatItem__profile-image" src="http://placehold.it/40x40">
+                    <img class="PrivateChatItem__profile-image"
+                         :src="partner.profileImageUrl">
                     <div class="PrivateChatItem__username">{{ partner.username }}</div>
                 </div>
 
@@ -27,16 +28,18 @@
 
         <div :id="'PrivateChatItem__body--' + index" class="PrivateChatItem__body">
             <div class="PrivateChatItem__body__wrapper">
-                <div class="PrivateChatItem__body__content">
+                <div :id="'PrivateChatItem__body__content--' + index"
+                     class="PrivateChatItem__body__content"
+                >
                     <chat-message
-                        v-for="(message, index) in messages"
-                        :message="message"
-                        :key="message.id"
+                            v-for="(message, index) in messages"
+                            :message="message"
+                            :key="message.id"
                     ></chat-message>
                 </div>
                 <chat-form
-                    v-on:message-sent="addMessage"
-                    :user="user"
+                        v-on:message-sent="addMessage"
+                        :user="user"
                 ></chat-form>
             </div>
         </div>
@@ -66,10 +69,16 @@
             this.userBId = this.partner.id;
 
             this.fetchMessagesAndListenToChannel();
+
+
+        },
+
+        updated() {
+            this.scrollChatToBottom();
         },
 
         methods: {
-            fetchMessagesAndListenToChannel: function () {
+            fetchMessagesAndListenToChannel() {
                 axios.get('/api/conversations/' + this.userAId + '/' + this.userBId).then(response => {
                     this.conversation = response.data;
 
@@ -108,19 +117,19 @@
                 });
             },
 
-            addMessage: function (message) {
+            addMessage(message) {
                 axios.post('/conversations', {
                     message: message.text,
                     sender_id: this.userAId,
                     recipient_id: this.userBId
-                }).catch(function (error) {
-                    console.log(error.response.status);
+                }).then(() => {
+                    this.fetchUserConversations();
+                }).catch((error) => {
+                    console.log(error);
                 });
-
-                this.fetchUserConversations();
             },
 
-            clear: function () {
+            clear() {
                 Vue.delete(this.$parent.conversationPartners, this.index);
                 $('.PrivateChatItem--' + this.index).remove();
                 if (this.listening === true) {
@@ -129,13 +138,18 @@
                 }
             },
 
-            toggle: function () {
+            toggle() {
                 $('#PrivateChatItem__head--' + this.index).removeClass('PrivateChatItem__head__notify');
                 $('#PrivateChatItem__body--' + this.index).slideToggle('fast');
             },
 
             fetchUserConversations() {
-                console.log(this.$refs.privateChatManager);
+                this.$root.$emit('fetchUserConversations');
+            },
+
+            scrollChatToBottom() {
+                var objDiv = document.getElementById('PrivateChatItem__body__content--' + this.index);
+                objDiv.scrollTop = objDiv.scrollHeight;
             }
         }
     }

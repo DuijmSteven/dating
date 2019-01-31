@@ -1,7 +1,7 @@
 
 @mixin private-chat-list {
     @for $i from 0 through 10 {
-        .PrivateChatItem--#{$i} { right: (320 + (map_get($privateChatItem, width) + 20) * $i) + px; }
+        .PrivateChatItem--#{$i} { right: (370 + (map_get($privateChatItem, width) + 20) * $i) + px; }
     }
 }
 
@@ -52,11 +52,14 @@
     &__profile-image {
         margin-right: 10px;
         border-radius: 50%;
+        width: 27px;
+        height: 27px;
     }
 
     &__username {
         display: inline-block;
         color: $white;
+        cursor: default;
 
         max-width: 132px;
         overflow: hidden;

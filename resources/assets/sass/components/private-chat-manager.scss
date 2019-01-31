@@ -1,9 +1,9 @@
 .PrivateChatManager {
     position: fixed;
     bottom: 0;
-    width: 250px;
-
     right: 50px;
+
+    width: 300px;
 
     box-shadow: 0 0 24px rgba(0,0,0,0.2);
 
@@ -72,21 +72,36 @@
         }
 
         &__right {
-            max-width: 185px;
+            max-width: 205px;
             display: flex;
             flex-direction: column;
             flex: 4;
 
             margin-right: 15px;
+
+            &__topPart {
+                display: flex;
+                align-items: flex-end;
+                flex: 1;
+            }
         }
 
         &__userName {
-            display: flex;
-            align-items: flex-end;
-            flex: 1;
+            display: inline-block;
+            width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
 
             font-weight: 500;
             font-size: 15px;
+        }
+
+        &__date {
+            display: inline-block;
+            width: 120px;
+            text-align: right;
+            font-size: 12px;
         }
 
         &__lastMessage {
@@ -98,5 +113,10 @@
             text-overflow: ellipsis;
             padding-right: 15px;
         }
+    }
+
+    &__body {
+        max-height: 600px;
+        overflow-y: scroll;
     }
 }
