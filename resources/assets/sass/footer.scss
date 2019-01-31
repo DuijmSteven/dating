@@ -6,6 +6,8 @@
 //
 // Style guide: Layout.Footer
 .Footer {
+    position: relative;
+    z-index: 5;
     padding: 30px 0;
     background-color: $footerBgColor;
     color: $white;

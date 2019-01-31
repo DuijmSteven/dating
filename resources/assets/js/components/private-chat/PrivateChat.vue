@@ -1,6 +1,7 @@
 <template>
     <div :class="'PrivateChatItem PrivateChatItem--' + index + ' ' + $mq">
-        <div :id="'PrivateChatItem__head--' + index" class="PrivateChatItem__head">
+        <div :id="'PrivateChatItem__head--' + index"
+             class="PrivateChatItem__head">
             <div class="PrivateChatItem__head__wrapper">
                 <div class="PrivateChatItem__user">
                     <img class="PrivateChatItem__profile-image"
@@ -16,7 +17,7 @@
                     >
                         <i class="material-icons material-icon minimize">minimize</i>
                     </div>
-                    <div v-on:click="clear"
+                    <div v-on:click="clear(partner)"
                          :id="'PrivateChatItem__clear--' + index"
                          class="PrivateChatItem__clear"
                     >
@@ -69,8 +70,6 @@
             this.userBId = this.partner.id;
 
             this.fetchMessagesAndListenToChannel();
-
-
         },
 
         updated() {
@@ -129,13 +128,24 @@
                 });
             },
 
-            clear() {
+            clear(partner) {
                 Vue.delete(this.$parent.conversationPartners, this.index);
                 $('.PrivateChatItem--' + this.index).remove();
                 if (this.listening === true) {
                     Echo.leave('chat.' + this.conversation.id);
                     this.listening = false;
                 }
+
+                axios.get(
+                    '/api/conversations/conversation-partner-ids/remove/' +
+                    parseInt(DP.authenticatedUser.id) +
+                    '/' +
+                    parseInt(partner.id)
+                ).then(
+                    response => {
+                        console.log(response);
+                    }
+                );
             },
 
             toggle() {

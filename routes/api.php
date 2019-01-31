@@ -27,6 +27,15 @@ Route::group([
 Route::group([
     'prefix' => 'conversations'
 ], function () {
+    Route::get('conversation-partner-ids/{userId}', 'Api\ConversationController@getOpenConversationPartners')
+        ->name('conversations.get-user-conversation-partner-ids');
+
+    Route::get('conversation-partner-ids/add/{userId}/{partnerId}', 'Api\ConversationController@persistConversationPartnerId')
+        ->name('conversations.add-user-conversation-partner-ids');
+
+    Route::get('conversation-partner-ids/remove/{userId}/{partnerId}', 'Api\ConversationController@removeConversationPartnerId')
+        ->name('conversations.remove-user-conversation-partner-ids');
+
     Route::get('{userAId}/{userBId}', 'Api\ConversationController@getConversationByParticipantIds')
         ->name('conversations.get-user-ids');
     Route::get('{userId}', 'Api\ConversationController@getConversationsByUserId')

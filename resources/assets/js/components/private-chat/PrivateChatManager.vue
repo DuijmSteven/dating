@@ -13,7 +13,11 @@
                 </div>
             </div>
         </div>
-        <div id="PrivateChatManager__body" class="PrivateChatManager__body" data-simplebar data-simplebar-auto-hide="false">
+        <div id="PrivateChatManager__body"
+             class="PrivateChatManager__body"
+        >
+            <div class="force-overflow"></div>
+
             <div v-for="(conversation, index) in conversations"
                  v-on:click="$parent.addChat(conversation.currentUser.id, conversation.otherUser.id)"
                  class="PrivateChatManager__item"

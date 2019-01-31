@@ -1,5 +1,6 @@
 .PrivateChatManager {
     position: fixed;
+    z-index: 10;
     bottom: 0;
     right: 50px;
 
@@ -72,7 +73,7 @@
         }
 
         &__right {
-            max-width: 205px;
+            max-width: 211px;
             display: flex;
             flex-direction: column;
             flex: 4;
@@ -119,4 +120,15 @@
         max-height: 600px;
         overflow-y: scroll;
     }
+}
+
+.scrollbar {
+    background-color: #F5F5F5;
+    float: left;
+    height: 300px;
+    margin-bottom: 25px;
+    margin-left: 22px;
+    margin-top: 40px;
+    width: 65px;
+    overflow-y: scroll;
 }

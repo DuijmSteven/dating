@@ -20,6 +20,7 @@
 
 .PrivateChatItem {
     position: fixed;
+    z-index: 10;
     bottom: 0;
     width: map_get($privateChatItem, width) + px;
 
@@ -126,10 +127,10 @@
     }
 
     &__textarea {
-        border-bottom: 1px solid $lightGrey !important;
         height: 34px;
         margin: 7px;
         border: medium none;
+        border-bottom: 1px solid $lightGrey !important;
         width: 95%;
         overflow: hidden;
 
@@ -171,10 +172,5 @@
 
     &.focus {
         box-shadow: 0 0 10px rgba(0,0,0,0.2);
-    }
-
-    &.mobile {
-        width: 100%;
-        position: sticky;
     }
 }
