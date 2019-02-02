@@ -40,6 +40,17 @@ class ConversationController
         }
     }
 
+    public function getHighestConversationId()
+    {
+        try {
+            $conversationId = $this->conversationManager->getHighestConversationId();
+
+            return JsonResponse::create($conversationId);
+        } catch (\Exception $exception) {
+            return JsonResponse::create($exception->getMessage(), 500);
+        }
+    }
+
     public function getConversationsByUserId(int $userId)
     {
         try {
@@ -68,7 +79,7 @@ class ConversationController
         try {
             $ids = Redis::smembers('users.conversationPartnerIds.' . $userId);
 
-            return JsonResponse::create($ids, 200);
+            return JsonResponse::create($ids);
         } catch (\Exception $exception) {
             return JsonResponse::create($exception->getMessage(), 500);
         }

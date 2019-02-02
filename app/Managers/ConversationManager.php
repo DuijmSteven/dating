@@ -369,6 +369,11 @@ class ConversationManager
         return $conversations;
     }
 
+    public function getHighestConversationId()
+    {
+        return Conversation::max('id');
+    }
+
     /**
      * @param int $userAId
      * @param int $userBId

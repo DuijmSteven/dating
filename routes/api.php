@@ -36,6 +36,10 @@ Route::group([
     Route::get('conversation-partner-ids/remove/{userId}/{partnerId}', 'Api\ConversationController@removeConversationPartnerId')
         ->name('conversations.remove-user-conversation-partner-ids');
 
+
+    Route::get('/get-highest-id', 'Api\ConversationController@getHighestConversationId')
+        ->name('conversations.get-highest-id');
+
     Route::get('{userAId}/{userBId}', 'Api\ConversationController@getConversationByParticipantIds')
         ->name('conversations.get-user-ids');
     Route::get('{userId}', 'Api\ConversationController@getConversationsByUserId')
