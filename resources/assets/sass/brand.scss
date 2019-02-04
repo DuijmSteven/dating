@@ -7,9 +7,9 @@
 // Style guide: Brand Variables
 
 // colors
-$slate: #4f5d75;
-$slateLight: #617493;
-$dark: #2d3142;
+$slate: #BF004D;
+$slateLight: #A22770;
+$dark: #4D4981;
 $tomato: #ef4f2b;
 $tomatoLight: #ee796d;
 $salmon: #f3a69e;
@@ -85,6 +85,10 @@ $tileHeading: (
 
 $tileBody: (
     'padding': 15
+);
+
+$tileBodyArticles: (
+    'padding': 35
 );
 
 // User-activity

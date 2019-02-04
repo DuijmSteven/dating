@@ -8442,7 +8442,7 @@ body {
 
 .navbar-default {
   border: 1px solid #d3e0e9;
-  background-color: #4f5d75;
+  background-color: #BF004D;
   position: relative;
 }
 
@@ -8565,7 +8565,7 @@ small.form-error {
 
 .Footer {
   padding: 30px 0;
-  background-color: #2d3142;
+  background-color: #4D4981;
   color: #fff;
 }
 
@@ -8603,13 +8603,17 @@ small.form-error {
 .Tile__heading {
   padding: 15px;
   font-size: 14px;
-  color: #4f5d75;
+  color: #BF004D;
   text-align: center;
   border-bottom: 2px solid #f3f3f3;
 }
 
 .Tile__body {
   padding: 15px;
+}
+
+.Tile__article {
+  padding: 35px;
 }
 
 .Button {
@@ -8650,15 +8654,15 @@ small.form-error {
 }
 
 .Button--primary {
-  background-color: #4f5d75;
+  background-color: #BF004D;
 }
 
 .Button--primary:hover {
-  background-color: #617493;
+  background-color: #A22770;
 }
 
 .Button--primary:active {
-  background-color: #4f5d75;
+  background-color: #BF004D;
 }
 
 .Button--success {
@@ -8748,7 +8752,7 @@ small.form-error {
   font-size: 14px;
   font-weight: 500;
   line-height: 1.21;
-  color: #4f5d75;
+  color: #BF004D;
 }
 
 .Activity__date {
@@ -8865,11 +8869,11 @@ small.form-error {
 }
 
 .User-profile__body .fa {
-  color: #4f5d75;
+  color: #BF004D;
 }
 
 .User-profile__body h5 {
-  color: #4f5d75;
+  color: #BF004D;
 }
 
 .User-profile__user-profile-image {
@@ -8985,7 +8989,7 @@ small.form-error {
 .PrivateChatItem__head {
   border-radius: 2px 2px 0 0;
   padding: 10px;
-  background-color: #4f5d75;
+  background-color: #BF004D;
   cursor: pointer;
 }
 
@@ -9219,7 +9223,7 @@ small.form-error {
   padding-top: 10px;
   padding-bottom: 10px;
   font-size: 14px;
-  color: #4f5d75;
+  color: #BF004D;
 }
 
 .User-account__body {
@@ -9247,7 +9251,7 @@ small.form-error {
       -ms-flex-pack: center;
           justify-content: center;
   text-align: center;
-  color: #4f5d75;
+  color: #BF004D;
 }
 
 .User-account__item__text {
@@ -9313,7 +9317,7 @@ small.form-error {
   resize: none;
   background-color: #f2f2f2;
   border-radius: 2px;
-  color: #4f5d75;
+  color: #BF004D;
   font-size: 12px;
 }
 
@@ -9349,7 +9353,7 @@ small.form-error {
 
 .Search__body label {
   font-size: 14px;
-  color: #4f5d75;
+  color: #BF004D;
 }
 
 .PrivateChat {
