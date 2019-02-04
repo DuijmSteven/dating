@@ -8440,6 +8440,29 @@ body {
   }
 }
 
+::-webkit-scrollbar {
+  background-color: #fff;
+  width: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #fff;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #89898f;
+  border-radius: 16px;
+  border: 2px solid #fff;
+}
+
+.margin10 {
+  margin: 10px 0 10px 0;
+}
+
+.fontSize15 {
+  font-size: 15px;
+}
+
 .navbar-default {
   border: 1px solid #d3e0e9;
   background-color: #BF004D;
@@ -8564,6 +8587,8 @@ small.form-error {
 }
 
 .Footer {
+  position: relative;
+  z-index: 5;
   padding: 30px 0;
   background-color: #4D4981;
   color: #fff;
@@ -8892,48 +8917,211 @@ small.form-error {
   font-size: 14px;
 }
 
-.PrivateChatItem--0 {
-  right: 100px;
+.PrivateChatManager {
+  position: fixed;
+  z-index: 10;
+  bottom: 0;
+  right: 50px;
+  width: 300px;
+  -webkit-box-shadow: 0 0 24px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 24px rgba(0, 0, 0, 0.2);
 }
 
-.PrivateChatItem--1 {
+.PrivateChatManager__head {
+  border-radius: 2px 2px 0 0;
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  height: 50px;
+  background-color: #BF004D;
+  color: #e6e6e6;
+}
+
+.PrivateChatManager__head__title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-flex: 3;
+      -ms-flex: 3;
+          flex: 3;
+  padding-left: 15px;
+}
+
+.PrivateChatManager__head__actionIcons {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.PrivateChatManager__toggle {
+  cursor: pointer;
+  position: relative;
+  top: 5px;
+  left: 8px;
+}
+
+.PrivateChatManager__item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  cursor: pointer;
+  background-color: #fff;
+}
+
+.PrivateChatManager__item:first-child .PrivateChatManager__item__right {
+  border-top: 0;
+}
+
+.PrivateChatManager__item .PrivateChatManager__item__right {
+  border-top: 1px solid #eee;
+}
+
+.PrivateChatManager__item:hover {
+  background-color: #efefef;
+}
+
+.PrivateChatManager__item__left {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.PrivateChatManager__item__profilePicture {
+  border-radius: 50%;
+  width: 65px;
+  height: 65px;
+  padding: 10px;
+}
+
+.PrivateChatManager__item__right {
+  max-width: 211px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-flex: 4;
+      -ms-flex: 4;
+          flex: 4;
+  margin-right: 15px;
+}
+
+.PrivateChatManager__item__right__topPart {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.PrivateChatManager__item__userName {
+  display: inline-block;
+  width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.PrivateChatManager__item__date {
+  display: inline-block;
+  width: 120px;
+  text-align: right;
+  font-size: 12px;
+}
+
+.PrivateChatManager__item__lastMessage {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  color: #888;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 15px;
+}
+
+.PrivateChatManager__body {
+  max-height: 600px;
+  overflow-y: scroll;
+}
+
+.scrollbar {
+  background-color: #F5F5F5;
+  float: left;
+  height: 300px;
+  margin-bottom: 25px;
+  margin-left: 22px;
+  margin-top: 40px;
+  width: 65px;
+  overflow-y: scroll;
+}
+
+.PrivateChatItem--0 {
   right: 370px;
 }
 
-.PrivateChatItem--2 {
+.PrivateChatItem--1 {
   right: 640px;
 }
 
-.PrivateChatItem--3 {
+.PrivateChatItem--2 {
   right: 910px;
 }
 
-.PrivateChatItem--4 {
+.PrivateChatItem--3 {
   right: 1180px;
 }
 
-.PrivateChatItem--5 {
+.PrivateChatItem--4 {
   right: 1450px;
 }
 
-.PrivateChatItem--6 {
+.PrivateChatItem--5 {
   right: 1720px;
 }
 
-.PrivateChatItem--7 {
+.PrivateChatItem--6 {
   right: 1990px;
 }
 
-.PrivateChatItem--8 {
+.PrivateChatItem--7 {
   right: 2260px;
 }
 
-.PrivateChatItem--9 {
+.PrivateChatItem--8 {
   right: 2530px;
 }
 
-.PrivateChatItem--10 {
+.PrivateChatItem--9 {
   right: 2800px;
+}
+
+.PrivateChatItem--10 {
+  right: 3070px;
 }
 
 .PrivateChatItem--0.mobile {
@@ -8982,6 +9170,7 @@ small.form-error {
 
 .PrivateChatItem {
   position: fixed;
+  z-index: 10;
   bottom: 0;
   width: 250px;
 }
@@ -8990,7 +9179,6 @@ small.form-error {
   border-radius: 2px 2px 0 0;
   padding: 10px;
   background-color: #BF004D;
-  cursor: pointer;
 }
 
 .PrivateChatItem__head__wrapper {
@@ -9024,12 +9212,17 @@ small.form-error {
 .PrivateChatItem__profile-image {
   margin-right: 10px;
   border-radius: 50%;
+  width: 27px;
+  height: 27px;
 }
 
 .PrivateChatItem__username {
   display: inline-block;
   color: #fff;
-  font-weight: bold;
+  cursor: default;
+  max-width: 132px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .PrivateChatItem__actionIcons {
@@ -9077,7 +9270,7 @@ small.form-error {
 
 .PrivateChatItem__message {
   position: relative;
-  padding: 10px;
+  padding: 10px 10px 28px 10px;
   min-height: 10px;
   border-radius: 5px;
   margin-bottom: 10px;
@@ -9098,11 +9291,19 @@ small.form-error {
   margin-bottom: 0;
 }
 
+.PrivateChatItem__message__createdAt {
+  position: absolute;
+  right: 4px;
+  bottom: 3px;
+  font-size: 11px;
+  color: #555;
+}
+
 .PrivateChatItem__textarea {
-  border-bottom: 1px solid #e5e5e5 !important;
   height: 34px;
   margin: 7px;
   border: medium none;
+  border-bottom: 1px solid #e5e5e5 !important;
   width: 95%;
   overflow: hidden;
 }
@@ -9145,12 +9346,6 @@ small.form-error {
 .PrivateChatItem.focus {
   -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-.PrivateChatItem.mobile {
-  width: 100%;
-  position: -webkit-sticky;
-  position: sticky;
 }
 
 .Online-users__item {
