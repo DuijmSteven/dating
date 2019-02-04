@@ -355,6 +355,25 @@ class ConversationManager
         return $conversation;
     }
 
+    public function getConversationsByUserId(int $userId)
+    {
+        $conversations = $this->conversation
+            ->with('messages', 'userA', 'userB')
+            ->where('user_a_id', $userId)
+            ->orWhere(function ($query) use ($userId) {
+                $query->where('user_b_id', $userId);
+            })
+            ->orderBy('updated_at', 'desc')
+            ->get();
+
+        return $conversations;
+    }
+
+    public function getHighestConversationId()
+    {
+        return Conversation::max('id');
+    }
+
     /**
      * @param int $userAId
      * @param int $userBId
@@ -377,8 +396,9 @@ class ConversationManager
                 'user_b_id' => $userBId
             ]);
 
-            $conversation->save();
         }
+        $conversation->setUpdatedAt(Carbon::now());
+        $conversation->save();
 
         return $conversation;
     }

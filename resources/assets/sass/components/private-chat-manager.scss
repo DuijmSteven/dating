@@ -1,0 +1,134 @@
+.PrivateChatManager {
+    position: fixed;
+    z-index: 10;
+    bottom: 0;
+    right: 50px;
+
+    width: 300px;
+
+    box-shadow: 0 0 24px rgba(0,0,0,0.2);
+
+    &__head {
+        border-radius: 2px 2px 0 0;
+        text-align: center;
+
+        display: flex;
+        flex-direction: row;
+
+        height: 50px;
+
+        background-color: map_get($privateChatManager, 'headBackGroundColor');
+        color: map_get($privateChatManager, 'headColor');
+
+        &__title {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            flex: 3;
+            padding-left: 15px;
+        }
+
+        &__actionIcons {
+            flex: 1;
+        }
+    }
+
+    &__toggle {
+        cursor: pointer;
+        position: relative;
+        top: 5px;
+        left: 8px;
+    }
+
+    &__item {
+        &:first-child {
+            .PrivateChatManager__item__right {
+                border-top: 0;
+            }
+        }
+
+        .PrivateChatManager__item__right {
+            border-top: 1px solid #eee;
+        }
+
+        &:hover {
+            background-color: #efefef;
+        }
+
+        display: flex;
+        flex-direction: row;
+
+        cursor: pointer;
+        background-color: #fff;
+
+        &__left {
+            flex: 1;
+        }
+
+        &__profilePicture {
+            border-radius: 50%;
+            width: 65px;
+            height: 65px;
+            padding: 10px;
+        }
+
+        &__right {
+            max-width: 211px;
+            display: flex;
+            flex-direction: column;
+            flex: 4;
+
+            margin-right: 15px;
+
+            &__topPart {
+                display: flex;
+                align-items: flex-end;
+                flex: 1;
+            }
+        }
+
+        &__userName {
+            display: inline-block;
+            width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        &__date {
+            display: inline-block;
+            width: 120px;
+            text-align: right;
+            font-size: 12px;
+        }
+
+        &__lastMessage {
+            flex: 1;
+            color: #888;
+            font-size: 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-right: 15px;
+        }
+    }
+
+    &__body {
+        max-height: 600px;
+        overflow-y: scroll;
+    }
+}
+
+.scrollbar {
+    background-color: #F5F5F5;
+    float: left;
+    height: 300px;
+    margin-bottom: 25px;
+    margin-left: 22px;
+    margin-top: 40px;
+    width: 65px;
+    overflow-y: scroll;
+}

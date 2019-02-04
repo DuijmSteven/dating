@@ -29,6 +29,13 @@ class User extends Authenticatable
 
     protected $dates = ['deactivated_at'];
 
+    protected $appends = ['profileImageUrl'];
+
+    public function getprofileImageUrlAttribute()
+    {
+        return \StorageHelper::profileImageUrl($this);
+    }
+
     /**
      * The attributes that are mass assignable.
      *

@@ -51,9 +51,11 @@ class BotCreateRequest extends Request
             'profile_image' => 'image|max:4000',
         ];
 
-        $imageCount = count($this->input('user_images')) - 1;
-        foreach (range(0, $imageCount) as $index) {
-            $rules['user_images.' . $index] = 'image|max:4000';
+        if (!is_null($this->input('user_images'))) {
+            $imageCount = count($this->input('user_images')) - 1;
+            foreach (range(0, $imageCount) as $index) {
+                $rules['user_images.' . $index] = 'image|max:4000';
+            }
         }
 
         return $rules;

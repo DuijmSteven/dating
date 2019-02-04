@@ -16,6 +16,18 @@ body {
     }
 }
 
-.row.thin_gutter {
+// set custom scrollbars
+::-webkit-scrollbar {
+    background-color: #fff;
+    width: 9px;
+}
 
+::-webkit-scrollbar-track {
+    background-color: #fff;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #89898f;
+    border-radius: 16px;
+    border: 2px solid #fff;
 }

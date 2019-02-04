@@ -5,7 +5,9 @@
 <body>
     @include('frontend.layouts.default.partials.header')
 
-    <div class="container" id="app">
+    <div class="container"
+         id="app"
+    >
         @include('frontend.components.alert')
 
         @if(isset($sidebarCount) && $sidebarCount > 0)
@@ -37,8 +39,15 @@
                 :index="index"
                 :key="partner.id"
                 :user="{{ $authenticatedUser }}"
-                :partner="partner">
+                :partner="partner"
+            >
             </private-chat>
+
+            <private-chat-manager
+                ref="privateChatManager"
+                :user="{{ $authenticatedUser }}"
+            >
+            </private-chat-manager>
         @endif
 
     </div>
@@ -52,7 +61,8 @@
          * can be defined here
          */
         var DP = {
-            baseUrl: '{!! url('/') !!}'
+            baseUrl: '{!! url('/') !!}',
+            authenticatedUser: <?php echo json_encode($authenticatedUser, true) ?>,
         };
     </script>
     <script src="{{ mix('js/app.js') }}"></script>

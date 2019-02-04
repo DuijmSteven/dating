@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -12,12 +13,17 @@ class Conversation extends Model
 {
     public $table = 'conversations';
 
-
+    protected $appends = ['updatedAtHumanReadable'];
 
     protected $fillable = [
         'user_a_id',
         'user_b_id'
     ];
+
+    public function getUpdatedAtHumanReadableAttribute()
+    {
+        return Carbon::createFromTimeStamp(strtotime($this->getUpdatedAt()))->diffForHumans();
+    }
 
     /**
      * @return mixed
@@ -66,5 +72,9 @@ class Conversation extends Model
 
     public function getId() {
         return $this->id;
+    }
+
+    public function getUpdatedAt() {
+        return $this->updated_at;
     }
 }
