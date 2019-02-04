@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class ConversationMessage extends Model
@@ -21,6 +22,13 @@ class ConversationMessage extends Model
         'generic',
         'flirt'
     ];
+
+    protected $appends = ['createdAtHumanReadable'];
+
+    public function getCreatedAtHumanReadableAttribute()
+    {
+        return Carbon::createFromTimeStamp(strtotime($this->getCreatedAt()))->diffForHumans();
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -55,5 +63,9 @@ class ConversationMessage extends Model
 
     public function getConversationId() {
         return $this->conversation_id;
+    }
+
+    public function getCreatedAt() {
+        return $this->created_at;
     }
 }

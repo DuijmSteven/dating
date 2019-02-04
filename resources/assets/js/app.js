@@ -14,6 +14,7 @@ window.Vue = require('vue/dist/vue.js');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+Vue.component('private-chat-manager', require('./components/private-chat/PrivateChatManager.vue'));
 Vue.component('private-chat', require('./components/private-chat/PrivateChat.vue'));
 Vue.component('chat-message', require('./components/private-chat/ChatMessage.vue'));
 Vue.component('chat-form', require('./components/private-chat/ChatForm.vue'));
@@ -21,17 +22,43 @@ Vue.component('chat-form', require('./components/private-chat/ChatForm.vue'));
 const app = new Vue({
     el: '#app',
 
+    props: [],
+
     data: {
         conversationPartners: []
     },
 
+    created() {
+        axios.get('/api/conversations/conversation-partner-ids/' + parseInt(DP.authenticatedUser.id)).then(
+            response => {
+                for (let key in response.data) {
+                    this.addChat(DP.authenticatedUser.id, response.data[key]);
+                }
+            }
+        );
+    },
+
     methods: {
         addChat: function (currentUserId, userBId) {
-            console.log('Current user ID: ' + currentUserId);
-            console.log('Chat partner ID: ' + userBId);
+            if (this.conversationPartners.length > 4) {
+                return false;
+            }
 
             let isConversationOpen = false;
             let openConversationIndex;
+
+            if (this.conversationPartners.map(partner => partner.id).indexOf(userBId) === -1) {
+                axios.get(
+                    '/api/conversations/conversation-partner-ids/add/' +
+                    parseInt(DP.authenticatedUser.id) +
+                    '/' +
+                    parseInt(userBId)
+                ).then(
+                    response => {
+                        console.log(response);
+                    }
+                );
+            }
 
             this.conversationPartners.forEach(function (partner, index) {
                 if (partner.id === userBId) {
@@ -93,6 +120,7 @@ $(window).ready(function() {
     if ($('.JS--Search__autoCompleteCites').length > 0) {
         require('./modules/search');
     }
+
 });
 
 
