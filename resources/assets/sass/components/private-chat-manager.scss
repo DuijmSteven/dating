@@ -43,6 +43,11 @@
             display: none;
         }
 
+        .material-icons {
+            &:hover {
+                color: #bbb !important;
+            }
+        }
     }
 
     &__item {
