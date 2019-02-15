@@ -8,6 +8,18 @@ require('./bootstrap');
 
 window.Vue = require('vue/dist/vue.js');
 
+
+import VueMq from 'vue-mq'
+
+Vue.use(VueMq, {
+    breakpoints: {
+        xs: 768,
+        sm: 992,
+        md: 1200,
+        lg: Infinity,
+    }
+});
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -87,17 +99,6 @@ const app = new Vue({
         },
     }
 });
-
-import VueMq from 'vue-mq'
-
-Vue.use(VueMq, {
-    breakpoints: {
-        mobile: 450,
-        tablet: 900,
-        laptop: 1250,
-        desktop: Infinity,
-    }
-})
 
 /**
  * Other Javascript

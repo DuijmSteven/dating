@@ -1,5 +1,6 @@
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ isset ($title) ? $title : 'Title'  }}</title>
     <meta name="description" content="Dating app">
     <meta name="author" content="Dating">
