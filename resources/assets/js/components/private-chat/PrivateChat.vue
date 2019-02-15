@@ -74,11 +74,28 @@
 
             this.fetchMessagesAndListenToChannel();
 
+
+            let $body = $('body');
             if (['xs', 'sm'].includes(this.$mq)) {
-                $('body').css('overflow-y', 'hidden');
+                $body.css('overflow-y', 'hidden');
             } else {
-                $('body').css('overflow-y', 'scroll');
+                $body.css('overflow-y', 'scroll');
             }
+
+            var bodySelector = $body;
+
+            $('.PrivateChatItem__body').hover(
+                function () {
+                    console.log('body');
+                    bodySelector.css('position', 'fixed');
+                    bodySelector.css('overflow-y', 'scroll');
+                },
+                function () {
+                    bodySelector.css('position', 'static');
+                    bodySelector.css('overflow-y', 'auto');
+                }
+            );
+
         },
 
         updated() {
