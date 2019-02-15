@@ -15,7 +15,7 @@
         display: flex;
         flex-direction: row;
 
-        height: 50px;
+        height: map_get($privateChatManager, 'headHeight') + px;
 
         background-color: map_get($privateChatManager, 'headBackGroundColor');
         color: map_get($privateChatManager, 'headColor');
@@ -38,6 +38,11 @@
         position: relative;
         top: 5px;
         left: 8px;
+
+        &__icon--minimize.material-icons {
+            display: none;
+        }
+
     }
 
     &__item {
@@ -117,6 +122,7 @@
     }
 
     &__body {
+        display: none;
         max-height: 600px;
         overflow-y: scroll;
     }
@@ -131,4 +137,104 @@
     margin-top: 40px;
     width: 65px;
     overflow-y: scroll;
+}
+
+@media (max-width: $screen-sm-max) {
+    .PrivateChatManager {
+        width: auto;
+
+        &.minimized {
+            .PrivateChatManager {
+                &__toggle {
+                    top: 0;
+                    left: 0;
+                    padding: 15px;
+                }
+            }
+
+            .PrivateChatManager {
+                &__head {
+                    &__title {
+                        display: none;
+                        padding-left: 0;
+                    }
+                }
+            }
+        }
+
+        &.maximized {
+            top: 0;
+            left: 0;
+            right: 0;
+
+            .PrivateChatManager {
+                &__head {
+                    height: map_get($privateChatManager, 'headHeightMobileMaximized') + px;
+                }
+
+                &__body {
+                    max-height: initial;
+                    height: -webkit-calc(100% - #{map_get($privateChatManager, 'headHeightMobileMaximized') + px});
+                    height: -moz-calc(100% - #{map_get($privateChatManager, 'headHeightMobileMaximized') + px});
+                    height: calc(100% - #{map_get($privateChatManager, 'headHeightMobileMaximized') + px});
+                }
+            }
+        }
+
+        &__toggle {
+            top: 13px;
+            left: 12px;
+        }
+
+        &.maximized {
+            .PrivateChatManager__toggle {
+                text-align: right;
+                padding-right: 10px;
+                padding-top: 19px;
+                top: 0;
+                left: 0;
+
+                &__icon--minimize.material-icons {
+                    display: inline-block;
+                }
+
+                &__icon--message.material-icons {
+                    display: none;
+                }
+            }
+        }
+
+        &__item {
+            &__right {
+                max-width: initial;
+                flex: 10;
+            }
+
+            &__date {
+                width: 100%;
+            }
+        }
+    }
+}
+
+@media (min-width: $screen-md-min) {
+    .PrivateChatManager {
+        &__head {
+            &__title {
+                &--desktop {
+                    display: inline-block;
+                }
+            }
+        }
+
+        &__toggle {
+            &__icon--minimize.material-icons {
+                display: inline-block;
+            }
+
+            &__icon--message.material-icons {
+                display: none;
+            }
+        }
+    }
 }

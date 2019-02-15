@@ -256,10 +256,13 @@ $userProfileItem: (
 
 // Chat
 $privateChatItem: (
-    'width': 250
+    'width': 250,
+    'headHeightMobileMaximized': 70
 );
 
 $privateChatManager: (
     'headBackGroundColor': $mainColor,
-    'headColor': $sugar
+    'headColor': $sugar,
+    'headHeight': 50,
+    'headHeightMobileMaximized': 70
 );

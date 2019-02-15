@@ -1,15 +1,29 @@
 <template>
-    <div class="PrivateChatManager">
+    <div class="PrivateChatManager" v-bind:class="{
+                    'maximized': this.isMaximized,
+                    'minimized': !this.isMaximized,
+                    'PrivateChatManager--xs': $mq === 'xs',
+                    'PrivateChatManager--sm': $mq === 'sm',
+                    'PrivateChatManager--md': $mq === 'md',
+                    'PrivateChatManager--lg': $mq === 'lg'
+                }">
         <div class="PrivateChatManager__head">
             <div class="PrivateChatManager__head__title">
-                Conversations
+                <span class="PrivateChatManager__head__title__text">Conversations</span>
             </div>
             <div class="PrivateChatManager__head__actionIcons">
                 <div v-on:click="toggle"
                      id="PrivateChatManager__toggle"
                      class="PrivateChatManager__toggle"
                 >
-                    <i class="material-icons material-icon minimize">minimize</i>
+                    <i class="PrivateChatManager__toggle__icon--minimize material-icons"
+                    >
+                        minimize
+                    </i>
+                    <i class="PrivateChatManager__toggle__icon--message material-icons"
+                    >
+                        message
+                    </i>
                 </div>
             </div>
         </div>
@@ -25,6 +39,7 @@
                 <div class="PrivateChatManager__item__left">
                     <img class="PrivateChatManager__item__profilePicture"
                          :src="conversation.otherUser.profileImageUrl"
+                         alt="profile-image"
                     >
                 </div>
                 <div class="PrivateChatManager__item__right">
@@ -54,6 +69,7 @@
             return {
                 conversations: [],
                 currentUser: undefined,
+                isMaximized: false
             };
         },
 
@@ -82,6 +98,13 @@
 
             toggle: function () {
                 $('#PrivateChatManager__body').slideToggle('fast');
+                this.isMaximized = !this.isMaximized;
+
+                if (['xs', 'sm'].includes(this.$mq) && this.isMaximized) {
+                    $('body').css('overflow-y', 'hidden');
+                } else {
+                    $('body').css('overflow-y', 'scroll');
+                }
             }
         },
         mounted() {

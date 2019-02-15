@@ -1,5 +1,5 @@
 <template>
-    <div :class="'PrivateChatItem PrivateChatItem--' + index + ' ' + $mq">
+    <div :class="'PrivateChatItem PrivateChatItem--' + index + ' ' + statusClass">
         <div :id="'PrivateChatItem__head--' + index"
              class="PrivateChatItem__head">
             <div class="PrivateChatItem__head__wrapper">
@@ -62,7 +62,9 @@
                 conversation: undefined,
                 userAId: undefined,
                 userBId: undefined,
-                highestConversationId: undefined
+                highestConversationId: undefined,
+                isMaximized: true,
+                statusClass: 'maximized'
             };
         },
 
@@ -71,6 +73,12 @@
             this.userBId = this.partner.id;
 
             this.fetchMessagesAndListenToChannel();
+
+            if (['xs', 'sm'].includes(this.$mq)) {
+                $('body').css('overflow-y', 'hidden');
+            } else {
+                $('body').css('overflow-y', 'scroll');
+            }
         },
 
         updated() {
@@ -181,6 +189,16 @@
             toggle() {
                 $('#PrivateChatItem__head--' + this.index).removeClass('PrivateChatItem__head__notify');
                 $('#PrivateChatItem__body--' + this.index).slideToggle('fast');
+
+                this.isMaximized = !this.isMaximized;
+
+                if (['xs', 'sm'].includes(this.$mq) && this.isMaximized) {
+                    $('body').css('overflow-y', 'hidden');
+                } else {
+                    $('body').css('overflow-y', 'scroll');
+                }
+
+                this.statusClass = this.isMaximized ? 'maximized' : 'minimized';
             },
 
             fetchUserConversations() {
