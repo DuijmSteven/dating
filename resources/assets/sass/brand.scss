@@ -7,9 +7,9 @@
 // Style guide: Brand Variables
 
 // colors
-$slate: #610486;
-$slateLight: #A22770;
-$dark: #4D4981;
+$slate: #4f5d75;
+$slateLight: #617493;
+$dark: #2d3142;
 $tomato: #ef4f2b;
 $tomatoLight: #ee796d;
 $salmon: #f3a69e;
@@ -35,6 +35,7 @@ $yellowLight: #f9ce89;
 // brand colors
 $mainColor: $slate;
 $secondaryColor: $tomato;
+$tertiaryColor: $dark;
 $textColor: $black;
 
 // layout colors
@@ -265,4 +266,9 @@ $privateChatManager: (
     'headColor': $sugar,
     'headHeight': 50,
     'headHeightMobileMaximized': 70
+);
+
+$pagination: (
+    'activeBackGroundColor': $mainColor,
+    'textColor': $tertiaryColor
 );
