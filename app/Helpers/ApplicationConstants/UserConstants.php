@@ -31,12 +31,12 @@ class UserConstants
     public static $userTableFields = [
         'common' => [
             'public' => [
-                'username',
-                'active'
+                'username'
             ],
             'private' => [
                 'password',
-                'account_type'
+                'account_type',
+                'active'
             ],
         ],
         'peasant' => [
@@ -105,20 +105,6 @@ class UserConstants
                     1 => 'yes',
                     2 => 'social',
                     3 => 'none'
-                ],
-                'province' => [
-                    1 => 'drenthe',
-                    2 => 'flevoland',
-                    3 => 'friesland',
-                    4 => 'gelderland',
-                    5 => 'groningen',
-                    6 => 'limburg',
-                    7 => 'noord_brabant',
-                    8 => 'noord_holland',
-                    9 => 'overijseel',
-                    10 => 'utrecht',
-                    11 => 'zeeland',
-                    12 => 'zuid_holland'
                 ]
             ],
             'private' => [
@@ -162,6 +148,10 @@ class UserConstants
                 'dob',
                 'city',
                 'country'
+            ],
+            'private' => [
+                'lat',
+                'lng'
             ]
         ]
     ];
@@ -1702,14 +1692,28 @@ class UserConstants
      */
     public static function userTableFields(string $userType = 'bot', string $visibility = 'public')
     {
+        $visibilities = ['public', 'private'];
+
         $result = [];
 
-        if (isset(self::$userTableFields['common'][$visibility])) {
-            $result = array_merge($result, self::$userTableFields['common'][$visibility]);
-        }
+        if ($visibility == 'all') {
+            foreach ($visibilities as $v) {
+                if (isset(self::$userTableFields['common'][$v])) {
+                    $result = array_merge($result, self::$userTableFields['common'][$v]);
+                }
 
-        if (isset(self::$userTableFields[$userType][$visibility])) {
-            $result = array_merge($result, self::$userTableFields[$userType][$visibility]);
+                if (isset(self::$userTableFields[$userType][$v])) {
+                    $result = array_merge($result, self::$userTableFields[$userType][$v]);
+                }
+            }
+        } else {
+            if (isset(self::$userTableFields['common'][$visibility])) {
+                $result = array_merge($result, self::$userTableFields['common'][$visibility]);
+            }
+
+            if (isset(self::$userTableFields[$userType][$visibility])) {
+                $result = array_merge($result, self::$userTableFields[$userType][$visibility]);
+            }
         }
 
         return (empty($result)) ? null : $result;
@@ -1722,14 +1726,29 @@ class UserConstants
      */
     public static function textFields(string $userType = 'bot', string $visibility = 'public')
     {
+        $visibilities = ['public', 'private'];
+
         $result = [];
 
-        if (isset(self::$textFields['common'][$visibility])) {
-            $result = array_merge($result, self::$textFields['common'][$visibility]);
-        }
+        if ($visibility == 'all') {
+            foreach ($visibilities as $v) {
+                if (isset(self::$textFields['common'][$v])) {
+                    $result = array_merge($result, self::$textFields['common'][$v]);
+                }
 
-        if (isset(self::$textFields[$userType][$visibility])) {
-            $result = array_merge($result, self::$textFields[$userType][$visibility]);
+                if (isset(self::$textFields[$userType][$v])) {
+                    $result = array_merge($result, self::$textFields[$userType][$v]);
+                }
+
+            }
+        } else {
+            if (isset(self::$textFields['common'][$visibility])) {
+                $result = array_merge($result, self::$textFields['common'][$visibility]);
+            }
+
+            if (isset(self::$textFields[$userType][$visibility])) {
+                $result = array_merge($result, self::$textFields[$userType][$visibility]);
+            }
         }
 
         return (empty($result)) ? null : $result;
@@ -1737,14 +1756,28 @@ class UserConstants
 
     public static function textInputs(string $userType = 'bot', string $visibility = 'public')
     {
+        $visibilities = ['public', 'private'];
+
         $result = [];
 
-        if (isset(self::$textInputs['common'][$visibility])) {
-            $result = array_merge($result, self::$textInputs['common'][$visibility]);
-        }
+        if ($visibility == 'all') {
+            foreach ($visibilities as $v) {
+                if (isset(self::$textInputs['common'][$v])) {
+                    $result = array_merge($result, self::$textInputs['common'][$v]);
+                }
 
-        if (isset(self::$textInputs[$userType][$visibility])) {
-            $result = array_merge($result, self::$textInputs[$userType][$visibility]);
+                if (isset(self::$textInputs[$userType][$v])) {
+                    $result = array_merge($result, self::$textInputs[$userType][$v]);
+                }
+            }
+        } else {
+            if (isset(self::$textInputs['common'][$visibility])) {
+                $result = array_merge($result, self::$textInputs['common'][$visibility]);
+            }
+
+            if (isset(self::$textInputs[$userType][$visibility])) {
+                $result = array_merge($result, self::$textInputs[$userType][$visibility]);
+            }
         }
 
         return (empty($result)) ? null : $result;
@@ -1758,10 +1791,10 @@ class UserConstants
     public static function publicFieldNames(string $userType = 'bot')
     {
         return array_merge(
-            array_keys(self::selectableFields($userType)),
-            array_keys(self::userTableFields($userType)),
-            self::textFields($userType),
-            self::textInputs($userType)
+            array_keys(self::selectableFields($userType, 'public')),
+            array_keys(self::userTableFields($userType, 'public')),
+            self::textFields($userType, 'public'),
+            self::textInputs($userType, 'public')
         );
     }
 

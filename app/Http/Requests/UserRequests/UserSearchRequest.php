@@ -34,7 +34,6 @@ class UserSearchRequest extends Request
             'query' => 'max:50',
             'username' => 'max:50|string',
             'city' => 'string|max:50',
-            'province' => 'in:'. implode(array_keys($userProfileFields['province']), ','),
             'gender' => 'in:'. implode(array_keys($userProfileFields['gender']), ','),
             'relationship_status' => 'in:'. implode(array_keys($userProfileFields['relationship_status']), ','),
             'body_type' => 'in:'. implode(array_keys($userProfileFields['body_type']), ','),

@@ -51,6 +51,7 @@ class BotManager extends UserManager
     public function updateBot(array $botData, int $botId)
     {
         $botData = $this->buildBotArrayToPersist($botData, 'update');
+
         $this->updateUser($botData, $botId);
     }
 
@@ -65,8 +66,8 @@ class BotManager extends UserManager
             return in_array(
                 $key,
                 array_merge(
-                    UserConstants::userTableFields('bot'),
-                    ['password']
+                    UserConstants::userTableFields('bot', 'public'),
+                    ['password', 'active']
                 )
             );
         });
@@ -76,8 +77,8 @@ class BotManager extends UserManager
                 $key,
                 array_merge(
                     array_keys(UserConstants::selectableFields('bot')),
-                    UserConstants::textFields('bot'),
-                    UserConstants::textInputs('bot')
+                    UserConstants::textFields('bot', 'public'),
+                    UserConstants::textInputs('bot', 'all')
                 )
             );
         });

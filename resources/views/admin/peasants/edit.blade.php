@@ -78,6 +78,18 @@
                                    name="city"
                                    value="{!! ucfirst($peasant->meta->city) !!}"
                             >
+                            <input type="text"
+                                   name="lat"
+                                   class="js-hiddenLatInput"
+                                   readonly
+                                   value="{!! $peasant->meta->lat !!}"
+                            >
+                            <input type="text"
+                                   name="lng"
+                                   class="js-hiddenLngInput"
+                                   readonly
+                                   value="{!! $peasant->meta->lng !!}"
+                            >
                             @if ($errors->has('city'))
                                 {!! $errors->first('city', '<small class="form-error">:message</small>') !!}
                             @endif
@@ -216,7 +228,7 @@
                                     {!! method_field('DELETE') !!}
                                     <button type="submit" class="btn btn-danger">Delete</button>
                                 </form>
-                                <a href="{!! route('users.set_profile_image', ['userId' => $peasant->id, 'imageId' => $image->id]) !!}" class="btn btn-success">Set profile</a>
+                                <a href="{!! route('users.set-profile-image', ['userId' => $peasant->id, 'imageId' => $image->id]) !!}" class="btn btn-success">Set profile</a>
                                 <a href="{!! route('images.toggle_visibility', ['imageId' => $image->id]) !!}" class="btn btn-default">Toggle visibility</a>
                             </td>
                         </tr>

@@ -93,7 +93,7 @@ const app = new Vue({
                 );
             } else {
                 $('.PrivateChatItem--' + openConversationIndex + ' textarea').focus();
-                $('.PrivateChatItem').removeClass('focus');
+                $('.PrivateChatItem').removeClass('focus');u<aa
                 $('.PrivateChatItem--' + openConversationIndex).addClass('focus');
             }
         },
@@ -107,7 +107,9 @@ const app = new Vue({
 /*window.jQuery = require('jquery');
 window.$ = window.jQuery;
 require('bootstrap-sass');*/
-require('jquery-autocomplete/jquery.autocomplete.js');
+//require('jquery-autocomplete/jquery.autocomplete.js');
+require("jquery-ui/ui/widgets/datepicker");
+require("jquery-ui/ui/widgets/autocomplete");
 
 $(window).ready(function() {
     //console.log($.fn.tooltip.Constructor.VERSION);
@@ -122,6 +124,37 @@ $(window).ready(function() {
         require('./modules/search');
     }
 
+    if ($('.JS--datepicker__date').length > 0) {
+        $('.datepicker__date').datepicker({
+            dateFormat: 'dd-mm-yy'
+        });
+    }
+
+    if ($('.js-autoCompleteCites').length > 0) {
+        // Auto-completes Dutch cities in bot creation view text field
+        $.getJSON(DP.baseUrl + '/api/cities/nl')
+            .done(function (response) {
+                $('.js-autoCompleteCites').autocomplete({
+                    source: response.cities
+                })
+            }).fail(function () {
+            console.log("Error: Ajax call to users/cities endpoint failed");
+        });
+    }
+
+    $('.js-autoCompleteCites').keyup(function(){
+        var geocoder =  new google.maps.Geocoder();
+
+        geocoder.geocode( { 'address': $('.js-autoCompleteCites').val() + ', nl'}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                $('.js-hiddenLatInput').val(results[0].geometry.location.lat());
+                $('.js-hiddenLngInput').val(results[0].geometry.location.lng());
+            } else {
+                $('.js-hiddenLatInput').val('');
+                $('.js-hiddenLngInput').val('');
+            }
+        });
+    });
 });
 
 

@@ -6,12 +6,19 @@
         <form method="GET" action="{{ route('users.search.form.get') }}">
             {{ csrf_field() }}
             <div class="form-group">
-                <label for="">Province</label>
-                <select name="province" class="form-control">
-                    @foreach(\UserConstants::selectableField('province') as $key => $value)
-                        <option value="{{ $key }}">{{ @trans('user_constants.province.' . $key) }}</option>
-                    @endforeach
-                </select>
+                <label for="city">{!! @trans('user_constants.city') !!}</label>
+                <input type="text"
+                       class="js-autoCompleteCites form-control"
+                       name="city"
+                >
+                <input type="hidden"
+                       name="lat"
+                       class="js-hiddenLatInput"
+                >
+                <input type="hidden"
+                       name="lng"
+                       class="js-hiddenLngInput"
+                >
             </div>
             <div class="form-group">
                 <label for="">Age</label>
