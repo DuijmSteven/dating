@@ -15,9 +15,20 @@ class UserConstants
         '46+' => '46+'
     ];
 
+    public static $radiuses = [
+        '20',
+        '40',
+        '60'
+    ];
+
     public static function getAgeGroups() {
         return self::$ageGroups;
     }
+
+    public static function getRadiuses() {
+        return self::$radiuses;
+    }
+
 
     /**
      * @return int

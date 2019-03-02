@@ -66,7 +66,7 @@ Route::group([
         ->name('users.overview');
     Route::get('/search', 'Frontend\UserSearchController@getSearch')
         ->name('users.search.get');
-    Route::get('/search-form-get', 'Frontend\UserSearchController@search')
+    Route::post('/search-form-get', 'Frontend\UserSearchController@search')
         ->name('users.search.form.get');
     Route::get('/search-results', 'Frontend\UserSearchController@getSearchResults')
         ->name('users.search.results.get');

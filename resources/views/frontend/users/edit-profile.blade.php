@@ -57,7 +57,7 @@
                             <div class="form-group">
                                 <label for="password">City</label>
                                 <input type="text"
-                                       class="js-autoCompleteCites form-control"
+                                       class="JS--autoCompleteCites form-control"
                                        name="city"
                                        value="{!! ucfirst($user->meta->city) !!}"
                                 >

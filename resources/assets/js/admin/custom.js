@@ -8,21 +8,21 @@ $(window).load(function () {
         'dateFormat': 'yy-mm-dd'
     });
 
-    if ($('.js-autoCompleteCites').length > 0) {
+    if ($('.JS--autoCompleteCites').length > 0) {
         // Auto-completes Dutch cities in bot creation view text field
         $.getJSON(DP.baseUrl + '/api/cities/nl')
             .done(function (response) {
-                $(".js-autoCompleteCites").autocomplete({
+                $(".JS--autoCompleteCites").autocomplete({
                     source: response.cities
                 })
             }).fail(function () {
             console.log("Error: Ajax call to users/cities endpoint failed");
         });
 
-        $('.js-autoCompleteCites').keyup(function(){
+        $('.JS--autoCompleteCites').keyup(function(){
             var geocoder =  new google.maps.Geocoder();
 
-            geocoder.geocode( { 'address': $('.js-autoCompleteCites').val() + ', nl'}, function(results, status) {
+            geocoder.geocode( { 'address': $('.JS--autoCompleteCites').val() + ', nl'}, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     $('.js-hiddenLatInput').val(results[0].geometry.location.lat());
                     $('.js-hiddenLngInput').val(results[0].geometry.location.lng());

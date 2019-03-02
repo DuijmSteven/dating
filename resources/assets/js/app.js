@@ -93,7 +93,8 @@ const app = new Vue({
                 );
             } else {
                 $('.PrivateChatItem--' + openConversationIndex + ' textarea').focus();
-                $('.PrivateChatItem').removeClass('focus');u<aa
+                $('.PrivateChatItem').removeClass('focus');
+                u < aa
                 $('.PrivateChatItem--' + openConversationIndex).addClass('focus');
             }
         },
@@ -111,7 +112,21 @@ require('bootstrap-sass');*/
 require("jquery-ui/ui/widgets/datepicker");
 require("jquery-ui/ui/widgets/autocomplete");
 
-$(window).ready(function() {
+function getCoordinatesAndFillInputs() {
+    var geocoder = new google.maps.Geocoder();
+
+    geocoder.geocode({'address': $('.JS--autoCompleteCites').val() + ', nl'}, function (results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            $('.js-hiddenLatInput').val(results[0].geometry.location.lat());
+            $('.js-hiddenLngInput').val(results[0].geometry.location.lng());
+        } else {
+            $('.js-hiddenLatInput').val('');
+            $('.js-hiddenLngInput').val('');
+        }
+    });
+}
+
+$(window).ready(function () {
     //console.log($.fn.tooltip.Constructor.VERSION);
 
     require('./global_helpers');
@@ -130,11 +145,11 @@ $(window).ready(function() {
         });
     }
 
-    if ($('.js-autoCompleteCites').length > 0) {
+    if ($('.JS--autoCompleteCites').length > 0) {
         // Auto-completes Dutch cities in bot creation view text field
         $.getJSON(DP.baseUrl + '/api/cities/nl')
             .done(function (response) {
-                $('.js-autoCompleteCites').autocomplete({
+                $('.JS--autoCompleteCites').autocomplete({
                     source: response.cities
                 })
             }).fail(function () {
@@ -142,19 +157,32 @@ $(window).ready(function() {
         });
     }
 
-    $('.js-autoCompleteCites').keyup(function(){
-        var geocoder =  new google.maps.Geocoder();
+    getCoordinatesAndFillInputs();
 
-        geocoder.geocode( { 'address': $('.js-autoCompleteCites').val() + ', nl'}, function(results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                $('.js-hiddenLatInput').val(results[0].geometry.location.lat());
-                $('.js-hiddenLngInput').val(results[0].geometry.location.lng());
+    $('.JS--autoCompleteCites').keyup(function () {
+        getCoordinatesAndFillInputs();
+    });
+
+
+    if ($('.JS--Search').length > 0) {
+        const $searchRadiusInput = $('.JS--radiusSearchInput');
+
+        if ($('.JS--autoCompleteCites').val().length > 0) {
+            $searchRadiusInput.removeClass('hidden');
+        }
+
+        $('.JS--autoCompleteCites').keyup(function () {
+            if ($('.JS--autoCompleteCites').val().length > 0) {
+                if ($searchRadiusInput.hasClass('hidden')) {
+                    $searchRadiusInput.removeClass('hidden');
+                }
             } else {
-                $('.js-hiddenLatInput').val('');
-                $('.js-hiddenLngInput').val('');
+                if (!$searchRadiusInput.hasClass('hidden')) {
+                    $searchRadiusInput.addClass('hidden');
+                }
             }
         });
-    });
+    }
 });
 
 
