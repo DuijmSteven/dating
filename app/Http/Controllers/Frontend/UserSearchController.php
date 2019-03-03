@@ -50,10 +50,8 @@ class UserSearchController extends FrontendController
      */
     public function search(UserSearchRequest $userSearchRequest)
     {
-
         $userSearchRequest->formatInput();
         $searchParameters = $userSearchRequest->all();
-        \Log::info($searchParameters);
 
         if (isset($searchParameters['age'])) {
             [$ageMin, $ageMax] = explode('-', $searchParameters['age']);

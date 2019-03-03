@@ -5,7 +5,7 @@
     <div class="Tile EditProfile JS--Edit-Profile">
         <div class="Tile__heading">Edit profile</div>
         <div class="Tile__body">
-            <form role="form" method="POST" action="{!! route('admin.peasants.update', ['id' => $user->id]) !!}"
+            <form role="form" class="searchForm" method="POST" action="{!! route('admin.peasants.update', ['id' => $user->id]) !!}"
                   enctype="multipart/form-data">
                 {!! csrf_field() !!}
                 {!! method_field('PUT') !!}

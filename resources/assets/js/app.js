@@ -118,8 +118,6 @@ let cityList;
 function getCoordinatesAndFillInputs() {
     var geocoder = new google.maps.Geocoder();
 
-    console.log($.inArray($('.JS--autoCompleteCites').val(), cityList));
-
     if ($.inArray($('.JS--autoCompleteCites').val(), cityList) > 0 || isUndefined(cityList)) {
         geocoder.geocode({'address': $('.JS--autoCompleteCites').val() + ', nl'}, function (results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
