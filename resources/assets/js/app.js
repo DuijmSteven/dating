@@ -3,6 +3,7 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+import isUndefined from "admin-lte/bower_components/moment/src/lib/utils/is-undefined";
 
 require('./bootstrap');
 
@@ -112,23 +113,31 @@ require('bootstrap-sass');*/
 require("jquery-ui/ui/widgets/datepicker");
 require("jquery-ui/ui/widgets/autocomplete");
 
+let cityList;
+
 function getCoordinatesAndFillInputs() {
     var geocoder = new google.maps.Geocoder();
 
-    geocoder.geocode({'address': $('.JS--autoCompleteCites').val() + ', nl'}, function (results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-            $('.js-hiddenLatInput').val(results[0].geometry.location.lat());
-            $('.js-hiddenLngInput').val(results[0].geometry.location.lng());
-        } else {
-            $('.js-hiddenLatInput').val('');
-            $('.js-hiddenLngInput').val('');
-        }
-    });
+    console.log($.inArray($('.JS--autoCompleteCites').val(), cityList));
+
+    if ($.inArray($('.JS--autoCompleteCites').val(), cityList) > 0 || isUndefined(cityList)) {
+        geocoder.geocode({'address': $('.JS--autoCompleteCites').val() + ', nl'}, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                $('.js-hiddenLatInput').val(results[0].geometry.location.lat());
+                $('.js-hiddenLngInput').val(results[0].geometry.location.lng());
+            } else {
+                $('.js-hiddenLatInput').val('');
+                $('.js-hiddenLngInput').val('');
+            }
+        });
+    }
+    else {
+        $('.js-hiddenLatInput').val('');
+        $('.js-hiddenLngInput').val('');
+    }
 }
 
 $(window).ready(function () {
-    //console.log($.fn.tooltip.Constructor.VERSION);
-
     require('./global_helpers');
 
     if ($('.Shoutbox').length > 0) {
@@ -149,6 +158,8 @@ $(window).ready(function () {
         // Auto-completes Dutch cities in bot creation view text field
         $.getJSON(DP.baseUrl + '/api/cities/nl')
             .done(function (response) {
+                cityList = response.cities;
+
                 $('.JS--autoCompleteCites').autocomplete({
                     source: response.cities
                 })
@@ -157,12 +168,13 @@ $(window).ready(function () {
         });
     }
 
-    getCoordinatesAndFillInputs();
-
-    $('.JS--autoCompleteCites').keyup(function () {
+    if ($('.JS--Search').length > 0 || $('.JS--Edit-Profile').length > 0) {
         getCoordinatesAndFillInputs();
-    });
 
+        $('.JS--autoCompleteCites').keyup(function () {
+            getCoordinatesAndFillInputs();
+        });
+    }
 
     if ($('.JS--Search').length > 0) {
         const $searchRadiusInput = $('.JS--radiusSearchInput');

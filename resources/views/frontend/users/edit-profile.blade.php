@@ -2,7 +2,7 @@
 
 
 @section('content')
-    <div class="Tile EditProfile">
+    <div class="Tile EditProfile JS--Edit-Profile">
         <div class="Tile__heading">Edit profile</div>
         <div class="Tile__body">
             <form role="form" method="POST" action="{!! route('admin.peasants.update', ['id' => $user->id]) !!}"
@@ -62,11 +62,11 @@
                                        value="{!! ucfirst($user->meta->city) !!}"
                                 >
                                 <input type="hidden"
-                                       name="latitude"
+                                       name="lat"
                                        class="js-hiddenLatInput"
                                 >
                                 <input type="hidden"
-                                       name="longitude"
+                                       name="lng"
                                        class="js-hiddenLngInput"
                                 >
                                 @if ($errors->has('city'))
