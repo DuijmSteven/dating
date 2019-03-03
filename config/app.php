@@ -189,6 +189,7 @@ return [
         TPWeb\TargetPay\TargetPayServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
         Bogardo\Mailgun\MailgunServiceProvider::class,
+        Cornford\Googlmapper\MapperServiceProvider::class,
 
         /*
          * Ours
@@ -260,6 +261,7 @@ return [
         'Pusher' => Pusher\Pusher::class,
         'Broadcast' => Illuminate\Support\Facades\Broadcast::class,
         'Mailgun' => Bogardo\Mailgun\Facades\Mailgun::class,
+        'Mapper' => Cornford\Googlmapper\Facades\MapperFacade::class,
     ],
 
 ];

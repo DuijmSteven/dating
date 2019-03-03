@@ -3,6 +3,7 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+import isUndefined from "admin-lte/bower_components/moment/src/lib/utils/is-undefined";
 
 require('./bootstrap');
 
@@ -94,6 +95,7 @@ const app = new Vue({
             } else {
                 $('.PrivateChatItem--' + openConversationIndex + ' textarea').focus();
                 $('.PrivateChatItem').removeClass('focus');
+                u < aa
                 $('.PrivateChatItem--' + openConversationIndex).addClass('focus');
             }
         },
@@ -107,11 +109,33 @@ const app = new Vue({
 /*window.jQuery = require('jquery');
 window.$ = window.jQuery;
 require('bootstrap-sass');*/
-require('jquery-autocomplete/jquery.autocomplete.js');
+//require('jquery-autocomplete/jquery.autocomplete.js');
+require("jquery-ui/ui/widgets/datepicker");
+require("jquery-ui/ui/widgets/autocomplete");
 
-$(window).ready(function() {
-    //console.log($.fn.tooltip.Constructor.VERSION);
+let cityList;
 
+function getCoordinatesAndFillInputs() {
+    var geocoder = new google.maps.Geocoder();
+
+    if ($.inArray($('.JS--autoCompleteCites').val(), cityList) > 0 || isUndefined(cityList)) {
+        geocoder.geocode({'address': $('.JS--autoCompleteCites').val() + ', nl'}, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                $('.js-hiddenLatInput').val(results[0].geometry.location.lat());
+                $('.js-hiddenLngInput').val(results[0].geometry.location.lng());
+            } else {
+                $('.js-hiddenLatInput').val('');
+                $('.js-hiddenLngInput').val('');
+            }
+        });
+    }
+    else {
+        $('.js-hiddenLatInput').val('');
+        $('.js-hiddenLngInput').val('');
+    }
+}
+
+$(window).ready(function () {
     require('./global_helpers');
 
     if ($('.Shoutbox').length > 0) {
@@ -122,6 +146,53 @@ $(window).ready(function() {
         require('./modules/search');
     }
 
+    if ($('.JS--datepicker__date').length > 0) {
+        $('.datepicker__date').datepicker({
+            dateFormat: 'dd-mm-yy'
+        });
+    }
+
+    if ($('.JS--autoCompleteCites').length > 0) {
+        // Auto-completes Dutch cities in bot creation view text field
+        $.getJSON(DP.baseUrl + '/api/cities/nl')
+            .done(function (response) {
+                cityList = response.cities;
+
+                $('.JS--autoCompleteCites').autocomplete({
+                    source: response.cities
+                })
+            }).fail(function () {
+            console.log("Error: Ajax call to users/cities endpoint failed");
+        });
+    }
+
+    if ($('.JS--Search').length > 0 || $('.JS--Edit-Profile').length > 0) {
+        getCoordinatesAndFillInputs();
+
+        $('.JS--autoCompleteCites').keyup(function () {
+            getCoordinatesAndFillInputs();
+        });
+    }
+
+    if ($('.JS--Search').length > 0) {
+        const $searchRadiusInput = $('.JS--radiusSearchInput');
+
+        if ($('.JS--autoCompleteCites').val().length > 0) {
+            $searchRadiusInput.removeClass('hidden');
+        }
+
+        $('.JS--autoCompleteCites').keyup(function () {
+            if ($('.JS--autoCompleteCites').val().length > 0) {
+                if ($searchRadiusInput.hasClass('hidden')) {
+                    $searchRadiusInput.removeClass('hidden');
+                }
+            } else {
+                if (!$searchRadiusInput.hasClass('hidden')) {
+                    $searchRadiusInput.addClass('hidden');
+                }
+            }
+        });
+    }
 });
 
 

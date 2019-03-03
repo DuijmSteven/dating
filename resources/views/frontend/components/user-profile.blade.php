@@ -37,10 +37,6 @@
                         <div> <strong>Age:</strong> {{ $user->meta->dob->diffInYears($carbonNow) }}</div>
                         <div> <strong>Status:</strong>
                             {{ ucfirst(str_replace('_', ' ', \UserConstants::selectableField('relationship_status', $user->roles[0]->name)[$user->meta->relationship_status])) }}
-                        </div>
-                        <div> <strong>Province:</strong>
-                            {{ ucfirst(str_replace('_', ' ', \UserConstants::selectableField('province', $user->roles[0]->name)[$user->meta->relationship_status])) }}
-                        </div>
                         <div> <strong>City:</strong>
                             {{ $user->meta->city }}
                         </div>

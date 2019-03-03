@@ -34,6 +34,10 @@ Route::get('/', 'Frontend\HomeController@index')
     ->name('home')->middleware(['auth']);
 
 
+Route::get('edit-profile', 'Frontend\UserController@showEditProfile')
+    ->name('edit-profile.get');
+
+
 Route::group([
     'prefix' => 'register',
     'middleware' => ['guest']
@@ -62,7 +66,7 @@ Route::group([
         ->name('users.overview');
     Route::get('/search', 'Frontend\UserSearchController@getSearch')
         ->name('users.search.get');
-    Route::get('/search-form-get', 'Frontend\UserSearchController@search')
+    Route::post('/search-form-get', 'Frontend\UserSearchController@search')
         ->name('users.search.form.get');
     Route::get('/search-results', 'Frontend\UserSearchController@getSearchResults')
         ->name('users.search.results.get');
@@ -71,7 +75,7 @@ Route::group([
     Route::get('/{userId}', 'Frontend\UserController@show')
         ->name('users.show');
     Route::get('{userId}/set-profile-image/{imageId}', 'UserImageController@setProfileImage')
-        ->name('users.set_profile_image');
+        ->name('users.set-profile-image');
 
     Route::group([
         'prefix' => 'favorites'

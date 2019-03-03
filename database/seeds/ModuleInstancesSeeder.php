@@ -32,15 +32,9 @@ class ModuleInstancesSeeder extends Seeder
 
         $moduleInstances = [
             [
-                'module_id' => 3,
+                'module_id' => 4,
                 'layout_part_id' => 1,
                 'view_id' => 1,
-                'priority' => 1,
-            ],
-            [
-                'module_id' => 3,
-                'layout_part_id' => 1,
-                'view_id' => 2,
                 'priority' => 1,
             ],
             [
@@ -52,21 +46,9 @@ class ModuleInstancesSeeder extends Seeder
             [
                 'module_id' => 2,
                 'layout_part_id' => 2,
-                'view_id' => 2,
+                'view_id' => 4,
                 'priority' => 1,
             ],
-            [
-                'module_id' => 1,
-                'layout_part_id' => 2,
-                'view_id' => 1,
-                'priority' => 2,
-            ],
-            [
-                'module_id' => 1,
-                'layout_part_id' => 2,
-                'view_id' => 2,
-                'priority' => 2,
-            ]
         ];
 
         foreach ($moduleInstances as $instance) {

@@ -57,8 +57,8 @@ class PeasantManager extends UserManager
             return in_array(
                 $key,
                 array_merge(
-                    UserConstants::userTableFields('peasant'),
-                    ['password']
+                    UserConstants::userTableFields('peasant', 'public'),
+                    ['password', 'active']
                 )
             );
         });
@@ -68,8 +68,8 @@ class PeasantManager extends UserManager
                 $key,
                 array_merge(
                     array_keys(UserConstants::selectableFields('peasant')),
-                    UserConstants::textFields('peasant'),
-                    UserConstants::textInputs('peasant')
+                    UserConstants::textFields('peasant', 'public'),
+                    UserConstants::textInputs('peasant', 'all')
                 )
             );
         });

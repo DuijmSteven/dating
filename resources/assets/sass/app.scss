@@ -5,12 +5,18 @@
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
-//Jquery Autocomplete
+// Jquery Autocomplete
 @import "node_modules/jquery-autocomplete/jquery.autocomplete";
+
+// Jquery UI theme && datepicker
+@import "node_modules/jquery-ui/themes/base/theme";
+@import "node_modules/jquery-ui/themes/base/datepicker";
+@import "node_modules/jquery-ui/themes/base/autocomplete";
 
 @import "scaffolding";
 @import "navbar";
 @import "forms";
+@import "pagination";
 @import "footer";
 
 // Components
@@ -23,10 +29,13 @@
 @import "components/private-chat-manager";
 @import "components/private-chat-item";
 
-//Modules
+// Modules
 @import "modules/online-users";
 @import "modules/user-account";
 @import "modules/shoutbox";
 @import "modules/search";
+
+// Views
+@import "views/edit-profile";
 
 @import "vue-apps/private-chat/main";

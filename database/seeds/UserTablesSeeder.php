@@ -14,6 +14,49 @@ class UserTablesSeeder extends Seeder
 {
     private $faker;
 
+    private $citiesWithCoordinates = [
+        [
+            'name' => 'Amsterdam',
+            'lat' => 52.367984300000000,
+            'lng' => 4.903561399999944
+        ],
+        [
+            'name'=> 'Venlo',
+            'lat' => 51.370374800000000,
+            'lng' => 6.172403099999997
+        ],
+        [
+            'name' => 'Den Haag',
+            'lat' => 52.070538000000000,
+            'lng' => 4.319340000000000
+        ],
+        [
+            'name' => 'Rotterdam',
+            'lat' => 51.928824000000000,
+            'lng' => 4.478083000000000
+        ],
+        [
+            'name' => 'Eindhoven',
+            'lat' => 51.441717,
+            'lng' => 5.477084
+        ],
+        [
+            'name' => 'Leiden',
+            'lat' => 52.160259,
+            'lng' => 4.495118
+        ],
+        [
+            'name' => 'Groningen',
+            'lat' => 53.217584,
+            'lng' => 6.565175
+        ],
+        [
+            'name' => 'Utrecht',
+            'lat' => 52.088694,
+            'lng' => 5.121296
+        ],
+    ];
+
     /**
      * UserTablesSeeder constructor.
      * @param Faker $faker
@@ -44,9 +87,14 @@ class UserTablesSeeder extends Seeder
             'password' => Hash::make('12qwaszx')
         ]);
 
+        $randomCityWithCoordinates = $this->citiesWithCoordinates[rand(0, count($this->citiesWithCoordinates) - 1)];
+
         $adminUserMetaInstance = $createdAdmin->meta()->save(factory(App\UserMeta::class)->make([
             'user_id' => $createdAdmin->id,
             'gender' => 1,
+            'city' => $randomCityWithCoordinates['name'],
+            'lat' => $randomCityWithCoordinates['lat'],
+            'lng' => $randomCityWithCoordinates['lng']
         ]));
 
         $adminUserRoleInstance = new \App\RoleUser([
@@ -54,6 +102,7 @@ class UserTablesSeeder extends Seeder
             'role_id' => 1
         ]);
         $adminUserRoleInstance->save();
+
 
         /* -- Create peasants and bots for all genders -- */
         foreach (['peasant', 'bot'] as $role) {
@@ -89,12 +138,17 @@ class UserTablesSeeder extends Seeder
                     $createdUser = factory(App\User::class)->create([
                         'account_type' => $accountType,
                         'active' => $active,
-                        'deactivated_at' => $deactivatedAt
+                        'deactivated_at' => $deactivatedAt,
                     ]);
+
+                    $randomCityWithCoordinates = $this->citiesWithCoordinates[rand(0, count($this->citiesWithCoordinates) - 1)];
 
                     $createdUser->meta()->save(factory(App\UserMeta::class)->make([
                         'user_id' => $createdUser->id,
-                        'gender' => $key
+                        'gender' => $key,
+                        'city' => $randomCityWithCoordinates['name'],
+                        'lat' => $randomCityWithCoordinates['lat'],
+                        'lng' => $randomCityWithCoordinates['lng']
                     ]));
 
                     if ($role == 'peasant') {

@@ -25,6 +25,8 @@ class UserMeta extends Model
         'looking_for_gender',
         'relationship_status',
         'city',
+        'lat',
+        'lng',
         'country',
         'height',
         'body_type',
@@ -35,7 +37,6 @@ class UserMeta extends Model
         'country',
         'about_me',
         'looking_for',
-        'province',
         'created_at',
         'updated_at'
     ];

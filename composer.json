@@ -19,7 +19,8 @@
         "pusher/pusher-php-server": "^3.0",
         "bogardo/mailgun": "^5.0",
         "guzzlehttp/guzzle": "^6.3",
-        "php-http/guzzle6-adapter": "^1.1"
+        "php-http/guzzle6-adapter": "^1.1",
+        "cornford/googlmapper": "2.*"
     },
     "require-dev": {
         "mockery/mockery": "0.9.*",

@@ -35,7 +35,7 @@ class CreateLayoutPartViewTable extends Migration
                 'layout_part_id' => 2
             ],
             [
-                'view_id' => 2,
+                'view_id' => 4,
                 'layout_part_id' => 2
             ]
         ]);

@@ -38,12 +38,6 @@ class UserController extends FrontendController
      */
     public function index()
     {
-        /*dd($this->user->with(['meta', 'roles'])->whereHas('roles', function ($query) {
-            $query->where('name', 'peasant');
-            $query->orWhere('name', 'bot');
-        })->paginate(15));*/
-
-
         $viewData = [
             'users' => $this->user->with(['meta', 'roles'])->whereHas('roles', function ($query) {
                 $query->where('name', 'peasant');
@@ -109,6 +103,25 @@ class UserController extends FrontendController
                 [
                     'title' => 'Online users',
                     'hasSidebar' => true
+                ]
+            )
+        );
+    }
+
+    public function showEditProfile()
+    {
+        $viewData = [
+            'user' => $this->authenticatedUser,
+            'pageHeading' => 'Edit profile',
+            'carbonNow' => Carbon::now()
+        ];
+
+        return view(
+            'frontend.users.edit-profile',
+            array_merge(
+                $viewData,
+                [
+                    'title' => 'Edit Profile - '. $this->authenticatedUser->username
                 ]
             )
         );

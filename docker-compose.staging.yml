@@ -71,6 +71,14 @@ services:
     depends_on:
       - dating-mysql
 
+  dating-redis:
+    container_name: dating-redis
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - dating-network
+
 #Docker Networks
 networks:
   dating-network:

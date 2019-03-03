@@ -74,9 +74,21 @@
                         <div class="form-group">
                             <label for="password">City</label>
                             <input type="text"
-                                   class="js-autoCompleteCites form-control"
+                                   class="JS--autoCompleteCites form-control"
                                    name="city"
                                    value="{!! ucfirst($bot->meta->city) !!}"
+                            >
+                            <input type="text"
+                                   name="lat"
+                                   class="js-hiddenLatInput"
+                                   readonly
+                                   value="{!! $bot->meta->lat !!}"
+                            >
+                            <input type="text"
+                                   name="lng"
+                                   class="js-hiddenLngInput"
+                                   readonly
+                                   value="{!! $bot->meta->lng !!}"
                             >
                             @if ($errors->has('city'))
                                 {!! $errors->first('city', '<small class="form-error">:message</small>') !!}
@@ -216,7 +228,7 @@
                                     {!! method_field('DELETE') !!}
                                     <button type="submit" class="btn btn-danger">Delete</button>
                                 </form>
-                                <a href="{!! route('users.set_profile_image', ['userId' => $bot->id, 'imageId' => $image->id]) !!}" class="btn btn-success">Set profile</a>
+                                <a href="{!! route('users.set-profile-image', ['userId' => $bot->id, 'imageId' => $image->id]) !!}" class="btn btn-success">Set profile</a>
                                 <a href="{!! route('images.toggle_visibility', ['imageId' => $image->id]) !!}" class="btn btn-default">Toggle visibility</a>
                             </td>
                         </tr>
