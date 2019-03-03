@@ -64,20 +64,6 @@ return [
         2 => 'Social',
         3 => 'None'
     ],
-    'province' => [
-        1 => 'Drenthe',
-        2 => 'Flevoland',
-        3 => 'Friesland',
-        4 => 'Gelderland',
-        5 => 'Groningen',
-        6 => 'Limburg',
-        7 => 'Noord-Brabant',
-        8 => 'Noord-Holland',
-        9 => 'Overijssel',
-        10 => 'Utrecht',
-        11 => 'Zeeland',
-        12 => 'Zuid-Holland'
-    ],
     'about_me' => 'About me',
     'looking_for' => 'Looking for',
     'dob' => 'Date of birth',

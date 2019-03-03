@@ -22,7 +22,8 @@ class CreateUserMetaTable extends Migration
             $table->tinyInteger('looking_for_gender')->nullable();
             $table->tinyInteger('relationship_status')->nullable();
             $table->string('city', 50)->nullable();
-            $table->tinyInteger('province')->nullable();
+            $table->float('lat', 20, 15)->nullable();
+            $table->float('lng', 20, 15)->nullable();
             $table->tinyInteger('height')->nullable();
             $table->tinyInteger('body_type')->nullable();
             $table->tinyInteger('eye_color')->nullable();

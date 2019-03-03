@@ -39,17 +39,20 @@ class PeasantUpdateRequest extends Request
             'hair_color' => 'in:'. implode(array_keys($userProfileFields['hair_color']), ','),
             'smoking_habits' => 'in:'. implode(array_keys($userProfileFields['drinking_habits']), ','),
             'drinking_habits' => 'in:'. implode(array_keys($userProfileFields['smoking_habits']), ','),
-            'province' => 'in:'. implode(array_keys($userProfileFields['province']), ','),
             'city' => 'string|min:3|max:40',
+            'lat' => 'required_with:city|numeric',
+            'lng' => 'required_with:city|numeric',
             'about_me' => 'string|max:1000',
             'looking_for' => 'string|max:1000'
         ];
 
-        $imageCount = count($this->input('user_images')) - 1;
-        foreach (range(0, $imageCount) as $index) {
-            $rules['user_images.' . $index] = 'image|max:4000';
-        }
+        if (!is_null($this->files->get('user_images'))) {
 
+            $imageCount = count($this->files->get('user_images')) - 1;
+            foreach (range(0, $imageCount) as $index) {
+                $rules['user_images.' . $index] = 'image|max:4000';
+            }
+        }
         return $rules;
     }
 }

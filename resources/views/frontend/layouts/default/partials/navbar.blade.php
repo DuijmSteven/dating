@@ -36,9 +36,6 @@
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
-                    <li class="{!! str_contains(\Request::route()->getName(), 'users.search') ? 'active' : '' !!}">
-                        <a href="{{ route('users.search.get') }}">Search for users</a>
-                    </li>
                     <li>
                         <a href="{!!  route('logout.post') !!}"
                            onclick="event.preventDefault();

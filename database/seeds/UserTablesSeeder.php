@@ -55,6 +55,7 @@ class UserTablesSeeder extends Seeder
         ]);
         $adminUserRoleInstance->save();
 
+
         /* -- Create peasants and bots for all genders -- */
         foreach (['peasant', 'bot'] as $role) {
             foreach (UserConstants::selectableField('gender') as $key => $value) {
@@ -89,12 +90,15 @@ class UserTablesSeeder extends Seeder
                     $createdUser = factory(App\User::class)->create([
                         'account_type' => $accountType,
                         'active' => $active,
-                        'deactivated_at' => $deactivatedAt
+                        'deactivated_at' => $deactivatedAt,
                     ]);
 
                     $createdUser->meta()->save(factory(App\UserMeta::class)->make([
                         'user_id' => $createdUser->id,
-                        'gender' => $key
+                        'gender' => $key,
+                        'city' => 'Amsterdam',
+                        'lat' => 52.3679843,
+                        'lng' => 4.903561399999944
                     ]));
 
                     if ($role == 'peasant') {

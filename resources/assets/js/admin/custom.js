@@ -8,15 +8,29 @@ $(window).load(function () {
         'dateFormat': 'yy-mm-dd'
     });
 
-    if ($('.js-autoCompleteCites').length > 0) {
+    if ($('.JS--autoCompleteCites').length > 0) {
         // Auto-completes Dutch cities in bot creation view text field
         $.getJSON(DP.baseUrl + '/api/cities/nl')
             .done(function (response) {
-                $(".js-autoCompleteCites").autocomplete({
+                $(".JS--autoCompleteCites").autocomplete({
                     source: response.cities
                 })
             }).fail(function () {
             console.log("Error: Ajax call to users/cities endpoint failed");
+        });
+
+        $('.JS--autoCompleteCites').keyup(function(){
+            var geocoder =  new google.maps.Geocoder();
+
+            geocoder.geocode( { 'address': $('.JS--autoCompleteCites').val() + ', nl'}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    $('.js-hiddenLatInput').val(results[0].geometry.location.lat());
+                    $('.js-hiddenLngInput').val(results[0].geometry.location.lng());
+                } else {
+                    $('.js-hiddenLatInput').val('');
+                    $('.js-hiddenLngInput').val('');
+                }
+            });
         });
     }
 
@@ -68,7 +82,6 @@ $(window).load(function () {
             $('#js-botUsername').text($(this).closest('li').data('bot-username'));
             $('#js-botAge').text($(this).closest('li').data('bot-age'));
             $('#js-botStatus').text($(this).closest('li').data('bot-status'));
-            $('#js-botProvince').text($(this).closest('li').data('bot-province'));
             $('#js-botCity').text($(this).closest('li').data('bot-city'));
             $('#js-botHeight').text($(this).closest('li').data('bot-height'));
             $('#js-botBodyType').text($(this).closest('li').data('bot-body-type'));
