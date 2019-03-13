@@ -67,9 +67,7 @@ const app = new Vue({
                     '/' +
                     parseInt(userBId)
                 ).then(
-                    response => {
-                        console.log(response);
-                    }
+                    response => {}
                 );
             }
 
@@ -95,7 +93,6 @@ const app = new Vue({
             } else {
                 $('.PrivateChatItem--' + openConversationIndex + ' textarea').focus();
                 $('.PrivateChatItem').removeClass('focus');
-                u < aa
                 $('.PrivateChatItem--' + openConversationIndex).addClass('focus');
             }
         },
@@ -106,10 +103,6 @@ const app = new Vue({
  * Other Javascript
  */
 
-/*window.jQuery = require('jquery');
-window.$ = window.jQuery;
-require('bootstrap-sass');*/
-//require('jquery-autocomplete/jquery.autocomplete.js');
 require("jquery-ui/ui/widgets/datepicker");
 require("jquery-ui/ui/widgets/autocomplete");
 

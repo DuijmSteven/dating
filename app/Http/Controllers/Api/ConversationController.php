@@ -62,6 +62,31 @@ class ConversationController
         }
     }
 
+    public function persistConversationManagerState(int $userId, string $state)
+    {
+        try {
+            $key = 'users.conversationManagerState.' . $userId;
+            Redis::set($key, $state);
+
+            return JsonResponse::create($state, 200);
+        } catch (\Exception $exception) {
+            return JsonResponse::create($exception->getMessage(), 500);
+        }
+    }
+
+
+    public function getConversationManagerState(int $userId)
+    {
+        try {
+            $key = 'users.conversationManagerState.' . $userId;
+
+            return JsonResponse::create(Redis::get($key), 200);
+        } catch (\Exception $exception) {
+            return JsonResponse::create($exception->getMessage(), 500);
+        }
+    }
+
+
     public function persistConversationPartnerId(int $userId, int $partnerId)
     {
         try {
