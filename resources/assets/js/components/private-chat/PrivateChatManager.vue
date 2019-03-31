@@ -69,15 +69,32 @@
             return {
                 conversations: [],
                 currentUser: undefined,
-                isMaximized: false
+                isMaximized: true
             };
         },
 
         created() {
             this.fetchUserConversations();
+            this.fetchConversationManagerStatus();
         },
 
         methods: {
+            fetchConversationManagerStatus: function () {
+                axios.get('/api/conversations/conversation-manager-state/' + parseInt(DP.authenticatedUser.id)).then(
+                    response => {
+                        this.conversationManagerState = response;
+
+                        this.isMaximized = this.conversationManagerState.data === '1';
+
+                        if (this.isMaximized) {
+                            $('#PrivateChatManager__body').css('display', 'block');
+                        } else {
+                            $('#PrivateChatManager__body').css('display', 'none');
+                        }
+                    }
+                );
+            },
+
             fetchUserConversations: function () {
                 axios.get('/api/conversations/' + this.user.id).then(response => {
                     this.conversations = response.data;
@@ -92,10 +109,8 @@
                         }
                     });
                 }).catch(function (error) {
-                    console.log(error);
                 });
             },
-
             toggle: function () {
                 $('#PrivateChatManager__body').slideToggle('fast');
                 this.isMaximized = !this.isMaximized;
@@ -105,6 +120,16 @@
                 } else {
                     $('body').css('overflow-y', 'scroll');
                 }
+
+                let managerState = this.isMaximized ? 1 : 0;
+
+                axios.get(
+                    '/api/conversations/conversation-manager-state/' +
+                    parseInt(DP.authenticatedUser.id) + '/' +
+                    managerState
+                ).then(
+                    response => {}
+                );
             }
         },
         mounted() {

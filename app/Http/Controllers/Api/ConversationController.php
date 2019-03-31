@@ -62,11 +62,40 @@ class ConversationController
         }
     }
 
-    public function persistConversationPartnerId(int $userId, int $partnerId)
+    public function persistConversationManagerState(int $userId, string $state)
+    {
+        try {
+            $key = 'users.conversationManagerState.' . $userId;
+            Redis::set($key, $state);
+
+            return JsonResponse::create($state, 200);
+        } catch (\Exception $exception) {
+            return JsonResponse::create($exception->getMessage(), 500);
+        }
+    }
+
+
+    public function getConversationManagerState(int $userId)
+    {
+        try {
+            $key = 'users.conversationManagerState.' . $userId;
+
+            return JsonResponse::create(Redis::get($key), 200);
+        } catch (\Exception $exception) {
+            return JsonResponse::create($exception->getMessage(), 500);
+        }
+    }
+
+
+    public function persistConversationPartnerId(int $userId, int $partnerId, string $state)
     {
         try {
             $key = 'users.conversationPartnerIds.' . $userId;
-            Redis::sadd($key, $partnerId);
+
+            Redis::srem($key, $partnerId . ':1');
+            Redis::srem($key, $partnerId . ':0');
+
+            Redis::sadd($key, $partnerId . ':' . $state);
 
             return JsonResponse::create(Redis::smembers('users.conversationPartnerIds.' . $userId), 200);
         } catch (\Exception $exception) {
@@ -89,7 +118,9 @@ class ConversationController
     {
         try {
             $key = 'users.conversationPartnerIds.' . $userId;
-            Redis::srem($key, $partnerId);
+
+            Redis::srem($key, $partnerId . ':1');
+            Redis::srem($key, $partnerId . ':0');
 
             return JsonResponse::create(Redis::smembers('users.conversationPartnerIds.' . $userId), 200);
         } catch (\Exception $exception) {

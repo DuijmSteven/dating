@@ -38,21 +38,27 @@ const app = new Vue({
     props: [],
 
     data: {
-        conversationPartners: []
+        conversationPartners: [],
+        conversationStatePerPartnerId: {}
     },
 
     created() {
         axios.get('/api/conversations/conversation-partner-ids/' + parseInt(DP.authenticatedUser.id)).then(
             response => {
                 for (let key in response.data) {
-                    this.addChat(DP.authenticatedUser.id, response.data[key]);
+                    let split = response.data[key].split(':');
+
+                    this.addChat(DP.authenticatedUser.id, split[0], split[1]);
+
+                    this.conversationStatePerPartnerId[split[0]] = split[1];
+
                 }
             }
         );
     },
 
     methods: {
-        addChat: function (currentUserId, userBId) {
+        addChat: function (currentUserId, userBId, state = '1') {
             if (this.conversationPartners.length > 4) {
                 return false;
             }
@@ -65,11 +71,11 @@ const app = new Vue({
                     '/api/conversations/conversation-partner-ids/add/' +
                     parseInt(DP.authenticatedUser.id) +
                     '/' +
-                    parseInt(userBId)
+                    parseInt(userBId) +
+                    '/' +
+                    state
                 ).then(
-                    response => {
-                        console.log(response);
-                    }
+                    response => {}
                 );
             }
 
@@ -83,19 +89,28 @@ const app = new Vue({
             if (!isConversationOpen) {
                 axios.get('/api/users/' + userBId).then(
                     response => {
-                        this.conversationPartners.push(response.data);
+                        let partnerData = response.data;
+                        partnerData.chatState = state;
+
+                        this.conversationPartners.push(partnerData);
 
                         this.$nextTick(() => {
                             $('.PrivateChatItem--' + (this.conversationPartners.length - 1) + ' textarea').focus();
                             $('.PrivateChatItem').removeClass('focus');
                             $('.PrivateChatItem--' + (this.conversationPartners.length - 1)).addClass('focus');
+
+
+                            if (state === '1') {
+                                $('#PrivateChatItem__body--' + (this.conversationPartners.length - 1)).css('display', 'block');
+                            } else {
+                                $('#PrivateChatItem__body--' + (this.conversationPartners.length - 1)).css('display', 'none');
+                            }
                         });
                     }
                 );
             } else {
                 $('.PrivateChatItem--' + openConversationIndex + ' textarea').focus();
                 $('.PrivateChatItem').removeClass('focus');
-                u < aa
                 $('.PrivateChatItem--' + openConversationIndex).addClass('focus');
             }
         },
@@ -106,10 +121,6 @@ const app = new Vue({
  * Other Javascript
  */
 
-/*window.jQuery = require('jquery');
-window.$ = window.jQuery;
-require('bootstrap-sass');*/
-//require('jquery-autocomplete/jquery.autocomplete.js');
 require("jquery-ui/ui/widgets/datepicker");
 require("jquery-ui/ui/widgets/autocomplete");
 
@@ -162,7 +173,6 @@ $(window).ready(function () {
                     source: response.cities
                 })
             }).fail(function () {
-            console.log("Error: Ajax call to users/cities endpoint failed");
         });
     }
 

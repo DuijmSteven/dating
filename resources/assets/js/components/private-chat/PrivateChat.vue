@@ -69,6 +69,9 @@
         },
 
         created() {
+            this.statusClass = this.partner.chatState === '1' ? 'maximized' : 'minimized';
+            this.isMaximized = this.partner.chatState === '1';
+
             this.userAId = this.user.id;
             this.userBId = this.partner.id;
 
@@ -86,7 +89,6 @@
 
             $('.PrivateChatItem__body').hover(
                 function () {
-                    console.log('body');
                     bodySelector.css('position', 'fixed');
                     bodySelector.css('overflow-y', 'scroll');
                 },
@@ -179,7 +181,6 @@
 
                     this.fetchUserConversations();
                 }).catch((error) => {
-                    console.log(error);
                 });
             },
 
@@ -197,9 +198,7 @@
                     '/' +
                     parseInt(partner.id)
                 ).then(
-                    response => {
-                        console.log(response);
-                    }
+                    response => {}
                 );
             },
 
@@ -216,6 +215,19 @@
                 }
 
                 this.statusClass = this.isMaximized ? 'maximized' : 'minimized';
+
+                let chatState = this.isMaximized ? '1' : '0';
+
+                axios.get(
+                    '/api/conversations/conversation-partner-ids/add/' +
+                    parseInt(DP.authenticatedUser.id) +
+                    '/' +
+                    parseInt(this.userBId) +
+                    '/' +
+                    chatState
+                ).then(
+                    response => {}
+                );
             },
 
             fetchUserConversations() {
