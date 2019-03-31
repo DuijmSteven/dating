@@ -30,7 +30,7 @@ Route::group([
     Route::get('conversation-partner-ids/{userId}', 'Api\ConversationController@getOpenConversationPartners')
         ->name('conversations.get-user-conversation-partner-ids');
 
-    Route::get('conversation-partner-ids/add/{userId}/{partnerId}', 'Api\ConversationController@persistConversationPartnerId')
+    Route::get('conversation-partner-ids/add/{userId}/{partnerId}/{state}', 'Api\ConversationController@persistConversationPartnerId')
         ->name('conversations.add-user-conversation-partner-ids');
 
     Route::get('conversation-partner-ids/remove/{userId}/{partnerId}', 'Api\ConversationController@removeConversationPartnerId')

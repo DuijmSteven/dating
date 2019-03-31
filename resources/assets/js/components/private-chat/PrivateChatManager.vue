@@ -109,7 +109,6 @@
                         }
                     });
                 }).catch(function (error) {
-                    console.log(error);
                 });
             },
             toggle: function () {

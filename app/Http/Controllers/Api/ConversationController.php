@@ -87,11 +87,15 @@ class ConversationController
     }
 
 
-    public function persistConversationPartnerId(int $userId, int $partnerId)
+    public function persistConversationPartnerId(int $userId, int $partnerId, string $state)
     {
         try {
             $key = 'users.conversationPartnerIds.' . $userId;
-            Redis::sadd($key, $partnerId);
+
+            Redis::srem($key, $partnerId . ':1');
+            Redis::srem($key, $partnerId . ':0');
+
+            Redis::sadd($key, $partnerId . ':' . $state);
 
             return JsonResponse::create(Redis::smembers('users.conversationPartnerIds.' . $userId), 200);
         } catch (\Exception $exception) {
@@ -114,7 +118,9 @@ class ConversationController
     {
         try {
             $key = 'users.conversationPartnerIds.' . $userId;
-            Redis::srem($key, $partnerId);
+
+            Redis::srem($key, $partnerId . ':1');
+            Redis::srem($key, $partnerId . ':0');
 
             return JsonResponse::create(Redis::smembers('users.conversationPartnerIds.' . $userId), 200);
         } catch (\Exception $exception) {
