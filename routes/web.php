@@ -15,7 +15,7 @@ Auth::routes();
 
 Route::get('login', 'Auth\LoginController@showLoginForm')
     ->name('login.get')
-    ->middleware(['auth.basic']);
+    ->middleware(['guest']);
 Route::post('login', 'Auth\LoginController@login')
     ->name('login.post')
     ->middleware(['guest']);
