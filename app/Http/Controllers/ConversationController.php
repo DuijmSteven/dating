@@ -76,7 +76,7 @@ class ConversationController extends Controller
             ->latest()
             ->first();
 
-        broadcast(new MessageSent($user, $conversationMessage, $conversationMessage->getConversationId()));
+//        broadcast(new MessageSent($user, $conversationMessage, $conversationMessage->getConversationId()));
 
         //return redirect()->back()->with('alerts', $alerts);
     }
