@@ -39,25 +39,45 @@ const app = new Vue({
 
     data: {
         conversationPartners: [],
-        conversationStatePerPartnerId: {}
+        conversationStatePerPartnerId: {},
+        previousConversationPartnersResponse: undefined,
+        currentConversationPartnersResponse: undefined,
+        //conversationPartnerIds: [],
+        intervalToFetchPartners: undefined
     },
 
     created() {
-        axios.get('/api/conversations/conversation-partner-ids/' + parseInt(DP.authenticatedUser.id)).then(
-            response => {
-                for (let key in response.data) {
-                    let split = response.data[key].split(':');
+        this.getConversationPartners();
 
-                    this.addChat(DP.authenticatedUser.id, split[0], split[1]);
-
-                    this.conversationStatePerPartnerId[split[0]] = split[1];
-
-                }
-            }
-        );
+        this.intervalToFetchPartners = setInterval(() => {
+            this.getConversationPartners()
+        }, 5000);
     },
 
     methods: {
+        getConversationPartners: function () {
+            axios.get('/api/conversations/conversation-partner-ids/' + parseInt(DP.authenticatedUser.id)).then(
+                response => {
+                    this.currentConversationPartnersResponse = response;
+
+                    if (this.previousConversationPartnersResponse === undefined || this.previousConversationPartnersResponse.data !== this.currentConversationPartnersResponse.data) {
+                        for (let key in response.data) {
+                            let split = response.data[key].split(':');
+
+                            if (!this.conversationPartners.map(partner => partner.id).includes(+split[0])) {
+                                //this.conversationPartnerIds.push(split[0]);
+
+                                this.addChat(DP.authenticatedUser.id, split[0], split[1]);
+                                this.conversationStatePerPartnerId[split[0]] = split[1];
+                                //this.fetchUserAndAddToPartners(split[0], 1);
+                            }
+                        }
+
+                        this.previousConversationPartnersResponse = this.currentConversationPartnersResponse;
+                    }
+                }
+            );
+        },
         addChat: function (currentUserId, userBId, state = '1') {
             if (this.conversationPartners.length > 4) {
                 return false;
@@ -66,7 +86,7 @@ const app = new Vue({
             let isConversationOpen = false;
             let openConversationIndex;
 
-            if (this.conversationPartners.map(partner => partner.id).indexOf(userBId) === -1) {
+/*            if (this.conversationPartners.map(partner => partner.id).indexOf(userBId) === -1) {
                 axios.get(
                     '/api/conversations/conversation-partner-ids/add/' +
                     parseInt(DP.authenticatedUser.id) +
@@ -77,7 +97,7 @@ const app = new Vue({
                 ).then(
                     response => {}
                 );
-            }
+            }*/
 
             this.conversationPartners.forEach(function (partner, index) {
                 if (partner.id === userBId) {
@@ -87,33 +107,47 @@ const app = new Vue({
             });
 
             if (!isConversationOpen) {
-                axios.get('/api/users/' + userBId).then(
-                    response => {
-                        let partnerData = response.data;
-                        partnerData.chatState = state;
-
-                        this.conversationPartners.push(partnerData);
-
-                        this.$nextTick(() => {
-                            $('.PrivateChatItem--' + (this.conversationPartners.length - 1) + ' textarea').focus();
-                            $('.PrivateChatItem').removeClass('focus');
-                            $('.PrivateChatItem--' + (this.conversationPartners.length - 1)).addClass('focus');
-
-
-                            if (state === '1') {
-                                $('#PrivateChatItem__body--' + (this.conversationPartners.length - 1)).css('display', 'block');
-                            } else {
-                                $('#PrivateChatItem__body--' + (this.conversationPartners.length - 1)).css('display', 'none');
-                            }
-                        });
-                    }
-                );
+                this.fetchUserAndAddToPartners(userBId, state);
             } else {
                 $('.PrivateChatItem--' + openConversationIndex + ' textarea').focus();
                 $('.PrivateChatItem').removeClass('focus');
                 $('.PrivateChatItem--' + openConversationIndex).addClass('focus');
             }
         },
+        fetchUserAndAddToPartners: function (userBId, state) {
+            axios.get('/api/users/' + userBId).then(
+                response => {
+                    let partnerData = response.data;
+                    partnerData.chatState = state;
+
+                    this.conversationPartners.push(partnerData);
+
+                    axios.get(
+                        '/api/conversations/conversation-partner-ids/add/' +
+                        parseInt(DP.authenticatedUser.id) +
+                        '/' +
+                        parseInt(userBId) +
+                        '/' +
+                        state
+                    ).then(
+                        response => {}
+                    );
+
+                    this.$nextTick(() => {
+                        $('.PrivateChatItem--' + (this.conversationPartners.length - 1) + ' textarea').focus();
+                        $('.PrivateChatItem').removeClass('focus');
+                        $('.PrivateChatItem--' + (this.conversationPartners.length - 1)).addClass('focus');
+
+
+                        if (state === '1') {
+                            $('#PrivateChatItem__body--' + (this.conversationPartners.length - 1)).css('display', 'block');
+                        } else {
+                            $('#PrivateChatItem__body--' + (this.conversationPartners.length - 1)).css('display', 'none');
+                        }
+                    });
+                }
+            );
+        }
     }
 });
 

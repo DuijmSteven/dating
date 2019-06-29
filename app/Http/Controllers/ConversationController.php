@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\Conversations\MessageCreateRequest;
 use App\Managers\ConversationManager;
 use App\Http\Controllers\Controller;
 use App\User;
+use Redis;
 
 /**
  * Class ConversationController
@@ -50,6 +51,18 @@ class ConversationController extends Controller
         try {
             $conversationMessage = $this->conversationManager->createMessage($messageData);
 
+            $recipientId = $messageData['recipient_id'];
+            $senderId = $messageData['sender_id'];
+            $recipientConversationPartnerIds = Redis::smembers('users.conversationPartnerIds.' . $recipientId);
+
+            if (!in_array($senderId, $recipientConversationPartnerIds)) {
+                $key = 'users.conversationPartnerIds.' . $recipientId;
+
+                Redis::srem($key, $senderId . ':1');
+                Redis::srem($key, $senderId . ':0');
+                Redis::sadd($key, $senderId . ':' . 1);
+            }
+
             $alerts[] = [
                 'type' => 'success',
                 'message' => 'The message was sent successfully'
@@ -75,10 +88,6 @@ class ConversationController extends Controller
             })
             ->latest()
             ->first();
-
-//        broadcast(new MessageSent($user, $conversationMessage, $conversationMessage->getConversationId()));
-
-        //return redirect()->back()->with('alerts', $alerts);
     }
 
     public function conversationMessages($conversationId)

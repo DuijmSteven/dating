@@ -41,6 +41,7 @@
                 <chat-form
                         v-on:message-sent="addMessage"
                         :user="user"
+                        :index="index"
                 ></chat-form>
             </div>
         </div>
@@ -68,6 +69,7 @@
                 previousHighestMessageId: undefined,
                 currentHighestMessageId: undefined,
                 firstIteration: true,
+                intervalToFetchMessages: undefined
             };
         },
 
@@ -80,7 +82,6 @@
 
             this.fetchMessagesAndListenToChannel();
 
-
             let $body = $('body');
             if (['xs', 'sm'].includes(this.$mq)) {
                 $body.css('overflow-y', 'hidden');
@@ -90,7 +91,7 @@
 
             var bodySelector = $body;
 
-            $('.PrivateChatItem__body').hover(
+            $('.PrivateChatItem__body--' + this.index).hover(
                 function () {
                     bodySelector.css('position', 'fixed');
                     bodySelector.css('overflow-y', 'scroll');
@@ -100,7 +101,6 @@
                     bodySelector.css('overflow-y', 'auto');
                 }
             );
-
         },
 
         updated() {
@@ -111,7 +111,7 @@
             fetchMessagesAndListenToChannel() {
                 this.fetchMessagesAndPopulate();
 
-                setInterval(() => {
+                this.intervalToFetchMessages = setInterval(() => {
                     this.fetchMessagesAndPopulate();
                 }, 5000);
             },
@@ -124,23 +124,21 @@
                         this.currentHighestMessageId = this.conversation.messages[this.conversation.messages.length - 1].id;
 
                         if (this.previousHighestMessageId === undefined || this.previousHighestMessageId !== this.currentHighestMessageId) {
+                            this.messages = [];
+
                             this.conversation.messages.forEach(message => {
-                                if (this.previousHighestMessageId === undefined || message.id > this.previousHighestMessageId) {
-                                    this.messages.push({
-                                        id: message.id,
-                                        text: message.body,
-                                        user: message.sender.id === this.user.id ? 'user-a' : 'user-b',
-                                        createdAt: message.createdAtHumanReadable
-                                    });
-                                }
+                                this.messages.push({
+                                    id: message.id,
+                                    text: message.body,
+                                    user: message.sender.id === this.user.id ? 'user-a' : 'user-b',
+                                    createdAt: message.createdAtHumanReadable
+                                });
                             });
                             this.previousHighestMessageId = this.currentHighestMessageId;
 
-                            if (
+                            if (!firstIteration &&
                                 !$('#PrivateChatItem__head--' + this.index)
                                     .hasClass('PrivateChatItem__head__notify')
-                                &&
-                                $('#PrivateChatItem__body--' + this.index).is(":hidden")
                             ) {
                                 $('#PrivateChatItem__head--' + this.index).addClass('PrivateChatItem__head__notify');
                             }
@@ -191,6 +189,8 @@
                 ).then(
                     response => {}
                 );
+
+                clearInterval(this.intervalToFetchMessages);
             },
 
             toggle() {

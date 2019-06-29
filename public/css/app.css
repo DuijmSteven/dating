@@ -10222,7 +10222,7 @@ small.form-error {
   z-index: 10;
   bottom: 0;
   right: 50px;
-  width: 300px;
+  width: 370px;
   -webkit-box-shadow: 0 0 24px rgba(0, 0, 0, 0.2);
           box-shadow: 0 0 24px rgba(0, 0, 0, 0.2);
 }
@@ -10317,7 +10317,7 @@ small.form-error {
 }
 
 .PrivateChatManager__item__right {
-  max-width: 211px;
+  max-width: 280px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -10325,9 +10325,9 @@ small.form-error {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-flex: 4;
-      -ms-flex: 4;
-          flex: 4;
+  -webkit-box-flex: 5;
+      -ms-flex: 5;
+          flex: 5;
   margin-right: 15px;
 }
 
@@ -10470,47 +10470,47 @@ small.form-error {
 }
 
 .PrivateChatItem--0 {
-  right: 370px;
+  right: 430px;
 }
 
 .PrivateChatItem--1 {
-  right: 710px;
+  right: 770px;
 }
 
 .PrivateChatItem--2 {
-  right: 1050px;
+  right: 1110px;
 }
 
 .PrivateChatItem--3 {
-  right: 1390px;
+  right: 1450px;
 }
 
 .PrivateChatItem--4 {
-  right: 1730px;
+  right: 1790px;
 }
 
 .PrivateChatItem--5 {
-  right: 2070px;
+  right: 2130px;
 }
 
 .PrivateChatItem--6 {
-  right: 2410px;
+  right: 2470px;
 }
 
 .PrivateChatItem--7 {
-  right: 2750px;
+  right: 2810px;
 }
 
 .PrivateChatItem--8 {
-  right: 3090px;
+  right: 3150px;
 }
 
 .PrivateChatItem--9 {
-  right: 3430px;
+  right: 3490px;
 }
 
 .PrivateChatItem--10 {
-  right: 3770px;
+  right: 3830px;
 }
 
 .PrivateChatItem {

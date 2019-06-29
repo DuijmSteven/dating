@@ -1,7 +1,7 @@
 
 @mixin private-chat-list {
     @for $i from 0 through 10 {
-        .PrivateChatItem--#{$i} { right: (370 + (map_get($privateChatItem, width) + 20) * $i) + px; }
+        .PrivateChatItem--#{$i} { right: (430 + (map_get($privateChatItem, width) + 20) * $i) + px; }
     }
 }
 

@@ -3,7 +3,9 @@
         <textarea id="test123" class="PrivateChatItem__textarea"
                   placeholder="Type your message here..."
                   v-model.trim="text"
-                  v-on:keyup.enter="sendMessage">
+                  v-on:keyup.enter="sendMessage"
+                  @focus="removeNotificationClass"
+        >
         </textarea>
         <div class="PrivateChatItem__textarea__buttons">
             <label style="margin-bottom: 0; cursor: pointer">
@@ -18,7 +20,10 @@
 
 <script>
     export default {
-        props: ['user'],
+        props: [
+            'user',
+            'index'
+        ],
 
         data() {
             return {
@@ -58,6 +63,15 @@
             },
 
             sendAttachment() {
+            },
+
+            removeNotificationClass() {
+                if (
+                    $('#PrivateChatItem__head--' + this.index)
+                        .hasClass('PrivateChatItem__head__notify')
+                ) {
+                    $('#PrivateChatItem__head--' + this.index).removeClass('PrivateChatItem__head__notify');
+                }
             }
         }
     }
