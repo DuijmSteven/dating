@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Redis;
 
-class FavoriteController extends Controller
+class   FavoriteController extends Controller
 {
     /**
      * @param int $userId

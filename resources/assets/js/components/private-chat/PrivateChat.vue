@@ -41,6 +41,7 @@
                 <chat-form
                         v-on:message-sent="addMessage"
                         :user="user"
+                        :index="index"
                 ></chat-form>
             </div>
         </div>
@@ -64,7 +65,11 @@
                 userBId: undefined,
                 highestConversationId: undefined,
                 isMaximized: true,
-                statusClass: 'maximized'
+                statusClass: 'maximized',
+                previousHighestMessageId: undefined,
+                currentHighestMessageId: undefined,
+                firstIteration: true,
+                intervalToFetchMessages: undefined
             };
         },
 
@@ -77,7 +82,6 @@
 
             this.fetchMessagesAndListenToChannel();
 
-
             let $body = $('body');
             if (['xs', 'sm'].includes(this.$mq)) {
                 $body.css('overflow-y', 'hidden');
@@ -87,7 +91,7 @@
 
             var bodySelector = $body;
 
-            $('.PrivateChatItem__body').hover(
+            $('.PrivateChatItem__body--' + this.index).hover(
                 function () {
                     bodySelector.css('position', 'fixed');
                     bodySelector.css('overflow-y', 'scroll');
@@ -97,7 +101,6 @@
                     bodySelector.css('overflow-y', 'auto');
                 }
             );
-
         },
 
         updated() {
@@ -106,41 +109,54 @@
 
         methods: {
             fetchMessagesAndListenToChannel() {
+                this.fetchMessagesAndPopulate();
+
+                this.intervalToFetchMessages = setInterval(() => {
+                    this.fetchMessagesAndPopulate();
+                }, 5000);
+            },
+
+            fetchMessagesAndPopulate() {
                 axios.get('/api/conversations/' + this.userAId + '/' + this.userBId).then(response => {
                     this.conversation = response.data;
 
-                    this.userBId = this.user.id === this.conversation.messages[0].sender_id ?
-                        this.conversation.messages[0].recipient_id :
-                        this.conversation.messages[0].sender_id;
+                    if (this.conversation.messages.length > 0) {
+                        this.currentHighestMessageId = this.conversation.messages[this.conversation.messages.length - 1].id;
 
-                    for (let i = 0; i < this.conversation.messages.length; i++) {
-                        this.messages.push({
-                            id: this.conversation.messages[i].id,
-                            text: this.conversation.messages[i].body,
-                            user: this.conversation.messages[i].sender.id === this.user.id ? 'user-a' : 'user-b',
-                            createdAt: this.conversation.messages[i].createdAtHumanReadable
-                        });
-                    }
+                        if (this.previousHighestMessageId === undefined || this.previousHighestMessageId !== this.currentHighestMessageId) {
+                            this.messages = [];
 
-                    Echo.private('chat.' + this.conversation.id)
-                        .listen('MessageSent', (e) => {
-                            this.messages.push({
-                                id: this.messages[this.messages.length - 1].id + 1,
-                                text: e.conversationMessage.body,
-                                user: e.user.id === this.user.id ? 'user-a' : 'user-b',
-                                createdAt: this.conversation.messages[i].createdAtHumanReadable
+                            this.conversation.messages.forEach(message => {
+                                this.messages.push({
+                                    id: message.id,
+                                    text: message.body,
+                                    user: message.sender.id === this.user.id ? 'user-a' : 'user-b',
+                                    createdAt: message.createdAtHumanReadable
+                                });
                             });
-                            if (
+                            this.previousHighestMessageId = this.currentHighestMessageId;
+
+                            if (!firstIteration &&
                                 !$('#PrivateChatItem__head--' + this.index)
                                     .hasClass('PrivateChatItem__head__notify')
-                                &&
-                                $('#PrivateChatItem__body--' + this.index).is(":hidden")
                             ) {
                                 $('#PrivateChatItem__head--' + this.index).addClass('PrivateChatItem__head__notify');
                             }
-                        });
-                    this.listening = true;
+                        }
 
+                        if (firstIteration) {
+                            this.userBId = this.user.id === this.conversation.messages[0].sender_id ?
+                                this.conversation.messages[0].recipient_id :
+                                this.conversation.messages[0].sender_id;
+
+                            this.userAId = this.user.id !== this.conversation.messages[0].sender_id ?
+                                this.conversation.messages[0].recipient_id :
+                                this.conversation.messages[0].sender_id;
+
+                        }
+
+                        this.firstIteration = false;
+                    }
                 }).catch((error) => {
                 });
             },
@@ -151,34 +167,7 @@
                     sender_id: this.userAId,
                     recipient_id: this.userBId
                 }).then(() => {
-                    if (!this.listening) {
-                        axios.get(
-                            '/api/conversations/get-highest-id'
-                        ).then(
-                            response => {
-                                this.highestConversationId = response.data;
-
-                                Echo.private('chat.' + this.highestConversationId)
-                                    .listen('MessageSent', (e) => {
-                                        this.messages.push({
-                                            id: this.messages.length > 0 ? this.messages[this.messages.length - 1].id + 1 : 1,
-                                            text: e.conversationMessage.body,
-                                            user: e.user.id === this.user.id ? 'user-a' : 'user-b'
-                                        });
-                                        if (
-                                            !$('#PrivateChatItem__head--' + this.index)
-                                                .hasClass('PrivateChatItem__head__notify')
-                                            &&
-                                            $('#PrivateChatItem__body--' + this.index).is(":hidden")
-                                        ) {
-                                            $('#PrivateChatItem__head--' + this.index).addClass('PrivateChatItem__head__notify');
-                                        }
-                                    });
-                                this.listening = true;
-                            }
-                        );
-                    }
-
+                    this.fetchMessagesAndPopulate();
                     this.fetchUserConversations();
                 }).catch((error) => {
                 });
@@ -200,6 +189,8 @@
                 ).then(
                     response => {}
                 );
+
+                clearInterval(this.intervalToFetchMessages);
             },
 
             toggle() {

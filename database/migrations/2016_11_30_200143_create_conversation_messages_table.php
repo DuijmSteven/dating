@@ -21,6 +21,7 @@ class CreateConversationMessagesTable extends Migration
             $table->integer('recipient_id')->unsigned();
             $table->string('body', 3000)->nullable();
             $table->boolean('has_attachment')->default(false);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

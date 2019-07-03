@@ -49,6 +49,9 @@ Route::group([
         ->name('conversations.get-user-ids');
     Route::get('{userId}', 'Api\ConversationController@getConversationsByUserId')
         ->name('conversations.get-user-conversations');
+
+    Route::delete('{conversationId}', 'Api\ConversationController@deleteConversationById')
+        ->name('conversations.delete-by-id');
 });
 
 Route::get('cities/{countryCode}', 'Api\LocationController@getCities')

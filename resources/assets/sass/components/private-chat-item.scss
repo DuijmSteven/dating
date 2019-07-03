@@ -1,7 +1,7 @@
 
 @mixin private-chat-list {
     @for $i from 0 through 10 {
-        .PrivateChatItem--#{$i} { right: (370 + (map_get($privateChatItem, width) + 20) * $i) + px; }
+        .PrivateChatItem--#{$i} { right: (430 + (map_get($privateChatItem, width) + 20) * $i) + px; }
     }
 }
 
@@ -93,7 +93,7 @@
 
         &__content {
             padding: 10px;
-            height: 200px;
+            height: 250px;
             overflow-y: scroll;
             background-color: $darkWhite;
         }

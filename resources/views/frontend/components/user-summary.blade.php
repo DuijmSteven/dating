@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="UserSummary__sendMessage"
-             v-on:click="addChat({!! $authenticatedUser->getId() !!}, {!! $user->getId() !!})">
+             v-on:click="addChat({!! $authenticatedUser->getId() !!}, {!! $user->getId() !!}, '1', true)">
             <i class="material-icons material-icon UserSummary__sendMessage__icon">textsms</i>
         </div>
     </div>

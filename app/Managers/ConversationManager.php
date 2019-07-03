@@ -40,15 +40,12 @@ class ConversationManager
     {
         $hasAttachment = isset($messageData['attachment']);
 
-        DB::beginTransaction();
-
         try {
             $conversation = $this->createOrRetrieveConversation(
                 $messageData['sender_id'],
                 $messageData['recipient_id']
             );
         } catch (\Exception $exception) {
-            DB::rollBack();
             throw $exception;
         }
 
@@ -64,9 +61,7 @@ class ConversationManager
 
             $messageInstance->save();
         } catch (\Exception $exception) {
-
-            \Log::info($exception->getMessage());
-            DB::rollBack();
+            \Log::info(__CLASS__ . ' - ' . $exception->getMessage());
             throw $exception;
         }
 
@@ -86,11 +81,9 @@ class ConversationManager
 
                 $messageAttachment->save();
             } catch (\Exception $exception) {
-                DB::rollBack();
                 throw $exception;
             }
         }
-        DB::commit();
 
         return $messageInstance;
     }
