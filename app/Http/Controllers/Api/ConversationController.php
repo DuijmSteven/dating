@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Conversation;
 use App\Managers\ConversationManager;
-use Carbon\Carbon;
+use App\OpenConversationPartner;
+use App\User;
 use Illuminate\Http\JsonResponse;
-use Redis;
 
 /**
  * Class ConversationController
@@ -65,8 +65,10 @@ class ConversationController
     public function persistConversationManagerState(int $userId, string $state)
     {
         try {
-            $key = 'users.conversationManagerState.' . $userId;
-            Redis::set($key, $state);
+            /** @var User $user */
+            $user = User::find($userId);
+
+            $user->setConversationManagerState($state);
 
             return JsonResponse::create($state, 200);
         } catch (\Exception $exception) {
@@ -78,26 +80,33 @@ class ConversationController
     public function getConversationManagerState(int $userId)
     {
         try {
-            $key = 'users.conversationManagerState.' . $userId;
+            /** @var User $user */
+            $user = User::find($userId);
 
-            return JsonResponse::create(Redis::get($key), 200);
+            return JsonResponse::create($user->getConversationManagerState(), 200);
         } catch (\Exception $exception) {
             return JsonResponse::create($exception->getMessage(), 500);
         }
     }
 
-
-    public function persistConversationPartnerId(int $userId, int $partnerId, string $state)
+    public function persistConversationPartnerId(int $userId, int $partnerId, bool $state)
     {
         try {
-            $key = 'users.conversationPartnerIds.' . $userId;
+            $exists = OpenConversationPartner::where('user_id', $userId)
+                    ->where('partner_id', $partnerId)
+                    ->count() > 0;
 
-            Redis::srem($key, $partnerId . ':1');
-            Redis::srem($key, $partnerId . ':0');
+            /** @var User $user */
+            $user = User::find($userId);
 
-            Redis::sadd($key, $partnerId . ':' . $state);
+            if ($exists) {
+                $user->openConversationPartners()->updateExistingPivot($partnerId, ['state' => $state]);
+            } else {
+                $partner = User::find($partnerId);
+                $user->addOpenConversationPartner($partner, $state);
+            }
 
-            return JsonResponse::create(Redis::smembers('users.conversationPartnerIds.' . $userId), 200);
+            return JsonResponse::create($user->openConversationPartners()->allRelatedIds(), 200);
         } catch (\Exception $exception) {
             return JsonResponse::create($exception->getMessage(), 500);
         }
@@ -106,9 +115,18 @@ class ConversationController
     public function getOpenConversationPartners(int $userId)
     {
         try {
-            $ids = Redis::smembers('users.conversationPartnerIds.' . $userId);
+            $partners = OpenConversationPartner::where('user_id', $userId)
+                ->orderBy('created_at', 'asc')
+                ->get();
 
-            return JsonResponse::create($ids);
+            $return = [];
+
+            /** @var User $partner */
+            foreach ($partners as $partner) {
+                array_push($return, $partner->partner_id . ':' . $partner->state);
+            }
+
+            return JsonResponse::create($return);
         } catch (\Exception $exception) {
             return JsonResponse::create($exception->getMessage(), 500);
         }
@@ -117,13 +135,33 @@ class ConversationController
     public function removeConversationPartnerId(int $userId, int $partnerId)
     {
         try {
-            $key = 'users.conversationPartnerIds.' . $userId;
+            /** @var User $user */
+            $user = User::find($userId);
 
-            Redis::srem($key, $partnerId . ':1');
-            Redis::srem($key, $partnerId . ':0');
+            $user->removeOpenConversationPartner($partnerId);
 
-            return JsonResponse::create(Redis::smembers('users.conversationPartnerIds.' . $userId), 200);
+            return JsonResponse::create($user->openConversationPartners()->allRelatedIds(), 200);
         } catch (\Exception $exception) {
+            return JsonResponse::create($exception->getMessage(), 500);
+        }
+    }
+
+    public function deleteConversationById(int $conversationId) {
+        try {
+            /** @var Conversation $conversation */
+            $conversation = Conversation::find($conversationId);
+
+            if (is_null($conversation)) {
+                throw new \Exception('The conversation does not exist');
+            }
+
+/*            if (\Auth::user()->getId() != $conversation->userA()->getId() && \Auth::user()->getId() != $conversation->userB()->getId()) {
+                throw new \Exception('The user attempting to delete the conversation is not a participant of the conversation');
+            }*/
+
+            return JsonResponse::create(Conversation::destroy($conversationId), 200);
+        } catch (\Exception $exception) {
+            \Log::debug($exception->getMessage());
             return JsonResponse::create($exception->getMessage(), 500);
         }
     }

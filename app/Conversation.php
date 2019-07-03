@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Conversation
@@ -11,6 +12,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Conversation extends Model
 {
+    use SoftDeletes;
+
     public $table = 'conversations';
 
     protected $appends = ['updatedAtHumanReadable'];

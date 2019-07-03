@@ -33,7 +33,7 @@
             <div class="force-overflow"></div>
 
             <div v-for="(conversation, index) in conversations"
-                 v-on:click="$parent.addChat(conversation.currentUser.id, conversation.otherUser.id)"
+                 v-on:click="$parent.addChat(conversation.currentUser.id, conversation.otherUser.id, '1', true)"
                  class="PrivateChatManager__item"
             >
                 <div class="PrivateChatManager__item__left">
@@ -54,6 +54,11 @@
                         }}
                     </div>
                 </div>
+
+                <i
+                    class="material-icons material-icon PrivateChatManager__item__deleteIcon"
+                    v-on:click="deleteConversation(conversation.id)"
+                >clear</i>
             </div>
         </div>
     </div>
@@ -79,12 +84,18 @@
         },
 
         methods: {
+            deleteConversation: function (conversationId) {
+                axios.delete('/api/conversations/' + conversationId).then(response => {
+                    this.fetchUserConversations();
+                }).catch(function (error) {
+                });
+            },
             fetchConversationManagerStatus: function () {
                 axios.get('/api/conversations/conversation-manager-state/' + parseInt(DP.authenticatedUser.id)).then(
                     response => {
                         this.conversationManagerState = response;
 
-                        this.isMaximized = this.conversationManagerState.data === '1';
+                        this.isMaximized = this.conversationManagerState.data === 1;
 
                         if (this.isMaximized) {
                             $('#PrivateChatManager__body').css('display', 'block');
@@ -100,14 +111,18 @@
                     this.conversations = response.data;
 
                     this.conversations.map(conversation => {
+
                         if (conversation.user_a.id === this.user.id) {
                             conversation.otherUser = conversation.user_b;
-                            conversation.currentUser = conversation.user_b;
-                        } else {
                             conversation.currentUser = conversation.user_a;
-                            conversation.otherUser = conversation.user_b;
+                        } else {
+                            conversation.currentUser = conversation.user_b;
+                            conversation.otherUser = conversation.user_a;
                         }
+
                     });
+
+
                 }).catch(function (error) {
                 });
             },

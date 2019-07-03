@@ -10280,6 +10280,7 @@ small.form-error {
 }
 
 .PrivateChatManager__item {
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -10289,6 +10290,28 @@ small.form-error {
           flex-direction: row;
   cursor: pointer;
   background-color: #fff;
+}
+
+.PrivateChatManager__item__deleteIcon {
+  display: none !important;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #fff;
+  border-radius: 50%;
+  color: #ff5b49;
+}
+
+.PrivateChatManager__item__deleteIcon:hover {
+  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  color: #ff2718;
+}
+
+.PrivateChatManager__item__deleteIcon:active {
+  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  color: #ff5b49;
 }
 
 .PrivateChatManager__item:first-child .PrivateChatManager__item__right {
@@ -10301,6 +10324,10 @@ small.form-error {
 
 .PrivateChatManager__item:hover {
   background-color: #efefef;
+}
+
+.PrivateChatManager__item:hover .PrivateChatManager__item__deleteIcon {
+  display: inline-block !important;
 }
 
 .PrivateChatManager__item__left {

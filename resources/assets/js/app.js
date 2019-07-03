@@ -39,19 +39,19 @@ const app = new Vue({
 
     data: {
         conversationPartners: [],
-        conversationStatePerPartnerId: {},
         previousConversationPartnersResponse: undefined,
         currentConversationPartnersResponse: undefined,
-        //conversationPartnerIds: [],
         intervalToFetchPartners: undefined
     },
 
     created() {
-        this.getConversationPartners();
+        if (!(isUndefined(DP.authenticatedUser) || DP.authenticatedUser == null)) {
+            this.getConversationPartners();
 
-        this.intervalToFetchPartners = setInterval(() => {
-            this.getConversationPartners()
-        }, 5000);
+            this.intervalToFetchPartners = setInterval(() => {
+                this.getConversationPartners()
+            }, 5000);
+        }
     },
 
     methods: {
@@ -65,11 +65,7 @@ const app = new Vue({
                             let split = response.data[key].split(':');
 
                             if (!this.conversationPartners.map(partner => partner.id).includes(+split[0])) {
-                                //this.conversationPartnerIds.push(split[0]);
-
                                 this.addChat(DP.authenticatedUser.id, split[0], split[1]);
-                                this.conversationStatePerPartnerId[split[0]] = split[1];
-                                //this.fetchUserAndAddToPartners(split[0], 1);
                             }
                         }
 
@@ -78,26 +74,13 @@ const app = new Vue({
                 }
             );
         },
-        addChat: function (currentUserId, userBId, state = '1') {
+        addChat: function (currentUserId, userBId, state = '1', persist = false) {
             if (this.conversationPartners.length > 4) {
                 return false;
             }
 
             let isConversationOpen = false;
             let openConversationIndex;
-
-/*            if (this.conversationPartners.map(partner => partner.id).indexOf(userBId) === -1) {
-                axios.get(
-                    '/api/conversations/conversation-partner-ids/add/' +
-                    parseInt(DP.authenticatedUser.id) +
-                    '/' +
-                    parseInt(userBId) +
-                    '/' +
-                    state
-                ).then(
-                    response => {}
-                );
-            }*/
 
             this.conversationPartners.forEach(function (partner, index) {
                 if (partner.id === userBId) {
@@ -107,14 +90,14 @@ const app = new Vue({
             });
 
             if (!isConversationOpen) {
-                this.fetchUserAndAddToPartners(userBId, state);
+                this.fetchUserAndAddToPartners(userBId, state, persist);
             } else {
                 $('.PrivateChatItem--' + openConversationIndex + ' textarea').focus();
                 $('.PrivateChatItem').removeClass('focus');
                 $('.PrivateChatItem--' + openConversationIndex).addClass('focus');
             }
         },
-        fetchUserAndAddToPartners: function (userBId, state) {
+        fetchUserAndAddToPartners: function (userBId, state, persist = false) {
             axios.get('/api/users/' + userBId).then(
                 response => {
                     let partnerData = response.data;
@@ -122,16 +105,18 @@ const app = new Vue({
 
                     this.conversationPartners.push(partnerData);
 
-                    axios.get(
-                        '/api/conversations/conversation-partner-ids/add/' +
-                        parseInt(DP.authenticatedUser.id) +
-                        '/' +
-                        parseInt(userBId) +
-                        '/' +
-                        state
-                    ).then(
-                        response => {}
-                    );
+                    if (persist) {
+                        axios.get(
+                            '/api/conversations/conversation-partner-ids/add/' +
+                            parseInt(DP.authenticatedUser.id) +
+                            '/' +
+                            parseInt(userBId) +
+                            '/' +
+                            state
+                        ).then(
+                            response => {}
+                        );
+                    }
 
                     this.$nextTick(() => {
                         $('.PrivateChatItem--' + (this.conversationPartners.length - 1) + ' textarea').focus();
@@ -154,7 +139,6 @@ const app = new Vue({
 /**
  * Other Javascript
  */
-
 require("jquery-ui/ui/widgets/datepicker");
 require("jquery-ui/ui/widgets/autocomplete");
 

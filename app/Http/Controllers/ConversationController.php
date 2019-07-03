@@ -7,7 +7,9 @@ use App\Events\MessageSent;
 use App\Http\Requests\Admin\Conversations\MessageCreateRequest;
 use App\Managers\ConversationManager;
 use App\Http\Controllers\Controller;
+use App\OpenConversationPartner;
 use App\User;
+use DB;
 use Redis;
 
 /**
@@ -44,50 +46,47 @@ class ConversationController extends Controller
      */
     public function store(MessageCreateRequest $messageCreateRequest)
     {
-        $messageData = $messageCreateRequest->all();
+        DB::beginTransaction();
 
-        \Log::info($messageData);
+        $messageData = $messageCreateRequest->all();
 
         try {
             $conversationMessage = $this->conversationManager->createMessage($messageData);
 
-            $recipientId = $messageData['recipient_id'];
             $senderId = $messageData['sender_id'];
-            $recipientConversationPartnerIds = Redis::smembers('users.conversationPartnerIds.' . $recipientId);
+            $recipientId = $messageData['recipient_id'];
 
-            if (!in_array($senderId, $recipientConversationPartnerIds)) {
-                $key = 'users.conversationPartnerIds.' . $recipientId;
+            $recipientPartnerIds = OpenConversationPartner::where('user_id', $recipientId)
+                ->get()
+                ->pluck('partner_id')
+                ->toArray();
 
-                Redis::srem($key, $senderId . ':1');
-                Redis::srem($key, $senderId . ':0');
-                Redis::sadd($key, $senderId . ':' . 1);
+            if (!in_array($senderId, $recipientPartnerIds)) {
+                /** @var User $recipient */
+                $recipient = User::find($recipientId);
+
+                /** @var User $sender */
+                $sender = User::find($senderId);
+
+                $recipient->addOpenConversationPartner($sender, 1);
             }
 
             $alerts[] = [
                 'type' => 'success',
                 'message' => 'The message was sent successfully'
             ];
+
+            DB::commit();
         } catch (\Exception $exception) {
+            \Log::info(__CLASS__ . ' - ' . $exception->getMessage());
+
+            DB::rollBack();
+
             $alerts[] = [
                 'type' => 'error',
                 'message' => 'The message was not sent due to an exception.'
             ];
         }
-
-        $user = User::where('id', $messageData['sender_id'])->first();
-
-        $conversationMessage = $this->conversationMessage
-            ->where('sender_id', $messageData['sender_id'])
-            ->where(function ($query) use ($messageData) {
-                $query->where('sender_id', $messageData['sender_id'])
-                    ->where('recipient_id', $messageData['recipient_id']);
-            })
-            ->orWhere(function ($query) use ($messageData)  {
-                $query->where('recipient_id', $messageData['sender_id'])
-                    ->where('sender_id', $messageData['recipient_id']);
-            })
-            ->latest()
-            ->first();
     }
 
     public function conversationMessages($conversationId)
