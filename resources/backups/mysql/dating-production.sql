@@ -138,6 +138,7 @@ CREATE TABLE `conversation_messages` (
   `recipient_id` int(10) unsigned NOT NULL,
   `body` varchar(3000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `has_attachment` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
