@@ -1,5 +1,9 @@
 <template>
-    <div :class="'PrivateChatItem PrivateChatItem--' + index + ' ' + statusClass">
+    <div
+        @mouseenter="mouseOver()"
+        @mouseleave="mouseLeave()"
+        :class="'PrivateChatItem PrivateChatItem--' + index + ' ' + statusClass"
+    >
         <div :id="'PrivateChatItem__head--' + index"
              class="PrivateChatItem__head">
             <div class="PrivateChatItem__head__wrapper">
@@ -33,15 +37,16 @@
                      class="PrivateChatItem__body__content"
                 >
                     <chat-message
-                            v-for="(message, index) in messages"
-                            :message="message"
-                            :key="message.id"
+                        v-for="(message, index) in messages"
+                        :message="message"
+                        :key="message.id"
+                        :conversation="conversation"
                     ></chat-message>
                 </div>
                 <chat-form
-                        v-on:message-sent="addMessage"
-                        :user="user"
-                        :index="index"
+                    v-on:message-sent="addMessage"
+                    :user="user"
+                    :index="index"
                 ></chat-form>
             </div>
         </div>
@@ -53,7 +58,8 @@
         props: [
             'user',
             'partner',
-            'index'
+            'index',
+            'storagePath',
         ],
 
         data() {
@@ -69,7 +75,8 @@
                 previousHighestMessageId: undefined,
                 currentHighestMessageId: undefined,
                 firstIteration: true,
-                intervalToFetchMessages: undefined
+                intervalToFetchMessages: undefined,
+                scrollTop: undefined
             };
         },
 
@@ -81,26 +88,6 @@
             this.userBId = this.partner.id;
 
             this.fetchMessagesAndListenToChannel();
-
-            let $body = $('body');
-            if (['xs', 'sm'].includes(this.$mq)) {
-                $body.css('overflow-y', 'hidden');
-            } else {
-                $body.css('overflow-y', 'scroll');
-            }
-
-            var bodySelector = $body;
-
-            $('.PrivateChatItem__body--' + this.index).hover(
-                function () {
-                    bodySelector.css('position', 'fixed');
-                    bodySelector.css('overflow-y', 'scroll');
-                },
-                function () {
-                    bodySelector.css('position', 'static');
-                    bodySelector.css('overflow-y', 'auto');
-                }
-            );
         },
 
         updated() {
@@ -108,6 +95,42 @@
         },
 
         methods: {
+            mouseOver() {
+                this.scrollTop = $(document).scrollTop();
+
+                let $body = $('body');
+
+                if (['xs', 'sm'].includes(this.$mq)) {
+                    $body.css('overflow-y', 'hidden');
+                } else {
+                    $body.css('overflow-y', 'scroll');
+                }
+
+                $body.css('top', - this.scrollTop);
+                $body.css('position', 'fixed');
+                $body.css('overflow-y', 'scroll');
+            },
+
+            mouseLeave() {
+                this.resetBrowserScrollPosition();
+            },
+
+            resetBrowserScrollPosition() {
+                let $body = $('body');
+
+                if (['xs', 'sm'].includes(this.$mq)) {
+                    $body.css('overflow-y', 'hidden');
+                } else {
+                    $body.css('overflow-y', 'scroll');
+                }
+
+                $body.css('position', 'static');
+                $body.css('overflow-y', 'auto');
+                $(window).scrollTop(this.scrollTop);
+
+                this.scrollTop = undefined;
+            },
+
             fetchMessagesAndListenToChannel() {
                 this.fetchMessagesAndPopulate();
 
@@ -130,6 +153,7 @@
                                 this.messages.push({
                                     id: message.id,
                                     text: message.body,
+                                    attachment: message.attachment,
                                     user: message.sender.id === this.user.id ? 'user-a' : 'user-b',
                                     createdAt: message.createdAtHumanReadable
                                 });
@@ -162,11 +186,22 @@
             },
 
             addMessage(message) {
-                axios.post('/conversations', {
-                    message: message.text,
-                    sender_id: this.userAId,
-                    recipient_id: this.userBId
-                }).then(() => {
+                let data = new FormData();
+                data.append('message', message.text);
+                data.append('sender_id', this.userAId);
+                data.append('recipient_id', this.userBId);
+
+                if (message.attachment != null) {
+                    data.append('attachment', message.attachment);
+                }
+
+                const config = {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                };
+
+                axios.post('/conversations', data, config).then(() => {
                     this.fetchMessagesAndPopulate();
                     this.fetchUserConversations();
                 }).catch((error) => {
@@ -189,6 +224,8 @@
                 ).then(
                     response => {}
                 );
+
+                this.resetBrowserScrollPosition();
 
                 clearInterval(this.intervalToFetchMessages);
             },

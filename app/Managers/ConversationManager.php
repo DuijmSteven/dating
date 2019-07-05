@@ -65,16 +65,18 @@ class ConversationManager
             throw $exception;
         }
 
+        \Log::info($hasAttachment);
+
         if ($hasAttachment) {
             try {
 
                 $uploadedImageFilename = $this->storageManager->saveConversationImage(
                     $messageData['attachment'],
-                    $messageData['conversation_id']
+                    $conversation->getId()
                 );
 
                 $messageAttachment = new MessageAttachment([
-                    'conversation_id' => $messageData['conversation_id'],
+                    'conversation_id' => $conversation->getId(),
                     'message_id' => $messageInstance->id,
                     'filename' => $uploadedImageFilename,
                 ]);
