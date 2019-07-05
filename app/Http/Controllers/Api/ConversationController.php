@@ -69,6 +69,7 @@ class ConversationController
             $user = User::find($userId);
 
             $user->setConversationManagerState($state);
+            $user->save();
 
             return JsonResponse::create($state, 200);
         } catch (\Exception $exception) {

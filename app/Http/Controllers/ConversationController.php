@@ -46,11 +46,10 @@ class ConversationController extends Controller
      */
     public function store(MessageCreateRequest $messageCreateRequest)
     {
-        DB::beginTransaction();
-
-        $messageData = $messageCreateRequest->all();
-
         try {
+            DB::beginTransaction();
+            $messageData = $messageCreateRequest->all();
+
             $conversationMessage = $this->conversationManager->createMessage($messageData);
 
             $senderId = $messageData['sender_id'];
@@ -75,6 +74,8 @@ class ConversationController extends Controller
                 'type' => 'success',
                 'message' => 'The message was sent successfully'
             ];
+
+            \Log::info('end');
 
             DB::commit();
         } catch (\Exception $exception) {

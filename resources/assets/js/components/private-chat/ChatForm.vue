@@ -1,5 +1,9 @@
 <template>
     <div class="PrivateChatItem__textarea__wrapper">
+        <div v-if="url" id="PrivateChatItem__imagePreview" class="PrivateChatItem__imagePreview">
+            <img v-if="url" :src="url"/>
+        </div>
+
         <textarea id="test123" class="PrivateChatItem__textarea"
                   placeholder="Type your message here..."
                   v-model.trim="text"
@@ -10,7 +14,7 @@
         <div class="PrivateChatItem__textarea__buttons">
             <label style="margin-bottom: 0; cursor: pointer">
                 <i class="material-icons">attach_file</i>
-                <form enctype="multipart/form-data" v-on:change="sendAttachment">
+                <form enctype="multipart/form-data" @change="previewImage($event)">
                     <input type="file" id="attachment" name="attachment" style="display: none;">
                 </form>
             </label>
@@ -27,7 +31,9 @@
 
         data() {
             return {
-                text: ''
+                text: '',
+                url: null,
+                file: null
             }
         },
 
@@ -55,14 +61,24 @@
 
         methods: {
             sendMessage() {
-                this.$emit('message-sent', {
-                    text: this.text
-                });
+                if (this.text.length > 0) {
 
-                this.text = ''
+                    console.log(this.file);
+
+                    this.$emit('message-sent', {
+                        text: this.text,
+                        attachment: this.file != null ? this.file : null
+                    });
+
+                    this.text = '';
+                    this.file = null;
+                    this.url = null;
+                }
             },
 
-            sendAttachment() {
+            previewImage(e) {
+                this.file = e.target.files[0];
+                this.url = URL.createObjectURL(this.file);
             },
 
             removeNotificationClass() {
