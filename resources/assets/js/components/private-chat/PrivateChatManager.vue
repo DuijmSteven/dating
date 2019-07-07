@@ -58,6 +58,7 @@
                 <i
                     class="material-icons material-icon PrivateChatManager__item__deleteIcon"
                     v-on:click="deleteConversation(conversation.id)"
+                    @click.stop="$event.stopPropagation()"
                 >clear</i>
             </div>
         </div>
