@@ -145,6 +145,18 @@
                     this.conversation = response.data;
 
                     if (this.conversation.messages.length > 0) {
+                        if (this.firstIteration) {
+                            this.userBId = this.user.id === this.conversation.messages[0].sender_id ?
+                                this.conversation.messages[0].recipient_id :
+                                this.conversation.messages[0].sender_id;
+
+                            this.userAId = this.user.id !== this.conversation.messages[0].sender_id ?
+                                this.conversation.messages[0].recipient_id :
+                                this.conversation.messages[0].sender_id;
+
+                            this.firstIteration = false;
+                        }
+
                         this.currentHighestMessageId = this.conversation.messages[this.conversation.messages.length - 1].id;
 
                         if (this.previousHighestMessageId === undefined || this.previousHighestMessageId !== this.currentHighestMessageId) {
@@ -160,31 +172,17 @@
                                 };
 
                                 this.messages.push(latestMessage);
-
-                                setTimeout(() => {
-                                    this.scrollChatToBottom();
-                                }, 200);
                             });
-                        }
+                            
+                            setTimeout(() => {
+                                this.scrollChatToBottom();
+                            }, 200);
 
-                        if (
-                            this.previousHighestMessageId !== undefined &&
-                            this.previousHighestMessageId !== this.currentHighestMessageId &&
-                            latestMessage.user === 'user-b'
-                        ) {
-                            $('#PrivateChatItem__head--' + this.index).addClass('PrivateChatItem__head__notify');
-                        }
-
-                        if (this.firstIteration) {
-                            this.userBId = this.user.id === this.conversation.messages[0].sender_id ?
-                                this.conversation.messages[0].recipient_id :
-                                this.conversation.messages[0].sender_id;
-
-                            this.userAId = this.user.id !== this.conversation.messages[0].sender_id ?
-                                this.conversation.messages[0].recipient_id :
-                                this.conversation.messages[0].sender_id;
-
-                           this.firstIteration = false;
+                            if (
+                                latestMessage.user === 'user-b'
+                            ) {
+                                $('#PrivateChatItem__head--' + this.index).addClass('PrivateChatItem__head__notify');
+                            }
                         }
 
                         this.previousHighestMessageId = this.currentHighestMessageId;
