@@ -1,8 +1,6 @@
 {
-    "/js/app.js": "/js/app.js?id=aa8852358b041afc8680",
-    "/css/app.css": "/css/app.css?id=af781ce92458565aed32",
-    "/js/app.js.map": "/js/app.js.map?id=a123c1c3858c7e3a5170",
-    "/css/app.css.map": "/css/app.css.map?id=081f9098f5528b0f00ba",
-    "/admin/css/plugins.css": "/admin/css/plugins.css?id=f08b518f1770696398ef",
-    "/admin/js/plugins.js": "/admin/js/plugins.js?id=a33f60342d4cc448b2b7"
+    "/js/app.js": "/js/app.js",
+    "/css/app.css": "/css/app.css",
+    "/js/app.js.map": "/js/app.js.map",
+    "/css/app.css.map": "/css/app.css.map"
 }

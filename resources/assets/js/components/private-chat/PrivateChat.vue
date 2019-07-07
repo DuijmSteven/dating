@@ -91,7 +91,6 @@
         },
 
         updated() {
-            this.scrollChatToBottom();
         },
 
         methods: {
@@ -140,6 +139,8 @@
             },
 
             fetchMessagesAndPopulate() {
+                let latestMessage;
+
                 axios.get('/api/conversations/' + this.userAId + '/' + this.userBId).then(response => {
                     this.conversation = response.data;
 
@@ -150,25 +151,31 @@
                             this.messages = [];
 
                             this.conversation.messages.forEach(message => {
-                                this.messages.push({
+                                latestMessage = {
                                     id: message.id,
                                     text: message.body,
                                     attachment: message.attachment,
                                     user: message.sender.id === this.user.id ? 'user-a' : 'user-b',
                                     createdAt: message.createdAtHumanReadable
-                                });
-                            });
-                            this.previousHighestMessageId = this.currentHighestMessageId;
+                                };
 
-                            if (!firstIteration &&
-                                !$('#PrivateChatItem__head--' + this.index)
-                                    .hasClass('PrivateChatItem__head__notify')
-                            ) {
-                                $('#PrivateChatItem__head--' + this.index).addClass('PrivateChatItem__head__notify');
-                            }
+                                this.messages.push(latestMessage);
+
+                                setTimeout(() => {
+                                    this.scrollChatToBottom();
+                                }, 200);
+                            });
                         }
 
-                        if (firstIteration) {
+                        if (
+                            this.previousHighestMessageId !== undefined &&
+                            this.previousHighestMessageId !== this.currentHighestMessageId &&
+                            latestMessage.user === 'user-b'
+                        ) {
+                            $('#PrivateChatItem__head--' + this.index).addClass('PrivateChatItem__head__notify');
+                        }
+
+                        if (this.firstIteration) {
                             this.userBId = this.user.id === this.conversation.messages[0].sender_id ?
                                 this.conversation.messages[0].recipient_id :
                                 this.conversation.messages[0].sender_id;
@@ -177,15 +184,18 @@
                                 this.conversation.messages[0].recipient_id :
                                 this.conversation.messages[0].sender_id;
 
+                           this.firstIteration = false;
                         }
 
-                        this.firstIteration = false;
+                        this.previousHighestMessageId = this.currentHighestMessageId;
                     }
                 }).catch((error) => {
                 });
             },
 
             addMessage(message) {
+                $('#PrivateChatItem__head--' + this.index).removeClass('PrivateChatItem__head__notify');
+
                 let data = new FormData();
                 data.append('message', message.text);
                 data.append('sender_id', this.userAId);
@@ -209,6 +219,8 @@
             },
 
             clear(partner) {
+                $('#PrivateChatItem__head--' + this.index).removeClass('PrivateChatItem__head__notify');
+
                 Vue.delete(this.$parent.conversationPartners, this.index);
                 $('.PrivateChatItem--' + this.index).remove();
                 if (this.listening === true) {
