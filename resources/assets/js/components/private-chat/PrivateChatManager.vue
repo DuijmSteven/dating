@@ -81,6 +81,11 @@
 
         created() {
             this.fetchUserConversations();
+
+            setInterval(() => {
+                this.fetchUserConversations();
+            }, 5000);
+
             this.fetchConversationManagerStatus();
         },
 
