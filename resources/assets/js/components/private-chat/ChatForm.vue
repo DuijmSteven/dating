@@ -5,7 +5,7 @@
         </div>
 
         <textarea id="test123" class="PrivateChatItem__textarea"
-                  placeholder="Type your message here..."
+                  placeholder="Uw bericht..."
                   v-model.trim="text"
                   v-on:keyup.enter="sendMessage"
                   @focus="removeNotificationClass"
@@ -38,7 +38,7 @@
         },
 
         mounted: function () {
-            var txt = $('.PrivateChatItem__textarea'),
+/*            var txt = $('.PrivateChatItem__textarea'),
                 hiddenDiv = $(document.createElement('div')),
                 content = null;
 
@@ -56,15 +56,12 @@
 
                 $(this).css('height', hiddenDiv.height());
 
-            });
+            });*/
         },
 
         methods: {
             sendMessage() {
                 if (this.text.length > 0) {
-
-                    console.log(this.file);
-
                     this.$emit('message-sent', {
                         text: this.text,
                         attachment: this.file != null ? this.file : null

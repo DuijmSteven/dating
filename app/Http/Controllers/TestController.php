@@ -48,7 +48,7 @@ class TestController extends Controller
 
     public function sendTestEmail()
     {
-        $user = User::find(5);
+        $user = User::find(1);
         var_dump($user->getEmail());
 
         $message = (new Welcome($user))->onQueue('emails');
