@@ -194,6 +194,18 @@
             addMessage(message) {
                 $('#PrivateChatItem__head--' + this.index).removeClass('PrivateChatItem__head__notify');
 
+                let newMessage = {
+                    text: message.text,
+                    attachment: message.attachment,
+                    user: 'user-a'
+                };
+
+                this.messages.push(newMessage);
+
+                setTimeout(() => {
+                    this.scrollChatToBottom();
+                }, 50);
+
                 let data = new FormData();
                 data.append('message', message.text);
                 data.append('sender_id', this.userAId);
