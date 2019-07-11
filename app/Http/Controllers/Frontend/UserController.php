@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Http\Requests\Admin\Peasants\PeasantUpdateRequest;
+use App\Managers\PeasantManager;
 use App\Managers\UserManager;
 use App\User;
 use Carbon\Carbon;
@@ -19,16 +21,20 @@ class UserController extends FrontendController
     /** @var UserManager  */
     private $userManager;
 
+    /** @var PeasantManager  */
+    private $peasantManager;
+
     /**
      * UserController constructor.
      * @param User $user
      * @param UserManager $userManager
      */
-    public function __construct(User $user, UserManager $userManager)
+    public function __construct(User $user, UserManager $userManager, PeasantManager $peasantManager)
     {
         parent::__construct();
         $this->user = $user;
         $this->userManager = $userManager;
+        $this->peasantManager = $peasantManager;
     }
 
     /**
@@ -108,6 +114,9 @@ class UserController extends FrontendController
         );
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function showEditProfile()
     {
         $viewData = [
@@ -125,5 +134,31 @@ class UserController extends FrontendController
                 ]
             )
         );
+    }
+
+    /**
+     * @param PeasantUpdateRequest $peasantUpdateRequest
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(PeasantUpdateRequest $peasantUpdateRequest)
+    {
+        $peasantUpdateRequest->formatInput();
+        $peasantData = $peasantUpdateRequest->all();
+
+        try {
+            $this->peasantManager->updatePeasant($peasantData, $peasantUpdateRequest->route('userId'));
+
+            $alerts[] = [
+                'type' => 'success',
+                'message' => 'The peasant was updated successfully'
+            ];
+        } catch (\Exception $exception) {
+            $alerts[] = [
+                'type' => 'error',
+                'message' => 'The peasant was not updated due to an exception.'
+            ];
+        }
+
+        return redirect()->back()->with('alerts', $alerts);
     }
 }

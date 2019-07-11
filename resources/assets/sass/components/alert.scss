@@ -10,10 +10,9 @@
 // .Alert--danger    - The error alert
 //
 // Style guide: Components.Alert
-.Alert {
+.alert {
     border-radius: 2px;
-    padding: 5px 10px;
-    font-size: 14px;
+    //font-size: 14px;
 
     .close {
         text-decoration: none

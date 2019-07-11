@@ -212,7 +212,7 @@
                     </td>
                 </tr>
 
-                <?php $botImagesNotProfile = $bot->nonProfileImages; ?>
+                <?php $botImagesNotProfile = $bot->imagesNotProfile; ?>
                 @if(!is_null($botImagesNotProfile))
                     @foreach($botImagesNotProfile as $image)
                         <tr>
