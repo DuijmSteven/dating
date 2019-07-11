@@ -3,9 +3,9 @@
 
 @section('content')
     <div class="Tile EditProfile JS--Edit-Profile">
-        <div class="Tile__heading">Edit profile</div>
+        <div class="Tile__heading">Profiel aanpassen</div>
         <div class="Tile__body">
-            <form role="form" class="searchForm" method="POST" action="{!! route('admin.peasants.update', ['id' => $user->id]) !!}"
+            <form role="form" class="searchForm" method="POST" action="{!! route('users.update', ['userId' => $user->id]) !!}"
                   enctype="multipart/form-data">
                 {!! csrf_field() !!}
                 {!! method_field('PUT') !!}
@@ -27,37 +27,11 @@
                             </div>
                         </div>
 
-                        <div class="col-xs-12">
-                            <hr/>
-                        </div>
-
-{{--                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Date of birth:</label>
-                                <div class="input-group date">
-                                    <div class="input-group-addon">
-                                        <i class="material-icons material-icon-calendar">
-                                            calendar_today
-                                        </i>
-                                    </div>
-                                    <input type="text"
-                                           class="form-control pull-right datepicker__date JS--datepicker__date"
-                                           name="dob"
-                                           value="{!! $user->meta->dob->format('d-m-Y') !!}"
-                                    >
-                                    @if ($errors->has('dob'))
-                                        {!! $errors->first('dob', '<small class="form-error">:message</small>') !!}
-                                    @endif
-                                </div>
-                                <!-- /.input group -->
-                            </div>
-                        </div>--}}
-
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="password">City</label>
+                                <label for="password">{{ @trans('user_constants.city') }}</label>
                                 <input type="text"
-                                       class="JS--autoCompleteCites form-control"
+                                       class="JS--autoCompleteCites form-control JS--Search"
                                        name="city"
                                        value="{!! ucfirst($user->meta->city) !!}"
                                 >
@@ -74,59 +48,181 @@
                                 @endif
                             </div>
                         </div>
-                        <?php $counter = 0; ?>
-                        @foreach(\UserConstants::selectableFields('peasant') as $field => $possibleOptions)
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="{!! $field !!}">{!! ucfirst(str_replace('_', ' ', $field)) !!}</label>
-                                    <select name="{!! $field !!}"
-                                            id="{!! $field !!}"
-                                            class="form-control"
-                                    >
-                                        <option value=""
-                                                {!! old($field) == '' ? 'selected' : '' !!}
-                                        ></option>
-                                        @foreach($possibleOptions as $key => $value)
-                                            <option value="{!! $key == '' ? null : $key !!}"
-                                                    {!! ($user->meta[$field] === $key) ? 'selected' : '' !!}
-                                            >
-                                                {!! $value !!}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @include('helpers.forms.error_message', ['field' => $field])
-                                </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="gender">{{ @trans('user_constants.labels.gender') }}</label>
+                                <select name="gender"
+                                        id="gender"
+                                        class="form-control"
+                                >
+                                    @foreach(\UserConstants::selectableField('gender') as $key => $value)
+                                        <option
+                                                {{ $user->meta['gender'] === $key ? 'selected' : '' }}
+                                                value="{{ $key }}">{{ @trans('user_constants.gender.' . $key) }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
-                            {{--Prevents breaking when error on > xs viewports--}}
-                            @if($counter % 2)
-                                <div class="col-xs-12"></div>
-                            @endif
-                            <?php $counter++; ?>
-                        @endforeach
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="looking_for_gender">{{ @trans('user_constants.labels.looking_for_gender') }}</label>
+                                <select name="looking_for_gender"
+                                        id="looking_for_gender"
+                                        class="form-control"
+                                >
+                                    @foreach(\UserConstants::selectableField('looking_for_gender') as $key => $value)
+                                        <option
+                                                {{ $user->meta['looking_for_gender'] === $key ? 'selected' : '' }}
+                                                value="{{ $key }}">{{ @trans('user_constants.looking_for_gender.' . $key) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
 
                         <div class="col-xs-12">
                             <hr/>
                         </div>
 
-                        <?php $counter = 0; ?>
-                        @foreach(\UserConstants::textFields('peasant') as $field)
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="{!! $field !!}">{!! ucfirst(str_replace('_', ' ', $field)) !!}</label>
-                                    <textarea name="{!! $field !!}"
-                                              id="{!! $field !!}"
-                                              class="form-control"
-                                              cols="30"
-                                              rows="10"
-                                    >{!! $user->meta[$field] !!}</textarea>
-                                    @include('helpers.forms.error_message', ['field' => $field])
-                                </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="relationship_status">{{ @trans('user_constants.labels.relationship_status') }}</label>
+                                <select name="relationship_status"
+                                        id="relationship_status"
+                                        class="form-control"
+                                >
+                                    @foreach(\UserConstants::selectableField('relationship_status') as $key => $value)
+                                        <option
+                                                {{ $user->meta['relationship_status'] === $key ? 'selected' : '' }}
+                                                value="{{ $key }}">{{ @trans('user_constants.relationship_status.' . $key) }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
-                            @if($counter % 2)
-                                <div class="col-xs-12"></div>
-                            @endif
-                            <?php $counter++; ?>
-                        @endforeach
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="body_type">{{ @trans('user_constants.labels.body_type') }}</label>
+                                <select name="body_type"
+                                        id="body_type"
+                                        class="form-control"
+                                >
+                                    @foreach(\UserConstants::selectableField('body_type') as $key => $value)
+                                        <option
+                                                {{ $user->meta['body_type'] === $key ? 'selected' : '' }}
+                                                value="{{ $key }}">{{ @trans('user_constants.body_type.' . $key) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="height">{{ @trans('user_constants.labels.height') }}</label>
+                                <select name="height"
+                                        id="height"
+                                        class="form-control"
+                                >
+                                    @foreach(\UserConstants::selectableField('height') as $key => $value)
+                                        <option
+                                                {{ $user->meta['height'] === $key ? 'selected' : '' }}
+                                                value="{{ $key }}">{{ @trans('user_constants.height.' . $key) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="eye_color">{{ @trans('user_constants.labels.eye_color') }}</label>
+                                <select name="eye_color"
+                                        id="eye_color"
+                                        class="form-control"
+                                >
+                                    @foreach(\UserConstants::selectableField('eye_color') as $key => $value)
+                                        <option
+                                                {{ $user->meta['eye_color'] === $key ? 'selected' : '' }}
+                                                value="{{ $key }}">{{ @trans('user_constants.eye_color.' . $key) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="hair_color">{{ @trans('user_constants.labels.hair_color') }}</label>
+                                <select name="hair_color"
+                                        id="hair_color"
+                                        class="form-control"
+                                >
+                                    @foreach(\UserConstants::selectableField('hair_color') as $key => $value)
+                                        <option
+                                                {{ $user->meta['hair_color'] === $key ? 'selected' : '' }}
+                                                value="{{ $key }}">{{ @trans('user_constants.hair_color.' . $key) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="smoking_habits">{{ @trans('user_constants.labels.smoking_habits') }}</label>
+                                <select name="smoking_habits"
+                                        id="smoking_habits"
+                                        class="form-control"
+                                >
+                                    @foreach(\UserConstants::selectableField('smoking_habits') as $key => $value)
+                                        <option
+                                                {{ $user->meta['smoking_habits'] === $key ? 'selected' : '' }}
+                                                value="{{ $key }}">{{ @trans('user_constants.smoking_habits.' . $key) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="drinking_habits">{{ @trans('user_constants.labels.drinking_habits') }}</label>
+                                <select name="drinking_habits"
+                                        id="drinking_habits"
+                                        class="form-control"
+                                >
+                                    @foreach(\UserConstants::selectableField('drinking_habits') as $key => $value)
+                                        <option
+                                                {{ $user->meta['drinking_habits'] === $key ? 'selected' : '' }}
+                                                value="{{ $key }}">{{ @trans('user_constants.drinking_habits.' . $key) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="col-xs-12">
+                            <hr/>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="about_me">{{ @trans('user_constants.about_me') }}</label>
+                                <textarea name="about_me"
+                                          id="about_me"
+                                          class="form-control"
+                                          cols="30"
+                                          rows="10"
+                                >{!! $user->meta['about_me'] !!}</textarea>
+                                @include('helpers.forms.error_message', ['field' => 'about_me'])
+                            </div>
+                        </div>
 
                         <div class="col-xs-12">
                             <hr/>
@@ -152,6 +248,102 @@
                 </div>
             </form>
 
+            <div class="table-responsive" id="images-section">
+                <table class="table table-striped">
+                    <?php $tableColumnAmount = 2; ?>
+                    <thead>
+                    <tr>
+                        <th>Profile image</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @if($user->hasProfileImage())
+                        <tr>
+                            <td>
+                                <a href="#" class="modalImage">
+                                    <img oncl alt="profileImage" class="imageResource" width="200" src="{!! \StorageHelper::profileImageUrl($user) !!}"/>
+                                </a>
+                            </td>
+                            <td class="action-buttons">
+                                <form method="POST" action="{!! route('images.destroy', ['imageId' => $user->profileImage->id]) !!}">
+                                    {!! csrf_field() !!}
+                                    {!! method_field('DELETE') !!}
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @else
+                        <tr>
+                            <td colspan="<?= $tableColumnAmount; ?>">
+                                No profile image set
+                            </td>
+                        </tr>
+                    @endif
+                </table>
+            </div>
+
+
+            <div class="table-responsive" id="images-section">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Other images</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td colspan="<?= $tableColumnAmount; ?>">
+                            Other Images
+                        </td>
+                    </tr>
+
+                    <?php $userImagesNotProfile = $user->imagesNotProfile; ?>
+                    @if(!is_null($userImagesNotProfile))
+                        @foreach($userImagesNotProfile as $image)
+                            <tr>
+                                <td>
+                                    <a href="#" class="modalImage">
+                                        <img alt="galleryImage" class="imageResource" width="200" src="{!! \StorageHelper::userImageUrl($user->id, $image->filename) !!}"/>
+                                    </a>
+                                </td>
+                                <td class="action-buttons">
+                                    <form method="POST" action="{!! route('images.destroy', ['imageId' => $image->id]) !!}">
+                                        {!! csrf_field() !!}
+                                        {!! method_field('DELETE') !!}
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                    <a href="{!! route('users.set-profile-image', ['userId' => $user->id, 'imageId' => $image->id]) !!}" class="btn btn-success">Set profile</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <tr>
+                            <td colspan="<?= $tableColumnAmount; ?>">
+                                No images found
+                            </td>
+                        </tr>
+                    @endif
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+    </div>
+
+    <!-- Creates the bootstrap modal where the image will appear -->
+    <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                </div>
+                <div class="modal-body">
+                    <img alt="imagePreview" src="" id="imagePreview" style="width: 100%" >
+                </div>
+            </div>
         </div>
     </div>
 @endsection

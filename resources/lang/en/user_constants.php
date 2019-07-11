@@ -73,5 +73,16 @@ return [
     'password' => 'Password',
     'email' => 'Email',
     'username' => 'Username',
+    'labels' => [
+        'gender' => 'Gender',
+        'looking_for_gender' => 'Looking for gender',
+        'relationship_status' => 'Relationship status',
+        'body_type' => 'Body type',
+        'height' => 'Height',
+        'eye_color' => 'Eye color',
+        'hair_color' => 'Hair color',
+        'smoking_habits' => 'Smoking habits',
+        'drinking_habits' => 'Drinking habits',
+    ]
 
 ];

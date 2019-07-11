@@ -64,18 +64,21 @@ Route::group([
 ], function () {
     Route::get('/', 'Frontend\UserController@index')
         ->name('users.overview');
-    Route::get('/search', 'Frontend\UserSearchController@getSearch')
+    Route::get('search', 'Frontend\UserSearchController@getSearch')
         ->name('users.search.get');
-    Route::post('/search-form-get', 'Frontend\UserSearchController@search')
+    Route::post('search-form-get', 'Frontend\UserSearchController@search')
         ->name('users.search.form.get');
-    Route::get('/search-results', 'Frontend\UserSearchController@getSearchResults')
+    Route::get('search-results', 'Frontend\UserSearchController@getSearchResults')
         ->name('users.search.results.get');
-    Route::get('/online', 'Frontend\UserController@online')
+    Route::get('online', 'Frontend\UserController@online')
         ->name('users.online');
-    Route::get('/{userId}', 'Frontend\UserController@show')
+    Route::get('{userId}', 'Frontend\UserController@show')
         ->name('users.show');
     Route::get('{userId}/set-profile-image/{imageId}', 'UserImageController@setProfileImage')
         ->name('users.set-profile-image');
+
+    Route::put('{userId}/edit', 'Frontend\UserController@update')
+        ->name('users.update');
 
     Route::group([
         'prefix' => 'favorites'

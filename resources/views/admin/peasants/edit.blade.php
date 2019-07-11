@@ -212,7 +212,7 @@
                     </td>
                 </tr>
 
-                <?php $peasantImagesNotProfile = $peasant->images; ?>
+                <?php $peasantImagesNotProfile = $peasant->imagesNotProfile; ?>
                 @if(!is_null($peasantImagesNotProfile))
                     @foreach($peasantImagesNotProfile as $image)
                         <tr>
