@@ -39,3 +39,8 @@
 @import "views/edit-profile";
 
 @import "vue-apps/private-chat/main";
+
+.ui-autocomplete.ui-widget.ui-widget-content {
+  max-height: 600px;
+  overflow: scroll;
+}

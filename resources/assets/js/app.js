@@ -187,8 +187,10 @@ $(window).ready(function () {
             .done(function (response) {
                 cityList = response.cities;
 
+
                 $('.JS--autoCompleteCites').autocomplete({
-                    source: response.cities
+                    source: response.cities,
+                    minLength: 2
                 })
             }).fail(function () {
         });
@@ -222,11 +224,13 @@ $(window).ready(function () {
         });
     }
 
+    if ($('.modalImage').length > 0) {
+        $(".modalImage").on("click", function() {
+            $('#imagePreview').attr('src', $(this).find('img').attr('src')); // here asign the image to the modal when the user click the enlarge link
+            $('#imageModal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
+        });
+    }
 
-    $(".modalImage").on("click", function() {
-        $('#imagePreview').attr('src', $(this).find('img').attr('src')); // here asign the image to the modal when the user click the enlarge link
-        $('#imageModal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
-    });
 });
 
 
