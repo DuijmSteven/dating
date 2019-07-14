@@ -10,7 +10,8 @@ require('./bootstrap');
 window.Vue = require('vue/dist/vue.js');
 
 
-import VueMq from 'vue-mq'
+import VueMq from 'vue-mq';
+import moment from 'moment';
 
 Vue.use(VueMq, {
     breakpoints: {
@@ -31,6 +32,12 @@ Vue.component('private-chat-manager', require('./components/private-chat/Private
 Vue.component('private-chat', require('./components/private-chat/PrivateChat.vue'));
 Vue.component('chat-message', require('./components/private-chat/ChatMessage.vue'));
 Vue.component('chat-form', require('./components/private-chat/ChatForm.vue'));
+
+Vue.filter('formatDate', function(value) {
+    if (value) {
+        return moment(String(value)).format('MM/DD/YYYY hh:mm')
+    }
+});
 
 const app = new Vue({
     el: '#app',

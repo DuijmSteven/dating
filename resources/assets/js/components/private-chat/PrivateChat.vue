@@ -118,7 +118,7 @@
                             text: message.body,
                             attachment: message.attachment,
                             user: message.sender.id === this.user.id ? 'user-a' : 'user-b',
-                            createdAt: message.createdAtHumanReadable
+                            createdAt: message.created_at
                         };
 
                         this.displayedMessages.splice(0, 0, latestMessage);
@@ -206,7 +206,7 @@
                                         text: message.body,
                                         attachment: message.attachment,
                                         user: message.sender.id === this.user.id ? 'user-a' : 'user-b',
-                                        createdAt: message.createdAtHumanReadable
+                                        createdAt: message.created_at
                                     };
 
                                     this.displayedMessages.push(latestMessage);
@@ -220,7 +220,7 @@
                                             text: message.body,
                                             attachment: message.attachment,
                                             user: message.sender.id === this.user.id ? 'user-a' : 'user-b',
-                                            createdAt: message.createdAtHumanReadable
+                                            createdAt: message.created_at
                                         };
 
                                         this.displayedMessages.push(latestMessage);
