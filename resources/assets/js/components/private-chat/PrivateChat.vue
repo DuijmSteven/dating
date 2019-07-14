@@ -35,9 +35,10 @@
             <div class="PrivateChatItem__body__wrapper">
                 <div :id="'PrivateChatItem__body__content--' + index"
                      class="PrivateChatItem__body__content"
+                     @scroll="checkScrollTop()"
                 >
                     <chat-message
-                        v-for="(message, index) in messages"
+                        v-for="(message, index) in displayedMessages"
                         :message="message"
                         :key="message.id"
                         :conversation="conversation"
@@ -65,7 +66,8 @@
         data() {
             return {
                 listening: false,
-                messages: [],
+                allMessages: undefined,
+                displayedMessages: [],
                 conversation: undefined,
                 userAId: undefined,
                 userBId: undefined,
@@ -76,7 +78,9 @@
                 currentHighestMessageId: undefined,
                 firstIteration: true,
                 intervalToFetchMessages: undefined,
-                scrollTop: undefined
+                scrollTop: undefined,
+                messagesPerScroll: 6,
+                checkingScroll: false
             };
         },
 
@@ -94,6 +98,39 @@
         },
 
         methods: {
+            checkScrollTop() {
+                let scrollTop = $('#PrivateChatItem__body__content--' + this.index).scrollTop();
+
+                if (!this.justCheckedScrollTop && scrollTop < 2 && this.allMessages.length > 0) {
+                    let latestMessage;
+                    this.justCheckedScrollTop = true;
+
+                    console.log(this.allMessages);
+
+                    let messagesAmountToLoad;
+                    if (this.allMessages.length >= this.messagesPerScroll) {
+                        messagesAmountToLoad = this.messagesPerScroll;
+                    } else {
+                        messagesAmountToLoad = this.allMessages.length;
+                    }
+
+                    this.allMessages.splice(-messagesAmountToLoad, messagesAmountToLoad).reverse().forEach(message => {
+                        latestMessage = {
+                            id: message.id,
+                            text: message.body,
+                            attachment: message.attachment,
+                            user: message.sender.id === this.user.id ? 'user-a' : 'user-b',
+                            createdAt: message.createdAtHumanReadable
+                        };
+
+                        this.displayedMessages.splice(0, 0, latestMessage);
+                    });
+                }
+
+                setTimeout(() => {
+                    this.justCheckedScrollTop = false;
+                }, 1000);
+            },
             mouseOver() {
                 this.scrollTop = $(document).scrollTop();
 
@@ -135,7 +172,7 @@
 
                 this.intervalToFetchMessages = setInterval(() => {
                     this.fetchMessagesAndPopulate();
-                }, 5000);
+                }, 10000);
             },
 
             fetchMessagesAndPopulate() {
@@ -160,20 +197,39 @@
                         this.currentHighestMessageId = this.conversation.messages[this.conversation.messages.length - 1].id;
 
                         if (this.previousHighestMessageId === undefined || this.previousHighestMessageId !== this.currentHighestMessageId) {
-                            this.messages = [];
 
-                            this.conversation.messages.forEach(message => {
-                                latestMessage = {
-                                    id: message.id,
-                                    text: message.body,
-                                    attachment: message.attachment,
-                                    user: message.sender.id === this.user.id ? 'user-a' : 'user-b',
-                                    createdAt: message.createdAtHumanReadable
-                                };
+                            if (this.previousHighestMessageId === undefined) {
+                                this.displayedMessages = [];
+                                this.allMessages = this.conversation.messages;
 
-                                this.messages.push(latestMessage);
-                            });
-                            
+                                this.allMessages.splice(-this.messagesPerScroll, this.messagesPerScroll).forEach(message => {
+                                    latestMessage = {
+                                        id: message.id,
+                                        text: message.body,
+                                        attachment: message.attachment,
+                                        user: message.sender.id === this.user.id ? 'user-a' : 'user-b',
+                                        createdAt: message.createdAtHumanReadable
+                                    };
+
+                                    this.displayedMessages.push(latestMessage);
+                                });
+
+                            } else {
+                                this.allMessages.forEach(message => {
+                                    if (message.id > this.previousHighestMessageId) {
+                                        latestMessage = {
+                                            id: message.id,
+                                            text: message.body,
+                                            attachment: message.attachment,
+                                            user: message.sender.id === this.user.id ? 'user-a' : 'user-b',
+                                            createdAt: message.createdAtHumanReadable
+                                        };
+
+                                        this.displayedMessages.push(latestMessage);
+                                    }
+                                });
+                            }
+
                             setTimeout(() => {
                                 this.scrollChatToBottom();
                             }, 200);
@@ -200,7 +256,7 @@
                     user: 'user-a'
                 };
 
-                this.messages.push(newMessage);
+                //this.displayedMessages.push(newMessage);
 
                 setTimeout(() => {
                     this.scrollChatToBottom();

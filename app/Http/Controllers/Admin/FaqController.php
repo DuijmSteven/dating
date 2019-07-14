@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Faq;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Faqs\TacUpdateRequest;
+use App\Http\Requests\Admin\Faqs\FaqCreateRequest;
+use App\Http\Requests\Admin\Faqs\FaqUpdateRequest;
 use App\Http\Requests\Admin\Faqs\TacCreateRequest;
+use App\Http\Requests\Admin\Faqs\TacUpdateRequest;
 use Carbon\Carbon;
 use GrahamCampbell\Markdown\Facades\Markdown;
 
@@ -94,10 +96,10 @@ class FaqController extends Controller
     }
 
     /**
-     * @param TacCreateRequest $request
+     * @param FaqCreateRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function post(TacCreateRequest $request)
+    public function post(FaqCreateRequest $request)
     {
         try {
             Faq::create($request->all());
@@ -117,11 +119,11 @@ class FaqController extends Controller
     }
 
     /**
-     * @param TacUpdateRequest $request
+     * @param FaqUpdateRequest $request
      * @param int $faqId
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(TacUpdateRequest $request, int $faqId)
+    public function update(FaqUpdateRequest $request, int $faqId)
     {
         try {
             $faq = Faq::find($faqId);
