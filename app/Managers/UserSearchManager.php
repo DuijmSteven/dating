@@ -52,8 +52,6 @@ class UserSearchManager
                 $query = $query->where('username', 'like', '%' . $parameters['username'] . '%');
             }
 
-            //dd(UserConstants::selectableFields('peasant'));
-
             foreach (UserConstants::selectableFields('peasant') as $field => $values) {
                 if (isset($parameters[$field])) {
                     $query = $query->whereHas('meta', function ($query) use ($parameters, $field) {
@@ -69,10 +67,37 @@ class UserSearchManager
                 });
             }
 
-            if (isset($parameters['city'])) {
-                $query = $query->whereHas('meta', function ($query) use ($parameters) {
-                    $query->where('city', 'like', '%' . $parameters['city'] . '%');
-                });
+            if (isset($parameters['city']) && isset($parameters['lat']) && isset($parameters['lng'])) {
+                $latInRadians = deg2rad($parameters['lat']);
+                $lngInRadians = deg2rad($parameters['lng']);
+
+                //dd($parameters);
+
+                $angularRadius = $parameters['radius']/6371;
+
+                $latMin = rad2deg($latInRadians - $angularRadius);
+                $latMax = rad2deg($latInRadians + $angularRadius);
+
+                $deltaLng = asin(sin($angularRadius)/cos($latInRadians));
+
+                $lngMin = rad2deg($lngInRadians - $deltaLng);
+                $lngMax = rad2deg($lngInRadians + $deltaLng);
+
+                $query = $query->whereHas(
+                    'meta',
+                    function ($query) use (
+                        $parameters,
+                        $latMin,
+                        $latMax,
+                        $lngMin,
+                        $lngMax
+                    ) {
+                        $query->where('lat', '>=', $latMin)
+                            ->where('lat', '<=', $latMax)
+                            ->where('lng', '>=', $lngMin)
+                            ->where('lng', '<=', $lngMax);
+                    }
+                );
             }
         }
 

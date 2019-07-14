@@ -18,7 +18,6 @@
                     data-bot-username="{!! $bot->username !!}"
                     data-bot-age="{!! $bot->meta->dob->diffInYears($carbonNow) !!}"
                     data-bot-status="{!! ucfirst(str_replace('_', ' ', \UserConstants::selectableField('relationship_status', $bot->roles[0]->name)[$bot->meta->relationship_status])) !!}"
-                    data-bot-province="{!! ucfirst(str_replace('_', ' ', \UserConstants::selectableField('province', $bot->roles[0]->name)[$bot->meta->relationship_status])) !!}"
                     data-bot-city="{!! $bot->meta->city !!}"
                     data-bot-height="{!! ucfirst(str_replace('_', ' ', \UserConstants::selectableField('height', $bot->roles[0]->name)[$bot->meta->relationship_status])) !!}"
                     data-bot-body-type="{!! ucfirst(str_replace('_', ' ', \UserConstants::selectableField('body_type', $bot->roles[0]->name)[$bot->meta->relationship_status])) !!}"
@@ -63,9 +62,6 @@
                                     <div> <strong>Age:</strong> <span id="js-botAge"></span></div>
                                     <div> <strong>Status:</strong>
                                         <span id="js-botStatus"></span>
-                                    </div>
-                                    <div> <strong>Province:</strong>
-                                        <span id="js-botProvince"></span>
                                     </div>
                                     <div> <strong>City:</strong>
                                         <span id="js-botCity"></span>
@@ -141,9 +137,6 @@
                                     <div> <strong>Age:</strong> {{ $peasant->meta->dob->diffInYears($carbonNow) }}</div>
                                     <div> <strong>Status:</strong>
                                         {{ ucfirst(str_replace('_', ' ', \UserConstants::selectableField('relationship_status', $peasant->roles[0]->name)[$peasant->meta->relationship_status])) }}
-                                    </div>
-                                    <div> <strong>Province:</strong>
-                                        {{ ucfirst(str_replace('_', ' ', \UserConstants::selectableField('province', $peasant->roles[0]->name)[$peasant->meta->relationship_status])) }}
                                     </div>
                                     <div> <strong>City:</strong>
                                         {{ $peasant->meta->city }}

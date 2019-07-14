@@ -33,7 +33,7 @@ class StorageHelper
     public static function profileImageUrl(User $user, bool $thumb = false)
     {
         if (!$user->hasProfileImage()) {
-            return asset(self::$genderAvatarsDir . \UserConstants::selectableField('gender')[$user->meta->gender] . '.png');
+            return asset(self::$genderAvatarsDir . \UserConstants::selectableField('gender')[$user->meta->gender] . '.jpg');
         }
 
         $filePath = self::userImagesPath($user->id) . $user->profileImage->filename;

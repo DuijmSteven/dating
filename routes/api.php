@@ -30,12 +30,17 @@ Route::group([
     Route::get('conversation-partner-ids/{userId}', 'Api\ConversationController@getOpenConversationPartners')
         ->name('conversations.get-user-conversation-partner-ids');
 
-    Route::get('conversation-partner-ids/add/{userId}/{partnerId}', 'Api\ConversationController@persistConversationPartnerId')
+    Route::get('conversation-partner-ids/add/{userId}/{partnerId}/{state}', 'Api\ConversationController@persistConversationPartnerId')
         ->name('conversations.add-user-conversation-partner-ids');
 
     Route::get('conversation-partner-ids/remove/{userId}/{partnerId}', 'Api\ConversationController@removeConversationPartnerId')
         ->name('conversations.remove-user-conversation-partner-ids');
 
+    Route::get('conversation-manager-state/{userId}/{state}', 'Api\ConversationController@persistConversationManagerState')
+        ->name('conversations.persist-conversation-manager-state');
+
+    Route::get('conversation-manager-state/{userId}', 'Api\ConversationController@getConversationManagerState')
+        ->name('conversations.get-conversation-manager-state');
 
     Route::get('/get-highest-id', 'Api\ConversationController@getHighestConversationId')
         ->name('conversations.get-highest-id');
@@ -44,6 +49,9 @@ Route::group([
         ->name('conversations.get-user-ids');
     Route::get('{userId}', 'Api\ConversationController@getConversationsByUserId')
         ->name('conversations.get-user-conversations');
+
+    Route::delete('{conversationId}', 'Api\ConversationController@deleteConversationById')
+        ->name('conversations.delete-by-id');
 });
 
 Route::get('cities/{countryCode}', 'Api\LocationController@getCities')

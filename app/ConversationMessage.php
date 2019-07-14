@@ -4,9 +4,12 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ConversationMessage extends Model
 {
+    use SoftDeletes;
+
     public $table = 'conversation_messages';
 
     protected $fillable = [

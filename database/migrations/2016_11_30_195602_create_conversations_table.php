@@ -18,6 +18,7 @@ class CreateConversationsTable extends Migration
             $table->integer('user_a_id')->unsigned();
             $table->integer('user_b_id')->unsigned();
             $table->integer('locked_by_user_id')->unsigned()->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

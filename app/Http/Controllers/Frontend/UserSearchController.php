@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Managers\UserSearchManager;
+use App\Session;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequests\UserSearchRequest;
@@ -23,6 +24,21 @@ class UserSearchController extends FrontendController
     {
         $this->userSearchManager = $userSearchManager;
         parent::__construct();
+    }
+
+    /**
+     * Search users view
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getSearch()
+    {
+        $viewData = [
+        ];
+        return view(
+            'frontend.users.search.overview',
+            $viewData
+        );
     }
 
     /**
@@ -61,22 +77,7 @@ class UserSearchController extends FrontendController
     }
 
     /**
-     * Search users view
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getSearch()
-    {
-        $viewData = [
-        ];
-        return view(
-            'frontend.users.search.overview',
-            $viewData
-        );
-    }
-
-    /**
-     * Uses flashed searchParameters from session to search for users and
+     * Uses flashed searchParameters from session to search for use   rs and
      * returns the search-results view
      *
      * @param Request $request
@@ -89,12 +90,18 @@ class UserSearchController extends FrontendController
 
         // flash searchParameters to session so the next request can access them
         $request->session()->flash('searchParameters', $searchParameters);
-        $users = $this->userSearchManager->searchUsers($searchParameters, true, $request->input('page'));
+
+        $users = $this->userSearchManager->searchUsers(
+            $searchParameters,
+            true,
+            $request->input('page')
+        );
 
         $viewData = [
             'users' => $users,
             'carbonNow' => Carbon::now()
         ];
+
         return view(
             'frontend.users.search.results',
             $viewData

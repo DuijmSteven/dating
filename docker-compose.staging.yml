@@ -47,9 +47,9 @@ services:
       - "3306:3306"
     environment:
       MYSQL_USER: dating
-      MYSQL_PASSWORD: 12qwaszx
-      MYSQL_DATABASE: dating
-      MYSQL_ROOT_PASSWORD: 12qwaszx
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       SERVICE_TAGS: staging
       SERVICE_NAME: mysql
     volumes:
@@ -70,6 +70,14 @@ services:
       - dating-network
     depends_on:
       - dating-mysql
+
+  dating-redis:
+    container_name: dating-redis
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - dating-network
 
 #Docker Networks
 networks:

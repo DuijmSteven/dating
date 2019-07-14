@@ -31,7 +31,7 @@ class User extends Authenticatable
 
     protected $appends = ['profileImageUrl'];
 
-    public function getprofileImageUrlAttribute()
+    public function getProfileImageUrlAttribute()
     {
         return \StorageHelper::profileImageUrl($this);
     }
@@ -45,7 +45,8 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
-        'active'
+        'active',
+        'conversation_manager_state'
     ];
 
     /**
@@ -108,7 +109,7 @@ class User extends Authenticatable
      */
     public function getCreatedAt()
     {
-        return $this->createAt;
+        return $this->created_at;
     }
 
     /**
@@ -117,6 +118,16 @@ class User extends Authenticatable
     public function getUpdatedAt()
     {
         return $this->updated_at;
+    }
+
+    public function getConversationManagerState()
+    {
+        return $this->conversation_manager_state;
+    }
+
+    public function setConversationManagerState($state)
+    {
+        $this->conversation_manager_state = $state;
     }
 
     /**
@@ -157,6 +168,26 @@ class User extends Authenticatable
     public function roles()
     {
         return $this->belongsToMany('App\Role');
+    }
+
+    public function openConversationPartners()
+    {
+        return $this->belongsToMany(
+            'App\User',
+            'open_conversation_partners',
+            'user_id',
+            'partner_id'
+        )->withTimestamps();
+    }
+
+    public function addOpenConversationPartner(User $partner, $state)
+    {
+        $this->openConversationPartners()->save($partner, ['state' => $state]);   // add friend
+    }
+
+    public function removeOpenConversationPartner($partnerId)
+    {
+        $this->openConversationPartners()->detach($partnerId);   // remove friend
     }
 
     /**

@@ -102,9 +102,19 @@
                         <div class="form-group">
                             <label for="password">City</label>
                             <input type="text"
-                                   class="js-autoCompleteCites form-control"
+                                   class="JS--autoCompleteCites form-control"
                                    name="city"
                                    value="{!! old('city', '') !!}"
+                            >
+                            <input type="text"
+                                   name="lat"
+                                   class="js-hiddenLatInput"
+                                   readonly
+                            >
+                            <input type="text"
+                                   name="lng"
+                                   class="js-hiddenLngInput"
+                                   readonly
                             >
                             @if ($errors->has('city'))
                                 {!! $errors->first('city', '<small class="form-error">:message</small>') !!}

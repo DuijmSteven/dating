@@ -63,6 +63,7 @@
         var DP = {
             baseUrl: '{!! url('/') !!}',
             authenticatedUser: <?php echo json_encode($authenticatedUser, true) ?>,
+            conversationsCloudUrl: '{{ Storage::disk('cloud')->url('conversations') }}',
         };
     </script>
     <script src="{{ mix('js/app.js') }}"></script>

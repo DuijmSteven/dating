@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->smallInteger('account_type')->unsigned();
             $table->boolean('active')->default(1);
+            $table->boolean('conversation_manager_state')->default(1);
             $table->rememberToken();
             $table->timestamps();
         });

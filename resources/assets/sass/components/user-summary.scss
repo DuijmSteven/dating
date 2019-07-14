@@ -20,6 +20,7 @@
 
     &__user-image {
         position: absolute;
+        overflow: hidden;
         width: 100%;
         left: 0;
         right: 0;
@@ -32,13 +33,50 @@
     }
 
     &__footer {
+        position: relative;
         display: flex;
         flex-direction: row;
-        justify-content: space-evenly;
+        justify-content: center;
+        padding-top: 30px;
+        padding-bottom: 20px;
     }
 
     &__sendMessage {
-        display: inline-block;
+        border: 1px solid #ddd;
+        position: absolute;
+        top: -25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: $white;
+
         cursor: pointer;
+
+        &__icon {
+            font-size: 26px;
+            color: $secondaryColor;
+        }
+
+        &:hover {
+            background-color: #eee;
+        }
+    }
+
+    &__userInfo {
+        text-align: center;
+        a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 700;
+        }
+
+        &__additional {
+            font-size: 14px;
+            color: #888;
+        }
     }
 }

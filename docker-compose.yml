@@ -6,6 +6,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - WITH_XDEBUG=true
     image: dating-app
     container_name: dating-app
     restart: unless-stopped
@@ -13,10 +15,13 @@ services:
     environment:
       SERVICE_NAME: dating
       SERVICE_TAGS: dev
+      PHP_IDE_CONFIG: serverName=dating-local
+      XDEBUG_CONFIG: idekey=PHPSTORMDATING
     working_dir: /var/www
     volumes:
       - ./:/var/www
       - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+      - ./xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
     networks:
       - dating-network
 
@@ -46,9 +51,9 @@ services:
       - "3307:3306"
     environment:
       MYSQL_USER: dating
-      MYSQL_PASSWORD: 12qwaszx
-      MYSQL_DATABASE: dating
-      MYSQL_ROOT_PASSWORD: 12qwaszx
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     volumes:

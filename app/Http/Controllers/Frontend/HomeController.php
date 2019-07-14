@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Activity;
+use Hash;
 
 /**
  * Class HomeController

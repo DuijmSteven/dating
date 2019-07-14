@@ -28,7 +28,7 @@ class TestController extends Controller
 
     public function showWelcomeEmail()
     {
-        $user = User::find(3);
+        $user = User::find(1);
 
         return view('emails.welcome', [
             'user' => $user
@@ -48,7 +48,7 @@ class TestController extends Controller
 
     public function sendTestEmail()
     {
-        $user = User::find(5);
+        $user = User::find(1);
         var_dump($user->getEmail());
 
         $message = (new Welcome($user))->onQueue('emails');
@@ -57,5 +57,15 @@ class TestController extends Controller
             ->queue($message);
 
         dd($send);
+    }
+
+    public function renderEmail()
+    {
+        return view(
+            'emails.layouts.default.layout',
+            [
+                'title' => config('app.name'),
+            ]
+        );
     }
 }
