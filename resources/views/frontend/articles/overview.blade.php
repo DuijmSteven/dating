@@ -17,7 +17,7 @@
                         <a href="{{ route('articles.show', ['articleId' => $article->getId()])  }}">{{ strtoupper($article->title) }}</a>
                     </div>
                     <div class="margin10 fontSize15">
-                        <i>Posted on {{ $article->created_at->toFormattedDateString() }}</i>
+                        <i class="material-icons fontSize17"> calendar_today </i> <i>Posted on {{ $article->created_at->toFormattedDateString() }}</i>
                     </div>
                     <div>
                         {{ str_limit($article->getBody(), 400) }}

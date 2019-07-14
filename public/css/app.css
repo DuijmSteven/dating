@@ -8463,6 +8463,10 @@ body {
   font-size: 15px;
 }
 
+.fontSize17 {
+  font-size: 17px !important;
+}
+
 .navbar-default {
   border: 1px solid #d3e0e9;
   background-color: #BF004D;
