@@ -105,8 +105,6 @@
                     let latestMessage;
                     this.justCheckedScrollTop = true;
 
-                    console.log(this.allMessages);
-
                     let messagesAmountToLoad;
                     if (this.allMessages.length >= this.messagesPerScroll) {
                         messagesAmountToLoad = this.messagesPerScroll;
@@ -215,7 +213,7 @@
                                 });
 
                             } else {
-                                this.allMessages.forEach(message => {
+                                this.conversation.messages.forEach(message => {
                                     if (message.id > this.previousHighestMessageId) {
                                         latestMessage = {
                                             id: message.id,
