@@ -84,7 +84,7 @@
 
             setInterval(() => {
                 this.fetchUserConversations();
-            }, 5000);
+            }, 10000);
 
             this.fetchConversationManagerStatus();
         },
