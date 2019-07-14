@@ -5,7 +5,7 @@
              v-bind:src="messageAttachmentUrl(this.conversation.id, message.attachment.filename)"
              alt=""
         >
-        {{ message.text }} <span class="PrivateChatItem__message__createdAt">{{ message.createdAt }}</span>
+        {{ message.text }} <span class="PrivateChatItem__message__createdAt">{{ message.createdAt | formatDate }}</span>
     </div>
 </template>
 
