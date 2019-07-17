@@ -6,6 +6,7 @@ use App\Conversation;
 use App\Managers\ConversationManager;
 use App\OpenConversationPartner;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -57,6 +58,30 @@ class ConversationController
             $conversations = $this->conversationManager->getConversationsByUserId($userId);
 
             return JsonResponse::create($conversations);
+        } catch (\Exception $exception) {
+            return JsonResponse::create($exception->getMessage(), 500);
+        }
+    }
+
+    public function setConversationActivityForUserId(int $userAId, int $userBId, int $userId, bool $value)
+    {
+        try {
+            $conversation = $this->conversationManager->retrieveConversation($userAId, $userBId);
+
+            if (!($conversation instanceof Conversation)) {
+                return JsonResponse::create('No conversation exists between these users', 404);
+            }
+
+            if ($conversation->getUserAId() === $userId) {
+                $conversation->setNewActivityForUserA($value);
+            } else {
+                $conversation->setNewActivityForUserB($value);
+            }
+
+            $conversation->setUpdatedAt(Carbon::now());
+            $conversation->save();
+
+            return JsonResponse::create($conversation);
         } catch (\Exception $exception) {
             return JsonResponse::create($exception->getMessage(), 500);
         }

@@ -33,8 +33,14 @@
             <div class="force-overflow"></div>
 
             <div v-for="(conversation, index) in conversations"
-                 v-on:click="$parent.addChat(conversation.currentUser.id, conversation.otherUser.id, '1', true)"
+                 v-on:click="
+                    $parent.addChat(conversation.currentUser.id, conversation.otherUser.id, '1', true);
+                    $parent.setConversationActivityForUser(conversation, 0);
+                    removeIsNewOrHasNewMessageClass(index);
+                 "
                  class="PrivateChatManager__item"
+                 v-bind:class="{isNewOrHasNewMessage: conversation.newActivity}"
+                 :id="'PrivateChatManager__item--' + index"
             >
                 <div class="PrivateChatManager__item__left">
                     <img class="PrivateChatManager__item__profilePicture"
@@ -60,6 +66,11 @@
                     v-on:click="deleteConversation(conversation.id)"
                     @click.stop="$event.stopPropagation()"
                 >clear</i>
+
+                <i
+                    class="material-icons material-icon PrivateChatManager__item__newMessagesIcon"
+                >email</i>
+
             </div>
         </div>
     </div>
@@ -90,6 +101,9 @@
         },
 
         methods: {
+            removeIsNewOrHasNewMessageClass: function (index) {
+                $('#PrivateChatManager__item--' + index).removeClass('isNewOrHasNewMessage');
+            },
             deleteConversation: function (conversationId) {
                 axios.delete('/api/conversations/' + conversationId).then(response => {
                     this.fetchUserConversations();
@@ -117,18 +131,26 @@
                     this.conversations = response.data;
 
                     this.conversations.map(conversation => {
-
                         if (conversation.user_a.id === this.user.id) {
                             conversation.otherUser = conversation.user_b;
                             conversation.currentUser = conversation.user_a;
+
+                            if (conversation.new_activity_for_user_a) {
+                                conversation.newActivity = true;
+                            } else {
+                                conversation.newActivity = false;
+                            }
                         } else {
                             conversation.currentUser = conversation.user_b;
                             conversation.otherUser = conversation.user_a;
+
+                            if (conversation.new_activity_for_user_b) {
+                                conversation.newActivity = true;
+                            } else {
+                                conversation.newActivity = false;
+                            }
                         }
-
                     });
-
-
                 }).catch(function (error) {
                 });
             },

@@ -20,7 +20,9 @@ class Conversation extends Model
 
     protected $fillable = [
         'user_a_id',
-        'user_b_id'
+        'user_b_id',
+        'new_activity_for_user_a',
+        'new_activity_for_user_b'
     ];
 
     public function getUpdatedAtHumanReadableAttribute()
@@ -65,6 +67,11 @@ class Conversation extends Model
         return $this->belongsTo('App\User', 'user_b_id', 'id')->with(['meta', 'roles', 'images']);
     }
 
+    public function newActivityParticipant()
+    {
+        return $this->belongsTo('App\User', 'new_activity_for_participant_id', 'id');
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -79,5 +86,25 @@ class Conversation extends Model
 
     public function getUpdatedAt() {
         return $this->updated_at;
+    }
+
+    public function setNewActivityForUserA(bool $value)
+    {
+        $this->new_activity_for_user_a = $value;
+    }
+
+    public function setNewActivityForUserB(bool $value)
+    {
+        $this->new_activity_for_user_b = $value;
+    }
+
+    public function getUserAId()
+    {
+        return $this->user_a_id;
+    }
+
+    public function getUserBId()
+    {
+        return $this->user_b_id;
     }
 }

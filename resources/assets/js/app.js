@@ -62,6 +62,13 @@ const app = new Vue({
     },
 
     methods: {
+        setConversationActivityForUser: function (conversation, value) {
+            axios.get('/api/conversations/set-conversation-activity-for-user/' + conversation.currentUser.id + '/' + conversation.otherUser.id + '/' + conversation.currentUser.id + '/' + value).then(
+                response => {
+                    console.log(response);
+                }
+            );
+        },
         getConversationPartners: function () {
             axios.get('/api/conversations/conversation-partner-ids/' + parseInt(DP.authenticatedUser.id)).then(
                 response => {
