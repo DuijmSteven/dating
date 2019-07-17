@@ -53,6 +53,12 @@
     &__item {
         position: relative;
 
+        &.isNewOrHasNewMessage {
+            .PrivateChatManager__item__newMessagesIcon {
+                display: inline-block !important;
+            }
+        }
+
         &__deleteIcon {
             display: none !important;
             position: absolute;
@@ -71,6 +77,15 @@
                 box-shadow: 0 0 4px rgba(0,0,0,0.2);
                 color: #ff5b49;
             }
+        }
+
+        &__newMessagesIcon {
+            display: none !important;
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            font-size: 20px !important;
+            color: #ff5b49;
         }
 
         &:first-child {

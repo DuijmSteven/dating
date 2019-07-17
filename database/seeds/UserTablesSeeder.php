@@ -84,7 +84,7 @@ class UserTablesSeeder extends Seeder
         $createdAdmin = factory(App\User::class)->create([
             'username' => 'admin',
             'email' => 'admin@gmail.com',
-            'password' => Hash::make(env('DB_PASSWORD'))
+            'password' => Hash::make(env('LOCAL_ADMIN_PASSWORD'))
         ]);
 
         $randomCityWithCoordinates = $this->citiesWithCoordinates[rand(0, count($this->citiesWithCoordinates) - 1)];
