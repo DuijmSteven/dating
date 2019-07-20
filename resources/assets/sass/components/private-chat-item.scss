@@ -76,6 +76,7 @@
         align-self: center;
     }
 
+    &__maximize,
     &__minimize,
     &__clear {
         display: flex;
@@ -83,6 +84,7 @@
         cursor: pointer;
 
         .material-icon {
+            &.maximize,
             &.minimize,
             &.clear {
                 align-self: center;
@@ -227,6 +229,41 @@
                 height: -moz-calc(100vh - 132px);
                 height: calc(100vh - 132px);
             }
+        }
+    }
+}
+
+.PrivateChatItem.fullScreen {
+    z-index: 50;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: auto;
+
+    &__minimize {
+        display: none;
+    }
+
+    &__head {
+        height: map_get($privateChatItem, 'headHeightMobileMaximized') + px;
+        padding-top: 21px;
+    }
+
+    &__body {
+        height: -webkit-calc(100% - #{map_get($privateChatItem, 'headHeightMobileMaximized') + px});
+        height: -moz-calc(100% - #{map_get($privateChatItem, 'headHeightMobileMaximized') + px});
+        height: calc(100% - #{map_get($privateChatItem, 'headHeightMobileMaximized') + px});
+
+        &__wrapper {
+            height: -webkit-calc(100% - #{map_get($privateChatItem, 'headHeightMobileMaximized') + px});
+            height: -moz-calc(100% - #{map_get($privateChatItem, 'headHeightMobileMaximized') + px});
+            height: calc(100% - #{map_get($privateChatItem, 'headHeightMobileMaximized') + px});
+        }
+
+        &__content {
+            height: -webkit-calc(100vh - 132px);
+            height: -moz-calc(100vh - 132px);
+            height: calc(100vh - 132px);
         }
     }
 }

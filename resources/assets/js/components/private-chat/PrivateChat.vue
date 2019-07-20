@@ -14,6 +14,13 @@
                 </div>
 
                 <div class="PrivateChatItem__actionIcons">
+                    <div v-on:click="maximize"
+                         :id="'PrivateChatItem__maximize--' + index"
+                         class="PrivateChatItem__maximize"
+
+                    >
+                        <i class="material-icons material-icon maximize">open_in_new</i>
+                    </div>
                     <div v-on:click="toggle"
                          :id="'PrivateChatItem__minimize--' + index"
                          class="PrivateChatItem__minimize"
@@ -254,8 +261,6 @@
                     user: 'user-a'
                 };
 
-                //this.displayedMessages.push(newMessage);
-
                 setTimeout(() => {
                     this.scrollChatToBottom();
                 }, 50);
@@ -332,6 +337,10 @@
                 ).then(
                     response => {}
                 );
+            },
+
+            maximize() {
+                $('.PrivateChatItem--' + this.index).addClass('fullScreen');
             },
 
             fetchUserConversations() {
