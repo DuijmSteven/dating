@@ -258,7 +258,6 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,
         'TargetPay' => TPWeb\TargetPay\TargetPayFacade::class,
-        'Pusher' => Pusher\Pusher::class,
         'Broadcast' => Illuminate\Support\Facades\Broadcast::class,
         'Mailgun' => Bogardo\Mailgun\Facades\Mailgun::class,
         'Mapper' => Cornford\Googlmapper\Facades\MapperFacade::class,

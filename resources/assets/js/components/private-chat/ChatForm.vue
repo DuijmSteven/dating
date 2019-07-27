@@ -8,7 +8,7 @@
                   placeholder="Uw bericht..."
                   v-model.trim="text"
                   v-on:keyup.enter="sendMessage"
-                  @focus="removeNotificationClass"
+                  @focus="removeNotificationClass(); $parent.setConversationActivityForUserFalse()"
         >
         </textarea>
         <div class="PrivateChatItem__textarea__buttons">
@@ -26,7 +26,8 @@
     export default {
         props: [
             'user',
-            'index'
+            'index',
+            'conversation'
         ],
 
         data() {
