@@ -13,6 +13,23 @@
     bottom: 0;
     width: map_get($privateChatItem, width) + px;
 
+    &__textarea__container {
+        position: relative;
+
+         .sendMessage {
+             position: absolute;
+             right: 20px;
+             top: 8px;
+
+             color: #888;
+             cursor: pointer;
+
+             &:hover {
+                 color: #468550;
+             }
+         }
+    }
+
     &__imagePreview {
         padding: 10px;
         text-align: right;
@@ -76,15 +93,27 @@
         align-self: center;
     }
 
+    &__resetMaximize {
+        display: none;
+    }
+
+    &__maximize,
     &__minimize,
     &__clear {
         display: flex;
+    }
 
+    &__maximize,
+    &__minimize,
+    &__clear,
+    &__resetMaximize {
         cursor: pointer;
 
         .material-icon {
+            &.maximize,
             &.minimize,
-            &.clear {
+            &.clear,
+            &.resetMaximize {
                 align-self: center;
                 color: $white;
             }
@@ -227,6 +256,61 @@
                 height: -moz-calc(100vh - 132px);
                 height: calc(100vh - 132px);
             }
+        }
+    }
+}
+
+.PrivateChatItem.fullScreen {
+    z-index: 50;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: auto;
+
+    .PrivateChatItem__resetMaximize {
+        display: flex;
+    }
+
+    .PrivateChatItem__maximize {
+        display: none;
+    }
+
+    .PrivateChatItem__head {
+        height: map_get($privateChatItem, 'headHeightMobileMaximized') + px;
+        padding-top: 21px;
+    }
+
+    .PrivateChatItem__body {
+        height: -webkit-calc(100% - #{map_get($privateChatItem, 'headHeightMobileMaximized') + px});
+        height: -moz-calc(100% - #{map_get($privateChatItem, 'headHeightMobileMaximized') + px});
+        height: calc(100% - #{map_get($privateChatItem, 'headHeightMobileMaximized') + px});
+
+        &__wrapper {
+            height: 100%;
+        }
+
+        &__content {
+            height: 90%;
+        }
+    }
+
+    .PrivateChatItem__textarea__wrapper {
+        height: 10%;
+    }
+
+    &.PrivateChatItem--showingPreview {
+        .PrivateChatItem__body {
+            &__content {
+                height: -webkit-calc(90% - 150px);
+                height: -moz-calc(90% - 150px);
+                height: calc(90% - 150px);
+            }
+        }
+
+        .PrivateChatItem__textarea__wrapper {
+            height: -webkit-calc(10% + 150px);
+            height: -moz-calc(10% + 150px);
+            height: calc(10% + 150px);
         }
     }
 }

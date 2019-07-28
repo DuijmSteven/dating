@@ -4,13 +4,20 @@
             <img v-if="url" :src="url"/>
         </div>
 
-        <textarea id="test123" class="PrivateChatItem__textarea"
-                  placeholder="Uw bericht..."
-                  v-model.trim="text"
-                  v-on:keyup.enter="sendMessage"
-                  @focus="removeNotificationClass"
-        >
-        </textarea>
+        <div class="PrivateChatItem__textarea__container">
+            <textarea id="PrivateChatItem__textarea" class="PrivateChatItem__textarea"
+                      placeholder="Uw bericht..."
+                      v-model.trim="text"
+                      v-on:keyup.enter="sendMessage"
+                      @focus="removeNotificationClass(); $parent.setConversationActivityForUserFalse()"
+            >
+            </textarea>
+
+            <i
+                class="material-icons material-icon sendMessage"
+                v-on:click="sendMessage"
+            >send</i>
+        </div>
         <div class="PrivateChatItem__textarea__buttons">
             <label style="margin-bottom: 0; cursor: pointer">
                 <i class="material-icons">attach_file</i>
@@ -26,7 +33,8 @@
     export default {
         props: [
             'user',
-            'index'
+            'index',
+            'conversation'
         ],
 
         data() {
@@ -38,25 +46,6 @@
         },
 
         mounted: function () {
-/*            var txt = $('.PrivateChatItem__textarea'),
-                hiddenDiv = $(document.createElement('div')),
-                content = null;
-
-            txt.addClass('PrivateChatItem__textarea__textStuff');
-            hiddenDiv.addClass('PrivateChatItem__textarea__hiddenDiv');
-
-            $('.PrivateChatItem__textarea__wrapper').append(hiddenDiv);
-
-            txt.on('keyup', function () {
-
-                content = $(this).val();
-
-                content = content.replace(/\n/g, '<br>');
-                hiddenDiv.html(content + '<br style="line-height: 3px">');
-
-                $(this).css('height', hiddenDiv.height());
-
-            });*/
         },
 
         methods: {
@@ -71,11 +60,17 @@
                     this.file = null;
                     this.url = null;
                 }
+
+                if ($('.PrivateChatItem--' + this.index).hasClass('PrivateChatItem--showingPreview')) {
+                    $('.PrivateChatItem--' + this.index).removeClass('PrivateChatItem--showingPreview');
+                }
             },
 
             previewImage(e) {
                 this.file = e.target.files[0];
                 this.url = URL.createObjectURL(this.file);
+
+                $('.PrivateChatItem--' + this.index).addClass('PrivateChatItem--showingPreview');
             },
 
             removeNotificationClass() {

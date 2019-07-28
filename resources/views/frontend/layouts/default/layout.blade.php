@@ -8,7 +8,9 @@
     <div class="container"
          id="app"
     >
-        @include('frontend.components.alert')
+        {{--@include('frontend.components.alert')--}}
+
+        @include('toast::messages')
 
         @if(isset($sidebarCount) && $sidebarCount > 0)
             <div class="row">

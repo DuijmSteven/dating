@@ -393,8 +393,10 @@ class ConversationManager
         } else {
             if ($conversation->getUserBId() === $userBId) {
                 $conversation->setNewActivityForUserB(true);
+                $conversation->setNewActivityForUserA(false);
             } else {
                 $conversation->setNewActivityForUserA(true);
+                $conversation->setNewActivityForUserB(false);
             }
         }
 

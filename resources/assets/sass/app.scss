@@ -3,15 +3,17 @@
 @import "brand";
 
 // Bootstrap
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap";
 
 // Jquery Autocomplete
-@import "node_modules/jquery-autocomplete/jquery.autocomplete";
+@import "~jquery-autocomplete/jquery.autocomplete";
+
+@import '~vuejs-dialog/dist/vuejs-dialog.min.css';
 
 // Jquery UI theme && datepicker
-@import "node_modules/jquery-ui/themes/base/theme";
-@import "node_modules/jquery-ui/themes/base/datepicker";
-@import "node_modules/jquery-ui/themes/base/autocomplete";
+@import "~jquery-ui/themes/base/theme";
+@import "~jquery-ui/themes/base/datepicker";
+@import "~jquery-ui/themes/base/autocomplete";
 
 @import "scaffolding";
 @import "navbar";
@@ -43,4 +45,16 @@
 .ui-autocomplete.ui-widget.ui-widget-content {
   max-height: 600px;
   overflow: scroll;
+}
+
+.ConfirmDialog {
+  .dg-btn--cancel {
+    background-color: $brand-danger;
+  }
+
+  .dg-btn--ok {
+    background-color: $brand-success;
+    color: $white;
+    border-color: transparent;
+  }
 }

@@ -78,8 +78,9 @@ class ConversationController
                 $conversation->setNewActivityForUserB($value);
             }
 
-            $conversation->setUpdatedAt(Carbon::now());
+            $conversation->timestamps = false;
             $conversation->save();
+            $conversation->timestamps = true;
 
             return JsonResponse::create($conversation);
         } catch (\Exception $exception) {
@@ -101,7 +102,6 @@ class ConversationController
             return JsonResponse::create($exception->getMessage(), 500);
         }
     }
-
 
     public function getConversationManagerState(int $userId)
     {

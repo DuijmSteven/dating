@@ -63,7 +63,7 @@
 
                 <i
                     class="material-icons material-icon PrivateChatManager__item__deleteIcon"
-                    v-on:click="deleteConversation(conversation.id)"
+                    v-on:click="confirmDeleteConversation(conversation.id)"
                     @click.stop="$event.stopPropagation()"
                 >clear</i>
 
@@ -103,6 +103,21 @@
         methods: {
             removeIsNewOrHasNewMessageClass: function (index) {
                 $('#PrivateChatManager__item--' + index).removeClass('isNewOrHasNewMessage');
+            },
+            confirmDeleteConversation: function (conversationId) {
+                this.$dialog.confirm({
+                    title: 'Delete conversation',
+                    body: 'Are you sure you want to delete this conversation?'
+                }, {
+                    customClass: 'ConfirmDialog',
+                    okText: 'Yes',
+                    cancelText: 'No'
+                })
+                    .then(() => {
+                        this.deleteConversation(conversationId);
+                    }).catch(() => {
+                        console.log('Clicked on no')
+                    });
             },
             deleteConversation: function (conversationId) {
                 axios.delete('/api/conversations/' + conversationId).then(response => {
