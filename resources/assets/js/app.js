@@ -9,6 +9,9 @@ require('./bootstrap');
 
 window.Vue = require('vue/dist/vue.js');
 
+import VuejsDialog from 'vuejs-dialog';
+import VuejsDialogMixin from 'vuejs-dialog/dist/vuejs-dialog-mixin.min.js';
+
 
 import VueMq from 'vue-mq';
 import moment from 'moment';
@@ -21,6 +24,8 @@ Vue.use(VueMq, {
         lg: Infinity,
     }
 });
+
+Vue.use(VuejsDialog);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
