@@ -20,7 +20,8 @@
         "bogardo/mailgun": "^5.0",
         "guzzlehttp/guzzle": "^6.3",
         "php-http/guzzle6-adapter": "^1.1",
-        "cornford/googlmapper": "2.*"
+        "cornford/googlmapper": "2.*",
+        "grimthorr/laravel-toast": "^1.1"
     },
     "require-dev": {
         "mockery/mockery": "^1.0",

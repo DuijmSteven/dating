@@ -19,7 +19,14 @@
                          class="PrivateChatItem__maximize"
 
                     >
-                        <i class="material-icons material-icon maximize">open_in_new</i>
+                        <i class="material-icons material-icon maximize">fullscreen</i>
+                    </div>
+                    <div v-on:click="resetMaximize"
+                         :id="'PrivateChatItem__resetMaximize--' + index"
+                         class="PrivateChatItem__resetMaximize"
+
+                    >
+                        <i class="material-icons material-icon resetMaximize">fullscreen_exit</i>
                     </div>
                     <div v-on:click="toggle"
                          :id="'PrivateChatItem__minimize--' + index"
@@ -348,7 +355,15 @@
             maximize() {
                 this.setConversationActivityForUserFalse();
 
+                $('#PrivateChatItem__body--' + this.index).css('display', 'block');
+                $('.PrivateChatItem--' + this.index).removeClass('minimized');
                 $('.PrivateChatItem--' + this.index).addClass('fullScreen');
+            },
+
+            resetMaximize() {
+                this.setConversationActivityForUserFalse();
+
+                $('.PrivateChatItem--' + this.index).removeClass('fullScreen');
             },
 
             fetchUserConversations() {

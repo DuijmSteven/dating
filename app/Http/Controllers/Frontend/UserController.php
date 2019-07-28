@@ -148,6 +148,8 @@ class UserController extends FrontendController
         try {
             $this->peasantManager->updatePeasant($peasantData, $peasantUpdateRequest->route('userId'));
 
+            toast()->message('The user was updated successfully', 'success');
+
             $alerts[] = [
                 'type' => 'success',
                 'message' => 'The peasant was updated successfully'
