@@ -1,7 +1,7 @@
 <template>
     <div
-            @mouseenter="mouseOver()"
-            @mouseleave="mouseLeave()"
+            @mouseenter="preventWindowScroll()"
+            @mouseleave="allowWindowScroll()"
             :class="'PrivateChatItem PrivateChatItem--' + index + ' ' + statusClass"
     >
         <div :id="'PrivateChatItem__head--' + index"
@@ -93,7 +93,8 @@
                 intervalToFetchMessages: undefined,
                 scrollTop: undefined,
                 messagesPerScroll: 6,
-                checkingScroll: false
+                checkingScroll: false,
+                windowScrollPrevented: false
             };
         },
 
@@ -139,24 +140,31 @@
                     this.justCheckedScrollTop = false;
                 }, 200);
             },
-            mouseOver() {
-                this.scrollTop = $(document).scrollTop();
+            preventWindowScroll() {
+                if (this.windowHasScrollbar()) {
+                    this.scrollTop = $(document).scrollTop();
 
-                let $body = $('body');
+                    let $body = $('body');
 
-                if (['xs', 'sm'].includes(this.$mq)) {
-                    $body.css('overflow-y', 'hidden');
-                } else {
+                    if (['xs', 'sm'].includes(this.$mq)) {
+                        $body.css('overflow-y', 'hidden');
+                    } else {
+                        $body.css('overflow-y', 'scroll');
+                    }
+
+                    $body.css('top', -this.scrollTop);
+                    $body.css('position', 'fixed');
                     $body.css('overflow-y', 'scroll');
-                }
 
-                $body.css('top', -this.scrollTop);
-                $body.css('position', 'fixed');
-                $body.css('overflow-y', 'scroll');
+                    this.windowScrollPrevented = true;
+                }
             },
 
-            mouseLeave() {
-                this.resetBrowserScrollPosition();
+            allowWindowScroll() {
+                if (this.windowScrollPrevented) {
+                    this.resetBrowserScrollPosition();
+                    this.windowScrollPrevented = false;
+                }
             },
 
             resetBrowserScrollPosition() {
@@ -173,6 +181,10 @@
                 $(window).scrollTop(this.scrollTop);
 
                 this.scrollTop = undefined;
+            },
+
+            windowHasScrollbar() {
+                return document.documentElement.scrollHeight > $(window).height();
             },
 
             fetchMessagesAndListenToChannel() {
