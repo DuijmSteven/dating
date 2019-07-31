@@ -32,7 +32,7 @@ class BotCreateRequest extends Request
 
         $rules = [
             'username' => 'min:5|max:50|string|required|unique:users',
-            'password' => 'required|min:6',
+            'password' => 'required|min:8',
             'active' => 'required|boolean',
             'dob' => 'required|date_format:Y-m-d',
             'gender' => 'required|in:'. implode(array_keys($userProfileFields['gender']), ','),
