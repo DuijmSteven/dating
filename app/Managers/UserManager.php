@@ -70,6 +70,17 @@ class UserManager
         if (isset($userData['user_images'])) {
             $this->persistImages($userData['user_images'], $userId);
         }
+        
+        if (isset($userData['email_notifications'])) {
+
+            $user = User::with('emailTypes')->where('id', $userId)->get()[0];
+
+            $user->emailTypes()->detach();
+
+            foreach ($userData['email_notifications'] as $emailTypeId) {
+                $user->emailTypes()->attach($emailTypeId);
+            }
+        }
         DB::commit();
     }
 
@@ -319,7 +330,7 @@ class UserManager
             return null;
         }
 
-        $user = User::with('profileImage', 'images', 'meta')->where('id', $user->getId())->get()[0];
+        $user = User::with('profileImage', 'images', 'meta', 'emailTypes')->where('id', $user->getId())->get()[0];
 
         return $user;
     }

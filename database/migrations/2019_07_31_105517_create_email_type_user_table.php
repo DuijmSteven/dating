@@ -16,7 +16,6 @@ class CreateEmailTypeUserTable extends Migration
         Schema::create('email_type_user', function (Blueprint $table) {
             $table->integer('email_type_id')->unsigned();
             $table->integer('user_id')->unsigned();
-            $table->boolean('active');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

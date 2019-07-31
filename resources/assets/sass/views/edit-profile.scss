@@ -8,4 +8,14 @@
         margin-bottom: 5px;
         width: 100%;
     }
+
+    .checkbox.notificationSettingsItem {
+        line-height: 20px;
+
+        .helpText {
+            margin-left: 20px;
+            color: #777;
+            font-size: 15px;
+        }
+    }
 }

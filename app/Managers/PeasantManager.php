@@ -42,7 +42,6 @@ class PeasantManager extends UserManager
     public function updatePeasant(array $peasantData, int $peasantId)
     {
         $peasantData = $this->buildPeasantArrayToPersist($peasantData, 'update');
-
         $this->updateUser($peasantData, $peasantId);
     }
 
@@ -94,6 +93,14 @@ class PeasantManager extends UserManager
         if ($action == 'create') {
             $userDataToPersist['user']['password'] = Hash::make($userDataToPersist['user']['password']);
             $userDataToPersist['user']['role'] = UserConstants::selectableField('role', 'peasant', 'array_flip')['peasant'];
+        }
+
+        if ($action == 'update') {
+            if (isset($peasantData['email_notifications'])) {
+                $userDataToPersist['email_notifications'] = $peasantData['email_notifications'];
+            } else {
+                $userDataToPersist['email_notifications'] = [];
+            }
         }
 
         return $userDataToPersist;

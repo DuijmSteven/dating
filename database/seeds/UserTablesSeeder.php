@@ -105,13 +105,12 @@ class UserTablesSeeder extends Seeder
         ]);
         $adminUserRoleInstance->save();
 
-        $roleUserInstance = new EmailTypeUser([
+/*        $roleUserInstance = new EmailTypeUser([
             'user_id' => $createdAdmin->id,
             'email_type_id' => 1,
-            'active' => 1,
         ]);
 
-        $roleUserInstance->save();
+        $roleUserInstance->save();*/
 
         /* -- Create peasants and bots for all genders -- */
         foreach (['peasant', 'bot'] as $role) {
@@ -189,13 +188,14 @@ class UserTablesSeeder extends Seeder
 
                     $roleUserInstance->save();
 
-                    $roleUserInstance = new EmailTypeUser([
-                        'user_id' => $createdUser->id,
-                        'email_type_id' => 1,
-                        'active' => 1,
-                    ]);
+                    if (rand(0, 1)) {
+                        $roleUserInstance = new EmailTypeUser([
+                            'user_id' => $createdUser->id,
+                            'email_type_id' => 1,
+                        ]);
+                        $roleUserInstance->save();
+                    }
 
-                    $roleUserInstance->save();
                 }
             }
         }
