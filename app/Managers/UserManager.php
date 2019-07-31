@@ -70,7 +70,7 @@ class UserManager
         if (isset($userData['user_images'])) {
             $this->persistImages($userData['user_images'], $userId);
         }
-        
+
         if (isset($userData['email_notifications'])) {
 
             $user = User::with('emailTypes')->where('id', $userId)->get()[0];
