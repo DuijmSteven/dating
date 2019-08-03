@@ -3,17 +3,27 @@
 @section('content')
 
     <h1 style="margin: 0 0 30px; font-size: 25px; line-height: 30px; color: #333333; font-weight: bold; text-align: center">
-        Welkom {{ $user->username }}!
+        Creditpack gekocht!
     </h1>
 
     <p style="font-family: sans-serif; font-weight: normal; margin: 0; Margin-bottom: 15px;">Beste {{ $user->username }},</p>
 
     <p>
-        Bedankt voor je registratie op <b>Altijdsex.nl</b>. Middels de gekozen inloggegevens kun je nu direct inloggen om je profiel compleet te maken.
+        Bedankt voor je aankoop op <b>Altijdsex.nl</b>, deze is in goede orde verwerkt en de gekochte credits zijn direct toegevoegd aan je account.
     </p>
 
     <p>
-        Heb je nog vragen over je account of over de website? Lees de veelgestelde vragen eens of neem gerust contact met ons op!
+        Hieronder zie je een overzicht van jouw bestelling:
+    </p>
+
+    <p>
+        <b>Creditpack</b>: {{ $creditPack->name }} <br>
+        <b>Aantal credits</b>: {{ $creditPack->credits }} <br>
+        <b>Prijs</b>: {{ $creditPack->price }} <br>
+    </p>
+
+    <p>
+        Heb je vragen of opmerkingen over je bestelling? Neem gerust contact met ons op!
     </p>
 
     <p style="font-family: sans-serif; font-weight: normal; margin: 0; Margin-bottom: 15px;">

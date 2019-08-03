@@ -3,18 +3,17 @@
 @section('content')
 
     <h1 style="margin: 0 0 30px; font-size: 25px; line-height: 30px; color: #333333; font-weight: bold; text-align: center">
-        Welkom {{ $user->username }}!
+        Account gedeactiveerd
     </h1>
 
     <p style="font-family: sans-serif; font-weight: normal; margin: 0; Margin-bottom: 15px;">Beste {{ $user->username }},</p>
 
     <p>
-        Bedankt voor je registratie op <b>Altijdsex.nl</b>. Middels de gekozen inloggegevens kun je nu direct inloggen om je profiel compleet te maken.
+        Je account is bij deze per direct gedeactiveerd.
     </p>
 
     <p>
-        Heb je nog vragen over je account of over de website? Lees de veelgestelde vragen eens of neem gerust contact met ons op!
-    </p>
+        Is dit een vergissing of wil je je account in de toekomst nog gebruiken? Neem dan contact met ons op.        </p>
 
     <p style="font-family: sans-serif; font-weight: normal; margin: 0; Margin-bottom: 15px;">
         Met vriendelijke groet,<br>
