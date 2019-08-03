@@ -49,7 +49,7 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-6">
+{{--                        <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="gender">{{ @trans('user_constants.labels.gender') }}</label>
                                 <select name="gender"
@@ -61,12 +61,15 @@
                                                 {{ $user->meta['gender'] === $key ? 'selected' : '' }}
                                                 value="{{ $key }}">{{ @trans('user_constants.gender.' . $key) }}
                                         </option>
+
+
+
                                     @endforeach
                                 </select>
                             </div>
-                        </div>
+                        </div>--}}
 
-                        <div class="col-sm-6">
+{{--                        <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="looking_for_gender">{{ @trans('user_constants.labels.looking_for_gender') }}</label>
                                 <select name="looking_for_gender"
@@ -81,7 +84,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                        </div>
+                        </div>--}}
 
                         <div class="col-xs-12">
                             <hr/>
@@ -206,7 +209,6 @@
                             </div>
                         </div>
 
-
                         <div class="col-xs-12">
                             <hr/>
                         </div>
@@ -221,6 +223,33 @@
                                           rows="10"
                                 >{!! $user->meta['about_me'] !!}</textarea>
                                 @include('helpers.forms.error_message', ['field' => 'about_me'])
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12">
+                            <hr/>
+                        </div>
+
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="email_notification_settings">{{ @trans('edit_profile.email_notification_settings') }}</label>
+
+                                @foreach($availableEmailTypes as $emailType)
+                                    <div class="checkbox notificationSettingsItem">
+                                        <label>
+                                            <input
+                                                type="checkbox"
+                                                value="{{ $emailType->id }}"
+                                                name="email_notifications[]"
+                                                {{ in_array($emailType->id, $userEmailTypeIds) ? 'checked' : '' }}
+                                            >
+                                            {{ @trans('edit_profile.user_email_types.' . $emailType->name) }}
+                                        </label>
+                                        <div class="helpText">
+                                            {{ @trans('edit_profile.user_email_types.' . $emailType->name . '_help') }}
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
 

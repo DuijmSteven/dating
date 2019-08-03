@@ -145,6 +145,10 @@
             border-color: #555555 !important;
         }
 
+        #content-container-cell {
+            padding: 30px 30px;
+        }
+
         @media screen and (min-width: 801px) {
             .email-container {
                 width: 800px;
@@ -201,7 +205,9 @@
             <td style="background-color: #ffffff; border-radius: 4px;">
                 <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                     <tr>
+                        <td id="content-container-cell" style="text-align: justify; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555;">
                             @yield('content')
+                        </td>
                     </tr>
 
                 </table>

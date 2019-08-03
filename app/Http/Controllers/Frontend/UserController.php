@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\EmailType;
 use App\Http\Requests\Admin\Peasants\PeasantUpdateRequest;
 use App\Managers\PeasantManager;
 use App\Managers\UserManager;
@@ -122,7 +123,9 @@ class UserController extends FrontendController
         $viewData = [
             'user' => $this->authenticatedUser,
             'pageHeading' => 'Edit profile',
-            'carbonNow' => Carbon::now()
+            'carbonNow' => Carbon::now(),
+            'availableEmailTypes' => EmailType::all(),
+            'userEmailTypeIds' => $this->authenticatedUser->emailTypes()->pluck('id')->toArray()
         ];
 
         return view(
@@ -149,18 +152,11 @@ class UserController extends FrontendController
             $this->peasantManager->updatePeasant($peasantData, $peasantUpdateRequest->route('userId'));
 
             toast()->message('The user was updated successfully', 'success');
-
-            $alerts[] = [
-                'type' => 'success',
-                'message' => 'The peasant was updated successfully'
-            ];
         } catch (\Exception $exception) {
-            $alerts[] = [
-                'type' => 'error',
-                'message' => 'The peasant was not updated due to an exception.'
-            ];
+            \Log::error($exception);
+            toast()->message($exception->getMessage(), 'error');
         }
 
-        return redirect()->back()->with('alerts', $alerts);
+        return redirect()->back();
     }
 }

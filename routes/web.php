@@ -407,6 +407,12 @@ Route::group([
         Route::get('show-welcome', 'TestController@showWelcomeEmail')
             ->name('test.email.welcome.show');
 
+        Route::get('show-credits-bought', 'TestController@showCreditsBoughtEmail')
+            ->name('test.email.credits-bought.show');
+
+        Route::get('show-deactivated', 'TestController@showDeactivatedEmail')
+            ->name('test.email.deactivated.show');
+
         Route::get('show-message-received', 'TestController@showMessageReceivedEmail')
             ->name('test.email.message-received.show');
 
