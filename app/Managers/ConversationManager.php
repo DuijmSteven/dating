@@ -65,8 +65,6 @@ class ConversationManager
             throw $exception;
         }
 
-        \Log::info($hasAttachment);
-
         if ($hasAttachment) {
             try {
 
@@ -353,7 +351,7 @@ class ConversationManager
     public function getConversationsByUserId(int $userId)
     {
         $conversations = $this->conversation
-            ->with('messages', 'userA', 'userB')
+            ->with('messages', 'userA', 'userB', 'newActivityParticipant')
             ->where('user_a_id', $userId)
             ->orWhere(function ($query) use ($userId) {
                 $query->where('user_b_id', $userId);
@@ -391,7 +389,17 @@ class ConversationManager
                 'user_b_id' => $userBId
             ]);
 
+            $conversation->setNewActivityForUserB(true);
+        } else {
+            if ($conversation->getUserBId() === $userBId) {
+                $conversation->setNewActivityForUserB(true);
+                $conversation->setNewActivityForUserA(false);
+            } else {
+                $conversation->setNewActivityForUserA(true);
+                $conversation->setNewActivityForUserB(false);
+            }
         }
+
         $conversation->setUpdatedAt(Carbon::now());
         $conversation->save();
 

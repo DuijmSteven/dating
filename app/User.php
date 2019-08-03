@@ -170,6 +170,24 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Role');
     }
 
+    /**
+     * Get the user that owns the meta.
+     */
+    public function emailTypes()
+    {
+        return $this->belongsToMany('App\EmailType');
+    }
+
+    public function addEmailType(EmailType $type)
+    {
+        $this->emailTypes()->save($type);   // add friend
+    }
+
+    public function removeEmailType($typeId)
+    {
+        $this->emailTypes()->detach($typeId);   // remove friend
+    }
+
     public function openConversationPartners()
     {
         return $this->belongsToMany(

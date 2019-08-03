@@ -9,8 +9,12 @@ require('./bootstrap');
 
 window.Vue = require('vue/dist/vue.js');
 
+import VuejsDialog from 'vuejs-dialog';
+import VuejsDialogMixin from 'vuejs-dialog/dist/vuejs-dialog-mixin.min.js';
 
-import VueMq from 'vue-mq'
+
+import VueMq from 'vue-mq';
+import moment from 'moment';
 
 Vue.use(VueMq, {
     breakpoints: {
@@ -20,6 +24,8 @@ Vue.use(VueMq, {
         lg: Infinity,
     }
 });
+
+Vue.use(VuejsDialog);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -31,6 +37,12 @@ Vue.component('private-chat-manager', require('./components/private-chat/Private
 Vue.component('private-chat', require('./components/private-chat/PrivateChat.vue'));
 Vue.component('chat-message', require('./components/private-chat/ChatMessage.vue'));
 Vue.component('chat-form', require('./components/private-chat/ChatForm.vue'));
+
+Vue.filter('formatDate', function(value) {
+    if (value) {
+        return moment(String(value)).format('MM/DD/YYYY hh:mm')
+    }
+});
 
 const app = new Vue({
     el: '#app',
@@ -55,6 +67,13 @@ const app = new Vue({
     },
 
     methods: {
+        setConversationActivityForUser: function (conversation, value) {
+            axios.get('/api/conversations/set-conversation-activity-for-user/' + conversation.currentUser.id + '/' + conversation.otherUser.id + '/' + conversation.currentUser.id + '/' + value).then(
+                response => {
+                    console.log(response);
+                }
+            );
+        },
         getConversationPartners: function () {
             axios.get('/api/conversations/conversation-partner-ids/' + parseInt(DP.authenticatedUser.id)).then(
                 response => {

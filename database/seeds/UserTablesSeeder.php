@@ -1,11 +1,12 @@
 <?php
 
+use App\EmailTypeUser;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\RoleUser;
+use Faker\Generator as Faker;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Faker\Generator as Faker;
 
 /**
  * Class UserTablesSeeder
@@ -80,11 +81,12 @@ class UserTablesSeeder extends Seeder
         $accountTypes = UserConstants::selectableField('account_type');
         $accountTypesCount = count($accountTypes);
 
+
         /* -- Create admin user -- */
         $createdAdmin = factory(App\User::class)->create([
             'username' => 'admin',
             'email' => 'admin@gmail.com',
-            'password' => Hash::make(env('DB_PASSWORD'))
+            'password' => bcrypt(env('LOCAL_ADMIN_PASSWORD'))
         ]);
 
         $randomCityWithCoordinates = $this->citiesWithCoordinates[rand(0, count($this->citiesWithCoordinates) - 1)];
@@ -103,6 +105,12 @@ class UserTablesSeeder extends Seeder
         ]);
         $adminUserRoleInstance->save();
 
+/*        $roleUserInstance = new EmailTypeUser([
+            'user_id' => $createdAdmin->id,
+            'email_type_id' => 1,
+        ]);
+
+        $roleUserInstance->save();*/
 
         /* -- Create peasants and bots for all genders -- */
         foreach (['peasant', 'bot'] as $role) {
@@ -179,6 +187,15 @@ class UserTablesSeeder extends Seeder
                     ]);
 
                     $roleUserInstance->save();
+
+                    if (rand(0, 1)) {
+                        $roleUserInstance = new EmailTypeUser([
+                            'user_id' => $createdUser->id,
+                            'email_type_id' => 1,
+                        ]);
+                        $roleUserInstance->save();
+                    }
+
                 }
             }
         }

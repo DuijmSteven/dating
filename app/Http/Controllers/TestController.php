@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Creditpack;
 use App\Mail\Welcome;
 use App\User;
 use Illuminate\Support\Facades\Mail;
@@ -28,9 +29,30 @@ class TestController extends Controller
 
     public function showWelcomeEmail()
     {
-        $user = User::find(1);
+        $user = User::find(2);
 
         return view('emails.welcome', [
+            'user' => $user
+        ]);
+    }
+
+    public function showCreditsBoughtEmail()
+    {
+        $user = User::find(2);
+
+        $creditPack = Creditpack::find(2);
+
+        return view('emails.credits-bought', [
+            'user' => $user,
+            'creditPack' => $creditPack
+        ]);
+    }
+
+    public function showDeactivatedEmail()
+    {
+        $user = User::find(2);
+
+        return view('emails.deactivated', [
             'user' => $user
         ]);
     }
