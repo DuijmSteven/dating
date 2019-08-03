@@ -66,6 +66,10 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $genderlookingForGender = explode("-", $data['lookingFor']);
+        $gender = $genderlookingForGender[0];
+        $lookingFor = $genderlookingForGender[1];
+
         return User::create([
             'username' => $data['username'],
             'email' => $data['email'],
