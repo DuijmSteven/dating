@@ -205,34 +205,56 @@ LP 1
         <div class="form-container">
             <div class="row">
                 <div class="form-box col-md-4 offset-md-4 col-xs-12 offset-xs-0">
-                    <form>
+                    <form method="POST" action="{{ route('register.post') }}">
+                        {{ csrf_field() }}
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label for="inputLookingFor">I am a:</label>
-                                <select class="form-control" id="inputLookingFor">
-                                    <option>Man looking for a Woman</option>
-                                    <option>Woman looking for a Man</option>
-                                    <option>Woman looking for a Woman</option>
-                                    <option>Man looking for a Man</option>
+                                <label for="lookingFor">I am a:</label>
+                                <select class="form-control" id="lookingFor" name="lookingFor">
+                                    <option value="male-female">Man looking for a Woman</option>
+                                    <option value="female-male">Woman looking for a Man</option>
+                                    <option value="female-female">Woman looking for a Woman</option>
+                                    <option value="male-male">Man looking for a Man</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label for="inputName">Name</label>
-                                <input type="text" class="form-control" id="inputName" placeholder="Name">
+                            <div class="form-group col-md-12{{ $errors->has('username') ? ' has-error' : '' }}">
+                                <label for="name">Username</label>
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Username" value="{{ old('username') }}" required autofocus>
+                                @if ($errors->has('username'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('username') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12{{ $errors->has('email') ? ' has-error' : '' }}">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ old('email') }}" required>
+                                @if ($errors->has('email'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12{{ $errors->has('password') ? ' has-error' : '' }}">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                                @if ($errors->has('password'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label for="inputEmail">Email</label>
-                                <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label for="inputPassword4">Password</label>
-                                <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+                                <label for="password-confirm">Confirm Password</label>
+                                <input type="password" class="form-control" id="password-confirm" name="password_confirmation" placeholder="Password" required>
                             </div>
                         </div>
                         <div class="form-row">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Helpers\ApplicationConstants\UserConstants;
 use App\Managers\UserSearchManager;
 use App\Session;
 use Carbon\Carbon;
@@ -54,7 +55,16 @@ class UserSearchController extends FrontendController
         $searchParameters = $userSearchRequest->all();
 
         if (isset($searchParameters['age'])) {
-            [$ageMin, $ageMax] = explode('-', $searchParameters['age']);
+
+            $ageMax = 100;
+
+            $largestAgeLimit = (int) array_keys(UserConstants::$ageGroups)[sizeof(UserConstants::$ageGroups) - 1];
+
+            if ($searchParameters['age'] != $largestAgeLimit) {
+                [$ageMin, $ageMax] = explode('-', $searchParameters['age']);
+            } else {
+                $ageMin = $largestAgeLimit;
+            }
 
             $date = new \DateTime;
             // The "Min" and "Max" are reversed on purpose in their usages, since the resulting date

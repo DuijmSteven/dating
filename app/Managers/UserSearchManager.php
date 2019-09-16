@@ -71,8 +71,6 @@ class UserSearchManager
                 $latInRadians = deg2rad($parameters['lat']);
                 $lngInRadians = deg2rad($parameters['lng']);
 
-                //dd($parameters);
-
                 $angularRadius = $parameters['radius']/6371;
 
                 $latMin = rad2deg($latInRadians - $angularRadius);
