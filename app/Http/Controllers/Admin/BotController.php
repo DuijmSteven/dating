@@ -89,6 +89,8 @@ class BotController extends Controller
                 'message' => 'The bot was created successfully'
             ];
         } catch (\Exception $exception) {
+            \Log::error($exception->getMessage());
+
             $alerts[] = [
                 'type' => 'error',
                 'message' => 'The bot was not created due to an exception.'

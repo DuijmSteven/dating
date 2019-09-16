@@ -91,8 +91,7 @@ Route::group([
 
 /* Articles routes */
 Route::group([
-    'prefix' => 'articles',
-    'middleware' => ['auth']
+    'prefix' => 'articles'
 ], function () {
     Route::get('/', 'Frontend\ArticleController@index')
         ->name('articles.overview');
@@ -374,7 +373,7 @@ Route::group([
         'prefix' => 'conversations'
     ], function () {
         Route::get('{conversationId}', 'Admin\ConversationController@show')
-            ->name('operator-platform.conversations.show');
+                ->name('operator-platform.conversations.show');
 
 
         Route::get('{userAId}/{userBId}', 'Admin\ConversationController@checkIfConversationExists')
