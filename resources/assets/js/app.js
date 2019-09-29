@@ -250,6 +250,16 @@ $(window).ready(function () {
         });
     }
 
+    $('.registerButton').click(function(){
+        $('#loginForm').toggle('fast');
+        $('#registrationForm').toggle('fast');
+    });
+
+    $('.loginButton').click(function(){
+        $('#registrationForm').toggle('fast');
+        $('#loginForm').toggle('fast');
+    });
+
 });
 
 

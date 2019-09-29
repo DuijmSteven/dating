@@ -127,6 +127,11 @@ LP 1
         background-color: #2e3142;
         border-color: #2e3142;
     }
+    .btn-register-login {
+        background-color: #ef4f2b;
+        border-color: #ef4f2b;
+        color: #fff;
+    }
     .carousel-control-next-icon {
         background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%232e3142' viewBox='0 0 8 8'%3e%3cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3e%3c/svg%3e");
     }
@@ -193,7 +198,6 @@ LP 1
             <div class="navbar-brand">
                 <img src="img/site_logos/Altijdsex_LogoBig_Pos.svg" />
             </div>
-            <a href="#" class="btn btn-secondary btn-lg">Login</a>
         </div>
     </header>
     <main>
@@ -205,7 +209,7 @@ LP 1
         <div class="form-container">
             <div class="row">
                 <div class="form-box col-md-4 offset-md-4 col-xs-12 offset-xs-0">
-                    <form method="POST" action="{{ route('register.post') }}">
+                    <form method="POST" action="{{ route('register.post') }}" id="registrationForm" style="display: none">
                         {{ csrf_field() }}
                         <div class="form-row">
                             <div class="form-group col-md-12">
@@ -257,12 +261,63 @@ LP 1
                                 <input type="password" class="form-control" id="password-confirm" name="password_confirmation" placeholder="Password" required>
                             </div>
                         </div>
-                        <div class="form-row">
+                        <div class="form-row margin10">
                             <div class="col-sm-10 submit">
                                 <button type="submit" class="btn btn-secondary btn-lg btn-block">Register Now!</button>
                             </div>
                         </div>
                         <p class="mt-3">By clicking on "Register Now!" you agree to our <a href="#">terms and conditions</a>.</p>
+                        <div class="form-row">
+                            <div class="col-sm-10">
+                                <h4 class="mt-3">Have an account?</h4>
+                            </div>
+                        </div>
+                        <div class="form-row margin10">
+                            <div class="col-sm-10 submit">
+                                <button type="button" class="btn btn-block btn-lg btn-register-login loginButton">Login</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <form method="POST" action="" id="loginForm">
+                        {{ csrf_field() }}
+                        <div class="form-row">
+                            <div class="form-group col-md-12{{ $errors->has('username') ? ' has-error' : '' }}">
+                                <label for="name">Username</label>
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Username" value="{{ old('username') }}" required autofocus>
+                                @if ($errors->has('username'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('username') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12{{ $errors->has('password') ? ' has-error' : '' }}">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                                @if ($errors->has('password'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-row margin10">
+                            <div class="col-sm-10 submit">
+                                <button type="submit" class="btn btn-secondary btn-lg btn-block">Login</button>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-sm-10">
+                                <h4 class="mt-3">Don't have an account?</h4>
+                            </div>
+                        </div>
+                        <div class="form-row margin10">
+                            <div class="col-sm-10 submit">
+                                <button type="button" class="btn btn-block btn-lg btn-register-login registerButton">Register</button>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -305,7 +360,7 @@ LP 1
         </div>
         <div class="container testimonials-container text-center">
             <h3>Success Stories</h3>
-            <div id="carouselExampleIndicators" class="carousel slide mt-5" data-ride="carousel">
+            <div id="carouselExampleControls" class="carousel slide mt-5" data-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <blockquote class="quote">
@@ -353,11 +408,11 @@ LP 1
                         </blockquote>
                     </div>
                 </div>
-                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
                 </a>
-                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
                 </a>
@@ -411,4 +466,5 @@ LP 1
             </div>
         </div>
     </footer>
+    <script src="{{ mix('js/app.js') }}"></script>
 </body>
