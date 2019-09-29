@@ -176,9 +176,6 @@ LP 1
             padding: 1rem 1.5rem;
             font-size: 1.5rem;
         }
-        .carousel-control-prev {
-            left: 20%;
-        }
     }
     @media (max-width: 767.98px) {
         .media-left, .media-right, .media-body {
@@ -363,49 +360,34 @@ LP 1
             <div id="carouselExampleControls" class="carousel slide mt-5" data-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <blockquote class="quote">
-                            <div class="media-left">
-                                <img class="img-wide" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZMuP15kIk0xs6E5c2qgb5O7_AUeSxVVTWenaLaCU7wvPaELV_" alt="">
-                            </div>
-                            <div class="media-body">
+                        <div class="text-center">
+                            <img class="img-wide" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZMuP15kIk0xs6E5c2qgb5O7_AUeSxVVTWenaLaCU7wvPaELV_" alt="">
+                        </div>
+                        <div class="text-center">
+                            <blockquote class="quote">
                                 <p class="q"><q>Thank you for helping me find my soul mate. You made the process of finding someone special very easy and fun. I will recommend this site to all my friends.
                                     </q></p>
 
                                 <p class="cite"><cite class="text-muted">
                                         Ann &amp; Tom Black
                                     </cite></p>
-                            </div>
-                        </blockquote>
+                            </blockquote>
+                        </div>
                     </div>
                     <div class="carousel-item">
-                        <blockquote class="quote">
-                            <div class="media-left">
-                                <img class="img-wide" src="https://www.gannett-cdn.com/-mm-/c15f5f19a52dc82a8ae04998311685d79708bb7f/c=0-160-361-521/local/-/media/2017/12/21/INGroup/Indianapolis/636494825523802717-couple-1.png?width=200&height=200&fit=crop" alt="">
-                            </div>
-                            <div class="media-body">
+                        <div class="text-center">
+                            <img class="img-wide" src="https://www.gannett-cdn.com/-mm-/c15f5f19a52dc82a8ae04998311685d79708bb7f/c=0-160-361-521/local/-/media/2017/12/21/INGroup/Indianapolis/636494825523802717-couple-1.png?width=200&height=200&fit=crop" alt="">
+                        </div>
+                        <div class="text-center">
+                            <blockquote class="quote">
                                 <p class="q"><q>Thank you for helping me find my soul mate. You made the process of finding someone special very easy and fun. I will recommend this site to all my friends.
                                     </q></p>
 
                                 <p class="cite"><cite class="text-muted">
                                         Kate &amp; John
                                     </cite></p>
-                            </div>
-                        </blockquote>
-                    </div>
-                    <div class="carousel-item">
-                        <blockquote class="quote">
-                            <div class="media-left">
-                                <img class="img-wide" src="http://rs40.pbsrc.com/albums/e245/foxracingmotox/BeautifulThings10.jpg~c200" alt="">
-                            </div>
-                            <div class="media-body">
-                                <p class="q"><q>Thank you for helping me find my soul mate. You made the process of finding someone special very easy and fun. I will recommend this site to all my friends.
-                                    </q></p>
-
-                                <p class="cite"><cite class="text-muted">
-                                        Christine &amp; David
-                                    </cite></p>
-                            </div>
-                        </blockquote>
+                            </blockquote>
+                        </div>
                     </div>
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -467,4 +449,7 @@ LP 1
         </div>
     </footer>
     <script src="{{ mix('js/app.js') }}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>$('.carousel').carousel()</script>
+
 </body>
