@@ -5,6 +5,12 @@
 // The Navbar
 //
 // Style guide: Layout.Navbar
+
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+    background-color: transparent;
+    color: #e6e6e6;
+}
+
 .navbar-default {
     border: $navbarBorderWidth + px solid #d3e0e9;
     background-color: $navbarBgColor;
@@ -13,6 +19,7 @@
     .navbar-nav {
         > li {
             > a {
+                background-color: $navbarBgColor;
                 line-height: $navbarLineHeight + px;
                 padding-top: ($navbarHeight - $navbarLineHeight - 2 * $navbarBorderWidth) / 2 + px;
                 padding-bottom: ($navbarHeight - $navbarLineHeight - 2 * $navbarBorderWidth) / 2 + px;
@@ -29,6 +36,36 @@
                     background-color: transparent;
                     color: $sugar;
                 }
+            }
+
+            &.userDropdown {
+                display: flex;
+                flex-direction: row;
+
+                .dropdown-menu {
+                    background-color: $mainColor;
+
+                    a {
+                        padding-top: 5px;
+                        padding-bottom: 5px;
+                        color: $navbarLinkColor;
+                        background-color: darken($mainColor, 2%);
+                        font-size: 16px;
+
+                        &:hover {
+                            background-color: darken($mainColor, 2%);
+                            color: darken($navbarLinkColor, 15%);
+                        }
+                    }
+                }
+
+                &.open {
+                    > a {
+                        background-color: darken($mainColor, 2%);
+                        color: $white;
+                    }
+                }
+
             }
         }
 
@@ -57,7 +94,7 @@
 
     #goToAdmin {
         position: absolute;
-        background-color: rgba(0,0,0,0.2);
+        background-color: rgba(0, 0, 0, 0.2);
         border-radius: 0 0 10px 10px;
         left: 20px;
         border: 1px solid #fff;
@@ -67,6 +104,62 @@
 
         a {
             color: $white;
+        }
+    }
+
+    .userDropdown {
+        position: relative;
+
+        .vertical-separator {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            margin-top: -($navbarHeight - 30)/2 + px;
+            width: 1px;
+            height: $navbarHeight - 30 + px;
+            border-right: 1px solid #5a6982;
+        }
+
+        .caret {
+            top: 10px;
+            position: relative;
+            margin-left: 4px;
+        }
+
+        &__imageContainer {
+            position: absolute;
+            left: 5px;
+            top: $userMenuImageTop + px;
+
+            display: flex;
+            width: $userMenuImageContainerDimension + px;
+            height: $userMenuImageContainerDimension + px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        &__image {
+            position: absolute;
+            width: $userMenuImageDimension + px;
+            left: 50%;
+            margin-left: -$userMenuImageDimension/2 + px;
+            top: 50%;
+            margin-top: -$userMenuImageDimension/2 + px;
+        }
+
+        .dropdown-toggle {
+            display: flex;
+            flex-direction: row;
+            padding-left: 48px;
+        }
+
+        .dropdown-menu {
+            min-width: 300px;
+
+            a {
+                padding-top: 15px !important;
+                padding-bottom: 15px !important;
+            }
         }
     }
 }
