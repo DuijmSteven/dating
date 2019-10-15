@@ -50,7 +50,7 @@
 
         methods: {
             sendMessage() {
-                if (this.text.length > 0) {
+                if (this.text.length > 0 || this.file != null) {
                     this.$emit('message-sent', {
                         text: this.text,
                         attachment: this.file != null ? this.file : null

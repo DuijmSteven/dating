@@ -259,7 +259,7 @@
 
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="user_images">Gallery Images</label>
+                                <label for="user_images">Upload Images</label>
                                 <input type="file" class="form-control" id="user_images" name="user_images[]" multiple>
                             </div>
                         </div>
@@ -276,6 +276,14 @@
                     </div>
                 </div>
             </form>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <hr/>
+                </div>
+            </div>
+
+            <label for="">Manage images</label>
 
             <div class="table-responsive" id="images-section">
                 <table class="table table-striped">
@@ -322,11 +330,6 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td colspan="<?= $tableColumnAmount; ?>">
-                            Other Images
-                        </td>
-                    </tr>
 
                     <?php $userImagesNotProfile = $user->imagesNotProfile; ?>
                     @if(!is_null($userImagesNotProfile))

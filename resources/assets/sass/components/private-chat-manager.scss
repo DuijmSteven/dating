@@ -164,7 +164,16 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            padding-right: 15px;
+            padding-right: 30px;
+            max-width: 190px;
+            position: relative;
+
+            .attachmentIcon {
+                position: absolute;
+                right: 0;
+                top: -2px;
+                font-size: 21px;
+            }
         }
     }
 

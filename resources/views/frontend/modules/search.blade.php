@@ -1,6 +1,6 @@
 <div class="Tile Search JS--Search">
     <div class="Tile__heading Search__heading">
-        Search
+        Search users
     </div>
     <div class="Tile__body Search__body">
         <form method="POST" action="{{ route('users.search.form.get') }}">

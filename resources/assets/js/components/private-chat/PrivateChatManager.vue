@@ -33,11 +33,7 @@
             <div class="force-overflow"></div>
 
             <div v-for="(conversation, index) in conversations"
-                 v-on:click="
-                    $parent.addChat(conversation.currentUser.id, conversation.otherUser.id, '1', true);
-                    $parent.setConversationActivityForUser(conversation, 0);
-                    removeIsNewOrHasNewMessageClass(index);
-                 "
+                 v-on:click="clickedOnConversationItem(conversation, index)"
                  class="PrivateChatManager__item"
                  v-bind:class="{isNewOrHasNewMessage: conversation.newActivity}"
                  :id="'PrivateChatManager__item--' + index"
@@ -58,6 +54,7 @@
                            conversation.messages[conversation.messages.length -1].body :
                            'flirt'
                         }}
+                        <i class="material-icons attachmentIcon" v-if="lastMessageOfConversationHasAttachment(conversation)">attachment</i>
                     </div>
                 </div>
 
@@ -101,6 +98,14 @@
         },
 
         methods: {
+            lastMessageOfConversationHasAttachment: function(conversation) {
+                return conversation.messages[conversation.messages.length -1].attachment != null;
+            },
+            clickedOnConversationItem: function (conversation, itemIndex) {
+                $parent.addChat(conversation.currentUser.id, conversation.otherUser.id, '1', true);
+                $parent.setConversationActivityForUser(conversation, 0);
+                this.removeIsNewOrHasNewMessageClass(itemIndex);
+            },
             removeIsNewOrHasNewMessageClass: function (index) {
                 $('#PrivateChatManager__item--' + index).removeClass('isNewOrHasNewMessage');
             },
