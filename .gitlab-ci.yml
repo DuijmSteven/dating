@@ -12,7 +12,7 @@ deploy_master:
   environment:
     name: production
   script:
-    - ssh opalampo@188.166.18.52:22 "cd /home/opalampo/dating &&
+    - ssh opalampo@188.166.18.52 "cd /home/opalampo/dating &&
         git checkout master &&
         git pull origin master &&
         docker-compose -f docker-compose.production.yml build dating-app &&
