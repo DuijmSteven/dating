@@ -248,6 +248,18 @@ LP 1
         padding-left: 0;
         padding-right: 0;
     }
+
+    .currentMembers .imageWrapper {
+        display: inline-block;
+        overflow: hidden;
+        border-radius: 50%;
+        width: 170px;
+        height: 170px;
+    }
+
+    .currentMembers .imageWrapper img {
+        width: 170px;
+    }
 </style>
 <body class="landingPage">
 <header>
@@ -432,14 +444,18 @@ LP 1
             </div>
         </div>
     </div>
-    <div class="container recent-container text-center">
+    <div class="container recent-container text-center currentMembers">
         <h3>Een greep uit onze leden</h3>
         <div class="row mt-5">
             @foreach ($users as $user)
                 <div class="col-lg-2 col-md-4 col-sm-12">
-                    <a href="{{ route('users.show', ['userId' => $user->getId()])  }}"><img
-                                src="{{ \StorageHelper::profileImageUrl($user) }}" class="img-circle img-wide"
-                                alt=""></a>
+                    <a href="{{ route('users.show', ['userId' => $user->getId()]) }}" class="imageWrapper">
+                        <img
+                            src="{{ \StorageHelper::profileImageUrl($user) }}"
+                            class="img-circle img-wide"
+                            alt=""
+                        >
+                    </a>
                     <h5 class="small">{{ ucfirst($user->username) }}</h5>
                     <p class="offset-0">
                         <small class="text-muted">Age: {{ $user->meta->dob->diffInYears($carbonNow) }}
