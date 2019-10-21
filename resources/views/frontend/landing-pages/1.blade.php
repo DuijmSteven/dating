@@ -426,7 +426,7 @@ LP 1
             personals and browse through 1000s of profiles. If you're looking for long term relationships with beautiful
             women or handsome men, you've come to the right place. Start interacting with singles via chat - join free
             now! </p>
-        <div class="row mt-5 icons">
+        <div class="row icons" style="margin-top: 75px">
             <div class="col-md-4 col-sm-12">
                 <i class="far fa-star"></i>
                 <h4>Satisfied users</h4>
