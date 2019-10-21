@@ -1,0 +1,6 @@
+test_variable:
+  stage: test
+  script:
+    - echo $SSH_PRIVATE_KEY
+  only:
+    - master
