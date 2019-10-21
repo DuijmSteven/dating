@@ -6,6 +6,7 @@
 import isUndefined from "admin-lte/bower_components/moment/src/lib/utils/is-undefined";
 
 require('./bootstrap');
+require('bootstrap-datepicker');
 
 window.Vue = require('vue/dist/vue.js');
 
@@ -44,116 +45,118 @@ Vue.filter('formatDate', function(value) {
     }
 });
 
-const app = new Vue({
-    el: '#app',
+if ($('#app').length > 0) {
+    const app = new Vue({
+        el: '#app',
 
-    props: [],
+        props: [],
 
-    data: {
-        conversationPartners: [],
-        previousConversationPartnersResponse: undefined,
-        currentConversationPartnersResponse: undefined,
-        intervalToFetchPartners: undefined
-    },
-
-    created() {
-        if (!(isUndefined(DP.authenticatedUser) || DP.authenticatedUser == null)) {
-            this.getConversationPartners();
-
-            this.intervalToFetchPartners = setInterval(() => {
-                this.getConversationPartners()
-            }, 5000);
-        }
-    },
-
-    methods: {
-        setConversationActivityForUser: function (conversation, value) {
-            axios.get('/api/conversations/set-conversation-activity-for-user/' + conversation.currentUser.id + '/' + conversation.otherUser.id + '/' + conversation.currentUser.id + '/' + value).then(
-                response => {
-                    console.log(response);
-                }
-            );
+        data: {
+            conversationPartners: [],
+            previousConversationPartnersResponse: undefined,
+            currentConversationPartnersResponse: undefined,
+            intervalToFetchPartners: undefined
         },
-        getConversationPartners: function () {
-            axios.get('/api/conversations/conversation-partner-ids/' + parseInt(DP.authenticatedUser.id)).then(
-                response => {
-                    this.currentConversationPartnersResponse = response;
 
-                    if (this.previousConversationPartnersResponse === undefined || this.previousConversationPartnersResponse.data !== this.currentConversationPartnersResponse.data) {
-                        for (let key in response.data) {
-                            let split = response.data[key].split(':');
+        created() {
+            if (!(isUndefined(DP.authenticatedUser) || DP.authenticatedUser == null)) {
+                this.getConversationPartners();
 
-                            if (!this.conversationPartners.map(partner => partner.id).includes(+split[0])) {
-                                this.addChat(DP.authenticatedUser.id, split[0], split[1]);
+                this.intervalToFetchPartners = setInterval(() => {
+                    this.getConversationPartners()
+                }, 5000);
+            }
+        },
+
+        methods: {
+            setConversationActivityForUser: function (conversation, value) {
+                axios.get('/api/conversations/set-conversation-activity-for-user/' + conversation.currentUser.id + '/' + conversation.otherUser.id + '/' + conversation.currentUser.id + '/' + value).then(
+                    response => {
+                        console.log(response);
+                    }
+                );
+            },
+            getConversationPartners: function () {
+                axios.get('/api/conversations/conversation-partner-ids/' + parseInt(DP.authenticatedUser.id)).then(
+                    response => {
+                        this.currentConversationPartnersResponse = response;
+
+                        if (this.previousConversationPartnersResponse === undefined || this.previousConversationPartnersResponse.data !== this.currentConversationPartnersResponse.data) {
+                            for (let key in response.data) {
+                                let split = response.data[key].split(':');
+
+                                if (!this.conversationPartners.map(partner => partner.id).includes(+split[0])) {
+                                    this.addChat(DP.authenticatedUser.id, split[0], split[1]);
+                                }
                             }
+
+                            this.previousConversationPartnersResponse = this.currentConversationPartnersResponse;
+                        }
+                    }
+                );
+            },
+            addChat: function (currentUserId, userBId, state = '1', persist = false) {
+                if (this.conversationPartners.length > 4) {
+                    return false;
+                }
+
+                let isConversationOpen = false;
+                let openConversationIndex;
+
+                this.conversationPartners.forEach(function (partner, index) {
+                    if (partner.id === userBId) {
+                        isConversationOpen = true;
+                        openConversationIndex = index;
+                    }
+                });
+
+                if (!isConversationOpen) {
+                    this.fetchUserAndAddToPartners(userBId, state, persist);
+                } else {
+                    $('.PrivateChatItem--' + openConversationIndex + ' textarea').focus();
+                    $('.PrivateChatItem').removeClass('focus');
+                    $('.PrivateChatItem--' + openConversationIndex).addClass('focus');
+                }
+            },
+            fetchUserAndAddToPartners: function (userBId, state, persist = false) {
+                axios.get('/api/users/' + userBId).then(
+                    response => {
+                        let partnerData = response.data;
+                        partnerData.chatState = state;
+
+                        this.conversationPartners.push(partnerData);
+
+                        if (persist) {
+                            axios.get(
+                                '/api/conversations/conversation-partner-ids/add/' +
+                                parseInt(DP.authenticatedUser.id) +
+                                '/' +
+                                parseInt(userBId) +
+                                '/' +
+                                state
+                            ).then(
+                                response => {}
+                            );
                         }
 
-                        this.previousConversationPartnersResponse = this.currentConversationPartnersResponse;
+                        this.$nextTick(() => {
+                            $('.PrivateChatItem--' + (this.conversationPartners.length - 1) + ' textarea').focus();
+                            $('.PrivateChatItem').removeClass('focus');
+                            $('.PrivateChatItem--' + (this.conversationPartners.length - 1)).addClass('focus');
+
+
+                            if (state === '1') {
+                                $('#PrivateChatItem__body--' + (this.conversationPartners.length - 1)).css('display', 'block');
+                            } else {
+                                $('#PrivateChatItem__body--' + (this.conversationPartners.length - 1)).css('display', 'none');
+                            }
+                        });
                     }
-                }
-            );
-        },
-        addChat: function (currentUserId, userBId, state = '1', persist = false) {
-            if (this.conversationPartners.length > 4) {
-                return false;
+                );
             }
-
-            let isConversationOpen = false;
-            let openConversationIndex;
-
-            this.conversationPartners.forEach(function (partner, index) {
-                if (partner.id === userBId) {
-                    isConversationOpen = true;
-                    openConversationIndex = index;
-                }
-            });
-
-            if (!isConversationOpen) {
-                this.fetchUserAndAddToPartners(userBId, state, persist);
-            } else {
-                $('.PrivateChatItem--' + openConversationIndex + ' textarea').focus();
-                $('.PrivateChatItem').removeClass('focus');
-                $('.PrivateChatItem--' + openConversationIndex).addClass('focus');
-            }
-        },
-        fetchUserAndAddToPartners: function (userBId, state, persist = false) {
-            axios.get('/api/users/' + userBId).then(
-                response => {
-                    let partnerData = response.data;
-                    partnerData.chatState = state;
-
-                    this.conversationPartners.push(partnerData);
-
-                    if (persist) {
-                        axios.get(
-                            '/api/conversations/conversation-partner-ids/add/' +
-                            parseInt(DP.authenticatedUser.id) +
-                            '/' +
-                            parseInt(userBId) +
-                            '/' +
-                            state
-                        ).then(
-                            response => {}
-                        );
-                    }
-
-                    this.$nextTick(() => {
-                        $('.PrivateChatItem--' + (this.conversationPartners.length - 1) + ' textarea').focus();
-                        $('.PrivateChatItem').removeClass('focus');
-                        $('.PrivateChatItem--' + (this.conversationPartners.length - 1)).addClass('focus');
-
-
-                        if (state === '1') {
-                            $('#PrivateChatItem__body--' + (this.conversationPartners.length - 1)).css('display', 'block');
-                        } else {
-                            $('#PrivateChatItem__body--' + (this.conversationPartners.length - 1)).css('display', 'none');
-                        }
-                    });
-                }
-            );
         }
-    }
-});
+    });
+}
 
 /**
  * Other Javascript
@@ -194,10 +197,21 @@ $(window).ready(function () {
         require('./modules/search');
     }
 
-    if ($('.JS--datepicker__date').length > 0) {
-        $('.datepicker__date').datepicker({
+    if ($('#JS--datepicker__date').length > 0) {
+        $('#JS--datepicker__date').datepicker({
             dateFormat: 'dd-mm-yy'
         });
+    }
+
+    // if ($('.datepicker').length > 0) {
+    //     $('.datepicker').datepicker({
+    //         format: 'dd/mm/yyyy',
+    //     });
+    // }
+
+    // fix user dropdown profile image vertical position
+    if ($('#JS--userDropdown_image').length > 0) {
+        $('#JS--userDropdown_image').css('margin-top', -parseInt($('#JS--userDropdown_image').css('height')) / 2 + 'px');
     }
 
     if ($('.JS--autoCompleteCites').length > 0) {
@@ -250,16 +264,17 @@ $(window).ready(function () {
         });
     }
 
-    $('.registerButton').click(function(){
-        $('#loginForm').toggle('fast');
-        $('#registrationForm').toggle('fast');
-    });
+    if ($('.landingPage').length > 0) {
+        $('#JS--registerButton').click(function(){
+            $('#JS--loginForm').toggle('fast');
+            $('#JS--registrationForm').toggle('fast');
+        });
 
-    $('.loginButton').click(function(){
-        $('#registrationForm').toggle('fast');
-        $('#loginForm').toggle('fast');
-    });
-
+        $('#JS--loginButton').click(function(){
+            $('#JS--registrationForm').toggle('fast');
+            $('#JS--loginForm').toggle('fast');
+        });
+    }
 });
 
 

@@ -42,6 +42,10 @@
                 display: flex;
                 flex-direction: row;
 
+                @media (max-width: $screen-sm-max) {
+                    flex-direction: column;
+                }
+
                 .dropdown-menu {
                     background-color: $mainColor;
 
@@ -49,8 +53,11 @@
                         padding-top: 5px;
                         padding-bottom: 5px;
                         color: $navbarLinkColor;
-                        background-color: darken($mainColor, 2%);
                         font-size: 16px;
+
+                        @media (min-width: $screen-md-min) {
+                            background-color: darken($mainColor, 2%);
+                        }
 
                         &:hover {
                             background-color: darken($mainColor, 2%);
@@ -59,10 +66,12 @@
                     }
                 }
 
-                &.open {
-                    > a {
-                        background-color: darken($mainColor, 2%);
-                        color: $white;
+                @media (min-width: $screen-md-min) {
+                    &.open {
+                        > a {
+                            background-color: darken($mainColor, 2%);
+                            color: $white;
+                        }
                     }
                 }
 
@@ -210,5 +219,16 @@
     }
     .collapse.in {
         display: block !important;
+    }
+
+    .navbar-nav .open .dropdown-menu {
+        position: static;
+        float: none;
+        width: auto;
+        margin-top: 0;
+        background-color: transparent;
+        border: 0;
+        -webkit-box-shadow: none;
+        box-shadow: none;
     }
 }

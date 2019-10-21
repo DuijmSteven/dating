@@ -49,6 +49,19 @@
                             </div>
                         </div>
 
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="dob">Date of birth</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="dob"
+                                       name="dob"
+                                       disabled
+                                       value="{!! $user->meta->dob->format('d M Y') !!}"
+                                >
+                            </div>
+                        </div>
+
 {{--                        <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="gender">{{ @trans('user_constants.labels.gender') }}</label>
