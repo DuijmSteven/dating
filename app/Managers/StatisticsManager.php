@@ -38,7 +38,10 @@ class StatisticsManager
     }
 
     public function messagesSentCountOnDay($date) : int {
-        return ConversationMessage::whereDate('created_at', $date)
+        return ConversationMessage::whereHas('sender.roles', function($query) {
+            $query->where('name', 'peasant')
+                ->orWhere('name', 'bot');
+        })->whereDate('created_at', $date)
             ->count();
     }
 
