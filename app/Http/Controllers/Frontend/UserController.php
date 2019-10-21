@@ -133,7 +133,8 @@ class UserController extends FrontendController
             array_merge(
                 $viewData,
                 [
-                    'title' => 'Edit Profile - '. $this->authenticatedUser->username
+                    'title' => 'Edit Profile - '. $this->authenticatedUser->username,
+                    'carbonInstance' => new Carbon()
                 ]
             )
         );
@@ -151,7 +152,7 @@ class UserController extends FrontendController
         try {
             $this->peasantManager->updatePeasant($peasantData, $peasantUpdateRequest->route('userId'));
 
-            toast()->message('The user was updated successfully', 'success');
+            toast()->message('Your profile has been updated successfully', 'success');
         } catch (\Exception $exception) {
             \Log::error($exception);
             toast()->message($exception->getMessage(), 'error');

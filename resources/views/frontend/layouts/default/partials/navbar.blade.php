@@ -39,6 +39,7 @@
                             <div class="userDropdown__imageContainer">
                                 <img
                                     class="userDropdown__image"
+                                    id="JS--userDropdown_image"
                                     src="{{ \StorageHelper::profileImageUrl($authenticatedUser, true) }}" alt=""
                                 >
                             </div>

@@ -2,10 +2,12 @@
 
 namespace App\Traits\Users;
 
+use App\Helpers\ApplicationConstants\UserConstants;
 use App\User;
 use App\UserAccount;
 use App\UserMeta;
 use App\RoleUser;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -31,8 +33,14 @@ trait RegistersUsers
      */
     public function register(Request $request)
     {
+        \Log::info($request->all());
+
 
         $this->validator($request->all())->validate();
+
+        $genderLookingForGender = explode("-", $request->all()['lookingFor']);
+        $gender = $genderLookingForGender[0];
+        $lookingFor = $genderLookingForGender[1];
 
         DB::beginTransaction();
         try {
@@ -47,7 +55,10 @@ trait RegistersUsers
             /** @var UserMeta $userMetaInstance */
             $userMetaInstance = new UserMeta([
                 'user_id' => $createdUser->id,
-                'country' => 'nl'
+                'country' => 'nl',
+                'gender' => UserConstants::selectableField('gender', 'peasant', 'array_flip')[$gender],
+                'looking_for_gender' => UserConstants::selectableField('gender', 'peasant', 'array_flip')[$lookingFor],
+                'dob' =>  new Carbon($request->all()['dob'])
             ]);
 
             $userMetaInstance->save();

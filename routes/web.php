@@ -47,7 +47,7 @@ Route::group([
 });
 
 Route::group([
-    'prefix' => 'LP',
+    'prefix' => 'welcome',
     'middleware' => ['guest']
 ], function () {
     Route::get('/', 'Frontend\LandingPageController@show')
