@@ -28,7 +28,8 @@ class ArticleController extends FrontendController
             'frontend.articles.show',
             [
                 'title' => 'Article - ' . $article->title . \config('app.name'),
-                'article' => $article
+                'article' => $article,
+                'markdownInstance' => new \Markdown()
             ]
         );
     }
