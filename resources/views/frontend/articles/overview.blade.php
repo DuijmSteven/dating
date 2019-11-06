@@ -37,6 +37,10 @@
 
             <hr>
         @endforeach
+
+        <div class="pagination__container text-right">
+            {!! $articles->render() !!}
+        </div>
     </div>
 </div>
 

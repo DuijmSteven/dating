@@ -45,6 +45,15 @@
                             @endif
                         </div>
                     </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="article_image">Image</label>
+                            <input type="file" class="form-control" id="article_image" name="article_image">
+                            @if ($errors->has('article_image'))
+                                {!! $errors->first('article_image', '<small class="form-error">:message</small>') !!}
+                            @endif
+                        </div>
+                    </div>
                     <div class="col-xs-12">
                         <div class="form-group">
                             <label for="body">Body</label>
