@@ -124,8 +124,6 @@ class UserManager
      */
     private function persistProfileImage(UploadedFile $userProfileImage, int $userId)
     {
-        UserImage::where('user_id', $userId)->get();
-
         try {
             $uploadedUserImageFilename = $this->storageManager->saveUserPhoto($userProfileImage, $userId);
         } catch (\Exception $exception) {

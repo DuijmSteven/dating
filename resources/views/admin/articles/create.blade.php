@@ -9,7 +9,7 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" method="POST" action="{!! route('admin.articles.post') !!}">
+        <form role="form" method="POST" action="{!! route('admin.articles.post') !!}" enctype="multipart/form-data">
             {!! csrf_field() !!}
             <div class="box-body">
                 <div class="row">

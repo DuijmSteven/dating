@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Article;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Articles\ArticleCreateRequest;
 use App\Http\Requests\Admin\Articles\ArticleUpdateRequest;
-use App\Http\Requests\Admin\Faqs\ArticleCreateRequest;
+use App\Managers\ArticleManager;
 use Carbon\Carbon;
+use DB;
 use GrahamCampbell\Markdown\Facades\Markdown;
 
 /**
@@ -15,6 +17,22 @@ use GrahamCampbell\Markdown\Facades\Markdown;
  */
 class ArticleController extends Controller
 {
+    /**
+     * @var ArticleManager
+     */
+    private $articleManager;
+
+    /**
+     * ArticleController constructor.
+     * @param ArticleManager $articleManager
+     */
+    public function __construct(
+      ArticleManager $articleManager
+    ) {
+        $this->articleManager = $articleManager;
+        parent::__construct();
+    }
+
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -99,19 +117,26 @@ class ArticleController extends Controller
      */
     public function post(ArticleCreateRequest $request)
     {
+        DB::beginTransaction();
         try {
-            Article::create($request->all());
+            $this->articleManager->persistArticle($request->all());
 
             $alerts[] = [
                 'type' => 'success',
                 'message' => 'The article was created.'
             ];
         } catch (\Exception $exception) {
+            DB::rollBack();
+
+            \Log::error($exception->getMessage());
+
             $alerts[] = [
                 'type' => 'error',
                 'message' => 'The article was not created due to an exception.'
             ];
         }
+
+        DB::commit();
 
         return redirect()->back()->with('alerts', $alerts);
     }

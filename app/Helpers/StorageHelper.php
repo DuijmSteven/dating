@@ -18,6 +18,12 @@ class StorageHelper
     public static $userImagesDir = 'images/';
 
     /** @var string */
+    public static $articlesDir = 'articles/';
+
+    /** @var string */
+    public static $articleImagesDir = 'images/';
+
+    /** @var string */
     public static $conversationsDir = 'conversations/';
 
     /** @var string */
@@ -41,6 +47,33 @@ class StorageHelper
         if (!Storage::disk('cloud')->exists($filePath)) {
             // TODO
             return 'http://placehold.it/100x150';
+        }
+
+        if ($thumb) {
+            $explodedFilename = explode('.', $filePath);
+
+            $thumbFilePath = $explodedFilename[0] . '_thumb' . '.' . $explodedFilename[1];
+            return self::fileUrl($thumbFilePath);
+        }
+        return self::fileUrl($filePath);
+    }
+
+
+    /**
+     * @param int $articleId
+     * @param string|null $filename
+     * @return mixed
+     * @throws \Exception
+     */
+    public static function articleImageUrl(int $articleId, string $filename = null, $thumb = false)
+    {
+
+        $filePath = self::articleImagesPath($articleId) . $filename;
+
+        if (!Storage::disk('cloud')->exists($filePath)) {
+            \Log::error('Image does not exist on s3 bucket. Article Id: ' . $articleId. ', Filename: ' . $filename);
+            // TODO
+            throw new \Exception('Article image does not exist');
         }
 
         if ($thumb) {
@@ -99,6 +132,15 @@ class StorageHelper
     public static function userImagesPath(int $userId)
     {
         return self::$usersDir . $userId . '/' . self::$userImagesDir;
+    }
+
+    /**
+     * @param int $articleId
+     * @return string
+     */
+    public static function articleImagesPath(int $articleId)
+    {
+        return self::$articlesDir . $articleId . '/' . self::$articleImagesDir;
     }
 
     /**

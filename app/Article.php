@@ -76,7 +76,7 @@ class Article extends Model
      */
     public function setImageFilename(string $imageFilename)
     {
-        $this->imageFilename = $imageFilename;
+        $this->image_filename = $imageFilename;
     }
 
     /**

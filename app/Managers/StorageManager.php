@@ -89,6 +89,15 @@ class StorageManager
         );
     }
 
+    public function saveArticleImage(UploadedFile $uploadedFile, int $articleId, $location = 'cloud')
+    {
+        return $this->saveFile(
+            $uploadedFile,
+            \StorageHelper::articleImagesPath($articleId),
+            $location
+        );
+    }
+
     public function saveConversationImage(UploadedFile $uploadedFile, int $conversationId, $location = 'cloud')
     {
         return $this->saveFile(

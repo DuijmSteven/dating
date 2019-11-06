@@ -28,6 +28,7 @@
                                 <th>Title</th>
                                 <th>Body</th>
                                 <th>Status</th>
+                                <th>Image</th>
                                 <th class="no-wrap">Created at</th>
                                 <th>Actions</th>
                             </tr>
@@ -39,6 +40,13 @@
                                     <td>{{ $article->title }}</td>
                                     <td>{!! $article->body !!}</td>
                                     <td>{{ \App\Article::$statuses[$article->status] }}</td>
+                                    <td>
+                                        @if($article->image_filename)
+                                            <a href="{!! \StorageHelper::articleImageUrl($article->id, $article->image_filename) !!}">
+                                                <img width="120" src="{!! \StorageHelper::articleImageUrl($article->id, $article->image_filename, true) !!}" alt="">
+                                            </a>
+                                        @endif
+                                    </td>
                                     <td class="no-wrap">{{ $article->created_at->format('d-m-Y H:i:s') }}</td>
                                     <td class="action-buttons">
                                         <a href="{{ route('admin.articles.edit', ['articleId' => $article->id]) }}"

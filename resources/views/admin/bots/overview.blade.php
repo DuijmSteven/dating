@@ -36,7 +36,7 @@
                                 <tr>
                                     <td>{!! $bot->id !!}</td>
                                     <td>
-                                        <a href="">
+                                        <a href="{!! \StorageHelper::profileImageUrl($bot) !!}">
                                             <img width="120" src="{!! \StorageHelper::profileImageUrl($bot, true) !!}" alt="">
                                         </a>
                                     </td>
