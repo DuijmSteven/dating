@@ -48,7 +48,7 @@ LP 1
     }
 
     .form-container {
-        margin-top: -20rem;
+        margin-top: -13rem;
         max-width: 1200px;
         margin-right: auto;
         margin-left: auto;
@@ -260,6 +260,7 @@ LP 1
     .currentMembers .imageWrapper img {
         width: 170px;
     }
+
 </style>
 <body class="landingPage">
 <header>
@@ -352,20 +353,20 @@ LP 1
                                    name="password_confirmation" placeholder="Password" required>
                         </div>
                     </div>
-                    <div class="form-row margin10">
-                        <div class="col-sm-10 submit">
+                    <div class="form-row">
+                        <div class="col-sm-12 submit">
                             <button type="submit" class="btn btn-secondary btn-lg btn-block">Register Now!</button>
                         </div>
                     </div>
                     <p class="mt-3">By clicking on "Register Now!" you agree to our <a href="#">terms and conditions</a>.
                     </p>
-                    <div class="form-row">
+                    <div class="form-row" style="margin-top: 20px">
                         <div class="col-sm-10">
                             <h4 class="mt-3">Have an account?</h4>
                         </div>
                     </div>
-                    <div class="form-row margin10">
-                        <div class="col-sm-10 submit">
+                    <div class="form-row">
+                        <div class="col-sm-12 submit">
                             <button id="JS--loginButton" type="button"
                                     class="btn btn-block btn-lg btn-register-login loginButton">Login
                             </button>
@@ -399,18 +400,18 @@ LP 1
                             @endif
                         </div>
                     </div>
-                    <div class="form-row margin10">
-                        <div class="col-sm-10 submit">
+                    <div class="form-row">
+                        <div class="col-sm-12 submit">
                             <button type="submit" class="btn btn-secondary btn-lg btn-block">Login</button>
                         </div>
                     </div>
-                    <div class="form-row">
+                    <div class="form-row" style="margin-top: 20px">
                         <div class="col-sm-10">
                             <h4 class="mt-3">Don't have an account?</h4>
                         </div>
                     </div>
-                    <div class="form-row margin10">
-                        <div class="col-sm-10 submit">
+                    <div class="form-row">
+                        <div class="col-sm-12 submit">
                             <button id="JS--registerButton" type="button"
                                     class="btn btn-block btn-lg btn-register-login registerButton">Register
                             </button>
