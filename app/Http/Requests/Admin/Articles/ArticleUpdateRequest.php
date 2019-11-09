@@ -29,9 +29,11 @@ class ArticleUpdateRequest extends Request
     public function rules()
     {
         return [
+            'meta_description' => 'string|required',
             'title' => 'string|required',
             'body' => 'required',
-            'status' => 'integer|required'
+            'status' => 'integer|required',
+            'article_image' => 'image|max:4000'
         ];
     }
 }

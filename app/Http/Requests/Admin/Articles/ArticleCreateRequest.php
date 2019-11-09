@@ -32,7 +32,7 @@ class ArticleCreateRequest extends Request
             'title' => 'string|required',
             'body' => 'required',
             'status' => 'integer|required',
-            'article_image' => 'image|max:4000'
+            'article_image' => 'image|max:4000|required'
         ];
     }
 }

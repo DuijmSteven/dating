@@ -55,12 +55,54 @@ class ArticleManager
         if (isset($articleData['article_image']) && ($articleData['article_image'] instanceof UploadedFile)) {
             try {
                 $uploadedArticleImageFilename = $this->storageManager->saveArticleImage($articleData['article_image'], $createdArticle->getId());
+
+                $createdArticle->setImageFilename($uploadedArticleImageFilename);
             } catch (\Exception $exception) {
+                if ($this->storageManager->fileExists($uploadedArticleImageFilename, \StorageHelper::articleImagesPath($createdArticle->getId()))) {
+                    $this->storageManager->deleteArticleImage($createdArticle->getId(), $uploadedArticleImageFilename);
+                }
+
                 throw $exception;
             }
         }
 
         $createdArticle->setImageFilename($uploadedArticleImageFilename);
         $createdArticle->save();
+    }
+
+    /**
+     * @param int $articleId
+     * @param array $articleData
+     * @throws \Exception
+     */
+    public function updateArticle(int $articleId, array $articleData)
+    {
+        try {
+            /** @var Article $article */
+            $article = Article::find($articleId);
+            $article->setTitle($articleData['title']);
+            $article->setBody($articleData['body']);
+            $article->setMetaDescription($articleData['meta_description']);
+            $article->setStatus($articleData['status']);
+
+        } catch (\Exception $exception) {
+            throw $exception;
+        }
+
+        if (isset($articleData['article_image']) && ($articleData['article_image'] instanceof UploadedFile)) {
+            try {
+                if ($this->storageManager->fileExists($article->getImageFilename(), \StorageHelper::articleImagesPath($article->getId()))) {
+                    $this->storageManager->deleteArticleImage($article->getId(), $article->getImageFilename());
+                }
+
+                $uploadedArticleImageFilename = $this->storageManager->saveArticleImage($articleData['article_image'], $article->getId());
+
+                $article->setImageFilename($uploadedArticleImageFilename);
+            } catch (\Exception $exception) {
+                throw $exception;
+            }
+        }
+
+        $article->save();
     }
 }

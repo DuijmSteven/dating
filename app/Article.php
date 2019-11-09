@@ -68,7 +68,7 @@ class Article extends Model
      */
     public function getImageFilename()
     {
-        return $this->body;
+        return $this->image_filename;
     }
 
     /**

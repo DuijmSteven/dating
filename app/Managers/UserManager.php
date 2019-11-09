@@ -313,7 +313,7 @@ class UserManager
         DB::commit();
 
         foreach ($user->images as $image) {
-            $this->storageManager->deleteImage($image->user_id, $image->filename);
+            $this->storageManager->deleteUserImage($image->user_id, $image->filename);
         }
     }
 

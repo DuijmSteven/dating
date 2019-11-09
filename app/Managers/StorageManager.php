@@ -98,6 +98,25 @@ class StorageManager
         );
     }
 
+    /**
+     * @param int $articleId
+     * @param string $filename
+     * @return bool
+     */
+    public function deleteArticleImage(int $articleId, string $filename)
+    {
+        if (Storage::disk('cloud')->exists(\StorageHelper::articleImagesPath($articleId) . $filename)) {
+            Storage::disk('cloud')->delete(\StorageHelper::articleImagesPath($articleId) . $filename);
+
+            $thumbFilenameParts = explode('.', $filename);
+            $thumbFilename = $thumbFilenameParts[0] . '_thumb' . '.' . $thumbFilenameParts[1];
+
+            return Storage::disk('cloud')->delete(\StorageHelper::articleImagesPath($articleId) . $thumbFilename);
+        }
+
+        return false;
+    }
+
     public function saveConversationImage(UploadedFile $uploadedFile, int $conversationId, $location = 'cloud')
     {
         return $this->saveFile(
@@ -112,12 +131,17 @@ class StorageManager
      * @param string $filename
      * @return bool
      */
-    public function deleteImage(int $userId, string $filename)
+    public function deleteUserImage(int $userId, string $filename)
     {
         if (Storage::disk('cloud')->exists(\StorageHelper::userImagesPath($userId) . $filename)) {
-            $deleted = Storage::disk('cloud')->delete(\StorageHelper::userImagesPath($userId) . $filename);
-            return $deleted;
+            Storage::disk('cloud')->delete(\StorageHelper::userImagesPath($userId) . $filename);
+
+            $thumbFilenameParts = explode('.', $filename);
+            $thumbFilename = $thumbFilenameParts[0] . '_thumb' . '.' . $thumbFilenameParts[1];
+
+            return Storage::disk('cloud')->delete(\StorageHelper::userImagesPath($userId) . $thumbFilename);
         }
+
         return false;
     }
 

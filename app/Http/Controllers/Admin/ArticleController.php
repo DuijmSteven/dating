@@ -149,8 +149,7 @@ class ArticleController extends Controller
     public function update(ArticleUpdateRequest $request, int $articleId)
     {
         try {
-            $article = Article::find($articleId);
-            $article->update($request->all());
+            $this->articleManager->updateArticle($articleId, $request->all());
 
             $alerts[] = [
                 'type' => 'success',
