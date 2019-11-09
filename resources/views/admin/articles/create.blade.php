@@ -9,7 +9,7 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" method="POST" action="{!! route('admin.articles.post') !!}">
+        <form role="form" method="POST" action="{!! route('admin.articles.post') !!}" enctype="multipart/form-data">
             {!! csrf_field() !!}
             <div class="box-body">
                 <div class="row">
@@ -42,6 +42,15 @@
                             </select>
                             @if ($errors->has('status'))
                                 {!! $errors->first('status', '<small class="form-error">:message</small>') !!}
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="article_image">Image</label>
+                            <input type="file" class="form-control" id="article_image" name="article_image">
+                            @if ($errors->has('article_image'))
+                                {!! $errors->first('article_image', '<small class="form-error">:message</small>') !!}
                             @endif
                         </div>
                     </div>

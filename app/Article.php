@@ -14,7 +14,8 @@ class Article extends Model
         'title',
         'body',
         'status',
-        'meta_description'
+        'meta_description',
+        'image_filename'
     ];
 
     public static $statuses = [
@@ -60,6 +61,22 @@ class Article extends Model
     public function setBody(string $body)
     {
         $this->body = $body;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImageFilename()
+    {
+        return $this->image_filename;
+    }
+
+    /**
+     * @param string $body
+     */
+    public function setImageFilename(string $imageFilename)
+    {
+        $this->image_filename = $imageFilename;
     }
 
     /**

@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use Illuminate\Http\Request;
 use App\Article;
 
 class ArticleController extends FrontendController
 {
     public function index()
     {
-        $articles = Article::orderBy('created_at', 'desc')->get();
+        $articles = Article::orderBy('created_at', 'desc')->paginate(10);
 
         return view(
             'frontend.articles.overview',

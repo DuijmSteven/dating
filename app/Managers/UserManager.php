@@ -124,8 +124,6 @@ class UserManager
      */
     private function persistProfileImage(UploadedFile $userProfileImage, int $userId)
     {
-        UserImage::where('user_id', $userId)->get();
-
         try {
             $uploadedUserImageFilename = $this->storageManager->saveUserPhoto($userProfileImage, $userId);
         } catch (\Exception $exception) {
@@ -315,7 +313,7 @@ class UserManager
         DB::commit();
 
         foreach ($user->images as $image) {
-            $this->storageManager->deleteImage($image->user_id, $image->filename);
+            $this->storageManager->deleteUserImage($image->user_id, $image->filename);
         }
     }
 

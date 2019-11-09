@@ -9,7 +9,7 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" method="POST" action="{!! route('admin.articles.update', ['articleId' => $article->getId()]) !!}">
+        <form role="form" method="POST" action="{!! route('admin.articles.update', ['articleId' => $article->getId()]) !!}" enctype="multipart/form-data">
             {!! csrf_field() !!}
             {!! method_field('PUT') !!}
             <div class="box-body">
@@ -45,6 +45,19 @@
                                 {!! $errors->first('status', '<small class="form-error">:message</small>') !!}
                             @endif
                         </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="article_image">Image</label>
+                            <input type="file" class="form-control" id="article_image" name="article_image">
+                            @if ($errors->has('article_image'))
+                                {!! $errors->first('article_image', '<small class="form-error">:message</small>') !!}
+                            @endif
+                        </div>
+
+                        <h4>Image preview</h4>
+                        <img class="Article__image" src="{!! \StorageHelper::articleImageUrl($article->id, $article->image_filename, true) !!}" alt="Article image">
+
                     </div>
                     <div class="col-xs-12">
                         <div class="form-group">
