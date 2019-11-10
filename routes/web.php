@@ -139,6 +139,12 @@ Route::group([
     ->name('payments.initiate');
 });
 
+Route::get('privacy', 'Frontend\MiscController@showPrivacy')
+    ->name('privacy.show');
+
+Route::get('faq', 'Frontend\MiscController@showFaq')
+    ->name('faq.show');
+
 Route::group([
     'prefix' => 'admin',
     'middleware' => ['admin']

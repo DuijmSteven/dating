@@ -30,7 +30,9 @@ class FaqUpdateRequest extends Request
         return [
             'title' => 'string|required',
             'body' => 'required',
-            'status' => 'integer|required'
+            'section' => 'string|required',
+            'status' => 'integer|required',
+            'priority' => 'integer|required'
         ];
     }
 }
