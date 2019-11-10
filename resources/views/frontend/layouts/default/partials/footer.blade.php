@@ -15,7 +15,7 @@
                 <h4 class="Footer__section-title">Klantenservice</h4>
                 <ul class="Footer__section-list">
                     <li class="Footer__section-listItem">
-                        <a href="">Veelgestelde vragen</a>
+                        <a href="{{ route('faq.show') }}">Veelgestelde vragen</a>
                     </li>
                 </ul>
             </div>
@@ -26,6 +26,9 @@
                 <ul class="Footer__section-list">
                     <li class="Footer__section-listItem">
                         <a href="{{ route('contact.get') }}">Bedrijfsgegevens</a>
+                    </li>
+                    <li class="Footer__section-listItem">
+                        <a href="{{ route('contact.get') }}">Contact</a>
                     </li>
                 </ul>
             </div>
@@ -38,7 +41,7 @@
                         <a href="">Algemene Voorwarden</a>
                     </li>
                     <li class="Footer__section-listItem">
-                        <a href="">Privacybeleid</a>
+                        <a href="{{ route('privacy.show') }}">Privacybeleid</a>
                     </li>
                 </ul>
             </div>

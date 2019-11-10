@@ -31,7 +31,8 @@ class FaqCreateRequest extends Request
             'section' => 'string|required',
             'title' => 'string|required',
             'body' => 'required',
-            'status' => 'integer|required'
+            'status' => 'integer|required',
+            'priority' => 'integer|required'
         ];
     }
 }

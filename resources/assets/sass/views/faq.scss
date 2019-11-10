@@ -1,0 +1,11 @@
+.Faq {
+    &__guide {
+        &__section {
+            font-weight: 400
+        }
+
+        &__list {
+            list-style-type: lower-alpha;
+        }
+    }
+}

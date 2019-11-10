@@ -55,7 +55,6 @@ class ArticleManager
         if (isset($articleData['article_image']) && ($articleData['article_image'] instanceof UploadedFile)) {
             try {
                 $uploadedArticleImageFilename = $this->storageManager->saveArticleImage($articleData['article_image'], $createdArticle->getId());
-
                 $createdArticle->setImageFilename($uploadedArticleImageFilename);
             } catch (\Exception $exception) {
                 if ($this->storageManager->fileExists($uploadedArticleImageFilename, \StorageHelper::articleImagesPath($createdArticle->getId()))) {
@@ -68,6 +67,8 @@ class ArticleManager
 
         $createdArticle->setImageFilename($uploadedArticleImageFilename);
         $createdArticle->save();
+
+
     }
 
     /**

@@ -62,6 +62,20 @@
                             @endif
                         </div>
                     </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="status">Priority</label>
+                            <input type="number"
+                                   name="priority"
+                                   required
+                                   class="form-control"
+                                   value="{{ $faq->getPriority() }}"
+                            >
+                            @if ($errors->has('priority'))
+                                {!! $errors->first('priority', '<small class="form-error">:priority</small>') !!}
+                            @endif
+                        </div>
+                    </div>
                     <div class="col-xs-12">
                         <div class="form-group">
                             <label for="body">Body</label>

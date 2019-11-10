@@ -15,6 +15,7 @@ class Faq extends Model
         'title',
         'body',
         'status',
+        'priority'
     ];
 
     public static $statuses = [
@@ -92,6 +93,22 @@ class Faq extends Model
     public function setStatus(string $status)
     {
         $this->status = $status;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPriority()
+    {
+        return $this->priority;
+    }
+
+    /**
+     * @param string $priority
+     */
+    public function setPriority(string $priority)
+    {
+        $this->priority = $priority;
     }
 
     public function getCreatedAt() {
