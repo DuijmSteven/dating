@@ -43,11 +43,11 @@ $bodyBgColor: $earlGrey;
 $borderColor: $bodyBgColor;
 
 $roundImageDimensions: (
-    'xs': 30,
-    'sm': 40, // this is not to be changed
-    'md': 80,
-    'lg': 150,
-    'xl': 250,
+        'xs': 30,
+        'sm': 40, // this is not to be changed
+        'md': 80,
+        'lg': 150,
+        'xl': 250,
 );
 
 // layout tweaks
@@ -56,8 +56,8 @@ $borderWidth: 1;
 
 // font tweaks
 $fontSize: (
-    'body-mobile': 16,
-    'body-desktop': 17
+        'body-mobile': 16,
+        'body-desktop': 17
 );
 
 // ---------------- Components & Modules ---------------
@@ -80,198 +80,201 @@ $footerLinkTextColor: $lightBlueDull;
 // Tile
 $tileBgColor: $white;
 $tileHeading: (
-    'padding': 15,
-    'fontSize': 14,
-    'fontColor': $mainColor,
-    'textAlign': center,
-    'borderWidth': 2
+        'padding': 15,
+        'fontSize': 14,
+        'fontColor': $mainColor,
+        'textAlign': center,
+        'borderWidth': 2
 );
 
 $tileBody: (
-    'padding': 35
+        'padding': 35
 );
 
 $tileBodyArticles: (
-    'padding': 35
+        'padding': 35
 );
 
 // User-activity
 $userActivityHeading: (
-    'textAlign': left
+        'textAlign': left
 );
 
 $userActivityProfileImage: (
-    'width': map_get($roundImageDimensions, sm),
-    'height': map_get($roundImageDimensions, sm)
+        'width': map_get($roundImageDimensions, sm),
+        'height': map_get($roundImageDimensions, sm)
 );
 
 // Online-users
 $onlineUsersItem: (
-    'textAlign': left,
-    'fontSize': 12,
-    'marginBottom': 10,
+        'textAlign': left,
+        'fontSize': 12,
+        'marginBottom': 10,
 );
 
 // Shoutbox
 $shoutboxHeight: 600;
 
 $shoutboxItem: (
-    'text-align': left,
-    'font-size': 12,
-    'margin-bottom': 10,
+        'text-align': left,
+        'font-size': 12,
+        'margin-bottom': 10,
 );
 
 $shoutboxControls: (
-    'border-top': 2px solid #f2f2f2,
-    'background-color': #fff,
-    'height': 156
+        'border-top': 2px solid #f2f2f2,
+        'background-color': #fff,
+        'height': 156
 );
 
 $shoutboxItemTextarea: (
-    'background-color': #f2f2f2,
-    'border-radius': $borderRadius,
-    'font-color': $slate,
-    'font-size': 12
+        'background-color': #f2f2f2,
+        'border-radius': $borderRadius,
+        'font-color': $slate,
+        'font-size': 12
 );
 
 $shoutboxItemProfileImage: (
-    width: map_get($roundImageDimensions, xs),
-    height: map_get($roundImageDimensions, xs)
+        width: map_get($roundImageDimensions, xs),
+        height: map_get($roundImageDimensions, xs)
 );
 
 $shoutboxItemBubble: (
-    background-color: #f2f2f2,
-    border-radius: $borderRadius,
-    padding: 5px 7px 9px 7px,
-    border: 1px solid #e6e6e6,
-    font-size: 12
+        background-color: #f2f2f2,
+        border-radius: $borderRadius,
+        padding: 5px 7px 9px 7px,
+        border: 1px solid #e6e6e6,
+        font-size: 12
 );
 
 // User-account
 $userAccountProfileImage: (
-    'width': map_get($roundImageDimensions, sm),
-    'height': map_get($roundImageDimensions, sm),
-    'border-radius': 50%,
-    'padding-top': 10
+        'width': map_get($roundImageDimensions, sm),
+        'height': map_get($roundImageDimensions, sm),
+        'border-radius': 50%,
+        'padding-top': 10
 );
 
 $userAccountUsername: (
-    'font-size': 14,
-    'font-color': $mainColor,
-    'padding-top': 10,
-    'padding-bottom': 10
+        'font-size': 14,
+        'font-color': $mainColor,
+        'padding-top': 10,
+        'padding-bottom': 10
 );
 
 // Footer
 $footerBgColor: $dark;
 $footerLogo: (
-    'height': $logoHeight + px
+        'height': $logoHeight + px
 );
 
 // Alerts
 $alertSuccess: (
-    'bgColor': $light-teal,
-    'font-color': $topaz,
-    'border-color': $topaz,
-    'dismiss-color': $topaz
+        'bgColor': $light-teal,
+        'font-color': $topaz,
+        'border-color': $topaz,
+        'dismiss-color': $topaz
 );
 
 $alertInfo: (
-    'bgColor': $skyBlue,
-    'font-color': $darkSkyBlue,
-    'border-color': $darkSkyBlue,
-    'dismiss-color': $darkSkyBlue
+        'bgColor': $skyBlue,
+        'font-color': $darkSkyBlue,
+        'border-color': $darkSkyBlue,
+        'dismiss-color': $darkSkyBlue
 );
 
 $alertWarning: (
-    'bgColor': $yellowLight,
-    'font-color': $squash,
-    'border-color': $squash,
-    'dismiss-color': $squash
+        'bgColor': $yellowLight,
+        'font-color': $squash,
+        'border-color': $squash,
+        'dismiss-color': $squash
 );
 
 $alertDanger: (
-    'bgColor': $salmon,
-    'font-color': $tomato,
-    'border-color': $tomato,
-    'dismiss-color': $tomato
+        'bgColor': $salmon,
+        'font-color': $tomato,
+        'border-color': $tomato,
+        'dismiss-color': $tomato
 );
 
 // Buttons
 $button: (
-    'font-color': $white,
-    'height': 44,
-    'border-radius': 2,
-    'border-width': 1,
-    'border-color': #ccc,
-    'font-size': 14,
-    'line-height': 1.5,
-    'box-shadow__active': inset 0 1px 3px 0 rgba(0, 0, 0, 0.25)
+        'font-color': $white,
+        'height': 44,
+        'border-radius': 2,
+        'border-width': 1,
+        'border-color': #ccc,
+        'font-size': 14,
+        'font-weight': 400,
+        'line-height': 1.5,
+        'box-shadow__active': inset 0 1px 3px 0 rgba(0, 0, 0, 0.25)
 );
 
 $defaultButton: (
-    'background-color': $white,
-    'font-color': #555,
-    'background-color__hover': $lightGrey,
-    'background-color__active': $lightGrey
+        'background-color': $white,
+        'border-color': $white,
+        'font-color': #555,
+        'background-color__hover': $lightGrey,
+        'background-color__active': $lightGrey
 );
 
 $primaryButton: (
-    'background-color': $slate,
-    'background-color__hover': $slateLight,
-    'background-color__active': $slate
+        'background-color': darken($slate, 10%),
+        'border-color': $slate,
+        'background-color__hover': $slateLight,
+        'background-color__active': $slate
 );
 
 $successButton: (
-    'background-color': $topaz,
-    'background-color__hover': $topazLight,
-    'background-color__active': $topaz
+        'background-color': $topaz,
+        'background-color__hover': $topazLight,
+        'background-color__active': $topaz
 );
 
 $infoButton: (
-    'background-color': $babyBlue,
-    'background-color__hover': $babyBlueLight,
-    'background-color__active': $babyBlue
+        'background-color': $babyBlue,
+        'background-color__hover': $babyBlueLight,
+        'background-color__active': $babyBlue
 );
 
 $warningButton: (
-    'background-color': $squash,
-    'background-color__hover': $squashLight,
-    'background-color__active': $squash
+        'background-color': $squash,
+        'background-color__hover': $squashLight,
+        'background-color__active': $squash
 );
 
 $dangerButton: (
-    'background-color': $tomato,
-    'background-color__hover': $tomatoLight,
-    'background-color__active': $tomato
+        'background-color': $tomato,
+        'background-color__hover': $tomatoLight,
+        'background-color__active': $tomato
 );
 
 // Search
 $searchItem: (
-    'font-size': 14,
-    'font-color': $slate
+        'font-size': 14,
+        'font-color': $slate
 );
 
 // User-profile
 $userProfileItem: (
-    'icon-color': $slate,
-    'font-size': 14
+        'icon-color': $slate,
+        'font-size': 14
 );
 
 // Chat
 $privateChatItem: (
-    'width': 320,
-    'headHeightMobileMaximized': 70
+        'width': 320,
+        'headHeightMobileMaximized': 70
 );
 
 $privateChatManager: (
-    'headBackGroundColor': $mainColor,
-    'headColor': $sugar,
-    'headHeight': 50,
-    'headHeightMobileMaximized': 70
+        'headBackGroundColor': $mainColor,
+        'headColor': $sugar,
+        'headHeight': 50,
+        'headHeightMobileMaximized': 70
 );
 
 $pagination: (
-    'activeBackGroundColor': $mainColor,
-    'textColor': $tertiaryColor
+        'activeBackGroundColor': $mainColor,
+        'textColor': $tertiaryColor
 );
