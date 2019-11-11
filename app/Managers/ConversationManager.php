@@ -329,10 +329,18 @@ class ConversationManager
      * @param int $userBId
      * @return Conversation
      */
-    public function retrieveConversation(int $userAId, int $userBId)
+    public function retrieveConversation(int $userAId, int $userBId, $offset = 0, $limit = 0)
     {
         $conversation = $this->conversation
-            ->with('messages')
+            ->with(['messages' => function($query) use ($offset, $limit) {
+                if ($offset) {
+                    $query->skip($offset);
+                }
+
+                if ($limit) {
+                    $query->take($limit);
+                }
+            }])
             ->where('user_a_id', $userAId)
             ->where('user_b_id', $userBId)
             ->orWhere(function ($query) use ($userAId, $userBId) {

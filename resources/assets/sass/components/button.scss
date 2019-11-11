@@ -20,7 +20,7 @@
     border: map_get($button, border-width) + px solid map_get($button, border-color);
     color: map_get($button, font-color);
 
-    .Button-fw {
+    &.Button-fw {
         width: 100%;
     }
 

@@ -94,7 +94,9 @@
                 scrollTop: undefined,
                 messagesPerScroll: 6,
                 checkingScroll: false,
-                windowScrollPrevented: false
+                windowScrollPrevented: false,
+                offset: 0,
+                messagesPerRequest: 3
             };
         },
 
@@ -198,7 +200,7 @@
             fetchMessagesAndPopulate() {
                 let latestMessage;
 
-                axios.get('/api/conversations/' + this.user.id + '/' + this.partner.id).then(response => {
+                axios.get('/api/conversations/' + this.user.id + '/' + this.partner.id + '/' + this.offset + '/' + this.messagesPerRequest).then(response => {
                     this.conversation = response.data;
 
                     if (this.conversation.messages.length > 0) {
