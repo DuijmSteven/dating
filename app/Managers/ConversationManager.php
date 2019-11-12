@@ -20,15 +20,23 @@ class ConversationManager
 
     /** @var StorageManager */
     private $storageManager;
+    /**
+     * @var ConversationMessage
+     */
+    private $conversationMessage;
 
     /**
      * ConversationManager constructor.
      * @param StorageManager $storageManager
      */
-    public function __construct(Conversation $conversation, StorageManager $storageManager)
-    {
+    public function __construct(
+        Conversation $conversation,
+        ConversationMessage $conversationMessage,
+        StorageManager $storageManager
+    ) {
         $this->conversation = $conversation;
         $this->storageManager = $storageManager;
+        $this->conversationMessage = $conversationMessage;
     }
 
     /**
@@ -354,6 +362,19 @@ class ConversationManager
         }
 
         return $conversation;
+    }
+
+    public function getConversationMessagesWithIdHigherThanByParticipantIds(int $userAId, int $userBId, $messageIdHigherThan)
+    {
+        return $this->conversationMessage
+            ->where('id', '>', $messageIdHigherThan)
+            ->where('sender_id', $userAId)
+            ->where('recipient_id', $userBId)
+            ->orWhere(function ($query) use ($userAId, $userBId) {
+                $query->where('sender_id', $userBId);
+                $query->where('recipient_id', $userAId);
+            })
+            ->get();
     }
 
     public function getConversationsByUserId(int $userId)

@@ -99,7 +99,7 @@ if ($('#app').length > 0) {
                 if (this.conversationPartners.length > 4) {
                     return false;
                 }
-
+                
                 let isConversationOpen = false;
                 let openConversationIndex;
 

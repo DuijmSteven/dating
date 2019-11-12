@@ -193,8 +193,14 @@
                 this.fetchMessagesAndPopulate();
 
                 this.intervalToFetchMessages = setInterval(() => {
-                    this.fetchMessagesAndPopulate();
+                    this.checkForNewMessagesAndShowThem();
                 }, 10000);
+            },
+
+            checkForNewMessagesAndShowThem() {
+                axios.get('/api/conversation-messages/' + this.user.id + '/' + this.partner.id + '/' + this.currentHighestMessageId).then(response => {
+                    console.log(response);
+                });
             },
 
             fetchMessagesAndPopulate() {
@@ -220,49 +226,30 @@
 
                         this.currentHighestMessageId = this.conversation.messages[this.conversation.messages.length - 1].id;
 
-                        if (this.previousHighestMessageId === undefined || this.previousHighestMessageId !== this.currentHighestMessageId) {
+                        console.log(this.conversation.messages);
 
-                            if (this.previousHighestMessageId === undefined) {
-                                this.displayedMessages = [];
-                                this.allMessages = this.conversation.messages;
+                        this.conversation.messages.forEach(message => {
+                            //if (message.id > this.previousHighestMessageId) {
+                            latestMessage = {
+                                id: message.id,
+                                text: message.body,
+                                attachment: message.attachment,
+                                user: message.sender.id === this.user.id ? 'user-a' : 'user-b',
+                                createdAt: message.created_at
+                            };
 
-                                this.allMessages.splice(-this.messagesPerScroll, this.messagesPerScroll).forEach(message => {
-                                    latestMessage = {
-                                        id: message.id,
-                                        text: message.body,
-                                        attachment: message.attachment,
-                                        user: message.sender.id === this.user.id ? 'user-a' : 'user-b',
-                                        createdAt: message.created_at
-                                    };
+                            this.displayedMessages.push(latestMessage);
+                            //}
+                        });
 
-                                    this.displayedMessages.push(latestMessage);
-                                });
+                        setTimeout(() => {
+                            this.scrollChatToBottom();
+                        }, 200);
 
-                            } else {
-                                this.conversation.messages.forEach(message => {
-                                    if (message.id > this.previousHighestMessageId) {
-                                        latestMessage = {
-                                            id: message.id,
-                                            text: message.body,
-                                            attachment: message.attachment,
-                                            user: message.sender.id === this.user.id ? 'user-a' : 'user-b',
-                                            createdAt: message.created_at
-                                        };
-
-                                        this.displayedMessages.push(latestMessage);
-                                    }
-                                });
-                            }
-
-                            setTimeout(() => {
-                                this.scrollChatToBottom();
-                            }, 200);
-
-                            if (
-                                this.conversation.newActivity
-                            ) {
-                                $('#PrivateChatItem__head--' + this.index).addClass('PrivateChatItem__head__notify');
-                            }
+                        if (
+                            this.conversation.newActivity
+                        ) {
+                            $('#PrivateChatItem__head--' + this.index).addClass('PrivateChatItem__head__notify');
                         }
 
                         this.previousHighestMessageId = this.currentHighestMessageId;
