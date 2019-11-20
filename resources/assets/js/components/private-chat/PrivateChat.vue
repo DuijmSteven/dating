@@ -92,7 +92,6 @@
                 firstIteration: true,
                 intervalToFetchMessages: undefined,
                 scrollTop: undefined,
-                messagesPerScroll: 6,
                 checkingScroll: false,
                 windowScrollPrevented: false,
                 offset: 0,
@@ -119,29 +118,29 @@
                     this.justCheckedScrollTop = true;
 
                     let messagesAmountToLoad;
-                    if (this.allMessages.length >= this.messagesPerScroll) {
-                        messagesAmountToLoad = this.messagesPerScroll;
+                    if (this.allMessages.length >= this.messagesPerRequest) {
+                        messagesAmountToLoad = this.messagesPerRequest;
                     } else {
                         messagesAmountToLoad = this.allMessages.length;
                     }
 
-                    this.allMessages.splice(-messagesAmountToLoad, messagesAmountToLoad).reverse().forEach(message => {
-                        latestMessage = {
-                            id: message.id,
-                            text: message.body,
-                            attachment: message.attachment,
-                            user: message.sender.id === this.user.id ? 'user-a' : 'user-b',
-                            createdAt: message.created_at
-                        };
+                    axios.get('/api/conversations/' + this.user.id + '/' + this.partner.id + '/' + this.offset + '/' + this.messagesPerRequest).then(response => {
+                        this.conversation = response.data;
 
-                        this.displayedMessages.splice(0, 0, latestMessage);
+                        let messages = this.conversation.messages.reverse();
+
+                        if (messages.length > 0) {
+                            this.addMessagesToBeDisplayed(messages);
+                        }
                     });
+
                 }
 
                 setTimeout(() => {
                     this.justCheckedScrollTop = false;
                 }, 200);
             },
+
             preventWindowScroll() {
                 if (this.windowHasScrollbar()) {
                     this.scrollTop = $(document).scrollTop();
@@ -199,15 +198,30 @@
 
             checkForNewMessagesAndShowThem() {
                 axios.get('/api/conversation-messages/' + this.user.id + '/' + this.partner.id + '/' + this.currentHighestMessageId).then(response => {
-                    console.log(response);
+                    let messages = response.data;
+
+                    if (messages.length > 0) {
+                        this.addMessagesToBeDisplayed(messages);
+
+                        let newActivity = false;
+
+                        messages.forEach(message => {
+                            if (message.sender.id !== this.user.id) {
+                                newActivity = true;
+                            }
+                        });
+
+                        if (newActivity) {
+                            this.setNewActivity();
+                        }
+                    }
                 });
             },
 
             fetchMessagesAndPopulate() {
-                let latestMessage;
-
                 axios.get('/api/conversations/' + this.user.id + '/' + this.partner.id + '/' + this.offset + '/' + this.messagesPerRequest).then(response => {
                     this.conversation = response.data;
+                    this.offset += this.messagesPerRequest;
 
                     if (this.conversation.messages.length > 0) {
                         if (this.user.id === this.conversation.user_a_id) {
@@ -224,39 +238,48 @@
                             }
                         }
 
-                        this.currentHighestMessageId = this.conversation.messages[this.conversation.messages.length - 1].id;
+                        let messages = this.conversation.messages.reverse();
 
-                        console.log(this.conversation.messages);
-
-                        this.conversation.messages.forEach(message => {
-                            //if (message.id > this.previousHighestMessageId) {
-                            latestMessage = {
-                                id: message.id,
-                                text: message.body,
-                                attachment: message.attachment,
-                                user: message.sender.id === this.user.id ? 'user-a' : 'user-b',
-                                createdAt: message.created_at
-                            };
-
-                            this.displayedMessages.push(latestMessage);
-                            //}
-                        });
-
-                        setTimeout(() => {
-                            this.scrollChatToBottom();
-                        }, 200);
+                        if (messages.length > 0) {
+                            this.addMessagesToBeDisplayed(messages);
+                        }
 
                         if (
                             this.conversation.newActivity
                         ) {
-                            $('#PrivateChatItem__head--' + this.index).addClass('PrivateChatItem__head__notify');
+                            this.setNewActivity();
                         }
-
-                        this.previousHighestMessageId = this.currentHighestMessageId;
                     }
                 }).catch((error) => {
                 });
             },
+
+            setNewActivity: function () {
+                $('#PrivateChatItem__head--' + this.index).addClass('PrivateChatItem__head__notify');
+            },
+
+            addMessagesToBeDisplayed: function (messages) {
+                this.currentHighestMessageId = messages[messages.length - 1].id;
+
+                messages.forEach(message => {
+                    this.displayedMessages.push(this.buildMessageObject(message));
+                });
+
+                setTimeout(() => {
+                    this.scrollChatToBottom();
+                }, 200);
+            },
+
+            buildMessageObject: function (message) {
+                return {
+                    id: message.id,
+                    text: message.body,
+                    attachment: message.attachment,
+                    user: message.sender.id === this.user.id ? 'user-b' : 'user-a',
+                    createdAt: message.created_at
+                };
+            },
+
             setConversationActivityForUserFalse: function () {
                 if ($('#PrivateChatItem__head--' + this.index).hasClass('PrivateChatItem__head__notify')) {
                     $('#PrivateChatItem__head--' + this.index).removeClass('PrivateChatItem__head__notify');
@@ -267,14 +290,9 @@
                     );
                 }
             },
+
             addMessage(message) {
                 this.setConversationActivityForUserFalse();
-
-                let newMessage = {
-                    text: message.text,
-                    attachment: message.attachment,
-                    user: 'user-a'
-                };
 
                 setTimeout(() => {
                     this.scrollChatToBottom();
@@ -296,7 +314,7 @@
                 };
 
                 axios.post('/conversations', data, config).then(() => {
-                    this.fetchMessagesAndPopulate();
+                    this.checkForNewMessagesAndShowThem();
                     this.fetchUserConversations();
                 }).catch((error) => {
                 });

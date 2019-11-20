@@ -341,6 +341,8 @@ class ConversationManager
     {
         $conversation = $this->conversation
             ->with(['messages' => function($query) use ($offset, $limit) {
+                $query->orderBy('id', 'desc');
+
                 if ($offset) {
                     $query->skip($offset);
                 }
@@ -367,13 +369,20 @@ class ConversationManager
     public function getConversationMessagesWithIdHigherThanByParticipantIds(int $userAId, int $userBId, $messageIdHigherThan)
     {
         return $this->conversationMessage
-            ->where('id', '>', $messageIdHigherThan)
+            ->with([
+                'sender',
+                'recipient',
+                'attachment'
+            ])
             ->where('sender_id', $userAId)
             ->where('recipient_id', $userBId)
-            ->orWhere(function ($query) use ($userAId, $userBId) {
+            ->where('id', '>', $messageIdHigherThan)
+            ->orWhere(function ($query) use ($userAId, $userBId, $messageIdHigherThan) {
                 $query->where('sender_id', $userBId);
                 $query->where('recipient_id', $userAId);
+                $query->where('id', '>', $messageIdHigherThan);
             })
+            ->orderBy('id', 'desc')
             ->get();
     }
 

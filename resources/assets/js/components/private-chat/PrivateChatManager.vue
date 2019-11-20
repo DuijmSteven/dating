@@ -102,8 +102,8 @@
                 return conversation.messages[conversation.messages.length -1].attachment != null;
             },
             clickedOnConversationItem: function (conversation, itemIndex) {
-                $parent.addChat(conversation.currentUser.id, conversation.otherUser.id, '1', true);
-                $parent.setConversationActivityForUser(conversation, 0);
+                this.$parent.addChat(conversation.currentUser.id, conversation.otherUser.id, '1', true);
+                this.$parent.setConversationActivityForUser(conversation, 0);
                 this.removeIsNewOrHasNewMessageClass(itemIndex);
             },
             removeIsNewOrHasNewMessageClass: function (index) {
