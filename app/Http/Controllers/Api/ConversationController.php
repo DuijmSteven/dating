@@ -26,10 +26,20 @@ class ConversationController
         $this->conversationManager = $conversationManager;
     }
 
-    public function getConversationByParticipantIds(int $userAId, int $userBId)
-    {
+    public function getConversationByParticipantIds(
+        int $userAId,
+        int $userBId,
+        int $offset = 0,
+        int $limit = 0
+    ) {
         try {
-            $conversation = $this->conversationManager->retrieveConversation($userAId, $userBId);
+            $conversation = $this->conversationManager
+                ->retrieveConversation(
+                    $userAId,
+                    $userBId,
+                    $offset,
+                    $limit
+                );
 
             if (!($conversation instanceof Conversation)) {
                 return JsonResponse::create('No conversation exists between these users', 404);

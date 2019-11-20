@@ -73,7 +73,8 @@
                     'buttonContext' => 'form',
                     'buttonType' => 'submit',
                     'buttonState' => 'primary',
-                    'buttonText' => 'SEARCH'
+                    'buttonText' => 'Search',
+                    'buttonClasses' => 'Button-fw'
                 ])
             </div>
         </form>
