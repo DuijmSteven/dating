@@ -275,6 +275,15 @@ $(window).ready(function () {
             $('#JS--loginForm').toggle('fast');
         });
     }
+
+    $('.block-pricing .btn').click(function() {
+        $('.table-rose').removeClass('table-rose');
+        $('.block-raised').removeClass('block-raised');
+        $('.btn-white').removeClass('btn-white').addClass('btn-rose');
+        $(this).closest('.block-pricing').addClass('block-raised');
+        $(this).closest('.table').addClass('table-rose');
+        $(this).addClass('btn-white')
+    });
 });
 
 

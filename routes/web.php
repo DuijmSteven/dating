@@ -145,6 +145,9 @@ Route::get('privacy', 'Frontend\MiscController@showPrivacy')
 Route::get('faq', 'Frontend\MiscController@showFaq')
     ->name('faq.show');
 
+Route::get('credits', 'Frontend\CreditsController@show')
+    ->name('credits.show');
+
 Route::group([
     'prefix' => 'admin',
     'middleware' => ['admin']
