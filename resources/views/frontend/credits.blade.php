@@ -101,7 +101,7 @@
                         <small class="text-muted">Age: {{ $user->meta->dob->diffInYears($carbonNow) }}
                             , {{ $user->meta->city }}</small>
                     </p>
-                    <a href="{{ route('users.show', ['userId' => $user->getId()])  }}" class="btn btn-lg btn-light">More
+                    <a href="{{ route('users.show', ['userId' => $user->getId()])  }}" class="btn btn-primary btn-lg btn-light">More
                         Info</a>
                 </div>
             @endforeach
