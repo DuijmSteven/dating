@@ -49,8 +49,36 @@
             <div class="PrivateChatItem__body__wrapper">
                 <div :id="'PrivateChatItem__body__content--' + index"
                      class="PrivateChatItem__body__content"
-                     @scroll="checkScrollTop()"
                 >
+                    <div
+                        v-if="conversation && (conversation.messages.length > 0) && !fetchingOlderMessages && !allMessagesFetched && waitedAfterLoaderDisappeared"
+                        class="fetchMoreButton"
+                        v-on:click="fetchOlderMessages()"
+                    >
+                        fetch older messages
+                        <i class="material-icons">
+                            get_app
+                        </i>
+                    </div>  
+
+                    <div
+                        v-if="fetchingOlderMessages || fetchingInitial"
+                        class="fetchingMessages"
+                    >
+                        <md-progress-spinner
+                            md-mode="indeterminate"
+                            :md-diameter="20"
+                            :md-stroke="2"
+                        ></md-progress-spinner>
+                    </div>
+
+                    <div
+                        v-if="allMessagesFetched"
+                        class="allMessagesFetched"
+                    >
+                        There are no more messages
+                    </div>
+
                     <chat-message
                             v-for="(message, index) in displayedMessages"
                             :message="message"
@@ -81,7 +109,6 @@
         data() {
             return {
                 listening: false,
-                allMessages: undefined,
                 displayedMessages: [],
                 conversation: undefined,
                 highestConversationId: undefined,
@@ -92,11 +119,15 @@
                 firstIteration: true,
                 intervalToFetchMessages: undefined,
                 scrollTop: undefined,
-                messagesPerScroll: 6,
                 checkingScroll: false,
                 windowScrollPrevented: false,
                 offset: 0,
-                messagesPerRequest: 3
+                messagesPerRequest: 5,
+                fetchingOlderMessages: false,
+                allMessagesFetched: false,
+                fetchingInitial: true,
+                waitedAfterLoaderDisappeared: false,
+                timeToWaitAfterLoaderDisappears: 20
             };
         },
 
@@ -111,37 +142,64 @@
         },
 
         methods: {
-            checkScrollTop() {
+            fetchOlderMessages() {
+                if (!this.allMessagesFetched && !this.fetchingOlderMessages) {
+
+                    this.waitedAfterLoaderDisappeared = false;
+                    this.fetchingOlderMessages = true;
+
+                    axios.get('/api/conversations/' + this.user.id + '/' + this.partner.id + '/' + this.offset + '/' + this.messagesPerRequest).then(response => {
+                        this.conversation = response.data;
+
+                        let messages = this.conversation.messages;
+
+                        if (messages.length > 0) {
+                            this.offset += this.messagesPerRequest;
+                            this.addMessagesToBeDisplayed(messages, true);
+                        } else {
+                            this.allMessagesFetched = true;
+                        }
+
+                        this.fetchingOlderMessages = false;
+
+                        setTimeout(() => {
+                            this.waitedAfterLoaderDisappeared = true;
+                        }, this.timeToWaitAfterLoaderDisappears);
+                    });
+
+                }
+            },
+/*            checkScrollTop() {
                 let scrollTop = $('#PrivateChatItem__body__content--' + this.index).scrollTop();
 
-                if (!this.justCheckedScrollTop && scrollTop < 20 && this.allMessages.length > 0) {
-                    let latestMessage;
+                if (!this.allMessagesFetched && !this.fetchingOlderMessages && !this.justCheckedScrollTop && scrollTop < 50) {
+
                     this.justCheckedScrollTop = true;
 
-                    let messagesAmountToLoad;
-                    if (this.allMessages.length >= this.messagesPerScroll) {
-                        messagesAmountToLoad = this.messagesPerScroll;
-                    } else {
-                        messagesAmountToLoad = this.allMessages.length;
-                    }
+                    this.fetchingOlderMessages = true;
 
-                    this.allMessages.splice(-messagesAmountToLoad, messagesAmountToLoad).reverse().forEach(message => {
-                        latestMessage = {
-                            id: message.id,
-                            text: message.body,
-                            attachment: message.attachment,
-                            user: message.sender.id === this.user.id ? 'user-a' : 'user-b',
-                            createdAt: message.created_at
-                        };
+                    axios.get('/api/conversations/' + this.user.id + '/' + this.partner.id + '/' + this.offset + '/' + this.messagesPerRequest).then(response => {
+                        this.conversation = response.data;
 
-                        this.displayedMessages.splice(0, 0, latestMessage);
+                        let messages = this.conversation.messages;
+
+                        if (messages.length > 0) {
+                            this.offset += this.messagesPerRequest;
+                            this.addMessagesToBeDisplayed(messages, true);
+                        } else {
+                            this.allMessagesFetched = true;
+                        }
+
+                        this.fetchingOlderMessages = false;
                     });
+
                 }
 
                 setTimeout(() => {
                     this.justCheckedScrollTop = false;
                 }, 200);
-            },
+            },*/
+
             preventWindowScroll() {
                 if (this.windowHasScrollbar()) {
                     this.scrollTop = $(document).scrollTop();
@@ -193,17 +251,39 @@
                 this.fetchMessagesAndPopulate();
 
                 this.intervalToFetchMessages = setInterval(() => {
-                    this.fetchMessagesAndPopulate();
+                    this.checkForNewMessagesAndShowThem();
                 }, 10000);
             },
 
-            fetchMessagesAndPopulate() {
-                let latestMessage;
+            checkForNewMessagesAndShowThem() {
+                axios.get('/api/conversation-messages/' + this.user.id + '/' + this.partner.id + '/' + this.currentHighestMessageId).then(response => {
+                    let messages = response.data;
 
+                    if (messages.length > 0) {
+                        this.addMessagesToBeDisplayed(messages);
+
+                        let newActivity = false;
+
+                        messages.forEach(message => {
+                            if (message.sender.id !== this.user.id) {
+                                newActivity = true;
+                            }
+                        });
+
+                        if (newActivity) {
+                            this.setNewActivity();
+                        }
+                    }
+                });
+            },
+
+            fetchMessagesAndPopulate() {
                 axios.get('/api/conversations/' + this.user.id + '/' + this.partner.id + '/' + this.offset + '/' + this.messagesPerRequest).then(response => {
                     this.conversation = response.data;
 
                     if (this.conversation.messages.length > 0) {
+                        this.offset += this.messagesPerRequest;
+
                         if (this.user.id === this.conversation.user_a_id) {
                             if (this.conversation.new_activity_for_user_a) {
                                 this.conversation.newActivity = true;
@@ -218,58 +298,68 @@
                             }
                         }
 
-                        this.currentHighestMessageId = this.conversation.messages[this.conversation.messages.length - 1].id;
-
-                        if (this.previousHighestMessageId === undefined || this.previousHighestMessageId !== this.currentHighestMessageId) {
-
-                            if (this.previousHighestMessageId === undefined) {
-                                this.displayedMessages = [];
-                                this.allMessages = this.conversation.messages;
-
-                                this.allMessages.splice(-this.messagesPerScroll, this.messagesPerScroll).forEach(message => {
-                                    latestMessage = {
-                                        id: message.id,
-                                        text: message.body,
-                                        attachment: message.attachment,
-                                        user: message.sender.id === this.user.id ? 'user-a' : 'user-b',
-                                        createdAt: message.created_at
-                                    };
-
-                                    this.displayedMessages.push(latestMessage);
-                                });
-
-                            } else {
-                                this.conversation.messages.forEach(message => {
-                                    if (message.id > this.previousHighestMessageId) {
-                                        latestMessage = {
-                                            id: message.id,
-                                            text: message.body,
-                                            attachment: message.attachment,
-                                            user: message.sender.id === this.user.id ? 'user-a' : 'user-b',
-                                            createdAt: message.created_at
-                                        };
-
-                                        this.displayedMessages.push(latestMessage);
-                                    }
-                                });
-                            }
-
-                            setTimeout(() => {
-                                this.scrollChatToBottom();
-                            }, 200);
-
-                            if (
-                                this.conversation.newActivity
-                            ) {
-                                $('#PrivateChatItem__head--' + this.index).addClass('PrivateChatItem__head__notify');
-                            }
+                        if (this.conversation.messages.length > 0) {
+                            this.addMessagesToBeDisplayed(this.conversation.messages);
                         }
 
-                        this.previousHighestMessageId = this.currentHighestMessageId;
+                        if (
+                            this.conversation.newActivity
+                        ) {
+                            this.setNewActivity();
+                        }
                     }
+
+                    this.fetchingInitial = false;
+
+
+                    setTimeout(() => {
+                        this.waitedAfterLoaderDisappeared = true;
+                    }, this.timeToWaitAfterLoaderDisappears);
                 }).catch((error) => {
+                    this.fetchingInitial = false;
+
+                    setTimeout(() => {
+                        this.waitedAfterLoaderDisappeared = true;
+                    }, this.timeToWaitAfterLoaderDisappears);
                 });
             },
+
+            setNewActivity: function () {
+                $('#PrivateChatItem__head--' + this.index).addClass('PrivateChatItem__head__notify');
+            },
+
+            addMessagesToBeDisplayed: function (messages, addToTop = false) {
+                if (!addToTop) {
+                    let messageIds = messages.map(message => {
+                        return message.id;
+                    });
+
+                    this.currentHighestMessageId = Math.max.apply(null, messageIds);
+
+                    messages.reverse().forEach(message => {
+                        this.displayedMessages.push(this.buildMessageObject(message));
+                    });
+
+                    setTimeout(() => {
+                        this.scrollChatToBottom();
+                    }, 200);
+                } else {
+                    messages.forEach(message => {
+                        this.displayedMessages.unshift(this.buildMessageObject(message));
+                    });
+                }
+            },
+
+            buildMessageObject: function (message) {
+                return {
+                    id: message.id,
+                    text: message.body,
+                    attachment: message.attachment,
+                    user: message.sender.id === this.user.id ? 'user-b' : 'user-a',
+                    createdAt: message.created_at
+                };
+            },
+
             setConversationActivityForUserFalse: function () {
                 if ($('#PrivateChatItem__head--' + this.index).hasClass('PrivateChatItem__head__notify')) {
                     $('#PrivateChatItem__head--' + this.index).removeClass('PrivateChatItem__head__notify');
@@ -280,14 +370,9 @@
                     );
                 }
             },
+
             addMessage(message) {
                 this.setConversationActivityForUserFalse();
-
-                let newMessage = {
-                    text: message.text,
-                    attachment: message.attachment,
-                    user: 'user-a'
-                };
 
                 setTimeout(() => {
                     this.scrollChatToBottom();
@@ -309,7 +394,12 @@
                 };
 
                 axios.post('/conversations', data, config).then(() => {
-                    this.fetchMessagesAndPopulate();
+                    if (this.currentHighestMessageId !== undefined) {
+                        this.checkForNewMessagesAndShowThem();
+                    } else {
+                        this.fetchMessagesAndPopulate();
+                    }
+
                     this.fetchUserConversations();
                 }).catch((error) => {
                 });

@@ -12,7 +12,7 @@ window.Vue = require('vue/dist/vue.js');
 
 import VuejsDialog from 'vuejs-dialog';
 import VuejsDialogMixin from 'vuejs-dialog/dist/vuejs-dialog-mixin.min.js';
-
+import VueMaterial from 'vue-material';
 
 import VueMq from 'vue-mq';
 import moment from 'moment';
@@ -27,6 +27,9 @@ Vue.use(VueMq, {
 });
 
 Vue.use(VuejsDialog);
+
+Vue.use(VueMaterial);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -70,7 +73,7 @@ if ($('#app').length > 0) {
 
         methods: {
             setConversationActivityForUser: function (conversation, value) {
-                axios.get('/api/conversations/set-conversation-activity-for-user/' + conversation.currentUser.id + '/' + conversation.otherUser.id + '/' + conversation.currentUser.id + '/' + value).then(
+                axios.get('/api/conversations/set-conversation-activity-for-user/' + conversation.currentUserId + '/' + conversation.otherUserId + '/' + conversation.currentUserId + '/' + value).then(
                     response => {
                         console.log(response);
                     }
@@ -99,7 +102,7 @@ if ($('#app').length > 0) {
                 if (this.conversationPartners.length > 4) {
                     return false;
                 }
-
+                
                 let isConversationOpen = false;
                 let openConversationIndex;
 
@@ -201,17 +204,6 @@ $(window).ready(function () {
         $('#JS--datepicker__date').datepicker({
             dateFormat: 'dd-mm-yy'
         });
-    }
-
-    // if ($('.datepicker').length > 0) {
-    //     $('.datepicker').datepicker({
-    //         format: 'dd/mm/yyyy',
-    //     });
-    // }
-
-    // fix user dropdown profile image vertical position
-    if ($('#JS--userDropdown_image').length > 0) {
-        $('#JS--userDropdown_image').css('margin-top', -parseInt($('#JS--userDropdown_image').css('height')) / 2 + 'px');
     }
 
     if ($('.JS--autoCompleteCites').length > 0) {

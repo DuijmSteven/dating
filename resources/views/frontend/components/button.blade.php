@@ -3,7 +3,7 @@
         <span class="Button__content">{{ $buttonText or 'Dummy button' }}</span>
     </a>
 @else
-    <button type="{{ $buttonType ?? 'submit' }}" class="Button Button--{{ $buttonState ?? 'default' }}  {{ $buttonClasses }}">
+    <button type="{{ $buttonType ?? 'submit' }}" class="Button Button--{{ $buttonState ?? 'default' }}  {{ $buttonClasses ?? '' }}">
         <span class="Button__content">{{ $buttonText ?? 'Dummy button' }}</span>
     </button>
 @endif

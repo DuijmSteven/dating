@@ -113,14 +113,21 @@
         background-color: #fff;
 
         &__left {
+            padding: 0 10px;
             flex: 1;
+            text-align: center;
         }
 
         &__profilePicture {
-            border-radius: 50%;
-            width: 65px;
-            height: 65px;
-            padding: 10px;
+            @include roundImage;
+
+            &__wrapper {
+                @include roundImageWrapper;
+                display: inline-block;
+
+                width: 45px;
+                height: 45px;
+            }
         }
 
         &__right {

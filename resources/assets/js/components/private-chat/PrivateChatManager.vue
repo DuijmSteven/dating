@@ -39,22 +39,24 @@
                  :id="'PrivateChatManager__item--' + index"
             >
                 <div class="PrivateChatManager__item__left">
-                    <img class="PrivateChatManager__item__profilePicture"
-                         :src="conversation.otherUser.profileImageUrl"
-                         alt="profile-image"
-                    >
+                    <div class="PrivateChatManager__item__profilePicture__wrapper">
+                        <img class="PrivateChatManager__item__profilePicture"
+                             :src="profileImageUrl(conversation.otherUserId, conversation.otherUserProfileImage, conversation.otherUserGender)"
+                             alt="profile-image"
+                        >
+                    </div>
                 </div>
                 <div class="PrivateChatManager__item__right">
                     <div class="PrivateChatManager__item__right__topPart">
-                        <span class="PrivateChatManager__item__userName">{{ conversation.otherUser.username }}</span>
-                        <span class="PrivateChatManager__item__date">{{ conversation.updatedAtHumanReadable }}</span>
+                        <span class="PrivateChatManager__item__userName">{{ conversation.otherUserUsername }}</span>
+                        <span class="PrivateChatManager__item__date">{{ conversation.conversation_updated_at }}</span>
                     </div>
                     <div class="PrivateChatManager__item__lastMessage">
-                        {{ conversation.messages[conversation.messages.length -1].type === 'generic' ?
-                           conversation.messages[conversation.messages.length -1].body :
+                        {{ conversation.last_message_type === 'generic' ?
+                           conversation.last_message_body :
                            'flirt'
                         }}
-                        <i class="material-icons attachmentIcon" v-if="lastMessageOfConversationHasAttachment(conversation)">attachment</i>
+                        <i class="material-icons attachmentIcon" v-if="conversation.last_message_has_attachment">attachment</i>
                     </div>
                 </div>
 
@@ -98,12 +100,23 @@
         },
 
         methods: {
+            profileImageUrl(userId, $filename, $gender) {
+                if (!$filename) {
+                    if (1) {
+                        return DP.malePlaceholderImageUrl;
+                    } else {
+                        return DP.femalePlaceholderImageUrl;
+                    }
+                }
+
+                return DP.usersCloudPath + '/' + userId + '/images/' + $filename
+            },
             lastMessageOfConversationHasAttachment: function(conversation) {
                 return conversation.messages[conversation.messages.length -1].attachment != null;
             },
             clickedOnConversationItem: function (conversation, itemIndex) {
-                $parent.addChat(conversation.currentUser.id, conversation.otherUser.id, '1', true);
-                $parent.setConversationActivityForUser(conversation, 0);
+                this.$parent.addChat(conversation.currentUserId, conversation.otherUserId, '1', true);
+                this.$parent.setConversationActivityForUser(conversation, 0);
                 this.removeIsNewOrHasNewMessageClass(itemIndex);
             },
             removeIsNewOrHasNewMessageClass: function (index) {
@@ -121,7 +134,6 @@
                     .then(() => {
                         this.deleteConversation(conversationId);
                     }).catch(() => {
-                        console.log('Clicked on no')
                     });
             },
             deleteConversation: function (conversationId) {
@@ -151,20 +163,32 @@
                     this.conversations = response.data;
 
                     this.conversations.map(conversation => {
-                        if (conversation.user_a.id === this.user.id) {
-                            conversation.otherUser = conversation.user_b;
-                            conversation.currentUser = conversation.user_a;
+                        if (conversation.user_a_id === this.user.id) {
+                            conversation.otherUserId = conversation.user_b_id;
+                            conversation.currentUserId = conversation.user_a_id;
+                            conversation.currentUserProfileImage = conversation.user_a_profile_image_filename;
+                            conversation.otherUserProfileImage = conversation.user_b_profile_image_filename;
+                            conversation.currentUserUsername = conversation.user_a_username;
+                            conversation.otherUserUsername = conversation.user_b_username;
+                            conversation.currentUserGender = conversation.user_a_gender;
+                            conversation.otherUserGender = conversation.user_b_gender;
 
-                            if (conversation.new_activity_for_user_a) {
+                            if (conversation.conversation_new_activity_for_user_a) {
                                 conversation.newActivity = true;
                             } else {
                                 conversation.newActivity = false;
                             }
                         } else {
-                            conversation.currentUser = conversation.user_b;
-                            conversation.otherUser = conversation.user_a;
+                            conversation.currentUserId = conversation.user_b_id;
+                            conversation.otherUserId = conversation.user_a_id;
+                            conversation.currentUserUsername = conversation.user_b_profile_image_filename;
+                            conversation.otherUserProfileImage = conversation.user_a_profile_image_filename;
+                            conversation.currentUserUsername = conversation.user_b_username;
+                            conversation.otherUserUsername = conversation.user_a_username;
+                            conversation.currentUserGender = conversation.user_b_gender;
+                            conversation.otherUserGender = conversation.user_a_gender;
 
-                            if (conversation.new_activity_for_user_b) {
+                            if (conversation.conversation_new_activity_for_user_b) {
                                 conversation.newActivity = true;
                             } else {
                                 conversation.newActivity = false;

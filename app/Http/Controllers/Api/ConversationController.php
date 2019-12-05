@@ -51,6 +51,25 @@ class ConversationController
         }
     }
 
+    public function getConversationMessagesWithIdHigherThanByParticipantIds(
+        int $userAId,
+        int $userBId,
+        int $messageIdHigherThan
+    ) {
+        try {
+            $messages = $this->conversationManager
+                ->getConversationMessagesWithIdHigherThanByParticipantIds(
+                    $userAId,
+                    $userBId,
+                    $messageIdHigherThan
+                );
+
+            return JsonResponse::create($messages);
+        } catch (\Exception $exception) {
+            return JsonResponse::create($exception->getMessage(), 500);
+        }
+    }
+
     public function getHighestConversationId()
     {
         try {
@@ -69,6 +88,8 @@ class ConversationController
 
             return JsonResponse::create($conversations);
         } catch (\Exception $exception) {
+            \Log::error($exception->getMessage());
+
             return JsonResponse::create($exception->getMessage(), 500);
         }
     }

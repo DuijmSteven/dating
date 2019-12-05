@@ -9,7 +9,7 @@
                       placeholder="Uw bericht..."
                       v-model.trim="text"
                       v-on:keyup.enter="sendMessage"
-                      @focus="removeNotificationClass(); $parent.setConversationActivityForUserFalse()"
+                      @focus="chatFocused()"
             >
             </textarea>
 
@@ -49,6 +49,10 @@
         },
 
         methods: {
+            chatFocused() {
+                this.removeNotificationClass();
+                this.$parent.setConversationActivityForUserFalse();
+            },
             sendMessage() {
                 if (this.text.length > 0 || this.file != null) {
                     this.$emit('message-sent', {
