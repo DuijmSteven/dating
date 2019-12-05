@@ -282,7 +282,12 @@ $(window).ready(function () {
         $('.btn-white').removeClass('btn-white').addClass('btn-rose');
         $(this).closest('.block-pricing').addClass('block-raised');
         $(this).closest('.table').addClass('table-rose');
-        $(this).addClass('btn-white')
+        $(this).addClass('btn-white');
+
+        //change cart values based on selected credits package
+        $('span.cart-value').html($('.block-raised .block-caption span').html());
+        $('span.cart-credits').html($('.block-raised b.package-credits').html());
+        $('span.cart-package').html($('.block-raised .category').html());
     });
 });
 

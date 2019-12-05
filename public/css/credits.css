@@ -494,5 +494,9 @@ h6,
     max-width: 170px;
 }
 
+li.list-group-item label {
+    cursor: pointer;
+}
+
 
 
