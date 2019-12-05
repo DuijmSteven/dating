@@ -482,10 +482,6 @@ h6,
     align-items: center;
 }
 
-.currentMembers .imageWrapper img {
-    width: 170px;
-}
-
 .recent-container {
     margin-top: 20px;
 }
@@ -496,6 +492,19 @@ h6,
 
 li.list-group-item label {
     cursor: pointer;
+}
+
+.currentMembers {
+    .imageWrapper {
+        @include roundImageWrapper;
+
+        width: 150px;
+        height: 150px;
+    }
+
+    .profileImage {
+        @include roundImage;
+    }
 }
 
 

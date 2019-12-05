@@ -1,7 +1,12 @@
+// Packages
+@import '~vue-material/dist/vue-material.min.css';
+@import '~vue-material/dist/theme/prebuilt/default-dark';
+
 // Variables
 @import "variables";
 
 @mixin roundImageWrapper {
+  display: inline-block;
   position: relative;
   overflow: hidden;
   border-radius: 50%;
@@ -61,11 +66,9 @@
 @import "views/articles";
 @import "views/faq";
 @import "views/edit-profile";
+@import "views/credits";
 
 @import "vue-apps/private-chat/main";
-
-@import '~vue-material/dist/vue-material.min.css';
-@import '~vue-material/dist/theme/prebuilt/default-dark';
 
 .ui-autocomplete.ui-widget.ui-widget-content {
   max-height: 600px;

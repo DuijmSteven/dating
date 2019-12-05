@@ -92,12 +92,14 @@
         <div class="row mt-5">
             @foreach ($users as $user)
                 <div class="col-lg-2 col-md-4 col-sm-12">
-                    <a href="{{ route('users.show', ['userId' => $user->getId()]) }}" class="imageWrapper">
-                        <img
+                    <a href="{{ route('users.show', ['userId' => $user->getId()]) }}">
+                        <div class="imageWrapper">
+                            <img
                                 src="{{ \StorageHelper::profileImageUrl($user) }}"
-                                class="img-circle img-wide"
+                                class="img-circle img-wide profileImage"
                                 alt=""
-                        >
+                            >
+                        </div>
                     </a>
                     <h5 class="small">{{ ucfirst($user->username) }}</h5>
                     <p class="offset-0">
