@@ -49,8 +49,36 @@
             <div class="PrivateChatItem__body__wrapper">
                 <div :id="'PrivateChatItem__body__content--' + index"
                      class="PrivateChatItem__body__content"
-                     @scroll="checkScrollTop()"
                 >
+                    <div
+                        v-if="conversation && (conversation.messages.length > 0) && !fetchingOlderMessages && !allMessagesFetched && waitedAfterLoaderDisappeared"
+                        class="fetchMoreButton"
+                        v-on:click="fetchOlderMessages()"
+                    >
+                        fetch older messages
+                        <i class="material-icons">
+                            get_app
+                        </i>
+                    </div>  
+
+                    <div
+                        v-if="fetchingOlderMessages || fetchingInitial"
+                        class="fetchingMessages"
+                    >
+                        <md-progress-spinner
+                            md-mode="indeterminate"
+                            :md-diameter="20"
+                            :md-stroke="2"
+                        ></md-progress-spinner>
+                    </div>
+
+                    <div
+                        v-if="allMessagesFetched"
+                        class="allMessagesFetched"
+                    >
+                        There are no more messages
+                    </div>
+
                     <chat-message
                             v-for="(message, index) in displayedMessages"
                             :message="message"
@@ -81,7 +109,6 @@
         data() {
             return {
                 listening: false,
-                allMessages: undefined,
                 displayedMessages: [],
                 conversation: undefined,
                 highestConversationId: undefined,
@@ -95,7 +122,12 @@
                 checkingScroll: false,
                 windowScrollPrevented: false,
                 offset: 0,
-                messagesPerRequest: 3
+                messagesPerRequest: 5,
+                fetchingOlderMessages: false,
+                allMessagesFetched: false,
+                fetchingInitial: true,
+                waitedAfterLoaderDisappeared: false,
+                timeToWaitAfterLoaderDisappears: 20
             };
         },
 
@@ -110,28 +142,55 @@
         },
 
         methods: {
-            checkScrollTop() {
-                let scrollTop = $('#PrivateChatItem__body__content--' + this.index).scrollTop();
+            fetchOlderMessages() {
+                if (!this.allMessagesFetched && !this.fetchingOlderMessages) {
 
-                if (!this.justCheckedScrollTop && scrollTop < 20 && this.allMessages.length > 0) {
-                    let latestMessage;
-                    this.justCheckedScrollTop = true;
-
-                    let messagesAmountToLoad;
-                    if (this.allMessages.length >= this.messagesPerRequest) {
-                        messagesAmountToLoad = this.messagesPerRequest;
-                    } else {
-                        messagesAmountToLoad = this.allMessages.length;
-                    }
+                    this.waitedAfterLoaderDisappeared = false;
+                    this.fetchingOlderMessages = true;
 
                     axios.get('/api/conversations/' + this.user.id + '/' + this.partner.id + '/' + this.offset + '/' + this.messagesPerRequest).then(response => {
                         this.conversation = response.data;
 
-                        let messages = this.conversation.messages.reverse();
+                        let messages = this.conversation.messages;
 
                         if (messages.length > 0) {
-                            this.addMessagesToBeDisplayed(messages);
+                            this.offset += this.messagesPerRequest;
+                            this.addMessagesToBeDisplayed(messages, true);
+                        } else {
+                            this.allMessagesFetched = true;
                         }
+
+                        this.fetchingOlderMessages = false;
+
+                        setTimeout(() => {
+                            this.waitedAfterLoaderDisappeared = true;
+                        }, this.timeToWaitAfterLoaderDisappears);
+                    });
+
+                }
+            },
+/*            checkScrollTop() {
+                let scrollTop = $('#PrivateChatItem__body__content--' + this.index).scrollTop();
+
+                if (!this.allMessagesFetched && !this.fetchingOlderMessages && !this.justCheckedScrollTop && scrollTop < 50) {
+
+                    this.justCheckedScrollTop = true;
+
+                    this.fetchingOlderMessages = true;
+
+                    axios.get('/api/conversations/' + this.user.id + '/' + this.partner.id + '/' + this.offset + '/' + this.messagesPerRequest).then(response => {
+                        this.conversation = response.data;
+
+                        let messages = this.conversation.messages;
+
+                        if (messages.length > 0) {
+                            this.offset += this.messagesPerRequest;
+                            this.addMessagesToBeDisplayed(messages, true);
+                        } else {
+                            this.allMessagesFetched = true;
+                        }
+
+                        this.fetchingOlderMessages = false;
                     });
 
                 }
@@ -139,7 +198,7 @@
                 setTimeout(() => {
                     this.justCheckedScrollTop = false;
                 }, 200);
-            },
+            },*/
 
             preventWindowScroll() {
                 if (this.windowHasScrollbar()) {
@@ -221,9 +280,10 @@
             fetchMessagesAndPopulate() {
                 axios.get('/api/conversations/' + this.user.id + '/' + this.partner.id + '/' + this.offset + '/' + this.messagesPerRequest).then(response => {
                     this.conversation = response.data;
-                    this.offset += this.messagesPerRequest;
 
                     if (this.conversation.messages.length > 0) {
+                        this.offset += this.messagesPerRequest;
+
                         if (this.user.id === this.conversation.user_a_id) {
                             if (this.conversation.new_activity_for_user_a) {
                                 this.conversation.newActivity = true;
@@ -238,10 +298,8 @@
                             }
                         }
 
-                        let messages = this.conversation.messages.reverse();
-
-                        if (messages.length > 0) {
-                            this.addMessagesToBeDisplayed(messages);
+                        if (this.conversation.messages.length > 0) {
+                            this.addMessagesToBeDisplayed(this.conversation.messages);
                         }
 
                         if (
@@ -250,7 +308,19 @@
                             this.setNewActivity();
                         }
                     }
+
+                    this.fetchingInitial = false;
+
+
+                    setTimeout(() => {
+                        this.waitedAfterLoaderDisappeared = true;
+                    }, this.timeToWaitAfterLoaderDisappears);
                 }).catch((error) => {
+                    this.fetchingInitial = false;
+
+                    setTimeout(() => {
+                        this.waitedAfterLoaderDisappeared = true;
+                    }, this.timeToWaitAfterLoaderDisappears);
                 });
             },
 
@@ -258,16 +328,26 @@
                 $('#PrivateChatItem__head--' + this.index).addClass('PrivateChatItem__head__notify');
             },
 
-            addMessagesToBeDisplayed: function (messages) {
-                this.currentHighestMessageId = messages[messages.length - 1].id;
+            addMessagesToBeDisplayed: function (messages, addToTop = false) {
+                if (!addToTop) {
+                    let messageIds = messages.map(message => {
+                        return message.id;
+                    });
 
-                messages.forEach(message => {
-                    this.displayedMessages.push(this.buildMessageObject(message));
-                });
+                    this.currentHighestMessageId = Math.max.apply(null, messageIds);
 
-                setTimeout(() => {
-                    this.scrollChatToBottom();
-                }, 200);
+                    messages.reverse().forEach(message => {
+                        this.displayedMessages.push(this.buildMessageObject(message));
+                    });
+
+                    setTimeout(() => {
+                        this.scrollChatToBottom();
+                    }, 200);
+                } else {
+                    messages.forEach(message => {
+                        this.displayedMessages.unshift(this.buildMessageObject(message));
+                    });
+                }
             },
 
             buildMessageObject: function (message) {
@@ -314,7 +394,12 @@
                 };
 
                 axios.post('/conversations', data, config).then(() => {
-                    this.checkForNewMessagesAndShowThem();
+                    if (this.currentHighestMessageId !== undefined) {
+                        this.checkForNewMessagesAndShowThem();
+                    } else {
+                        this.fetchMessagesAndPopulate();
+                    }
+
                     this.fetchUserConversations();
                 }).catch((error) => {
                 });

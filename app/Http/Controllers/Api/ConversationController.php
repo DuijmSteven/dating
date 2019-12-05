@@ -88,6 +88,8 @@ class ConversationController
 
             return JsonResponse::create($conversations);
         } catch (\Exception $exception) {
+            \Log::error($exception->getMessage());
+
             return JsonResponse::create($exception->getMessage(), 500);
         }
     }

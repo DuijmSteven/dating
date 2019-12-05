@@ -1,5 +1,23 @@
 // Variables
 @import "variables";
+
+@mixin roundImageWrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+@mixin roundImage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 100%;
+  width: auto;
+  -webkit-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+
 @import "brand";
 
 // Bootstrap
@@ -45,6 +63,9 @@
 @import "views/edit-profile";
 
 @import "vue-apps/private-chat/main";
+
+@import '~vue-material/dist/vue-material.min.css';
+@import '~vue-material/dist/theme/prebuilt/default-dark';
 
 .ui-autocomplete.ui-widget.ui-widget-content {
   max-height: 600px;

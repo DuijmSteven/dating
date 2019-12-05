@@ -66,6 +66,9 @@
             baseUrl: '{!! url('/') !!}',
             authenticatedUser: <?php echo json_encode($authenticatedUser, true) ?>,
             conversationsCloudUrl: '{{ Storage::disk('cloud')->url('conversations') }}',
+            usersCloudPath: '{{ Storage::disk('cloud')->url('users') }}',
+            malePlaceholderImageUrl: '{{ url('/') . '/img/' . 'avatars/male.jpg' }}',
+            femalePlaceholderImageUrl: '{{ url('/') . '/img/' . 'avatars/female.jpg' }}',
         };
     </script>
     <script src="{{ mix('js/app.js') }}"></script>

@@ -13,6 +13,36 @@
     bottom: 0;
     width: map_get($privateChatItem, width) + px;
 
+    .md-progress-spinner.md-theme-default .md-progress-spinner-circle {
+        stroke: grey;
+    }
+
+    .fetchMoreButton,
+    .fetchingMessages,
+    .allMessagesFetched {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        padding: 10px 0;
+        margin-bottom: 5px;
+        text-align: center;
+    }
+
+    .fetchMoreButton {
+        cursor: pointer;
+
+        .material-icons {
+            font-size: 18px;
+            margin-left: 5px;
+            position: relative;
+            top: 2px;
+        }
+    }
+
     &__textarea__container {
         position: relative;
 
@@ -136,7 +166,11 @@
         font-size: 12px;
 
         &__content {
+            position: relative;
             padding: 10px;
+
+            padding-top: 40px;
+
             height: 250px;
             overflow-y: scroll;
             background-color: $darkWhite;

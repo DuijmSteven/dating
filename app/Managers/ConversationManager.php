@@ -388,14 +388,82 @@ class ConversationManager
 
     public function getConversationsByUserId(int $userId)
     {
-        $conversations = $this->conversation
-            ->with('messages', 'userA', 'userB', 'newActivityParticipant')
-            ->where('user_a_id', $userId)
-            ->orWhere(function ($query) use ($userId) {
-                $query->where('user_b_id', $userId);
+        $conversations = DB::table('conversations')->select(
+            'conversations.id as conversation_id',
+            'conversations.new_activity_for_user_a as conversation_new_activity_for_user_a',
+            'conversations.new_activity_for_user_b as conversation_new_activity_for_user_b',
+            'conversations.user_a_id as conversation_user_a_id',
+            'conversations.user_b_id as conversation_user_b_id',
+            'conversations.created_at as conversation_created_at',
+            'conversations.updated_at as conversation_updated_at',
+            'last_message.id as last_message_id',
+            'last_message.created_at as last_message_created_at',
+            'last_message.body as last_message_body',
+            'last_message.has_attachment as last_message_has_attachment',
+            'last_message.type as last_message_type',
+            'last_message.recipient_id as last_message_recipient_id',
+            'last_message.sender_id as last_message_sender_id',
+            'last_message.type as last_message_type',
+            'message_attachments.id as attachment_id',
+            'message_attachments.filename as attachment_filename',
+            'uai.filename as user_a_profile_image_filename',
+            'ubi.filename as user_b_profile_image_filename',
+            'ua.id as user_a_id',
+            'ua.username as user_a_username',
+            'ua.username as user_a_username',
+            'ub.id as user_b_id',
+            'ub.username as user_b_username',
+            'uam.gender as user_a_gender',
+            'ubm.gender as user_b_gender'
+        )
+            ->leftJoin('conversation_messages as last_message', function ($join) {
+                $join->on('last_message.id', '=', DB::raw('(SELECT  mi.id
+                FROM    conversation_messages mi
+                WHERE   mi.conversation_id = conversations.id
+                ORDER BY mi.created_at DESC
+                LIMIT 1)'));
             })
-            ->orderBy('updated_at', 'desc')
+            ->leftJoin('message_attachments', function ($join) {
+                $join->on('message_attachments.message_id', '=', 'last_message.id');
+            })
+            ->leftJoin('users as ua', function ($join) {
+                $join->on('ua.id', '=', 'conversations.user_a_id');
+            })
+            ->leftJoin('users as ub', function ($join) {
+                $join->on('ub.id', '=', 'conversations.user_b_id');
+            })
+            ->leftJoin('user_meta as uam', function ($join) {
+                $join->on('uam.user_id', '=', 'ua.id');
+            })
+            ->leftJoin('user_meta as ubm', function ($join) {
+                $join->on('ubm.user_id', '=', 'ub.id');
+            })
+            ->leftJoin('user_images as uai', function ($join) {
+                $join->on('uai.user_id', '=', 'ua.id')
+                    ->where('uai.profile', 1);
+            })
+            ->leftJoin('user_images as ubi', function ($join) {
+                $join->on('ubi.user_id', '=', 'ub.id')
+                    ->where('ubi.profile', 1);
+            })
+            ->where('conversations.user_a_id', $userId)
+            ->orWhere('conversations.user_b_id', $userId)
+            ->orderBy('last_message_created_at', 'desc')
             ->get();
+
+//        $conversations = $this->conversation
+//            ->with([
+//                'messages' => function ($query) {
+//                   //$query->offset(0)->limit(2);
+//                },
+//                'userA', 'userB', 'newActivityParticipant'
+//            ])
+//            ->where('user_a_id', $userId)
+//            ->orWhere(function ($query) use ($userId) {
+//                $query->where('user_b_id', $userId);
+//            })
+//            ->orderBy('updated_at', 'desc')
+//            ->get();
 
         return $conversations;
     }
