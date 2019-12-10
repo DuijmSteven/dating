@@ -39,8 +39,7 @@ class Conversation extends Model
             'sender',
             'recipient',
             'attachment'
-        ])
-        ->orderBy('created_at', 'asc');
+        ]);
     }
 
     /**

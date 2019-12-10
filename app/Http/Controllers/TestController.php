@@ -73,7 +73,7 @@ class TestController extends Controller
         $user = User::find(1);
         var_dump($user->getEmail());
 
-        $message = (new Welcome($user))->onQueue('emails');
+            $message = (new Welcome($user))->onQueue('emails');
 
         $send = Mail::to($user)
             ->queue($message);

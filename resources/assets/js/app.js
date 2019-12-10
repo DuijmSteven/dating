@@ -12,7 +12,7 @@ window.Vue = require('vue/dist/vue.js');
 
 import VuejsDialog from 'vuejs-dialog';
 import VuejsDialogMixin from 'vuejs-dialog/dist/vuejs-dialog-mixin.min.js';
-
+import VueMaterial from 'vue-material';
 
 import VueMq from 'vue-mq';
 import moment from 'moment';
@@ -27,6 +27,9 @@ Vue.use(VueMq, {
 });
 
 Vue.use(VuejsDialog);
+
+Vue.use(VueMaterial);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -70,7 +73,7 @@ if ($('#app').length > 0) {
 
         methods: {
             setConversationActivityForUser: function (conversation, value) {
-                axios.get('/api/conversations/set-conversation-activity-for-user/' + conversation.currentUser.id + '/' + conversation.otherUser.id + '/' + conversation.currentUser.id + '/' + value).then(
+                axios.get('/api/conversations/set-conversation-activity-for-user/' + conversation.currentUserId + '/' + conversation.otherUserId + '/' + conversation.currentUserId + '/' + value).then(
                     response => {
                         console.log(response);
                     }
@@ -99,7 +102,7 @@ if ($('#app').length > 0) {
                 if (this.conversationPartners.length > 4) {
                     return false;
                 }
-
+                
                 let isConversationOpen = false;
                 let openConversationIndex;
 
@@ -203,17 +206,6 @@ $(window).ready(function () {
         });
     }
 
-    // if ($('.datepicker').length > 0) {
-    //     $('.datepicker').datepicker({
-    //         format: 'dd/mm/yyyy',
-    //     });
-    // }
-
-    // fix user dropdown profile image vertical position
-    if ($('#JS--userDropdown_image').length > 0) {
-        $('#JS--userDropdown_image').css('margin-top', -parseInt($('#JS--userDropdown_image').css('height')) / 2 + 'px');
-    }
-
     if ($('.JS--autoCompleteCites').length > 0) {
         // Auto-completes Dutch cities in bot creation view text field
         $.getJSON(DP.baseUrl + '/api/cities/nl')
@@ -275,6 +267,20 @@ $(window).ready(function () {
             $('#JS--loginForm').toggle('fast');
         });
     }
+
+    $('.block-pricing .btn').click(function() {
+        $('.table-rose').removeClass('table-rose');
+        $('.block-raised').removeClass('block-raised');
+        $('.btn-white').removeClass('btn-white').addClass('btn-rose');
+        $(this).closest('.block-pricing').addClass('block-raised');
+        $(this).closest('.table').addClass('table-rose');
+        $(this).addClass('btn-white');
+
+        //change cart values based on selected credits package
+        $('span.cart-value').html($('.block-raised .block-caption span').html());
+        $('span.cart-credits').html($('.block-raised b.package-credits').html());
+        $('span.cart-package').html($('.block-raised .category').html());
+    });
 });
 
 

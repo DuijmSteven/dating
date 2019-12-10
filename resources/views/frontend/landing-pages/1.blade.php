@@ -27,7 +27,7 @@ LP 1
 
     .vh-70 .container {
         position: absolute;
-        top: 47%;
+        top: 60%;
         left: 0;
         right: 0;
         -moz-transform: translateY(-50%);
@@ -249,16 +249,25 @@ LP 1
         padding-right: 0;
     }
 
-    .currentMembers .imageWrapper {
+    .roundImageWrapper {
         display: inline-block;
+        position: relative;
         overflow: hidden;
         border-radius: 50%;
-        width: 170px;
-        height: 170px;
+
+        width: 150px;
+        height: 150px;
     }
 
-    .currentMembers .imageWrapper img {
-        width: 170px;
+    .roundImage {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        height: 100%;
+        width: auto;
+        -webkit-transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+        transform: translate(-50%,-50%);
     }
 
 </style>
@@ -271,7 +280,7 @@ LP 1
     </div>
 </header>
 <main>
-    <div class="vh-70 bg-image text-center" style="background-image: url(img/bg.jpg)">
+    <div class="vh-70 bg-image text-center" style="background-image: url(img/bg.jpg); position: relative">
         <div class="container">
             <h1>Meet your next love here!</h1>
         </div>
@@ -450,12 +459,14 @@ LP 1
         <div class="row mt-5">
             @foreach ($users as $user)
                 <div class="col-lg-2 col-md-4 col-sm-12">
-                    <a href="{{ route('users.show', ['userId' => $user->getId()]) }}" class="imageWrapper">
-                        <img
-                            src="{{ \StorageHelper::profileImageUrl($user) }}"
-                            class="img-circle img-wide"
-                            alt=""
-                        >
+                    <a href="{{ route('users.show', ['userId' => $user->getId()]) }}">
+                        <div class="roundImageWrapper">
+                            <img
+                                src="{{ \StorageHelper::profileImageUrl($user) }}"
+                                class="roundImage"
+                                alt=""
+                            >
+                        </div>
                     </a>
                     <h5 class="small">{{ ucfirst($user->username) }}</h5>
                     <p class="offset-0">
@@ -475,9 +486,11 @@ LP 1
                 @foreach($testimonials as $testimonial)
                     <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
                         <div class="text-center">
-                            <img class="img-wide"
-                                 src="{{ $testimonial['imgSource'] }}"
-                                 alt="">
+                            <div class="roundImageWrapper">
+                                <img class="roundImage"
+                                     src="{{ $testimonial['imgSource'] }}"
+                                     alt="">
+                            </div>
                         </div>
                         <div class="text-center">
                             <blockquote class="quote">

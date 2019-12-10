@@ -136,24 +136,18 @@
         }
 
         &__imageContainer {
-            position: absolute;
-            left: 5px;
-            top: $userMenuImageTop + px;
+            @include roundImageWrapper;
 
-            display: flex;
+            position: absolute;
+            bottom: 17px;
+            left: 9px;
+
             width: $userMenuImageContainerDimension + px;
             height: $userMenuImageContainerDimension + px;
-            border-radius: 50%;
-            overflow: hidden;
         }
 
         &__image {
-            position: absolute;
-            width: $userMenuImageDimension + px;
-            left: 50%;
-            margin-left: -$userMenuImageDimension/2 + px;
-            top: 50%;
-            margin-top: -$userMenuImageDimension/2 + px;
+            @include roundImage;
         }
 
         .dropdown-toggle {

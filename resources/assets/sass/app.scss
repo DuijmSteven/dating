@@ -1,5 +1,28 @@
+// Packages
+@import '~vue-material/dist/vue-material.min.css';
+@import '~vue-material/dist/theme/prebuilt/default-dark';
+
 // Variables
 @import "variables";
+
+@mixin roundImageWrapper {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+@mixin roundImage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 100%;
+  width: auto;
+  -webkit-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+
 @import "brand";
 
 // Bootstrap
@@ -43,6 +66,7 @@
 @import "views/articles";
 @import "views/faq";
 @import "views/edit-profile";
+@import "views/credits";
 
 @import "vue-apps/private-chat/main";
 

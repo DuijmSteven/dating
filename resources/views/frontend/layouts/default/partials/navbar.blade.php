@@ -39,7 +39,6 @@
                             <div class="userDropdown__imageContainer">
                                 <img
                                     class="userDropdown__image"
-                                    id="JS--userDropdown_image"
                                     src="{{ \StorageHelper::profileImageUrl($authenticatedUser, true) }}" alt=""
                                 >
                             </div>
@@ -83,7 +82,7 @@
 
                 @else
                     <li class="{!! \Request::route()->getName() == 'login.get' ? 'active' : '' !!}">
-                        <a href="{{ route('login.get') }}">Login</a>
+                        <a href="{{ route('landing-page.show') }}">Login</a>
                     </li>
                     <li class="{!! \Request::route()->getName() == 'landing-page.show' ? 'active' : '' !!}">
                         <a href="{{ route('landing-page.show') }}">Register</a>

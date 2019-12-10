@@ -10,6 +10,12 @@
         data-provide="markdown"
         class="Tile__body"
     >
+        @if($article->image_filename)
+            <div class="img-responsive">
+                <img class="Article__image" src="{!! \StorageHelper::articleImageUrl($article->id, $article->image_filename, false) !!}" alt="Article image">
+            </div>
+        @endif
+
         {!! \GrahamCampbell\Markdown\Facades\Markdown::convertToHtml($article->getBody()) !!}
     </div>
 </div>

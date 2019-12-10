@@ -3,6 +3,8 @@
 namespace App\Traits\Users;
 
 use App\Helpers\ApplicationConstants\UserConstants;
+use App\Http\Requests\RegisterRequest;
+use App\Mail\Welcome;
 use App\User;
 use App\UserAccount;
 use App\UserMeta;
@@ -11,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 trait RegistersUsers
 {
@@ -31,13 +34,8 @@ trait RegistersUsers
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws \Exception
      */
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
-        \Log::info($request->all());
-
-
-        $this->validator($request->all())->validate();
-
         $genderLookingForGender = explode("-", $request->all()['lookingFor']);
         $gender = $genderLookingForGender[0];
         $lookingFor = $genderLookingForGender[1];
@@ -93,6 +91,11 @@ trait RegistersUsers
             throw $exception;
         }
         DB::commit();
+
+        $welcomeEmail = (new Welcome($createdUser))->onQueue('emails');
+
+        Mail::to($createdUser)
+            ->queue($welcomeEmail);
 
         $this->guard()->login($createdUser);
 

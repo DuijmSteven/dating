@@ -25,6 +25,13 @@ Route::group([
 
 
 Route::group([
+    'prefix' => 'conversation-messages'
+], function () {
+    Route::get('{userAId}/{userBId}/{messageIdHigherThan}', 'Api\ConversationController@getConversationMessagesWithIdHigherThanByParticipantIds')
+        ->name('conversations-messages.get-messages-with-higher-id');
+});
+
+Route::group([
     'prefix' => 'conversations'
 ], function () {
     Route::get('conversation-partner-ids/{userId}', 'Api\ConversationController@getOpenConversationPartners')
