@@ -5,39 +5,21 @@
     <div class="pricing-3">
         <div>
             <div class="row">
-                <div class="col-md-4">
-                    <div class="block block-pricing">
-                        <div class="table">
-                            <h6 class="category">Small</h6>
-                            <h1 class="block-caption"><small>€</small><span>29</span></h1>
-                            <ul>
-                                <li><b class="package-credits">150</b> credits</li>
-                                <li><b>1,27</b> per message</li>
-                            </ul> <a href="#" class="btn btn-rose btn-round">Select</a> </div>
+
+                @foreach($creditpacks as $creditpack)
+                    <div class="col-md-4">
+                        <div class="block block-pricing {{ $loop->iteration == 2 ? 'block-raised' : '' }}">
+                            <div class="table {{ $loop->iteration == 2 ? 'table-rose' : '' }}">
+                                <h6 class="category">{{ $creditpack->name }}</h6>
+                                <h1 class="block-caption"><small>€</small><span>{{ $creditpack->price/100 }}</span></h1>
+                                <ul>
+                                    <li><b class="package-credits">{{ $creditpack->credits }}</b> credits</li>
+                                    <li><b>{{ round($creditpack->price/$creditpack->credits, 2) }}</b> per message</li>
+                                </ul> <a href="#" class="btn {{ $loop->iteration == 2 ? 'btn-white' : 'btn-rose' }} btn-round">Select</a> </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="block block-pricing block-raised">
-                        <div class="table table-rose">
-                            <h6 class="category">Medium</h6>
-                            <h1 class="block-caption"><small>€</small><span>49</span></h1>
-                            <ul>
-                                <li><b class="package-credits">300</b> credits</li>
-                                <li><b>1,10</b> per message</li>
-                            </ul> <a href="#" class="btn btn-white btn-round">Select</a> </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="block block-pricing">
-                        <div class="table">
-                            <h6 class="category">Large</h6>
-                            <h1 class="block-caption"><small>€</small><span>69</span></h1>
-                            <ul>
-                                <li><b class="package-credits">500</b> credits</li>
-                                <li><b>0,99</b> per message</li>
-                            </ul> <a href="#" class="btn btn-rose btn-round">Select</a> </div>
-                    </div>
-                </div>
+                @endforeach
+
             </div>
         </div>
     </div>
@@ -46,10 +28,10 @@
             {{ csrf_field() }}
             <div class="col-md-6">
                 <h4>Payment methods</h4>
-                <ul class="list-group mb-3">
+                <ul class="list-group mb-3 JS--paymentMethods">
                     <li class="list-group-item d-flex justify-content-between lh-condensed" style="margin-bottom: 10px">
                         <div>
-                            <label><input type="radio" name="payment-method" value="ideal"> <span style="margin-left: 5px">iDeal</span></label>
+                            <label for=""><input type="radio" name="payment-method" value="ideal"> <span style="margin-left: 5px">iDeal</span></label>
                         </div>
                         <span class="text-muted"><img src="{{ asset('img/icons/ideal.png') }}" /></span>
                     </li>
@@ -72,14 +54,14 @@
                 <ul class="list-group mb-3">
                     <li class="list-group-item d-flex justify-content-between lh-condensed">
                         <div>
-                            <h6 class="my-0"><span class="cart-package">Medium</span> package</h6>
-                            <small class="text-muted"><span class="cart-credits">300</span> credits</small>
+                            <h6 class="my-0"><span class="cart-package">{{ $creditpacks[1]->name }}</span> package</h6>
+                            <small class="text-muted"><span class="cart-credits">{{ $creditpacks[1]->credits }}</span> credits</small>
                         </div>
-                        <span class="text-muted"><span class="cart-value">49</span>€</span>
+                        <span class="text-muted"><span class="cart-value">{{ $creditpacks[1]->price/100 }}</span>€</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between">
                         <span>Total (EUR)</span>
-                        <strong><span class="cart-value">49</span>€</strong>
+                        <strong><span class="cart-value">{{ $creditpacks[1]->price/100 }}</span>€</strong>
                     </li>
                 </ul>
                 <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>

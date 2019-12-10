@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Creditpack;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -18,6 +19,7 @@ class CreditsController extends FrontendController
                 'title' => config('app.name'),
                 'users' => $users,
                 'carbonNow' => Carbon::now(),
+                'creditpacks' => Creditpack::all()->sortBy('id')
             ]
         );
     }
