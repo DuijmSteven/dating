@@ -23,15 +23,23 @@ class ConversationController extends Controller
 
     /** @var ConversationMessage $conversationMessage */
     private $conversationMessage;
+    /**
+     * @var User
+     */
+    private $user;
 
     /**
      * ConversationController constructor.
      * @param ConversationManager $conversationManager
      */
-    public function __construct(ConversationManager $conversationManager, ConversationMessage $conversationMessage)
-    {
+    public function __construct(
+        ConversationManager $conversationManager,
+        ConversationMessage $conversationMessage,
+        User $user
+    ) {
         $this->conversationManager = $conversationManager;
         $this->conversationMessage = $conversationMessage;
+        $this->user = $user;
         parent::__construct();
     }
 
@@ -46,15 +54,20 @@ class ConversationController extends Controller
      */
     public function store(MessageCreateRequest $messageCreateRequest)
     {
+        $messageData = $messageCreateRequest->all();
+        $senderId = $messageData['sender_id'];
+        $recipientId = $messageData['recipient_id'];
+
+        $senderCredits = $this->user->find($senderId)->account->credits;
+
+        if ($senderCredits < 300) {
+            throw new \Exception('Not enough credits');
+        }
+
         try {
             DB::beginTransaction();
-            $messageData = $messageCreateRequest->all();
 
             $conversationMessage = $this->conversationManager->createMessage($messageData);
-
-            $senderId = $messageData['sender_id'];
-            $recipientId = $messageData['recipient_id'];
-
             $recipientPartnerIds = OpenConversationPartner::where('user_id', $recipientId)
                 ->get()
                 ->pluck('partner_id')
@@ -74,8 +87,6 @@ class ConversationController extends Controller
                 'type' => 'success',
                 'message' => 'The message was sent successfully'
             ];
-
-            \Log::info('end');
 
             DB::commit();
         } catch (\Exception $exception) {

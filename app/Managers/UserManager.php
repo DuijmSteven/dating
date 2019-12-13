@@ -40,7 +40,7 @@ class UserManager
 
     public function getUserCredits(int $userId)
     {
-        return $this->user->account()->getCredits();
+        return $this->user->find($userId)->account->credits;
     }
 
     /**

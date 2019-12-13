@@ -47,6 +47,13 @@
 
         <div :id="'PrivateChatItem__body--' + index" class="PrivateChatItem__body">
             <div class="PrivateChatItem__body__wrapper">
+                <div
+                    v-if="showNoCredits"
+                    class="notEnoughCredits">
+                    <div>No credits</div>
+                    <div><a :href="creditsUrl">Refill now!</a></div>
+                </div>
+
                 <div :id="'PrivateChatItem__body__content--' + index"
                      class="PrivateChatItem__body__content"
                 >
@@ -125,7 +132,9 @@
                 fetchingInitial: true,
                 waitedAfterLoaderDisappeared: false,
                 timeToWaitAfterLoaderDisappears: 20,
-                sendingMessage: false
+                sendingMessage: false,
+                showNoCredits: false,
+                creditsUrl: DP.creditsUrl
             };
         },
 
@@ -309,7 +318,6 @@
 
                     this.fetchingInitial = false;
 
-
                     setTimeout(() => {
                         this.waitedAfterLoaderDisappeared = true;
                     }, this.timeToWaitAfterLoaderDisappears);
@@ -401,8 +409,17 @@
                         this.fetchMessagesAndPopulate();
                     }
 
+                    this.$parent.getUserCredits();
+
                     this.fetchUserConversations();
                 }).catch((error) => {
+                    if (error && error.response && error.response.data.message == 'Not enough credits') {
+                        this.showNoCredits = true;
+
+                        setTimeout(() => {
+                            this.showNoCredits = false;
+                        }, 40000)
+                    }
                     this.sendingMessage = false;
                 });
             },

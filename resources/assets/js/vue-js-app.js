@@ -10,12 +10,14 @@ if ($('#app').length > 0) {
             conversationPartners: [],
             previousConversationPartnersResponse: undefined,
             currentConversationPartnersResponse: undefined,
-            intervalToFetchPartners: undefined
+            intervalToFetchPartners: undefined,
+            userCredits: undefined
         },
 
         created() {
             if (!(isUndefined(DP.authenticatedUser) || DP.authenticatedUser == null)) {
                 this.getConversationPartners();
+                this.getUserCredits();
 
                 this.intervalToFetchPartners = setInterval(() => {
                     this.getConversationPartners()
@@ -24,6 +26,15 @@ if ($('#app').length > 0) {
         },
 
         methods: {
+            getUserCredits: function () {
+                axios.get('/api/users/' + parseInt(DP.authenticatedUser.id) + '/credits').then(
+                    response => {
+                        this.userCredits = response.data;
+
+                        console.log(this.userCredits);
+                    }
+                );
+            },
             setConversationActivityForUser: function (conversation, value) {
                 axios.get('/api/conversations/set-conversation-activity-for-user/' + conversation.currentUserId + '/' + conversation.otherUserId + '/' + conversation.currentUserId + '/' + value).then(
                     response => {

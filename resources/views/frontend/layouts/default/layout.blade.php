@@ -69,6 +69,7 @@
             usersCloudPath: '{{ Storage::disk('cloud')->url('users') }}',
             malePlaceholderImageUrl: '{{ url('/') . '/img/' . 'avatars/male.jpg' }}',
             femalePlaceholderImageUrl: '{{ url('/') . '/img/' . 'avatars/female.jpg' }}',
+            creditsUrl: '{{ route('credits.show') }}',
         };
     </script>
     <script src="{{ mix('js/app.js') }}"></script>
