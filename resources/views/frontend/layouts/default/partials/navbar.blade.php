@@ -28,6 +28,15 @@
 
             <ul class="nav navbar-nav navbar-right">
                 @if(isset($authenticatedUser))
+                    <li class="userCredits">
+                        <div class="userCredits">
+                            <a href="{{ route('credits.show') }}">
+                                {{ $authenticatedUser->account->credits }} credits
+                            </a>
+                        </div>
+
+                        <div class="vertical-separator"></div>
+                    </li>
                     <li class="dropdown userDropdown">
                         <a href="#"
                            class="dropdown-toggle"
@@ -63,9 +72,7 @@
 
                         </ul>
 
-                        <div class="vertical-separator">
-
-                        </div>
+                        <div class="vertical-separator"></div>
                     </li>
 
                     <li class="{!! str_contains(\Request::route()->getName(), 'home') ? 'active' : '' !!}"><a

@@ -1,8 +1,8 @@
 <template>
     <div
-            @mouseenter="preventWindowScroll()"
-            @mouseleave="allowWindowScroll()"
-            :class="'PrivateChatItem PrivateChatItem--' + index + ' ' + statusClass"
+        @mouseenter="preventWindowScroll()"
+        @mouseleave="allowWindowScroll()"
+        :class="'PrivateChatItem PrivateChatItem--' + index + ' ' + statusClass"
     >
         <div :id="'PrivateChatItem__head--' + index"
              class="PrivateChatItem__head">
@@ -59,17 +59,13 @@
                         <i class="material-icons">
                             get_app
                         </i>
-                    </div>  
+                    </div>
 
                     <div
                         v-if="fetchingOlderMessages || fetchingInitial"
                         class="fetchingMessages"
                     >
-                        <md-progress-spinner
-                            md-mode="indeterminate"
-                            :md-diameter="20"
-                            :md-stroke="2"
-                        ></md-progress-spinner>
+                        <div class="loader"></div>
                     </div>
 
                     <div
@@ -80,17 +76,18 @@
                     </div>
 
                     <chat-message
-                            v-for="(message, index) in displayedMessages"
-                            :message="message"
-                            :key="message.id"
-                            :conversation="conversation"
+                        v-for="(message, index) in displayedMessages"
+                        :message="message"
+                        :key="message.id"
+                        :conversation="conversation"
                     ></chat-message>
                 </div>
                 <chat-form
-                        v-on:message-sent="addMessage"
-                        :user="user"
-                        :index="index"
-                        :conversation="conversation"
+                    v-on:message-sent="addMessage"
+                    :user="user"
+                    :index="index"
+                    :conversation="conversation"
+                    :sendingMessage="sendingMessage"
                 ></chat-form>
             </div>
         </div>
@@ -127,7 +124,8 @@
                 allMessagesFetched: false,
                 fetchingInitial: true,
                 waitedAfterLoaderDisappeared: false,
-                timeToWaitAfterLoaderDisappears: 20
+                timeToWaitAfterLoaderDisappears: 20,
+                sendingMessage: false
             };
         },
 
@@ -169,36 +167,36 @@
 
                 }
             },
-/*            checkScrollTop() {
-                let scrollTop = $('#PrivateChatItem__body__content--' + this.index).scrollTop();
+            /*            checkScrollTop() {
+                            let scrollTop = $('#PrivateChatItem__body__content--' + this.index).scrollTop();
 
-                if (!this.allMessagesFetched && !this.fetchingOlderMessages && !this.justCheckedScrollTop && scrollTop < 50) {
+                            if (!this.allMessagesFetched && !this.fetchingOlderMessages && !this.justCheckedScrollTop && scrollTop < 50) {
 
-                    this.justCheckedScrollTop = true;
+                                this.justCheckedScrollTop = true;
 
-                    this.fetchingOlderMessages = true;
+                                this.fetchingOlderMessages = true;
 
-                    axios.get('/api/conversations/' + this.user.id + '/' + this.partner.id + '/' + this.offset + '/' + this.messagesPerRequest).then(response => {
-                        this.conversation = response.data;
+                                axios.get('/api/conversations/' + this.user.id + '/' + this.partner.id + '/' + this.offset + '/' + this.messagesPerRequest).then(response => {
+                                    this.conversation = response.data;
 
-                        let messages = this.conversation.messages;
+                                    let messages = this.conversation.messages;
 
-                        if (messages.length > 0) {
-                            this.offset += this.messagesPerRequest;
-                            this.addMessagesToBeDisplayed(messages, true);
-                        } else {
-                            this.allMessagesFetched = true;
-                        }
+                                    if (messages.length > 0) {
+                                        this.offset += this.messagesPerRequest;
+                                        this.addMessagesToBeDisplayed(messages, true);
+                                    } else {
+                                        this.allMessagesFetched = true;
+                                    }
 
-                        this.fetchingOlderMessages = false;
-                    });
+                                    this.fetchingOlderMessages = false;
+                                });
 
-                }
+                            }
 
-                setTimeout(() => {
-                    this.justCheckedScrollTop = false;
-                }, 200);
-            },*/
+                            setTimeout(() => {
+                                this.justCheckedScrollTop = false;
+                            }, 200);
+                        },*/
 
             preventWindowScroll() {
                 if (this.windowHasScrollbar()) {
@@ -255,7 +253,7 @@
                 }, 10000);
             },
 
-            checkForNewMessagesAndShowThem() {
+                checkForNewMessagesAndShowThem() {
                 axios.get('/api/conversation-messages/' + this.user.id + '/' + this.partner.id + '/' + this.currentHighestMessageId).then(response => {
                     let messages = response.data;
 
@@ -372,6 +370,7 @@
             },
 
             addMessage(message) {
+                this.sendingMessage = true;
                 this.setConversationActivityForUserFalse();
 
                 setTimeout(() => {
@@ -394,6 +393,8 @@
                 };
 
                 axios.post('/conversations', data, config).then(() => {
+                    this.sendingMessage = false;
+
                     if (this.currentHighestMessageId !== undefined) {
                         this.checkForNewMessagesAndShowThem();
                     } else {
@@ -402,6 +403,7 @@
 
                     this.fetchUserConversations();
                 }).catch((error) => {
+                    this.sendingMessage = false;
                 });
             },
 

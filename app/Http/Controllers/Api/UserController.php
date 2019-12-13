@@ -13,6 +13,7 @@ use Illuminate\Http\JsonResponse;
  */
 class UserController
 {
+    /** @var UserManager */
     private $userManager;
 
     /**
@@ -24,11 +25,19 @@ class UserController
         $this->userManager = $userManager;
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function getCurrentUser(Request $request)
     {
         return $request->user();
     }
 
+    /**
+     * @param int $userId
+     * @return JsonResponse
+     */
     public function getUserById(int $userId)
     {
         try {
@@ -38,5 +47,14 @@ class UserController
         }
 
         return JsonResponse::create($user);
+    }
+
+    /**
+     * @param int $userId
+     * @return JsonResponse
+     */
+    public function getUserCredits(int $userId)
+    {
+        return $this->userManager->getUserCredits($userId);
     }
 }

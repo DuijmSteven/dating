@@ -16,8 +16,48 @@
     background-color: $navbarBgColor;
     position: relative;
 
+    .navbar-toggle {
+        &:focus,
+        &:hover {
+            background-color: initial;
+        }
+    }
+
     .navbar-nav {
+        .vertical-separator {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            margin-top: -($navbarHeight - 30)/2 + px;
+            width: 1px;
+            height: $navbarHeight - 30 + px;
+            border-right: 1px solid #5a6982;
+
+            @media (max-width: $screen-sm-max) {
+                display: none;
+            }
+        }
+
         > li {
+            &.userCredits {
+                display: flex;
+                position: relative;
+                align-items: center;
+                justify-content: center;
+                width: 108px;
+                height: $navbarHeight + px;
+
+                a {
+                    color: $navbarLinkColor;
+
+                    &:hover {
+                        color: darken($navbarLinkColor, 15%);
+                        cursor: pointer;
+                        text-decoration: none;
+                    }
+                }
+            }
+
             > a {
                 background-color: $navbarBgColor;
                 line-height: $navbarLineHeight + px;
@@ -119,16 +159,6 @@
     .userDropdown {
         position: relative;
 
-        .vertical-separator {
-            position: absolute;
-            right: 0;
-            top: 50%;
-            margin-top: -($navbarHeight - 30)/2 + px;
-            width: 1px;
-            height: $navbarHeight - 30 + px;
-            border-right: 1px solid #5a6982;
-        }
-
         .caret {
             top: 10px;
             position: relative;
@@ -140,7 +170,7 @@
 
             position: absolute;
             bottom: 17px;
-            left: 9px;
+            left: 13px;
 
             width: $userMenuImageContainerDimension + px;
             height: $userMenuImageContainerDimension + px;
@@ -153,7 +183,7 @@
         .dropdown-toggle {
             display: flex;
             flex-direction: row;
-            padding-left: 48px;
+            padding-left: 55px;
         }
 
         .dropdown-menu {

@@ -46,7 +46,8 @@
     &__textarea__container {
         position: relative;
 
-         .sendMessage {
+         .sendMessage,
+         .loader {
              position: absolute;
              right: 20px;
              top: 8px;
@@ -58,6 +59,10 @@
                  color: #468550;
              }
          }
+
+        .loader {
+            cursor: initial;
+        }
     }
 
     &__imagePreview {

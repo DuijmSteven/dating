@@ -15,7 +15,15 @@
                                 <ul>
                                     <li><b class="package-credits">{{ $creditpack->credits }}</b> credits</li>
                                     <li><b>{{ round($creditpack->price/$creditpack->credits, 2) }}</b> per message</li>
-                                </ul> <a href="#" class="btn {{ $loop->iteration == 2 ? 'btn-white' : 'btn-rose' }} btn-round">Select</a> </div>
+                                </ul>
+
+                                <a
+                                    href="#"
+                                    class="btn {{ $loop->iteration == 2 ? 'btn-white' : 'btn-rose' }} btn-round JS--prevent-default__click"
+                                >
+                                    Select
+                                </a>
+                            </div>
                         </div>
                     </div>
                 @endforeach

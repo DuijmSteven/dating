@@ -21,6 +21,9 @@ Route::group([
 ], function () {
     Route::get('{userId}', 'Api\UserController@getUserById')
         ->name('users.get-by-id');
+
+    Route::get('{userId}/credits', 'Api\UserController@getUserCredits')
+        ->name('users.get-user-credits');
 });
 
 

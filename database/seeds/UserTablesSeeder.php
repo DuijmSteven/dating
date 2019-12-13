@@ -89,6 +89,10 @@ class UserTablesSeeder extends Seeder
             'password' => bcrypt(env('LOCAL_ADMIN_PASSWORD'))
         ]);
 
+        $createdAdmin->account()->save(factory(App\UserAccount::class)->make([
+            'user_id' => $createdAdmin->id
+        ]));
+
         $randomCityWithCoordinates = $this->citiesWithCoordinates[rand(0, count($this->citiesWithCoordinates) - 1)];
 
         $adminUserMetaInstance = $createdAdmin->meta()->save(factory(App\UserMeta::class)->make([
