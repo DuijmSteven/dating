@@ -80,7 +80,7 @@ class UserSearchController extends FrontendController
         }
 
         // flash parameters to session so the next request can access them
-        $userSearchRequest->session()->flash('searchParameters', $searchParameters);
+        $userSearchRequest->session()->put('searchParameters', $searchParameters);
 
         // redirect to search results' first page
         return redirect()->route('users.search.results.get', ['page' => 1]);
@@ -96,10 +96,7 @@ class UserSearchController extends FrontendController
     public function getSearchResults(Request $request)
     {
         // get searchParameters from session
-        $searchParameters = session('searchParameters');
-
-        // flash searchParameters to session so the next request can access them
-        $request->session()->flash('searchParameters', $searchParameters);
+        $searchParameters = $request->session()->get('searchParameters');
 
         $users = $this->userSearchManager->searchUsers(
             $searchParameters,
@@ -109,7 +106,8 @@ class UserSearchController extends FrontendController
 
         $viewData = [
             'users' => $users,
-            'carbonNow' => Carbon::now()
+            'carbonNow' => Carbon::now(),
+            'title' => 'Search results - ' . config('app.name'),
         ];
 
         return view(

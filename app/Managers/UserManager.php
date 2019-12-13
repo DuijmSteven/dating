@@ -38,6 +38,11 @@ class UserManager
         $this->storageManager = $storageManager;
     }
 
+    public function getUserCredits(int $userId)
+    {
+        return $this->user->find($userId)->account->credits;
+    }
+
     /**
      * @param array $userData
      * @throws \Exception
@@ -328,7 +333,7 @@ class UserManager
             return null;
         }
 
-        $user = User::with('profileImage', 'images', 'meta', 'emailTypes')->where('id', $user->getId())->get()[0];
+        $user = User::with('profileImage', 'images', 'meta', 'emailTypes', 'account')->where('id', $user->getId())->get()[0];
 
         return $user;
     }

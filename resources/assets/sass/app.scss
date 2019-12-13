@@ -1,7 +1,3 @@
-// Packages
-@import '~vue-material/dist/vue-material.min.css';
-@import '~vue-material/dist/theme/prebuilt/default-dark';
-
 // Variables
 @import "variables";
 
@@ -55,6 +51,7 @@
 @import "components/private-chat-manager";
 @import "components/private-chat-item";
 @import "components/image-modal";
+@import "components/spinner";
 
 // Modules
 @import "modules/online-users";

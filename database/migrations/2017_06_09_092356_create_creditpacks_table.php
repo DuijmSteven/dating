@@ -27,22 +27,22 @@ class CreateCreditpacksTable extends Migration
         Creditpack::insert([
             [
                 'name' => 'small',
-                'credits' => 20,
-                'price' => 25000,
+                'credits' => 70,
+                'price' => 6000,
                 'description' => 'Dummy',
                 'image_url' => 'Dummy'
             ],
             [
                 'name' => 'medium',
-                'credits' => 30,
-                'price' => 60000,
+                'credits' => 110,
+                'price' => 9000,
                 'description' => 'Dummy',
                 'image_url' => 'Dummy'
             ],
             [
                 'name' => 'large',
-                'credits' => 40,
-                'price' => 100000,
+                'credits' => 170,
+                'price' => 12000,
                 'description' => 'Dummy',
                 'image_url' => 'Dummy'
             ]

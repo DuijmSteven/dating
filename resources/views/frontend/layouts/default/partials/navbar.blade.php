@@ -25,9 +25,17 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-
             <ul class="nav navbar-nav navbar-right">
                 @if(isset($authenticatedUser))
+                    <li class="userCredits">
+                        <div class="userCredits">
+                            <a href="{{ route('credits.show') }}">
+                                {{ $authenticatedUser->account->credits }} credits
+                            </a>
+                        </div>
+
+                        <div class="vertical-separator"></div>
+                    </li>
                     <li class="dropdown userDropdown">
                         <a href="#"
                            class="dropdown-toggle"
@@ -47,12 +55,12 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="{!! route('edit-profile.get') !!}">Edit profile</a></li>
-                            <li><a href="#">Credits</a></li>
+                            <li><a href="{{ route('credits.show') }}">Credits</a></li>
 
                             <li>
                                 <a href="{!!  route('logout.post') !!}"
                                    onclick="event.preventDefault();
-                           document.getElementById('logout-form').submit();">Logout
+                                    document.getElementById('logout-form').submit();">Logout
                                 </a>
 
                                 <form id="logout-form" action="{!!  route('logout.post') !!}" method="POST"
@@ -63,23 +71,12 @@
 
                         </ul>
 
-                        <div class="vertical-separator">
-
-                        </div>
+                        <div class="vertical-separator"></div>
                     </li>
 
                     <li class="{!! str_contains(\Request::route()->getName(), 'home') ? 'active' : '' !!}"><a
-                                href="{{ route('home') }}"><i class="fa fa-fw fa-newspaper-o"></i>Home</a>
+                            href="{{ route('home') }}"><i class="fa fa-fw fa-newspaper-o"></i>Home</a>
                     </li>
-
-                    {{--                    <li class="{!! \Request::route()->getName() == 'users.overview' ? 'active' : '' !!}">
-                                            <a href="{{ route('users.overview') }}">
-                                                {{ @trans('profiles.main_heading') }}
-                                                <span class="sr-only">(current)</span>
-                                            </a>
-                                        </li>--}}
-
-
                 @else
                     <li class="{!! \Request::route()->getName() == 'login.get' ? 'active' : '' !!}">
                         <a href="{{ route('landing-page.show') }}">Login</a>

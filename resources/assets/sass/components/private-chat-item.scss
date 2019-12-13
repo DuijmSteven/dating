@@ -1,7 +1,8 @@
-
 @mixin private-chat-list {
     @for $i from 0 through 10 {
-        .PrivateChatItem--#{$i} { right: (430 + (map_get($privateChatItem, width) + 20) * $i) + px; }
+        .PrivateChatItem--#{$i} {
+            right: (430 + (map_get($privateChatItem, width) + 20) * $i) + px;
+        }
     }
 }
 
@@ -13,8 +14,25 @@
     bottom: 0;
     width: map_get($privateChatItem, width) + px;
 
-    .md-progress-spinner.md-theme-default .md-progress-spinner-circle {
-        stroke: grey;
+    .notEnoughCredits {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.6);
+        color: #fff;
+        font-size: 27px;
+        font-weight: 500;
+        z-index: 400;
+
+        a {
+            color: $secondaryColor;
+        }
     }
 
     .fetchMoreButton,
@@ -46,18 +64,23 @@
     &__textarea__container {
         position: relative;
 
-         .sendMessage {
-             position: absolute;
-             right: 20px;
-             top: 8px;
+        .sendMessage,
+        .loader {
+            position: absolute;
+            right: 20px;
+            top: 8px;
 
-             color: #888;
-             cursor: pointer;
+            color: #888;
+            cursor: pointer;
 
-             &:hover {
-                 color: #468550;
-             }
-         }
+            &:hover {
+                color: #468550;
+            }
+        }
+
+        .loader {
+            cursor: initial;
+        }
     }
 
     &__imagePreview {
@@ -165,6 +188,10 @@
     &__body {
         font-size: 12px;
 
+        &__wrapper {
+            position: relative;
+        }
+
         &__content {
             position: relative;
             padding: 10px;
@@ -266,7 +293,7 @@
     }
 
     &.focus {
-        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     }
 }
 

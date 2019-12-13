@@ -14,9 +14,15 @@
             </textarea>
 
             <i
+                v-if="!sendingMessage"
                 class="material-icons material-icon sendMessage"
                 v-on:click="sendMessage"
             >send</i>
+
+            <div
+                v-if="sendingMessage"
+                class="loader"
+            ></div>
         </div>
         <div class="PrivateChatItem__textarea__buttons">
             <label style="margin-bottom: 0; cursor: pointer">
@@ -34,7 +40,8 @@
         props: [
             'user',
             'index',
-            'conversation'
+            'conversation',
+            'sendingMessage'
         ],
 
         data() {

@@ -17,4 +17,9 @@ class UserAccount extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function getCredits()
+    {
+        return $this->credits;
+    }
 }
