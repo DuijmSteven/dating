@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use Illuminate\Http\Request;
 use App\Interfaces\PaymentProvider;
 use App\Managers\PaymentManager;
 use App\Services\PaymentService;
+use Illuminate\Validation\Rule;
 
 /**
  * Class PaymentController
@@ -30,8 +32,23 @@ class PaymentController extends FrontendController
         parent::__construct();
     }
 
-    public function initiatePayment()
+    public function initiatePayment(Request $request)
     {
-        $this->paymentProvider->initiatePayment('RABONL2U', 'ideal', 1, 'sdsdsds');
+        $this->validate($request,[
+            'paymentMethod' => [
+                'required',
+                Rule::in([
+                    'ideal', 'credit', 'paysafe'
+                ])
+            ],
+            'amount' => 'required'
+        ]);
+
+        $bank = $request->get('bank');
+        $paymentMethod = $request->get('paymentMethod');
+        $amount = number_format((float)$request->get('amount'), 2, '.', '');
+        $description = $request->get('description') . ' credits';
+
+        return $this->paymentProvider->initiatePayment($bank, $paymentMethod, $amount, $description);
     }
 }

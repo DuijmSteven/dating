@@ -22,4 +22,9 @@ class UserAccount extends Model
     {
         return $this->credits;
     }
+
+    public function setCredits(int $credits)
+    {
+        $this->credits = $credits;
+    }
 }

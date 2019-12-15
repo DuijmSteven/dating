@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Frontend;
 use App\Creditpack;
 use App\User;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class CreditsController extends FrontendController
 {

@@ -4,17 +4,11 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 import isUndefined from "admin-lte/bower_components/moment/src/lib/utils/is-undefined";
-
-require('./bootstrap');
-require('bootstrap-datepicker');
-
 window.Vue = require('vue/dist/vue.js');
 
 import VuejsDialog from 'vuejs-dialog';
-import VuejsDialogMixin from 'vuejs-dialog/dist/vuejs-dialog-mixin.min.js';
 
 import VueMq from 'vue-mq';
-import moment from 'moment';
 
 Vue.use(VueMq, {
     breakpoints: {
@@ -27,24 +21,25 @@ Vue.use(VueMq, {
 
 Vue.use(VuejsDialog);
 
+require('./bootstrap');
+require('bootstrap-datepicker');
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('private-chat-manager', require('./components/private-chat/PrivateChatManager.vue'));
-Vue.component('private-chat', require('./components/private-chat/PrivateChat.vue'));
-Vue.component('chat-message', require('./components/private-chat/ChatMessage.vue'));
-Vue.component('chat-form', require('./components/private-chat/ChatForm.vue'));
+require('./vue/custom');
 
-Vue.filter('formatDate', function(value) {
-    if (value) {
-        return moment(String(value)).format('MM/DD/YYYY hh:mm')
-    }
-});
+Vue.component('private-chat-manager', require('./vue/components/private-chat/PrivateChatManager.vue'));
+Vue.component('private-chat', require('./vue/components/private-chat/PrivateChat.vue'));
+Vue.component('chat-message', require('./vue/components/private-chat/ChatMessage.vue'));
+Vue.component('chat-form', require('./vue/components/private-chat/ChatForm.vue'));
+Vue.component('credits-count', require('./vue/components/CreditsCount.vue'));
 
-require('./vue-js-app');
+require('./vue/vue-js-app');
 
 /**
  * Other Javascript
@@ -164,8 +159,19 @@ $(window).ready(function () {
 
             //change cart values based on selected credits package
             $('span.cart-value').html($('.block-raised .block-caption span').html());
+            $('input[name="amount"]').val($('.block-raised .block-caption span').html());
             $('span.cart-credits').html($('.block-raised b.package-credits').html());
+            $('input[name="description"]').val($('.block-raised b.package-credits').html());
             $('span.cart-package').html($('.block-raised .category').html());
+        });
+    }
+
+    if($('.JS--banksContainer').length > 0) {
+        $('input:radio[name="paymentMethod"]').change( function(){
+            if ($(this).is(':checked') && $(this).val() == 'ideal') {
+                $('.JS--banksContainer').show();
+            } else
+                $('.JS--banksContainer').hide();
         });
     }
 });

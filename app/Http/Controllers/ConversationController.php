@@ -9,6 +9,7 @@ use App\Managers\ConversationManager;
 use App\Http\Controllers\Controller;
 use App\OpenConversationPartner;
 use App\User;
+use App\UserAccount;
 use DB;
 use Redis;
 
@@ -58,9 +59,15 @@ class ConversationController extends Controller
         $senderId = $messageData['sender_id'];
         $recipientId = $messageData['recipient_id'];
 
-        $senderCredits = $this->user->find($senderId)->account->credits;
+        /** @var User $recipient */
+        $recipient = User::find($recipientId);
 
-        if ($senderCredits < 300) {
+        /** @var User $sender */
+        $sender = User::find($senderId);
+
+        $senderCredits = $sender->account->credits;
+
+        if ($senderCredits < 1) {
             throw new \Exception('Not enough credits');
         }
 
@@ -74,14 +81,14 @@ class ConversationController extends Controller
                 ->toArray();
 
             if (!in_array($senderId, $recipientPartnerIds)) {
-                /** @var User $recipient */
-                $recipient = User::find($recipientId);
-
-                /** @var User $sender */
-                $sender = User::find($senderId);
-
                 $recipient->addOpenConversationPartner($sender, 1);
             }
+
+            /** @var UserAccount $senderAccount */
+            $senderAccount = $sender->account;
+
+            $senderAccount->setCredits($senderCredits - 1);
+            $senderAccount->save();
 
             $alerts[] = [
                 'type' => 'success',

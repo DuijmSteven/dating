@@ -147,6 +147,8 @@ Route::get('faq', 'Frontend\MiscController@showFaq')
 
 Route::get('credits', 'Frontend\CreditsController@show')
     ->name('credits.show');
+Route::post('credits', 'Frontend\PaymentController@initiatePayment')
+    ->name('credits.store');
 
 Route::group([
     'prefix' => 'admin',

@@ -30,8 +30,6 @@ if ($('#app').length > 0) {
                 axios.get('/api/users/' + parseInt(DP.authenticatedUser.id) + '/credits').then(
                     response => {
                         this.userCredits = response.data;
-
-                        console.log(this.userCredits);
                     }
                 );
             },
