@@ -32,26 +32,44 @@
         </div>
     </div>
     <div class="row pricing-10">
-        <form method="POST" action="">
+        <form method="post" action="{{ route('credits.store') }}">
             {{ csrf_field() }}
             <div class="col-md-6">
                 <h4>Payment methods</h4>
                 <ul class="list-group mb-3 JS--paymentMethods">
-                    <li class="list-group-item d-flex justify-content-between lh-condensed" style="margin-bottom: 10px">
+                    <li class="list-group-item d-flex justify-content-between" style="margin-bottom: 10px; flex-wrap: wrap;">
                         <div>
-                            <label for=""><input type="radio" name="payment-method" value="ideal"> <span style="margin-left: 5px">iDeal</span></label>
+                            <label><input type="radio" name="paymentMethod" value="ideal" required> <span style="margin-left: 5px">iDeal</span></label>
                         </div>
                         <span class="text-muted"><img src="{{ asset('img/icons/ideal.png') }}" /></span>
+                        <div class="break" style="flex-basis: 100%; height: 0;"></div>
+                        <div class="JS--banksContainer" style="display: none; margin-top: 20px">
+                            <div class="form-group form-inline" style="display: contents">
+                                Bank:
+                                <select class="form-control" id="bank" name="bank">
+                                    <option value="ABNANL2A">ABN AMRO</option>
+                                    <option value="ASNBNL21">ASN BANK</option>
+                                    <option value="BUNQNL2A">BUNQ</option>
+                                    <option value="INGBNL2A">ING</option>
+                                    <option value="KNABNL2H">KNAB</option>
+                                    <option value="RABONL2U">RABOBANK</option>
+                                    <option value="RBRBNL21">REGIOBANK</option>
+                                    <option value="SNSBNL2A">SNS Bank</option>
+                                    <option value="TRIONL2U">Triodos Bank</option>
+                                    <option value="FVLBNL22">van Lanschot</option>
+                                </select>
+                            </div>
+                        </div>
                     </li>
-                    <li class="list-group-item d-flex justify-content-between lh-condensed" style="margin-bottom: 10px">
+                    <li class="list-group-item d-flex justify-content-between" style="margin-bottom: 10px">
                         <div>
-                            <label><input type="radio" name="payment-method" value="credit-card"> <span style="margin-left: 5px">Visa/MasterCard</span></label>
+                            <label><input type="radio" name="paymentMethod" value="credit"> <span style="margin-left: 5px">Visa/MasterCard</span></label>
                         </div>
                         <span class="text-muted"><img src="{{ asset('img/icons/credit-cards.png') }}" /></span>
                     </li>
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <li class="list-group-item d-flex justify-content-between">
                         <div>
-                            <label><input type="radio" name="payment-method" value="paysafecard"> <span style="margin-left: 5px">Paysafecard</span></label>
+                            <label><input type="radio" name="paymentMethod" value="paysafe"> <span style="margin-left: 5px">Paysafecard</span></label>
                         </div>
                         <span class="text-muted"><img src="{{ asset('img/icons/paysafecard.png') }}" /></span>
                     </li>
@@ -60,16 +78,18 @@
             <div class="col-md-6">
                 <h4>Cart</h4>
                 <ul class="list-group mb-3">
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <li class="list-group-item d-flex justify-content-between">
                         <div>
                             <h6 class="my-0"><span class="cart-package">{{ $creditpacks[1]->name }}</span> package</h6>
                             <small class="text-muted"><span class="cart-credits">{{ $creditpacks[1]->credits }}</span> credits</small>
+                            <input name="description" type="hidden" value="{{ $creditpacks[1]->credits }}">
                         </div>
                         <span class="text-muted"><span class="cart-value">{{ $creditpacks[1]->price/100 }}</span>€</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between">
                         <span>Total (EUR)</span>
                         <strong><span class="cart-value">{{ $creditpacks[1]->price/100 }}</span>€</strong>
+                        <input name="amount" type="hidden" value="{{ $creditpacks[1]->price/100 }}">
                     </li>
                 </ul>
                 <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>

@@ -11,32 +11,41 @@ interface PaymentProvider
     /**
      * @param string $bank
      * @param string $paymentMethod
-     * @param int $amount
+     * @param float $amount
      * @param string $description
      * @return mixed
      */
-    public function initiatePayment(string $bank, string $paymentMethod, int $amount, string $description);
+    public function initiatePayment(string $bank, string $paymentMethod, float $amount, string $description);
+
+    /**
+     * @param  string  $paymentMethod
+     * @param  string  $description
+     * @param  int  $status
+     * @param  int  $transactionId
+     * @return mixed
+     */
+    public function storePayment(string $paymentMethod, string $description, int $status, int $transactionId);
 
     /**
      * @param string $bank
-     * @param int $amount
+     * @param float $amount
      * @param string $description
      * @return mixed
      */
-    public function idealPayment(string $bank, int $amount, string $description);
+    public function idealPayment(string $bank, float $amount, string $description);
 
     /**
-     * @param int $amount
+     * @param float $amount
      * @param string $description
      * @return mixed
      */
-    public function paysafePayment(int $amount, string $description);
+    public function paysafePayment(float $amount, string $description);
 
     /**
      * @param string $bank
-     * @param int $amount
+     * @param float $amount
      * @param string $description
      * @return mixed
      */
-    public function ivrPayment(string $bank, int $amount, string $description);
+    public function ivrPayment(string $bank, float $amount, string $description);
 }

@@ -4,6 +4,10 @@ namespace App\Services;
 
 use App\Interfaces\PaymentProvider;
 
+use App\Payment;
+use App\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use TPWeb\TargetPay\TargetPay;
 use TPWeb\TargetPay\Transaction\IDeal;
 use TPWeb\TargetPay\Transaction\IVR;
@@ -32,14 +36,14 @@ class PaymentService implements PaymentProvider
      * @param string $description
      * @throws \Exception
      */
-    public function initiatePayment(string $bank, string $paymentMethod, int $amount, string $description)
+    public function initiatePayment(string $bank, string $paymentMethod, float $amount, string $description)
     {
         switch ($paymentMethod) {
             case 'ideal':
-                $this->idealPayment($bank, $amount, $description);
+                $transaction = $this->idealPayment($bank, $amount, $description);
                 break;
             case 'paysafe':
-                $this->paysafePayment($amount, $description);
+                $transaction = $this->paysafePayment($amount, $description);
                 break;
             case 'ivr':
                 $this->ivrPayment($bank, $amount, $description);
@@ -47,6 +51,30 @@ class PaymentService implements PaymentProvider
             default:
                 throw new \Exception('Payment method invalid');
         }
+
+        $this->storePayment($paymentMethod, $description, 1, $transaction['transactionId']);
+
+        return redirect()->away($transaction['redirectUrl']);
+    }
+
+    /**
+     * @param  string  $paymentMethod
+     * @param  string  $description
+     * @param  int  $status
+     * @param  int  $transactionId
+     * @return mixed|void
+     */
+    public function storePayment(string $paymentMethod, string $description, int $status, int $transactionId)
+    {
+        $user = User::find(1);
+
+        $payment = new Payment();
+        $payment->method = $paymentMethod;
+        $payment->description = $description;
+        $payment->status = 1;
+        $payment->transactionId = $transactionId;
+
+        $user->payments()->save($payment);
     }
 
     /**
@@ -54,7 +82,7 @@ class PaymentService implements PaymentProvider
      * @param int $amount
      * @param string $description
      */
-    public function idealPayment(string $bank, int $amount, string $description)
+    public function idealPayment(string $bank, float $amount, string $description)
     {
         /** @var TargetPay $targetPay */
         $targetPay = new \TargetPay(new IDeal());
@@ -71,13 +99,18 @@ class PaymentService implements PaymentProvider
 
         $redirectUrl = $transaction->getIdealUrl();
         $transactionId = $transaction->getTransactionId();
+
+        return [
+            'redirectUrl' => $redirectUrl,
+            'transactionId' => $transactionId
+        ];
     }
 
     /**
      * @param int $amount
      * @param string $description
      */
-    public function paysafePayment(int $amount, string $description)
+    public function paysafePayment(float $amount, string $description)
     {
         /** @var TargetPay $targetPay */
         $targetPay = new \TargetPay(new Paysafecard());
@@ -93,6 +126,11 @@ class PaymentService implements PaymentProvider
 
         $redirectUrl = $transaction->getPaysafecardUrl();
         $transactionId = $transaction->getTransactionId();
+
+        return [
+            'redirectUrl' => $redirectUrl,
+            'transactionId' => $transactionId
+        ];
     }
 
     /**
@@ -100,7 +138,7 @@ class PaymentService implements PaymentProvider
      * @param int $amount
      * @param string $description
      */
-    public function ivrPayment(string $bank, int $amount, string $description)
+    public function ivrPayment(string $bank, float $amount, string $description)
     {
         /** @var TargetPay $targetPay */
         $targetPay = new \TargetPay(new IVR());

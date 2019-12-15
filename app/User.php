@@ -281,6 +281,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Flirt', 'sender_id');
     }
 
+    public function payments()
+    {
+        return $this->hasMany('App\Payment');
+    }
+
     /**
      * @param $email
      */

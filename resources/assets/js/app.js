@@ -164,8 +164,19 @@ $(window).ready(function () {
 
             //change cart values based on selected credits package
             $('span.cart-value').html($('.block-raised .block-caption span').html());
+            $('input[name="amount"]').val($('.block-raised .block-caption span').html());
             $('span.cart-credits').html($('.block-raised b.package-credits').html());
+            $('input[name="description"]').val($('.block-raised b.package-credits').html());
             $('span.cart-package').html($('.block-raised .category').html());
+        });
+    }
+
+    if($('.JS--banksContainer').length > 0) {
+        $('input:radio[name="paymentMethod"]').change( function(){
+            if ($(this).is(':checked') && $(this).val() == 'ideal') {
+                $('.JS--banksContainer').show();
+            } else
+                $('.JS--banksContainer').hide();
         });
     }
 });
