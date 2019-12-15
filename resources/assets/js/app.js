@@ -37,6 +37,7 @@ Vue.component('private-chat-manager', require('./components/private-chat/Private
 Vue.component('private-chat', require('./components/private-chat/PrivateChat.vue'));
 Vue.component('chat-message', require('./components/private-chat/ChatMessage.vue'));
 Vue.component('chat-form', require('./components/private-chat/ChatForm.vue'));
+Vue.component('credits-count', require('./components/CreditsCount.vue'));
 
 Vue.filter('formatDate', function(value) {
     if (value) {

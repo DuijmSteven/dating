@@ -409,7 +409,7 @@
                         this.fetchMessagesAndPopulate();
                     }
 
-                    this.$parent.getUserCredits();
+                    this.$root.$emit('updateUserCredits');
 
                     this.fetchUserConversations();
                 }).catch((error) => {
