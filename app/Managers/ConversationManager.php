@@ -390,6 +390,7 @@ class ConversationManager
     {
         $conversations = DB::table('conversations')->select(
             'conversations.id as conversation_id',
+            'conversations.id as id',
             'conversations.new_activity_for_user_a as conversation_new_activity_for_user_a',
             'conversations.new_activity_for_user_b as conversation_new_activity_for_user_b',
             'conversations.user_a_id as conversation_user_a_id',
@@ -446,8 +447,11 @@ class ConversationManager
                 $join->on('ubi.user_id', '=', 'ub.id')
                     ->where('ubi.profile', 1);
             })
-            ->where('conversations.user_a_id', $userId)
-            ->orWhere('conversations.user_b_id', $userId)
+            ->where('conversations.deleted_at', null)
+            ->where(function ($query) use ($userId) {
+                $query->where('conversations.user_a_id', $userId)
+                    ->orWhere('conversations.user_b_id', $userId);
+            })
             ->orderBy('last_message_created_at', 'desc')
             ->get();
 

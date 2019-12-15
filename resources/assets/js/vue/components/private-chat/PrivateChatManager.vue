@@ -32,7 +32,7 @@
         >
             <div class="force-overflow"></div>
 
-            <div v-for="(conversation, index) in conversations"
+            <div v-for="(conversation, index) in conversations" :key="'A' + index"
                  v-on:click="clickedOnConversationItem(conversation, index)"
                  class="PrivateChatManager__item"
                  v-bind:class="{isNewOrHasNewMessage: conversation.newActivity}"
@@ -49,7 +49,7 @@
                 <div class="PrivateChatManager__item__right">
                     <div class="PrivateChatManager__item__right__topPart">
                         <span class="PrivateChatManager__item__userName">{{ conversation.otherUserUsername }}</span>
-                        <span class="PrivateChatManager__item__date">{{ conversation.conversation_updated_at }}</span>
+                        <span class="PrivateChatManager__item__date">{{ conversation.conversation_updated_at | formatDate }}</span>
                     </div>
                     <div class="PrivateChatManager__item__lastMessage">
                         {{ conversation.last_message_type === 'generic' ?

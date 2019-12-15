@@ -58,7 +58,11 @@
                      class="PrivateChatItem__body__content"
                 >
                     <div
-                        v-if="conversation && (conversation.messages.length > 0) && !fetchingOlderMessages && !allMessagesFetched && waitedAfterLoaderDisappeared"
+                        v-if="conversation &&
+                            (displayedMessages.length >= messagesPerRequest) &&
+                            !fetchingOlderMessages &&
+                            !allMessagesFetched &&
+                            waitedAfterLoaderDisappeared"
                         class="fetchMoreButton"
                         v-on:click="fetchOlderMessages()"
                     >
@@ -76,16 +80,23 @@
                     </div>
 
                     <div
-                        v-if="allMessagesFetched"
+                        v-if="allMessagesFetched && (displayedMessages.length >= messagesPerRequest)"
                         class="allMessagesFetched"
                     >
-                        There are no more messages
+                        There are no more messages to fetch
+                    </div>
+
+                    <div
+                        v-if="allMessagesFetched && displayedMessages.length === 0"
+                        class="allMessagesFetched"
+                    >
+                        There are no messages yet
                     </div>
 
                     <chat-message
                         v-for="(message, index) in displayedMessages"
                         :message="message"
-                        :key="message.id"
+                        :key="message.id + '\'' + index + '\''"
                         :conversation="conversation"
                     ></chat-message>
                 </div>
@@ -176,36 +187,6 @@
 
                 }
             },
-            /*            checkScrollTop() {
-                            let scrollTop = $('#PrivateChatItem__body__content--' + this.index).scrollTop();
-
-                            if (!this.allMessagesFetched && !this.fetchingOlderMessages && !this.justCheckedScrollTop && scrollTop < 50) {
-
-                                this.justCheckedScrollTop = true;
-
-                                this.fetchingOlderMessages = true;
-
-                                axios.get('/api/conversations/' + this.user.id + '/' + this.partner.id + '/' + this.offset + '/' + this.messagesPerRequest).then(response => {
-                                    this.conversation = response.data;
-
-                                    let messages = this.conversation.messages;
-
-                                    if (messages.length > 0) {
-                                        this.offset += this.messagesPerRequest;
-                                        this.addMessagesToBeDisplayed(messages, true);
-                                    } else {
-                                        this.allMessagesFetched = true;
-                                    }
-
-                                    this.fetchingOlderMessages = false;
-                                });
-
-                            }
-
-                            setTimeout(() => {
-                                this.justCheckedScrollTop = false;
-                            }, 200);
-                        },*/
 
             preventWindowScroll() {
                 if (this.windowHasScrollbar()) {
@@ -258,11 +239,13 @@
                 this.fetchMessagesAndPopulate();
 
                 this.intervalToFetchMessages = setInterval(() => {
-                    this.checkForNewMessagesAndShowThem();
+                    if (this.currentHighestMessageId !== undefined) {
+                        this.checkForNewMessagesAndShowThem();
+                    }
                 }, 10000);
             },
 
-                checkForNewMessagesAndShowThem() {
+            checkForNewMessagesAndShowThem() {
                 axios.get('/api/conversation-messages/' + this.user.id + '/' + this.partner.id + '/' + this.currentHighestMessageId).then(response => {
                     let messages = response.data;
 
@@ -323,6 +306,10 @@
                     }, this.timeToWaitAfterLoaderDisappears);
                 }).catch((error) => {
                     this.fetchingInitial = false;
+
+                    if (error.response.status === 404) {
+                        this.allMessagesFetched = true;
+                    }
 
                     setTimeout(() => {
                         this.waitedAfterLoaderDisappeared = true;
