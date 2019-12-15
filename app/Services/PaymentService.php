@@ -66,6 +66,7 @@ class PaymentService implements PaymentProvider
      */
     public function storePayment(string $paymentMethod, string $description, int $status, int $transactionId)
     {
+        //TODO select authenticated user (now there is a bug with the navbar) and implement payments status
         $user = User::find(1);
 
         $payment = new Payment();
