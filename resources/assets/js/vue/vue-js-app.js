@@ -1,4 +1,5 @@
 import isUndefined from "admin-lte/bower_components/moment/src/lib/utils/is-undefined";
+import {isNull} from "lodash";
 
 if ($('#app').length > 0) {
     const app = new Vue({
@@ -35,9 +36,7 @@ if ($('#app').length > 0) {
             },
             setConversationActivityForUser: function (conversation, value) {
                 axios.get('/api/conversations/set-conversation-activity-for-user/' + conversation.currentUserId + '/' + conversation.otherUserId + '/' + conversation.currentUserId + '/' + value).then(
-                    response => {
-                        console.log(response);
-                    }
+                    response => {}
                 );
             },
             getConversationPartners: function () {
@@ -45,12 +44,18 @@ if ($('#app').length > 0) {
                     response => {
                         this.currentConversationPartnersResponse = response;
 
-                        if (this.previousConversationPartnersResponse === undefined || this.previousConversationPartnersResponse.data !== this.currentConversationPartnersResponse.data) {
+                        if (
+                            this.previousConversationPartnersResponse === undefined ||
+                            this.previousConversationPartnersResponse.data !== this.currentConversationPartnersResponse.data
+                        ) {
                             for (let key in response.data) {
                                 let split = response.data[key].split(':');
 
-                                if (!this.conversationPartners.map(partner => partner.id).includes(+split[0])) {
-                                    this.addChat(DP.authenticatedUser.id, split[0], split[1]);
+                                let userBId = +split[0];
+                                let state = split[1];
+
+                                if (!this.conversationPartners.map(partner => partner.id).includes(userBId)) {
+                                    this.addChat(DP.authenticatedUser.id, userBId, state);
                                 }
                             }
 

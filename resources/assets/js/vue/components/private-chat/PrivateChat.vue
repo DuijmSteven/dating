@@ -156,9 +156,6 @@
             this.fetchMessagesAndListenToChannel();
         },
 
-        updated() {
-        },
-
         methods: {
             fetchOlderMessages() {
                 if (!this.allMessagesFetched && !this.fetchingOlderMessages) {

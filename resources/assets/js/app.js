@@ -130,7 +130,8 @@ $(window).ready(function () {
     }
 
     if ($('.modalImage').length > 0) {
-        $(".modalImage").on("click", function() {
+        $(".modalImage").on("click", function(event) {
+            event.preventDefault();
             $('#imagePreview').attr('src', $(this).find('img').attr('src')); // here asign the image to the modal when the user click the enlarge link
             $('#imageModal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
         });

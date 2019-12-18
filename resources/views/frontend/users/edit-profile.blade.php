@@ -312,7 +312,7 @@
                         <tr>
                             <td>
                                 <a href="#" class="modalImage">
-                                    <img oncl alt="profileImage" class="imageResource" width="200" src="{!! \StorageHelper::profileImageUrl($user) !!}"/>
+                                    <img alt="profileImage" class="imageResource" width="200" src="{!! \StorageHelper::profileImageUrl($user) !!}"/>
                                 </a>
                             </td>
                             <td class="action-buttons">
@@ -376,6 +376,4 @@
         </div>
     </div>
 
-    <!-- Creates the bootstrap modal where the image will appear -->
-   @include('frontend.components.image-modal')
 @endsection
