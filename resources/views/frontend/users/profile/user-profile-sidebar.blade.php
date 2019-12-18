@@ -1,1 +1,4 @@
-@include('frontend.components.user-summary', ['user' => $user])
+@include('frontend.components.user-summary', [
+    'user' => $user,
+    'showOtherImages' => true
+])

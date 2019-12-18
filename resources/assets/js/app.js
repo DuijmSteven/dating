@@ -199,13 +199,19 @@ $(window).ready(function () {
     }
 
     if($('.JS--UserSummary').length > 0) {
-        $(".JS--UserSummary__user-image").each((index, element) => {
-            showProfileImageProperly($(element));
+        $('.JS--UserSummary__user-image').each((index, element) => {
+            fitImageToContainer($(element));
         });
+
+        if ($('.JS--UserSummary__otherImages').length > 0) {
+            $('.JS--UserSummary__nonProfileImageWrapper').each((index, element) => {
+                fitImageToContainer($(element));
+            });
+        }
     }
 });
 
-function showProfileImageProperly(element) {
+function fitImageToContainer(element) {
     var containerHeight = element.height();
     var containerWidth = element.width();
 
