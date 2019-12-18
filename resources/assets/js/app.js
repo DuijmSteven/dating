@@ -188,7 +188,40 @@ $(window).ready(function () {
                 $('.JS--banksContainer').hide();
         });
     }
+
+    if($('.JS--banksContainer').length > 0) {
+        $('input:radio[name="paymentMethod"]').change( function(){
+            if ($(this).is(':checked') && $(this).val() == 'ideal') {
+                $('.JS--banksContainer').show();
+            } else
+                $('.JS--banksContainer').hide();
+        });
+    }
+
+    if($('.JS--UserSummary').length > 0) {
+        $(".JS--UserSummary__user-image").each((index, element) => {
+            showProfileImageProperly($(element));
+        });
+    }
 });
 
+function showProfileImageProperly(element) {
+    var containerHeight = element.height();
+    var containerWidth = element.width();
+
+    const $profileImage = $(element).find('img');
+
+    var profileImageHeight = $profileImage.height();
+
+    if (profileImageHeight < containerHeight + 5) {
+        $profileImage.css("width", "auto");
+        $profileImage.css("height", containerHeight);
+
+        const profileImageWidth = $profileImage.css('width');
+
+        const imageWidth = parseInt(profileImageWidth.replace('px', ''));
+        $profileImage.css("margin-left", - (imageWidth - containerWidth)/2);
+    }
+}
 
 

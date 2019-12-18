@@ -4,11 +4,24 @@
             {{ $user->username }}{{ isset($user->meta->dob) ? ', ' . $user->meta->dob->diffInYears($carbonNow) : '' }}
         </a>
     </div>--}}
-    <div class="Tile__body UserSummary__body">
-        <div class="UserSummary__user-image">
-            <a href="{{ route('users.show', ['userId' => $user->getId()])  }}">
-                <img src="{{ \StorageHelper::profileImageUrl($user) }}" alt="user image">
-            </a>
+    <div class="Tile__body UserSummary__body JS--UserSummary">
+        <div class="UserSummary__user-image JS--UserSummary__user-image">
+            @if($user->hasProfileImage())
+                <a href="#" class="modalImage">
+                    <div class="UserSummary__profileImageWrapper">
+                        <img
+                            class="UserSummary__profileImage"
+                            src="{{ \StorageHelper::profileImageUrl($user) }}"
+                            alt="user image"
+                        >
+                    </div>
+                </a>
+            @else
+                <img
+                    src="{{ \StorageHelper::profileImageUrl($user) }}"
+                    alt="user image"
+                >
+            @endif
         </div>
     </div>
     <div class="Tile__footer UserSummary__footer">
