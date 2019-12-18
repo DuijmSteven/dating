@@ -21,7 +21,7 @@
                 <i class="fa fa-money"></i>
             </div>
             <div class="User-account__item__text">
-                Credits
+                <a href="{!! route('credits.show') !!}">Credits</a>
             </div>
         </div>
     </div>

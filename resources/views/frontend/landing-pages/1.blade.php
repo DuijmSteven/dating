@@ -1,11 +1,4 @@
-{{--@extends('frontend.layouts.default.layout')
-
-@section('content')
-
-LP 1
-
-@endsection--}}
-        <!doctype html>
+<!doctype html>
 <html lang="en">
 @include('frontend.layouts.default.partials.head')
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -13,6 +6,7 @@ LP 1
 <link href="https://fonts.googleapis.com/css?family=Comfortaa&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
       integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
 
 
 <style>
@@ -265,9 +259,9 @@ LP 1
         top: 50%;
         height: 100%;
         width: auto;
-        -webkit-transform: translate(-50%,-50%);
-        -ms-transform: translate(-50%,-50%);
-        transform: translate(-50%,-50%);
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
     }
 
 </style>
@@ -303,7 +297,7 @@ LP 1
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-12{{ $errors->has('username') ? ' has-error' : '' }}">
+                        <div class="form-group col-md-12 {{ $errors->has('username') ? ' has-error' : '' }}">
                             <label for="name">Username</label>
                             <input type="text" class="form-control" id="username" name="username" placeholder="Username"
                                    value="{{ old('username') }}" required autofocus>
@@ -315,7 +309,7 @@ LP 1
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-12{{ $errors->has('email') ? ' has-error' : '' }}">
+                        <div class="form-group col-md-12 {{ $errors->has('email') ? ' has-error' : '' }}">
                             <label for="email">Email</label>
                             <input type="email" class="form-control" id="email" name="email" placeholder="Email"
                                    value="{{ old('email') }}" required>
@@ -327,16 +321,16 @@ LP 1
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-12{{ $errors->has('dob') ? ' has-error' : '' }}">
+                        <div class="form-group col-md-12 {{ $errors->has('dob') ? ' has-error' : '' }}">
                             <label for="password">Date of birth</label>
                             <div
-                                    class="input-group date dateOfBirthGroup"
-                                    data-provide="datepicker"
-                                    data-date-format="dd-mm-yyyy"
-                                    data-date-start-view="decade"
-                                    data-date-start-date="01-01-1900"
+                                class="input-group date dateOfBirthGroup"
+                                data-provide="datepicker"
+                                data-date-format="dd-mm-yyyy"
+                                data-date-start-view="decade"
+                                data-date-start-date="01-01-1900"
                             >
-                                <input type="text" class="form-control" name="dob">
+                                <input type="text" class="form-control" name="dob" required value="{{ old('dob') }}">
                                 <div class="input-group-addon">
                                     <span class="fa fa-calendar"></span>
                                 </div>
@@ -344,7 +338,7 @@ LP 1
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-12{{ $errors->has('password') ? ' has-error' : '' }}">
+                        <div class="form-group col-md-12 {{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password">Password</label>
                             <input type="password" class="form-control" id="password" name="password"
                                    placeholder="Password" required>
@@ -383,10 +377,10 @@ LP 1
                     </div>
                 </form>
 
-                <form method="POST" action="{{ route('login.post') }}" id="JS--loginForm">
+                <form method="POST" action="{{ route('login.post') }}" id="JS--loginForm" style="display: none">
                     {{ csrf_field() }}
                     <div class="form-row">
-                        <div class="form-group col-md-12{{ $errors->has('username') ? ' has-error' : '' }}">
+                        <div class="form-group col-md-12 {{ $errors->has('username') ? ' has-error' : '' }}">
                             <label for="login-username">Username</label>
                             <input type="text" class="form-control" id="login-username" name="username"
                                    placeholder="Username" value="{{ old('username') }}" required autofocus>
@@ -398,7 +392,7 @@ LP 1
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-12{{ $errors->has('password') ? ' has-error' : '' }}">
+                        <div class="form-group col-md-12 {{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="login-password">Password</label>
                             <input type="password" class="form-control" id="login-password" name="password"
                                    placeholder="Password" required>

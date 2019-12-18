@@ -32,6 +32,7 @@ class RegisterRequest extends Request
             'username' => 'required|max:50|string|unique:users',
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed|min:6',
+            'dob' => 'date_format:d-m-Y|required',
         ];
     }
 }

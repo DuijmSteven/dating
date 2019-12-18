@@ -3,15 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\ConversationMessage;
-use App\Events\MessageSent;
 use App\Http\Requests\Admin\Conversations\MessageCreateRequest;
 use App\Managers\ConversationManager;
-use App\Http\Controllers\Controller;
 use App\OpenConversationPartner;
 use App\User;
 use App\UserAccount;
 use DB;
-use Redis;
 
 /**
  * Class ConversationController

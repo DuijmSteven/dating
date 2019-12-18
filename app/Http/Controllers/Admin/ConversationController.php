@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
+use Kim\Activity\Activity;
 
 /**
  * Class ConversationController
@@ -165,6 +166,16 @@ class ConversationController extends Controller
         try {
             $conversationMessage = $this->conversationManager->createMessage($messageData);
 
+            $sender = User::find($messageData['sender_id']);
+
+            if ($sender->roles()->get()[0]->name == 'bot') {
+                $activity = new Activity;
+                $activity->id = bcrypt((int) time() . $messageData['sender_id'] . $messageData['recipient_id']);
+                $activity->last_activity = time();
+                $activity->user_id = $sender->getId();
+                $activity->save();
+            }
+
             $alerts[] = [
                 'type' => 'success',
                 'message' => 'The message was sent successfully'
@@ -172,7 +183,7 @@ class ConversationController extends Controller
         } catch (\Exception $exception) {
             $alerts[] = [
                 'type' => 'error',
-                'message' => 'The message was not sent due to an exception.'
+                'message' => $exception->getMessage()
             ];
         }
 

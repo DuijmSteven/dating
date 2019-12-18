@@ -14,7 +14,8 @@
 
     &__logo {
         img {
-            height: map_get($footerLogo, height);
+            width: map_get($footerLogo, height) + px;
+            padding-top: map_get($footerLogo, margin-top) + rem;
         }
 
         &-container {
@@ -23,6 +24,11 @@
     }
 
     &__section {
+        &-title {
+            color: $secondaryColor;
+            font-size: 17px;
+        }
+
         &-list {
             list-style: none;
             padding: 0;

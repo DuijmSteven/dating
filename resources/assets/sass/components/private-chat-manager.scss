@@ -121,6 +121,22 @@
         &__profilePicture {
             @include roundImage;
 
+            &__secondWrapper {
+                position: relative;
+                width: fit-content;
+                margin: 0 auto;
+
+                &__onlineCircle {
+                    position: absolute;
+                    background-color: #33e23c;
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+                    right: 1px;
+                    bottom: 6px;
+                }
+            }
+
             &__wrapper {
                 @include roundImageWrapper;
 
@@ -146,6 +162,7 @@
         }
 
         &__userName {
+            position: relative;
             display: inline-block;
             width: 150px;
             white-space: nowrap;

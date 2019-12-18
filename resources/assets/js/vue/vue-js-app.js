@@ -12,13 +12,15 @@ if ($('#app').length > 0) {
             previousConversationPartnersResponse: undefined,
             currentConversationPartnersResponse: undefined,
             intervalToFetchPartners: undefined,
-            userCredits: undefined
+            userCredits: undefined,
+            onlineUserIds: undefined
         },
 
         created() {
             if (!(isUndefined(DP.authenticatedUser) || DP.authenticatedUser == null)) {
                 this.getConversationPartners();
                 this.getUserCredits();
+                this.getOnlineUserIds();
 
                 this.intervalToFetchPartners = setInterval(() => {
                     this.getConversationPartners()
@@ -31,6 +33,13 @@ if ($('#app').length > 0) {
                 axios.get('/api/users/' + parseInt(DP.authenticatedUser.id) + '/credits').then(
                     response => {
                         this.userCredits = response.data;
+                    }
+                );
+            },
+            getOnlineUserIds: function () {
+                axios.get('/api/users/online/ids').then(
+                    response => {
+                        this.onlineUserIds = response.data;
                     }
                 );
             },
@@ -76,8 +85,6 @@ if ($('#app').length > 0) {
                 });
 
                 if (!isConversationOpen) {
-                    console.log(userBId);
-
                     this.fetchUserAndAddToPartners(userBId, state, persist);
                 } else {
                     $('.PrivateChatItem--' + openConversationIndex + ' textarea').focus();

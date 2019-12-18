@@ -30,7 +30,7 @@
                     <li class="userCredits">
                         <div class="userCredits">
                             <a href="{{ route('credits.show') }}">
-                                <credits-count></credits-count> credits
+                                <credits-count></credits-count>
                             </a>
                         </div>
 

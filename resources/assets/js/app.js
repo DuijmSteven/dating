@@ -138,15 +138,28 @@ $(window).ready(function () {
     }
 
     if ($('.landingPage').length > 0) {
+        var data = Cookies.get("lpFormSelection");
+
+        if (data === 'register') {
+            $('#JS--registrationForm').toggle('fast');
+        } else {
+            $('#JS--loginForm').toggle('fast');
+        }
+
         $('#JS--registerButton').click(function(){
             $('#JS--loginForm').toggle('fast');
             $('#JS--registrationForm').toggle('fast');
+
+            Cookies.set("lpFormSelection", 'register');
         });
 
         $('#JS--loginButton').click(function(){
             $('#JS--registrationForm').toggle('fast');
             $('#JS--loginForm').toggle('fast');
+
+            Cookies.set("lpFormSelection", 'login');
         });
+
     }
 
     if ($('.block-pricing').length > 0) {

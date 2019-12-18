@@ -5,13 +5,18 @@
     <div class="Tile__body Search__body">
         <form method="POST" action="{{ route('users.search.form.get') }}">
             {{ csrf_field() }}
-            <div class="form-group">
+            <div class="form-group {{ $errors->has('city') ? ' has-error' : '' }}">
                 <label for="city">{!! @trans('user_constants.city') !!}</label>
                 <input type="text"
                        class="JS--autoCompleteCites form-control"
                        name="city"
-                       value="{!! Session::get('searchParameters')['city'] !!}"
+                       value="{!! old('city') ?? Session::get('searchParameters')['city'] !!}"
                 >
+                @if ($errors->has('city'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('city') }}</strong>
+                    </span>
+                @endif
                 <input type="hidden"
                        name="lat"
                        class="js-hiddenLatInput"

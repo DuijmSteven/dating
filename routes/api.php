@@ -19,6 +19,9 @@ Route::get('user', 'Api\UserController@getCurrentUser')
 Route::group([
     'prefix' => 'users'
 ], function () {
+    Route::get('online/ids', 'Api\UserController@getOnlineUserIds')
+        ->name('users.get-online-ids');
+
     Route::get('{userId}', 'Api\UserController@getUserById')
         ->name('users.get-by-id');
 

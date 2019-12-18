@@ -33,7 +33,7 @@ class UserSearchRequest extends Request
         return [
             'query' => 'max:50',
             'username' => 'max:50|string',
-            'city' => 'string|max:50',
+            'city' => 'min:3|required|string|max:50',
             'lat' => 'required_with:city|numeric',
             'lng' => 'required_with:city|numeric',
             'radius' => 'required_with:city|integer',
