@@ -27,4 +27,14 @@ class UserImage extends Model
     {
         return $this->belongsTo('App\User', 'users', 'id', 'user_id');
     }
+
+    public function getFilename()
+    {
+        return $this->filename;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
 }

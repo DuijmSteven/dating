@@ -25,19 +25,32 @@
         </div>
     </div>
     <div class="Tile__footer UserSummary__footer">
-        <div class="UserSummary__userInfo">
-            <a href="{{ route('users.show', ['userId' => $user->getId()])  }}"
-               class="UserSummary__userInfo__primary">
-                {{ $user->username }}
-            </a>
-            <div class="UserSummary__userInfo__additional">
-                {!! isset($user->meta->city) ? $user->meta->city . " <span>&centerdot;</span>" : '' !!}
-                {{ $user->meta->dob->diffInYears($carbonNow) }} Jaar
+        <div class="UserSummary__footer__upperPart">
+            <div class="UserSummary__userInfo">
+                <a href="{{ route('users.show', ['userId' => $user->getId()])  }}"
+                   class="UserSummary__userInfo__primary">
+                    {{ $user->username }}
+                </a>
+                <div class="UserSummary__userInfo__additional">
+                    {!! isset($user->meta->city) ? $user->meta->city . " <span>&centerdot;</span>" : '' !!}
+                    {{ $user->meta->dob->diffInYears($carbonNow) }} Jaar
+                </div>
+            </div>
+            <div class="UserSummary__sendMessage"
+                 v-on:click="addChat({!! $authenticatedUser->getId() !!}, {!! $user->getId() !!}, '1', true)">
+                <i class="material-icons material-icon UserSummary__sendMessage__icon">textsms</i>
             </div>
         </div>
-        <div class="UserSummary__sendMessage"
-             v-on:click="addChat({!! $authenticatedUser->getId() !!}, {!! $user->getId() !!}, '1', true)">
-            <i class="material-icons material-icon UserSummary__sendMessage__icon">textsms</i>
-        </div>
+
+        @if(isset($showOtherImages) && $showOtherImages)
+            <div class="UserSummary__otherImages JS--UserSummary__otherImages">
+                {{-- DON'T reformat this loop, it is structured like this to avoid spacing between inline blocks --}}
+                @foreach($user->imagesNotProfile as $image)<a href="#" class="modalImage"><div class="UserSummary__nonProfileImageWrapper JS--UserSummary__nonProfileImageWrapper"><img
+                                class="UserSummary__nonProfileImage"
+                                src="{{ \StorageHelper::userImageUrl($user->getId(), $image->getFilename()) }}"
+                                alt="user image"
+                            ></div></a>@endforeach
+            </div>
+        @endif
     </div>
 </div>
