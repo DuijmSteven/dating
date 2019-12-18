@@ -260,7 +260,6 @@ return [
         'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,
         'TargetPay' => TPWeb\TargetPay\TargetPayFacade::class,
         'Broadcast' => Illuminate\Support\Facades\Broadcast::class,
-        'Mailgun' => Bogardo\Mailgun\Facades\Mailgun::class,
         'Mapper' => Cornford\Googlmapper\Facades\MapperFacade::class,
     ],
 
