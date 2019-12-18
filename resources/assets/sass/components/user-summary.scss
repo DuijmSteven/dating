@@ -18,6 +18,20 @@
         }
     }
 
+    &__profileImage {
+        position: relative;
+    }
+
+    &__profileImage {
+        //position: absolute;
+        //left: 50%;
+        //top: 50%;
+        //height: 100%;
+        //width: auto;
+        //-webkit-transform: translate(-50%, -50%);
+        //transform: translate(-50%, -50%)
+    }
+
     &__user-image {
         position: absolute;
         overflow: hidden;

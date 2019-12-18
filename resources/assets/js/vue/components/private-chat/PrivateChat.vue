@@ -9,12 +9,15 @@
         >
             <div class="PrivateChatItem__head__wrapper">
                 <div class="PrivateChatItem__user">
-                    <img class="PrivateChatItem__profile-image"
-                         :src="partner.profileImageUrl">
+                    <div class="PrivateChatItem__profilePicture__wrapper">
+                        <img class="PrivateChatItem__profilePicture"
+                             :src="partner.profileImageUrl">
+                    </div>
+
                     <div class="PrivateChatItem__username">{{ partner.username }}</div>
 
                     <div
-                        v-if="$parent.onlineUserIds.includes(partner.id)"
+                        v-if="$parent.onlineUserIds && $parent.onlineUserIds.includes(partner.id)"
                         class="PrivateChatItem__user__onlineCircle"
                     ></div>
                 </div>

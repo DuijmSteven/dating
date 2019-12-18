@@ -48,7 +48,7 @@
                         </div>
 
                         <div
-                            v-if="$parent.onlineUserIds.includes(conversation.otherUserId)"
+                            v-if="$parent.onlineUserIds && $parent.onlineUserIds.includes(conversation.otherUserId)"
                             class="PrivateChatManager__item__profilePicture__secondWrapper__onlineCircle"
                         ></div>
                     </div>
