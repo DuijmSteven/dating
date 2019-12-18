@@ -67,6 +67,10 @@
 
 @import "vue-apps/private-chat/main";
 
+.help-block {
+  font-size: 13px;
+}
+
 .ui-autocomplete.ui-widget.ui-widget-content {
   max-height: 600px;
   overflow: scroll;

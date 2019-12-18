@@ -39,16 +39,25 @@
                  :id="'PrivateChatManager__item--' + index"
             >
                 <div class="PrivateChatManager__item__left">
-                    <div class="PrivateChatManager__item__profilePicture__wrapper">
-                        <img class="PrivateChatManager__item__profilePicture"
-                             :src="profileImageUrl(conversation.otherUserId, conversation.otherUserProfileImage, conversation.otherUserGender)"
-                             alt="profile-image"
-                        >
+                    <div class="PrivateChatManager__item__profilePicture__secondWrapper">
+                        <div class="PrivateChatManager__item__profilePicture__wrapper">
+                            <img class="PrivateChatManager__item__profilePicture"
+                                 :src="profileImageUrl(conversation.otherUserId, conversation.otherUserProfileImage, conversation.otherUserGender)"
+                                 alt="profile-image"
+                            >
+                        </div>
+
+                        <div
+                            v-if="$parent.onlineUserIds.includes(conversation.otherUserId)"
+                            class="PrivateChatManager__item__profilePicture__secondWrapper__onlineCircle"
+                        ></div>
                     </div>
                 </div>
                 <div class="PrivateChatManager__item__right">
                     <div class="PrivateChatManager__item__right__topPart">
-                        <span class="PrivateChatManager__item__userName">{{ conversation.otherUserUsername }}</span>
+                        <div class="PrivateChatManager__item__userName">
+                            {{ conversation.otherUserUsername }}
+                        </div>
                         <span class="PrivateChatManager__item__date">{{ conversation.conversation_updated_at | formatDate }}</span>
                     </div>
                     <div class="PrivateChatManager__item__lastMessage">

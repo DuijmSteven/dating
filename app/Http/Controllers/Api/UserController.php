@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Request;
 use App\Managers\UserManager;
 use Illuminate\Http\JsonResponse;
+use Kim\Activity\Activity;
 
 /**
  * Class UserController
@@ -57,4 +58,13 @@ class UserController
     {
         return $this->userManager->getUserCredits($userId);
     }
+
+    /**
+     * @return JsonResponse
+     */
+    public function getOnlineUserIds()
+    {
+        return JsonResponse::create(Activity::users(10)->pluck('user_id')->toArray());
+    }
+
 }

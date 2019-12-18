@@ -38,6 +38,11 @@
             }
         }
 
+        .userCreditsNumber {
+            font-weight: 500;
+            color: lighten($secondaryColor, 10%);
+        }
+
         > li {
             &.userCredits {
                 display: flex;
@@ -53,6 +58,10 @@
                     &:hover {
                         color: darken($navbarLinkColor, 15%);
                         cursor: pointer;
+                        text-decoration: none;
+                    }
+
+                    &:focus {
                         text-decoration: none;
                     }
                 }
@@ -87,6 +96,7 @@
                 }
 
                 .dropdown-menu {
+                    padding: 0;
                     background-color: $mainColor;
 
                     a {

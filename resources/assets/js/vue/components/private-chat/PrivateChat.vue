@@ -5,12 +5,18 @@
         :class="'PrivateChatItem PrivateChatItem--' + index + ' ' + statusClass"
     >
         <div :id="'PrivateChatItem__head--' + index"
-             class="PrivateChatItem__head">
+             class="PrivateChatItem__head"
+        >
             <div class="PrivateChatItem__head__wrapper">
                 <div class="PrivateChatItem__user">
                     <img class="PrivateChatItem__profile-image"
                          :src="partner.profileImageUrl">
                     <div class="PrivateChatItem__username">{{ partner.username }}</div>
+
+                    <div
+                        v-if="$parent.onlineUserIds.includes(partner.id)"
+                        class="PrivateChatItem__user__onlineCircle"
+                    ></div>
                 </div>
 
                 <div class="PrivateChatItem__actionIcons">
@@ -43,6 +49,8 @@
                     </div>
                 </div>
             </div>
+
+<!--            <div class="PrivateChatItem__head__onlineBar"></div>-->
         </div>
 
         <div :id="'PrivateChatItem__body--' + index" class="PrivateChatItem__body">

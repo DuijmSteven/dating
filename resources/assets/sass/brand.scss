@@ -165,7 +165,9 @@ $userAccountUsername: (
 // Footer
 $footerBgColor: $dark;
 $footerLogo: (
-        'height': $logoHeight + px
+        'height': 110,
+        'width': 110,
+        'margin-top': 3
 );
 
 // Alerts
@@ -221,7 +223,7 @@ $defaultButton: (
 $primaryButton: (
         'background-color': darken($slate, 10%),
         'border-color': $slate,
-        'background-color__hover': $slateLight,
+        'background-color__hover': $slate,
         'background-color__active': $slate
 );
 
