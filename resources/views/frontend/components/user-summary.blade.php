@@ -45,7 +45,7 @@
         @if(isset($showOtherImages) && $showOtherImages)
             <div class="UserSummary__otherImages JS--UserSummary__otherImages">
                 {{-- DON'T reformat this loop, it is structured like this to avoid spacing between inline blocks --}}
-                @foreach($user->imagesNotProfile as $image)<a href="#" class="modalImage"><div class="UserSummary__nonProfileImageWrapper JS--UserSummary__nonProfileImageWrapper"><img
+                @foreach($user->imagesNotProfile as $image)<a href="#" class="modalImage UserSummary__nonProfileImageModalWrapper"><div class="UserSummary__nonProfileImageWrapper JS--UserSummary__nonProfileImageWrapper"><img
                                 class="UserSummary__nonProfileImage"
                                 src="{{ \StorageHelper::userImageUrl($user->getId(), $image->getFilename()) }}"
                                 alt="user image"
