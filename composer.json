@@ -17,7 +17,6 @@
         "tpweb/targetpay": "1.*",
         "rap2hpoutre/laravel-log-viewer": "^0.10.4",
         "pusher/pusher-php-server": "^3.0",
-        "bogardo/mailgun": "^5.0",
         "guzzlehttp/guzzle": "^6.3",
         "php-http/guzzle6-adapter": "^1.1",
         "cornford/googlmapper": "2.*",

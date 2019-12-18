@@ -36,7 +36,8 @@ if ($('#app').length > 0) {
             },
             setConversationActivityForUser: function (conversation, value) {
                 axios.get('/api/conversations/set-conversation-activity-for-user/' + conversation.currentUserId + '/' + conversation.otherUserId + '/' + conversation.currentUserId + '/' + value).then(
-                    response => {}
+                    response => {
+                    }
                 );
             },
             getConversationPartners: function () {
@@ -44,23 +45,18 @@ if ($('#app').length > 0) {
                     response => {
                         this.currentConversationPartnersResponse = response;
 
-                        if (
-                            this.previousConversationPartnersResponse === undefined ||
-                            this.previousConversationPartnersResponse.data !== this.currentConversationPartnersResponse.data
-                        ) {
-                            for (let key in response.data) {
-                                let split = response.data[key].split(':');
+                        for (let key in response.data) {
+                            let split = response.data[key].split(':');
 
-                                let userBId = +split[0];
-                                let state = split[1];
+                            let userBId = +split[0];
+                            let state = split[1];
 
-                                if (!this.conversationPartners.map(partner => partner.id).includes(userBId)) {
-                                    this.addChat(DP.authenticatedUser.id, userBId, state);
-                                }
+                            if (!this.conversationPartners.map(partner => partner.id).includes(userBId)) {
+                                this.addChat(DP.authenticatedUser.id, userBId, state);
                             }
-
-                            this.previousConversationPartnersResponse = this.currentConversationPartnersResponse;
                         }
+
+                        this.previousConversationPartnersResponse = this.currentConversationPartnersResponse;
                     }
                 );
             },
@@ -80,6 +76,8 @@ if ($('#app').length > 0) {
                 });
 
                 if (!isConversationOpen) {
+                    console.log(userBId);
+
                     this.fetchUserAndAddToPartners(userBId, state, persist);
                 } else {
                     $('.PrivateChatItem--' + openConversationIndex + ' textarea').focus();
@@ -104,7 +102,8 @@ if ($('#app').length > 0) {
                                 '/' +
                                 state
                             ).then(
-                                response => {}
+                                response => {
+                                }
                             );
                         }
 
