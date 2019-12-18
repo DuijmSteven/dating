@@ -1,0 +1,3 @@
+INSERT INTO dating.user_accounts (id, user_id, credits, created_at, updated_at) VALUES (1, 1, 2, '2017-07-09 16:36:56', '2017-07-09 16:36:56');
+INSERT INTO dating.user_accounts (id, user_id, credits, created_at, updated_at) VALUES (2, 102, 2, '2019-10-01 11:06:49', '2019-10-01 11:06:49');
+INSERT INTO dating.user_accounts (id, user_id, credits, created_at, updated_at) VALUES (3, 188, 2, '2019-12-18 11:05:00', '2019-12-18 11:05:00');
