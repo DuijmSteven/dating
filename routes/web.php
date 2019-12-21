@@ -135,8 +135,8 @@ Route::group([
 ], function () {
     Route::post('/', 'Frontend\PaymentController@postPayment')
     ->name('payments.post');
-    Route::get('initiate', 'Frontend\PaymentController@initiatePayment')
-    ->name('payments.initiate');
+    Route::get('thank-you', 'Frontend\PaymentController@checkPayment')
+    ->name('payments.check');
 });
 
 Route::get('privacy', 'Frontend\MiscController@showPrivacy')
@@ -147,7 +147,7 @@ Route::get('faq', 'Frontend\MiscController@showFaq')
 
 Route::get('credits', 'Frontend\CreditsController@show')
     ->name('credits.show');
-Route::post('credits', 'Frontend\PaymentController@initiatePayment')
+Route::post('credits', 'Frontend\PaymentController@makePayment')
     ->name('credits.store');
 
 Route::group([

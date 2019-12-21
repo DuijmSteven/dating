@@ -5,9 +5,7 @@ namespace App\Services;
 use App\Interfaces\PaymentProvider;
 
 use App\Payment;
-use App\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 use TPWeb\TargetPay\TargetPay;
 use TPWeb\TargetPay\Transaction\IDeal;
 use TPWeb\TargetPay\Transaction\IVR;
@@ -26,14 +24,15 @@ class PaymentService implements PaymentProvider
      */
     public function __construct()
     {
-        $this->returnUrl = route('home');
+        $this->returnUrl = route('payments.check');
     }
 
     /**
-     * @param string $bank
-     * @param string $paymentMethod
-     * @param int $amount
-     * @param string $description
+     * @param  string  $bank
+     * @param  string  $paymentMethod
+     * @param  int  $amount
+     * @param  string  $description
+     * @return array|mixed
      * @throws \Exception
      */
     public function initiatePayment(string $bank, string $paymentMethod, float $amount, string $description)
@@ -52,9 +51,7 @@ class PaymentService implements PaymentProvider
                 throw new \Exception('Payment method invalid');
         }
 
-        $this->storePayment($paymentMethod, $description, 1, $transaction['transactionId']);
-
-        return redirect()->away($transaction['redirectUrl']);
+        return $transaction;
     }
 
     /**
@@ -66,8 +63,7 @@ class PaymentService implements PaymentProvider
      */
     public function storePayment(string $paymentMethod, string $description, int $status, int $transactionId)
     {
-        //TODO select authenticated user (now there is a bug with the navbar) and implement payments status
-        $user = User::find(1);
+        $user = Auth::user();
 
         $payment = new Payment();
         $payment->method = $paymentMethod;
@@ -161,5 +157,32 @@ class PaymentService implements PaymentProvider
         $mode = $transaction->getMode();
         $callCost = $transaction->getAmountPerAction();
         $duration = $transaction->getMode() == "PM" ? $transaction->getDuration() . "s" : "";
+    }
+
+    public function paymentCheck(string $paymentMethod, int $transactionId)
+    {
+        switch ($paymentMethod) {
+            case 'ideal':
+                $targetPay = new TargetPay(new IDeal());
+                break;
+            case 'paysafe':
+                $targetPay = new TargetPay(new Paysafecard());
+                break;
+            default:
+                throw new \Exception('Payment method invalid');
+        }
+
+        $targetPay->transaction->setTransactionId($transactionId);
+        $targetPay->checkPaymentInfo();
+
+        $status = $targetPay->transaction->getPaymentDone();
+
+        $status ? $statusUpdate = 3 : $statusUpdate = 5;
+
+        Payment::where('user_id', Auth::user()->id)
+            ->where('transactionId', $transactionId)
+            ->update(['status' => $statusUpdate]);
+
+        return $status;
     }
 }
