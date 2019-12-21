@@ -1,5 +1,5 @@
 stages:
-  - deploy-production
+  - deploy_production
 
 before_script:
   - apt-get update -qq
@@ -11,7 +11,7 @@ before_script:
   - mkdir -p ~/.ssh
   - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
 
-deploy_master_no_docker:
+deploy_production:
   environment:
     name: production
   script:
