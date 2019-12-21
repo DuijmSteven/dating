@@ -48,4 +48,11 @@ interface PaymentProvider
      * @return mixed
      */
     public function ivrPayment(string $bank, float $amount, string $description);
+
+    /**
+     * @param  string  $paymentMethod
+     * @param  int  $transactionId
+     * @return mixed
+     */
+    public function paymentCheck(string $paymentMethod, int $transactionId);
 }

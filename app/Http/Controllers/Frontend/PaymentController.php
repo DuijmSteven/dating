@@ -32,7 +32,7 @@ class PaymentController extends FrontendController
         parent::__construct();
     }
 
-    public function initiatePayment(Request $request)
+    public function makePayment(Request $request)
     {
         $this->validate($request,[
             'paymentMethod' => [
@@ -49,6 +49,26 @@ class PaymentController extends FrontendController
         $amount = number_format((float)$request->get('amount'), 2, '.', '');
         $description = $request->get('description') . ' credits';
 
-        return $this->paymentProvider->initiatePayment($bank, $paymentMethod, $amount, $description);
+        $transaction = $this->paymentProvider->initiatePayment($bank, $paymentMethod, $amount, $description);
+
+        $this->paymentProvider->storePayment($paymentMethod, $description, 1, $transaction['transactionId']);
+
+        session(['transactionId' => $transaction['transactionId']]);
+        session(['paymentMethod' => $paymentMethod]);
+
+        return redirect()->away($transaction['redirectUrl']);
+    }
+
+    public function checkPayment()
+    {
+        $transactionId = session('transactionId');
+        $paymentMethod = session('paymentMethod');
+
+        $status = $this->paymentProvider->paymentCheck($paymentMethod, $transactionId);
+
+        return view('frontend.thank-you', [
+            'title' => 'Payment - ' . config('app.name'),
+            'status' => $status
+        ]);
     }
 }

@@ -64,13 +64,13 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between" style="margin-bottom: 10px">
+                        {{--<li class="list-group-item d-flex justify-content-between" style="margin-bottom: 10px">
                             <div>
                                 <label><input type="radio" name="paymentMethod" value="credit"> <span
                                         style="margin-left: 5px">Visa/MasterCard</span></label>
                             </div>
                             <span class="text-muted"><img src="{{ asset('img/icons/credit-cards.png') }}"/></span>
-                        </li>
+                        </li>--}}
                         <li class="list-group-item d-flex justify-content-between">
                             <div>
                                 <label><input type="radio" name="paymentMethod" value="paysafe"> <span
