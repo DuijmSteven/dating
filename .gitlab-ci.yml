@@ -1,3 +1,6 @@
+stages:
+  - deploy-production
+
 before_script:
   - apt-get update -qq
   - apt-get install -qq git
@@ -8,20 +11,18 @@ before_script:
   - mkdir -p ~/.ssh
   - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
 
-deploy_master:
+deploy_master_no_docker:
   environment:
     name: production
   script:
-    - ssh opalampo@188.166.18.52 "cd /home/opalampo/dating &&
-        git checkout master &&
-        git pull origin master &&
-        docker-compose -f docker-compose.production.yml build dating-app &&
-        docker-compose -f docker-compose.production.yml up -d &&
-        docker exec dating-app rm -rf bootstrap/cache/* &&
-        docker exec dating-app composer install --no-interaction --prefer-dist --optimize-autoloader &&
-        docker exec dating-app php artisan migrate --force &&
-        docker exec dating-app php artisan config:cache &&
-        docker exec dating-app php artisan route:cache &&
-        exit"
+    - ssh opalampo@178.62.249.225 "cd /var/www/dating &&
+      git checkout master &&
+      git pull origin master &&
+      rm -rf bootstrap/cache/* &&
+      composer install --no-interaction --prefer-dist --optimize-autoloader &&
+      php artisan migrate --force &&
+      php artisan config:cache &&
+      php artisan route:cache &&
+      exit"
   only:
     - master
