@@ -63,7 +63,6 @@ class PaymentService implements PaymentProvider
      */
     public function storePayment(string $paymentMethod, string $description, int $status, int $transactionId)
     {
-        //TODO select authenticated user (now there is a bug with the navbar) and implement payments status
         $user = Auth::user();
 
         $payment = new Payment();
@@ -176,6 +175,17 @@ class PaymentService implements PaymentProvider
         $targetPay->transaction->setTransactionId($transactionId);
         $targetPay->checkPaymentInfo();
 
-        return $targetPay->transaction->getPaymentDone();
+        $status = $targetPay->transaction->getPaymentDone();
+
+        if($status)
+            $statusUpdate = 3;
+        else
+            $statusUpdate = 5;
+
+        Payment::where('user_id', Auth::user()->id)
+            ->where('transactionId', $transactionId)
+            ->update(['status' => $statusUpdate]);
+
+        return $status;
     }
 }
