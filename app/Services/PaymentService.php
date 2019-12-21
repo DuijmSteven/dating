@@ -177,10 +177,7 @@ class PaymentService implements PaymentProvider
 
         $status = $targetPay->transaction->getPaymentDone();
 
-        if($status)
-            $statusUpdate = 3;
-        else
-            $statusUpdate = 5;
+        $status ? $statusUpdate = 3 : $statusUpdate = 5;
 
         Payment::where('user_id', Auth::user()->id)
             ->where('transactionId', $transactionId)
