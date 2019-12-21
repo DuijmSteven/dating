@@ -25,19 +25,3 @@ deploy_master:
         exit"
   only:
     - master
-
-deploy_master_no_docker:
-  environment:
-    name: production-no-docker
-  script:
-    - ssh opalampo@178.62.249.225 "cd /var/www/dating &&
-      git checkout master &&
-      git pull origin master &&
-      rm -rf bootstrap/cache/* &&
-      composer install --no-interaction --prefer-dist --optimize-autoloader &&
-      php artisan migrate --force &&
-      php artisan config:cache &&
-      php artisan route:cache &&
-      exit"
-  only:
-    - master
