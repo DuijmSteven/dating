@@ -53,8 +53,11 @@ class PaymentController extends FrontendController
 
         $this->paymentProvider->storePayment($paymentMethod, $description, 1, $transaction['transactionId']);
 
-        session(['transactionId' => $transaction['transactionId']]);
-        session(['paymentMethod' => $paymentMethod]);
+        session([
+            'transactionId' => $transaction['transactionId'],
+            'paymentMethod' => $paymentMethod,
+            'credits' => $description
+        ]);
 
         return redirect()->away($transaction['redirectUrl']);
     }
