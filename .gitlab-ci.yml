@@ -1,6 +1,3 @@
-stages:
-  - deploy_production
-
 before_script:
   - apt-get update -qq
   - apt-get install -qq git
@@ -11,8 +8,11 @@ before_script:
   - mkdir -p ~/.ssh
   - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
 
+stages:
+  - deploy_production
+
 deploy_production:
-  stage: code_quality
+  stage: deploy_production
   environment:
     name: production
   script:
