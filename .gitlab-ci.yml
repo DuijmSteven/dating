@@ -12,6 +12,7 @@ before_script:
   - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
 
 deploy_production:
+  stage: code_quality
   environment:
     name: production
   script:
