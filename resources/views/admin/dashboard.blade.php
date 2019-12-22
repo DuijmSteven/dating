@@ -115,6 +115,27 @@
                 </div>
             </div>
         </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="box box-widget DashboardWidget">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="bg-olive">
+                    <div class="widget-us DashboardWidget_header">
+                        <i class="fa fa-close DashboardWidget_header-icon"></i>
+                        <span class="DashboardWidget_header-title">User types</span>
+                    </div>
+                    <!-- /.widget-user-image -->
+                </div>
+                <div class="box-footer no-padding">
+                    <ul class="nav nav-stacked">
+                        <li><a href="#">No credits <span class="DashboardWidget_count">{!! $userTypeStatistics['no_credits'] !!}</span></a></li>
+                        <li><a href="#">Never bought creditpack <span class="DashboardWidget_count">{!! $userTypeStatistics['never_bought'] !!}</span></a></li>
+                        <li><a href="#">Small <span class="DashboardWidget_count">{!! $userTypeStatistics['small'] !!}</span></a></li>
+                        <li><a href="#">Medium <span class="DashboardWidget_count">{!! $userTypeStatistics['medium'] !!}</span></a></li>
+                        <li><a href="#">Large <span class="DashboardWidget_count">{!! $userTypeStatistics['large'] !!}</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 
 @endsection
