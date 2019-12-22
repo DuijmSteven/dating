@@ -8,7 +8,9 @@
                 <div class="row">
                     @foreach($creditpacks as $creditpack)
                         <div class="col-md-4">
-                            <div class="block block-pricing {{ $loop->iteration == 2 ? 'block-raised' : '' }}">
+                            <div data-creditpack-id="{{ $creditpack->id }}"
+                                 class="block block-pricing {{ $loop->iteration == 2 ? 'block-raised' : '' }} JS--creditpack"
+                            >
                                 <div class="table {{ $loop->iteration == 2 ? 'table-rose' : '' }}">
                                     <h6 class="category">{{ $creditpack->name }}</h6>
                                     <h1 class="block-caption"><small>€</small><span>{{ $creditpack->price/100 }}</span>
@@ -89,7 +91,7 @@
                                 </h6>
                                 <small class="text-muted"><span
                                         class="cart-credits">{{ $creditpacks[1]->credits }}</span> credits</small>
-                                <input name="description" type="hidden" value="{{ $creditpacks[1]->credits }}">
+                                <input name="creditpack_id" type="hidden" value="{{ $creditpacks[1]->id }}">
                             </div>
                             <span class="text-muted"><span
                                     class="cart-value">{{ $creditpacks[1]->price/100 }}</span>€</span>
@@ -97,7 +99,6 @@
                         <li class="list-group-item d-flex justify-content-between">
                             <span>Total (EUR)</span>
                             <strong><span class="cart-value">{{ $creditpacks[1]->price/100 }}</span>€</strong>
-                            <input name="amount" type="hidden" value="{{ $creditpacks[1]->price/100 }}">
                         </li>
                     </ul>
                     <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>

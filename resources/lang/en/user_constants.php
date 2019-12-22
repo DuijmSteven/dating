@@ -17,7 +17,8 @@ return [
     ],
     'relationship_status' => [
         1 => 'Single',
-        2 => 'In a relationship'
+        2 => 'In a relationship',
+        3 => 'Complicated'
     ],
     'body_type' => [
         1 => 'Skinny',

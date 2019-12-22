@@ -55,21 +55,31 @@ class PaymentService implements PaymentProvider
     }
 
     /**
-     * @param  string  $paymentMethod
-     * @param  string  $description
-     * @param  int  $status
-     * @param  int  $transactionId
+     * @param string $paymentMethod
+     * @param int $status
+     * @param int $transactionId
+     * @param int $amount
+     * @param string|null $description
+     * @param int|null $creditpackId
      * @return mixed|void
      */
-    public function storePayment(string $paymentMethod, string $description, int $status, int $transactionId)
-    {
+    public function storePayment(
+        string $paymentMethod,
+        int $status,
+        int $transactionId,
+        int $amount,
+        string $description = null,
+        int $creditpackId = null
+    ) {
         $user = Auth::user();
 
         $payment = new Payment();
-        $payment->method = $paymentMethod;
-        $payment->description = $description;
-        $payment->status = 1;
-        $payment->transactionId = $transactionId;
+        $payment->setMethod($paymentMethod);
+        $payment->setDescription($description);
+        $payment->setCreditpackId($creditpackId);
+        $payment->setStatus(1);
+        $payment->setAmount($amount);
+        $payment->setTransactionId($transactionId);
 
         $user->payments()->save($payment);
     }
@@ -177,6 +187,16 @@ class PaymentService implements PaymentProvider
 
         $status = $targetPay->transaction->getPaymentDone();
 
+        $payment = Payment::where('user_id', Auth::user()->id)
+                          ->where('transactionId', $transactionId)
+                          ->first();
+
+        //Increase credits
+        if($status && $payment->status == 1) {
+            //TODO increase credits
+        }
+
+        //Update payment status
         $status ? $statusUpdate = 3 : $statusUpdate = 5;
 
         Payment::where('user_id', Auth::user()->id)

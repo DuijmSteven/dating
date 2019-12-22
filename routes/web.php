@@ -145,10 +145,15 @@ Route::get('privacy', 'Frontend\MiscController@showPrivacy')
 Route::get('faq', 'Frontend\MiscController@showFaq')
     ->name('faq.show');
 
-Route::get('credits', 'Frontend\CreditsController@show')
-    ->name('credits.show');
-Route::post('credits', 'Frontend\PaymentController@makePayment')
-    ->name('credits.store');
+Route::group([
+    'prefix' => 'credits',
+    'middleware' => ['auth']
+], function () {
+    Route::get('/', 'Frontend\CreditsController@show')
+        ->name('credits.show');
+    Route::post('/', 'Frontend\PaymentController@makePayment')
+        ->name('credits.store');
+});
 
 Route::group([
     'prefix' => 'admin',

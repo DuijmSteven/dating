@@ -16,10 +16,12 @@ class CreatePaymentsTable extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
+            $table->integer('creditpack_id')->unsigned()->nullable();
             $table->string('method');
             $table->string('description', 300);
+            $table->mediumInteger('amount')->unsigned();
             $table->smallInteger('status')->unsigned();
-            $table->integer('transactionId')->unsigned()->nullable();
+            $table->integer('transaction_id')->unsigned()->nullable();
             $table->timestamps();
         });
     }
