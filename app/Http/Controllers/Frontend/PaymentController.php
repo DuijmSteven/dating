@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Creditpack;
 use Illuminate\Http\Request;
 use App\Interfaces\PaymentProvider;
 use App\Managers\PaymentManager;
@@ -46,12 +47,25 @@ class PaymentController extends FrontendController
 
         $bank = $request->get('bank');
         $paymentMethod = $request->get('paymentMethod');
-        $amount = number_format((float)$request->get('amount'), 2, '.', '');
-        $description = $request->get('description') . ' credits';
+        $creditPackId = (int) $request->get('creditpack_id');
 
-        $transaction = $this->paymentProvider->initiatePayment($bank, $paymentMethod, $amount, $description);
+        /** @var Creditpack $creditPack */
+        $creditPack = Creditpack::find($creditPackId);
 
-        $this->paymentProvider->storePayment($paymentMethod, $description, 1, $transaction['transactionId']);
+        $description = $creditPack->getDescription();
+
+        $amountWithDecimals = number_format((float) $request->get('amount'), 2, '.', '');
+
+        $transaction = $this->paymentProvider->initiatePayment($bank, $paymentMethod, $amountWithDecimals, $description);
+
+        $this->paymentProvider->storePayment(
+            $paymentMethod,
+            1,
+            $transaction['transaction_id'],
+            $request->get('amount'),
+            $description,
+            $creditPackId
+        );
 
         session(['transactionId' => $transaction['transactionId']]);
         session(['paymentMethod' => $paymentMethod]);

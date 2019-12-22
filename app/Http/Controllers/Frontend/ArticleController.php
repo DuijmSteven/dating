@@ -13,7 +13,7 @@ class ArticleController extends FrontendController
         return view(
             'frontend.articles.overview',
             [
-                'title' => 'Articles Overview - ' . \config('app.name'),
+                'title' => $this->buildTitleWith('Articles Overview'),
                 'articles' => $articles
             ]
         );
@@ -26,7 +26,7 @@ class ArticleController extends FrontendController
         return view(
             'frontend.articles.show',
             [
-                'title' => 'Article - ' . $article->title . \config('app.name'),
+                'title' => $this->buildTitleWith('Article - ' . $article->title),
                 'article' => $article,
                 'markdownInstance' => new \Markdown()
             ]

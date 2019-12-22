@@ -70,7 +70,8 @@ class UserConstants
                 ],
                 'relationship_status' => [
                     1 => 'single',
-                    2 => 'in_a_relationship'
+                    2 => 'in_a_relationship',
+                    3 => 'complicated'
                 ],
                 'body_type' => [
                     1 => 'skinny',
@@ -127,9 +128,9 @@ class UserConstants
                 ],
                 'account_type' => [
                     1 => 'free',
-                    2 => 'premium_1',
-                    3 => 'premium_2',
-                    4 => 'premium_3',
+                    2 => 'small',
+                    3 => 'medium',
+                    4 => 'large',
                 ]
             ]
         ],
