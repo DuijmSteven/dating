@@ -63,57 +63,21 @@
                             </div>
                         </div>
 
-                        {{--                        <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label for="gender">{{ @trans('user_constants.labels.gender') }}</label>
-                                                        <select name="gender"
-                                                                id="gender"
-                                                                class="form-control"
-                                                        >
-                                                            @foreach(\UserConstants::selectableField('gender') as $key => $value)
-                                                                <option
-                                                                        {{ $user->meta['gender'] === $key ? 'selected' : '' }}
-                                                                        value="{{ $key }}">{{ @trans('user_constants.gender.' . $key) }}
-                                                                </option>
-
-
-
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>--}}
-
-                        {{--                        <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label for="looking_for_gender">{{ @trans('user_constants.labels.looking_for_gender') }}</label>
-                                                        <select name="looking_for_gender"
-                                                                id="looking_for_gender"
-                                                                class="form-control"
-                                                        >
-                                                            @foreach(\UserConstants::selectableField('looking_for_gender') as $key => $value)
-                                                                <option
-                                                                        {{ $user->meta['looking_for_gender'] === $key ? 'selected' : '' }}
-                                                                        value="{{ $key }}">{{ @trans('user_constants.looking_for_gender.' . $key) }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>--}}
-
                         <div class="col-xs-12">
                             <hr/>
                         </div>
 
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label
-                                    for="relationship_status">{{ @trans('user_constants.labels.relationship_status') }}</label>
+                                <label for="relationship_status">{{ @trans('user_constants.labels.relationship_status') }}</label>
                                 <select name="relationship_status"
                                         id="relationship_status"
                                         class="form-control"
                                 >
-                                    <option value="" disabled selected>Select
-                                        your {{ strtolower(@trans('user_constants.labels.relationship_status')) }}</option>
+                                    @if(!$user->meta['relationship_status'])
+                                        <option value="" disabled selected>Select your {{ strtolower(@trans('user_constants.labels.relationship_status')) }}</option>
+                                    @endif
+
                                     @foreach(\UserConstants::selectableField('relationship_status') as $key => $value)
                                         <option
                                             {{ $user->meta['relationship_status'] === $key ? 'selected' : '' }}
@@ -131,8 +95,10 @@
                                         id="body_type"
                                         class="form-control"
                                 >
-                                    <option value="" disabled selected>Select
-                                        your {{ strtolower(@trans('user_constants.labels.body_type')) }}</option>
+                                    @if(!$user->meta['body_type'])
+                                        <option value="" disabled selected>Select your {{ strtolower(@trans('user_constants.labels.body_type')) }}</option>
+                                    @endif
+
                                     @foreach(\UserConstants::selectableField('body_type') as $key => $value)
                                         <option
                                             {{ $user->meta['body_type'] === $key ? 'selected' : '' }}
@@ -150,8 +116,10 @@
                                         id="height"
                                         class="form-control"
                                 >
-                                    <option value="" disabled selected>Select
-                                        your {{ strtolower(@trans('user_constants.labels.height')) }}</option>
+                                    @if(!$user->meta['height'])
+                                        <option value="" disabled selected>Select your {{ strtolower(@trans('user_constants.labels.height')) }}</option>
+                                    @endif
+
                                     @foreach(\UserConstants::selectableField('height') as $key => $value)
                                         <option
                                             {{ $user->meta['height'] === $key ? 'selected' : '' }}
@@ -169,8 +137,10 @@
                                         id="eye_color"
                                         class="form-control"
                                 >
-                                    <option value="" disabled selected>Select
-                                        your {{ strtolower(@trans('user_constants.labels.eye_color')) }}</option>
+                                    @if(!$user->meta['eye_color'])
+                                        <option value="" disabled selected>Select your {{ strtolower(@trans('user_constants.labels.eye_color')) }}</option>
+                                    @endif
+
                                     @foreach(\UserConstants::selectableField('eye_color') as $key => $value)
                                         <option
                                             {{ $user->meta['eye_color'] === $key ? 'selected' : '' }}
@@ -188,8 +158,10 @@
                                         id="hair_color"
                                         class="form-control"
                                 >
-                                    <option value="" disabled selected>Select
-                                        your {{ strtolower(@trans('user_constants.labels.hair_color')) }}</option>
+                                    @if(!$user->meta['hair_color'])
+                                        <option value="" disabled selected>Select your {{ strtolower(@trans('user_constants.labels.hair_color')) }}</option>
+                                    @endif
+
                                     @foreach(\UserConstants::selectableField('hair_color') as $key => $value)
                                         <option
                                             {{ $user->meta['hair_color'] === $key ? 'selected' : '' }}
@@ -207,8 +179,10 @@
                                         id="smoking_habits"
                                         class="form-control"
                                 >
-                                    <option value="" disabled selected>Select
-                                        your {{ strtolower(@trans('user_constants.labels.smoking_habits')) }}</option>
+                                    @if(!$user->meta['smoking_habits'])
+                                        <option value="" disabled selected>Select your {{ strtolower(@trans('user_constants.labels.smoking_habits')) }}</option>
+                                    @endif
+
                                     @foreach(\UserConstants::selectableField('smoking_habits') as $key => $value)
                                         <option
                                             {{ $user->meta['smoking_habits'] === $key ? 'selected' : '' }}
@@ -227,8 +201,10 @@
                                         id="drinking_habits"
                                         class="form-control"
                                 >
-                                    <option value="" disabled selected>Select
-                                        your {{ strtolower(@trans('user_constants.labels.drinking_habits')) }}</option>
+                                    @if(!$user->meta['drinking_habits'])
+                                        <option value="" disabled selected>Select your {{ strtolower(@trans('user_constants.labels.drinking_habits')) }}</option>
+                                    @endif
+
                                     @foreach(\UserConstants::selectableField('drinking_habits') as $key => $value)
                                         <option
                                             {{ $user->meta['drinking_habits'] === $key ? 'selected' : '' }}
