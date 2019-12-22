@@ -187,6 +187,16 @@ class PaymentService implements PaymentProvider
 
         $status = $targetPay->transaction->getPaymentDone();
 
+        $payment = Payment::where('user_id', Auth::user()->id)
+                          ->where('transactionId', $transactionId)
+                          ->first();
+
+        //Increase credits
+        if($status && $payment->status == 1) {
+            //TODO increase credits
+        }
+
+        //Update payment status
         $status ? $statusUpdate = 3 : $statusUpdate = 5;
 
         Payment::where('user_id', Auth::user()->id)

@@ -67,8 +67,11 @@ class PaymentController extends FrontendController
             $creditPackId
         );
 
-        session(['transactionId' => $transaction['transactionId']]);
-        session(['paymentMethod' => $paymentMethod]);
+        session([
+            'transactionId' => $transaction['transactionId'],
+            'paymentMethod' => $paymentMethod,
+            'credits' => $description
+        ]);
 
         return redirect()->away($transaction['redirectUrl']);
     }
