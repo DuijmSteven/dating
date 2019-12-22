@@ -69,7 +69,7 @@ function getCoordinatesAndFillInputs() {
     }
 }
 
-$(window).ready(function () {
+$(window).on('load', function () {
     require('./global_helpers');
 
     if ($('.Shoutbox').length > 0) {
@@ -210,6 +210,21 @@ $(window).ready(function () {
                 fitImageToContainer($(element));
             });
         }
+
+        $(window).resize(function() {
+            $('.JS--UserSummary__user-image').each((index, element) => {
+                console.log(1);
+
+                fitImageToContainer($(element));
+            });
+
+            if ($('.JS--UserSummary__otherImages').length > 0) {
+                $('.JS--UserSummary__nonProfileImageWrapper').each((index, element) => {
+
+                    fitImageToContainer($(element));
+                });
+            }
+        });
     }
 });
 
