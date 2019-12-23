@@ -30,9 +30,11 @@ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::get('contact', 'Frontend\HomeController@showContact')
     ->name('contact.get');
 
-Route::get('/', 'Frontend\HomeController@index')
+Route::get('/news', 'Frontend\HomeController@index')
     ->name('home')->middleware(['auth']);
 
+Route::get('/', 'Frontend\UserSearchController@showInitialSearchResults')
+    ->name('home');
 
 Route::get('edit-profile', 'Frontend\UserController@showEditProfile')
     ->name('edit-profile.get');

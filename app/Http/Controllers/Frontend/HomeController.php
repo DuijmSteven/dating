@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Activity;
+use App\Http\Requests\Request;
 use Hash;
+use Stevebauman\Location\Facades\Location;
 
 /**
  * Class HomeController

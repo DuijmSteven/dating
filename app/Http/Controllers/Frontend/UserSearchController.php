@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Managers\UserSearchManager;
+use App\Services\LocationService;
+use App\Services\UserLocationService;
 use App\Session;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -18,13 +20,21 @@ class UserSearchController extends FrontendController
     private $userSearchManager;
 
     /**
+     * @var UserLocationService
+     */
+    private UserLocationService $userLocationService;
+
+    /**
      * UserSearchController constructor.
      * @param UserSearchManager $userSearchManager
      */
-    public function __construct(UserSearchManager $userSearchManager)
-    {
+    public function __construct(
+        UserSearchManager $userSearchManager,
+        UserLocationService $userLocationService
+    ) {
         $this->userSearchManager = $userSearchManager;
         parent::__construct();
+        $this->userLocationService = $userLocationService;
     }
 
     /**
@@ -97,6 +107,42 @@ class UserSearchController extends FrontendController
     {
         // get searchParameters from session
         $searchParameters = $request->session()->get('searchParameters');
+
+        $users = $this->userSearchManager->searchUsers(
+            $searchParameters,
+            true,
+            $request->input('page')
+        );
+
+        $viewData = [
+            'users' => $users,
+            'carbonNow' => Carbon::now(),
+            'title' => 'Search results - ' . config('app.name'),
+        ];
+
+        return view(
+            'frontend.users.search.results',
+            $viewData
+        );
+    }
+
+    public function showInitialSearchResults(Request $request)
+    {
+        $userCityName = $this->userLocationService->getUserCityName();
+
+        //dd($userCityName);
+
+//        if (!$userCity) {
+//            $userCity = 'Amsterdam';
+//        }
+
+        // get searchParameters from session
+//        $searchParameters = [
+//            'city' => $userCity
+//            'lat' =>
+//            'lng' =>
+//            'radius' => 20
+//        ];
 
         $users = $this->userSearchManager->searchUsers(
             $searchParameters,
