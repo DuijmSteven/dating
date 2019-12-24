@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Interfaces\PaymentProvider;
 
 use App\Payment;
+use App\User;
+use App\UserAccount;
 use Illuminate\Support\Facades\Auth;
 use TPWeb\TargetPay\TargetPay;
 use TPWeb\TargetPay\Transaction\IDeal;
@@ -183,15 +185,21 @@ class PaymentService implements PaymentProvider
 
         //Increase credits
         if($status && $payment->status == 1) {
-            //TODO increase credits
+            if(Auth::user()->account()->exists()) {
+                $credits = Auth::user()->account->credits;
+                Auth::user()->account()->update(['credits' => $credits + (int) session('credits')]);
+            } else {
+                $account = new UserAccount(['credits' => (int) session('credits')]);
+                Auth::user()->account()->save($account);
+            }
         }
 
         //Update payment status
         $status ? $statusUpdate = 3 : $statusUpdate = 5;
 
         Payment::where('user_id', Auth::user()->id)
-            ->where('transactionId', $transactionId)
-            ->update(['status' => $statusUpdate]);
+               ->where('transactionId', $transactionId)
+               ->update(['status' => $statusUpdate]);
 
         return $status;
     }
