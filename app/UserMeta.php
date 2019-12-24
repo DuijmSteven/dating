@@ -48,4 +48,9 @@ class UserMeta extends Model
     {
         return $this->belongsTo('App\User', 'user_id', 'id');
     }
+
+    public function getLookingForGender()
+    {
+        return $this->looking_for_gender;
+    }
 }

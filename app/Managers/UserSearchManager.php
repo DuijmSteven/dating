@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class UserSearchManager
 {
+    const ORDERING_TYPE_RANDOMIZED = 'randomized';
+
     /**
      * @var User
      */
@@ -37,9 +39,16 @@ class UserSearchManager
      * @param bool $paginated
      * @param int $page
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|Collection|static[]
+     * @throws \Exception
      */
-    public function searchUsers(array $parameters, $paginated = false, $page = 1)
+    public function searchUsers(array $parameters, $paginated = false, $page = 1, array $ordering = null)
     {
+        if (isset($ordering) && isset($ordering['randomization_key'])) {
+            if (gettype($ordering['randomization_key']) !== 'string') {
+                throw new \Exception('The ordering randomization key must be of type [string]');
+            }
+        }
+
         // initial part of query
         $query = $this->user->with(['meta', 'roles']);
 
@@ -104,9 +113,21 @@ class UserSearchManager
         });
 
         if (!$paginated) {
-            $results = $query->get();
-            return $results;
+            if (null !== $ordering) {
+                if ($ordering['type'] = self::ORDERING_TYPE_RANDOMIZED) {
+                    $query->inRandomOrder($ordering['randomization_key']);
+                }
+            }
+
+            return $query->get();
         }
+
+        if (null !== $ordering) {
+            if ($ordering['type'] = self::ORDERING_TYPE_RANDOMIZED) {
+                $query->inRandomOrder($ordering['randomization_key']);
+            }
+        }
+
         $results = $query->paginate(PaginationConstants::$perPage['user_profiles'], ['*'], 'page', $page);
         return $results;
     }

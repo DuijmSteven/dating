@@ -81,40 +81,22 @@ class UserTablesSeeder extends Seeder
         $accountTypes = UserConstants::selectableField('account_type');
         $accountTypesCount = count($accountTypes);
 
+        $this->createUser(
+            UserConstants::selectableField('gender', 'common', 'array_flip')['male'],
+            UserConstants::selectableField('role', 'common', 'array_flip')['admin'],
+            'admin'
+        );
+        $this->createUser(
+            UserConstants::selectableField('gender', 'common', 'array_flip')['male'],
+            UserConstants::selectableField('role', 'common', 'array_flip')['peasant'],
+            'male.peasant'
+        );
+        $this->createUser(
+            UserConstants::selectableField('gender', 'common', 'array_flip')['female'],
+            UserConstants::selectableField('role', 'common', 'array_flip')['peasant'],
+            'female.peasant'
+        );
 
-        /* -- Create admin user -- */
-        $createdAdmin = factory(App\User::class)->create([
-            'username' => 'admin',
-            'email' => 'admin@gmail.com',
-            'password' => bcrypt(env('LOCAL_ADMIN_PASSWORD'))
-        ]);
-
-        $createdAdmin->account()->save(factory(App\UserAccount::class)->make([
-            'user_id' => $createdAdmin->id
-        ]));
-
-        $randomCityWithCoordinates = $this->citiesWithCoordinates[rand(0, count($this->citiesWithCoordinates) - 1)];
-
-        $adminUserMetaInstance = $createdAdmin->meta()->save(factory(App\UserMeta::class)->make([
-            'user_id' => $createdAdmin->id,
-            'gender' => 1,
-            'city' => $randomCityWithCoordinates['name'],
-            'lat' => $randomCityWithCoordinates['lat'],
-            'lng' => $randomCityWithCoordinates['lng']
-        ]));
-
-        $adminUserRoleInstance = new \App\RoleUser([
-            'user_id' => $createdAdmin->id,
-            'role_id' => 1
-        ]);
-        $adminUserRoleInstance->save();
-
-/*        $roleUserInstance = new EmailTypeUser([
-            'user_id' => $createdAdmin->id,
-            'email_type_id' => 1,
-        ]);
-
-        $roleUserInstance->save();*/
 
         /* -- Create peasants and bots for all genders -- */
         foreach (['peasant', 'bot'] as $role) {
@@ -231,5 +213,48 @@ class UserTablesSeeder extends Seeder
                 return $key;
             }
         }
+    }
+
+    /**
+     * @return void
+     */
+    private function createUser($genderId, string $roleId, string $username): void
+    {
+        /* -- Create admin user -- */
+        $createdUser = factory(App\User::class)->create([
+            'username' => $username,
+            'email' => $username . '@gmail.com',
+            'password' => bcrypt(env('LOCAL_PASSWORD'))
+        ]);
+
+        $createdUser->account()->save(factory(App\UserAccount::class)->make([
+            'user_id' => $createdUser->id
+        ]));
+
+        $randomCityWithCoordinates = $this->citiesWithCoordinates[rand(0, count($this->citiesWithCoordinates) - 1)];
+
+        $lookingForGenderId = $genderId === 1 ? 2 : 1;
+
+        $userMetaInstance = $createdUser->meta()->save(factory(App\UserMeta::class)->make([
+            'user_id' => $createdUser->id,
+            'gender' => $genderId,
+            'looking_for_gender' => $lookingForGenderId,
+            'city' => $randomCityWithCoordinates['name'],
+            'lat' => $randomCityWithCoordinates['lat'],
+            'lng' => $randomCityWithCoordinates['lng']
+        ]));
+
+        $userRoleInstance = new \App\RoleUser([
+            'user_id' => $createdUser->id,
+            'role_id' => $roleId
+        ]);
+        $userRoleInstance->save();
+
+        $roleUserInstance = new EmailTypeUser([
+            'user_id' => $createdUser->id,
+            'email_type_id' => 1,
+        ]);
+
+        $roleUserInstance->save();
     }
 }

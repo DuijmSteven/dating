@@ -13,9 +13,6 @@
 
 Auth::routes();
 
-Route::get('login', 'Auth\LoginController@showLoginForm')
-    ->name('login.get')
-    ->middleware(['guest']);
 Route::post('login', 'Auth\LoginController@login')
     ->name('login.post')
     ->middleware(['guest']);
@@ -30,13 +27,20 @@ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::get('contact', 'Frontend\HomeController@showContact')
     ->name('contact.get');
 
-Route::get('/', 'Frontend\HomeController@index')
-    ->name('home')->middleware(['auth']);
+Route::get('/dashboard', 'Frontend\DashboardController@index')
+    ->name('dashboard')
+    ->middleware('auth');
 
+Route::get('/', 'Frontend\UserSearchController@showInitialSearchResults')
+    ->name('home')
+    ->middleware('auth');
+
+Route::get('/home', 'Frontend\UserSearchController@showInitialSearchResults')
+    ->name('home')
+    ->middleware('auth');
 
 Route::get('edit-profile', 'Frontend\UserController@showEditProfile')
     ->name('edit-profile.get');
-
 
 Route::group([
     'prefix' => 'register',
@@ -44,6 +48,10 @@ Route::group([
 ], function () {
     Route::get('/', 'Auth\RegisterController@showRegistrationForm')
         ->name('register.get');
+});
+
+Route::get('login', function () {
+    return redirect(route('landing-page.show'));
 });
 
 Route::group([

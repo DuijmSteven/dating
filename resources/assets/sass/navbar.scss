@@ -133,6 +133,11 @@
                 background-color: transparent;
                 color: $white;
                 font-weight: 500;
+
+                &:focus {
+                    color: $white;
+                    background-color: transparent;
+                }
             }
 
             &:hover {

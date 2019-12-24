@@ -62,26 +62,26 @@ services:
     networks:
       - dating-network
 
-  #phpmyadmin service
-  dating-phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: dating-phpmyadmin
-    ports:
-      - "90:80"
-    environment:
-      PMA_HOST: dating-mysql
-    networks:
-      - dating-network
-    depends_on:
-      - dating-mysql
-
-  dating-redis:
-    container_name: dating-redis
-    image: redis:latest
-    ports:
-      - "6379:6379"
-    networks:
-      - dating-network
+#  #phpmyadmin service
+#  dating-phpmyadmin:
+#    image: phpmyadmin/phpmyadmin
+#    container_name: dating-phpmyadmin
+#    ports:
+#      - "90:80"
+#    environment:
+#      PMA_HOST: dating-mysql
+#    networks:
+#      - dating-network
+#    depends_on:
+#      - dating-mysql
+#
+#  dating-redis:
+#    container_name: dating-redis
+#    image: redis:latest
+#    ports:
+#      - "6379:6379"
+#    networks:
+#      - dating-network
 
 
 #Docker Networks

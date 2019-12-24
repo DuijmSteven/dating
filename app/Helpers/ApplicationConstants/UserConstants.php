@@ -1655,11 +1655,11 @@ class UserConstants
     ];
 
     /**
-     * @param string $userType
+     * @param string $userRoleName
      * @param string $visibility
      * @return array|null
      */
-    public static function selectableFields(string $userType = 'bot', string $visibility = 'public')
+    public static function selectableFields(string $userRoleName = 'bot', string $visibility = 'public')
     {
         $result = [];
 
@@ -1667,8 +1667,8 @@ class UserConstants
             $result = array_merge($result, self::$selectableFields['common'][$visibility]);
         }
 
-        if (isset(self::$selectableFields[$userType][$visibility])) {
-            $result = array_merge($result, self::$selectableFields[$userType][$visibility]);
+        if (isset(self::$selectableFields[$userRoleName][$visibility])) {
+            $result = array_merge($result, self::$selectableFields[$userRoleName][$visibility]);
         }
 
         return (empty($result)) ? null : $result;
@@ -1676,17 +1676,17 @@ class UserConstants
 
     /**
      * @param string $fieldName
-     * @param string $userType
+     * @param string $userRoleName
      * @param string $arrayManipulationMethodName
      * @return mixed|null
      * @throws \Exception
      */
     public static function selectableField(
         string $fieldName,
-        string $userType = 'bot',
+        string $userRoleName = 'bot',
         string $arrayManipulationMethodName = ''
     ) {
-        $data = self::getSelectableFieldData($fieldName, $userType);
+        $data = self::getSelectableFieldData($fieldName, $userRoleName);
 
         if ($arrayManipulationMethodName != '') {
             $data = self::applyArrayMethod($arrayManipulationMethodName, $data);
@@ -1700,11 +1700,11 @@ class UserConstants
     }
 
     /**
-     * @param string $userType
+     * @param string $userRoleName
      * @param string $visibility
      * @return array|null
      */
-    public static function userTableFields(string $userType = 'bot', string $visibility = 'public')
+    public static function userTableFields(string $userRoleName = 'bot', string $visibility = 'public')
     {
         $visibilities = ['public', 'private'];
 
@@ -1716,8 +1716,8 @@ class UserConstants
                     $result = array_merge($result, self::$userTableFields['common'][$v]);
                 }
 
-                if (isset(self::$userTableFields[$userType][$v])) {
-                    $result = array_merge($result, self::$userTableFields[$userType][$v]);
+                if (isset(self::$userTableFields[$userRoleName][$v])) {
+                    $result = array_merge($result, self::$userTableFields[$userRoleName][$v]);
                 }
             }
         } else {
@@ -1725,8 +1725,8 @@ class UserConstants
                 $result = array_merge($result, self::$userTableFields['common'][$visibility]);
             }
 
-            if (isset(self::$userTableFields[$userType][$visibility])) {
-                $result = array_merge($result, self::$userTableFields[$userType][$visibility]);
+            if (isset(self::$userTableFields[$userRoleName][$visibility])) {
+                $result = array_merge($result, self::$userTableFields[$userRoleName][$visibility]);
             }
         }
 
@@ -1734,11 +1734,11 @@ class UserConstants
     }
 
     /**
-     * @param string $userType
+     * @param string $userRoleName
      * @param string $visibility
      * @return array|null
      */
-    public static function textFields(string $userType = 'bot', string $visibility = 'public')
+    public static function textFields(string $userRoleName = 'bot', string $visibility = 'public')
     {
         $visibilities = ['public', 'private'];
 
@@ -1750,8 +1750,8 @@ class UserConstants
                     $result = array_merge($result, self::$textFields['common'][$v]);
                 }
 
-                if (isset(self::$textFields[$userType][$v])) {
-                    $result = array_merge($result, self::$textFields[$userType][$v]);
+                if (isset(self::$textFields[$userRoleName][$v])) {
+                    $result = array_merge($result, self::$textFields[$userRoleName][$v]);
                 }
 
             }
@@ -1760,15 +1760,15 @@ class UserConstants
                 $result = array_merge($result, self::$textFields['common'][$visibility]);
             }
 
-            if (isset(self::$textFields[$userType][$visibility])) {
-                $result = array_merge($result, self::$textFields[$userType][$visibility]);
+            if (isset(self::$textFields[$userRoleName][$visibility])) {
+                $result = array_merge($result, self::$textFields[$userRoleName][$visibility]);
             }
         }
 
         return (empty($result)) ? null : $result;
     }
 
-    public static function textInputs(string $userType = 'bot', string $visibility = 'public')
+    public static function textInputs(string $userRoleName = 'bot', string $visibility = 'public')
     {
         $visibilities = ['public', 'private'];
 
@@ -1780,8 +1780,8 @@ class UserConstants
                     $result = array_merge($result, self::$textInputs['common'][$v]);
                 }
 
-                if (isset(self::$textInputs[$userType][$v])) {
-                    $result = array_merge($result, self::$textInputs[$userType][$v]);
+                if (isset(self::$textInputs[$userRoleName][$v])) {
+                    $result = array_merge($result, self::$textInputs[$userRoleName][$v]);
                 }
             }
         } else {
@@ -1789,8 +1789,8 @@ class UserConstants
                 $result = array_merge($result, self::$textInputs['common'][$visibility]);
             }
 
-            if (isset(self::$textInputs[$userType][$visibility])) {
-                $result = array_merge($result, self::$textInputs[$userType][$visibility]);
+            if (isset(self::$textInputs[$userRoleName][$visibility])) {
+                $result = array_merge($result, self::$textInputs[$userRoleName][$visibility]);
             }
         }
 
@@ -1799,25 +1799,25 @@ class UserConstants
 
 
     /**
-     * @param string $userType
+     * @param string $userRoleName
      * @return array
      */
-    public static function publicFieldNames(string $userType = 'bot')
+    public static function publicFieldNames(string $userRoleName = 'bot')
     {
         return array_merge(
-            array_keys(self::selectableFields($userType, 'public')),
-            array_keys(self::userTableFields($userType, 'public')),
-            self::textFields($userType, 'public'),
-            self::textInputs($userType, 'public')
+            array_keys(self::selectableFields($userRoleName, 'public')),
+            array_keys(self::userTableFields($userRoleName, 'public')),
+            self::textFields($userRoleName, 'public'),
+            self::textInputs($userRoleName, 'public')
         );
     }
 
     /**
      * @param string $fieldName
-     * @param string $userType
+     * @param string $userRoleName
      * @return mixed
      */
-    private static function getSelectableFieldData(string $fieldName, string $userType)
+    private static function getSelectableFieldData(string $fieldName, string $userRoleName)
     {
         $data = [];
 
@@ -1828,8 +1828,8 @@ class UserConstants
             $data = self::$selectableFields['common']['public'][$fieldName];
             return $data;
         } elseif (
-            isset(self::$selectableFields[$userType]['public']) &&
-            in_array($fieldName, array_keys(self::$selectableFields[$userType]['public']))
+            isset(self::$selectableFields[$userRoleName]['public']) &&
+            in_array($fieldName, array_keys(self::$selectableFields[$userRoleName]['public']))
         ) {
             $data = self::$selectableFields['common']['public'][$fieldName];
             return $data;
@@ -1840,10 +1840,10 @@ class UserConstants
             $data = self::$selectableFields['common']['private'][$fieldName];
             return $data;
         } elseif (
-            isset(self::$selectableFields[$userType]['private']) &&
-            in_array($fieldName, array_keys(self::$selectableFields[$userType]['private']))
+            isset(self::$selectableFields[$userRoleName]['private']) &&
+            in_array($fieldName, array_keys(self::$selectableFields[$userRoleName]['private']))
         ) {
-            $data = self::$selectableFields[$userType]['private'][$fieldName];
+            $data = self::$selectableFields[$userRoleName]['private'][$fieldName];
             return $data;
         }
         return $data;

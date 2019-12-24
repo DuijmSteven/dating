@@ -4,10 +4,14 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Managers\UserSearchManager;
-use App\Session;
+use App\Services\UserLocationService;
+use App\User;
 use Carbon\Carbon;
+use Cornford\Googlmapper\Models\Location;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequests\UserSearchRequest;
+use Illuminate\Support\Str;
+use Mapper;
 
 /**
  * Class UserSearchController
@@ -18,13 +22,21 @@ class UserSearchController extends FrontendController
     private $userSearchManager;
 
     /**
+     * @var UserLocationService
+     */
+    private UserLocationService $userLocationService;
+
+    /**
      * UserSearchController constructor.
      * @param UserSearchManager $userSearchManager
      */
-    public function __construct(UserSearchManager $userSearchManager)
-    {
+    public function __construct(
+        UserSearchManager $userSearchManager,
+        UserLocationService $userLocationService
+    ) {
         $this->userSearchManager = $userSearchManager;
         parent::__construct();
+        $this->userLocationService = $userLocationService;
     }
 
     /**
@@ -55,7 +67,6 @@ class UserSearchController extends FrontendController
         $searchParameters = $userSearchRequest->all();
 
         if (isset($searchParameters['age'])) {
-
             $ageMax = 100;
 
             $largestAgeLimit = (int) array_keys(UserConstants::$ageGroups)[sizeof(UserConstants::$ageGroups) - 1];
@@ -77,6 +88,8 @@ class UserSearchController extends FrontendController
             $searchParameters['dob'] = [];
             $searchParameters['dob']['min'] = $formattedMinDate;
             $searchParameters['dob']['max'] = $formattedMaxDate;
+
+            $searchParameters['gender'] = \Auth::user()->meta->getLookingForGender();
         }
 
         // flash parameters to session so the next request can access them
@@ -107,7 +120,73 @@ class UserSearchController extends FrontendController
         $viewData = [
             'users' => $users,
             'carbonNow' => Carbon::now(),
-            'title' => 'Search results - ' . config('app.name'),
+            'title' => config('app.name') . ' - Search results',
+        ];
+
+        return view(
+            'frontend.users.search.results',
+            $viewData
+        );
+    }
+
+    public function showInitialSearchResults(Request $request)
+    {
+        $userCityName = $this->userLocationService->getUserCityName();
+
+        if (!$userCityName) {
+            $userCityName = 'Amsterdam';
+        }
+
+        try {
+            /** @var Location $location */
+            $location = Mapper::location($userCityName . ', NL');
+            $latitude = $location->getLatitude();
+            $longitude = $location->getLongitude();
+        } catch (\Exception $exception) {
+            \Log::debug($exception->getMessage());
+
+            $latitude = '52.379189';
+            $longitude = '4.899431';
+        }
+
+        /** @var User $user */
+        $user = \Auth::user();
+        $lookingForGender = $user->meta->getLookingForGender();
+
+        $searchParameters = [
+            'city' => $userCityName,
+            'lat' => $latitude,
+            'lng' => $longitude,
+            'radius' => 40,
+            'age' => null,
+            'body_type' => null,
+            'height' => null,
+            'gender' => $lookingForGender,
+        ];
+
+        $request->session()->put('searchParameters', $searchParameters);
+
+        $randomizationKey = $request->session()->get('initial_search_randomization_key');
+
+        if (!$randomizationKey) {
+            $randomizationKey = (string) rand(1, 999);
+            $request->session()->put('initial_search_randomization_key', $randomizationKey);
+        }
+
+        $users = $this->userSearchManager->searchUsers(
+            $searchParameters,
+            true,
+            $request->input('page'),
+            [
+                'type' => UserSearchManager::ORDERING_TYPE_RANDOMIZED,
+                'randomization_key' => $randomizationKey
+            ]
+        );
+
+        $viewData = [
+            'users' => $users,
+            'carbonNow' => Carbon::now(),
+            'title' => config('app.name') . ' - Search results',
         ];
 
         return view(

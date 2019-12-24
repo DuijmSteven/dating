@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Activity;
+use App\Http\Requests\Request;
 use Hash;
+use Stevebauman\Location\Facades\Location;
 
 /**
- * Class HomeController
+ * Class DashboardController
  * @package App\Http\Controllers\Frontend
  */
-class HomeController extends FrontendController
+class DashboardController extends FrontendController
 {
     /**
      * HomeController constructor.
@@ -27,7 +29,7 @@ class HomeController extends FrontendController
     public function index(Activity $activity)
     {
         return view('frontend.home', [
-            'title' => 'Homepage - ' . config('app.name'),
+            'title' => config('app.name') . ' - Dashboard',
             'activity' => $activity->latest()->get()
         ]);
     }
@@ -42,7 +44,7 @@ class HomeController extends FrontendController
         return view(
             'frontend.contact',
             [
-                'title' => 'Contact - ' . config('app.name'),
+                'title' => config('app.name') . ' - Contact',
             ]
         );
     }

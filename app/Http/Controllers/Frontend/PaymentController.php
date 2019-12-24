@@ -42,7 +42,6 @@ class PaymentController extends FrontendController
                     'ideal', 'credit', 'paysafe'
                 ])
             ],
-            'amount' => 'required'
         ]);
 
         $bank = $request->get('bank');
@@ -54,7 +53,7 @@ class PaymentController extends FrontendController
 
         $description = $creditPack->getDescription();
 
-        $amountWithDecimals = number_format((float) $request->get('amount'), 2, '.', '');
+        $amountWithDecimals = number_format((float) $creditPack->price/100, 2, '.', '');
 
         $transaction = $this->paymentProvider->initiatePayment($bank, $paymentMethod, $amountWithDecimals, $description);
 
@@ -62,15 +61,15 @@ class PaymentController extends FrontendController
             $paymentMethod,
             1,
             $transaction['transaction_id'],
-            $request->get('amount'),
+            $amountWithDecimals,
             $description,
             $creditPackId
         );
 
         session([
-            'transactionId' => $transaction['transactionId'],
+            'transactionId' => $transaction['transaction_id'],
             'paymentMethod' => $paymentMethod,
-            'credits' => $description
+            'credits' => $creditPack->credits
         ]);
 
         return redirect()->away($transaction['redirectUrl']);
