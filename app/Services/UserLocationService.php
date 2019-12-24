@@ -7,7 +7,7 @@ use Stevebauman\Location\Facades\Location;
 use Stevebauman\Location\Position;
 
 /**
- * Class LocationService
+ * Class UserLocationService
  * @package App\Services
  */
 class UserLocationService
