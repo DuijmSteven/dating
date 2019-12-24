@@ -24,7 +24,7 @@ class UserSearchController extends FrontendController
     /**
      * @var UserLocationService
      */
-    private UserLocationService $userLocationService;
+    private $userLocationService;
 
     /**
      * UserSearchController constructor.
