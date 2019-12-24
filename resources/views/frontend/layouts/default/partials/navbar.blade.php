@@ -27,6 +27,13 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 @if(isset($authenticatedUser))
+                    <li>
+                        <a href="#" class="JS--searchToggle">
+                            <i class="material-icons">
+                                search
+                            </i>
+                        </a>
+                    </li>
                     <li class="userCredits">
                         <div class="userCredits">
                             <a href="{{ route('credits.show') }}">
@@ -87,5 +94,6 @@
                 @endif
             </ul>
         </div>
+
     </div>
 </nav>

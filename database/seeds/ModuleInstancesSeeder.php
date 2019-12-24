@@ -32,7 +32,7 @@ class ModuleInstancesSeeder extends Seeder
 
         $moduleInstances = [
             [
-                'module_id' => 4,
+                'module_id' => 3,
                 'layout_part_id' => 1,
                 'view_id' => 1,
                 'priority' => 1,

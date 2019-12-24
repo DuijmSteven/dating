@@ -101,7 +101,7 @@ $(window).on('load', function () {
         });
     }
 
-    if ($('.JS--Search').length > 0 || $('.JS--Edit-Profile').length > 0) {
+    if ($('.JS--SearchBar').length > 0 || $('.JS--Edit-Profile').length > 0) {
         getCoordinatesAndFillInputs();
 
         $('.JS--autoCompleteCites').keyup(function () {
@@ -109,25 +109,27 @@ $(window).on('load', function () {
         });
     }
 
-    if ($('.JS--Search').length > 0) {
-        const $searchRadiusInput = $('.JS--radiusSearchInput');
 
-        if ($('.JS--autoCompleteCites').val().length > 0) {
-            $searchRadiusInput.removeClass('hidden');
-        }
-
-        $('.JS--autoCompleteCites').keyup(function () {
-            if ($('.JS--autoCompleteCites').val().length > 0) {
-                if ($searchRadiusInput.hasClass('hidden')) {
-                    $searchRadiusInput.removeClass('hidden');
-                }
-            } else {
-                if (!$searchRadiusInput.hasClass('hidden')) {
-                    $searchRadiusInput.addClass('hidden');
-                }
-            }
-        });
+    if($('.SearchBar .city').hasClass('has-error')) {
+        $('.SearchBar').toggleClass('hidden');
     }
+    const $searchRadiusInput = $('.JS--radiusSearchInput');
+
+    if ($('.JS--autoCompleteCites').length > 0 && $('.JS--autoCompleteCites').val().length > 0) {
+        $searchRadiusInput.removeClass('hidden');
+    }
+
+    $('.JS--autoCompleteCites').keyup(function () {
+        if ($(this).val().length > 0) {
+            if ($searchRadiusInput.hasClass('hidden')) {
+                $searchRadiusInput.removeClass('hidden');
+            }
+        } else {
+            if (!$searchRadiusInput.hasClass('hidden')) {
+                $searchRadiusInput.addClass('hidden');
+            }
+        }
+    });
 
     if ($('.modalImage').length > 0) {
         $(".modalImage").on("click", function(event) {
@@ -223,6 +225,25 @@ $(window).on('load', function () {
 
                     fitImageToContainer($(element));
                 });
+            }
+        });
+    }
+
+    if ($('.JS--searchToggle').length > 0) {
+        var searchBarState = Cookies.get('searchBarState');
+
+        if (searchBarState === 'open') {
+            $('.JS--SearchBar').removeClass('hidden');
+        }
+
+        $('.JS--searchToggle').click((event) => {
+            event.preventDefault();
+            $('.JS--SearchBar').toggleClass('hidden');
+
+            if ($('.JS--SearchBar').hasClass('hidden')) {
+                Cookies.set('searchBarState', 'hidden');
+            } else {
+                Cookies.set('searchBarState', 'open');
             }
         });
     }

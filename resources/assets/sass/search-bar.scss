@@ -1,0 +1,114 @@
+
+.SearchBar {
+    position: absolute;
+    top: - 23px;
+    left: 0px;
+    right: 0px;
+    background-color: $navbarBgColor;
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
+    border-top: 0;
+    border-radius: 0 0 5px 5px;
+    padding: 10px;
+
+    &.with-errors {
+        padding-bottom: 30px;
+    }
+
+    .has-error .form-control {
+        color: lighten($secondaryColor, 15%);
+    }
+
+    .help-block {
+        position: absolute;
+        color: lighten($secondaryColor, 15%);
+    }
+
+    @media (min-width: $screen-sm-min) {
+        left: 150px;
+        right: 150px;
+    }
+
+    @media (min-width: $screen-md-min) {
+        left: 50px;
+        right: 50px;
+    }
+
+    .form-group {
+        margin-bottom: 0;
+
+        label {
+            color: $navbarLinkColor;
+        }
+
+        width: 100%;
+
+        @media (min-width: $screen-md-min) {
+            padding-right: 20px;
+            &.city {
+                width: 25%;
+            }
+
+            &.radius,
+            &.age,
+            &.bodyType {
+                width: 15%;
+            }
+
+            &.height {
+                width: 20%;
+            }
+
+            &.submit {
+                width: 15%;
+                position: absolute;
+                right: 10px;
+                bottom: 10px;
+                padding-right: 0px;
+
+                button {
+                    width: 70px;
+                    height: 36px;
+                    text-align: center;
+                    padding: 0;
+                }
+
+                .material-icons {
+                    position: relative;
+                    top: 4px;
+                    font-size: 20px;
+                    color: #fff;
+                }
+            }
+        }
+
+
+        &.submit {
+            button {
+                text-align: center;
+                background-color: lighten($secondaryColor, 10%);
+
+                &:hover {
+                    background-color: lighten($secondaryColor, 5%);
+                }
+            }
+
+            .material-icons {
+                position: relative;
+                top: 4px;
+                font-size: 20px;
+                color: #fff;
+            }
+        }
+    }
+
+    form {
+        display: flex;
+
+        flex-direction: column;
+
+        @media (min-width: $screen-md-min) {
+            flex-direction: row;
+            align-items: center;
+        }
+    }
+}
