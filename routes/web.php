@@ -50,9 +50,8 @@ Route::group([
         ->name('register.get');
 });
 
-Route::get('login', function () {
-    return redirect(route('landing-page.show'));
-});
+Route::get('login', 'Frontend\LandingPageController@show')
+    ->name('login.show');
 
 Route::group([
     'prefix' => 'welcome',

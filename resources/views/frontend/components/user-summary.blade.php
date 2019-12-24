@@ -7,20 +7,34 @@
     <div class="Tile__body UserSummary__body JS--UserSummary">
         <div class="UserSummary__user-image JS--UserSummary__user-image">
             @if($user->hasProfileImage())
-                <a href="#" class="modalImage">
-                    <div class="UserSummary__profileImageWrapper">
-                        <img
-                            class="UserSummary__profileImage"
-                            src="{{ \StorageHelper::profileImageUrl($user) }}"
-                            alt="user image"
-                        >
-                    </div>
-                </a>
+                @if(isset($showOtherImages))
+                    <a href="#" class="modalImage">
+                        <div class="UserSummary__profileImageWrapper">
+                            <img
+                                class="UserSummary__profileImage"
+                                src="{{ \StorageHelper::profileImageUrl($user) }}"
+                                alt="user image"
+                            >
+                        </div>
+                    </a>
+                @else
+                    <a href="{{ route('users.show', ['userId' => $user->getId()])  }}">
+                        <div class="UserSummary__profileImageWrapper">
+                            <img
+                                class="UserSummary__profileImage"
+                                src="{{ \StorageHelper::profileImageUrl($user) }}"
+                                alt="user image"
+                            >
+                        </div>
+                    </a>
+                @endif
             @else
-                <img
-                    src="{{ \StorageHelper::profileImageUrl($user) }}"
-                    alt="user image"
-                >
+                <a href="{{ route('users.show', ['userId' => $user->getId()])  }}">
+                    <img
+                        src="{{ \StorageHelper::profileImageUrl($user) }}"
+                        alt="user image"
+                    >
+                </a>
             @endif
         </div>
     </div>
