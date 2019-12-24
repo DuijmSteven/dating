@@ -32,7 +32,7 @@ Route::get('/dashboard', 'Frontend\DashboardController@index')
     ->middleware('auth');
 
 Route::get('/', 'Frontend\UserSearchController@showInitialSearchResults')
-    ->name('home')
+    ->name('initial-search-results')
     ->middleware('auth');
 
 Route::get('/home', 'Frontend\UserSearchController@showInitialSearchResults')
