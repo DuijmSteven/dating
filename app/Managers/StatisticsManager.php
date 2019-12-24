@@ -3,6 +3,7 @@
 namespace App\Managers;
 
 use App\ConversationMessage;
+use App\Payment;
 use App\User;
 use Carbon\Carbon;
 
@@ -86,5 +87,49 @@ class StatisticsManager
                 $endDate
             ])
             ->count();
+    }
+
+    public function peasantsWithNoCreditpack() : int {
+        return User::whereHas('roles', function($query) {
+            $query->where('name', 'peasant');
+        })->whereHas('account', function($query) {
+            $query->where('credits', 0);
+        })
+            ->count();
+    }
+
+    public function peasantsThatNeverHadCreditpack() : int {
+        return User::has('payments', '=', 0)
+        ->whereHas('roles', function($query) {
+            $query->where('name', 'peasant');
+        })
+        ->orWhereHas('payments', function ($query) {
+            $query->whereNull('creditpack_id');
+        })
+            ->count();
+    }
+
+    public function peasantsWithSmallCreditpack() : int {
+        return $this->peasantsCreditpackId(1);
+    }
+
+    public function peasantsWithMediumCreditpack() : int {
+        return $this->peasantsCreditpackId(2);
+    }
+
+    public function peasantsWithLargeCreditpack() : int {
+        return $this->peasantsCreditpackId(3);
+    }
+
+    private function peasantsCreditpackId(int $creditpackId) : int {
+        return User::whereHas('roles', function($query) {
+            $query->where('name', 'peasant');
+        })->whereHas('account', function($query) {
+            $query->where('credits', '>', 0);
+        })->whereHas('payments', function($query) {
+            $query->orderBy('created_at', 'desc')->take(1);
+        })->get()->filter(function ($user) use ($creditpackId) {
+            return $user->payments[0]->getCreditpackId() == $creditpackId;
+        })->count();
     }
 }

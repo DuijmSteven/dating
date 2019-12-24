@@ -56,7 +56,14 @@
                         </div>
 
                         <h4>Image preview</h4>
-                        <img class="Article__image" src="{!! \StorageHelper::articleImageUrl($article->id, $article->image_filename, true) !!}" alt="Article image">
+                        @if($article->image_filename)
+                            <div class="img-responsive">
+                                <img class="Article__image" src="{!! \StorageHelper::articleImageUrl($article->id, $article->image_filename, false) !!}" alt="Article image">
+                            </div>
+                        @else
+                            No image set yet.
+                        @endif
+
 
                     </div>
                     <div class="col-xs-12">

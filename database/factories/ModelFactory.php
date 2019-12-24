@@ -67,13 +67,18 @@ $factory->define(App\Article::class, function (FakerGenerator $faker) {
 $factory->define(App\Payment::class, function (FakerGenerator $faker) {
     $statusesCount = count(PaymentsHelper::$statuses);
     $paymentMethodsCount = count(PaymentsHelper::$methods);
+    $creditpacks = \App\Creditpack::all()->toArray();
+
+    $creditpack = $creditpacks[rand(0, count($creditpacks) - 1)];
 
     return [
         'user_id' => 2,
         'method' => rand(1, $paymentMethodsCount),
         'status' => rand(1, $statusesCount),
-        'transactionId' => $faker->creditCardNumber,
-        'description' => $faker->realText($maxNbChars = 100, $indexSize = 1)
+        'transaction_id' => $faker->creditCardNumber,
+        'creditpack_id' => $creditpack['id'],
+        'amount' => $creditpack['price'],
+        'description' => $creditpack['description']
     ];
 });
 

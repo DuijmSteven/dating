@@ -5,7 +5,8 @@
     <div class="Tile EditProfile JS--Edit-Profile">
         <div class="Tile__heading">Profiel aanpassen</div>
         <div class="Tile__body">
-            <form role="form" class="searchForm" method="POST" action="{!! route('users.update', ['userId' => $user->id]) !!}"
+            <form role="form" class="searchForm" method="POST"
+                  action="{!! route('users.update', ['userId' => $user->id]) !!}"
                   enctype="multipart/form-data">
                 {!! csrf_field() !!}
                 {!! method_field('PUT') !!}
@@ -62,43 +63,6 @@
                             </div>
                         </div>
 
-{{--                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="gender">{{ @trans('user_constants.labels.gender') }}</label>
-                                <select name="gender"
-                                        id="gender"
-                                        class="form-control"
-                                >
-                                    @foreach(\UserConstants::selectableField('gender') as $key => $value)
-                                        <option
-                                                {{ $user->meta['gender'] === $key ? 'selected' : '' }}
-                                                value="{{ $key }}">{{ @trans('user_constants.gender.' . $key) }}
-                                        </option>
-
-
-
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>--}}
-
-{{--                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="looking_for_gender">{{ @trans('user_constants.labels.looking_for_gender') }}</label>
-                                <select name="looking_for_gender"
-                                        id="looking_for_gender"
-                                        class="form-control"
-                                >
-                                    @foreach(\UserConstants::selectableField('looking_for_gender') as $key => $value)
-                                        <option
-                                                {{ $user->meta['looking_for_gender'] === $key ? 'selected' : '' }}
-                                                value="{{ $key }}">{{ @trans('user_constants.looking_for_gender.' . $key) }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>--}}
-
                         <div class="col-xs-12">
                             <hr/>
                         </div>
@@ -110,10 +74,14 @@
                                         id="relationship_status"
                                         class="form-control"
                                 >
+                                    @if(!$user->meta['relationship_status'])
+                                        <option value="" disabled selected>Select your {{ strtolower(@trans('user_constants.labels.relationship_status')) }}</option>
+                                    @endif
+
                                     @foreach(\UserConstants::selectableField('relationship_status') as $key => $value)
                                         <option
-                                                {{ $user->meta['relationship_status'] === $key ? 'selected' : '' }}
-                                                value="{{ $key }}">{{ @trans('user_constants.relationship_status.' . $key) }}
+                                            {{ $user->meta['relationship_status'] === $key ? 'selected' : '' }}
+                                            value="{{ $key }}">{{ @trans('user_constants.relationship_status.' . $key) }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -127,10 +95,14 @@
                                         id="body_type"
                                         class="form-control"
                                 >
+                                    @if(!$user->meta['body_type'])
+                                        <option value="" disabled selected>Select your {{ strtolower(@trans('user_constants.labels.body_type')) }}</option>
+                                    @endif
+
                                     @foreach(\UserConstants::selectableField('body_type') as $key => $value)
                                         <option
-                                                {{ $user->meta['body_type'] === $key ? 'selected' : '' }}
-                                                value="{{ $key }}">{{ @trans('user_constants.body_type.' . $key) }}
+                                            {{ $user->meta['body_type'] === $key ? 'selected' : '' }}
+                                            value="{{ $key }}">{{ @trans('user_constants.body_type.' . $key) }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -144,10 +116,14 @@
                                         id="height"
                                         class="form-control"
                                 >
+                                    @if(!$user->meta['height'])
+                                        <option value="" disabled selected>Select your {{ strtolower(@trans('user_constants.labels.height')) }}</option>
+                                    @endif
+
                                     @foreach(\UserConstants::selectableField('height') as $key => $value)
                                         <option
-                                                {{ $user->meta['height'] === $key ? 'selected' : '' }}
-                                                value="{{ $key }}">{{ @trans('user_constants.height.' . $key) }}
+                                            {{ $user->meta['height'] === $key ? 'selected' : '' }}
+                                            value="{{ $key }}">{{ @trans('user_constants.height.' . $key) }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -161,10 +137,14 @@
                                         id="eye_color"
                                         class="form-control"
                                 >
+                                    @if(!$user->meta['eye_color'])
+                                        <option value="" disabled selected>Select your {{ strtolower(@trans('user_constants.labels.eye_color')) }}</option>
+                                    @endif
+
                                     @foreach(\UserConstants::selectableField('eye_color') as $key => $value)
                                         <option
-                                                {{ $user->meta['eye_color'] === $key ? 'selected' : '' }}
-                                                value="{{ $key }}">{{ @trans('user_constants.eye_color.' . $key) }}
+                                            {{ $user->meta['eye_color'] === $key ? 'selected' : '' }}
+                                            value="{{ $key }}">{{ @trans('user_constants.eye_color.' . $key) }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -178,10 +158,14 @@
                                         id="hair_color"
                                         class="form-control"
                                 >
+                                    @if(!$user->meta['hair_color'])
+                                        <option value="" disabled selected>Select your {{ strtolower(@trans('user_constants.labels.hair_color')) }}</option>
+                                    @endif
+
                                     @foreach(\UserConstants::selectableField('hair_color') as $key => $value)
                                         <option
-                                                {{ $user->meta['hair_color'] === $key ? 'selected' : '' }}
-                                                value="{{ $key }}">{{ @trans('user_constants.hair_color.' . $key) }}
+                                            {{ $user->meta['hair_color'] === $key ? 'selected' : '' }}
+                                            value="{{ $key }}">{{ @trans('user_constants.hair_color.' . $key) }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -195,10 +179,14 @@
                                         id="smoking_habits"
                                         class="form-control"
                                 >
+                                    @if(!$user->meta['smoking_habits'])
+                                        <option value="" disabled selected>Select your {{ strtolower(@trans('user_constants.labels.smoking_habits')) }}</option>
+                                    @endif
+
                                     @foreach(\UserConstants::selectableField('smoking_habits') as $key => $value)
                                         <option
-                                                {{ $user->meta['smoking_habits'] === $key ? 'selected' : '' }}
-                                                value="{{ $key }}">{{ @trans('user_constants.smoking_habits.' . $key) }}
+                                            {{ $user->meta['smoking_habits'] === $key ? 'selected' : '' }}
+                                            value="{{ $key }}">{{ @trans('user_constants.smoking_habits.' . $key) }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -207,15 +195,20 @@
 
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="drinking_habits">{{ @trans('user_constants.labels.drinking_habits') }}</label>
+                                <label
+                                    for="drinking_habits">{{ @trans('user_constants.labels.drinking_habits') }}</label>
                                 <select name="drinking_habits"
                                         id="drinking_habits"
                                         class="form-control"
                                 >
+                                    @if(!$user->meta['drinking_habits'])
+                                        <option value="" disabled selected>Select your {{ strtolower(@trans('user_constants.labels.drinking_habits')) }}</option>
+                                    @endif
+
                                     @foreach(\UserConstants::selectableField('drinking_habits') as $key => $value)
                                         <option
-                                                {{ $user->meta['drinking_habits'] === $key ? 'selected' : '' }}
-                                                value="{{ $key }}">{{ @trans('user_constants.drinking_habits.' . $key) }}
+                                            {{ $user->meta['drinking_habits'] === $key ? 'selected' : '' }}
+                                            value="{{ $key }}">{{ @trans('user_constants.drinking_habits.' . $key) }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -234,6 +227,7 @@
                                           class="form-control"
                                           cols="30"
                                           rows="10"
+                                          placeholder="Let other get to know you a bit. What makes you happy? What irritates you? What makes you excited? Users that share a bit about themselves tend to get a lot more attention!"
                                 >{!! $user->meta['about_me'] !!}</textarea>
                                 @include('helpers.forms.error_message', ['field' => 'about_me'])
                             </div>
@@ -245,7 +239,8 @@
 
                         <div class="col-xs-12">
                             <div class="form-group">
-                                <label for="email_notification_settings">{{ @trans('edit_profile.email_notification_settings') }}</label>
+                                <label
+                                    for="email_notification_settings">{{ @trans('edit_profile.email_notification_settings') }}</label>
 
                                 @foreach($availableEmailTypes as $emailType)
                                     <div class="checkbox notificationSettingsItem">
@@ -312,11 +307,13 @@
                         <tr>
                             <td>
                                 <a href="#" class="modalImage">
-                                    <img alt="profileImage" class="imageResource" width="200" src="{!! \StorageHelper::profileImageUrl($user) !!}"/>
+                                    <img alt="profileImage" class="imageResource" width="200"
+                                         src="{!! \StorageHelper::profileImageUrl($user) !!}"/>
                                 </a>
                             </td>
                             <td class="action-buttons">
-                                <form method="POST" action="{!! route('images.destroy', ['imageId' => $user->profileImage->id]) !!}">
+                                <form method="POST"
+                                      action="{!! route('images.destroy', ['imageId' => $user->profileImage->id]) !!}">
                                     {!! csrf_field() !!}
                                     {!! method_field('DELETE') !!}
                                     <button type="submit" class="btn btn-danger">Delete</button>
@@ -350,16 +347,19 @@
                             <tr>
                                 <td>
                                     <a href="#" class="modalImage">
-                                        <img alt="galleryImage" class="imageResource" width="200" src="{!! \StorageHelper::userImageUrl($user->id, $image->filename) !!}"/>
+                                        <img alt="galleryImage" class="imageResource" width="200"
+                                             src="{!! \StorageHelper::userImageUrl($user->id, $image->filename) !!}"/>
                                     </a>
                                 </td>
                                 <td class="action-buttons">
-                                    <form method="POST" action="{!! route('images.destroy', ['imageId' => $image->id]) !!}">
+                                    <form method="POST"
+                                          action="{!! route('images.destroy', ['imageId' => $image->id]) !!}">
                                         {!! csrf_field() !!}
                                         {!! method_field('DELETE') !!}
                                         <button type="submit" class="btn btn-danger">Delete</button>
                                     </form>
-                                    <a href="{!! route('users.set-profile-image', ['userId' => $user->id, 'imageId' => $image->id]) !!}" class="btn btn-success">Set profile</a>
+                                    <a href="{!! route('users.set-profile-image', ['userId' => $user->id, 'imageId' => $image->id]) !!}"
+                                       class="btn btn-success">Set profile</a>
                                 </td>
                             </tr>
                         @endforeach

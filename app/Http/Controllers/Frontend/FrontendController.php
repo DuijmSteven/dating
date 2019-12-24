@@ -59,4 +59,9 @@ class FrontendController extends Controller
         \View::share('rightSidebar', $this->rightSidebar);
         \View::share('sidebarCount', $this->sidebarCount);
     }
+
+    protected function buildTitleWith(string $string)
+    {
+        return config('app.name') . ' - ' . $string;
+    }
 }

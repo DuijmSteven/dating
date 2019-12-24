@@ -143,6 +143,13 @@ class DashboardController extends Controller
                     Carbon::now()->endOfYear()
                 )
             ],
+            'userTypeStatistics' => [
+                'no_credits' => $this->statisticsManager->peasantsWithNoCreditpack(),
+                'never_bought' => $this->statisticsManager->peasantsThatNeverHadCreditpack(),
+                'small' => $this->statisticsManager->peasantsWithSmallCreditpack(),
+                'medium' => $this->statisticsManager->peasantsWithMediumCreditpack(),
+                'large' => $this->statisticsManager->peasantsWithLargeCreditpack(),
+            ],
         ];
 
         return view('admin.dashboard', array_merge(

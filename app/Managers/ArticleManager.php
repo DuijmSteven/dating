@@ -92,7 +92,13 @@ class ArticleManager
 
         if (isset($articleData['article_image']) && ($articleData['article_image'] instanceof UploadedFile)) {
             try {
-                if ($this->storageManager->fileExists($article->getImageFilename(), \StorageHelper::articleImagesPath($article->getId()))) {
+                if (
+                    $article->getImageFilename() &&
+                    $this->storageManager->fileExists(
+                        $article->getImageFilename(),
+                        \StorageHelper::articleImagesPath($article->getId())
+                    )
+                ) {
                     $this->storageManager->deleteArticleImage($article->getId(), $article->getImageFilename());
                 }
 

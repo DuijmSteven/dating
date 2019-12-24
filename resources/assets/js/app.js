@@ -69,7 +69,7 @@ function getCoordinatesAndFillInputs() {
     }
 }
 
-$(window).ready(function () {
+$(window).on('load', function () {
     require('./global_helpers');
 
     if ($('.Shoutbox').length > 0) {
@@ -162,20 +162,22 @@ $(window).ready(function () {
 
     }
 
-    if ($('.block-pricing').length > 0) {
-        $('.block-pricing .btn').click(function () {
+    if ($('.JS--creditpack').length > 0) {
+        $('.JS--creditpack .btn').click(function () {
             $('.table-rose').removeClass('table-rose');
             $('.block-raised').removeClass('block-raised');
             $('.btn-white').removeClass('btn-white').addClass('btn-rose');
-            $(this).closest('.block-pricing').addClass('block-raised');
+            $(this).closest('.JS--creditpack').addClass('block-raised');
             $(this).closest('.table').addClass('table-rose');
             $(this).addClass('btn-white');
+
+            let creditPackId = $('.block-raised').data('creditpack-id');
 
             //change cart values based on selected credits package
             $('span.cart-value').html($('.block-raised .block-caption span').html());
             $('input[name="amount"]').val($('.block-raised .block-caption span').html());
             $('span.cart-credits').html($('.block-raised b.package-credits').html());
-            $('input[name="description"]').val($('.block-raised b.package-credits').html());
+            $('input[name="creditpack_id"]').val(creditPackId);
             $('span.cart-package').html($('.block-raised .category').html());
         });
     }
@@ -208,6 +210,21 @@ $(window).ready(function () {
                 fitImageToContainer($(element));
             });
         }
+
+        $(window).resize(function() {
+            $('.JS--UserSummary__user-image').each((index, element) => {
+                console.log(1);
+
+                fitImageToContainer($(element));
+            });
+
+            if ($('.JS--UserSummary__otherImages').length > 0) {
+                $('.JS--UserSummary__nonProfileImageWrapper').each((index, element) => {
+
+                    fitImageToContainer($(element));
+                });
+            }
+        });
     }
 });
 

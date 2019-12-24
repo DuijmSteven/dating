@@ -18,13 +18,22 @@ interface PaymentProvider
     public function initiatePayment(string $bank, string $paymentMethod, float $amount, string $description);
 
     /**
-     * @param  string  $paymentMethod
-     * @param  string  $description
-     * @param  int  $status
-     * @param  int  $transactionId
+     * @param string $paymentMethod
+     * @param int $status
+     * @param int $transactionId
+     * @param int $amount
+     * @param string $description
+     * @param int $creditpackId
      * @return mixed
      */
-    public function storePayment(string $paymentMethod, string $description, int $status, int $transactionId);
+    public function storePayment(
+        string $paymentMethod,
+        int $status,
+        int $transactionId,
+        int $amount,
+        string $description,
+        int $creditpackId
+    );
 
     /**
      * @param string $bank
