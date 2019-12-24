@@ -111,7 +111,7 @@ class PaymentService implements PaymentProvider
 
         return [
             'redirectUrl' => $redirectUrl,
-            'transactionId' => $transactionId
+            'transaction_id' => $transactionId
         ];
     }
 
@@ -138,7 +138,7 @@ class PaymentService implements PaymentProvider
 
         return [
             'redirectUrl' => $redirectUrl,
-            'transactionId' => $transactionId
+            'transaction_id' => $transactionId
         ];
     }
 
@@ -190,7 +190,7 @@ class PaymentService implements PaymentProvider
         $status = $targetPay->transaction->getPaymentDone();
 
         $payment = Payment::where('user_id', Auth::user()->id)
-                          ->where('transactionId', $transactionId)
+                          ->where('transaction_id', $transactionId)
                           ->first();
 
         //Increase credits
@@ -208,7 +208,7 @@ class PaymentService implements PaymentProvider
         $status ? $statusUpdate = 3 : $statusUpdate = 5;
 
         Payment::where('user_id', Auth::user()->id)
-               ->where('transactionId', $transactionId)
+               ->where('transaction_id', $transactionId)
                ->update(['status' => $statusUpdate]);
 
         return $status;
