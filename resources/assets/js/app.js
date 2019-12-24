@@ -215,7 +215,7 @@ $(window).on('load', function () {
 
         $(window).resize(function() {
             $('.JS--UserSummary__user-image').each((index, element) => {
-                console.log(1);
+                console.log(element);
 
                 fitImageToContainer($(element));
             });
@@ -234,11 +234,13 @@ $(window).on('load', function () {
 
         if (searchBarState === 'open') {
             $('.JS--SearchBar').removeClass('hidden');
+            $('.JS--searchToggleButton').addClass('pressed');
         }
 
         $('.JS--searchToggle').click((event) => {
             event.preventDefault();
             $('.JS--SearchBar').toggleClass('hidden');
+            $('.JS--searchToggleButton').toggleClass('pressed');
 
             if ($('.JS--SearchBar').hasClass('hidden')) {
                 Cookies.set('searchBarState', 'hidden');

@@ -51,7 +51,8 @@ Route::group([
 });
 
 Route::get('login', function () {
-    return redirect(route('landing-page.show'));
+    Route::get('/', 'Frontend\LandingPageController@show')
+        ->name('landing-page.show');
 });
 
 Route::group([

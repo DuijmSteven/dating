@@ -28,10 +28,12 @@
             <ul class="nav navbar-nav navbar-right">
                 @if(isset($authenticatedUser))
                     <li>
-                        <a href="#" class="JS--searchToggle">
-                            <i class="material-icons">
-                                search
-                            </i>
+                        <a href="#" class="JS--searchToggle searchToggle">
+                            <div class="searchToggleButton JS--searchToggleButton">
+                                <i class="material-icons">
+                                    search
+                                </i>
+                            </div>
                         </a>
                     </li>
                     <li class="userCredits">

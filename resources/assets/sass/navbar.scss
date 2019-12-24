@@ -279,5 +279,38 @@
 
     .searchToggle {
         position: relative;
+        display: inline-block;
+    }
+
+    .searchToggleButton {
+        position: absolute;
+        left: -17px;
+        bottom: -12px;
+        text-align: center;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        border: 1px solid $secondaryColor;
+        box-shadow: 0 0 3px rgba(0,0,0,0.3);
+
+        background-color: lighten($secondaryColor, 5%);
+        color: #fff;
+
+
+        @media (max-width: $screen-sm-max) {
+            left: 20px;
+            bottom: -12px;
+        }
+
+        &.pressed {
+            border: 1px solid $secondaryColor;
+            box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
+            background-color: $secondaryColor;
+        }
+
+        .material-icons {
+            position: relative;
+            top: 7px;
+        }
     }
 }
