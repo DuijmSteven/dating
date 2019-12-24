@@ -37,6 +37,7 @@
 
 @import "scaffolding";
 @import "navbar";
+@import "search-bar";
 @import "forms";
 @import "pagination";
 @import "footer";
@@ -57,7 +58,6 @@
 @import "modules/online-users";
 @import "modules/user-account";
 @import "modules/shoutbox";
-@import "modules/search";
 
 // Views
 @import "views/articles";

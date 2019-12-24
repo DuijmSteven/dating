@@ -4,6 +4,6 @@
     </a>
 @else
     <button type="{{ $buttonType ?? 'submit' }}" class="Button Button--{{ $buttonState ?? 'default' }}  {{ $buttonClasses ?? '' }}">
-        <span class="Button__content">{{ $buttonText ?? 'Dummy button' }}</span>
+        <span class="Button__content">{!! $buttonText ?? 'Dummy button' !!}</span>
     </button>
 @endif
