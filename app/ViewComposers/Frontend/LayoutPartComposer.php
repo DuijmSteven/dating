@@ -32,6 +32,7 @@ class LayoutPartComposer
     /**
      * @param string $layoutPart
      * @return string
+     * @throws \Exception
      */
     protected function layoutPartHtml(int $layoutPartId)
     {
@@ -99,6 +100,7 @@ class LayoutPartComposer
      * highest priority and should be displayed on top.
      *
      * @return array
+     * @throws \Exception
      */
     private function getLayoutPartModules(int $layoutPartId)
     {

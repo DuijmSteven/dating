@@ -17,12 +17,17 @@ class UserLocationService
     public function __construct()
     {
         $userIp = Request::ip();
-        $this->location = Location::get(/*Request::ip()*/ '82.217.122.82');
+        //$userIp = '82.217.122.82';
+
+        if ($userIp && Location::get($userIp)) {
+            $this->location = Location::get($userIp);
+            //$this->location = Location::get('82.217.122.82');
+        }
     }
 
     public function getUserLocation(): ?string
     {
-        if (!$this->location || $this->location->countryCode !== 'NL') {
+        if (!isset($this->location) || !$this->location || $this->location->countryCode !== 'NL') {
             return null;
         }
 
@@ -31,7 +36,7 @@ class UserLocationService
 
     public function getUserCityName()
     {
-        if (!$this->location || $this->location->countryCode !== 'NL') {
+        if (!isset($this->location) || !$this->location || $this->location->countryCode !== 'NL') {
             return null;
         }
 
