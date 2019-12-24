@@ -12,7 +12,7 @@ use Stevebauman\Location\Position;
  */
 class UserLocationService
 {
-    private Position $location;
+    private $location;
 
     public function __construct()
     {
