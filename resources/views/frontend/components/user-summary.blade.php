@@ -18,7 +18,7 @@
                         </div>
                     </a>
                 @else
-                    <a href="{{ route('users.show', ['userId' => $user->getId()])  }}">
+                    <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}">
                         <div class="UserSummary__profileImageWrapper">
                             <img
                                 class="UserSummary__profileImage"
@@ -29,7 +29,7 @@
                     </a>
                 @endif
             @else
-                <a href="{{ route('users.show', ['userId' => $user->getId()])  }}">
+                <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}">
                     <img
                         src="{{ \StorageHelper::profileImageUrl($user) }}"
                         alt="user image"
@@ -41,7 +41,7 @@
     <div class="Tile__footer UserSummary__footer">
         <div class="UserSummary__footer__upperPart">
             <div class="UserSummary__userInfo">
-                <a href="{{ route('users.show', ['userId' => $user->getId()])  }}"
+                <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}"
                    class="UserSummary__userInfo__primary">
                     {{ $user->username }}
                 </a>

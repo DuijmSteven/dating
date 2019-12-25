@@ -453,7 +453,7 @@
         <div class="row mt-5">
             @foreach ($users as $user)
                 <div class="col-lg-2 col-md-4 col-sm-12">
-                    <a href="{{ route('users.show', ['userId' => $user->getId()]) }}">
+                    <a href="{{ route('users.show', ['username' => $user->getUsername()]) }}">
                         <div class="roundImageWrapper">
                             <img
                                 src="{{ \StorageHelper::profileImageUrl($user) }}"
@@ -467,7 +467,7 @@
                         <small class="text-muted">Age: {{ $user->meta->dob->diffInYears($carbonNow) }}
                             , {{ $user->meta->city }}</small>
                     </p>
-                    <a href="{{ route('users.show', ['userId' => $user->getId()])  }}" class="btn btn-lg btn-light">More
+                    <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}" class="btn btn-lg btn-light">More
                         Info</a>
                 </div>
             @endforeach

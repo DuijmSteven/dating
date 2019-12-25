@@ -79,7 +79,7 @@ Route::group([
         ->name('users.search.results.get');
     Route::get('online', 'Frontend\UserController@online')
         ->name('users.online');
-    Route::get('{userId}', 'Frontend\UserController@show')
+    Route::get('{username}', 'Frontend\UserController@show')
         ->name('users.show');
     Route::get('{userId}/set-profile-image/{imageId}', 'UserImageController@setProfileImage')
         ->name('users.set-profile-image');

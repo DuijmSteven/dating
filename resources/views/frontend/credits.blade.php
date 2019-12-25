@@ -110,7 +110,7 @@
             <h3>They are waiting for you...</h3>
             @foreach ($users as $user)
                 <div class="col-lg-2 col-md-4 col-sm-12">
-                    <a href="{{ route('users.show', ['userId' => $user->getId()]) }}">
+                    <a href="{{ route('users.show', ['username' => $user->getUsername()]) }}">
                         <div class="imageWrapper">
                             <img
                                 src="{{ \StorageHelper::profileImageUrl($user) }}"
@@ -124,7 +124,7 @@
                         <small class="text-muted">Age: {{ $user->meta->dob->diffInYears($carbonNow) }}
                             , {{ $user->meta->city }}</small>
                     </p>
-                    <a href="{{ route('users.show', ['userId' => $user->getId()])  }}"
+                    <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}"
                        class="btn btn-primary btn-lg btn-light">More
                         Info</a>
                 </div>

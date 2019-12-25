@@ -6,12 +6,12 @@
         @foreach($onlineUsers as $user)
             <div class="Online-users__item">
                 <div class="Online-users__profile-image">
-                    <a href="{!! route('users.show', ['userId' => $user->id]) !!}">
+                    <a href="{!! route('users.show', ['username' => $user->getUsername()]) !!}">
                         <img src="{!! \StorageHelper::profileImageUrl($user, true) !!}" alt="">
                     </a>
                 </div>
                 <div class="Online-users__username">
-                    <a href="{!! route('users.show', ['userId' => $user->id]) !!}">
+                    <a href="{!! route('users.show', ['username' => $user->getUsername()]) !!}">
                         {{ $user->username }}
                     </a>
                 </div>

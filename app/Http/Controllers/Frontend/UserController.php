@@ -67,13 +67,17 @@ class UserController extends FrontendController
     /**
      * Display the specified resource.
      *
-     * @param $userId
+     * @param $userName
      * @return \Illuminate\Http\Response
      * @internal param $
      */
-    public function show($userId)
+    public function show(string $username)
     {
-        $user = User::findOrFail($userId);
+        $user = User::where('username', $username)->first();
+
+        if (!($user instanceof User)) {
+            redirect(route('login'));
+        }
 
         $viewData = [
             'user' => $user,
