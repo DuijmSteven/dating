@@ -24,16 +24,14 @@ Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm'
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')
     ->name('password.reset');
 
-Route::get('contact', 'Frontend\HomeController@showContact')
+Route::get('contact', 'Frontend\DashboardController@showContact')
     ->name('contact.get');
 
 Route::get('/dashboard', 'Frontend\DashboardController@index')
     ->name('dashboard')
     ->middleware('auth');
 
-Route::get('/', 'Frontend\UserSearchController@showInitialSearchResults')
-    ->name('initial-search-results')
-    ->middleware('auth');
+Route::redirect('/', '/home', 301);
 
 Route::get('/home', 'Frontend\UserSearchController@showInitialSearchResults')
     ->name('home')
@@ -389,7 +387,7 @@ Route::group([
     'prefix' => 'operator-platform',
     'middleware' => ['operator']
 ], function () {
-    Route::get('dashboard', 'Operators\HomeController@showDashboard')
+    Route::get('dashboard', 'Operators\DashboardController@showDashboard')
     ->name('operator-platform.dashboard');
 
     Route::group([
