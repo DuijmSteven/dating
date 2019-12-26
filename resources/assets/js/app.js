@@ -232,10 +232,10 @@ $(window).on('load', function () {
     if ($('.JS--searchToggle').length > 0) {
         var searchBarState = Cookies.get('searchBarState');
 
-        if (searchBarState === 'open') {
-            $('.JS--SearchBar').removeClass('hidden');
-            $('.JS--searchToggleButton').addClass('pressed');
-        }
+        // if (searchBarState === 'open') {
+        //     $('.JS--SearchBar').removeClass('hidden');
+        //     $('.JS--searchToggleButton').addClass('pressed');
+        // }
 
         $('.JS--searchToggle').click((event) => {
             event.preventDefault();

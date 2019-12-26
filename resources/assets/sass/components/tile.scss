@@ -19,6 +19,7 @@
     &__heading {
         padding: map_get($tileHeading, padding) + px;
         font-size: map_get($tileHeading, fontSize) + px;
+        font-weight: 500;
         color: map_get($tileHeading, fontColor);
         text-align: map_get($tileHeading, textAlign);
         border-bottom: map_get($tileHeading, borderWidth) + px solid $borderColor;
@@ -26,6 +27,10 @@
 
     &__body {
         padding: 20px map_get($tileBody, padding) + px;
+
+        @media (max-width: $screen-sm-max) {
+            padding: 20px 15px;
+        }
 
         h4 {
             margin-top: 30px;

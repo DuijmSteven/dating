@@ -1,5 +1,5 @@
 <template>
-    <span class="userCreditsNumber"><span>{{ userCredits }}</span> <span v-if="userCredits !== 'undefined'">credits</span></span>
+    <span v-if="userCredits !== undefined" class="userCreditsNumber"><span>{{ userCredits }}</span> <span v-if="userCredits !== undefined">credits</span></span>
 </template>
 
 <script>

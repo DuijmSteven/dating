@@ -41,7 +41,7 @@ class UserSearchManager
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|Collection|static[]
      * @throws \Exception
      */
-    public function searchUsers(array $parameters, $paginated = false, $page = 1, array $ordering = null)
+    public function         searchUsers(array $parameters, $paginated = false, $page = 1, array $ordering = null)
     {
         if (isset($ordering) && isset($ordering['randomization_key'])) {
             if (gettype($ordering['randomization_key']) !== 'string') {

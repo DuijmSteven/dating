@@ -56,8 +56,8 @@ $borderWidth: 1;
 
 // font tweaks
 $fontSize: (
-        'body-mobile': 16,
-        'body-desktop': 17
+        'body-mobile': 18,
+        'body-desktop': 18
 );
 
 // ---------------- Components & Modules ---------------
@@ -81,7 +81,7 @@ $footerLinkTextColor: $lightBlueDull;
 $tileBgColor: $white;
 $tileHeading: (
         'padding': 15,
-        'fontSize': 14,
+        'fontSize': 18,
         'fontColor': $mainColor,
         'textAlign': center,
         'borderWidth': 2

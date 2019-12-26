@@ -155,8 +155,13 @@ Table of Contents End
     }
 
     [class*="pricing-"] {
-        padding: 30px 0 60px 0;
+        padding: 0px 0 60px 0;
+
+        @media (max-width: $screen-sm-max) {
+            padding: 0px 0 10px 0;
+        }
     }
+
 
     .btn[type='submit'] {
         font-size: 16px;

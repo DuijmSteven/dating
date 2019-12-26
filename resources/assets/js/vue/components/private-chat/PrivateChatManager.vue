@@ -1,12 +1,13 @@
 <template>
-    <div class="PrivateChatManager" v-bind:class="{
-                    'maximized': this.isMaximized,
-                    'minimized': !this.isMaximized,
-                    'PrivateChatManager--xs': $mq === 'xs',
-                    'PrivateChatManager--sm': $mq === 'sm',
-                    'PrivateChatManager--md': $mq === 'md',
-                    'PrivateChatManager--lg': $mq === 'lg'
-                }">
+    <div class="PrivateChatManager"
+         v-bind:class="{
+            'maximized': this.isMaximized,
+            'minimized': !this.isMaximized,
+            'PrivateChatManager--xs': $mq === 'xs',
+            'PrivateChatManager--sm': $mq === 'sm',
+            'PrivateChatManager--md': $mq === 'md',
+            'PrivateChatManager--lg': $mq === 'lg'
+        }">
         <div class="PrivateChatManager__head">
             <div class="PrivateChatManager__head__title">
                 <span class="PrivateChatManager__head__title__text">Conversations ({{ conversations.length }})</span>

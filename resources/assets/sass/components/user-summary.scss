@@ -99,12 +99,14 @@
         a {
             text-decoration: none;
             color: #555;
-            font-weight: 700;
+            font-weight: 500;
+            font-size: 19px;
         }
 
         &__additional {
-            font-size: 14px;
-            color: #888;
+            font-size: 16px;
+            color: $secondaryColor;
+            font-weight: 400;
         }
     }
 }

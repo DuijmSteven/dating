@@ -49,8 +49,9 @@
                 position: relative;
                 align-items: center;
                 justify-content: center;
-                width: 108px;
+                width: 114px;
                 height: $navbarHeight + px;
+                font-size: 20px;
 
                 a {
                     color: $navbarLinkColor;
@@ -73,7 +74,7 @@
                 padding-top: ($navbarHeight - $navbarLineHeight - 2 * $navbarBorderWidth) / 2 + px;
                 padding-bottom: ($navbarHeight - $navbarLineHeight - 2 * $navbarBorderWidth) / 2 + px;
                 color: $navbarLinkColor;
-                font-size: 18px;
+                font-size: 20px;
                 font-weight: 200;
 
                 &:hover {

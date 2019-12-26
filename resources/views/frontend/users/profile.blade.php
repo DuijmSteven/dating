@@ -3,7 +3,7 @@
 
 @section('content')
     <div class="User-profile">
-        <div class="col-md-3 hidden-xs hidden-sm">
+        <div class="col-md-3">
             @include('frontend.users.profile.user-profile-sidebar')
         </div>
 

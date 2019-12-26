@@ -20,14 +20,13 @@
     }
 
     label {
-        font-size: 14px;
         color: $mainColor;
     }
 
     table {
         th {
-            font-size: 14px;
-            color: #4e5d75;
+            //font-size: 14px;
+            color: $mainColor;
         }
 
         td.action-buttons {
