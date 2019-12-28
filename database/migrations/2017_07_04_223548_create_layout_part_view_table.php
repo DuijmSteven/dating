@@ -25,20 +25,20 @@ class CreateLayoutPartViewTable extends Migration
             $table->foreign('layout_part_id')->references('id')->on('layout_parts')->onDelete('cascade');
         });
 
-        LayoutPartView::insert([
-            [
-                'view_id' => 1,
-                'layout_part_id' => 1
-            ],
-            [
-                'view_id' => 1,
-                'layout_part_id' => 2
-            ],
-            [
-                'view_id' => 4,
-                'layout_part_id' => 2
-            ]
-        ]);
+//        LayoutPartView::insert([
+//            [
+//                'view_id' => 1,
+//                'layout_part_id' => 1
+//            ],
+//            [
+//                'view_id' => 1,
+//                'layout_part_id' => 2
+//            ],
+//            [
+//                'view_id' => 4,
+//                'layout_part_id' => 2
+//            ]
+//        ]);
     }
 
     /**

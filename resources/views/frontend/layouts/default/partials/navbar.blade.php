@@ -63,13 +63,13 @@
                             {{ $authenticatedUser->username }} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="{!! route('edit-profile.get') !!}">Edit profile</a></li>
-                            <li><a href="{{ route('credits.show') }}">Credits</a></li>
+                            <li><a href="{!! route('edit-profile.get') !!}">{{ @trans('navbar.edit_profile') }}</a></li>
+                            <li><a href="{{ route('credits.show') }}">{{ @trans('navbar.credits') }}</a></li>
 
                             <li>
                                 <a href="{!!  route('logout.post') !!}"
                                    onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">Logout
+                                    document.getElementById('logout-form').submit();">{{ @trans('navbar.logout') }}
                                 </a>
 
                                 <form id="logout-form" action="{!!  route('logout.post') !!}" method="POST"
@@ -84,14 +84,14 @@
                     </li>
 
                     <li class="{!! str_contains(\Request::route()->getName(), 'home') ? 'active' : '' !!}"><a
-                            href="{{ route('home') }}"><i class="fa fa-fw fa-newspaper-o"></i>Home</a>
+                            href="{{ route('home') }}"><i class="fa fa-fw fa-newspaper-o"></i>{{ @trans('navbar.home') }}</a>
                     </li>
                 @else
                     <li class="{!! \Request::route()->getName() == 'login.get' ? 'active' : '' !!}">
-                        <a href="{{ route('landing-page.show') }}">Login</a>
+                        <a href="{{ route('landing-page.show') }}">{{ @trans('navbar.login') }}</a>
                     </li>
                     <li class="{!! \Request::route()->getName() == 'landing-page.show' ? 'active' : '' !!}">
-                        <a href="{{ route('landing-page.show') }}">Register</a>
+                        <a href="{{ route('landing-page.show') }}">{{ @trans('navbar.register') }}</a>
                     </li>
                 @endif
             </ul>

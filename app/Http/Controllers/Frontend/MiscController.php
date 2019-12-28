@@ -13,8 +13,8 @@ class MiscController extends FrontendController
         return view(
             'frontend.misc.tac',
             [
-                'title' => 'Terms & Conditions - ' . \config('app.name'),
-                'tac' => Tac::where('language', Config::get('app.locale'))->first()
+                'tac' => Tac::where('language', Config::get('app.locale'))->first(),
+                'title' => config('app.name') . ' - Terms & Conditions'
             ]
         );
     }
@@ -24,7 +24,7 @@ class MiscController extends FrontendController
         return view(
             'frontend.misc.privacy',
             [
-                'title' => 'Privacy - ' . \config('app.name'),
+                'title' => config('app.name') . ' - Privacy',
             ]
         );
     }
@@ -40,7 +40,7 @@ class MiscController extends FrontendController
             [
                 'faqs' => $faqs,
                 'faqSections' => $faqSections,
-                'title' => 'FAQ - ' . \config('app.name'),
+                'title' => config('app.name') . ' - FAQ',
             ]
         );
     }

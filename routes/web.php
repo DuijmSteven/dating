@@ -147,6 +147,9 @@ Route::group([
 Route::get('privacy', 'Frontend\MiscController@showPrivacy')
     ->name('privacy.show');
 
+Route::get('tac', 'Frontend\MiscController@showTac')
+    ->name('tac.show');
+
 Route::get('faq', 'Frontend\MiscController@showFaq')
     ->name('faq.show');
 

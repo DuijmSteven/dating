@@ -54,7 +54,7 @@ function getCoordinatesAndFillInputs() {
 
     if ($.inArray($('.JS--autoCompleteCites').val(), cityList) > 0 || isUndefined(cityList)) {
         geocoder.geocode({'address': $('.JS--autoCompleteCites').val() + ', nl'}, function (results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
+            if (status === google.maps.GeocoderStatus.OK) {
                 $('.js-hiddenLatInput').val(results[0].geometry.location.lat());
                 $('.js-hiddenLngInput').val(results[0].geometry.location.lng());
             } else {

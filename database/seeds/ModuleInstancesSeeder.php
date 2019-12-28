@@ -30,26 +30,28 @@ class ModuleInstancesSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table('module_instances')->truncate();
 
-        $moduleInstances = [
-            [
-                'module_id' => 3,
-                'layout_part_id' => 1,
-                'view_id' => 1,
-                'priority' => 1,
-            ],
-            [
-                'module_id' => 2,
-                'layout_part_id' => 2,
-                'view_id' => 1,
-                'priority' => 1,
-            ],
-            [
-                'module_id' => 2,
-                'layout_part_id' => 2,
-                'view_id' => 4,
-                'priority' => 1,
-            ],
-        ];
+        $moduleInstances = [];
+
+//        $moduleInstances = [
+//            [
+//                'module_id' => 3,
+//                'layout_part_id' => 1,
+//                'view_id' => 1,
+//                'priority' => 1,
+//            ],
+//            [
+//                'module_id' => 2,
+//                'layout_part_id' => 2,
+//                'view_id' => 1,
+//                'priority' => 1,
+//            ],
+//            [
+//                'module_id' => 2,
+//                'layout_part_id' => 2,
+//                'view_id' => 4,
+//                'priority' => 1,
+//            ],
+//        ];
 
         foreach ($moduleInstances as $instance) {
             factory(App\ModuleInstance::class)->create($instance);
