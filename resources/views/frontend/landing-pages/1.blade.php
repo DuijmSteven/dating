@@ -101,7 +101,6 @@
         font-weight: 700;
         color: #ef4f2b;
         letter-spacing: .1em;
-        text-transform: uppercase;
         margin-top: 1.375rem;
     }
 
@@ -292,6 +291,19 @@
         border-radius: .3rem;
     }
 
+    /* btn-white */
+    .btn.btn-white {
+        color: #3C4857;
+        background-color: #fff;
+        border-color: #fff;
+        box-shadow: 0 2px 2px 0 rgba(153, 153, 153, 0.14), 0 3px 1px -2px rgba(153, 153, 153, 0.2), 0 1px 5px 0 rgba(153, 153, 153, 0.12);
+    }
+
+    .btn.btn-white:focus,
+    .btn.btn-white:active,
+    .btn.btn-white:hover {
+        box-shadow: 0 4px 4px 0 rgba(153, 153, 153, 0.24), 0 3px 1px -2px rgba(153, 153, 153, 0.3), 0 1px 5px 0 rgba(153, 153, 153, 0.32);
+    }
 </style>
 <body class="landingPage">
 <header>
@@ -514,13 +526,13 @@
                             >
                         </div>
                     </a>
-                    <h5 class="small">{{ ucfirst($user->username) }}</h5>
+                    <h5 class="small">{{ $user->username }}</h5>
                     <p class="offset-0">
-                        <small class="text-muted">Age: {{ $user->meta->dob->diffInYears($carbonNow) }}
+                        <small class="text-muted">{{ @trans('lp1.age') }}: {{ $user->meta->dob->diffInYears($carbonNow) }}
                             , {{ $user->meta->city }}</small>
                     </p>
                     <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}"
-                       class="btn btn-lg btn-light">{{ @trans('lp1.more_info') }}</a>
+                       class="btn btn-lg btn-white">{{ @trans('lp1.more_info') }}</a>
                 </div>
             @endforeach
         </div>

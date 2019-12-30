@@ -53,4 +53,9 @@ class UserMeta extends Model
     {
         return $this->looking_for_gender;
     }
+
+    public function getGender()
+    {
+        return $this->gender;
+    }
 }

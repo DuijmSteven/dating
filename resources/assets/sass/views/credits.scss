@@ -64,7 +64,6 @@ Table of Contents End
     .h5 {
         font-size: 1.25em;
         line-height: 1.55em;
-        margin-bottom: 30px;
     }
 
     h6,
@@ -72,6 +71,12 @@ Table of Contents End
         font-size: 1.0em;
         text-transform: uppercase;
         font-weight: 700;
+    }
+
+    small, .small {
+        font-size: 1.6rem;
+        line-height: 1.2;
+        font-weight: 400;
     }
 
     /* ======= SECTIONS  ======= */
@@ -490,6 +495,14 @@ Table of Contents End
 
     .recent-container {
         margin-top: 20px;
+    }
+
+    .recent-container h5.small {
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: #ef4f2b;
+        letter-spacing: .1em;
+        margin-top: 1.375rem;
     }
 
     .recent-container img {

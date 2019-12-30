@@ -49,4 +49,5 @@ return [
     'success_stories' => 'Success Stories',
     'previous' => 'Previous',
     'next' => 'Next',
+    'age' => 'Age',
 ];

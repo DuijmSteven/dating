@@ -11,8 +11,11 @@ class LandingPageController extends FrontendController
 {
     public function show()
     {
-        // TODO hardcode specific selection of users here
-        $users = User::orderBy('created_at', 'asc')->take(6)->get();
+        $users = User::whereHas('roles', function ($query) {
+            $query->where('name', 'peasant')
+                ->orWhere('name', 'bot');
+        })
+            ->inRandomOrder()->take(6)->get();
 
         $testimonials = [
             [

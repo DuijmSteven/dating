@@ -119,13 +119,13 @@
                             >
                         </div>
                     </a>
-                    <h5 class="small">{{ ucfirst($user->username) }}</h5>
+                    <h5 class="small">{{ $user->username }}</h5>
                     <p class="offset-0">
                         <small class="text-muted">Age: {{ $user->meta->dob->diffInYears($carbonNow) }}
                             , {{ $user->meta->city }}</small>
                     </p>
                     <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}"
-                       class="btn btn-primary btn-lg btn-light">More
+                       class="btn btn-lg btn-white">More
                         Info</a>
                 </div>
             @endforeach
