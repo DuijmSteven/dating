@@ -89,6 +89,22 @@ class User extends Authenticatable
     }
 
     /**
+     * @return string
+     */
+    public function getLocale(): string
+    {
+        return $this->locale;
+    }
+
+    /**
+     * @param string $locale
+     */
+    public function setLocale($locale = '')
+    {
+        $this->locale = $locale;
+    }
+
+    /**
      * @return mixed
      */
     public function getEmail()

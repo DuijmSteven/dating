@@ -249,6 +249,15 @@ $(window).on('load', function () {
             }
         });
     }
+
+    if ($('.dropdown-submenu').length > 0) {
+        $('.dropdown-submenu a.JS--showLanguagesSubmenu').on("click", function(e){
+            $(this).next('ul').toggle();
+            e.stopPropagation();
+            e.preventDefault();
+        });
+    }
+
 });
 
 function fitImageToContainer(element) {

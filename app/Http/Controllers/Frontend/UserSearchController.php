@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Cornford\Googlmapper\Models\Location;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequests\UserSearchRequest;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 use Mapper;
 

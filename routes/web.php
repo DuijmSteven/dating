@@ -81,6 +81,8 @@ Route::group([
         ->name('users.show');
     Route::get('{userId}/set-profile-image/{imageId}', 'UserImageController@setProfileImage')
         ->name('users.set-profile-image');
+    Route::get('set-locale/{locale}', 'Frontend\UserController@setLocale')
+        ->name('users.set-locale');
 
     Route::put('{userId}/edit', 'Frontend\UserController@update')
         ->name('users.update');

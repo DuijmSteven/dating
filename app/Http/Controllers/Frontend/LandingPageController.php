@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 
+use App;
 use App\User;
 use Carbon\Carbon;
 

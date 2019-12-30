@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Request;
 use App\View;
+use Carbon\Carbon;
 
 /**
  * Class FrontendController

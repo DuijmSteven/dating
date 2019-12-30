@@ -9,6 +9,7 @@ use App\Managers\UserManager;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class UserController
@@ -163,6 +164,15 @@ class UserController extends FrontendController
             toast()->message($exception->getMessage(), 'error');
         }
 
+        return redirect()->back();
+    }
+
+    public function setLocale(string $locale)
+    {
+        $user = Auth::user();
+        $user->setLocale($locale);
+        $user->save();
+        
         return redirect()->back();
     }
 }

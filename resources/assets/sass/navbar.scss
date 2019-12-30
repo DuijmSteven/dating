@@ -11,6 +11,45 @@
     color: #e6e6e6;
 }
 
+.showSelectedLanguage {
+    position: absolute;
+    right: 10px;
+    top: 16px;
+}
+
+.languagesSubmenu {
+    position: relative;
+
+    .dropdown-menu {
+        position: absolute;
+        top: 0;
+        left: -101%;
+        margin-top: -1px;
+        width: 100%;
+    }
+
+    .flagImageWrapper {
+        @include roundImageWrapper;
+
+        margin-right: 10px;
+
+        width: 24px;
+        height: 24px;
+    }
+
+    .flagImage {
+        @include roundImage;
+    }
+
+    &__item {
+        display: flex !important;
+    }
+}
+
+.navbar-default .userDropdown .languagesSubmenu .caret {
+    top: 0;
+}
+
 .navbar-default {
     border: $navbarBorderWidth + px solid #d3e0e9;
     background-color: $navbarBgColor;
@@ -100,6 +139,13 @@
                     padding: 0;
                     background-color: $mainColor;
 
+                    li {
+                        border-bottom: 1px solid lighten($mainColor, 2%);
+                        &:last-of-type {
+                            border-bottom: 0;
+                        }
+                    }
+
                     a {
                         padding-top: 5px;
                         padding-bottom: 5px;
@@ -114,6 +160,8 @@
                             background-color: darken($mainColor, 2%);
                             color: darken($navbarLinkColor, 15%);
                         }
+
+
                     }
                 }
 
@@ -299,7 +347,7 @@
 
 
         @media (max-width: $screen-sm-max) {
-            left: 20px;
+            left: 12px;
             bottom: -12px;
         }
 

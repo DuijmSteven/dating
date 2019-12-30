@@ -7,4 +7,7 @@ return [
     'home' => 'Home',
     'login' => 'Login',
     'register' => 'Register',
+    'language' => 'Language',
+    'english' => 'English',
+    'dutch' => 'Dutch',
 ];

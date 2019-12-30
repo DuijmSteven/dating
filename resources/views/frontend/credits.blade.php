@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="credits-page-content">
-        <h4>Select a package</h4>
+        <h4>{{ trans('credits.select_package') }}</h4>
         <div class="pricing-3">
             <div>
                 <div class="row">
@@ -16,8 +16,8 @@
                                     <h1 class="block-caption"><small>€</small><span>{{ $creditpack->price/100 }}</span>
                                     </h1>
                                     <ul>
-                                        <li><b class="package-credits">{{ $creditpack->credits }}</b> credits</li>
-                                        <li><b>{{ round($creditpack->price/$creditpack->credits, 2) }}</b> per message
+                                        <li><b class="package-credits">{{ $creditpack->credits }}</b> {{ trans('credits.credits') }}</li>
+                                        <li><b>{{ round($creditpack->price/$creditpack->credits, 2) }}</b> {{ trans('credits.per_message') }}
                                         </li>
                                     </ul>
 
@@ -25,7 +25,7 @@
                                         href="#"
                                         class="btn {{ $loop->iteration == 2 ? 'btn-white' : 'btn-rose' }} btn-round JS--prevent-default__click"
                                     >
-                                        Select
+                                        {{ trans('credits.select') }}
                                     </a>
                                 </div>
                             </div>
@@ -38,7 +38,7 @@
             <form method="post" action="{{ route('credits.store') }}">
                 {{ csrf_field() }}
                 <div class="col-md-6">
-                    <h4>Payment methods</h4>
+                    <h4>{{ trans('credits.select') }}</h4>
                     <ul class="list-group mb-3 JS--paymentMethods">
                         <li class="list-group-item d-flex justify-content-between"
                             style="margin-bottom: 10px; flex-wrap: wrap;">
