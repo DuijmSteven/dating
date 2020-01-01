@@ -11,7 +11,7 @@
                 <div class="PrivateChatItem__user">
                     <div class="PrivateChatItem__profilePicture__wrapper">
                         <img class="PrivateChatItem__profilePicture"
-                             :src="partner.profileImageUrl">
+                             :src="partner.profileImageUrlThumb">
                     </div>
 
                     <div class="PrivateChatItem__username">{{ partner.username }}</div>

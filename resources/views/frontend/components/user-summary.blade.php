@@ -12,7 +12,7 @@
                         <div class="UserSummary__profileImageWrapper">
                             <img
                                 class="UserSummary__profileImage"
-                                src="{{ \StorageHelper::profileImageUrl($user) }}"
+                                src="{{ \StorageHelper::profileImageUrl($user, true) }}"
                                 alt="user image"
                             >
                         </div>
@@ -21,7 +21,7 @@
                     <div class="UserSummary__profileImageWrapper">
                         <img
                             class="UserSummary__profileImage"
-                            src="{{ \StorageHelper::profileImageUrl($user) }}"
+                            src="{{ \StorageHelper::profileImageUrl($user, true) }}"
                             alt="user image"
                         >
                     </div>
@@ -31,7 +31,7 @@
                     <div class="UserSummary__profileImageWrapper">
                         <img
                             class="UserSummary__profileImage"
-                            src="{{ \StorageHelper::profileImageUrl($user) }}"
+                                src="{{ \StorageHelper::profileImageUrl($user, true) }}"
                             alt="user image"
                         >
                     </div>

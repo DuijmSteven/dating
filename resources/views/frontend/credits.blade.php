@@ -113,7 +113,7 @@
                     <a href="{{ route('users.show', ['username' => $user->getUsername()]) }}">
                         <div class="imageWrapper">
                             <img
-                                src="{{ \StorageHelper::profileImageUrl($user) }}"
+                                src="{{ \StorageHelper::profileImageUrl($user, true) }}"
                                 class="img-circle img-wide profileImage"
                                 alt=""
                             >

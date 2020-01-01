@@ -29,11 +29,19 @@ class User extends Authenticatable
 
     protected $dates = ['deactivated_at'];
 
-    protected $appends = ['profileImageUrl'];
+    protected $appends = [
+        'profileImageUrl',
+        'profileImageUrlThumb'
+    ];
 
     public function getProfileImageUrlAttribute()
     {
         return \StorageHelper::profileImageUrl($this);
+    }
+
+    public function getProfileImageUrlThumbAttribute()
+    {
+        return \StorageHelper::profileImageUrl($this, true);
     }
 
     /**

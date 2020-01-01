@@ -110,13 +110,23 @@
         },
 
         methods: {
-            profileImageUrl(userId, $filename, $gender) {
+            profileImageUrl(userId, $filename, $gender, $thumbnail = true) {
                 if (!$filename) {
-                    if (1) {
+                    if ($gender === 'male') {
                         return DP.malePlaceholderImageUrl;
                     } else {
                         return DP.femalePlaceholderImageUrl;
                     }
+                }
+
+                if ($thumbnail) {
+                    let splitFilename = $filename.split('.');
+                    let filename = splitFilename[0];
+                    let extension = splitFilename[1];
+
+                    let thumbFilename = filename + '_thumb' + '.' + extension;
+
+                    return DP.usersCloudPath + '/' + userId + '/images/' + thumbFilename;
                 }
 
                 return DP.usersCloudPath + '/' + userId + '/images/' + $filename

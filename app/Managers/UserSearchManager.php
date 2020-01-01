@@ -4,6 +4,7 @@ namespace App\Managers;
 
 use App\Helpers\ApplicationConstants\PaginationConstants;
 use App\Helpers\ApplicationConstants\UserConstants;
+use App\Role;
 use App\User;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -41,7 +42,7 @@ class UserSearchManager
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|Collection|static[]
      * @throws \Exception
      */
-    public function         searchUsers(array $parameters, $paginated = false, $page = 1, array $ordering = null)
+    public function searchUsers(array $parameters, $paginated = false, $page = 1, array $ordering = null)
     {
         if (isset($ordering) && isset($ordering['randomization_key'])) {
             if (gettype($ordering['randomization_key']) !== 'string') {
@@ -109,7 +110,7 @@ class UserSearchManager
         }
 
         $query = $query->whereHas('roles', function ($query) {
-            $query->whereIn('id', [2, 3]);
+            $query->whereIn('id', [Role::ROLE_PEASANT, Role::ROLE_BOT]);
         });
 
         if (!$paginated) {

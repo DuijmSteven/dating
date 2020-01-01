@@ -39,14 +39,13 @@ class StorageHelper
     public static function profileImageUrl(User $user, bool $thumb = false)
     {
         if (!$user->hasProfileImage()) {
-            return asset(self::$genderAvatarsDir . \UserConstants::selectableField('gender')[$user->meta->gender] . '.jpg');
+            return self::getGenderImageUrl($user);
         }
 
         $filePath = self::userImagesPath($user->id) . $user->profileImage->filename;
 
         if (!Storage::disk('cloud')->exists($filePath)) {
-            // TODO
-            return 'http://placehold.it/100x150';
+            return self::getGenderImageUrl($user);
         }
 
         if ($thumb) {
@@ -172,5 +171,15 @@ class StorageHelper
     {
         $disk = Storage::disk($location);
         return $disk->url($filePath);
+    }
+
+    /**
+     * @param User $user
+     * @return string
+     * @throws \Exception
+     */
+    private static function getGenderImageUrl(User $user): string
+    {
+        return asset(self::$genderAvatarsDir . \UserConstants::selectableField('gender')[$user->meta->gender] . '.jpg');
     }
 }
