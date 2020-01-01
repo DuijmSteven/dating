@@ -520,7 +520,8 @@
                     <a href="{{ route('users.show', ['username' => $user->getUsername()]) }}">
                         <div class="roundImageWrapper">
                             <img
-                                src="{{ \StorageHelper::profileImageUrl($user, true) }}"
+                                data-src="{{ \StorageHelper::profileImageUrl($user, true) }}"
+                                src=""
                                 class="roundImage"
                                 alt=""
                             >
@@ -645,6 +646,15 @@
     var DP = {
         baseUrl: '{!! url('/') !!}'
     };
+
+    window.addEventListener('load', function(){
+        var allimages= document.getElementsByTagName('img');
+        for (var i=0; i<allimages.length; i++) {
+            if (allimages[i].getAttribute('data-src')) {
+                allimages[i].setAttribute('src', allimages[i].getAttribute('data-src'));
+            }
+        }
+    }, false)
 </script>
 <script src="{{ mix('js/app.js') }}"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
