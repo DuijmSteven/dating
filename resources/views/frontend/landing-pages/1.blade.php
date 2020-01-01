@@ -314,7 +314,7 @@
     </div>
 </header>
 <main>
-    <div class="vh-70 bg-image text-center" style="background-image: url(img/bg.jpg); position: relative">
+    <div class="vh-70 bg-image text-center" style="background-image: url('img/lp_header_bg.webp'); position: relative">
         <div class="container">
             <h1>{{ @trans('lp1.heading') }}</h1>
         </div>
