@@ -4,6 +4,10 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Comfortaa&display=swap" rel="stylesheet">
+<script
+    src="https://code.jquery.com/jquery-2.2.4.min.js"
+    integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+    crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
 
 
@@ -268,14 +272,7 @@
     }
 
     .roundImage {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        height: 100%;
-        width: auto;
-        -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
+        width: 100%;
     }
 
     .Footer__section-title {
@@ -652,14 +649,14 @@
         baseUrl: '{!! url('/') !!}'
     };
 
-    window.addEventListener('load', function(){
-        var allimages= document.getElementsByTagName('img');
-        for (var i=0; i<allimages.length; i++) {
+    window.addEventListener('load', function () {
+        var allimages = document.getElementsByTagName('img');
+        for (var i = 0; i < allimages.length; i++) {
             if (allimages[i].getAttribute('data-src')) {
                 allimages[i].setAttribute('src', allimages[i].getAttribute('data-src'));
             }
         }
-    }, false)
+    }, false);
 </script>
 <script src="{{ mix('js/app.js') }}"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"

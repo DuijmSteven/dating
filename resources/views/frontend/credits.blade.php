@@ -114,7 +114,7 @@
                         <div class="imageWrapper">
                             <img
                                 src="{{ \StorageHelper::profileImageUrl($user, true) }}"
-                                class="img-circle img-wide profileImage"
+                                class="profileImage"
                                 alt=""
                             >
                         </div>

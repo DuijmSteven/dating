@@ -76,6 +76,7 @@
         malePlaceholderImageUrl: '{{ url('/') . '/img/' . 'avatars/male.jpg' }}',
         femalePlaceholderImageUrl: '{{ url('/') . '/img/' . 'avatars/female.jpg' }}',
         creditsUrl: '{{ route('credits.show') }}',
+        singleProfileUrl: '{{ url('/') . '/users/' }}',
     };
 </script>
 <script src="{{ mix('js/app.js') }}"></script>

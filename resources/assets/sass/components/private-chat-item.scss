@@ -167,6 +167,17 @@
         max-width: 175px;
         overflow: hidden;
         text-overflow: ellipsis;
+
+        &Anchor {
+            text-decoration: none;
+            color: $white;
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: none;
+                color: darken($white, 10%);
+            }
+        }
     }
 
     &__actionIcons {

@@ -14,7 +14,12 @@
                              :src="partner.profileImageUrlThumb">
                     </div>
 
-                    <div class="PrivateChatItem__username">{{ partner.username }}</div>
+                    <div class="PrivateChatItem__username">
+                        <a class="PrivateChatItem__usernameAnchor"
+                           :href="singleProfileUrl + partner.username">
+                            {{ partner.username }}
+                        </a>
+                    </div>
 
                     <div
                         v-if="$parent.onlineUserIds && $parent.onlineUserIds.includes(partner.id)"
@@ -156,11 +161,14 @@
                 timeToWaitAfterLoaderDisappears: 20,
                 sendingMessage: false,
                 showNoCredits: false,
-                creditsUrl: DP.creditsUrl
+                creditsUrl: DP.creditsUrl,
+                singleProfileUrl: DP.singleProfileUrl,
             };
         },
 
         created() {
+
+
             this.statusClass = this.partner.chatState === '1' ? 'maximized' : 'minimized';
             this.isMaximized = this.partner.chatState === '1';
 
@@ -365,9 +373,7 @@
                 if ($('#PrivateChatItem__head--' + this.index).hasClass('PrivateChatItem__head__notify')) {
                     $('#PrivateChatItem__head--' + this.index).removeClass('PrivateChatItem__head__notify');
                     axios.get('/api/conversations/set-conversation-activity-for-user/' + this.user.id + '/' + this.partner.id + '/' + this.user.id + '/' + '0').then(
-                        response => {
-                            console.log(response);
-                        }
+                        response => {}
                     );
                 }
             },

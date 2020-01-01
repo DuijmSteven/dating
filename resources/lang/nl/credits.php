@@ -3,7 +3,7 @@
 return [
     'select_package' => 'Select a package',
     'credits' => 'credits',
-    'per_message' => 'pre message',
+    'per_message' => 'per message',
     'select' => 'Select',
     'payment_methods' => 'Payment methods',
     'register' => 'Register',
