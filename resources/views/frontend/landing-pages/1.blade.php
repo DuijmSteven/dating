@@ -300,9 +300,15 @@
         box-shadow: 0 4px 4px 0 rgba(153, 153, 153, 0.24), 0 3px 1px -2px rgba(153, 153, 153, 0.3), 0 1px 5px 0 rgba(153, 153, 153, 0.32);
     }
 
-    .material-icons {
+    .material-icons.calendar {
         font-size: 16px;
         line-height: 15px;
+    }
+
+    .user-info {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 </style>
 <body class="landingPage">
@@ -321,7 +327,7 @@
     </div>
     <div class="form-container">
         <div class="row">
-            <div class="form-box col-md-4 offset-md-4 col-xs-12 offset-xs-0">
+            <div class="form-box col-xs-12 offset-xs-0 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
                 <form method="POST" action="{{ route('register.post') }}" id="JS--registrationForm"
                       style="display: none">
                     {{ csrf_field() }}
@@ -385,7 +391,7 @@
                             >
                                 <input type="text" class="form-control" name="dob" required value="{{ old('dob') }}">
                                 <div class="input-group-addon">
-                                    <i class="material-icons">
+                                    <i class="material-icons calendar">
                                         calendar_today
                                     </i>
                                 </div>
@@ -495,20 +501,27 @@
     </div>
     <div class="container welcome-container text-center">
         <h3>{{ @trans('lp1.welcome') }}</h3>
-        <p class="mt-5">{{ @trans('lp1.welcome_text') }}</p>
+        <div>
+            <p class="mt-5">{{ @trans('lp1.welcome_text') }}</p>
+        </div>
         <div class="row icons" style="margin-top: 75px">
             <div class="col-md-4 col-sm-12">
-                <i class="far fa-star"></i>
+                <i class="material-icons">
+                    star
+                </i>
                 <h4>{{ @trans('lp1.usps.satisfied_users.title') }}</h4>
                 <p>{{ @trans('lp1.usps.satisfied_users.text') }}</p>
             </div>
             <div class="col-md-4 col-sm-12">
-                <i class="far fa-heart"></i>
-                <h4>{{ @trans('lp1.usps.find_your_love.title') }}</h4>
+                <i class="material-icons">
+                    favorite
+                </i>                <h4>{{ @trans('lp1.usps.find_your_love.title') }}</h4>
                 <p>{{ @trans('lp1.usps.find_your_love.text') }}</p>
             </div>
             <div class="col-md-4 col-sm-12">
-                <i class="far fa-handshake"></i>
+                <i class="material-icons">
+                    vpn_lock
+                </i>
                 <h4>{{ @trans('lp1.usps.privacy_anonymity.title') }}</h4>
                 <p>{{ @trans('lp1.usps.privacy_anonymity.text') }}</p>
             </div>
@@ -518,7 +531,7 @@
         <h3>{{ @trans('lp1.a_group_of_members') }}</h3>
         <div class="row mt-5">
             @foreach ($users as $user)
-                <div class="col-lg-2 col-md-4 col-sm-12">
+                <div class="col-lg-2 col-md-4 col-sm-12 mb-4">
                     <a href="{{ route('users.show', ['username' => $user->getUsername()]) }}">
                         <div class="roundImageWrapper">
                             <img
@@ -530,12 +543,12 @@
                         </div>
                     </a>
                     <h5 class="small">{{ $user->username }}</h5>
-                    <p class="offset-0">
+                    <p class="offset-0 user-info">
                         <small class="text-muted">{{ @trans('lp1.age') }}: {{ $user->meta->dob->diffInYears($carbonNow) }}
                             , {{ $user->meta->city }}</small>
                     </p>
-                    <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}"
-                       class="btn btn-lg btn-white">{{ @trans('lp1.more_info') }}</a>
+{{--                    <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}"--}}
+{{--                       class="btn btn-lg btn-white">{{ @trans('lp1.more_info') }}</a>--}}
                 </div>
             @endforeach
         </div>
