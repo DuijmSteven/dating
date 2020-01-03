@@ -65,9 +65,15 @@
             <div class="PrivateChatItem__body__wrapper">
                 <div
                     v-if="showNoCredits"
-                    class="notEnoughCredits">
+                    class="PrivateChatItem__feedback PrivateChatItem__feedback--notEnoughCredits">
                     <div>No credits</div>
                     <div><a :href="creditsUrl">Refill now!</a></div>
+                </div>
+
+                <div
+                    v-if="errorMessage"
+                    class="PrivateChatItem__feedback PrivateChatItem__feedback--error">
+                    <div>{{ errorMessage }}</div>
                 </div>
 
                 <div :id="'PrivateChatItem__body__content--' + index"
@@ -163,6 +169,7 @@
                 showNoCredits: false,
                 creditsUrl: DP.creditsUrl,
                 singleProfileUrl: DP.singleProfileUrl,
+                errorMessage: undefined
             };
         },
 
@@ -414,13 +421,28 @@
 
                     this.fetchUserConversations();
                 }).catch((error) => {
-                    if (error && error.response && error.response.data.message == 'Not enough credits') {
+                    if (error && error.response && error.response.data.message === 'Not enough credits') {
                         this.showNoCredits = true;
 
                         setTimeout(() => {
                             this.showNoCredits = false;
-                        }, 40000)
+                        }, 4000)
+                    } else if (error && error.response && error.response.status === 422) {
+                        if (error.response.data && error.response.data.errors.attachment) {
+                            this.errorMessage = 'The attachment size cannot exceed 1MB';
+
+                            setTimeout(() => {
+                                this.errorMessage = undefined;
+                            }, 20000)
+                        }
+                    } else {
+                        this.errorMessage = 'There was an error. Please try again or contact support to report the problem';
+
+                        setTimeout(() => {
+                            this.errorMessage = undefined;
+                        }, 20000)
                     }
+
                     this.sendingMessage = false;
                 });
             },

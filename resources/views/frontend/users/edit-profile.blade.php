@@ -30,9 +30,9 @@
 
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="password">{{ @trans('user_constants.city') }}</label>
+                                <label for="city">{{ @trans('user_constants.city') }}</label>
                                 <input type="text"
-                                       class="JS--autoCompleteCites form-control JS--Search"
+                                       class="JS--autoCompleteCites form-control"
                                        name="city"
                                        value="{!! ucfirst($user->meta->city) !!}"
                                 >

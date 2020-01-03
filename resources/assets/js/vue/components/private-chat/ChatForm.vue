@@ -28,7 +28,7 @@
             <label style="margin-bottom: 0; cursor: pointer">
                 <i class="material-icons">attach_file</i>
                 <form enctype="multipart/form-data" @change="previewImage($event)">
-                    <input type="file" id="attachment" name="attachment" style="display: none;">
+                    <input type="file" accept=".png,.jpg,.jpeg" id="attachment" name="attachment" style="display: none;">
                 </form>
             </label>
         </div>

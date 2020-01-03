@@ -56,7 +56,10 @@ trait RegistersUsers
                 'country' => 'nl',
                 'gender' => UserConstants::selectableField('gender', 'peasant', 'array_flip')[$gender],
                 'looking_for_gender' => UserConstants::selectableField('gender', 'peasant', 'array_flip')[$lookingFor],
-                'dob' =>  new Carbon($request->all()['dob'])
+                'dob' =>  new Carbon($request->all()['dob']),
+                'lat' => $request->all()['lat'],
+                'lng' => $request->all()['lng'],
+                'city' => $request->all()['city'],
             ]);
 
             $userMetaInstance->save();
@@ -69,7 +72,7 @@ trait RegistersUsers
             /** @var UserAccount $userAccountInstance */
             $userAccountInstance = new UserAccount([
                 'user_id' => $createdUser->id,
-                'credits' => 2
+                'credits' => 1
             ]);
 
             $userAccountInstance->save();

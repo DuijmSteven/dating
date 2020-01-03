@@ -4,10 +4,6 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Comfortaa&display=swap" rel="stylesheet">
-<script
-    src="https://code.jquery.com/jquery-2.2.4.min.js"
-    integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
-    crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
 
 
@@ -310,6 +306,10 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
+
+    .input-group .form-control {
+        z-index: unset;
+    }
 </style>
 <body class="landingPage">
 <header>
@@ -325,7 +325,7 @@
             <h1>{{ @trans('lp1.heading') }}</h1>
         </div>
     </div>
-    <div class="form-container">
+    <div class="form-container hidden">
         <div class="row">
             <div class="form-box col-xs-12 offset-xs-0 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
                 <form method="POST" action="{{ route('register.post') }}" id="JS--registrationForm"
@@ -376,6 +376,30 @@
                                 <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12 {{ $errors->has('city') ? ' has-error' : '' }}">
+                            <label for="city">{{ @trans('lp1.form.city') }}</label>
+                            <input type="text"
+                                   class="JS--autoCompleteCites form-control JS--Search"
+                                   id="city"
+                                   name="city"
+                                   placeholder="{{ @trans('lp1.form.city') }}"
+                                   value="{{ old('city') }}"
+                                   required
+                            >
+                            <input type="hidden"
+                                   name="lat"
+                                   class="js-hiddenLatInput"
+                            >
+                            <input type="hidden"
+                                   name="lng"
+                                   class="js-hiddenLngInput"
+                            >
+                            @if ($errors->has('city'))
+                                {!! $errors->first('city', '<small class="form-error">:message</small>') !!}
                             @endif
                         </div>
                     </div>
@@ -562,7 +586,8 @@
                         <div class="text-center">
                             <div class="roundImageWrapper">
                                 <img class="roundImage"
-                                     src="{{ $testimonial['imgSource'] }}"
+                                     data-src="{{ $testimonial['imgSource'] }}"
+                                     src=""
                                      alt="">
                             </div>
                         </div>
@@ -662,16 +687,8 @@
         baseUrl: '{!! url('/') !!}'
     };
 
-    window.addEventListener('load', function () {
-        var allimages = document.getElementsByTagName('img');
-        for (var i = 0; i < allimages.length; i++) {
-            if (allimages[i].getAttribute('data-src')) {
-                allimages[i].setAttribute('src', allimages[i].getAttribute('data-src'));
-            }
-        }
-    }, false);
 </script>
-<script src="{{ mix('js/app.js') }}"></script>
+<script src="{{ mix('js/lp.js') }}"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>

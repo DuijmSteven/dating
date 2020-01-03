@@ -10,6 +10,7 @@ return [
         'man_looking_for_man' => 'Man looking for a Man',
         'username' => 'Username',
         'email' => 'Email',
+        'city' => 'City',
         'dob' => 'Date of birth',
         'password' => 'Password',
         'password_confirmation' => 'Password confirmation',

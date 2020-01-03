@@ -99,6 +99,30 @@ $(window).on('load', function () {
                 })
             }).fail(function () {
         });
+
+        const $searchRadiusInput = $('.JS--radiusSearchInput');
+
+        if ($('.JS--autoCompleteCites').length > 0 && $('.JS--autoCompleteCites').val().length > 0) {
+            $searchRadiusInput.removeClass('hidden');
+        }
+
+        $('.JS--autoCompleteCites').keyup(function () {
+            if ($(this).val().length > 0) {
+                if ($searchRadiusInput.hasClass('hidden')) {
+                    $searchRadiusInput.removeClass('hidden');
+                }
+            } else {
+                if (!$searchRadiusInput.hasClass('hidden')) {
+                    $searchRadiusInput.addClass('hidden');
+                }
+            }
+        });
+
+        getCoordinatesAndFillInputs();
+
+        $('.JS--autoCompleteCites').keyup(function () {
+            getCoordinatesAndFillInputs();
+        });
     }
 
     if ($('.JS--SearchBar').length > 0 || $('.JS--Edit-Profile').length > 0) {
@@ -109,27 +133,9 @@ $(window).on('load', function () {
         });
     }
 
-
     if($('.SearchBar .city').hasClass('has-error')) {
         $('.SearchBar').toggleClass('hidden');
     }
-    const $searchRadiusInput = $('.JS--radiusSearchInput');
-
-    if ($('.JS--autoCompleteCites').length > 0 && $('.JS--autoCompleteCites').val().length > 0) {
-        $searchRadiusInput.removeClass('hidden');
-    }
-
-    $('.JS--autoCompleteCites').keyup(function () {
-        if ($(this).val().length > 0) {
-            if ($searchRadiusInput.hasClass('hidden')) {
-                $searchRadiusInput.removeClass('hidden');
-            }
-        } else {
-            if (!$searchRadiusInput.hasClass('hidden')) {
-                $searchRadiusInput.addClass('hidden');
-            }
-        }
-    });
 
     if ($('.modalImage').length > 0) {
         $(".modalImage").on("click", function(event) {
@@ -139,30 +145,30 @@ $(window).on('load', function () {
         });
     }
 
-    if ($('.landingPage').length > 0) {
-        var data = Cookies.get("lpFormSelection");
-
-        if (data === 'register') {
-            $('#JS--registrationForm').toggle('fast');
-        } else {
-            $('#JS--loginForm').toggle('fast');
-        }
-
-        $('#JS--registerButton').click(function(){
-            $('#JS--loginForm').toggle('fast');
-            $('#JS--registrationForm').toggle('fast');
-
-            Cookies.set("lpFormSelection", 'register');
-        });
-
-        $('#JS--loginButton').click(function(){
-            $('#JS--registrationForm').toggle('fast');
-            $('#JS--loginForm').toggle('fast');
-
-            Cookies.set("lpFormSelection", 'login');
-        });
-
-    }
+    // if ($('.landingPage').length > 0) {
+    //     var data = Cookies.get("lpFormSelection");
+    //
+    //     if (data === 'register') {
+    //         $('#JS--registrationForm').toggle('fast');
+    //     } else {
+    //         $('#JS--loginForm').toggle('fast');
+    //     }
+    //
+    //     $('#JS--registerButton').click(function(){
+    //         $('#JS--loginForm').toggle('fast');
+    //         $('#JS--registrationForm').toggle('fast');
+    //
+    //         Cookies.set("lpFormSelection", 'register');
+    //     });
+    //
+    //     $('#JS--loginButton').click(function(){
+    //         $('#JS--registrationForm').toggle('fast');
+    //         $('#JS--loginForm').toggle('fast');
+    //
+    //         Cookies.set("lpFormSelection", 'login');
+    //     });
+    //
+    // }
 
     if ($('.JS--creditpack').length > 0) {
         $('.JS--creditpack .btn').click(function () {
@@ -213,20 +219,18 @@ $(window).on('load', function () {
             });
         }
 
-        $(window).resize(function() {
-            $('.JS--UserSummary__user-image').each((index, element) => {
-                console.log(element);
-
-                fitImageToContainer($(element));
-            });
-
-            if ($('.JS--UserSummary__otherImages').length > 0) {
-                $('.JS--UserSummary__nonProfileImageWrapper').each((index, element) => {
-
-                    fitImageToContainer($(element));
-                });
-            }
-        });
+        // $(window).resize(function() {
+        //     $('.JS--UserSummary__user-image').each((index, element) => {
+        //         fitImageToContainer($(element));
+        //     });
+        //
+        //     if ($('.JS--UserSummary__otherImages').length > 0) {
+        //         $('.JS--UserSummary__nonProfileImageWrapper').each((index, element) => {
+        //
+        //             fitImageToContainer($(element));
+        //         });
+        //     }
+        // });
     }
 
     if ($('.JS--searchToggle').length > 0) {

@@ -33,6 +33,7 @@ class RegisterRequest extends Request
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed|min:6',
             'dob' => 'date_format:d-m-Y|required',
+            'city' => 'required',
         ];
     }
 }
