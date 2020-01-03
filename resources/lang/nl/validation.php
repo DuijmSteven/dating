@@ -98,8 +98,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'city' => [
+            'in' => 'The :attribute must be selected from the provided list of cities',
         ],
     ],
 
