@@ -268,14 +268,21 @@
     }
 
     .roundImage {
-        width: 100%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        height: 130%;
+        width: auto;
+        -webkit-transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+        transform: translate(-50%,-50%);
     }
 
     .Footer__section-title {
         font-size: 1.8rem;
     }
 
-    .btn-group-lg > .btn, .btn-lg {
+    .btn-group-lg > .btn, .btn-lg {rou
         padding: .5rem 1rem;
         font-size: 1.7rem;
         line-height: 1.5;
