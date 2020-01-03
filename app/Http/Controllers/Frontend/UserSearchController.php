@@ -133,32 +133,14 @@ class UserSearchController extends FrontendController
 
     public function showInitialSearchResults(Request $request)
     {
-        $userCityName = $this->userLocationService->getUserCityName();
-
-        if (!$userCityName) {
-            $userCityName = 'Amsterdam';
-        }
-
-        try {
-            /** @var Location $location */
-            $location = Mapper::location($userCityName . ', NL');
-            $latitude = $location->getLatitude();
-            $longitude = $location->getLongitude();
-        } catch (\Exception $exception) {
-            \Log::debug($exception->getMessage());
-
-            $latitude = '52.379189';
-            $longitude = '4.899431';
-        }
-
         /** @var User $user */
         $user = \Auth::user();
         $lookingForGender = $user->meta->getLookingForGender();
 
         $searchParameters = [
-            'city' => $userCityName,
-            'lat' => $latitude,
-            'lng' => $longitude,
+            'city' => $user->meta->getCity(),
+            'lat' => $user->meta->getLat(),
+            'lng' => $user->meta->getLng(),
             'radius' => 40,
             'age' => null,
             'body_type' => null,

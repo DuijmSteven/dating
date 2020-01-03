@@ -58,4 +58,19 @@ class UserMeta extends Model
     {
         return $this->gender;
     }
+
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    public function getLat()
+    {
+        return $this->lat;
+    }
+
+    public function getLng()
+    {
+        return $this->lng;
+    }
 }
