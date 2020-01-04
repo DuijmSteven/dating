@@ -71,9 +71,12 @@
                 </div>
 
                 <div
-                    v-if="errorMessage"
+                    v-if="errorMessages.length > 0"
                     class="PrivateChatItem__feedback PrivateChatItem__feedback--error">
-                    <div>{{ errorMessage }}</div>
+
+                    <div
+                        v-for="(errorMessage, index) in errorMessages"
+                    >{{ errorMessage }}</div>
                 </div>
 
                 <div :id="'PrivateChatItem__body__content--' + index"
@@ -169,7 +172,7 @@
                 showNoCredits: false,
                 creditsUrl: DP.creditsUrl,
                 singleProfileUrl: DP.singleProfileUrl,
-                errorMessage: undefined
+                errorMessages: []
             };
         },
 
@@ -427,20 +430,32 @@
                         setTimeout(() => {
                             this.showNoCredits = false;
                         }, 4000)
-                    } else if (error && error.response && error.response.status === 422) {
-                        if (error.response.data && error.response.data.errors.attachment) {
-                            this.errorMessage = 'The attachment size cannot exceed 1MB';
+                    } else if (error && error.response) {
+                        if (error.response.data && error.response.data.errors) {
+                            console.log(error.response.data.errors);
+
+                            $.each(error.response.data.errors, (key, error) => {
+                                $.each(error, (key, error) => {
+                                    this.errorMessages.push(error);
+                                });
+                            });
 
                             setTimeout(() => {
-                                this.errorMessage = undefined;
-                            }, 20000)
+                                this.errorMessages = [];
+                            }, 3000);
+                        } else {
+                            this.errorMessages = 'There was an error. Please try again or contact support to report the problem';
+
+                            setTimeout(() => {
+                                this.errorMessages = [];
+                            }, 3000)
                         }
                     } else {
-                        this.errorMessage = 'There was an error. Please try again or contact support to report the problem';
+                        this.errorMessages = 'There was an error. Please try again or contact support to report the problem';
 
                         setTimeout(() => {
-                            this.errorMessage = undefined;
-                        }, 20000)
+                            this.errorMessages = [];
+                        }, 3000)
                     }
 
                     this.sendingMessage = false;
