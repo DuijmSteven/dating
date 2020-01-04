@@ -33,7 +33,7 @@ class UserSearchRequest extends Request
         return [
             'query' => 'max:50',
             'username' => 'max:50|string',
-            'city' => 'min:3|required|string|max:50',
+            'city' => 'required|in:' . implode(',', UserConstants::$cities['nl']),
             'lat' => 'required_with:city|numeric',
             'lng' => 'required_with:city|numeric',
             'radius' => 'required_with:city|integer',
