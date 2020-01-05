@@ -80,11 +80,12 @@ class PaymentController extends FrontendController
         $transactionId = session('transactionId');
         $paymentMethod = session('paymentMethod');
 
-        $status = $this->paymentProvider->paymentCheck($paymentMethod, $transactionId);
+        $check = $this->paymentProvider->paymentCheck($paymentMethod, $transactionId);
 
         return view('frontend.thank-you', [
             'title' => 'Payment - ' . config('app.name'),
-            'status' => $status
+            'status' => $check['status'],
+            'info' => $check['info']
         ]);
     }
 }

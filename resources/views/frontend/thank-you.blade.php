@@ -12,7 +12,7 @@
                 <a href="{{ route('home') }}" class="btn btn-success btn-lg btn-block" style="margin-top: 30px">Home Page</a>
             @else
                 <h1 style="font-size: 60px; font-weight: 700;">Something went wrong!</h1>
-                <h4>The transaction was not completed, please try again..</h4>
+                <h3>{{ $info }}</h3>
                 <a href="{{ route('credits.show') }}" class="btn btn-warning btn-lg btn-block" style="margin-top: 30px">Try Again</a>
             @endif
         </div>

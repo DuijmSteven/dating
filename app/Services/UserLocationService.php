@@ -16,8 +16,8 @@ class UserLocationService
 
     public function __construct()
     {
-        $userIp = Request::ip();
-        //$userIp = '82.217.122.82';
+        //$userIp = Request::ip();
+        $userIp = '82.217.122.82';
 
         if ($userIp && Location::get($userIp)) {
             $this->location = Location::get($userIp);
