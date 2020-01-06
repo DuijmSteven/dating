@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Creditpack;
+use App\Mail\Contact;
 use App\Mail\Welcome;
 use App\User;
 use Illuminate\Support\Facades\Mail;
@@ -73,7 +74,7 @@ class TestController extends Controller
         $user = User::find(1);
         var_dump($user->getEmail());
 
-            $message = (new Welcome($user))->onQueue('emails');
+        $message = (new Welcome($user))->onQueue('emails');
 
         $send = Mail::to($user)
             ->queue($message);

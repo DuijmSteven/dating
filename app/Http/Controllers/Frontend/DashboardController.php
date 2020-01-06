@@ -33,19 +33,4 @@ class DashboardController extends FrontendController
             'activity' => $activity->latest()->get()
         ]);
     }
-
-    /**
-     * Show the contact view
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showContact()
-    {
-        return view(
-            'frontend.contact',
-            [
-                'title' => config('app.name') . ' - Contact',
-            ]
-        );
-    }
 }

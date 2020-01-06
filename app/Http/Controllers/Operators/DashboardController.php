@@ -6,10 +6,10 @@ use App\Managers\ConversationManager;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Class HomeController
+ * Class DashboardController
  * @package App\Http\Controllers\Operators
  */
-class HomeController extends \App\Http\Controllers\Controller
+class DashboardController extends \App\Http\Controllers\Controller
 {
     /** @var ConversationManager */
     private $conversationManager;

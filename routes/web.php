@@ -24,8 +24,10 @@ Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm'
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')
     ->name('password.reset');
 
-Route::get('contact', 'Frontend\DashboardController@showContact')
+Route::get('contact', 'Frontend\ContactController@showContact')
     ->name('contact.get');
+Route::post('contact', 'Frontend\ContactController@postContact')
+    ->name('contact.post');
 
 Route::get('/dashboard', 'Frontend\DashboardController@index')
     ->name('dashboard')

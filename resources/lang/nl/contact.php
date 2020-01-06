@@ -9,6 +9,7 @@ return [
     'support_email' => 'Support email',
     'send_a_message' => 'Send a message',
     'email' => 'Email',
+    'name' => 'Name',
     'subject' => 'Subject',
     'message' => 'Your message',
     'send' => 'Send',

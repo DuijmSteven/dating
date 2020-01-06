@@ -20,28 +20,62 @@
         <div class="Tile">
             <div class="Tile__heading">{{ @trans('contact.send_a_message') }}</div>
             <div class="Tile__body">
-                <form action="" class="form" role="form">
-                    <div class="form-group">
+                <form  method="post" action="{{ route('contact.post') }}" class="form" role="form">
+                    @csrf
+
+                    <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
                         <label for="email">{{ @trans('contact.email') }}</label>
                         <input type="email"
                                name="email"
                                id="email"
+                               value="{{ old('email') }}"
                                class="form-control">
+                        @if ($errors->has('email'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('email') }}</strong>
+                            </span>
+                        @endif
                     </div>
-                    <div class="form-group">
+                    <div class="form-group {{ $errors->has('name') ? ' has-error' : '' }}">
+                        <label for="name">{{ @trans('contact.name') }}</label>
+                        <input type="name"
+                               name="name"
+                               id="name"
+                               value="{{ old('name') }}"
+                               class="form-control">
+                        @if ($errors->has('name'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('name') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                    <div class="form-group {{ $errors->has('subject') ? ' has-error' : '' }}">
                         <label for="subject">{{ @trans('contact.subject') }}</label>
                         <input type="text"
                                name="subject"
                                id="subject"
+                               value="{{ old('subject') }}"
                                class="form-control">
+                        @if ($errors->has('subject'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('subject') }}</strong>
+                            </span>
+                        @endif
                     </div>
-                    <div class="form-group">
+                    <div class="form-group {{ $errors->has('body') ? ' has-error' : '' }}">
                         <label for="body">{{ @trans('contact.message') }}</label>
                         <textarea rows="7"
                                name="body"
                                id="body"
-                               class="form-control">
+                               class="form-control"
+                        >
+                            {{ old('body') }}
                         </textarea>
+                        @if ($errors->has('body'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('body') }}</strong>
+                            </span>
+                        @endif
                     </div>
                     <div class="form-group text-right">
                         <button type="submit"

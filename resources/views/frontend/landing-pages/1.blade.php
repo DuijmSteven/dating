@@ -273,17 +273,17 @@
         top: 50%;
         height: 130%;
         width: auto;
-        -webkit-transform: translate(-50%,-50%);
-        -ms-transform: translate(-50%,-50%);
-        transform: translate(-50%,-50%);
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
     }
 
     .Footer__section-title {
         font-size: 1.8rem;
     }
 
-    .btn-group-lg > .btn, .btn-lg {rou
-        padding: .5rem 1rem;
+    .btn-group-lg > .btn, .btn-lg {
+        rou padding: .5rem 1rem;
         font-size: 1.7rem;
         line-height: 1.5;
         border-radius: .3rem;
@@ -363,8 +363,8 @@
                             >
                             @if ($errors->has('username'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('username') }}</strong>
-                                    </span>
+                                    <strong>{{ $errors->first('username') }}</strong>
+                                </span>
                             @endif
                         </div>
                     </div>
@@ -445,12 +445,14 @@
                         <div class="form-group col-md-12">
                             <label for="password-confirm">{{ @trans('lp1.form.password_confirmation') }}</label>
                             <input type="password" class="form-control" id="password-confirm"
-                                   name="password_confirmation" placeholder="{{ @trans('lp1.form.password') }}" required>
+                                   name="password_confirmation" placeholder="{{ @trans('lp1.form.password') }}"
+                                   required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-sm-12 submit">
-                            <button type="submit" class="btn btn-secondary btn-lg btn-block">{{ @trans('lp1.form.register_now') }}</button>
+                            <button type="submit"
+                                    class="btn btn-secondary btn-lg btn-block">{{ @trans('lp1.form.register_now') }}</button>
                         </div>
 
                         <div class="col-xs-12">
@@ -489,7 +491,8 @@
                         <div class="form-group col-md-12 {{ $errors->has('username') ? ' has-error' : '' }}">
                             <label for="login-username">{{ @trans('lp1.form.username') }}</label>
                             <input type="text" class="form-control" id="login-username" name="username"
-                                   placeholder="{{ @trans('lp1.form.username') }}" value="{{ old('username') }}" required autofocus>
+                                   placeholder="{{ @trans('lp1.form.username') }}" value="{{ old('username') }}"
+                                   required autofocus>
                             @if ($errors->has('username'))
                                 <span class="help-block">
                                         <strong>{{ $errors->first('username') }}</strong>
@@ -511,7 +514,8 @@
                     </div>
                     <div class="form-row">
                         <div class="col-sm-12 submit">
-                            <button type="submit" class="btn btn-secondary btn-lg btn-block">{{ @trans('lp1.form.login') }}</button>
+                            <button type="submit"
+                                    class="btn btn-secondary btn-lg btn-block">{{ @trans('lp1.form.login') }}</button>
                         </div>
                     </div>
                     <div class="form-row" style="margin-top: 20px">
@@ -575,11 +579,12 @@
                     </a>
                     <h5 class="small">{{ $user->username }}</h5>
                     <p class="offset-0 user-info">
-                        <small class="text-muted">{{ @trans('lp1.age') }}: {{ $user->meta->dob->diffInYears($carbonNow) }}
+                        <small class="text-muted">{{ @trans('lp1.age') }}
+                            : {{ $user->meta->dob->diffInYears($carbonNow) }}
                             , {{ $user->meta->city }}</small>
                     </p>
-{{--                    <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}"--}}
-{{--                       class="btn btn-lg btn-white">{{ @trans('lp1.more_info') }}</a>--}}
+                    {{--                    <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}"--}}
+                    {{--                       class="btn btn-lg btn-white">{{ @trans('lp1.more_info') }}</a>--}}
                 </div>
             @endforeach
         </div>
