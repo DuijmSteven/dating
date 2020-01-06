@@ -1,9 +1,4 @@
 <div class="Tile UserSummary" data-user-id="{!! $user->getId() !!}">
-    {{--    <div class="Tile__heading UserSummary__heading">
-            <a href="{{ route('users.show', ['userId' => $user->getId()])  }}">
-                {{ $user->username }}{{ isset($user->meta->dob) ? ', ' . $user->meta->dob->diffInYears($carbonNow) : '' }}
-            </a>
-        </div>--}}
     <div class="Tile__body UserSummary__body JS--UserSummary">
         <div class="UserSummary__user-image JS--UserSummary__user-image">
             @if(isset($showOtherImages))

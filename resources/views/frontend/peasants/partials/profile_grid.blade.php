@@ -1,7 +1,7 @@
 @if(count($users) == 0)
     <div>
         <p style="margin-bottom: 50px">
-            There are no users matching the search criteria. Please try another search.
+            {{ trans('profile_grid.no_matching_users') }}
         </p>
     </div>
 @endif

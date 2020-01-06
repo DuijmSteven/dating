@@ -4,7 +4,7 @@
 
     <div class="Tile Tile__privacy">
         <div class="Tile__heading">
-            <h4>Algemene Voorwaarden Altijdsex.nl</h4>
+            <h4>{{ trans('tac.tac') }} Altijdsex.nl</h4>
         </div>
         <div
                 class="Tile__body"

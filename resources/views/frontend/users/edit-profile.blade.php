@@ -3,7 +3,7 @@
 
 @section('content')
     <div class="Tile EditProfile JS--Edit-Profile">
-        <div class="Tile__heading">Profiel aanpassen</div>
+        <div class="Tile__heading">{{ trans('edit_profile.edit_profile') }}</div>
         <div class="Tile__body">
             <form role="form" class="searchForm" method="POST"
                   action="{!! route('users.update', ['userId' => $user->id]) !!}"
@@ -14,7 +14,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="username">Username</label>
+                                <label for="username">{{ trans('user_constants.about_me') }}</label>
                                 <input type="text"
                                        class="form-control"
                                        id="username"
@@ -52,7 +52,7 @@
 
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="dob">Date of birth</label>
+                                <label for="dob">{{ trans('user_constants.dob') }}</label>
                                 <input type="text"
                                        class="form-control"
                                        id="dob"
@@ -75,7 +75,7 @@
                                         class="form-control"
                                 >
                                     @if(!$user->meta['relationship_status'])
-                                        <option value="" disabled selected>Select your {{ strtolower(@trans('user_constants.labels.relationship_status')) }}</option>
+                                        <option value="" disabled selected>{{ trans('edit_profile.select_your') }} {{ strtolower(@trans('user_constants.labels.relationship_status')) }}</option>
                                     @endif
 
                                     @foreach(\UserConstants::selectableField('relationship_status') as $key => $value)
@@ -96,7 +96,7 @@
                                         class="form-control"
                                 >
                                     @if(!$user->meta['body_type'])
-                                        <option value="" disabled selected>Select your {{ strtolower(@trans('user_constants.labels.body_type')) }}</option>
+                                        <option value="" disabled selected>{{ trans('edit_profile.select_your') }} {{ strtolower(@trans('user_constants.labels.body_type')) }}</option>
                                     @endif
 
                                     @foreach(\UserConstants::selectableField('body_type') as $key => $value)
@@ -117,7 +117,7 @@
                                         class="form-control"
                                 >
                                     @if(!$user->meta['height'])
-                                        <option value="" disabled selected>Select your {{ strtolower(@trans('user_constants.labels.height')) }}</option>
+                                        <option value="" disabled selected>{{ trans('edit_profile.select_your') }} {{ strtolower(@trans('user_constants.labels.height')) }}</option>
                                     @endif
 
                                     @foreach(\UserConstants::selectableField('height') as $key => $value)
@@ -138,7 +138,7 @@
                                         class="form-control"
                                 >
                                     @if(!$user->meta['eye_color'])
-                                        <option value="" disabled selected>Select your {{ strtolower(@trans('user_constants.labels.eye_color')) }}</option>
+                                        <option value="" disabled selected>{{ trans('edit_profile.select_your') }} {{ strtolower(@trans('user_constants.labels.eye_color')) }}</option>
                                     @endif
 
                                     @foreach(\UserConstants::selectableField('eye_color') as $key => $value)
@@ -159,7 +159,7 @@
                                         class="form-control"
                                 >
                                     @if(!$user->meta['hair_color'])
-                                        <option value="" disabled selected>Select your {{ strtolower(@trans('user_constants.labels.hair_color')) }}</option>
+                                        <option value="" disabled selected>{{ trans('edit_profile.select_your') }} {{ strtolower(@trans('user_constants.labels.hair_color')) }}</option>
                                     @endif
 
                                     @foreach(\UserConstants::selectableField('hair_color') as $key => $value)
@@ -180,7 +180,7 @@
                                         class="form-control"
                                 >
                                     @if(!$user->meta['smoking_habits'])
-                                        <option value="" disabled selected>Select your {{ strtolower(@trans('user_constants.labels.smoking_habits')) }}</option>
+                                        <option value="" disabled selected>{{ trans('edit_profile.select_your') }} {{ strtolower(@trans('user_constants.labels.smoking_habits')) }}</option>
                                     @endif
 
                                     @foreach(\UserConstants::selectableField('smoking_habits') as $key => $value)
@@ -202,7 +202,7 @@
                                         class="form-control"
                                 >
                                     @if(!$user->meta['drinking_habits'])
-                                        <option value="" disabled selected>Select your {{ strtolower(@trans('user_constants.labels.drinking_habits')) }}</option>
+                                        <option value="" disabled selected>{{ trans('edit_profile.select_your') }} {{ strtolower(@trans('user_constants.labels.drinking_habits')) }}</option>
                                     @endif
 
                                     @foreach(\UserConstants::selectableField('drinking_habits') as $key => $value)
@@ -227,7 +227,7 @@
                                           class="form-control"
                                           cols="30"
                                           rows="10"
-                                          placeholder="Let other get to know you a bit. What makes you happy? What irritates you? What makes you excited? Users that share a bit about themselves tend to get a lot more attention!"
+                                          placeholder="{{ @trans('edit_profile.about_me_placeholer') }}"
                                 >{!! $user->meta['about_me'] !!}</textarea>
                                 @include('helpers.forms.error_message', ['field' => 'about_me'])
                             </div>
@@ -267,7 +267,7 @@
 
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="user_images">Upload Images</label>
+                                <label for="user_images">{{ @trans('edit_profile.upload_images') }}</label>
                                 <input type="file" class="form-control" id="user_images" name="user_images[]" multiple>
                             </div>
                         </div>
@@ -291,15 +291,15 @@
                 </div>
             </div>
 
-            <label for="">Manage images</label>
+            <label for="">{{ @trans('edit_profile.manage_images') }}</label>
 
             <div class="table-responsive" id="images-section">
                 <table class="table table-striped">
                     <?php $tableColumnAmount = 2; ?>
                     <thead>
                     <tr>
-                        <th>Profile image</th>
-                        <th>Actions</th>
+                        <th>{{ @trans('edit_profile.profile_image') }}</th>
+                        <th>{{ @trans('edit_profile.actions') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -316,14 +316,14 @@
                                       action="{!! route('images.destroy', ['imageId' => $user->profileImage->id]) !!}">
                                     {!! csrf_field() !!}
                                     {!! method_field('DELETE') !!}
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    <button type="submit" class="btn btn-danger">{{ @trans('edit_profile.delete') }}</button>
                                 </form>
                             </td>
                         </tr>
                     @else
                         <tr>
                             <td colspan="<?= $tableColumnAmount; ?>">
-                                No profile image set
+                                {{ @trans('edit_profile.no_profile_image_set') }}
                             </td>
                         </tr>
                     @endif
@@ -335,8 +335,8 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>Other images</th>
-                        <th>Actions</th>
+                        <th>{{ @trans('edit_profile.other_images') }}</th>
+                        <th>{{ @trans('edit_profile.actions') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -356,17 +356,17 @@
                                           action="{!! route('images.destroy', ['imageId' => $image->id]) !!}">
                                         {!! csrf_field() !!}
                                         {!! method_field('DELETE') !!}
-                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                        <button type="submit" class="btn btn-danger">{{ @trans('edit_profile.delete') }}</button>
                                     </form>
                                     <a href="{!! route('users.set-profile-image', ['userId' => $user->id, 'imageId' => $image->id]) !!}"
-                                       class="btn btn-success">Set profile</a>
+                                       class="btn btn-success">{{ @trans('edit_profile.set_profile') }}</a>
                                 </td>
                             </tr>
                         @endforeach
                     @else
                         <tr>
                             <td colspan="<?= $tableColumnAmount; ?>">
-                                No images found
+                                {{ @trans('edit_profile.no_images') }}
                             </td>
                         </tr>
                     @endif

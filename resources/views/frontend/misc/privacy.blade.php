@@ -4,7 +4,7 @@
 
     <div class="Tile Tile__privacy">
         <div class="Tile__heading">
-            <h4>Privacyverklaring Altijdsex.nl</h4>
+            <h4>{{ trans('privacy.privacy_explanation') }} Altijdsex.nl</h4>
         </div>
         <div
                 class="Tile__body"

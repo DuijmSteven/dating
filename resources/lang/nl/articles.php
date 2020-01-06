@@ -1,6 +1,7 @@
 <?php
 
 return [
-    'title' => 'Articles',
-    'main_heading' => 'Articles',
+    'articles' => 'Articles',
+    'read_more' => 'Read More',
+    'posted_on' => 'Posted on',
 ];

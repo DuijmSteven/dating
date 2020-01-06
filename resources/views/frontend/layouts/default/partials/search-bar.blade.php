@@ -23,7 +23,7 @@
             >
         </div>
         <div class="form-group radius hidden JS--radiusSearchInput">
-            <label for="">Aafstand</label>
+            <label for="">{!! @trans('search.distance') !!}</label>
             <select name="radius" class="form-control">
                 @foreach(\UserConstants::getRadiuses() as $radius)
                     <option
@@ -34,9 +34,9 @@
             </select>
         </div>
         <div class="form-group age">
-            <label for="">Age</label>
+            <label for="">{!! @trans('user_constants.age') !!}</label>
             <select name="age" class="form-control">
-                <option value="">Alle</option>
+                <option value="">{!! @trans('search.all') !!}</option>
                 @foreach(\UserConstants::getAgeGroups() as $key => $value)
                     <option
                         {{ Session::get('searchParameters')['age'] == $key ? 'selected' : ''}}
@@ -46,9 +46,9 @@
             </select>
         </div>
         <div class="form-group bodyType">
-            <label for="">Body type</label>
+            <label for="">{{ trans('user_constants.labels.body_type') }}</label>
             <select name="body_type" class="form-control">
-                <option value="">Alle</option>
+                <option value="">{!! @trans('search.all') !!}</option>
                 @foreach(\UserConstants::selectableField('body_type') as $key => $value)
                     <option
                         {{ Session::get('searchParameters')['body_type'] == $key ? 'selected' : ''}}
@@ -58,9 +58,9 @@
             </select>
         </div>
         <div class="form-group height">
-            <label for="">Height</label>
+            <label for="">{{ trans('user_constants.labels.height') }}</label>
             <select name="height" class="form-control">
-                <option value="">Alle</option>
+                <option value="">{!! @trans('search.all') !!}</option>
                 @foreach(\UserConstants::selectableField('height') as $key => $value)
                     <option
                         {{ Session::get('searchParameters')['height'] == $key ? 'selected' : ''}}

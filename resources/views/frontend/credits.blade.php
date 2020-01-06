@@ -83,31 +83,31 @@
                     </ul>
                 </div>
                 <div class="col-md-6">
-                    <h4>Cart</h4>
+                    <h4>{{ @trans('credits.cart') }}</h4>
                     <ul class="list-group mb-3">
                         <li class="list-group-item d-flex justify-content-between">
                             <div>
-                                <h6 class="my-0"><span class="cart-package">{{ $creditpacks[1]->name }}</span> package
+                                <h6 class="my-0"><span class="cart-package">{{ $creditpacks[1]->name }}</span> {{ @trans('credits.package') }}
                                 </h6>
                                 <small class="text-muted"><span
-                                        class="cart-credits">{{ $creditpacks[1]->credits }}</span> credits</small>
+                                        class="cart-credits">{{ $creditpacks[1]->credits }}</span> {{ @trans('credits.credits') }}</small>
                                 <input name="creditpack_id" type="hidden" value="{{ $creditpacks[1]->id }}">
                             </div>
                             <span class="text-muted"><span
                                     class="cart-value">{{ $creditpacks[1]->price/100 }}</span>€</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between">
-                            <span>Total (EUR)</span>
+                            <span>&euro; {{ @trans('credits.total') }}</span>
                             <strong><span class="cart-value">{{ $creditpacks[1]->price/100 }}</span>€</strong>
                         </li>
                     </ul>
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">{{ @trans('credits.to_checkout') }}</button>
                 </div>
             </form>
         </div>
 
         <div class="row mt-5 recent-container text-center currentMembers pricing-10">
-            <h3>They are waiting for you...</h3>
+            <h3>{{ @trans('credits.they_are_waiting') }}</h3>
             @foreach ($users as $user)
                 <div class="col-lg-2 col-md-4 col-sm-12">
                     <a href="{{ route('users.show', ['username' => $user->getUsername()]) }}">
@@ -121,12 +121,11 @@
                     </a>
                     <h5 class="small">{{ $user->username }}</h5>
                     <p class="offset-0">
-                        <small class="text-muted">Age: {{ $user->meta->dob->diffInYears($carbonNow) }}
+                        <small class="text-muted">{{ @trans('credits.age') }}: {{ $user->meta->dob->diffInYears($carbonNow) }}
                             , {{ $user->meta->city }}</small>
                     </p>
                     <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}"
-                       class="btn btn-lg btn-white">More
-                        Info</a>
+                       class="btn btn-lg btn-white">{{ @trans('credits.more_info') }}</a>
                 </div>
             @endforeach
         </div>

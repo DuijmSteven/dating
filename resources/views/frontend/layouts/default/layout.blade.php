@@ -7,8 +7,6 @@
     @include('frontend.layouts.default.partials.header')
 
     <div class="container" style="position: relative">
-        {{--@include('frontend.components.alert')--}}
-
         @include('toast::messages')
 
         @if(isset($sidebarCount) && $sidebarCount > 0)
