@@ -13,8 +13,8 @@
                     {{ @trans('credits_bought_feedback.home') }}
                 </a>
             @else
-                <h1 style="font-size: 60px; font-weight: 700;">{{ @trans('credits_bought_feedback.problem_with_payment') }}</h1>
-                <h4>{{ @trans('credits_bought_feedback.unsuccessful_payment_message') }}</h4>
+                <h1 style="font-size: 60px; font-weight: 700;">Something went wrong!</h1>
+                <h3>{{ $info }}</h3>
                 <a href="{{ route('credits.show') }}" class="btn btn-warning btn-lg btn-block" style="margin-top: 30px">
                     {{ @trans('credits_bought_feedback.retry') }}
                 </a>

@@ -8,6 +8,7 @@ use App\Payment;
 use App\User;
 use App\UserAccount;
 use Illuminate\Support\Facades\Auth;
+use TPWeb\TargetPay\Exception\TargetPayException;
 use TPWeb\TargetPay\TargetPay;
 use TPWeb\TargetPay\Transaction\IDeal;
 use TPWeb\TargetPay\Transaction\IVR;
@@ -185,7 +186,14 @@ class PaymentService implements PaymentProvider
         }
 
         $targetPay->transaction->setTransactionId($transactionId);
-        $targetPay->checkPaymentInfo();
+        try {
+            $targetPay->checkPaymentInfo();
+        } catch (TargetPayException $exception) {
+            return $check = [
+                'status' => false,
+                'info' => $exception->getMessage()
+            ];
+        }
 
         $status = $targetPay->transaction->getPaymentDone();
 
@@ -211,6 +219,9 @@ class PaymentService implements PaymentProvider
                ->where('transaction_id', $transactionId)
                ->update(['status' => $statusUpdate]);
 
-        return $status;
+        return $check = [
+            'status' => $status,
+            'info' => ''
+        ];
     }
 }
