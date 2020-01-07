@@ -101,6 +101,8 @@ return [
         'city' => [
             'in' => 'The :attribute must be selected from the provided list of cities',
         ],
+        'user_images.*.max' => 'Each image cannot be larger than :max kB',
+        'user_images.*.image' => 'The files must be images of the types jpg, jpeg or png'
     ],
 
     /*

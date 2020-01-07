@@ -7,7 +7,7 @@
                         <div class="UserSummary__profileImageWrapper">
                             <img
                                 class="UserSummary__profileImage"
-                                src="{{ \StorageHelper::profileImageUrl($user, true) }}"
+                                src="{{ \StorageHelper::profileImageUrl($user) }}"
                                 alt="user image"
                             >
                         </div>
@@ -16,7 +16,7 @@
                     <div class="UserSummary__profileImageWrapper">
                         <img
                             class="UserSummary__profileImage"
-                            src="{{ \StorageHelper::profileImageUrl($user, true) }}"
+                            src="{{ \StorageHelper::profileImageUrl($user) }}"
                             alt="user image"
                         >
                     </div>
@@ -26,7 +26,7 @@
                     <div class="UserSummary__profileImageWrapper">
                         <img
                             class="UserSummary__profileImage"
-                                src="{{ \StorageHelper::profileImageUrl($user, true) }}"
+                                src="{{ \StorageHelper::profileImageUrl($user) }}"
                             alt="user image"
                         >
                     </div>
@@ -57,7 +57,8 @@
                 {{-- DON'T reformat this loop, it is structured like this to avoid spacing between inline blocks --}}
                 @foreach($user->imagesNotProfile as $image)<a href="#" class="modalImage UserSummary__nonProfileImageModalWrapper"><div class="UserSummary__nonProfileImageWrapper JS--UserSummary__nonProfileImageWrapper"><img
                                 class="UserSummary__nonProfileImage"
-                                src="{{ \StorageHelper::userImageUrl($user->getId(), $image->getFilename()) }}"
+                                src="{{ \StorageHelper::userImageUrl($user->getId(), $image->getFilename(), true) }}"
+                                data-src="{{ \StorageHelper::userImageUrl($user->getId(), $image->getFilename()) }}"
                                 alt="user image"
                             ></div></a>@endforeach
             </div>

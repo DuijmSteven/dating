@@ -2,7 +2,7 @@
 
 return [
     'name' => 'Dubble Digital',
-    'email' => 'info@seksvriend.nl',
+    'info_email' => 'info@altijdsex.nl',
     'post_code' => 'info@seksvriend.nl',
     'kvk' => '64194140',
     'btw' => 'NL206692304B01',

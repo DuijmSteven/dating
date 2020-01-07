@@ -1,0 +1,13 @@
+.ConfirmDialog {
+  .dg-btn--cancel {
+    background-color: $secondaryColor;
+    color: $white;
+    border-color: transparent;
+  }
+
+  .dg-btn--ok {
+    background-color: $tertiaryColor;
+    color: $white;
+    border-color: transparent;
+  }
+}

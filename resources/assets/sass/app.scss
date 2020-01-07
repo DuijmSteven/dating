@@ -37,6 +37,7 @@
 @import "components/private-chat-item";
 @import "components/image-modal";
 @import "components/spinner";
+@import "components/confirm-dialog";
 
 // Modules
 @import "modules/online-users";
@@ -48,6 +49,7 @@
 @import "views/faq";
 @import "views/edit-profile";
 @import "views/credits";
+@import "views/contact";
 
 @import "vue-apps/private-chat/main";
 
@@ -60,14 +62,3 @@
   overflow: scroll;
 }
 
-.ConfirmDialog {
-  .dg-btn--cancel {
-    background-color: $brand-danger;
-  }
-
-  .dg-btn--ok {
-    background-color: $brand-success;
-    color: $white;
-    border-color: transparent;
-  }
-}

@@ -17,11 +17,21 @@
     padding: 4px 20px;
     border-radius: map_get($button, border-radius) + px;
     border-width: map_get($button, border-width) + px;
-    border: map_get($button, border-width) + px solid map_get($button, border-color);
+    border: 0;
     color: map_get($button, font-color);
+    text-align: center;
 
     &.Button-fw {
         width: 100%;
+    }
+
+    &.bottom-spacing {
+        margin-bottom: 5px;
+    }
+
+    &:hover {
+        text-decoration: none;
+        color: $white;
     }
 
     &:active {
@@ -33,8 +43,8 @@
     }
 
     .Button__content {
-        line-height: map_get($button, line-height);
-        font-size: map_get($button, font-size) + px;
+        line-height: map_get($button, line-height) + px;
+        font-size: map_get($button, font-size) + rem;
         font-weight: map_get($button, font-weight);
     }
 }

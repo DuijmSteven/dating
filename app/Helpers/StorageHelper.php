@@ -90,7 +90,7 @@ class StorageHelper
      * @param string|null $filename
      * @return mixed|string
      */
-    public static function profileImageUrlFromId(int $userId, string $filename = null, $gender)
+    public static function profileImageUrlFromId(int $userId, string $filename, $gender)
     {
         if (!in_array($gender, [1, 2, '1', '2', 'male', 'female'])) {
             \Log::error(__FUNCTION__ . ' in ' . __CLASS__ . ' : Wrong gender parameter passed (' . $gender . ')');
@@ -111,14 +111,21 @@ class StorageHelper
      * @param string $filename
      * @return mixed|string
      */
-    public static function userImageUrl(int $userId, string $filename = null)
+    public static function userImageUrl(int $userId, string $filename = null, bool $thumb = false)
     {
         $filePath = self::userImagesPath($userId) . $filename;
 
         if (!Storage::disk('cloud')->exists($filePath)) {
             \Log::error('Image does not exist on s3 bucket. User Id: ' . $userId. ', Filename: ' . $filename);
-            // TODO
-            return 'http://placehold.it/100x100';
+
+            return '';
+        }
+
+        if ($thumb) {
+            $explodedFilename = explode('.', $filePath);
+
+            $thumbFilePath = $explodedFilename[0] . '_thumb' . '.' . $explodedFilename[1];
+            return self::fileUrl($thumbFilePath);
         }
 
         return self::fileUrl($filePath);
