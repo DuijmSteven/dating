@@ -157,11 +157,12 @@ class UserController extends FrontendController
         try {
             $this->peasantManager->updatePeasant($peasantData, $peasantUpdateRequest->route('userId'));
 
-            toast()->message('Your profile has been updated successfully', 'success');
+            toast()->message(trans('user_profile.feedback.profile_updated'), 'success');
 
         } catch (\Exception $exception) {
             \Log::error($exception);
-            toast()->message($exception->getMessage(), 'error');
+
+            toast()->message(trans('user_profile.feedback.profile_not_updated'), 'error');
         }
 
         return redirect()->back();

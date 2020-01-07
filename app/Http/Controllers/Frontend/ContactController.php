@@ -38,7 +38,7 @@ class ContactController extends FrontendController
                 ->queue($contactEmail);
 
             toast()->message(
-                'Thank you for your message! We will reply shortly.',
+                trans('contact.feedback.message_sent'),
                 'success'
             );
 
@@ -46,7 +46,7 @@ class ContactController extends FrontendController
             \Log::error($exception);
 
             toast()->message(
-                'There was a problem while sending your message. Please try again.',
+                trans('contact.feedback.message_not_sent'),
                 'error'
             );
         }

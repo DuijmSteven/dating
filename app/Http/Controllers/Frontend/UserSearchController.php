@@ -64,37 +64,45 @@ class UserSearchController extends FrontendController
      */
     public function search(UserSearchRequest $userSearchRequest)
     {
-        $userSearchRequest->formatInput();
-        $searchParameters = $userSearchRequest->all();
+        try {
+            $userSearchRequest->formatInput();
+            $searchParameters = $userSearchRequest->all();
 
-        if (isset($searchParameters['age'])) {
-            $ageMax = 100;
+            if (isset($searchParameters['age'])) {
+                $ageMax = 100;
 
-            $largestAgeLimit = (int) array_keys(UserConstants::$ageGroups)[sizeof(UserConstants::$ageGroups) - 1];
+                $largestAgeLimit = (int)array_keys(UserConstants::$ageGroups)[sizeof(UserConstants::$ageGroups) - 1];
 
-            if ($searchParameters['age'] != $largestAgeLimit) {
-                [$ageMin, $ageMax] = explode('-', $searchParameters['age']);
-            } else {
-                $ageMin = $largestAgeLimit;
+                if ($searchParameters['age'] != $largestAgeLimit) {
+                    [$ageMin, $ageMax] = explode('-', $searchParameters['age']);
+                } else {
+                    $ageMin = $largestAgeLimit;
+                }
+
+                $date = new \DateTime;
+                // The "Min" and "Max" are reversed on purpose in their usages, since the resulting date
+                // from the minimum age would be more recent than the one resulting from the maximum age
+                $formattedMaxDate = $date->modify('-' . $ageMin . ' years')->format('Y-m-d H:i:s');
+
+                $date = new \DateTime;
+                $formattedMinDate = $date->modify('-' . $ageMax . ' years')->format('Y-m-d H:i:s');
+
+                $searchParameters['dob'] = [];
+                $searchParameters['dob']['min'] = $formattedMinDate;
+                $searchParameters['dob']['max'] = $formattedMaxDate;
+
+                $searchParameters['gender'] = \Auth::user()->meta->getLookingForGender();
             }
 
-            $date = new \DateTime;
-            // The "Min" and "Max" are reversed on purpose in their usages, since the resulting date
-            // from the minimum age would be more recent than the one resulting from the maximum age
-            $formattedMaxDate = $date->modify('-' . $ageMin . ' years')->format('Y-m-d H:i:s');
+            // flash parameters to session so the next request can access them
+            $userSearchRequest->session()->put('searchParameters', $searchParameters);
+        } catch (\Exception $exception) {
+            \Log::error($exception->getMessage() . $exception->getTraceAsString());
 
-            $date = new \DateTime;
-            $formattedMinDate = $date->modify('-' . $ageMax . ' years')->format('Y-m-d H:i:s');
+            toast()->message(trans('user_search.feedback.search_error'), 'error');
 
-            $searchParameters['dob'] = [];
-            $searchParameters['dob']['min'] = $formattedMinDate;
-            $searchParameters['dob']['max'] = $formattedMaxDate;
-
-            $searchParameters['gender'] = \Auth::user()->meta->getLookingForGender();
+            return redirect()->back();
         }
-
-        // flash parameters to session so the next request can access them
-        $userSearchRequest->session()->put('searchParameters', $searchParameters);
 
         // redirect to search results' first page
         return redirect()->route('users.search.results.get', ['page' => 1]);
@@ -131,6 +139,10 @@ class UserSearchController extends FrontendController
         );
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function showInitialSearchResults(Request $request)
     {
         /** @var User $user */
@@ -157,15 +169,21 @@ class UserSearchController extends FrontendController
             $request->session()->put('initial_search_randomization_key', $randomizationKey);
         }
 
-        $users = $this->userSearchManager->searchUsers(
-            $searchParameters,
-            true,
-            $request->input('page'),
-            [
-                'type' => UserSearchManager::ORDERING_TYPE_RANDOMIZED,
-                'randomization_key' => $randomizationKey
-            ]
-        );
+        try {
+            $users = $this->userSearchManager->searchUsers(
+                $searchParameters,
+                true,
+                $request->input('page'),
+                [
+                    'type' => UserSearchManager::ORDERING_TYPE_RANDOMIZED,
+                    'randomization_key' => $randomizationKey
+                ]
+            );
+        } catch (\Exception $exception) {
+            \Log::error($exception->getMessage() . $exception->getTraceAsString());
+
+            toast()->message(trans('user_search.feedback.search_error'), 'error');
+        }
 
         $viewData = [
             'users' => $users,

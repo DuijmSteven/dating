@@ -13,4 +13,8 @@ return [
     'subject' => 'Subject',
     'message' => 'Your message',
     'send' => 'Send',
+    'feedback' => [
+        'message_sent' => 'Thank you for your message! We will reply shortly.',
+        'message_not_sent' => 'There was a problem while sending your message. Please try again.'
+    ]
 ];
