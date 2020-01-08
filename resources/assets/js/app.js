@@ -102,11 +102,11 @@ $(window).on('load', function () {
 
         const $searchRadiusInput = $('.JS--radiusSearchInput');
 
-        if ($('.JS--autoCompleteCites').length > 0 && $('.JS--autoCompleteCites').val().length > 0) {
+        if ($('.JS--autoCompleteCites.JS--bar').length > 0 && $('.JS--autoCompleteCites.JS--bar').val().length > 0) {
             $searchRadiusInput.removeClass('hidden');
         }
 
-        $('.JS--autoCompleteCites').keyup(function () {
+        $('.JS--autoCompleteCites.JS--bar').keyup(function () {
             if ($(this).val().length > 0) {
                 if ($searchRadiusInput.hasClass('hidden')) {
                     $searchRadiusInput.removeClass('hidden');

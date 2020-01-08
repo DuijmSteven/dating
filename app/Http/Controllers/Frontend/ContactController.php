@@ -33,7 +33,6 @@ class ContactController extends FrontendController
 
             $contactEmail = $contactMailInstance->onQueue('emails');
 
-            // TODO set proper to
             Mail::to(config('company.info_email'))
                 ->queue($contactEmail);
 

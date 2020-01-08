@@ -32,7 +32,7 @@
                             <div class="form-group">
                                 <label for="city">{{ @trans('user_constants.city') }}</label>
                                 <input type="text"
-                                       class="JS--autoCompleteCites form-control"
+                                       class="JS--autoCompleteCites JS--edit form-control"
                                        name="city"
                                        value="{!! ucfirst($user->meta->city) !!}"
                                 >
@@ -227,7 +227,7 @@
                                           class="form-control"
                                           cols="30"
                                           rows="10"
-                                          placeholder="{{ @trans('edit_profile.about_me_placeholer') }}"
+                                          placeholder="{{ @trans('edit_profile.about_me_placeholder') }}"
                                 >{!! $user->meta['about_me'] !!}</textarea>
                                 @include('helpers.forms.error_message', ['field' => 'about_me'])
                             </div>

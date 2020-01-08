@@ -66,8 +66,8 @@
                 <div
                     v-if="showNoCredits"
                     class="PrivateChatItem__feedback PrivateChatItem__feedback--notEnoughCredits">
-                    <div>No credits</div>
-                    <div><a :href="creditsUrl">Refill now!</a></div>
+                    <div>{{ this.$parent.chatTranslations['not_enough_credits'] }}</div>
+                    <div><a :href="creditsUrl">{{ this.$parent.chatTranslations['refill'] }}</a></div>
                 </div>
 
                 <div
@@ -172,7 +172,7 @@
                 showNoCredits: false,
                 creditsUrl: DP.creditsUrl,
                 singleProfileUrl: DP.singleProfileUrl,
-                errorMessages: []
+                errorMessages: [],
             };
         },
 
@@ -432,8 +432,6 @@
                         }, 4000)
                     } else if (error && error.response) {
                         if (error.response.data && error.response.data.errors) {
-                            console.log(error.response.data.errors);
-
                             $.each(error.response.data.errors, (key, error) => {
                                 $.each(error, (key, error) => {
                                     this.errorMessages.push(error);
@@ -444,14 +442,14 @@
                                 this.errorMessages = [];
                             }, 3000);
                         } else {
-                            this.errorMessages = 'There was an error. Please try again or contact support to report the problem';
+                            this.errorMessages = this.$parent.chatTranslations['general_error'];
 
                             setTimeout(() => {
                                 this.errorMessages = [];
                             }, 3000)
                         }
                     } else {
-                        this.errorMessages = 'There was an error. Please try again or contact support to report the problem';
+                        this.errorMessages = this.$parent.chatTranslations['general_error'];
 
                         setTimeout(() => {
                             this.errorMessages = [];

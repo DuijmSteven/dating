@@ -65,7 +65,7 @@ return [
         2 => 'Social',
         3 => 'None'
     ],
-    'about_me' => 'Over mij',
+    'about_me' => 'About me',
     'looking_for' => 'Looking for',
     'dob' => 'Date of birth',
     'age' => 'Age',

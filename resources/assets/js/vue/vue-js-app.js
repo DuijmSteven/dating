@@ -13,7 +13,8 @@ if ($('#app').length > 0) {
             currentConversationPartnersResponse: undefined,
             intervalToFetchPartners: undefined,
             userCredits: undefined,
-            onlineUserIds: undefined
+            onlineUserIds: undefined,
+            chatTranslations: undefined
         },
 
         created() {
@@ -21,6 +22,10 @@ if ($('#app').length > 0) {
                 this.getConversationPartners();
                 this.getUserCredits();
                 this.getOnlineUserIds();
+
+                axios.get('/api/' + DP.authenticatedUser.id + '/chat-translations').then(response => {
+                    this.chatTranslations = response.data;
+                });
 
                 this.intervalToFetchPartners = setInterval(() => {
                     this.getConversationPartners()
