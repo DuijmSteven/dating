@@ -133,6 +133,8 @@ class UserController extends FrontendController
             'userEmailTypeIds' => $this->authenticatedUser->emailTypes()->pluck('id')->toArray()
         ];
 
+        $emailTypes = $this->authenticatedUser->emailTypes;
+
         return view(
             'frontend.users.edit-profile',
             array_merge(

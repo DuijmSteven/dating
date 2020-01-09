@@ -24,7 +24,7 @@ class CreateEmailTypesTable extends Migration
             [
                 'name' => 'new_message',
                 'description' => 'This email is sent when a user receives a new message',
-            ]
+            ],
         ]);
     }
 
