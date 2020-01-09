@@ -155,14 +155,65 @@
         border-color: #2e3142;
     }
 
-    .btn-register-login {
+    .btn-register-login,
+    .btn-accept-cookies {
         background-color: #ef4f2b;
         border-color: #ef4f2b;
         color: #fff;
     }
 
+    .cookie-popup {
+        position: fixed;
+        background-color: #fff;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 200px;
+        max-height: 400px;
+        box-shadow: 20px 0 30px rgba(0,0,0,0.4);
+        font-size: 1.8rem;
+        color: #555;
+        padding: 30px;
+        text-align: center;
+    }
+
+    @media screen and (max-width: 700px) {
+        .cookie-popup {
+            height: 250px;
+        }
+    }
+
+    @media screen and (max-width: 500px) {
+        .cookie-popup {
+            height: 350px;
+        }
+    }
+
+    @media screen and (min-width: 1100px) {
+        .cookie-popup p {
+            width: 1000px;
+        }
+    }
+
+    .cookie-popup p {
+        display: inline-block;
+        margin-bottom: 30px;
+    }
+
+    .cookie-popup button {
+        display: inline-block;
+        width: 100px;
+        color: #fff;
+    }
+
+    .cookie-popup button:hover {
+        display: inline-block;
+        width: 100px;
+        color: #fff;
+    }
+
     .btn-register-login:hover {
-        background-color: #fe6d35;
+        background-color: #ef4f2b;
         color: #fff;
     }
 
@@ -730,6 +781,24 @@
         </div>
     </div>
 </footer>
+
+<div class="cookie-popup hidden">
+    <p>
+        <strong>Altijdsex.nl</strong> maakt gebruik van cookies om de website continu te kunnen blijven verbeteren. Als
+        je op “Akkoord”
+        klikt of je registreert op deze website, ga je automatisch akkoord met het <a
+            href="{{ route('privacy.show') }}">Privacy</a>- en Cookiebeleid
+    </p>
+
+    <div>
+        <button type="button"
+                class="btn btn-block btn-lg btn-accept-cookies JS--acceptCookies"
+        >
+            {{ @trans('lp1.accept') }}
+        </button>
+    </div>
+</div>
+
 <script>
     /*
      * Application namespace

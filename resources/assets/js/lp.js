@@ -46,6 +46,17 @@ $(window).on('load', function () {
     require('./global_helpers');
 
     var formSelected = Cookies.get("lpFormSelection");
+    var cookiesAccepted = Cookies.get("lpCookiesAccepted");
+
+    if (cookiesAccepted !== 'true') {
+        $('.cookie-popup').removeClass('hidden');
+    }
+
+    $('.JS--acceptCookies').click(() => {
+        $('.cookie-popup').addClass('hidden');
+
+        Cookies.set("lpCookiesAccepted", 'true');
+    });
 
     if (formSelected === 'register') {
         $('.form-container').removeClass('hidden');

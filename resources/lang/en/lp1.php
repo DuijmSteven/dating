@@ -51,4 +51,5 @@ return [
     'previous' => 'Previous',
     'next' => 'Next',
     'age' => 'Age',
+    'accept' => 'Accept',
 ];

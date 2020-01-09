@@ -51,4 +51,5 @@ return [
     'previous' => 'Vorig',
     'next' => 'Volgende',
     'age' => 'Leeftijd',
+    'accept' => 'Akkord',
 ];
