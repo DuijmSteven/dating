@@ -14,7 +14,7 @@ class MiscController extends FrontendController
             'frontend.misc.tac',
             [
                 'tac' => Tac::where('language', Config::get('app.locale'))->first(),
-                'title' => config('app.name') . ' - Terms & Conditions'
+                'title' => $this->buildTitleWith(trans('view_titles.tac'))
             ]
         );
     }
@@ -24,7 +24,7 @@ class MiscController extends FrontendController
         return view(
             'frontend.misc.privacy',
             [
-                'title' => config('app.name') . ' - Privacy',
+                'title' => $this->buildTitleWith(trans('view_titles.privacy'))
             ]
         );
     }
@@ -40,7 +40,7 @@ class MiscController extends FrontendController
             [
                 'faqs' => $faqs,
                 'faqSections' => $faqSections,
-                'title' => config('app.name') . ' - FAQ',
+                'title' => $this->buildTitleWith(trans('view_titles.faq'))
             ]
         );
     }

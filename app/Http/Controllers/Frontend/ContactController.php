@@ -17,7 +17,7 @@ class ContactController extends FrontendController
         return view(
             'frontend.contact',
             [
-                'title' => config('app.name') . ' - Contact',
+                'title' => $this->buildTitleWith(trans('view_titles.contact')),
             ]
         );
     }

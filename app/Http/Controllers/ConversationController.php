@@ -99,8 +99,6 @@ class ConversationController extends Controller
                 $recipientEmailTypeIds
             );
 
-            \Log::error($recipientEmailTypeIds);
-
             if ($recipientHasMessageNotificationsEnabled) {
                 $onlineUserIds = Activity::users(1)->pluck('user_id')->toArray();
 

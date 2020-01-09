@@ -66,11 +66,8 @@ class UserController extends FrontendController
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param $userName
-     * @return \Illuminate\Http\Response
-     * @internal param $
+     * @param string $username
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(string $username)
     {
@@ -90,7 +87,7 @@ class UserController extends FrontendController
             array_merge(
                 $viewData,
                 [
-                    'title' => 'Profile - '. $user->username
+                    'title' => $this->buildTitleWith(trans('view_titles.single_profile') . ' - '. $user->username)
                 ]
             )
         );
@@ -140,7 +137,9 @@ class UserController extends FrontendController
             array_merge(
                 $viewData,
                 [
-                    'title' => 'Edit Profile - '. $this->authenticatedUser->username,
+                    'title' => $this->buildTitleWith(
+                        trans('view_titles.edit_profile') . ' - '. $this->authenticatedUser->username
+                    ),
                     'carbonInstance' => new Carbon()
                 ]
             )

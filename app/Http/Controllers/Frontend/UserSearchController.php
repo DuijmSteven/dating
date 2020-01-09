@@ -130,7 +130,7 @@ class UserSearchController extends FrontendController
         $viewData = [
             'users' => $users,
             'carbonNow' => Carbon::now(),
-            'title' => config('app.name') . ' - Search results',
+            'title' => $this->buildTitleWith(trans('view_titles.search_results')),
         ];
 
         return view(
@@ -188,7 +188,7 @@ class UserSearchController extends FrontendController
         $viewData = [
             'users' => $users,
             'carbonNow' => Carbon::now(),
-            'title' => config('app.name') . ' - Search results',
+            'title' => $this->buildTitleWith(trans('view_titles.home')),
         ];
 
         return view(

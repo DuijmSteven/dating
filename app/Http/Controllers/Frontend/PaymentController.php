@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Creditpack;
+use App\Mail\CreditsBought;
+use App\Mail\Welcome;
 use Illuminate\Http\Request;
 use App\Interfaces\PaymentProvider;
 use App\Managers\PaymentManager;
 use App\Services\PaymentService;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 
 /**
@@ -69,7 +72,8 @@ class PaymentController extends FrontendController
         session([
             'transactionId' => $transaction['transaction_id'],
             'paymentMethod' => $paymentMethod,
-            'credits' => $creditPack->credits
+            'credits' => $creditPack->credits,
+            'creditPackId' => $creditPack->id
         ]);
 
         return redirect()->away($transaction['redirectUrl']);
@@ -79,11 +83,21 @@ class PaymentController extends FrontendController
     {
         $transactionId = session('transactionId');
         $paymentMethod = session('paymentMethod');
+        $creditPackId = session('creditPackId');
+        $creditPack = Creditpack::find($creditPackId);
 
         $check = $this->paymentProvider->paymentCheck($paymentMethod, $transactionId);
 
+        // TODO check if payment successful to send email conditionally
+        $user = \Auth::user();
+        $creditsBoughtEmail = (new CreditsBought($user, $creditPack))
+            ->onQueue('emails');
+
+        Mail::to($user)
+            ->queue($creditsBoughtEmail);
+
         return view('frontend.thank-you', [
-            'title' => 'Payment - ' . config('app.name'),
+            'title' => $this->buildTitleWith(trans('view_titles.payment')),
             'status' => $check['status'],
             'info' => $check['info']
         ]);
