@@ -2,5 +2,5 @@
 
 return [
     'distance' => 'Distance',
-    'all' => 'Alle',
+    'all' => 'All',
 ];

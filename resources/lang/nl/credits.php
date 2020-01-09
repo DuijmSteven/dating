@@ -1,17 +1,17 @@
 <?php
 
 return [
-    'select_package' => 'Select a package',
+    'select_package' => 'Selecteer een pakket',
     'credits' => 'credits',
-    'per_message' => 'per message',
-    'select' => 'Select',
-    'payment_methods' => 'Payment methods',
-    'register' => 'Register',
-    'age' => 'Age',
-    'package' => 'Package',
-    'they_are_waiting' => 'They are waiting...',
-    'more_info' => 'More info',
-    'to_checkout' => 'Continue to checkout',
+    'per_message' => 'per bericht',
+    'select' => 'Kiezen',
+    'payment_methods' => 'Betaalmethodes',
+    'register' => 'Registreren',
+    'age' => 'Leeftijd',
+    'package' => 'Pakket',
+    'they_are_waiting' => 'Zij zijn aan het wachten...',
+    'more_info' => 'Meer informatie',
+    'to_checkout' => 'Ga door met afrekenen',
     'cart' => 'Cart',
-    'total' => 'Total',
+    'total' => 'Totaal',
 ];

@@ -45,7 +45,7 @@ return [
             'text' => 'Your data stay safe with us',
         ]
     ],
-    'a_group_of_members' => 'Een greep uit onze leden',
+    'a_group_of_members' => 'Some of our members',
     'more_info' => 'More Info',
     'success_stories' => 'Success Stories',
     'previous' => 'Previous',

@@ -161,6 +161,11 @@
         color: #fff;
     }
 
+    .btn-register-login:hover {
+        background-color: #fe6d35;
+        color: #fff;
+    }
+
     .carousel-control-next-icon {
         background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%232e3142' viewBox='0 0 8 8'%3e%3cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3e%3c/svg%3e");
     }
@@ -189,7 +194,7 @@
         color: #ef4f2b;
     }
 
-    footer img {
+    footer .Footer__logo img {
         width: 110px;
         height: 110px;
         padding-top: 3rem;
@@ -316,6 +321,30 @@
 
     .input-group .form-control {
         z-index: unset;
+    }
+
+    .Footer__logo-container {
+        position: relative;
+    }
+
+    .language-selection {
+        position: absolute;
+        right: 0;
+        bottom: 40px;
+    }
+
+    @media screen and (max-width: 700px) {
+        .language-selection {
+            bottom: -10px;
+        }
+    }
+
+    .language-selection a {
+        display: inline-block;
+    }
+
+    .language-selection a .flagImage {
+        width: 40px;
     }
 </style>
 <body class="landingPage">
@@ -684,6 +713,19 @@
             </div>
             <div class="col-md-12 copyright">
                 <h5>{{ @trans('footer.copyright', ['currentYear' => $carbonNow->year]) }}</h5>
+            </div>
+
+            <div class="language-selection">
+                <a href="{{ route('landing-page.show', ['locale' => 'nl']) }}">
+                    <div class="flagImageWrapper">
+                        <img class="flagImage" src="{{ asset('img/flags/nl.png') }}" alt="">
+                    </div>
+                </a> |
+                <a href="{{ route('landing-page.show', ['locale' => 'en']) }}">
+                    <div class="flagImageWrapper">
+                        <img class="flagImage" src="{{ asset('img/flags/uk.svg') }}" alt="">
+                    </div>
+                </a>
             </div>
         </div>
     </div>

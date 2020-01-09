@@ -9,7 +9,7 @@ return [
     'company_data' => 'Company data',
     'contact' => 'Contact',
     'legal' => 'Legal',
-    'tac' => 'Algemene Voorwarden',
-    'privacy' => 'Privacybeleid',
+    'tac' => 'Terms & Conditions',
+    'privacy' => 'Privacy',
     'copyright' => 'Copyright © :currentYear altijdsex.nl',
 ];

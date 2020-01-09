@@ -1,7 +1,8 @@
 <?php
 
 return [
-    'general_error' => 'Er was en problem.',
-    'not_enough_credits' => 'Geen credits',
-    'refill' => 'Credits kopen',
+    'general_error' => 'Er is een fout opgetreden',
+    'not_enough_credits' => 'Niet genoeg credits',
+    'refill' => 'Koop credits',
+    'conversations' => 'Conversaties',
 ];

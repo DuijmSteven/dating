@@ -15,7 +15,7 @@ return [
     'no_images' => 'No images found',
     'actions' => 'Actions',
     'delete' => 'Delete',
-    'set_profile' => 'Set profile',
+    'set_profile' => 'Set as profile image',
     'no_profile_image_set' => 'No profile image set',
     'about_me_placeholder' => 'Let other get to know you a bit. What makes you happy? What irritates you? What makes you excited? Users that share a bit about themselves tend to get a lot more attention!',
 ];

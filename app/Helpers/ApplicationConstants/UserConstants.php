@@ -109,7 +109,7 @@ class UserConstants
                     8 => 'pink'
                 ],
                 'smoking_habits' => [
-                    1 => 'yes',
+                    1 => 'regular',
                     2 => 'social',
                     3 => 'none'
                 ],

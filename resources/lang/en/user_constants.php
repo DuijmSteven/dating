@@ -56,14 +56,14 @@ return [
         8 => 'Pink'
     ],
     'smoking_habits' => [
-        1 => 'Yes',
+        1 => 'Regular',
         2 => 'Social',
-        3 => 'None'
+        3 => 'I never smoke'
     ],
     'drinking_habits' => [
-        1 => 'Yes',
+        1 => 'Regular',
         2 => 'Social',
-        3 => 'None'
+        3 => 'I never drink'
     ],
     'about_me' => 'About me',
     'looking_for' => 'Looking for',
@@ -76,7 +76,7 @@ return [
     'username' => 'Username',
     'labels' => [
         'gender' => 'Gender',
-        'looking_for_gender' => 'Looking for gender',
+        'looking_for_gender' => 'Looking for',
         'relationship_status' => 'Relationship status',
         'body_type' => 'Body type',
         'height' => 'Height',

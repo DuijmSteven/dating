@@ -6,11 +6,22 @@ namespace App\Http\Controllers\Frontend;
 use App;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class LandingPageController extends FrontendController
 {
-    public function show()
+    public function show(Request $request)
     {
+        $locale = 'nl';
+
+        $localeFromRequest = $request->get('locale');
+
+        if ($localeFromRequest && in_array($localeFromRequest, ['nl', 'en'])) {
+            $locale = $request->get('locale');
+        }
+
+        app()->setLocale($locale);
+
         $users = User::whereHas('roles', function ($query) {
             $query->where('name', 'peasant')
                 ->orWhere('name', 'bot');

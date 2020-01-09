@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'privacy_explanation' => 'Privacyverklaring',
+    'privacy_explanation' => 'Privacy explanation',
 ];

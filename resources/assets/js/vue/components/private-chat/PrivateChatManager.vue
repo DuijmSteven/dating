@@ -10,7 +10,7 @@
         }">
         <div class="PrivateChatManager__head">
             <div class="PrivateChatManager__head__title">
-                <span class="PrivateChatManager__head__title__text">Conversations ({{ conversations.length }})</span>
+                <span class="PrivateChatManager__head__title__text">{{ $parent.chatTranslations['conversations'] }} ({{ conversations.length }})</span>
             </div>
             <div class="PrivateChatManager__head__actionIcons">
                 <div v-on:click="toggle"

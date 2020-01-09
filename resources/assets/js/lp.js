@@ -45,9 +45,9 @@ window.addEventListener('load', function () {
 $(window).on('load', function () {
     require('./global_helpers');
 
-    var data = Cookies.get("lpFormSelection");
+    var formSelected = Cookies.get("lpFormSelection");
 
-    if (data === 'register') {
+    if (formSelected === 'register') {
         $('.form-container').removeClass('hidden');
         $('#JS--registrationForm').toggle('fast');
     } else {

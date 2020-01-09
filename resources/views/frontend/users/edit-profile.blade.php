@@ -371,7 +371,7 @@
                                         'buttonType' => 'submit',
                                         'buttonState' => 'primary',
                                         'buttonText' => @trans('edit_profile.set_profile'),
-                                        'buttonClasses' => 'Button-fw'
+                                        'buttonClasses' => 'Button-fw bottom-spacing'
                                     ])
 
                                     <form method="POST"

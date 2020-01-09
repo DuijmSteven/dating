@@ -1,13 +1,13 @@
 <?php
 
 return [
-    'edit_profile' => 'Edit profile',
+    'edit_profile' => 'Bewerk profiel',
     'credits' => 'Credits',
-    'logout' => 'Logout',
+    'logout' => 'Uitloggen',
     'home' => 'Home',
-    'login' => 'Login',
-    'register' => 'Register',
-    'language' => 'Language',
-    'english' => 'English',
-    'dutch' => 'Dutch',
+    'login' => 'Log in',
+    'register' => 'Registreer',
+    'language' => 'Taal',
+    'english' => 'Engels',
+    'dutch' => 'Nederlands',
 ];

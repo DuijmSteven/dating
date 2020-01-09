@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'tac' => 'Algemene Voorwaarden',
+    'tac' => 'Terms & Conditions',
 ];

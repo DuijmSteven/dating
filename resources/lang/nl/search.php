@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'distance' => 'Distance',
+    'distance' => 'Afstand',
     'all' => 'Alle',
 ];

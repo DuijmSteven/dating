@@ -1,10 +1,10 @@
 <?php
 
 return [
-    'information' => 'Information',
+    'information' => 'Informatie',
     'about_me' => 'Over mij',
     'feedback' => [
-        'profile_updated' => 'Your profile has been updated successfully.',
-        'profile_not_updated' => 'There was an error. Please try again or contact support.'
+        'profile_updated' => 'Je profiel is succesvol bijgewerkt.',
+        'profile_not_updated' => 'Er is een fout opgetreden. Probeer het opnieuw of neem contact op met support.'
     ]
 ];

@@ -8,7 +8,7 @@ return [
     'address' => 'Address',
     'support_email' => 'Support email',
     'send_a_message' => 'Send a message',
-    'email' => 'Email',
+    'email' => 'E-mail',
     'name' => 'Name',
     'subject' => 'Subject',
     'message' => 'Your message',
