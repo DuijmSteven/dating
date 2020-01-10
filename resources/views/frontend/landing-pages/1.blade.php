@@ -321,10 +321,8 @@
 
     .roundImage {
         position: absolute;
-        left: 50%;
-        top: 50%;
-        height: 130%;
-        width: auto;
+        height: auto;
+        width: 100%;
         -webkit-transform: translate(-50%, -50%);
         -ms-transform: translate(-50%, -50%);
         transform: translate(-50%, -50%);
@@ -392,6 +390,11 @@
 
     .language-selection a .flagImage {
         width: 40px;
+    }
+
+    .fitVertically {
+        height: 100%;
+        width: auto;
     }
 </style>
 <body class="landingPage">
@@ -644,7 +647,7 @@
             @foreach ($users as $user)
                 <div class="col-lg-2 col-md-4 col-sm-12 mb-4">
                     <a href="{{ route('users.show', ['username' => $user->getUsername()]) }}">
-                        <div class="roundImageWrapper">
+                        <div class="roundImageWrapper fitHorizontally">
                             <img
                                 data-src="{{ \StorageHelper::profileImageUrl($user, true) }}"
                                 src=""
