@@ -124,12 +124,12 @@ function fitImageToContainer(element) {
     //var containerHeight = element.height();
     //var containerWidth = element.width();
 
-    const $imageToFit = $(element).find('img');
+    let $imageToFit = $(element).find('img');
 
     var imageToFitHeight = $imageToFit.height();
     var imageToFitWidth = $imageToFit.width();
 
-    if (imageToFitWidth < imageToFitHeight) {
+    if (imageToFitWidth > imageToFitHeight) {
 
         $imageToFit.addClass('fitVertically');
         // $imageToFit.css("width", "auto");

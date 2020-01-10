@@ -391,7 +391,7 @@
         width: 40px;
     }
 
-    .fitVertically {
+    .roundImage.fitVertically {
         top: 0;
         bottom: 0;
         height: 100%;
@@ -648,7 +648,7 @@
             @foreach ($users as $user)
                 <div class="col-lg-2 col-md-4 col-sm-12 mb-4">
                     <a href="{{ route('users.show', ['username' => $user->getUsername()]) }}">
-                        <div class="roundImageWrapper fitHorizontally">
+                        <div class="roundImageWrapper">
                             <img
                                 data-src="{{ \StorageHelper::profileImageUrl($user, true) }}"
                                 src=""
