@@ -113,6 +113,8 @@ class UserSearchManager
             $query->whereIn('id', [Role::ROLE_PEASANT, Role::ROLE_BOT]);
         });
 
+        $query->where('id', '!=', \Auth::user()->getId());
+
         if (!$paginated) {
             if (null !== $ordering) {
                 if ($ordering['type'] = self::ORDERING_TYPE_RANDOMIZED) {
