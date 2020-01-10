@@ -39,14 +39,16 @@
                 {{ csrf_field() }}
                 <div class="col-md-6">
                     <h4>{{ trans('credits.select') }}</h4>
-                    <ul class="list-group mb-3 JS--paymentMethods">
+                    <ul class="list-group mb-3 JS--paymentMethods paymentMethodsList">
                         <li class="list-group-item d-flex justify-content-between"
                             style="margin-bottom: 10px; flex-wrap: wrap;">
-                            <div>
-                                <label><input type="radio" name="paymentMethod" value="ideal" required> <span
-                                        style="margin-left: 5px">iDeal</span></label>
-                            </div>
-                            <span class="text-muted"><img src="{{ asset('img/icons/ideal.png') }}"/></span>
+                            <label class="paymentMethodsLabel">
+                                <input type="radio" name="paymentMethod" value="ideal" required>
+                                <span style="margin-left: 5px">iDeal</span>
+                            </label>
+                            <span class="paymentMethodLogo">
+                                <img src="{{ asset('img/icons/ideal.png') }}"/>
+                            </span>
                             <div class="break" style="flex-basis: 100%; height: 0;"></div>
                             <div class="JS--banksContainer" style="display: none; margin-top: 20px">
                                 <div class="form-group form-inline" style="display: contents">
@@ -74,11 +76,11 @@
                             <span class="text-muted"><img src="{{ asset('img/icons/credit-cards.png') }}"/></span>
                         </li>--}}
                         <li class="list-group-item d-flex justify-content-between">
-                            <div>
-                                <label><input type="radio" name="paymentMethod" value="paysafe"> <span
-                                        style="margin-left: 5px">Paysafecard</span></label>
-                            </div>
-                            <span class="text-muted"><img src="{{ asset('img/icons/paysafecard.png') }}"/></span>
+                            <label class="paymentMethodsLabel">
+                                <input type="radio" name="paymentMethod" value="paysafe">
+                                <span style="margin-left: 5px">Paysafecard</span>
+                            </label>
+                            <span class="paymentMethodLogo"><img src="{{ asset('img/icons/paysafecard.png') }}"/></span>
                         </li>
                     </ul>
                 </div>
