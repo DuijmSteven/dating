@@ -102,10 +102,6 @@
         margin-top: 1.375rem;
     }
 
-    .recent-container img {
-        max-width: 170px;
-    }
-
     form label {
         font-family: comfortaa, sans-serif;
         color: #ef4f2b;
