@@ -152,13 +152,14 @@ $(window).on('load', function () {
     }
 
     if ($('.JS--creditpack').length > 0) {
-        $('.JS--creditpack .btn').click(function () {
+        $('.JS--creditpack').click(function () {
             $('.table-rose').removeClass('table-rose');
             $('.block-raised').removeClass('block-raised');
             $('.btn-white').removeClass('btn-white').addClass('btn-rose');
-            $(this).closest('.JS--creditpack').addClass('block-raised');
-            $(this).closest('.table').addClass('table-rose');
-            $(this).addClass('btn-white');
+
+            $(this).addClass('block-raised');
+            $(this).find('.table').addClass('table-rose');
+            $(this).find('.btn').addClass('btn-white');
 
             let creditPackId = $('.block-raised').data('creditpack-id');
 

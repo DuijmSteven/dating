@@ -91,7 +91,7 @@
                         class="fetchMoreButton"
                         v-on:click="fetchOlderMessages()"
                     >
-                        fetch older messages
+                        {{ this.$parent.chatTranslations['older_messages'] }}
                         <i class="material-icons">
                             get_app
                         </i>
@@ -108,14 +108,14 @@
                         v-if="allMessagesFetched && (displayedMessages.length >= messagesPerRequest)"
                         class="allMessagesFetched"
                     >
-                        There are no more messages to fetch
+                        {{ this.$parent.chatTranslations['no_more_messages'] }}
                     </div>
 
                     <div
                         v-if="allMessagesFetched && displayedMessages.length === 0"
                         class="allMessagesFetched"
                     >
-                        There are no messages yet
+                        {{ this.$parent.chatTranslations['no_messages_yet'] }}
                     </div>
 
                     <chat-message
@@ -446,14 +446,14 @@
                                 this.errorMessages = [];
                             }, 3000);
                         } else {
-                            this.errorMessages = this.$parent.chatTranslations['general_error'];
+                            this.errorMessages.push(this.$parent.chatTranslations['general_error']);
 
                             setTimeout(() => {
                                 this.errorMessages = [];
                             }, 3000)
                         }
                     } else {
-                        this.errorMessages = this.$parent.chatTranslations['general_error'];
+                        this.errorMessages.push(this.$parent.chatTranslations['general_error']);
 
                         setTimeout(() => {
                             this.errorMessages = [];
