@@ -36,10 +36,15 @@
 
     &:active {
         box-shadow: map_get($button, box-shadow__active);
+        color: map_get($button, font-color);
+        outline: 0;
+        text-decoration: none;
     }
 
     &:focus {
         outline: 0;
+        color: map_get($button, font-color);
+        text-decoration: none;
     }
 
     .Button__content {

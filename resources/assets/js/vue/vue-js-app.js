@@ -54,6 +54,15 @@ if ($('#app').length > 0) {
                     }
                 );
             },
+            fitRoundImageToContainer: function (element) {
+                let containerHeight = element.height();
+                let $imageToFit = $(element).find('img');
+                let imageToFitHeight = $imageToFit.height();
+
+                if (containerHeight > imageToFitHeight) {
+                    $imageToFit.addClass('fitVertically');
+                }
+            },
             getConversationPartners: function () {
                 axios.get('/api/conversations/conversation-partner-ids/' + parseInt(DP.authenticatedUser.id)).then(
                     response => {

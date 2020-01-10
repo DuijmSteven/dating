@@ -9,7 +9,7 @@
         >
             <div class="PrivateChatItem__head__wrapper">
                 <div class="PrivateChatItem__user">
-                    <div class="PrivateChatItem__profilePicture__wrapper">
+                    <div class="PrivateChatItem__profilePicture__wrapper JS--roundImageWrapper">
                         <img class="PrivateChatItem__profilePicture"
                              :src="partner.profileImageUrlThumb">
                     </div>
@@ -177,12 +177,16 @@
         },
 
         created() {
-
-
             this.statusClass = this.partner.chatState === '1' ? 'maximized' : 'minimized';
             this.isMaximized = this.partner.chatState === '1';
 
             this.fetchMessagesAndListenToChannel();
+        },
+
+        mounted() {
+            $('.JS--roundImageWrapper').each((index, element) => {
+                this.$parent.fitRoundImageToContainer($(element));
+            });
         },
 
         methods: {
