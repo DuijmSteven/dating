@@ -151,31 +151,6 @@ $(window).on('load', function () {
         });
     }
 
-    // if ($('.landingPage').length > 0) {
-    //     var data = Cookies.get("lpFormSelection");
-    //
-    //     if (data === 'register') {
-    //         $('#JS--registrationForm').toggle('fast');
-    //     } else {
-    //         $('#JS--loginForm').toggle('fast');
-    //     }
-    //
-    //     $('#JS--registerButton').click(function(){
-    //         $('#JS--loginForm').toggle('fast');
-    //         $('#JS--registrationForm').toggle('fast');
-    //
-    //         Cookies.set("lpFormSelection", 'register');
-    //     });
-    //
-    //     $('#JS--loginButton').click(function(){
-    //         $('#JS--registrationForm').toggle('fast');
-    //         $('#JS--loginForm').toggle('fast');
-    //
-    //         Cookies.set("lpFormSelection", 'login');
-    //     });
-    //
-    // }
-
     if ($('.JS--creditpack').length > 0) {
         $('.JS--creditpack .btn').click(function () {
             $('.table-rose').removeClass('table-rose');
@@ -214,14 +189,20 @@ $(window).on('load', function () {
         });
     }
 
+    if ($('.JS--roundImageWrapper').length > 0) {
+        $('.JS--roundImageWrapper').each((index, element) => {
+            fitRoundImageToContainer($(element));
+        });
+    }
+
     if($('.JS--UserSummary').length > 0) {
         $('.JS--UserSummary__user-image').each((index, element) => {
-            fitImageToContainer($(element));
+            fitGeneralImageToContainer($(element));
         });
 
         if ($('.JS--UserSummary__otherImages').length > 0) {
             $('.JS--UserSummary__nonProfileImageWrapper').each((index, element) => {
-                fitImageToContainer($(element));
+                fitGeneralImageToContainer($(element));
             });
         }
 
@@ -240,13 +221,6 @@ $(window).on('load', function () {
     }
 
     if ($('.JS--searchToggle').length > 0) {
-        var searchBarState = Cookies.get('searchBarState');
-
-        // if (searchBarState === 'open') {
-        //     $('.JS--SearchBar').removeClass('hidden');
-        //     $('.JS--searchToggleButton').addClass('pressed');
-        // }
-
         $('.JS--searchToggle').click((event) => {
             event.preventDefault();
             $('.JS--SearchBar').toggleClass('hidden');
@@ -270,7 +244,7 @@ $(window).on('load', function () {
 
 });
 
-function fitImageToContainer(element) {
+function fitGeneralImageToContainer(element) {
     var containerHeight = element.height();
     var containerWidth = element.width();
 
@@ -286,6 +260,16 @@ function fitImageToContainer(element) {
 
         const imageWidth = parseInt(profileImageWidth.replace('px', ''));
         $profileImage.css("margin-left", - (imageWidth - containerWidth)/2);
+    }
+}
+
+function fitRoundImageToContainer(element) {
+    let containerHeight = element.height();
+    let $imageToFit = $(element).find('img');
+    let imageToFitHeight = $imageToFit.height();
+
+    if (containerHeight > imageToFitHeight) {
+        $imageToFit.addClass('fitVertically');
     }
 }
 

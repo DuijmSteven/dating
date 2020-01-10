@@ -111,7 +111,7 @@
             @foreach ($users as $user)
                 <div class="col-lg-2 col-md-4 col-sm-12">
                     <a href="{{ route('users.show', ['username' => $user->getUsername()]) }}">
-                        <div class="imageWrapper">
+                        <div class="imageWrapper JS--roundImageWrapper">
                             <img
                                 src="{{ \StorageHelper::profileImageUrl($user, true) }}"
                                 class="profileImage"

@@ -26,16 +26,16 @@ function getCoordinatesAndFillInputs() {
 }
 
 window.addEventListener('load', function () {
-    var allimages = document.getElementsByTagName('img');
-    for (var i = 0; i < allimages.length; i++) {
-        if (allimages[i].getAttribute('data-src')) {
-            allimages[i].setAttribute('src', allimages[i].getAttribute('data-src'));
-        }
-    }
+    // var allimages = document.getElementsByTagName('img');
+    // for (var i = 0; i < allimages.length; i++) {
+    //     if (allimages[i].getAttribute('data-src')) {
+    //         allimages[i].setAttribute('src', allimages[i].getAttribute('data-src'));
+    //     }
+    // }
 
     setTimeout(() => {
         $('.roundImageWrapper').each((index, element) => {
-            fitImageToContainer($(element));
+            fitRoundImageToContainer($(element));
         });
 
     }, 100);
@@ -120,25 +120,13 @@ $(window).on('load', function () {
     }
 });
 
-function fitImageToContainer(element) {
-    var containerHeight = element.height();
-    //var containerWidth = element.width();
-
+function fitRoundImageToContainer(element) {
+    let containerHeight = element.height();
     let $imageToFit = $(element).find('img');
-
-    var imageToFitHeight = $imageToFit.height();
-    var imageToFitWidth = $imageToFit.width();
+    let imageToFitHeight = $imageToFit.height();
 
     if (containerHeight > imageToFitHeight) {
-
         $imageToFit.addClass('fitVertically');
-        // $imageToFit.css("width", "auto");
-        // $imageToFit.css("height", containerHeight);
-        //
-        // const imageToFitWidth = $imageToFit.css('width');
-        //
-        // const imageWidth = parseInt(imageToFitWidth.replace('px', ''));
-        // $profileImage.css("margin-left", - (imageWidth - containerWidth)/2);
     }
 }
 

@@ -8,13 +8,18 @@
             'PrivateChatManager--md': $mq === 'md',
             'PrivateChatManager--lg': $mq === 'lg'
         }">
-        <div class="PrivateChatManager__head">
+        <div v-on:click="toggle"
+            class="PrivateChatManager__head"
+        >
             <div class="PrivateChatManager__head__title">
-                <span class="PrivateChatManager__head__title__text">{{ $parent.chatTranslations['conversations'] }} ({{ conversations.length }})</span>
+                <span
+                    v-if="$parent.chatTranslations"
+                    class="PrivateChatManager__head__title__text">
+                    {{ $parent.chatTranslations['conversations'] }} ({{ conversations.length }})
+                </span>
             </div>
             <div class="PrivateChatManager__head__actionIcons">
-                <div v-on:click="toggle"
-                     id="PrivateChatManager__toggle"
+                <div id="PrivateChatManager__toggle"
                      class="PrivateChatManager__toggle"
                 >
                     <i class="PrivateChatManager__toggle__icon--minimize material-icons"
@@ -41,7 +46,7 @@
             >
                 <div class="PrivateChatManager__item__left">
                     <div class="PrivateChatManager__item__profilePicture__secondWrapper">
-                        <div class="PrivateChatManager__item__profilePicture__wrapper">
+                        <div class="PrivateChatManager__item__profilePicture__wrapper JS--roundImageWrapper">
                             <img class="PrivateChatManager__item__profilePicture"
                                  :src="profileImageUrl(conversation.otherUserId, conversation.otherUserProfileImage, conversation.otherUserGender)"
                                  alt="profile-image"
@@ -242,6 +247,10 @@
         mounted() {
             this.$root.$on('fetchUserConversations', () => {
                 this.fetchUserConversations();
+            });
+
+            $('.JS--roundImageWrapper').each((index, element) => {
+                this.$parent.fitRoundImageToContainer($(element));
             });
         }
     }
