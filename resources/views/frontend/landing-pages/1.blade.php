@@ -322,10 +322,9 @@
     .roundImage {
         position: absolute;
         height: auto;
+        left: 0;
+        right: 0;
         width: 100%;
-        -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
     }
 
     .Footer__section-title {
@@ -393,6 +392,8 @@
     }
 
     .fitVertically {
+        top: 0;
+        bottom: 0;
         height: 100%;
         width: auto;
     }
