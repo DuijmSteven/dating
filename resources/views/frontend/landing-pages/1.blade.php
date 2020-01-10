@@ -652,8 +652,8 @@
                     <a href="{{ route('users.show', ['username' => $user->getUsername()]) }}">
                         <div class="roundImageWrapper">
                             <img
-                                data-src="{{ \StorageHelper::profileImageUrl($user, true) }}"
-                                src=""
+{{--                                data-src="{{ \StorageHelper::profileImageUrl($user, true) }}"--}}
+                                src="{{ \StorageHelper::profileImageUrl($user, true) }}"
                                 class="roundImage"
                                 alt=""
                             >
@@ -680,8 +680,8 @@
                         <div class="text-center">
                             <div class="roundImageWrapper">
                                 <img class="roundImage"
-                                     data-src="{{ $testimonial['imgSource'] }}"
-                                     src=""
+{{--                                     data-src="{{ $testimonial['imgSource'] }}"--}}
+                                     src="{{ $testimonial['imgSource'] }}"
                                      alt="">
                             </div>
                         </div>
