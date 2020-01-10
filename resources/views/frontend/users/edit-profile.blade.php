@@ -14,7 +14,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="username">{{ trans('user_constants.about_me') }}</label>
+                                <label for="username">{{ trans('user_constants.username') }}</label>
                                 <input type="text"
                                        class="form-control"
                                        id="username"
