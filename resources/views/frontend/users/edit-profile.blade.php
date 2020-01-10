@@ -19,7 +19,7 @@
                                        class="form-control"
                                        id="username"
                                        name="username"
-                                       required
+                                       disabled
                                        value="{!! $user->username !!}"
                                 >
                                 @if ($errors->has('username'))
