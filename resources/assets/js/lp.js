@@ -121,21 +121,24 @@ $(window).on('load', function () {
 });
 
 function fitImageToContainer(element) {
-    var containerHeight = element.height();
-    var containerWidth = element.width();
+    //var containerHeight = element.height();
+    //var containerWidth = element.width();
 
-    const $profileImage = $(element).find('img');
+    const $imageToFit = $(element).find('img');
 
-    var profileImageHeight = $profileImage.height();
+    var imageToFitHeight = $imageToFit.height();
+    var imageToFitWidth = $imageToFit.width();
 
-    if (profileImageHeight > 30 && profileImageHeight < containerHeight + 5) {
-        $profileImage.css("width", "auto");
-        $profileImage.css("height", containerHeight);
+    if (imageToFitWidth < imageToFitHeight) {
 
-        const profileImageWidth = $profileImage.css('width');
-
-        const imageWidth = parseInt(profileImageWidth.replace('px', ''));
-        $profileImage.css("margin-left", - (imageWidth - containerWidth)/2);
+        $imageToFit.addClass('fitVertically');
+        // $imageToFit.css("width", "auto");
+        // $imageToFit.css("height", containerHeight);
+        //
+        // const imageToFitWidth = $imageToFit.css('width');
+        //
+        // const imageWidth = parseInt(imageToFitWidth.replace('px', ''));
+        // $profileImage.css("margin-left", - (imageWidth - containerWidth)/2);
     }
 }
 
