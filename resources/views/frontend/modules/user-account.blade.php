@@ -13,7 +13,7 @@
                 <i class="fa fa-user"></i>
             </div>
             <div class="User-account__item__text">
-                <a href="{!! route('edit-profile.get') !!}">Edit profile and images</a>
+                <a href="{!! route('users.edit-profile.get', ['userId' => $authenticatedUser->getUsername()]) !!}">Edit profile and images</a>
             </div>
         </div>
         <div class="User-account__item">
