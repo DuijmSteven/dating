@@ -59,8 +59,9 @@ if ($('#app').length > 0) {
                 let containerHeight = element.height();
                 let $imageToFit = $(element).find('img');
                 let imageToFitHeight = $imageToFit.height();
+                let imageToFitWidth = $imageToFit.width();
 
-                if (containerHeight > imageToFitHeight) {
+                if (imageToFitWidth > imageToFitHeight) {
                     $imageToFit.addClass('fitVertically');
                 }
             },
