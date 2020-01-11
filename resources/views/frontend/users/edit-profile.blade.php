@@ -401,6 +401,30 @@
                     </tbody>
                 </table>
             </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <hr/>
+                </div>
+            </div>
+
+            <label for="">{{ @trans('edit_profile.account_deactivation') }}</label>
+
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <p>{{ trans('edit_profile.deactivation_text') }}</p>
+
+                    <div class="text-left">
+                        @include('frontend.components.button', [
+                            'buttonContext' => 'form',
+                            'buttonState' => 'danger',
+                            'buttonText' => @trans('edit_profile.deactivate')
+                        ])
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
