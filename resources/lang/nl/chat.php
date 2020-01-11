@@ -7,5 +7,5 @@ return [
     'conversations' => 'Conversaties',
     'older_messages' => 'Oudere berichten',
     'no_more_messages' => 'Geen meer berichten',
-    'no_messages_yet' => 'Geeb berichten',
+    'no_messages_yet' => 'Geen berichten',
 ];
