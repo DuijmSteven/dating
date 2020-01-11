@@ -62,10 +62,10 @@ class ConversationController extends Controller
         $recipientId = $messageData['recipient_id'];
 
         /** @var User $recipient */
-        $recipient = User::find($recipientId);
+        $recipient = User::with('emailTypes')->find($recipientId);
 
         /** @var User $sender */
-        $sender = User::with('emailTypes')->find($senderId);
+        $sender = User::find($senderId);
 
         $senderCredits = $sender->account->credits;
 
