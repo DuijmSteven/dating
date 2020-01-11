@@ -6,7 +6,6 @@ use App\ConversationMessage;
 use App\EmailType;
 use App\Http\Requests\Admin\Conversations\MessageCreateRequest;
 use App\Mail\MessageReceived;
-use App\Mail\Welcome;
 use App\Managers\ConversationManager;
 use App\OpenConversationPartner;
 use App\User;

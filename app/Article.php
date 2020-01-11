@@ -2,13 +2,11 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * Class Article
  * @package App
  */
-class Article extends Model
+class Article extends TimeZonedModel
 {
     public $fillable = [
         'title',

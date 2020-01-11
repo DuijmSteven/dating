@@ -113,7 +113,7 @@ trait RegistersUsers
         }
         DB::commit();
 
-        $welcomeEmail = (new Welcome($createdUser))->onQueue('emails');
+        $welcomeEmail = (new    Welcome($createdUser))->onQueue('emails');
 
         Mail::to($createdUser)
             ->queue($welcomeEmail);

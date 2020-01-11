@@ -10,6 +10,8 @@ import VuejsDialog from 'vuejs-dialog';
 
 import VueMq from 'vue-mq';
 
+Vue.use(require('vue-moment'));
+
 Vue.use(VueMq, {
     breakpoints: {
         xs: 768,

@@ -64,7 +64,7 @@
                         <div class="PrivateChatManager__item__userName">
                             {{ conversation.otherUserUsername }}
                         </div>
-                        <span class="PrivateChatManager__item__date">{{ conversation.conversation_updated_at | formatDate }}</span>
+                        <span class="PrivateChatManager__item__date">{{ conversation.conversation_updated_at | moment("add", "1 hours") | formatDate }}</span>
                     </div>
                     <div class="PrivateChatManager__item__lastMessage">
                         {{ conversation.last_message_type === 'generic' ?

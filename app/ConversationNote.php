@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class ConversationNote extends Model
+class ConversationNote extends TimeZonedModel
 {
     public $table = 'conversation_notes';
 

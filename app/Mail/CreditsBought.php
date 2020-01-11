@@ -36,6 +36,6 @@ class CreditsBought extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->view('emails.credits-bought');
+        return $this->subject(trans('emails.credits_bought'))->view('emails.credits-bought');
     }
 }

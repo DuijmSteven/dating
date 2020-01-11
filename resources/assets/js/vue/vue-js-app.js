@@ -11,7 +11,7 @@ if ($('#app').length > 0) {
             conversationPartners: [],
             previousConversationPartnersResponse: undefined,
             currentConversationPartnersResponse: undefined,
-            intervalToFetchPartners: undefined,
+            intervalToFetchData: undefined,
             userCredits: undefined,
             onlineUserIds: undefined,
             chatTranslations: undefined
@@ -27,8 +27,9 @@ if ($('#app').length > 0) {
                     this.chatTranslations = response.data;
                 });
 
-                this.intervalToFetchPartners = setInterval(() => {
-                    this.getConversationPartners()
+                this.intervalToFetchData = setInterval(() => {
+                    this.getConversationPartners();
+                    this.getOnlineUserIds();
                 }, 5000);
             }
         },
@@ -84,7 +85,7 @@ if ($('#app').length > 0) {
                 );
             },
             addChat: function (currentUserId, userBId, state = '1', persist = false) {
-                if (this.conversationPartners.length > 4) {
+                if (this.conversationPartners.length > 3) {
                     return false;
                 }
 
