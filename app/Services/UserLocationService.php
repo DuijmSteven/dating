@@ -4,7 +4,6 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Request;
 use Stevebauman\Location\Facades\Location;
-use Stevebauman\Location\Position;
 
 /**
  * Class UserLocationService

@@ -1,4 +1,5 @@
 require('./bootstrap');
+require('bootstrap-datepicker');
 require("jquery-ui/ui/widgets/autocomplete");
 
 import isUndefined from "admin-lte/bower_components/moment/src/lib/utils/is-undefined";

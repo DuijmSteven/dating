@@ -52,4 +52,5 @@ return [
     'next' => 'Next',
     'age' => 'Age',
     'accept' => 'Accept',
+    'select_city_again' => 'Please select again'
 ];

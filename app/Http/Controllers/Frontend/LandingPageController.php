@@ -6,7 +6,9 @@ namespace App\Http\Controllers\Frontend;
 use App;
 use App\User;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Spatie\Geocoder\Geocoder;
 
 class LandingPageController extends FrontendController
 {

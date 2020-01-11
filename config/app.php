@@ -198,6 +198,7 @@ return [
         App\Providers\FacadeServiceProvider::class,
         App\Providers\ValidationServiceProvider::class,
 
+        Spatie\Geocoder\GeocoderServiceProvider::class
     ],
 
     /*
@@ -261,6 +262,7 @@ return [
         'TargetPay' => TPWeb\TargetPay\TargetPayFacade::class,
         'Broadcast' => Illuminate\Support\Facades\Broadcast::class,
         'Mapper' => Cornford\Googlmapper\Facades\MapperFacade::class,
+        'Geocoder' => Spatie\Geocoder\Facades\Geocoder::class,
     ],
 
 ];

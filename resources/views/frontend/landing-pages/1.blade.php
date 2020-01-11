@@ -392,6 +392,10 @@
         height: 100%;
         width: auto;
     }
+
+    .datepicker {
+        font-size: 1.7rem;
+    }
 </style>
 <body class="landingPage">
 <header>
@@ -482,6 +486,8 @@
                             >
                             @if ($errors->has('city'))
                                 {!! $errors->first('city', '<small class="form-error">:message</small>') !!}
+{{--                            @elseif ($errors->has('lat') || $errors->has('lat'))--}}
+{{--                                <small class="form-error">{{ @trans('lp1.select_city_again') }}</small>--}}
                             @endif
                         </div>
                     </div>
