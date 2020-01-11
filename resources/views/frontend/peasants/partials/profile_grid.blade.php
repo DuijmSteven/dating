@@ -1,6 +1,6 @@
 @if(count($users) == 0)
     <div>
-        <p style="margin-bottom: 50px">
+        <p style="margin-bottom: 1300px">
             {{ trans('profile_grid.no_matching_users') }}
         </p>
     </div>

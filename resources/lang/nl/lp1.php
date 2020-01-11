@@ -52,4 +52,5 @@ return [
     'next' => 'Volgende',
     'age' => 'Leeftijd',
     'accept' => 'Akkord',
+    'select_city_again' => 'Kies nog een keer'
 ];
