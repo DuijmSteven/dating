@@ -90,7 +90,7 @@ class StorageHelper
      * @param string|null $filename
      * @return mixed|string
      */
-    public static function profileImageUrlFromId(int $userId, string $filename, $gender)
+    public static function profileImageUrlFromId(int $userId, $gender, string $filename = null)
     {
         if (!in_array($gender, [1, 2, '1', '2', 'male', 'female'])) {
             \Log::error(__FUNCTION__ . ' in ' . __CLASS__ . ' : Wrong gender parameter passed (' . $gender . ')');
