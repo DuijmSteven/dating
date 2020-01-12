@@ -9,7 +9,7 @@
     <p style="font-family: sans-serif; font-weight: normal; margin: 0; Margin-bottom: 15px;">Beste {{ $messageRecipient->username }},</p>
 
     <p style="margin-bottom: 0">
-        Je hebt een bericht van <b> {{ $messageSender->username }}</b> ontvangen op <b>Altijdsex.nl</b>. Klik op onderstaande link om het bericht direct te bekijken!
+        Je hebt een bericht ontvangen van <b> {{ $messageSender->username }}</b> op <b>Altijdsex.nl</b>. Klik op onderstaande link om het bericht direct te bekijken!
     </p>
 
     <div style="text-align: center">
