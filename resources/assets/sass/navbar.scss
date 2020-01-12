@@ -29,8 +29,7 @@
     }
 
     .flagImageWrapper {
-        @include roundImageWrapper;
-
+        position: relative;
         margin-right: 10px;
 
         width: 24px;
@@ -39,6 +38,12 @@
 
     .flagImage {
         @include roundImage;
+
+        position: absolute;
+        top: 6px;
+        left: 0;
+        width: 24px;
+        height: 24px;
     }
 
     &__item {
@@ -88,7 +93,7 @@
                 position: relative;
                 align-items: center;
                 justify-content: center;
-                width: 114px;
+                width: 123px;
                 height: $navbarHeight + px;
                 font-size: 20px;
 
@@ -128,6 +133,7 @@
             }
 
             &.userDropdown {
+                position: relative;
                 display: flex;
                 flex-direction: row;
 
@@ -229,19 +235,14 @@
             margin-left: 4px;
         }
 
-        &__imageContainer {
-            @include roundImageWrapper;
-
-            position: absolute;
-            bottom: 17px;
-            left: 13px;
-
-            width: $userMenuImageContainerDimension + px;
-            height: $userMenuImageContainerDimension + px;
-        }
-
         &__image {
             @include roundImage;
+
+            position: absolute;
+            left: 12px;
+            top: 25px;
+            width: 33px;
+            height: 33px;
         }
 
         .dropdown-toggle {

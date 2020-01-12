@@ -160,16 +160,20 @@
     }
 
     &__profilePicture__wrapper {
-        @include roundImageWrapper;
-
+        position: relative;
         margin-right: 7px;
-
         width: 27px;
         height: 27px;
     }
 
     &__profilePicture {
         @include roundImage;
+
+        position: absolute;
+        left: -2px;
+        top: 4px;
+        width: 30px;
+        height: 30px;
     }
 
     &__username {

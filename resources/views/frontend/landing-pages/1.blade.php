@@ -309,21 +309,6 @@
         padding-right: 0;
     }
 
-    .roundImageWrapper {
-        display: inline-block;
-        position: relative;
-        overflow: hidden;
-        border-radius: 50%;
-
-        width: 150px;
-        height: 150px;
-    }
-
-    .roundImage {
-        height: auto;
-        width: 100%;
-    }
-
     .Footer__section-title {
         font-size: 1.8rem;
     }
@@ -388,9 +373,17 @@
         width: 40px;
     }
 
-    .roundImage.fitVertically {
-        height: 100%;
-        width: auto;
+    .roundImage {
+        width: 11rem;
+        height: 11rem;
+        border-radius: 50%;
+        object-fit: cover;
+        transform: translateY(-0.5rem);
+    }
+
+    .testimonials-container .roundImage {
+        width: 14rem;
+        height: 14rem;
     }
 
     .datepicker {
@@ -649,14 +642,11 @@
             @foreach ($users as $user)
                 <div class="col-lg-2 col-md-4 col-sm-12 mb-4">
                     <a href="{{ route('users.show', ['username' => $user->getUsername()]) }}">
-                        <div class="roundImageWrapper">
-                            <img
-{{--                                data-src="{{ \StorageHelper::profileImageUrl($user, true) }}"--}}
-                                src="{{ \StorageHelper::profileImageUrl($user, true) }}"
-                                class="roundImage"
-                                alt=""
-                            >
-                        </div>
+                        <img
+                            src="{{ \StorageHelper::profileImageUrl($user, true) }}"
+                            class="roundImage"
+                            alt="profile-image"
+                        >
                     </a>
                     <h5 class="small">{{ $user->username }}</h5>
                     <p class="offset-0 user-info">
@@ -664,8 +654,6 @@
                             : {{ $user->meta->dob->diffInYears($carbonNow) }}
                             , {{ $user->meta->city }}</small>
                     </p>
-                    {{--                    <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}"--}}
-                    {{--                       class="btn btn-lg btn-white">{{ @trans('lp1.more_info') }}</a>--}}
                 </div>
             @endforeach
         </div>
@@ -677,12 +665,9 @@
                 @foreach($testimonials as $testimonial)
                     <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
                         <div class="text-center">
-                            <div class="roundImageWrapper">
-                                <img class="roundImage"
-{{--                                     data-src="{{ $testimonial['imgSource'] }}"--}}
-                                     src="{{ $testimonial['imgSource'] }}"
-                                     alt="">
-                            </div>
+                            <img class="roundImage"
+                                 src="{{ $testimonial['imgSource'] }}"
+                                 alt="">
                         </div>
                         <div class="text-center">
                             <blockquote class="quote">

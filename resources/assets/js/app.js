@@ -192,12 +192,6 @@ $(window).on('load', function () {
         });
     }
 
-    if ($('.JS--roundImageWrapper').length > 0) {
-        $('.JS--roundImageWrapper').each((index, element) => {
-            fitRoundImageToContainer($(element));
-        });
-    }
-
     if($('.JS--UserSummary').length > 0) {
         $('.JS--UserSummary__user-image').each((index, element) => {
             fitGeneralImageToContainer($(element));
@@ -266,14 +260,5 @@ function fitGeneralImageToContainer(element) {
     }
 }
 
-function fitRoundImageToContainer(element) {
-    let containerHeight = element.height();
-    let $imageToFit = $(element).find('img');
-    let imageToFitHeight = $imageToFit.height();
-
-    if (containerHeight > imageToFitHeight) {
-        $imageToFit.addClass('fitVertically');
-    }
-}
 
 

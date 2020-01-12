@@ -126,6 +126,12 @@
         &__profilePicture {
             @include roundImage;
 
+            position: absolute;
+            left: 2px;
+            top: 7px;
+            width: 40px;
+            height: 40px;
+
             &__secondWrapper {
                 position: relative;
                 width: fit-content;
@@ -143,11 +149,9 @@
             }
 
             &__wrapper {
-                @include roundImageWrapper;
-
+                position: relative;
                 width: 45px;
                 height: 45px;
-                top: 4px;
             }
         }
 

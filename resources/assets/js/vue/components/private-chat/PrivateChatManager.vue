@@ -46,7 +46,7 @@
             >
                 <div class="PrivateChatManager__item__left">
                     <div class="PrivateChatManager__item__profilePicture__secondWrapper">
-                        <div class="PrivateChatManager__item__profilePicture__wrapper JS--roundImageWrapper">
+                        <div class="PrivateChatManager__item__profilePicture__wrapper">
                             <img class="PrivateChatManager__item__profilePicture"
                                  :src="profileImageUrl(conversation.otherUserId, conversation.otherUserProfileImage, conversation.otherUserGender)"
                                  alt="profile-image"
@@ -247,10 +247,6 @@
         mounted() {
             this.$root.$on('fetchUserConversations', () => {
                 this.fetchUserConversations();
-            });
-
-            $('.JS--roundImageWrapper').each((index, element) => {
-                this.$parent.fitRoundImageToContainer($(element));
             });
         }
     }
