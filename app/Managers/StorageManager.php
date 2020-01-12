@@ -29,11 +29,11 @@ class StorageManager
                     . $uploadedFile->getClientSize());
 
                 $fileNameMain = $fileNameRoot
-                    . '.' . $uploadedFile->extension();
+                    . '.' . $uploadedFile->getExtension();
 
                 $fileNameThumb = $fileNameRoot
                     .'_thumb'
-                    . '.' . $uploadedFile->extension();
+                    . '.' . $uploadedFile->getExtension();
 
                 $resource = $this->imageResize($uploadedFile, 180);
 
@@ -79,6 +79,7 @@ class StorageManager
      * @param $userId
      * @param string $location
      * @return bool
+     * @throws \Exception
      */
     public function saveUserPhoto(UploadedFile $uploadedFile, int $userId, $location = 'cloud')
     {
@@ -89,6 +90,13 @@ class StorageManager
         );
     }
 
+    /**
+     * @param UploadedFile $uploadedFile
+     * @param int $articleId
+     * @param string $location
+     * @return mixed
+     * @throws \Exception
+     */
     public function saveArticleImage(UploadedFile $uploadedFile, int $articleId, $location = 'cloud')
     {
         return $this->saveFile(
@@ -157,7 +165,7 @@ class StorageManager
 
         if (is_null($width)) {
             $img->resize(null, $height, function ($constraint) {
-                $constraint->aspectRatio();
+                $constraint->getAspectRatio();
             });
         } else {
             $img->resize($width, $height);
