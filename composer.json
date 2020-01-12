@@ -22,7 +22,8 @@
         "cornford/googlmapper": "2.*",
         "grimthorr/laravel-toast": "^1.1",
         "stevebauman/location": "^5.0",
-        "ext-SimpleXML": "*"
+        "ext-SimpleXML": "*",
+        "digiwallet/transaction-sdk": "^1.0"
     },
     "require-dev": {
         "mockery/mockery": "^1.0",

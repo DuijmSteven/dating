@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7fbd67089f1c26f7fa89e3f0961dcf98",
+    "content-hash": "36ef5a4111586d60c39fb9af6eeb0178",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -273,6 +273,63 @@
                 "streetview"
             ],
             "time": "2019-10-16T09:40:11+00:00"
+        },
+        {
+            "name": "digiwallet/transaction-sdk",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/DigiWallet/transaction-sdk.git",
+                "reference": "9180f872f0cf4a43d70ccdf05fa6a551a8974f6b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DigiWallet/transaction-sdk/zipball/9180f872f0cf4a43d70ccdf05fa6a551a8974f6b",
+                "reference": "9180f872f0cf4a43d70ccdf05fa6a551a8974f6b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Monolog": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "DigiWallet",
+                    "email": "development@targetmedia.eu",
+                    "homepage": "https://www.targetmedia.eu",
+                    "role": "Developer"
+                }
+            ],
+            "description": "DigiWallet Bank Payments PHP SDK",
+            "keywords": [
+                "afterpay",
+                "amex",
+                "bancontact",
+                "creditcard",
+                "digiwallet",
+                "ideal",
+                "klarna",
+                "mastercard",
+                "mistercash",
+                "payments",
+                "paypal",
+                "paysafe",
+                "paysafecard",
+                "psp",
+                "sofort",
+                "targetpay",
+                "visa"
+            ],
+            "time": "2019-02-11T10:10:18+00:00"
         },
         {
             "name": "doctrine/inflector",
