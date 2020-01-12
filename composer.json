@@ -23,7 +23,7 @@
         "grimthorr/laravel-toast": "^1.1",
         "stevebauman/location": "^5.0",
         "ext-SimpleXML": "*",
-        "spatie/geocoder": "^3.6"
+        "spatie/geocoder": "^3.6",
         "digiwallet/transaction-sdk": "^1.0"
     },
     "require-dev": {
@@ -42,7 +42,10 @@
         ],
         "psr-4": {
             "App\\": "app/"
-        }
+        },
+        "files": [
+            "vendor/digiwallet/transaction-sdk/lib/DigiWallet/autoload.php"
+        ]
     },
     "autoload-dev": {
         "classmap": [

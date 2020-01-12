@@ -56,7 +56,7 @@ class PaymentController extends FrontendController
 
         $description = $creditPack->getDescription();
 
-        $amountWithDecimals = number_format((float) $creditPack->price/100, 2, '.', '');
+        $amountWithDecimals = number_format((float) $creditPack->price, 2, '.', '');
 
         $transaction = $this->paymentProvider->initiatePayment($bank, $paymentMethod, $amountWithDecimals, $description);
 
@@ -88,13 +88,14 @@ class PaymentController extends FrontendController
 
         $check = $this->paymentProvider->paymentCheck($paymentMethod, $transactionId);
 
-        // TODO check if payment successful to send email conditionally
-        $user = \Auth::user();
-        $creditsBoughtEmail = (new CreditsBought($user, $creditPack))
-            ->onQueue('emails');
+        if($check['status']) {
+            /*$user = \Auth::user();
+            $creditsBoughtEmail = (new CreditsBought($user, $creditPack))
+                ->onQueue('emails');
 
-        Mail::to($user)
-            ->queue($creditsBoughtEmail);
+            Mail::to($user)
+                ->queue($creditsBoughtEmail);*/
+        }
 
         return view('frontend.thank-you', [
             'title' => $this->buildTitleWith(trans('view_titles.payment')),

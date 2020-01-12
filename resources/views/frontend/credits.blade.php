@@ -54,26 +54,17 @@
                                 <div class="form-group form-inline" style="display: contents">
                                     Bank:
                                     <select class="form-control" id="bank" name="bank">
-                                        <option value="ABNANL2A">ABN AMRO</option>
-                                        <option value="ASNBNL21">ASN BANK</option>
-                                        <option value="BUNQNL2A">BUNQ</option>
-                                        <option value="INGBNL2A">ING</option>
-                                        <option value="KNABNL2H">KNAB</option>
-                                        <option value="RABONL2U">RABOBANK</option>
-                                        <option value="RBRBNL21">REGIOBANK</option>
-                                        <option value="SNSBNL2A">SNS Bank</option>
-                                        <option value="TRIONL2U">Triodos Bank</option>
-                                        <option value="FVLBNL22">van Lanschot</option>
+                                        <?php readfile("https://transaction.digiwallet.nl/ideal/getissuers?ver=4&format=html"); ?>
                                     </select>
                                 </div>
                             </div>
                         </li>
                         {{--<li class="list-group-item d-flex justify-content-between" style="margin-bottom: 10px">
-                            <div>
-                                <label><input type="radio" name="paymentMethod" value="credit"> <span
-                                        style="margin-left: 5px">Visa/MasterCard</span></label>
-                            </div>
-                            <span class="text-muted"><img src="{{ asset('img/icons/credit-cards.png') }}"/></span>
+                            <label class="paymentMethodsLabel">
+                                <input type="radio" name="paymentMethod" value="credit">
+                                <span style="margin-left: 5px">Visa/MasterCard</span>
+                            </label>
+                            <span class="paymentMethodLogo"><img src="{{ asset('img/icons/credit-cards.png') }}"/></span>
                         </li>--}}
                         <li class="list-group-item d-flex justify-content-between">
                             <label class="paymentMethodsLabel">

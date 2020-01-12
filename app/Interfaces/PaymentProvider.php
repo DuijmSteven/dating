@@ -59,6 +59,14 @@ interface PaymentProvider
     public function ivrPayment(string $bank, float $amount, string $description);
 
     /**
+     * @param string $bank
+     * @param float $amount
+     * @param string $description
+     * @return mixed
+     */
+    public function creditPayment(float $amount, string $description);
+
+    /**
      * @param  string  $paymentMethod
      * @param  int  $transactionId
      * @return mixed

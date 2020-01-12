@@ -7,6 +7,7 @@ use App\Interfaces\PaymentProvider;
 use App\Payment;
 use App\User;
 use App\UserAccount;
+use DigiWallet\Transaction;
 use Illuminate\Support\Facades\Auth;
 use TPWeb\TargetPay\Exception\TargetPayException;
 use TPWeb\TargetPay\TargetPay;
@@ -46,6 +47,9 @@ class PaymentService implements PaymentProvider
                 break;
             case 'paysafe':
                 $transaction = $this->paysafePayment($amount, $description);
+                break;
+            case 'credit':
+                $transaction = $this->creditPayment($amount, $description);
                 break;
             case 'ivr':
                 $this->ivrPayment($bank, $amount, $description);
@@ -88,58 +92,72 @@ class PaymentService implements PaymentProvider
     }
 
     /**
-     * @param string $bank
-     * @param int $amount
-     * @param string $description
+     * @param  string  $bank
+     * @param  float  $amount
+     * @param  string  $description
+     * @return array
+     * @throws \DigiWallet\Exception
      */
     public function idealPayment(string $bank, float $amount, string $description)
     {
-        /** @var TargetPay $targetPay */
-        $targetPay = new \TargetPay(new IDeal());
-
-        /** @var IDeal $transaction */
-        $transaction = $targetPay->transaction;
-
-        $transaction->setBank($bank);
-        $targetPay->setAmount($amount);
-        $transaction->setDescription($description);
-        $transaction->setReturnUrl($this->returnUrl);
-
-        $targetPay->getPaymentInfo();
-
-        $redirectUrl = $transaction->getIdealUrl();
-        $transactionId = $transaction->getTransactionId();
+        $startPaymentResult = Transaction::model("Ideal")
+            ->outletId(config('targetpay.layoutcode'))
+            ->amount($amount)
+            ->description($description)
+            ->returnUrl($this->returnUrl)
+            ->bank($bank)
+            ->test(config('targetpay.test'))
+            ->start();
 
         return [
-            'redirectUrl' => $redirectUrl,
-            'transaction_id' => $transactionId
+            'redirectUrl' => $startPaymentResult->url,
+            'transaction_id' => $startPaymentResult->transactionId
         ];
     }
 
     /**
-     * @param int $amount
-     * @param string $description
+     * @param  float  $amount
+     * @param  string  $description
+     * @return array
+     * @throws \DigiWallet\Exception
      */
     public function paysafePayment(float $amount, string $description)
     {
-        /** @var TargetPay $targetPay */
-        $targetPay = new \TargetPay(new Paysafecard());
-
-        /** @var Paysafecard $transaction */
-        $transaction = $targetPay->transaction;
-
-        $targetPay->setAmount($amount);
-        $transaction->setDescription($description);
-        $transaction->setReturnUrl($this->returnUrl);
-
-        $targetPay->getPaymentInfo();
-
-        $redirectUrl = $transaction->getPaysafecardUrl();
-        $transactionId = $transaction->getTransactionId();
+        $startPaymentResult = Transaction::model("PaysafeCard")
+            ->outletId(config('targetpay.layoutcode'))
+            ->amount($amount)
+            ->description($description)
+            ->returnUrl($this->returnUrl)
+            ->test(config('targetpay.test'))
+            ->start();
 
         return [
-            'redirectUrl' => $redirectUrl,
-            'transaction_id' => $transactionId
+            'redirectUrl' => $startPaymentResult->url,
+            'transaction_id' => $startPaymentResult->transactionId
+        ];
+    }
+
+    /**
+     * @param  float  $amount
+     * @param  string  $description
+     * @return mixed|void
+     * @throws \DigiWallet\Exception
+     */
+    public function creditPayment(float $amount, string $description)
+    {
+        $startPaymentResult = Transaction::model("Creditcard")
+            ->outletId(config('targetpay.layoutcode'))
+            ->amount($amount)
+            ->description($description)
+            ->returnUrl($this->returnUrl)
+            ->test(config('targetpay.test'))
+            ->start();
+
+        dd($startPaymentResult);
+
+        return [
+            'redirectUrl' => $startPaymentResult->url,
+            'transaction_id' => $startPaymentResult->transactionId
         ];
     }
 
@@ -176,33 +194,39 @@ class PaymentService implements PaymentProvider
     {
         switch ($paymentMethod) {
             case 'ideal':
-                $targetPay = new TargetPay(new IDeal());
+                $targetPay = Transaction::model("Ideal");
                 break;
             case 'paysafe':
-                $targetPay = new TargetPay(new Paysafecard());
+                $targetPay = Transaction::model("PaysafeCard");
+                break;
+            case 'credit':
+                $targetPay = Transaction::model("Creditcard");
                 break;
             default:
                 throw new \Exception('Payment method invalid');
         }
 
-        $targetPay->transaction->setTransactionId($transactionId);
-        try {
-            $targetPay->checkPaymentInfo();
-        } catch (TargetPayException $exception) {
+        $checkPaymentResult = $targetPay
+            ->outletId(config('targetpay.layoutcode'))
+            ->transactionId($transactionId)
+            ->test(config('targetpay.test'))
+            ->check();
+
+        if (!$checkPaymentResult->status) {
             return $check = [
                 'status' => false,
-                'info' => $exception->getMessage()
+                'info' => $checkPaymentResult->error
             ];
         }
 
-        $status = $targetPay->transaction->getPaymentDone();
+        $status = $checkPaymentResult->status;
 
         $payment = Payment::where('user_id', Auth::user()->id)
                           ->where('transaction_id', $transactionId)
                           ->first();
 
         //Increase credits
-        if($status && $payment->status == 1) {
+        if ($status && $payment->status == 1) {
             if(Auth::user()->account()->exists()) {
                 $credits = Auth::user()->account->credits;
                 Auth::user()->account()->update(['credits' => $credits + (int) session('credits')]);
