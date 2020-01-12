@@ -14,12 +14,12 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="username">{{ trans('user_constants.about_me') }}</label>
+                                <label for="username">{{ trans('user_constants.username') }}</label>
                                 <input type="text"
                                        class="form-control"
                                        id="username"
                                        name="username"
-                                       required
+                                       disabled
                                        value="{!! $user->username !!}"
                                 >
                                 @if ($errors->has('username'))
@@ -32,7 +32,7 @@
                             <div class="form-group">
                                 <label for="city">{{ @trans('user_constants.city') }}</label>
                                 <input type="text"
-                                       class="JS--autoCompleteCites form-control"
+                                       class="JS--autoCompleteCites JS--edit form-control"
                                        name="city"
                                        value="{!! ucfirst($user->meta->city) !!}"
                                 >
@@ -227,7 +227,7 @@
                                           class="form-control"
                                           cols="30"
                                           rows="10"
-                                          placeholder="{{ @trans('edit_profile.about_me_placeholer') }}"
+                                          placeholder="{{ @trans('edit_profile.about_me_placeholder') }}"
                                 >{!! $user->meta['about_me'] !!}</textarea>
                                 @include('helpers.forms.error_message', ['field' => 'about_me'])
                             </div>
@@ -268,7 +268,10 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="user_images">{{ @trans('edit_profile.upload_images') }}</label>
-                                <input type="file" class="form-control" id="user_images" name="user_images[]" multiple>
+                                <input type="file" accept=".png,.jpg,.jpeg" class="form-control" id="user_images" name="user_images[]" multiple>
+                                @if ($errors->has('user_images.0'))
+                                    {!! $errors->first('user_images.0', '<small class="form-error">:message</small>') !!}
+                                @endif
                             </div>
                         </div>
                         <div class="col-sm-12">
@@ -308,7 +311,8 @@
                             <td>
                                 <a href="#" class="modalImage">
                                     <img alt="profileImage" class="imageResource" width="200"
-                                         src="{!! \StorageHelper::profileImageUrl($user) !!}"/>
+                                         src="{!! \StorageHelper::profileImageUrl($user) !!}"
+                                    />
                                 </a>
                             </td>
                             <td class="action-buttons">
@@ -316,7 +320,15 @@
                                       action="{!! route('images.destroy', ['imageId' => $user->profileImage->id]) !!}">
                                     {!! csrf_field() !!}
                                     {!! method_field('DELETE') !!}
-                                    <button type="submit" class="btn btn-danger">{{ @trans('edit_profile.delete') }}</button>
+
+                                    @include('frontend.components.button', [
+                                        'buttonContext' => 'form',
+                                        'buttonType' => 'submit',
+                                        'buttonState' => 'danger',
+                                        'buttonText' => trans('edit_profile.delete'),
+                                        'buttonClasses' => 'Button-fw'
+                                    ])
+
                                 </form>
                             </td>
                         </tr>
@@ -348,18 +360,34 @@
                                 <td>
                                     <a href="#" class="modalImage">
                                         <img alt="galleryImage" class="imageResource" width="200"
-                                             src="{!! \StorageHelper::userImageUrl($user->id, $image->filename) !!}"/>
+                                             src="{!! \StorageHelper::userImageUrl($user->id, $image->filename, true) !!}"
+                                             data-src="{!! \StorageHelper::userImageUrl($user->id, $image->filename) !!}"
+                                        />
                                     </a>
                                 </td>
                                 <td class="action-buttons">
+                                    @include('frontend.components.button', [
+                                        'url' => route('users.set-profile-image', ['userId' => $user->id, 'imageId' => $image->id]),
+                                        'buttonType' => 'submit',
+                                        'buttonState' => 'primary',
+                                        'buttonText' => @trans('edit_profile.set_profile'),
+                                        'buttonClasses' => 'Button-fw bottom-spacing'
+                                    ])
+
                                     <form method="POST"
                                           action="{!! route('images.destroy', ['imageId' => $image->id]) !!}">
                                         {!! csrf_field() !!}
                                         {!! method_field('DELETE') !!}
-                                        <button type="submit" class="btn btn-danger">{{ @trans('edit_profile.delete') }}</button>
+
+                                        @include('frontend.components.button', [
+                                            'buttonContext' => 'form',
+                                            'buttonType' => 'submit',
+                                            'buttonState' => 'danger',
+                                            'buttonText' => trans('edit_profile.delete'),
+                                            'buttonClasses' => 'Button-fw'
+                                        ])
+
                                     </form>
-                                    <a href="{!! route('users.set-profile-image', ['userId' => $user->id, 'imageId' => $image->id]) !!}"
-                                       class="btn btn-success">{{ @trans('edit_profile.set_profile') }}</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -373,6 +401,30 @@
                     </tbody>
                 </table>
             </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <hr/>
+                </div>
+            </div>
+
+            <label for="">{{ @trans('edit_profile.account_deactivation') }}</label>
+
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <p>{{ trans('edit_profile.deactivation_text') }}</p>
+
+                    <div class="text-left">
+                        @include('frontend.components.button', [
+                            'buttonContext' => 'form',
+                            'buttonState' => 'danger',
+                            'buttonText' => @trans('edit_profile.deactivate')
+                        ])
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 

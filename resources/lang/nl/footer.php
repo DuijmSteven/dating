@@ -1,14 +1,14 @@
 <?php
 
 return [
-    'noteworthy' => 'Noteworthy',
-    'articles' => 'Articles',
-    'client_service' => 'Client service',
+    'noteworthy' => 'Opmerkelijk',
+    'articles' => 'Artikelen',
+    'client_service' => 'Klantenservice',
     'faq' => 'FAQ',
-    'about_us' => 'About us',
-    'company_data' => 'Company data',
+    'about_us' => 'Over ons',
+    'company_data' => 'Bedrijfsgegevens',
     'contact' => 'Contact',
-    'legal' => 'Legal',
+    'legal' => 'Legaal',
     'tac' => 'Algemene Voorwarden',
     'privacy' => 'Privacybeleid',
     'copyright' => 'Copyright © :currentYear altijdsex.nl',

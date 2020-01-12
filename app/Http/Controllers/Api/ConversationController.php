@@ -7,7 +7,10 @@ use App\Managers\ConversationManager;
 use App\OpenConversationPartner;
 use App\User;
 use Carbon\Carbon;
+use Config;
+use File;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Lang;
 
 /**
  * Class ConversationController
@@ -24,6 +27,17 @@ class ConversationController
     public function __construct(ConversationManager $conversationManager)
     {
         $this->conversationManager = $conversationManager;
+    }
+
+    /**
+     * @param int $userId
+     * @return JsonResponse
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    public function getChatTranslations(int $userId) {
+        $chatTranslations = File::getRequire(base_path() . '/resources/lang/' . User::find($userId)->getLocale() . '/chat.php');
+
+        return JsonResponse::create($chatTranslations, 200);
     }
 
     public function getConversationByParticipantIds(

@@ -4,7 +4,7 @@
         <div class="form-group city {{ $errors->has('city') ? ' has-error' : '' }}">
             <label for="city">{!! @trans('user_constants.city') !!}</label>
             <input type="text"
-                   class="JS--autoCompleteCites form-control"
+                   class="JS--autoCompleteCites JS--bar form-control"
                    name="city"
                    value="{!! old('city') ?? Session::get('searchParameters')['city'] !!}"
             >

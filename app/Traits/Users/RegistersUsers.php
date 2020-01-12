@@ -6,11 +6,14 @@ use App\Helpers\ApplicationConstants\UserConstants;
 use App\Http\Requests\RegisterRequest;
 use App\Mail\Contact;
 use App\Mail\Welcome;
+use App\Services\GeocoderService;
 use App\User;
 use App\UserAccount;
 use App\UserMeta;
 use App\RoleUser;
 use Carbon\Carbon;
+use Cornford\Googlmapper\Mapper;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -50,6 +53,20 @@ trait RegistersUsers
             throw $exception;
         }
 
+        $lat = $request->all()['lat'];
+        $lng = $request->all()['lng'];
+
+        if (!$lat || $lat == 0 || is_null($lat) || !$lng || $lng == 0 || is_null($lng)) {
+
+            $client = new Client();
+            $geocoder = new GeocoderService($client);
+
+            $coordinates = $geocoder->getCoordinatesForAddress($request->all()['city']);
+
+            $lat = $coordinates['lat'];
+            $lng = $coordinates['lng'];
+        }
+
         try {
             /** @var UserMeta $userMetaInstance */
             $userMetaInstance = new UserMeta([
@@ -58,8 +75,8 @@ trait RegistersUsers
                 'gender' => UserConstants::selectableField('gender', 'peasant', 'array_flip')[$gender],
                 'looking_for_gender' => UserConstants::selectableField('gender', 'peasant', 'array_flip')[$lookingFor],
                 'dob' =>  new Carbon($request->all()['dob']),
-                'lat' => $request->all()['lat'],
-                'lng' => $request->all()['lng'],
+                'lat' => $lat,
+                'lng' => $lng,
                 'city' => $request->all()['city'],
             ]);
 
@@ -96,7 +113,7 @@ trait RegistersUsers
         }
         DB::commit();
 
-        $welcomeEmail = (new Welcome($createdUser))->onQueue('emails');
+        $welcomeEmail = (new    Welcome($createdUser))->onQueue('emails');
 
         Mail::to($createdUser)
             ->queue($welcomeEmail);

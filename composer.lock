@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "36ef5a4111586d60c39fb9af6eeb0178",
+    "content-hash": "5628ed962b5464f8f00bd1ce6bb6983d",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -273,63 +273,6 @@
                 "streetview"
             ],
             "time": "2019-10-16T09:40:11+00:00"
-        },
-        {
-            "name": "digiwallet/transaction-sdk",
-            "version": "1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/DigiWallet/transaction-sdk.git",
-                "reference": "9180f872f0cf4a43d70ccdf05fa6a551a8974f6b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DigiWallet/transaction-sdk/zipball/9180f872f0cf4a43d70ccdf05fa6a551a8974f6b",
-                "reference": "9180f872f0cf4a43d70ccdf05fa6a551a8974f6b",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Monolog": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "DigiWallet",
-                    "email": "development@targetmedia.eu",
-                    "homepage": "https://www.targetmedia.eu",
-                    "role": "Developer"
-                }
-            ],
-            "description": "DigiWallet Bank Payments PHP SDK",
-            "keywords": [
-                "afterpay",
-                "amex",
-                "bancontact",
-                "creditcard",
-                "digiwallet",
-                "ideal",
-                "klarna",
-                "mastercard",
-                "mistercash",
-                "payments",
-                "paypal",
-                "paysafe",
-                "paysafecard",
-                "psp",
-                "sofort",
-                "targetpay",
-                "visa"
-            ],
-            "time": "2019-02-11T10:10:18+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -2758,6 +2701,66 @@
                 "lumen"
             ],
             "time": "2017-06-29T11:18:01+00:00"
+        },
+        {
+            "name": "spatie/geocoder",
+            "version": "3.6.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/geocoder.git",
+                "reference": "006b79000a95240021bb97e21c57bce898b8157d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/geocoder/zipball/006b79000a95240021bb97e21c57bce898b8157d",
+                "reference": "006b79000a95240021bb97e21c57bce898b8157d",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~6.0",
+                "illuminate/support": "^5.0|^6.0",
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.0",
+                "vlucas/phpdotenv": "^3.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\Geocoder\\GeocoderServiceProvider"
+                    ],
+                    "aliases": {
+                        "Geocoder": "Spatie\\Geocoder\\Facades\\Geocoder"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Geocoder\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be"
+                }
+            ],
+            "description": "Geocoding addresses to coordinates",
+            "homepage": "https://github.com/spatie/geocoder",
+            "keywords": [
+                "coordinate",
+                "geocode",
+                "laravel",
+                "location",
+                "map"
+            ],
+            "time": "2020-01-04T15:51:51+00:00"
         },
         {
             "name": "stevebauman/location",

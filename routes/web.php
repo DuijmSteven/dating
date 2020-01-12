@@ -39,9 +39,6 @@ Route::get('/home', 'Frontend\UserSearchController@showInitialSearchResults')
     ->name('home')
     ->middleware('auth');
 
-Route::get('edit-profile', 'Frontend\UserController@showEditProfile')
-    ->name('edit-profile.get');
-
 Route::group([
     'prefix' => 'register',
     'middleware' => ['guest']
@@ -88,6 +85,10 @@ Route::group([
 
     Route::put('{userId}/edit', 'Frontend\UserController@update')
         ->name('users.update');
+
+    Route::get('{username}/edit-profile', 'Frontend\UserController@showEditProfile')
+        ->name('users.edit-profile.get')
+        ->middleware('current_user');
 
     Route::group([
         'prefix' => 'favorites'

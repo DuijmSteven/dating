@@ -9,6 +9,7 @@
     box-shadow: 0 0 24px rgba(0,0,0,0.2);
 
     &__head {
+        cursor: pointer;
         border-radius: 2px 2px 0 0;
         text-align: center;
 
@@ -34,7 +35,6 @@
     }
 
     &__toggle {
-        cursor: pointer;
         position: relative;
         top: 5px;
         left: 8px;
@@ -62,8 +62,8 @@
         &__deleteIcon {
             display: none !important;
             position: absolute;
-            top: 14px;
-            right: 10px;
+            top: 23px;
+            right: 36px;
             background-color: #fff;
             border-radius: 50%;
             color: #ff5b49;
@@ -88,7 +88,7 @@
             display: none !important;
             position: absolute;
             right: 10px;
-            bottom: 10px;
+            bottom: 8px;
             font-size: 20px !important;
             color: #ff5b49;
         }

@@ -11,9 +11,10 @@ if ($('#app').length > 0) {
             conversationPartners: [],
             previousConversationPartnersResponse: undefined,
             currentConversationPartnersResponse: undefined,
-            intervalToFetchPartners: undefined,
+            intervalToFetchData: undefined,
             userCredits: undefined,
-            onlineUserIds: undefined
+            onlineUserIds: undefined,
+            chatTranslations: undefined
         },
 
         created() {
@@ -22,8 +23,13 @@ if ($('#app').length > 0) {
                 this.getUserCredits();
                 this.getOnlineUserIds();
 
-                this.intervalToFetchPartners = setInterval(() => {
-                    this.getConversationPartners()
+                axios.get('/api/' + DP.authenticatedUser.id + '/chat-translations').then(response => {
+                    this.chatTranslations = response.data;
+                });
+
+                this.intervalToFetchData = setInterval(() => {
+                    this.getConversationPartners();
+                    this.getOnlineUserIds();
                 }, 5000);
             }
         },
@@ -49,6 +55,16 @@ if ($('#app').length > 0) {
                     }
                 );
             },
+            fitRoundImageToContainer: function (element) {
+                let containerHeight = element.height();
+                let $imageToFit = $(element).find('img');
+                let imageToFitHeight = $imageToFit.height();
+                let imageToFitWidth = $imageToFit.width();
+
+                if (imageToFitWidth > imageToFitHeight) {
+                    $imageToFit.addClass('fitVertically');
+                }
+            },
             getConversationPartners: function () {
                 axios.get('/api/conversations/conversation-partner-ids/' + parseInt(DP.authenticatedUser.id)).then(
                     response => {
@@ -70,7 +86,7 @@ if ($('#app').length > 0) {
                 );
             },
             addChat: function (currentUserId, userBId, state = '1', persist = false) {
-                if (this.conversationPartners.length > 4) {
+                if (this.conversationPartners.length > 3) {
                     return false;
                 }
 

@@ -67,6 +67,8 @@ class UserSearchController extends FrontendController
         try {
             $userSearchRequest->formatInput();
             $searchParameters = $userSearchRequest->all();
+            $searchParameters['gender'] = $this->authenticatedUser->meta->getLookingForGender();
+            $searchParameters['looking_for_gender'] = $this->authenticatedUser->meta->getGender();
 
             if (isset($searchParameters['age'])) {
                 $ageMax = 100;
@@ -90,8 +92,6 @@ class UserSearchController extends FrontendController
                 $searchParameters['dob'] = [];
                 $searchParameters['dob']['min'] = $formattedMinDate;
                 $searchParameters['dob']['max'] = $formattedMaxDate;
-
-                $searchParameters['gender'] = \Auth::user()->meta->getLookingForGender();
             }
 
             // flash parameters to session so the next request can access them
@@ -130,7 +130,7 @@ class UserSearchController extends FrontendController
         $viewData = [
             'users' => $users,
             'carbonNow' => Carbon::now(),
-            'title' => config('app.name') . ' - Search results',
+            'title' => $this->buildTitleWith(trans('view_titles.search_results')),
         ];
 
         return view(
@@ -145,19 +145,16 @@ class UserSearchController extends FrontendController
      */
     public function showInitialSearchResults(Request $request)
     {
-        /** @var User $user */
-        $user = \Auth::user();
-        $lookingForGender = $user->meta->getLookingForGender();
-
         $searchParameters = [
-            'city' => $user->meta->getCity(),
-            'lat' => $user->meta->getLat(),
-            'lng' => $user->meta->getLng(),
+            'city' => $this->authenticatedUser->meta->getCity(),
+            'lat' => $this->authenticatedUser->meta->getLat(),
+            'lng' => $this->authenticatedUser->meta->getLng(),
             'radius' => 40,
             'age' => null,
             'body_type' => null,
             'height' => null,
-            'gender' => $lookingForGender,
+            'gender' => $this->authenticatedUser->meta->getLookingForGender(),
+            'looking_for_gender' => $this->authenticatedUser->meta->getGender(),
         ];
 
         $request->session()->put('searchParameters', $searchParameters);
@@ -188,7 +185,7 @@ class UserSearchController extends FrontendController
         $viewData = [
             'users' => $users,
             'carbonNow' => Carbon::now(),
-            'title' => config('app.name') . ' - Search results',
+            'title' => $this->buildTitleWith(trans('view_titles.home')),
         ];
 
         return view(

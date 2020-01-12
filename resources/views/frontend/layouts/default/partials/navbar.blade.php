@@ -53,7 +53,7 @@
                            aria-haspopup="true"
                            aria-expanded="false"
                         >
-                            <div class="userDropdown__imageContainer">
+                            <div class="userDropdown__imageContainer JS--roundImageWrapper">
                                 <img
                                     class="userDropdown__image"
                                     src="{{ \StorageHelper::profileImageUrl($authenticatedUser, true) }}" alt=""
@@ -63,7 +63,7 @@
                             {{ $authenticatedUser->username }} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="{!! route('edit-profile.get') !!}">{{ @trans('navbar.edit_profile') }}</a></li>
+                            <li><a href="{!! route('users.edit-profile.get', ['userId' => $authenticatedUser->getUsername()]) !!}">{{ @trans('navbar.edit_profile') }}</a></li>
                             <li><a href="{{ route('credits.show') }}">{{ @trans('navbar.credits') }}</a></li>
 
                             <li class="dropdown-submenu languagesSubmenu">
@@ -71,7 +71,7 @@
                                 <ul class="dropdown-menu">
                                     <li>
                                         <a class="languagesSubmenu__item" href="{{ route('users.set-locale', ['locale' => 'en']) }}">
-                                            <div class="flagImageWrapper">
+                                            <div class="flagImageWrapper JS--roundImageWrapper">
                                                 <img class="flagImage" src="{{ asset('img/flags/uk.svg') }}" alt="">
                                             </div>
                                             <span>{{ @trans('navbar.english') }}</span>
@@ -79,7 +79,7 @@
                                     </li>
                                     <li>
                                         <a class="languagesSubmenu__item" href="{{ route('users.set-locale', ['locale' => 'nl']) }}">
-                                            <div class="flagImageWrapper">
+                                            <div class="flagImageWrapper JS--roundImageWrapper">
                                                 <img class="flagImage" src="{{ asset('img/flags/nl.png') }}" alt="">
                                             </div>
                                             <span>{{ @trans('navbar.dutch') }}</span>
@@ -87,7 +87,7 @@
                                     </li>
                                 </ul>
                                 <div class="showSelectedLanguage">
-                                    <div class="flagImageWrapper">
+                                    <div class="flagImageWrapper JS--roundImageWrapper">
                                         @if($authenticatedUser->getLocale() === 'en')
                                             <img class="flagImage" src="{{ asset('img/flags/uk.svg') }}" alt="">
                                         @elseif($authenticatedUser->getLocale() === 'nl')

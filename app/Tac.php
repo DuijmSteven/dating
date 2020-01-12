@@ -2,13 +2,11 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * Class Tac
  * @package App
  */
-class Tac extends Model
+class Tac extends TimeZonedModel
 {
     public $fillable = [
         'content',
@@ -52,21 +50,5 @@ class Tac extends Model
     public function setLanguage(string $language)
     {
         $this->language = $language;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCreatedAt()
-    {
-        return $this->created_at;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updated_at;
     }
 }

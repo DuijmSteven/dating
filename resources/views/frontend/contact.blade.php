@@ -7,13 +7,39 @@
         <div class="Tile">
             <div class="Tile__heading">{{ @trans('contact.heading') }}</div>
             <div class="Tile__body">
-                <ul>
-                    <li><strong>{{ @trans('contact.company') }}</strong>: {!! config('company.name') !!}</li>
-                    <li><strong>{{ @trans('contact.kvk_number') }}</strong>: {!! config('company.kvk') !!}</li>
-                    <li><strong>{{ @trans('contact.btw_number') }}</strong>: {!! config('company.btw') !!}</li>
-                    <li><strong>{{ @trans('contact.address') }}</strong>: {!! config('company.address') !!}, {!! config('company.city') !!}</li>
-                    <li><strong>{{ @trans('contact.support_email') }}</strong>: {!! config('company.email') !!}</li>
-                </ul>
+
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td><span class="CompanyInfo__title">{{ @trans('contact.company') }}</span></td>
+                            <td><span class="CompanyInfo__value">{!! config('company.name') !!}</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="CompanyInfo__title">{{ @trans('contact.kvk_number') }}</span></td>
+                            <td><span class="CompanyInfo__value">{!! config('company.kvk') !!}</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="CompanyInfo__title">{{ @trans('contact.btw_number') }}</span></td>
+                            <td><span class="CompanyInfo__value">{!! config('company.btw') !!}</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="CompanyInfo__title">{{ @trans('contact.address') }}</span></td>
+                            <td><span class="CompanyInfo__value">{!! config('company.address') !!}, {!! config('company.city') !!}</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="CompanyInfo__title">{{ @trans('contact.support_email') }}</span></td>
+                            <td><span class="CompanyInfo__value">{!! config('company.info_email') !!}</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+{{--                <ul>--}}
+{{--                    <li><strong>{{ @trans('contact.company') }}</strong>: {!! config('company.name') !!}</li>--}}
+{{--                    <li><strong>{{ @trans('contact.kvk_number') }}</strong>: {!! config('company.kvk') !!}</li>--}}
+{{--                    <li><strong>{{ @trans('contact.btw_number') }}</strong>: {!! config('company.btw') !!}</li>--}}
+{{--                    <li><strong>{{ @trans('contact.address') }}</strong>: {!! config('company.address') !!}, {!! config('company.city') !!}</li>--}}
+{{--                    <li><strong>{{ @trans('contact.support_email') }}</strong>: {!! config('company.email') !!}</li>--}}
+{{--                </ul>--}}
             </div>
         </div>
 

@@ -37,6 +37,7 @@
     "lodash.mergewith": "^4.6.2",
     "moment": "^2.24.0",
     "node-sass": "^4.13.0",
+    "vue-moment": "^4.1.0",
     "vue-mq": "^0.2.1",
     "vuejs-dialog": "^1.4.1"
   }

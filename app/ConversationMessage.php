@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ConversationMessage extends Model
+class ConversationMessage extends TimeZonedModel
 {
     use SoftDeletes;
 
@@ -66,9 +66,5 @@ class ConversationMessage extends Model
 
     public function getConversationId() {
         return $this->conversation_id;
-    }
-
-    public function getCreatedAt() {
-        return $this->created_at;
     }
 }

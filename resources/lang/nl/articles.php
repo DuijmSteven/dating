@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'articles' => 'Articles',
-    'read_more' => 'Read More',
-    'posted_on' => 'Posted on',
+    'articles' => 'Artikels',
+    'read_more' => 'Less verder',
+    'posted_on' => 'Gepost op',
 ];

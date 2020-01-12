@@ -102,10 +102,6 @@
         margin-top: 1.375rem;
     }
 
-    .recent-container img {
-        max-width: 170px;
-    }
-
     form label {
         font-family: comfortaa, sans-serif;
         color: #ef4f2b;
@@ -155,9 +151,65 @@
         border-color: #2e3142;
     }
 
-    .btn-register-login {
+    .btn-register-login,
+    .btn-accept-cookies {
         background-color: #ef4f2b;
         border-color: #ef4f2b;
+        color: #fff;
+    }
+
+    .cookie-popup {
+        position: fixed;
+        background-color: #fff;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 200px;
+        max-height: 400px;
+        box-shadow: 20px 0 30px rgba(0,0,0,0.4);
+        font-size: 1.8rem;
+        color: #555;
+        padding: 30px;
+        text-align: center;
+    }
+
+    @media screen and (max-width: 700px) {
+        .cookie-popup {
+            height: 250px;
+        }
+    }
+
+    @media screen and (max-width: 500px) {
+        .cookie-popup {
+            height: 350px;
+        }
+    }
+
+    @media screen and (min-width: 1100px) {
+        .cookie-popup p {
+            width: 1000px;
+        }
+    }
+
+    .cookie-popup p {
+        display: inline-block;
+        margin-bottom: 30px;
+    }
+
+    .cookie-popup button {
+        display: inline-block;
+        width: 100px;
+        color: #fff;
+    }
+
+    .cookie-popup button:hover {
+        display: inline-block;
+        width: 100px;
+        color: #fff;
+    }
+
+    .btn-register-login:hover {
+        background-color: #ef4f2b;
         color: #fff;
     }
 
@@ -189,7 +241,7 @@
         color: #ef4f2b;
     }
 
-    footer img {
+    footer .Footer__logo img {
         width: 110px;
         height: 110px;
         padding-top: 3rem;
@@ -268,14 +320,8 @@
     }
 
     .roundImage {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        height: 130%;
-        width: auto;
-        -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
+        height: auto;
+        width: 100%;
     }
 
     .Footer__section-title {
@@ -316,6 +362,39 @@
 
     .input-group .form-control {
         z-index: unset;
+    }
+
+    .Footer__logo-container {
+        position: relative;
+    }
+
+    .language-selection {
+        position: absolute;
+        right: 0;
+        bottom: 40px;
+    }
+
+    @media screen and (max-width: 700px) {
+        .language-selection {
+            bottom: -10px;
+        }
+    }
+
+    .language-selection a {
+        display: inline-block;
+    }
+
+    .language-selection a .flagImage {
+        width: 40px;
+    }
+
+    .roundImage.fitVertically {
+        height: 100%;
+        width: auto;
+    }
+
+    .datepicker {
+        font-size: 1.7rem;
     }
 </style>
 <body class="landingPage">
@@ -407,6 +486,8 @@
                             >
                             @if ($errors->has('city'))
                                 {!! $errors->first('city', '<small class="form-error">:message</small>') !!}
+{{--                            @elseif ($errors->has('lat') || $errors->has('lat'))--}}
+{{--                                <small class="form-error">{{ @trans('lp1.select_city_again') }}</small>--}}
                             @endif
                         </div>
                     </div>
@@ -570,8 +651,8 @@
                     <a href="{{ route('users.show', ['username' => $user->getUsername()]) }}">
                         <div class="roundImageWrapper">
                             <img
-                                data-src="{{ \StorageHelper::profileImageUrl($user, true) }}"
-                                src=""
+{{--                                data-src="{{ \StorageHelper::profileImageUrl($user, true) }}"--}}
+                                src="{{ \StorageHelper::profileImageUrl($user, true) }}"
                                 class="roundImage"
                                 alt=""
                             >
@@ -598,8 +679,8 @@
                         <div class="text-center">
                             <div class="roundImageWrapper">
                                 <img class="roundImage"
-                                     data-src="{{ $testimonial['imgSource'] }}"
-                                     src=""
+{{--                                     data-src="{{ $testimonial['imgSource'] }}"--}}
+                                     src="{{ $testimonial['imgSource'] }}"
                                      alt="">
                             </div>
                         </div>
@@ -685,9 +766,40 @@
             <div class="col-md-12 copyright">
                 <h5>{{ @trans('footer.copyright', ['currentYear' => $carbonNow->year]) }}</h5>
             </div>
+
+            <div class="language-selection">
+                <a href="{{ route('landing-page.show', ['locale' => 'nl']) }}">
+                    <div class="flagImageWrapper">
+                        <img class="flagImage" src="{{ asset('img/flags/nl.png') }}" alt="">
+                    </div>
+                </a> |
+                <a href="{{ route('landing-page.show', ['locale' => 'en']) }}">
+                    <div class="flagImageWrapper">
+                        <img class="flagImage" src="{{ asset('img/flags/uk.svg') }}" alt="">
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
 </footer>
+
+<div class="cookie-popup hidden">
+    <p>
+        <strong>Altijdsex.nl</strong> maakt gebruik van cookies om de website continu te kunnen blijven verbeteren. Als
+        je op “Akkoord”
+        klikt of je registreert op deze website, ga je automatisch akkoord met het <a
+            href="{{ route('privacy.show') }}">Privacy</a>- en Cookiebeleid
+    </p>
+
+    <div>
+        <button type="button"
+                class="btn btn-block btn-lg btn-accept-cookies JS--acceptCookies"
+        >
+            {{ @trans('lp1.accept') }}
+        </button>
+    </div>
+</div>
+
 <script>
     /*
      * Application namespace

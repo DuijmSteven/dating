@@ -17,7 +17,7 @@ class ContactController extends FrontendController
         return view(
             'frontend.contact',
             [
-                'title' => config('app.name') . ' - Contact',
+                'title' => $this->buildTitleWith(trans('view_titles.contact')),
             ]
         );
     }
@@ -33,8 +33,7 @@ class ContactController extends FrontendController
 
             $contactEmail = $contactMailInstance->onQueue('emails');
 
-            // TODO set proper to
-            Mail::to('orestis.palampougioukis@gmail.com')
+            Mail::to(config('company.info_email'))
                 ->queue($contactEmail);
 
             toast()->message(

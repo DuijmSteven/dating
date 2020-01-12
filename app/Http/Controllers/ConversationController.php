@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\ConversationMessage;
+use App\EmailType;
 use App\Http\Requests\Admin\Conversations\MessageCreateRequest;
+use App\Mail\MessageReceived;
 use App\Managers\ConversationManager;
 use App\OpenConversationPartner;
 use App\User;
 use App\UserAccount;
 use DB;
+use Kim\Activity\Activity;
+use Mail;
 
 /**
  * Class ConversationController
@@ -57,7 +61,7 @@ class ConversationController extends Controller
         $recipientId = $messageData['recipient_id'];
 
         /** @var User $recipient */
-        $recipient = User::find($recipientId);
+        $recipient = User::with('emailTypes')->find($recipientId);
 
         /** @var User $sender */
         $sender = User::find($senderId);
@@ -86,6 +90,25 @@ class ConversationController extends Controller
 
             $senderAccount->setCredits($senderCredits - 1);
             $senderAccount->save();
+
+            $recipientEmailTypeIds = $recipient->emailTypes->pluck('id')->toArray();
+
+            $recipientHasMessageNotificationsEnabled = in_array(
+                EmailType::MESSAGE_RECEIVED,
+                $recipientEmailTypeIds
+            );
+
+            if ($recipientHasMessageNotificationsEnabled) {
+                $onlineUserIds = Activity::users(1)->pluck('user_id')->toArray();
+
+                if (!in_array($recipient->getId(), $onlineUserIds)) {
+
+                    $messageReceivedEmail = (new MessageReceived($sender, $recipient))->onQueue('emails');
+
+                    Mail::to($recipient)
+                        ->queue($messageReceivedEmail);
+                }
+            }
 
             $alerts[] = [
                 'type' => 'success',

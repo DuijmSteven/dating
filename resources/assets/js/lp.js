@@ -1,4 +1,5 @@
 require('./bootstrap');
+require('bootstrap-datepicker');
 require("jquery-ui/ui/widgets/autocomplete");
 
 import isUndefined from "admin-lte/bower_components/moment/src/lib/utils/is-undefined";
@@ -26,16 +27,16 @@ function getCoordinatesAndFillInputs() {
 }
 
 window.addEventListener('load', function () {
-    var allimages = document.getElementsByTagName('img');
-    for (var i = 0; i < allimages.length; i++) {
-        if (allimages[i].getAttribute('data-src')) {
-            allimages[i].setAttribute('src', allimages[i].getAttribute('data-src'));
-        }
-    }
+    // var allimages = document.getElementsByTagName('img');
+    // for (var i = 0; i < allimages.length; i++) {
+    //     if (allimages[i].getAttribute('data-src')) {
+    //         allimages[i].setAttribute('src', allimages[i].getAttribute('data-src'));
+    //     }
+    // }
 
     setTimeout(() => {
         $('.roundImageWrapper').each((index, element) => {
-            fitImageToContainer($(element));
+            fitRoundImageToContainer($(element));
         });
 
     }, 100);
@@ -45,9 +46,20 @@ window.addEventListener('load', function () {
 $(window).on('load', function () {
     require('./global_helpers');
 
-    var data = Cookies.get("lpFormSelection");
+    var formSelected = Cookies.get("lpFormSelection");
+    var cookiesAccepted = Cookies.get("lpCookiesAccepted");
 
-    if (data === 'register') {
+    if (cookiesAccepted !== 'true') {
+        $('.cookie-popup').removeClass('hidden');
+    }
+
+    $('.JS--acceptCookies').click(() => {
+        $('.cookie-popup').addClass('hidden');
+
+        Cookies.set("lpCookiesAccepted", 'true');
+    });
+
+    if (formSelected === 'register') {
         $('.form-container').removeClass('hidden');
         $('#JS--registrationForm').toggle('fast');
     } else {
@@ -109,22 +121,13 @@ $(window).on('load', function () {
     }
 });
 
-function fitImageToContainer(element) {
-    var containerHeight = element.height();
-    var containerWidth = element.width();
+function fitRoundImageToContainer(element) {
+    let containerHeight = element.height();
+    let $imageToFit = $(element).find('img');
+    let imageToFitHeight = $imageToFit.height();
 
-    const $profileImage = $(element).find('img');
-
-    var profileImageHeight = $profileImage.height();
-
-    if (profileImageHeight > 30 && profileImageHeight < containerHeight + 5) {
-        $profileImage.css("width", "auto");
-        $profileImage.css("height", containerHeight);
-
-        const profileImageWidth = $profileImage.css('width');
-
-        const imageWidth = parseInt(profileImageWidth.replace('px', ''));
-        $profileImage.css("margin-left", - (imageWidth - containerWidth)/2);
+    if (containerHeight > imageToFitHeight) {
+        $imageToFit.addClass('fitVertically');
     }
 }
 

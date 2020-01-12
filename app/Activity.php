@@ -2,13 +2,11 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * Class Activity
  * @package App
  */
-class Activity extends Model
+class Activity extends TimeZonedModel
 {
     public $table = 'activity';
 
@@ -114,14 +112,6 @@ class Activity extends Model
     public function setText(string $text)
     {
         $this->text = $text;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCreatedAt()
-    {
-        return $this->created_at;
     }
 
     /**

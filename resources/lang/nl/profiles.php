@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'title' => 'Profiles',
-    'main_heading' => 'Profiles',
+    'title' => 'Profielen',
+    'main_heading' => 'Profielen',
 ];

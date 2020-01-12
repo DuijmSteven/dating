@@ -70,5 +70,8 @@ Route::group([
         ->name('conversations.set-conversation-activity-for-user-id');
 });
 
+Route::get('{userId}/chat-translations', 'Api\ConversationController@getChatTranslations')
+    ->name('cities.get');
+
 Route::get('cities/{countryCode}', 'Api\LocationController@getCities')
     ->name('cities.get');

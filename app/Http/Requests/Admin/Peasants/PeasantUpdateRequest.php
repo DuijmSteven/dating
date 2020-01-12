@@ -27,7 +27,7 @@ class PeasantUpdateRequest extends Request
         $userProfileFields = UserConstants::selectableFields('peasant');
 
         $rules = [
-            'username' => 'min:5|max:50|string|required|unique:users,username,' . trim($this->route('userId') . ',id'),
+            //'username' => 'min:5|max:50|string|unique:users,username,' . trim($this->route('userId') . ',id'),
             'active' => 'boolean',
             'dob' => 'date_format:Y-m-d',
             'gender' => 'in:'. implode(',', array_keys($userProfileFields['gender'])),
@@ -43,7 +43,6 @@ class PeasantUpdateRequest extends Request
             'lat' => 'required_with:city|numeric',
             'lng' => 'required_with:city|numeric',
             'about_me' => 'string|max:1000',
-            'looking_for' => 'string|max:1000'
         ];
 
         if (!is_null($this->files->get('user_images'))) {

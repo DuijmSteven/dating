@@ -2,13 +2,11 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * Class Faq
  * @package App
  */
-class Faq extends Model
+class Faq extends TimeZonedModel
 {
     public $fillable = [
         'section',
@@ -109,9 +107,5 @@ class Faq extends Model
     public function setPriority(string $priority)
     {
         $this->priority = $priority;
-    }
-
-    public function getCreatedAt() {
-        return $this->created_at;
     }
 }

@@ -39,8 +39,6 @@
 
     .flagImage {
         @include roundImage;
-
-        height: 120%;
     }
 
     &__item {
@@ -80,7 +78,7 @@
         }
 
         .userCreditsNumber {
-            font-weight: 500;
+            font-weight: 400;
             color: lighten($secondaryColor, 10%);
         }
 

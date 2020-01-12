@@ -6,15 +6,15 @@
         Nieuw bericht ontvangen!
     </h1>
 
-    <p style="font-family: sans-serif; font-weight: normal; margin: 0; Margin-bottom: 15px;">Beste {{ $recipient->username }},</p>
+    <p style="font-family: sans-serif; font-weight: normal; margin: 0; Margin-bottom: 15px;">Beste {{ $messageRecipient->username }},</p>
 
     <p style="margin-bottom: 0">
-        Je hebt een bericht van <b> {{ $sender->username }}</b> ontvangen op <b>Altijdsex.nl</b>. Klik op onderstaande link om het bericht direct te bekijken!
+        Je hebt een bericht van <b> {{ $messageSender->username }}</b> ontvangen op <b>Altijdsex.nl</b>. Klik op onderstaande link om het bericht direct te bekijken!
     </p>
 
     <div style="text-align: center">
         <div style="display: inline-block; padding: 7px 20px; background-color: #ef4f2b; color: #fff; border: 1px solid #ef4f2b; border-radius: 4px; margin: 20px 0; cursor: pointer">
-            Naar het bericht
+            <a style="color: #fff" href="{{ route('landing-page.show') }}">Naar Altijdsex.nl</a>
         </div>
     </div>
 

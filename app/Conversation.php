@@ -3,14 +3,13 @@
 namespace App;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Conversation
  * @package App
  */
-class Conversation extends Model
+class Conversation extends TimeZonedModel
 {
     use SoftDeletes;
 
@@ -81,10 +80,6 @@ class Conversation extends Model
 
     public function getId() {
         return $this->id;
-    }
-
-    public function getUpdatedAt() {
-        return $this->updated_at;
     }
 
     public function setNewActivityForUserA(bool $value)

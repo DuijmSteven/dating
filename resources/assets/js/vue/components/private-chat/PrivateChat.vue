@@ -9,7 +9,7 @@
         >
             <div class="PrivateChatItem__head__wrapper">
                 <div class="PrivateChatItem__user">
-                    <div class="PrivateChatItem__profilePicture__wrapper">
+                    <div class="PrivateChatItem__profilePicture__wrapper JS--roundImageWrapper">
                         <img class="PrivateChatItem__profilePicture"
                              :src="partner.profileImageUrlThumb">
                     </div>
@@ -66,8 +66,8 @@
                 <div
                     v-if="showNoCredits"
                     class="PrivateChatItem__feedback PrivateChatItem__feedback--notEnoughCredits">
-                    <div>No credits</div>
-                    <div><a :href="creditsUrl">Refill now!</a></div>
+                    <div>{{ this.$parent.chatTranslations['not_enough_credits'] }}</div>
+                    <div><a :href="creditsUrl">{{ this.$parent.chatTranslations['refill'] }}</a></div>
                 </div>
 
                 <div
@@ -91,7 +91,7 @@
                         class="fetchMoreButton"
                         v-on:click="fetchOlderMessages()"
                     >
-                        fetch older messages
+                        {{ this.$parent.chatTranslations['older_messages'] }}
                         <i class="material-icons">
                             get_app
                         </i>
@@ -108,14 +108,14 @@
                         v-if="allMessagesFetched && (displayedMessages.length >= messagesPerRequest)"
                         class="allMessagesFetched"
                     >
-                        There are no more messages to fetch
+                        {{ this.$parent.chatTranslations['no_more_messages'] }}
                     </div>
 
                     <div
                         v-if="allMessagesFetched && displayedMessages.length === 0"
                         class="allMessagesFetched"
                     >
-                        There are no messages yet
+                        {{ this.$parent.chatTranslations['no_messages_yet'] }}
                     </div>
 
                     <chat-message
@@ -172,17 +172,21 @@
                 showNoCredits: false,
                 creditsUrl: DP.creditsUrl,
                 singleProfileUrl: DP.singleProfileUrl,
-                errorMessages: []
+                errorMessages: [],
             };
         },
 
         created() {
-
-
             this.statusClass = this.partner.chatState === '1' ? 'maximized' : 'minimized';
             this.isMaximized = this.partner.chatState === '1';
 
             this.fetchMessagesAndListenToChannel();
+        },
+
+        mounted() {
+            $('.JS--roundImageWrapper').each((index, element) => {
+                this.$parent.fitRoundImageToContainer($(element));
+            });
         },
 
         methods: {
@@ -432,8 +436,6 @@
                         }, 4000)
                     } else if (error && error.response) {
                         if (error.response.data && error.response.data.errors) {
-                            console.log(error.response.data.errors);
-
                             $.each(error.response.data.errors, (key, error) => {
                                 $.each(error, (key, error) => {
                                     this.errorMessages.push(error);
@@ -444,14 +446,14 @@
                                 this.errorMessages = [];
                             }, 3000);
                         } else {
-                            this.errorMessages = 'There was an error. Please try again or contact support to report the problem';
+                            this.errorMessages.push(this.$parent.chatTranslations['general_error']);
 
                             setTimeout(() => {
                                 this.errorMessages = [];
                             }, 3000)
                         }
                     } else {
-                        this.errorMessages = 'There was an error. Please try again or contact support to report the problem';
+                        this.errorMessages.push(this.$parent.chatTranslations['general_error']);
 
                         setTimeout(() => {
                             this.errorMessages = [];

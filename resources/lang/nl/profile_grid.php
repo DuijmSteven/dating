@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'no_matching_users' => 'There are no users matching the search criteria. Please try another search.',
+    'no_matching_users' => 'Er zijn geen gebruikers die voldoen aan de zoekcriteria. Probeer een andere zoekopdracht.',
 ];

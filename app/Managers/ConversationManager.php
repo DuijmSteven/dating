@@ -648,8 +648,8 @@ class ConversationManager
         $conversation['user_a']['username'] = $result->user_a_username;
         $conversation['user_a']['profile_image_url'] = \StorageHelper::profileImageUrlFromId(
             $conversation['user_a']['id'],
-            $result->user_a_profile_img,
-            $result->user_a_gender
+            $result->user_a_gender,
+            $result->user_a_profile_img
         );
 
         $conversation['user_a']['role'] = (int) $result->user_a_role_id;
@@ -669,8 +669,8 @@ class ConversationManager
         $conversation['user_b']['username'] = $result->user_b_username;
         $conversation['user_b']['profile_image_url'] = \StorageHelper::profileImageUrlFromId(
             $conversation['user_b']['id'],
-            $result->user_b_profile_img,
-            $result->user_b_gender
+            $result->user_b_gender,
+            $result->user_b_profile_img
         );
 
         $conversation['user_b']['role'] = (int) $result->user_b_role_id;

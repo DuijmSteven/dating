@@ -36,8 +36,6 @@ class Contact extends Mailable implements ShouldQueue
         return $this->view('emails.contact')
             ->from($this->requestData['email'])
             ->subject( $this->requestData['subject'])
-            ->replyTo($this->requestData['email'])
-            // TODO set proper cc
-            ->cc('orestis.palampougioukis@gmail.com');
+            ->replyTo($this->requestData['email']);
     }
 }

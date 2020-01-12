@@ -10,6 +10,8 @@ import VuejsDialog from 'vuejs-dialog';
 
 import VueMq from 'vue-mq';
 
+Vue.use(require('vue-moment'));
+
 Vue.use(VueMq, {
     breakpoints: {
         xs: 768,
@@ -102,11 +104,11 @@ $(window).on('load', function () {
 
         const $searchRadiusInput = $('.JS--radiusSearchInput');
 
-        if ($('.JS--autoCompleteCites').length > 0 && $('.JS--autoCompleteCites').val().length > 0) {
+        if ($('.JS--autoCompleteCites.JS--bar').length > 0 && $('.JS--autoCompleteCites.JS--bar').val().length > 0) {
             $searchRadiusInput.removeClass('hidden');
         }
 
-        $('.JS--autoCompleteCites').keyup(function () {
+        $('.JS--autoCompleteCites.JS--bar').keyup(function () {
             if ($(this).val().length > 0) {
                 if ($searchRadiusInput.hasClass('hidden')) {
                     $searchRadiusInput.removeClass('hidden');
@@ -140,44 +142,26 @@ $(window).on('load', function () {
     if ($('.modalImage').length > 0) {
         $(".modalImage").on("click", function(event) {
             event.preventDefault();
-            $('#imagePreview').attr('src', $(this).find('img').attr('src')); // here asign the image to the modal when the user click the enlarge link
+
+            if ($(this).find('img').data('src') && $(this).find('img').data('src').length > 0) {
+                $('#imagePreview').attr('src', $(this).find('img').data('src'));
+            } else {
+                $('#imagePreview').attr('src', $(this).find('img').attr('src')); // here asign the image to the modal when the user click the enlarge link
+            }
+
             $('#imageModal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
         });
     }
 
-    // if ($('.landingPage').length > 0) {
-    //     var data = Cookies.get("lpFormSelection");
-    //
-    //     if (data === 'register') {
-    //         $('#JS--registrationForm').toggle('fast');
-    //     } else {
-    //         $('#JS--loginForm').toggle('fast');
-    //     }
-    //
-    //     $('#JS--registerButton').click(function(){
-    //         $('#JS--loginForm').toggle('fast');
-    //         $('#JS--registrationForm').toggle('fast');
-    //
-    //         Cookies.set("lpFormSelection", 'register');
-    //     });
-    //
-    //     $('#JS--loginButton').click(function(){
-    //         $('#JS--registrationForm').toggle('fast');
-    //         $('#JS--loginForm').toggle('fast');
-    //
-    //         Cookies.set("lpFormSelection", 'login');
-    //     });
-    //
-    // }
-
     if ($('.JS--creditpack').length > 0) {
-        $('.JS--creditpack .btn').click(function () {
+        $('.JS--creditpack').click(function () {
             $('.table-rose').removeClass('table-rose');
             $('.block-raised').removeClass('block-raised');
             $('.btn-white').removeClass('btn-white').addClass('btn-rose');
-            $(this).closest('.JS--creditpack').addClass('block-raised');
-            $(this).closest('.table').addClass('table-rose');
-            $(this).addClass('btn-white');
+
+            $(this).addClass('block-raised');
+            $(this).find('.table').addClass('table-rose');
+            $(this).find('.btn').addClass('btn-white');
 
             let creditPackId = $('.block-raised').data('creditpack-id');
 
@@ -208,14 +192,20 @@ $(window).on('load', function () {
         });
     }
 
+    if ($('.JS--roundImageWrapper').length > 0) {
+        $('.JS--roundImageWrapper').each((index, element) => {
+            fitRoundImageToContainer($(element));
+        });
+    }
+
     if($('.JS--UserSummary').length > 0) {
         $('.JS--UserSummary__user-image').each((index, element) => {
-            fitImageToContainer($(element));
+            fitGeneralImageToContainer($(element));
         });
 
         if ($('.JS--UserSummary__otherImages').length > 0) {
             $('.JS--UserSummary__nonProfileImageWrapper').each((index, element) => {
-                fitImageToContainer($(element));
+                fitGeneralImageToContainer($(element));
             });
         }
 
@@ -234,13 +224,6 @@ $(window).on('load', function () {
     }
 
     if ($('.JS--searchToggle').length > 0) {
-        var searchBarState = Cookies.get('searchBarState');
-
-        // if (searchBarState === 'open') {
-        //     $('.JS--SearchBar').removeClass('hidden');
-        //     $('.JS--searchToggleButton').addClass('pressed');
-        // }
-
         $('.JS--searchToggle').click((event) => {
             event.preventDefault();
             $('.JS--SearchBar').toggleClass('hidden');
@@ -264,7 +247,7 @@ $(window).on('load', function () {
 
 });
 
-function fitImageToContainer(element) {
+function fitGeneralImageToContainer(element) {
     var containerHeight = element.height();
     var containerWidth = element.width();
 
@@ -280,6 +263,16 @@ function fitImageToContainer(element) {
 
         const imageWidth = parseInt(profileImageWidth.replace('px', ''));
         $profileImage.css("margin-left", - (imageWidth - containerWidth)/2);
+    }
+}
+
+function fitRoundImageToContainer(element) {
+    let containerHeight = element.height();
+    let $imageToFit = $(element).find('img');
+    let imageToFitHeight = $imageToFit.height();
+
+    if (containerHeight > imageToFitHeight) {
+        $imageToFit.addClass('fitVertically');
     }
 }
 

@@ -1,21 +1,25 @@
 <?php
 
 return [
-    'edit_profile' => 'Edit profile',
-    'email_notification_settings' => 'Email notification settings',
+    'edit_profile' => 'Bewerk profiel',
+    'email_notification_settings' => 'Instellingen voor e-mailmeldingen',
     'user_email_types' => [
-        'new_message' => 'New message received',
-        'new_message_help' => 'Receive an email when a user sends you a message and you are not logged in',
+        'new_message' => 'Nieuw bericht ontvangen',
+        'new_message_help' => 'Ontvang een e-mail wanneer een gebruiker u een bericht stuurt en u niet bent ingelogd',
     ],
-    'select_your' => 'Select your',
-    'upload_images' => 'Upload images',
-    'manage_images' => 'Manage images',
-    'profile_image' => 'Profile image',
-    'other_images' => 'Other images',
-    'no_images' => 'No images found',
-    'actions' => 'Actions',
-    'delete' => 'Delete',
-    'set_profile' => 'Set profile',
-    'no_profile_image_set' => 'No profile image set',
-    'about_me_placeholder' => 'Let other get to know you a bit. What makes you happy? What irritates you? What makes you excited? Users that share a bit about themselves tend to get a lot more attention!',
+    'select_your' => 'Selecteer uw',
+    'upload_images' => 'Upload fotos',
+    'manage_images' => 'Beheer fotos',
+    'profile_image' => 'Profielfoto',
+    'other_images' => 'Andere fotos',
+    'no_images' => 'Nog geen fotos',
+    'actions' => 'Acties',
+    'delete' => 'Verwijderen',
+    'set_profile' => 'Instellen als profiel foto',
+    'no_profile_image_set' => 'Geen profielfoto ingesteld',
+    'about_me_placeholder' => 'Laat anderen je een beetje leren kennen. Wat maakt je blij? Wat irriteert je? Wat maakt je enthousiast? Gebruikers die iets over zichzelf delen, hebben de neiging om veel meer aandacht te krijgen!',
+    'account_deactivation' => 'Account deactiveren',
+    'deactivate' => 'Nu deactiveren',
+    'deactivation_text' => 'Als u uw profiel deactiveert, verliest u geen toegang tot het profiel. Andere leden kunnen u niet vinden of berichten naar u verzenden. De volgende keer dat u inlogt, wordt uw profiel automatisch geactiveerd.'
+
 ];
