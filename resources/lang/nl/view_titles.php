@@ -13,4 +13,6 @@ return [
     'faq' => 'FAQ',
     'home' => 'Home',
     'tac' => 'Algemene Voorwarden',
+    'deactivated' => 'Gedeactiveerd',
+
 ];

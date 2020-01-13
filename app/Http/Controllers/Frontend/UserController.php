@@ -4,12 +4,15 @@ namespace App\Http\Controllers\Frontend;
 
 use App\EmailType;
 use App\Http\Requests\Admin\Peasants\PeasantUpdateRequest;
+use App\Mail\Deactivated;
+use App\Mail\Welcome;
 use App\Managers\PeasantManager;
 use App\Managers\UserManager;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 /**
  * Class UserController
@@ -74,7 +77,7 @@ class UserController extends FrontendController
         $user = User::where('username', $username)->first();
 
         if (!($user instanceof User)) {
-            redirect(route('login'));
+            redirect(route('welcome'));
         }
 
         $viewData = [
@@ -167,6 +170,44 @@ class UserController extends FrontendController
         }
 
         return redirect()->back();
+    }
+
+    /**
+     * @param int $userId
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function deactivate(Request $request)
+    {
+        try {
+            $user = $this->authenticatedUser;
+            $user->setActive(false);
+            $user->save();
+
+            $deactivatedEmail = (new Deactivated($user))->onQueue('emails');
+
+            Mail::to($user)
+                ->queue($deactivatedEmail);
+        } catch (\Exception $exception) {
+            \Log::error($exception);
+        }
+
+        Auth::guard()->logout();
+        $request->session()->invalidate();
+
+        return redirect()->route('users.deactivated.get');
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showDeactivated()
+    {
+        return view(
+            'frontend.users.deactivated',
+            [
+                'title' => $this->buildTitleWith(trans('view_titles.deactivated'))
+            ]
+        );
     }
 
     public function setLocale(string $locale)

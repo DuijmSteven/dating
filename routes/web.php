@@ -61,6 +61,10 @@ Route::group([
 });
 
 
+
+Route::get('deactivated', 'Frontend\UserController@showDeactivated')
+    ->name('users.deactivated.get');
+
 /* User routes */
 Route::group([
     'prefix' => 'users',
@@ -88,6 +92,10 @@ Route::group([
 
     Route::get('{username}/edit-profile', 'Frontend\UserController@showEditProfile')
         ->name('users.edit-profile.get')
+        ->middleware('current_user');
+
+    Route::get('{userId}/deactivate', 'Frontend\UserController@deactivate')
+        ->name('users.deactivate.get')
         ->middleware('current_user');
 
     Route::group([

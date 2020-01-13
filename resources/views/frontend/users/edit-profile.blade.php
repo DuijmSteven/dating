@@ -416,16 +416,20 @@
                     <p>{{ trans('edit_profile.deactivation_text') }}</p>
 
                     <div class="text-left">
-                        @include('frontend.components.button', [
-                            'buttonContext' => 'form',
-                            'buttonState' => 'danger',
-                            'buttonText' => @trans('edit_profile.deactivate')
-                        ])
+                        <button type="button" class="Button Button--danger" data-toggle="modal" data-target=".ConfirmModalDeactivate">
+                            <span class="Button__content">{{ @trans('edit_profile.deactivate') }}</span>
+                        </button>
                     </div>
                 </div>
             </div>
 
         </div>
     </div>
+
+    @include('frontend.components.confirm-modal', [
+        'url' => route('users.deactivate.get', ['userId' => $authenticatedUser->getId()]),
+        'modalId' => 'Deactivate',
+        'body' => trans('deactivation.confirmation_message')
+    ])
 
 @endsection

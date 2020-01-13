@@ -62,6 +62,10 @@ class UserSearchManager
                 $query = $query->where('username', 'like', '%' . $parameters['username'] . '%');
             }
 
+            if (isset($parameters['active'])) {
+                $query = $query->where('active', '=', $parameters['active']);
+            }
+
             foreach (UserConstants::selectableFields('peasant') as $field => $values) {
                 if (isset($parameters[$field])) {
                     $query = $query->whereHas('meta', function ($query) use ($parameters, $field) {

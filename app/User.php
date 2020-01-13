@@ -113,6 +113,22 @@ class User extends Authenticatable
     }
 
     /**
+     * @return bool
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param bool $active
+     */
+    public function setActive(bool $active)
+    {
+        $this->active = $active;
+    }
+
+    /**
      * @return mixed
      */
     public function getEmail()

@@ -13,4 +13,5 @@ return [
     'faq' => 'FAQ',
     'home' => 'Home',
     'tac' => 'Terms & Conditions',
+    'deactivated' => 'Deactivated',
 ];
