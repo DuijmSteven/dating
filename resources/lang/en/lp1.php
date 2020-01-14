@@ -52,5 +52,7 @@ return [
     'next' => 'Next',
     'age' => 'Age',
     'accept' => 'Accept',
-    'select_city_again' => 'Please select again'
+    'select_city_again' => 'Please select again',
+    'forgot_password' => 'Forgot Password?',
+    'reset_password' => 'Reset Password'
 ];

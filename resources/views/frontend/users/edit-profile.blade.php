@@ -408,6 +408,28 @@
                 </div>
             </div>
 
+            <label for="">{{ @trans('edit_profile.reset_password') }}</label>
+
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <div class="text-left">
+                        @include('frontend.components.button', [
+                            'url' => route('password.reset.get'),
+                            'buttonContext' => 'general',
+                            'buttonState' => 'primary',
+                            'buttonText' => trans('edit_profile.reset_password')
+                        ])
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <hr/>
+                </div>
+            </div>
+
             <label for="">{{ @trans('edit_profile.account_deactivation') }}</label>
 
             <div class="row">

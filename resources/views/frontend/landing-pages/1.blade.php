@@ -158,6 +158,20 @@
         color: #fff;
     }
 
+    .btn-forgot-password {
+        background-color: #fff;
+        border-color: #ccc;
+        color: #555;
+    }
+
+    .btn-forgot-password:hover,
+    .btn-forgot-password:focus,
+    .btn-forgot-password:active {
+        background-color: #eee;
+        border-color: #ccc;
+        color: #555;
+    }
+
     .cookie-popup {
         position: fixed;
         background-color: #fff;
@@ -209,7 +223,7 @@
     }
 
     .btn-register-login:hover {
-        background-color: #ef4f2b;
+        background-color: #f96431;
         color: #fff;
     }
 
@@ -602,6 +616,21 @@
                             <button id="JS--registerButton" type="button"
                                     class="btn btn-block btn-lg btn-register-login registerButton">{{ @trans('lp1.form.register') }}
                             </button>
+                        </div>
+                    </div>
+                    <div class="form-row" style="margin-top: 20px">
+                        <div class="col-sm-10">
+                            <h4 class="mt-3">{{ @trans('lp1.forgot_password') }}</h4>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-sm-12">
+                            @include('frontend.components.button', [
+                                'url' => route('password.reset.get'),
+                                'buttonContext' => 'general',
+                                'buttonText' => trans('lp1.reset_password'),
+                                'buttonClasses' => 'btn btn-block btn-lg btn-forgot-password'
+                            ])
                         </div>
                     </div>
                 </form>

@@ -20,6 +20,5 @@ return [
     'about_me_placeholder' => 'Let other get to know you a bit. What makes you happy? What irritates you? What makes you excited? Users that share a bit about themselves tend to get a lot more attention!',
     'account_deactivation' => 'Account deactivation',
     'deactivate' => 'Deactivate',
-    'deactivation_text' => 'If you deactivate your profile, you will not lose access to it. Other losers will not be able to find you or send messages to you. The next time you log in your profile will be activated automatically.'
-
+    'deactivation_text' => 'If you deactivate your profile, you will not lose access to it. Other losers will not be able to find you or send messages to you. The next time you log in your profile will be activated automatically.',
 ];
