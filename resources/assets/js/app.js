@@ -197,24 +197,21 @@ $(window).on('load', function () {
             fitGeneralImageToContainer($(element));
         });
 
+        $(window).resize(() => {
+            setTimeout(() => {
+                $('.JS--UserSummary__user-image').each((index, element) => {
+                    fitGeneralImageToContainer($(element));
+
+                });
+
+            }, 20);
+        });
+
         if ($('.JS--UserSummary__otherImages').length > 0) {
             $('.JS--UserSummary__nonProfileImageWrapper').each((index, element) => {
                 fitGeneralImageToContainer($(element));
             });
         }
-
-        // $(window).resize(function() {
-        //     $('.JS--UserSummary__user-image').each((index, element) => {
-        //         fitImageToContainer($(element));
-        //     });
-        //
-        //     if ($('.JS--UserSummary__otherImages').length > 0) {
-        //         $('.JS--UserSummary__nonProfileImageWrapper').each((index, element) => {
-        //
-        //             fitImageToContainer($(element));
-        //         });
-        //     }
-        // });
     }
 
     if ($('.JS--searchToggle').length > 0) {
@@ -245,18 +242,24 @@ function fitGeneralImageToContainer(element) {
     var containerHeight = element.height();
     var containerWidth = element.width();
 
-    const $profileImage = $(element).find('img');
+    const $image = $(element).find('img');
 
-    var profileImageHeight = $profileImage.height();
+    var imageHeight = $image.height();
 
-    if (profileImageHeight < containerHeight + 5) {
-        $profileImage.css("width", "auto");
-        $profileImage.css("height", containerHeight);
+    if (imageHeight < containerHeight) {
+        $image.css("width", "auto");
+        $image.css("height", containerHeight);
 
-        const profileImageWidth = $profileImage.css('width');
+        const imageWidth = $image.css('width');
 
-        const imageWidth = parseInt(profileImageWidth.replace('px', ''));
-        $profileImage.css("margin-left", - (imageWidth - containerWidth)/2);
+        const imageWidthAsInteger = parseInt(imageWidth.replace('px', ''));
+        $image.css("margin-left", - (imageWidthAsInteger - containerWidth)/2);
+    } else {
+        if ($image.css('width') !== "100%") {
+            $image.css("width", "100%");
+            $image.css("height", "auto");
+            $image.css("margin-left", 'initial');
+        }
     }
 }
 

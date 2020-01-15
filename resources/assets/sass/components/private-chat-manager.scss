@@ -197,8 +197,9 @@
 
         &__lastMessage {
             flex: 1;
-            color: #888;
-            font-size: 12px;
+            color: darken($secondaryColor, 10%);
+            font-size: 1.4rem;
+            line-height: 19px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
