@@ -666,7 +666,7 @@
         </div>
     </div>
     <div class="container recent-container text-center currentMembers">
-        <h3>{{ @trans('lp1.a_group_of_members') }}</h3>
+        <h3 style="margin-bottom: 40px">{{ @trans('lp1.a_group_of_members') }}</h3>
         <div class="row mt-5">
             @foreach ($users as $user)
                 <div class="col-lg-2 col-md-4 col-sm-12 mb-4">
@@ -690,7 +690,7 @@
     <div class="container testimonials-container text-center">
         <h3>{{ @trans('lp1.success_stories') }}</h3>
         <div id="carouselExampleControls" class="carousel slide mt-5">
-            <div class="carousel-inner">
+            <div class="carousel-inner" style="padding-top: 15px">
                 @foreach($testimonials as $testimonial)
                     <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
                         <div class="text-center">

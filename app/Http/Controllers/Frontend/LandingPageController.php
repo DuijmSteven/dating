@@ -34,7 +34,7 @@ class LandingPageController extends FrontendController
             [
                 'quote' => 'Ik weet niet of ik zonder deze website ook zo snel contact gehad zou hebben. 
                             Erg makkelijk in gebruik, leuke contacten en na een paar weken had ik de eerste date! Super bedankt.',
-                'imgSource' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZMuP15kIk0xs6E5c2qgb5O7_AUeSxVVTWenaLaCU7wvPaELV_',
+                'imgSource' => asset('img/lp/testimonials/timo.jpg'),
                 'names' => 'Timo, 28'
             ],
             [
@@ -44,7 +44,7 @@ class LandingPageController extends FrontendController
             ],
             [
                 'quote' => 'Was op zoek naar een leuke date en gevonden...Super geslaagd dus',
-                'imgSource' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZMuP15kIk0xs6E5c2qgb5O7_AUeSxVVTWenaLaCU7wvPaELV_',
+                'imgSource' => asset('img/lp/testimonials/remco.jpg'),
                 'names' => 'Remco, 36'
             ],
             [
@@ -64,7 +64,7 @@ class LandingPageController extends FrontendController
             ],
             [
                 'quote' => 'Was wel toe aan iets anders dan Tinder en gewoon oprecht een leuk gesprekje voeren voor je elkaar in het echt treft en de hemd van het lijf scheurt.',
-                'imgSource' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZMuP15kIk0xs6E5c2qgb5O7_AUeSxVVTWenaLaCU7wvPaELV_',
+                'imgSource' => asset('img/lp/testimonials/laura.jpg'),
                 'names' => 'Laura, 29'
             ],
             [
