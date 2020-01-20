@@ -201,8 +201,13 @@ $(window).on('load', function () {
             setTimeout(() => {
                 $('.JS--UserSummary__user-image').each((index, element) => {
                     fitGeneralImageToContainer($(element));
-
                 });
+
+                if ($('.JS--UserSummary__otherImages').length > 0) {
+                    $('.JS--UserSummary__nonProfileImageWrapper').each((index, element) => {
+                        fitGeneralImageToContainer($(element));
+                    });
+                }
 
             }, 20);
         });

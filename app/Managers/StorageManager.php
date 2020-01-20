@@ -6,6 +6,7 @@ use App\UserImage;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
+use Intervention\Image\Constraint;
 use Intervention\Image\Facades\Image;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -29,11 +30,11 @@ class StorageManager
                     . $uploadedFile->getClientSize());
 
                 $fileNameMain = $fileNameRoot
-                    . '.' . $uploadedFile->getExtension();
+                    . '.' . $uploadedFile->extension();
 
                 $fileNameThumb = $fileNameRoot
                     .'_thumb'
-                    . '.' . $uploadedFile->getExtension();
+                    . '.' . $uploadedFile->extension();
 
                 $resource = $this->imageResize($uploadedFile, 180);
 
@@ -161,11 +162,12 @@ class StorageManager
      */
     private function imageResize(UploadedFile $uploadedFile, int $height, int $width = null)
     {
+        /** @var \Intervention\Image\Image $img */
         $img = Image::make($uploadedFile);
 
         if (is_null($width)) {
             $img->resize(null, $height, function ($constraint) {
-                $constraint->getAspectRatio();
+                $constraint->aspectRatio();
             });
         } else {
             $img->resize($width, $height);

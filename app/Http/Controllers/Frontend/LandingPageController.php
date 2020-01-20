@@ -39,7 +39,7 @@ class LandingPageController extends FrontendController
             ],
             [
                 'quote' => 'Als ‘mooie’ vrouw krijg je vaak eindeloos veel berichten en vriendschapsverzoeken, maar gelukkig dat ik hier wel mensen trof die serieus waren.',
-                'imgSource' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZMuP15kIk0xs6E5c2qgb5O7_AUeSxVVTWenaLaCU7wvPaELV_',
+                'imgSource' => asset('img/lp/testimonials/amber.jpg'),
                 'names' => 'Amber, 24'
             ],
             [
@@ -54,13 +54,13 @@ class LandingPageController extends FrontendController
             ],
             [
                 'quote' => 'Na een spanningsloos huwelijk was ik wel toe aan wat leven in de brouwerij. Hier heb ik een paar leuke vrouwen leren kennen waar ik zo nu en dan eens een bakkie koffie mee kan drinken.',
-                'imgSource' => 'https://www.gannett-cdn.com/-mm-/c15f5f19a52dc82a8ae04998311685d79708bb7f/c=0-160-361-521/local/-/media/2017/12/21/INGroup/Indianapolis/636494825523802717-couple-1.png?width=200&height=200&fit=crop',
+                'imgSource' => asset('img/lp/testimonials/nico.jpg'),
                 'names' => 'Nico, 45'
             ],
             [
                 'quote' => 'Zelf had ik niet helemaal meer verwacht van zo’n datingsite gebruik te maken. Ik verbaasde me in het beginsel over het gemak waar je een gesprek mee voert en dat het gaandeweg echt leuker wordt. Uiteindelijk heb ik nog een paar weken gechat, maar nu ben ik gelukkig en hopelijk voorlopig voorzien haha',
-                'imgSource' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZMuP15kIk0xs6E5c2qgb5O7_AUeSxVVTWenaLaCU7wvPaELV_',
-                'names' => 'Johannes, 49'
+                'imgSource' => asset('img/lp/testimonials/johan.jpg'),
+                'names' => 'Johan, 42'
             ],
             [
                 'quote' => 'Was wel toe aan iets anders dan Tinder en gewoon oprecht een leuk gesprekje voeren voor je elkaar in het echt treft en de hemd van het lijf scheurt.',
