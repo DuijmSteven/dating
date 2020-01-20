@@ -334,18 +334,27 @@
 
     .searchToggleButton {
         position: absolute;
-        left: -17px;
-        bottom: -12px;
+        display: flex;
+        flex-direction: row;
+        align-content: center;
+        justify-content: center;
+        left: -128px;
+        bottom: -5px;
         text-align: center;
-        width: 42px;
-        height: 42px;
-        border-radius: 50%;
+        width: 131px;
+        height: 31px;
+        border-radius: 20px;
         border: 1px solid $secondaryColor;
         box-shadow: 0 0 3px rgba(0,0,0,0.3);
 
         background-color: lighten($secondaryColor, 5%);
         color: #fff;
 
+        span {
+            display: flex;
+            align-items: center;
+            margin-right: 5px;
+        }
 
         @media (max-width: $screen-sm-max) {
             left: 12px;
@@ -360,7 +369,8 @@
 
         .material-icons {
             position: relative;
-            top: 7px;
+            top: 3px;
+            width: 14px;
         }
     }
 }

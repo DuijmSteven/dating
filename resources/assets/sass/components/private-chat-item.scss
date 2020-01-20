@@ -14,6 +14,29 @@
     bottom: 0;
     width: map_get($privateChatItem, width) + px;
 
+    &__clearImagePreview {
+        position: absolute;
+        cursor: pointer;
+        top: 15px;
+        right: 15px;
+        background-color: #fff;
+        border-radius: 50%;
+        color: #ff5b49;
+    }
+
+    &__clearImagePreview:hover {
+        -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+        color: #ff2718;
+    }
+
+    &__clearImagePreview:active {
+        -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+        color: #ff5b49;
+    }
+
+
     &__feedback {
         position: absolute;
         top: 0;
@@ -74,14 +97,35 @@
         }
     }
 
+    &__attachmentIcon {
+        color: #888;
+        position: absolute;
+        right: 50px;
+        bottom: 15px;
+        margin: 0;
+        height: 24px;
+
+        label {
+            height: 24px;
+        }
+
+        &:hover {
+            color: #666;
+
+            label {
+                cursor: pointer;
+            }
+        }
+    }
+
     &__textarea__container {
         position: relative;
 
         .sendMessage,
         .loader {
             position: absolute;
-            right: 20px;
-            top: 8px;
+            right: 15px;
+            bottom: 15px;
 
             color: #888;
             cursor: pointer;
@@ -98,6 +142,7 @@
 
     &__imagePreview {
         overflow: hidden;
+        position: relative;
         padding: 10px;
         text-align: right;
 
@@ -116,7 +161,6 @@
         border-radius: 2px 2px 0 0;
         padding: 10px;
         background-color: $tertiaryColor;
-
 
         &__wrapper {
             display: flex;
@@ -308,17 +352,15 @@
     }
 
     &__textarea {
-        height: 34px;
-        margin: 7px;
+        height: 44px;
         border: medium none;
-        border-bottom: 1px solid $lightGrey !important;
-        width: 95%;
+        width: 100%;
         overflow: hidden;
         resize: none;
-        font-size: 15px;
+        font-size: 16px;
         letter-spacing: 0.3px;
         line-height: 18px;
-        padding-right: 40px;
+        padding: 13px 78px 16px 10px;
 
         &:focus {
             outline: 0;
@@ -330,7 +372,7 @@
 
         &__buttons {
             overflow: hidden;
-            padding: 2px 0px 0px 5px;
+            padding: 2px 0 0 5px;
             width: 100%;
             background-color: $white;
         }
@@ -391,7 +433,7 @@
 
         .PrivateChatItem__head {
             height: map_get($privateChatItem, 'headHeightMobileMaximized') + px;
-            padding-top: 21px;
+            padding-top: 15px;
         }
 
         .PrivateChatItem__body {
@@ -404,12 +446,26 @@
             }
 
             &__content {
-                height: 90%;
+                height: 100%;
+                padding-bottom: 150px;
             }
         }
 
+        .PrivateChatItem__textarea {
+            height: 100%;
+        }
+
+        .PrivateChatItem__textarea__container {
+            height: 100%;
+        }
+
         .PrivateChatItem__textarea__wrapper {
-            height: 10%;
+            position: absolute;
+            z-index: 10000;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            height: 150px;
         }
 
         &.PrivateChatItem--showingPreview {
@@ -460,8 +516,9 @@
     }
 
     .PrivateChatItem__head {
+        border-radius: 0 0 0 0;
         height: map_get($privateChatItem, 'headHeightMobileMaximized') + px;
-        padding-top: 21px;
+        padding-top: 16px;
     }
 
     .PrivateChatItem__body {
@@ -474,12 +531,26 @@
         }
 
         &__content {
-            height: 90%;
+            height: 100%;
+            padding-bottom: 20%;
         }
     }
 
+    .PrivateChatItem__textarea {
+        height: 100%;
+    }
+
+    .PrivateChatItem__textarea__container {
+        height: 100%;
+    }
+
     .PrivateChatItem__textarea__wrapper {
-        height: 10%;
+        position: absolute;
+        z-index: 10000;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        height: 20%;
     }
 
     &.PrivateChatItem--showingPreview {

@@ -30,6 +30,7 @@
                     <li>
                         <a href="#" class="JS--searchToggle searchToggle">
                             <div class="searchToggleButton JS--searchToggleButton">
+                                <span>{{ @trans('search.search') }}</span>
                                 <i class="material-icons">
                                     search
                                 </i>

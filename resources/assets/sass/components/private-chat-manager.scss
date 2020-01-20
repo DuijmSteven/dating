@@ -6,7 +6,7 @@
 
     width: 370px;
 
-    box-shadow: 0 0 24px rgba(0,0,0,0.2);
+    box-shadow: 0 0 24px rgba(0, 0, 0, 0.2);
 
     &__head {
         cursor: pointer;
@@ -67,6 +67,7 @@
             background-color: #fff;
             border-radius: 50%;
             color: #ff5b49;
+            font-size: 24px;
 
             @media (max-width: $screen-sm-max) {
                 display: inline-block !important;
@@ -74,12 +75,12 @@
             }
 
             &:hover {
-                box-shadow: 0 0 4px rgba(0,0,0,0.2);
+                box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
                 color: #ff2718;
             }
 
             &:active {
-                box-shadow: 0 0 4px rgba(0,0,0,0.2);
+                box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
                 color: #ff5b49;
             }
         }
@@ -212,6 +213,7 @@
                 right: 0;
                 top: -2px;
                 font-size: 21px;
+                color: #777;
             }
         }
     }
@@ -254,6 +256,12 @@
                         padding-left: 0;
                     }
                 }
+            }
+        }
+
+        &__item {
+            &__deleteIcon {
+                font-size: 21px !important;
             }
         }
 
@@ -304,6 +312,7 @@
             &__right {
                 max-width: initial;
                 flex: 10;
+                margin-right: 0;
             }
 
             &__date {

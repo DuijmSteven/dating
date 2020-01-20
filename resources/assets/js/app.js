@@ -208,7 +208,6 @@ $(window).on('load', function () {
                         fitGeneralImageToContainer($(element));
                     });
                 }
-
             }, 20);
         });
 
