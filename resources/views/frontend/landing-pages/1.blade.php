@@ -802,7 +802,7 @@
         <strong>Altijdsex.nl</strong> maakt gebruik van cookies om de website continu te kunnen blijven verbeteren. Als
         je op “Akkoord”
         klikt of je registreert op deze website, ga je automatisch akkoord met het <a
-            href="{{ route('privacy.show') }}">Privacy</a>- en Cookiebeleid
+            href="{{ route('privacy.show') }}">Privacy- en Cookiebeleid</a>
     </p>
 
     <div>

@@ -332,6 +332,12 @@
         display: inline-block;
     }
 
+    @media (max-width: $screen-sm-max) {
+        .searchBarContainer {
+            height: 70px;
+        }
+    }
+
     .searchToggleButton {
         position: absolute;
         display: flex;

@@ -27,7 +27,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 @if(isset($authenticatedUser))
-                    <li>
+                    <li class="searchBarContainer">
                         <a href="#" class="JS--searchToggle searchToggle">
                             <div class="searchToggleButton JS--searchToggleButton">
                                 <span>{{ @trans('search.search') }}</span>

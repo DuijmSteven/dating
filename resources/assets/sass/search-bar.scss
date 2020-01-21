@@ -42,8 +42,15 @@
 
         width: 100%;
 
+        @media (max-width: $screen-sm-max) {
+            &.has-error {
+                padding-bottom: 30px;
+            }
+        }
+
         @media (min-width: $screen-md-min) {
             padding-right: 20px;
+
             &.city {
                 width: 25%;
             }

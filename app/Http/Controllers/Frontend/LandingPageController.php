@@ -48,11 +48,6 @@ class LandingPageController extends FrontendController
                 'names' => 'Remco, 36'
             ],
             [
-                'quote' => 'Ik ben blij dat ik eindelijk een datingsite heb gevonden waar je zonder onderbreking kunt chatten. Niet meer eindeloos herladen of gesprek voor gesprek openen, gewoon lekker kletsen én daten natuurlijk.',
-                'imgSource' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZMuP15kIk0xs6E5c2qgb5O7_AUeSxVVTWenaLaCU7wvPaELV_',
-                'names' => 'Herman, 53'
-            ],
-            [
                 'quote' => 'Na een spanningsloos huwelijk was ik wel toe aan wat leven in de brouwerij. Hier heb ik een paar leuke vrouwen leren kennen waar ik zo nu en dan eens een bakkie koffie mee kan drinken.',
                 'imgSource' => asset('img/lp/testimonials/nico.jpg'),
                 'names' => 'Nico, 45'
