@@ -67,10 +67,7 @@
                         <span class="PrivateChatManager__item__date">{{ conversation.conversation_updated_at | moment("add", "1 hours") | formatDate }}</span>
                     </div>
                     <div class="PrivateChatManager__item__lastMessage">
-                        {{ conversation.last_message_type === 'generic' ?
-                           conversation.last_message_body :
-                           'flirt'
-                        }}
+                        {{ conversation.last_message_body ? conversation.last_message_body : '&nbsp;' }}
                         <i class="material-icons attachmentIcon" v-if="conversation.last_message_has_attachment">attachment</i>
                     </div>
                 </div>
