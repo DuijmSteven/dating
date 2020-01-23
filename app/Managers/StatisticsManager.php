@@ -9,6 +9,20 @@ use Carbon\Carbon;
 
 class StatisticsManager
 {
+    public function revenueOnDate($date) {
+        return Payment::whereDate('created_at', $date)
+            ->sum('amount');
+    }
+
+    public function revenueBetween($startDate, $endDate) {
+        return Payment::whereBetween('created_at',
+            [
+                $startDate,
+                $endDate
+            ])
+            ->sum('amount');
+    }
+
     public function registrationsCountBetween($startDate, $endDate) {
         return User::whereHas('roles', function ($query) {
             $query->where('id', 2);
@@ -18,7 +32,7 @@ class StatisticsManager
                     $startDate,
                     $endDate
                 ])
-                ->count();
+            ->count();
     }
 
     public function registrationsCountOnDay($date) : int {

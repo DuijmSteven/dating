@@ -23,6 +23,26 @@ class DashboardController extends Controller
     public function dashboard()
     {
         $viewData = [
+            'revenueStatistics' => [
+                'revenueToday' => $this->statisticsManager->revenueOnDate(Carbon::today()),
+                'revenueYesterday' => $this->statisticsManager->revenueOnDate(Carbon::yesterday()),
+                'revenueCurrentWeek' => $this->statisticsManager->revenueBetween(
+                    Carbon::now()->startOfWeek(),
+                    Carbon::now()->endOfWeek()
+                ),
+                'revenueCurrentMonth' => $this->statisticsManager->revenueBetween(
+                    Carbon::now()->startOfMonth(),
+                    Carbon::now()->endOfMonth()
+                ),
+                'revenuePreviousMonth' => $this->statisticsManager->revenueBetween(
+                    Carbon::now()->startOfMonth()->subMonth(),
+                    Carbon::now()->subMonth()->endOfMonth()
+                ),
+                'revenueCurrentYear' => $this->statisticsManager->revenueBetween(
+                    Carbon::now()->startOfYear(),
+                    Carbon::now()->endOfYear()
+                )
+            ],
             'registrationStatistics' => [
                 'registrationsToday' => $this->statisticsManager->registrationsCountOnDay(Carbon::today()),
                 'registrationsYesterday' => $this->statisticsManager->registrationsCountOnDay(Carbon::yesterday()),
