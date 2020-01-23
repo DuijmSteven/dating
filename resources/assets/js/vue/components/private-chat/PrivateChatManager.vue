@@ -149,12 +149,12 @@
             },
             confirmDeleteConversation: function (conversationId) {
                 this.$dialog.confirm({
-                    title: 'Delete conversation',
-                    body: 'Are you sure you want to delete this conversation?'
+                    title: this.$parent.chatTranslations['delete_conversation'],
+                    body: this.$parent.chatTranslations['delete_conversation_confirm']
                 }, {
                     customClass: 'ConfirmDialog',
-                    okText: 'Yes',
-                    cancelText: 'No'
+                    okText: this.$parent.chatTranslations['yes'],
+                    cancelText: this.$parent.chatTranslations['no']
                 })
                     .then(() => {
                         this.deleteConversation(conversationId);

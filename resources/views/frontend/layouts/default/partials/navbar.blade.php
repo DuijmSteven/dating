@@ -21,6 +21,17 @@
             <a class="navbar-brand" href="{!! route('home') !!}">
                 <img src="{!! asset('img/site_logos/Altijdsex_LogoSmall_Pos@1x.png') !!}">
             </a>
+
+            @if(isset($authenticatedUser))
+                <a href="#" class="JS--searchToggle searchToggle mobile">
+                    <div class="searchToggleButton JS--searchToggleButton">
+                        <span class="searchToggleButtonText">{{ @trans('search.search') }}</span>
+                        <i class="material-icons">
+                            search
+                        </i>
+                    </div>
+                </a>
+            @endif
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -30,7 +41,7 @@
                     <li class="searchBarContainer">
                         <a href="#" class="JS--searchToggle searchToggle">
                             <div class="searchToggleButton JS--searchToggleButton">
-                                <span>{{ @trans('search.search') }}</span>
+                                <span class="searchToggleButtonText">{{ @trans('search.search') }}</span>
                                 <i class="material-icons">
                                     search
                                 </i>

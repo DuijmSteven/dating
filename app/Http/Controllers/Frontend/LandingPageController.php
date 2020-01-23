@@ -50,7 +50,7 @@ class LandingPageController extends FrontendController
             [
                 'quote' => 'Na een spanningsloos huwelijk was ik wel toe aan wat leven in de brouwerij. Hier heb ik een paar leuke vrouwen leren kennen waar ik zo nu en dan eens een bakkie koffie mee kan drinken.',
                 'imgSource' => asset('img/lp/testimonials/nico.jpg'),
-                'names' => 'Nico, 45'
+                'names' => 'Nico, 36'
             ],
             [
                 'quote' => 'Zelf had ik niet helemaal meer verwacht van zo’n datingsite gebruik te maken. Ik verbaasde me in het beginsel over het gemak waar je een gesprek mee voert en dat het gaandeweg echt leuker wordt. Uiteindelijk heb ik nog een paar weken gechat, maar nu ben ik gelukkig en hopelijk voorlopig voorzien haha',
@@ -64,7 +64,7 @@ class LandingPageController extends FrontendController
             ],
             [
                 'quote' => 'Op mijn leeftijd sluit je niet meer zo makkelijk aan in de kroeg. Op enkele datingsites kwam ik bedrogen uit, maar ik ben blij dat ik op altijdsex toch nog invulling heb kunnen geven aan mijn lusten, ook al ben ik niet meer de jongste, de oudste zal ik ook zeker niet zijn, toch?',
-                'imgSource' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZMuP15kIk0xs6E5c2qgb5O7_AUeSxVVTWenaLaCU7wvPaELV_',
+                'imgSource' => asset('img/lp/testimonials/mrjones.jpg'),
                 'names' => 'Mr. Jones, 68'
             ],
         ];
