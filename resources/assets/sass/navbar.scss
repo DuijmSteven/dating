@@ -56,9 +56,10 @@
 }
 
 .navbar-default {
-    border: $navbarBorderWidth + px solid #d3e0e9;
+    border: $navbarBorderWidth + px solid $navbarBgColor;
     background-color: $navbarBgColor;
     position: relative;
+    border-radius: 0;
 
     .navbar-toggle {
         margin-top: 17px;

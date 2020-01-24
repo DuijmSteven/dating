@@ -119,6 +119,10 @@ Table of Contents End
         width: 100%;
         padding-right: 200px;
         z-index: 20;
+
+        @media (max-width: $screen-xs-max) {
+            padding-right: 40%;
+        }
     }
 
     .paymentMethodsList {
