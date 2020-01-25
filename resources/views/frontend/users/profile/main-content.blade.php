@@ -33,34 +33,69 @@
                             class="User-profile__info__title">{{ trans('user_constants.labels.relationship_status') }}</span>
                     </td>
                     <td><span
-                            class="User-profile__info__value">{{ trans('user_constants.relationship_status.' . $user->meta->relationship_status) }}</span>
+                            class="User-profile__info__value"
+                        >
+                            @if($user->meta->relationship_status)
+                                {{ trans('user_constants.relationship_status.' . $user->meta->relationship_status) }}
+                            @else
+                                {{ trans('user_constants.not_filled') }}
+                            @endif
+                        </span>
                     </td>
                 </tr>
                 <tr>
                     <td><span class="User-profile__info__title">{{ trans('user_constants.labels.height') }}</span></td>
                     <td><span
-                            class="User-profile__info__value">{{ trans('user_constants.height.' . $user->meta->height) }}</span>
+                            class="User-profile__info__value"
+                        >
+                            @if($user->meta->height)
+                                {{ trans('user_constants.height.' . $user->meta->height) }}
+                            @else
+                                {{ trans('user_constants.not_filled') }}
+                            @endif
+                        </span>
                     </td>
                 </tr>
                 <tr>
                     <td><span class="User-profile__info__title">{{ trans('user_constants.labels.body_type') }}</span>
                     </td>
                     <td><span
-                            class="User-profile__info__value">{{ trans('user_constants.body_type.' . $user->meta->body_type) }}</span>
+                            class="User-profile__info__value"
+                        >
+                            @if($user->meta->body_type)
+                                {{ trans('user_constants.body_type.' . $user->meta->body_type) }}
+                            @else
+                                {{ trans('user_constants.not_filled') }}
+                            @endif
+                        </span>
                     </td>
                 </tr>
                 <tr>
                     <td><span class="User-profile__info__title">{{ trans('user_constants.labels.eye_color') }}</span>
                     </td>
                     <td><span
-                            class="User-profile__info__value">{{ trans('user_constants.eye_color.' . $user->meta->eye_color) }}</span>
+                            class="User-profile__info__value"
+                        >
+                            @if($user->meta->eye_color)
+                                {{ trans('user_constants.eye_color.' . $user->meta->eye_color) }}
+                            @else
+                                {{ trans('user_constants.not_filled') }}
+                            @endif
+                        </span>
                     </td>
                 </tr>
                 <tr>
                     <td><span class="User-profile__info__title">{{ trans('user_constants.labels.hair_color') }}</span>
                     </td>
                     <td><span
-                            class="User-profile__info__value">{{ trans('user_constants.hair_color.' . $user->meta->hair_color) }}</span>
+                            class="User-profile__info__value"
+                        >
+                            @if($user->meta->hair_color)
+                                {{ trans('user_constants.eye_color.' . $user->meta->hair_color) }}
+                            @else
+                                {{ trans('user_constants.not_filled') }}
+                            @endif
+                        </span>
                     </td>
                 </tr>
                 <tr>
@@ -68,7 +103,14 @@
                             class="User-profile__info__title">{{ trans('user_constants.labels.smoking_habits') }}</span>
                     </td>
                     <td><span
-                            class="User-profile__info__value">{{ trans('user_constants.smoking_habits.' . $user->meta->smoking_habits) }}</span>
+                            class="User-profile__info__value"
+                        >
+                            @if($user->meta->smoking_habits)
+                                {{ trans('user_constants.eye_color.' . $user->meta->smoking_habits) }}
+                            @else
+                                {{ trans('user_constants.not_filled') }}
+                            @endif
+                        </span>
                     </td>
                 </tr>
                 <tr>
@@ -76,7 +118,14 @@
                             class="User-profile__info__title">{{ trans('user_constants.labels.drinking_habits') }}</span>
                     </td>
                     <td><span
-                            class="User-profile__info__value">{{ trans('user_constants.drinking_habits.' . $user->meta->drinking_habits) }}</span>
+                            class="User-profile__info__value"
+                        >
+                            @if($user->meta->drinking_habits)
+                                {{ trans('user_constants.eye_color.' . $user->meta->drinking_habits) }}
+                            @else
+                                {{ trans('user_constants.not_filled') }}
+                            @endif
+                        </span>
                     </td>
                 </tr>
                 </tbody>
