@@ -6,13 +6,13 @@
     <div class="col-xs-12">
         <div class="Tile">
             <div class="Tile__heading">{{ @trans('contact.heading') }}</div>
-            <div class="Tile__body">
+            <div class="Tile__body CompanyInfo__Tile__body">
 
-                <table class="table table-striped">
+                <table class="table table-striped" style="margin-bottom: 0">
                     <tbody>
                         <tr>
-                            <td><span class="CompanyInfo__title">{{ @trans('contact.company') }}</span></td>
-                            <td><span class="CompanyInfo__value">{!! config('company.name') !!}</span></td>
+                            <td style="border-top: 0"><span class="CompanyInfo__title">{{ @trans('contact.company') }}</span></td>
+                            <td style="border-top: 0"><span class="CompanyInfo__value">{!! config('company.name') !!}</span></td>
                         </tr>
                         <tr>
                             <td><span class="CompanyInfo__title">{{ @trans('contact.kvk_number') }}</span></td>
@@ -104,10 +104,12 @@
                         @endif
                     </div>
                     <div class="form-group text-right">
-                        <button type="submit"
-                                class="btn btn-default">
-                            {{ @trans('contact.send') }}
-                        </button>
+                        @include('frontend.components.button', [
+                                    'buttonContext' => 'form',
+                                    'buttonType' => 'submit',
+                                    'buttonState' => 'primary',
+                                    'buttonText' => @trans('contact.send')
+                                ])
                     </div>
                 </form>
             </div>

@@ -28,7 +28,7 @@ return [
         'array' => 'The :attribute must have between :min and :max items.',
     ],
     'boolean' => 'The :attribute field must be true or false.',
-    'confirmed' => 'De :attribute bevestiging komt niet overeen.',
+    'confirmed' => 'Het :attribute veld bevestiging komt niet overeen. Probeer het nog eens.',
     'date' => ':attribute is geen geldige datum.',
     'date_format' => 'The :attribute does not match the format :format.',
     'different' => 'The :attribute and :other must be different.',
@@ -36,7 +36,7 @@ return [
     'digits_between' => 'The :attribute must be between :min and :max digits.',
     'dimensions' => 'The :attribute has invalid image dimensions.',
     'distinct' => 'The :attribute field has a duplicate value.',
-    'email' => 'De :attribute moet een geldig e-mail adres zijn.',
+    'email' => 'Het :attribute veld moet een geldig e-mail adres bevatten.',
     'exists' => 'The selected :attribute is invalid.',
     'file' => 'The :attribute must be a file.',
     'filled' => 'The :attribute field is required.',
@@ -64,7 +64,7 @@ return [
     'numeric' => ':attribute moet een nummer zijn.',
     'present' => 'The :attribute field must be present.',
     'regex' => 'The :attribute format is invalid.',
-    'required' => 'Het :attribute veld is verplicht.',
+    'required' => 'Dit veld is vereist.',
     'required_if' => 'The :attribute field is required when :other is :value.',
     'required_unless' => 'The :attribute field is required unless :other is in :values.',
     'required_with' => 'The :attribute field is required when :values is present.',
@@ -84,7 +84,7 @@ return [
     'uploaded' => 'The :attribute failed to upload.',
     'url' => 'The :attribute format is invalid.',
 
-    'without_spaces' => 'The :attribute kan geen spaties hebben',
+    'without_spaces' => 'Je kan geen spaties gebruiken in dit veld.',
 
     /*
     |--------------------------------------------------------------------------
@@ -99,10 +99,17 @@ return [
 
     'custom' => [
         'city' => [
-            'in' => 'De :attribute moet worden geselecteerd uit de verstrekte lijst met steden',
+            'in' => 'Het stad veld moet worden geselecteerd uit de verstrekte lijst',
         ],
         'user_images.*.max' => 'Elke foto kan niet groter zijn dan :max kB',
-        'user_images.*.image' => 'De fotos moeten van het volgende type zijn: jpg, jpeg of png'
+        'user_images.*.image' => 'De fotos moeten van het volgende type zijn: jpg, jpeg of png',
+        'email' => [
+            'unique' => 'Dit e-mailadres is al in gebruik.'
+        ],
+        'password' => [
+            'confirmed' => 'Het wachtwoord komt niet overeen. Probeer het nog eens.'
+        ],
+        'date' => 'Dit is geen geldige datum.'
     ],
 
     /*
