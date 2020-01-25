@@ -280,7 +280,7 @@
                                     'buttonContext' => 'form',
                                     'buttonType' => 'submit',
                                     'buttonState' => 'primary',
-                                    'buttonText' => 'Aanpasen'
+                                    'buttonText' => @trans('edit_profile.update')
                                 ])
                             </div>
                         </div>

@@ -419,11 +419,13 @@
         }
     }
 
-    @media (max-width: $screen-xs-max) {
+    @media (max-width: $screen-sm-max) {
         .searchBarContainer {
             display: none
         }
+    }
 
+    @media (max-width: $screen-xs-max) {
         span.searchToggleButtonText {
             display: none;
         }

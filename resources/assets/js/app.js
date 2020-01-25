@@ -74,6 +74,16 @@ function getCoordinatesAndFillInputs() {
 $(window).on('load', function () {
     require('./global_helpers');
 
+    // this will disable right-click on all images
+    $("body").on("contextmenu",function(e){
+        return false;
+    });
+
+    // this will disable dragging of all images
+    $("img").mousedown(function(e){
+        e.preventDefault()
+    });
+
     if ($('.JS--ScrollTopButton').length > 0) {
         $('.JS--ScrollTopButton').click(() => {
             $('html, body').animate({scrollTop:0}, 500, 'swing');

@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'update' => 'Aanpassen',
     'edit_profile' => 'Bewerk profiel',
     'email_notification_settings' => 'Instellingen voor e-mailmeldingen',
     'user_email_types' => [

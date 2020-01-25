@@ -32,21 +32,21 @@
         @endif
 
         @if(isset($authenticatedUser) && $authenticatedUser != null)
-{{--            <private-chat--}}
-{{--                v-model="conversationPartners"--}}
-{{--                v-for="(partner, index) in conversationPartners"--}}
-{{--                :index="index"--}}
-{{--                :key="partner.id"--}}
-{{--                :user="{{ $authenticatedUser }}"--}}
-{{--                :partner="partner"--}}
-{{--            >--}}
-{{--            </private-chat>--}}
+            <private-chat
+                v-model="conversationPartners"
+                v-for="(partner, index) in conversationPartners"
+                :index="index"
+                :key="partner.id"
+                :user="{{ $authenticatedUser }}"
+                :partner="partner"
+            >
+            </private-chat>
 
-{{--            <private-chat-manager--}}
-{{--                ref="privateChatManager"--}}
-{{--                :user="{{ $authenticatedUser }}"--}}
-{{--            >--}}
-{{--            </private-chat-manager>--}}
+            <private-chat-manager
+                ref="privateChatManager"
+                :user="{{ $authenticatedUser }}"
+            >
+            </private-chat-manager>
 
             @include('frontend.layouts.default.partials.search-bar')
 
