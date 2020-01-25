@@ -142,24 +142,24 @@
                                         {{ $peasant->meta->city }}
                                     </div>
                                     <div> <strong>Height:</strong>
-                                        {{ ucfirst(str_replace('_', ' ', $peasant->meta->relationship_status ? \UserConstants::selectableField('height', $peasant->roles[0]->name)[$peasant->meta->relationship_status] : 'Nog niet ingevuld')) }}
+                                        {{ ucfirst(str_replace('_', ' ', $peasant->meta->height ? \UserConstants::selectableField('height', $peasant->roles[0]->name)[$peasant->meta->height ] : 'Nog niet ingevuld')) }}
                                     </div>
                                 </div>
                                 <div class="col-xs-6">
                                     <div> <strong>Body type:</strong>
-                                        {{ ucfirst(str_replace('_', ' ', $peasant->meta->relationship_status ? \UserConstants::selectableField('body_type', $peasant->roles[0]->name)[$peasant->meta->relationship_status] : 'Nog niet ingevuld')) }}
+                                        {{ ucfirst(str_replace('_', ' ', $peasant->meta->body_type ? \UserConstants::selectableField('body_type', $peasant->roles[0]->name)[$peasant->meta->body_type] : 'Nog niet ingevuld')) }}
                                     </div>
                                     <div> <strong>Eye color:</strong>
-                                        {{ ucfirst(str_replace('_', ' ', $peasant->meta->relationship_status ? \UserConstants::selectableField('eye_color', $peasant->roles[0]->name)[$peasant->meta->relationship_status] : 'Nog niet ingevuld')) }}
+                                        {{ ucfirst(str_replace('_', ' ', $peasant->meta->eye_color ? \UserConstants::selectableField('eye_color', $peasant->roles[0]->name)[$peasant->meta->eye_color] : 'Nog niet ingevuld')) }}
                                     </div>
                                     <div> <strong>Hair color:</strong>
-                                        {{ ucfirst(str_replace('_', ' ', $peasant->meta->relationship_status ? \UserConstants::selectableField('hair_color', $peasant->roles[0]->name)[$peasant->meta->relationship_status] : 'Nog niet ingevuld')) }}
+                                        {{ ucfirst(str_replace('_', ' ', $peasant->meta->hair_color ? \UserConstants::selectableField('hair_color', $peasant->roles[0]->name)[$peasant->meta->hair_color] : 'Nog niet ingevuld')) }}
                                     </div>
                                     <div> <strong>Smoking:</strong>
-                                        {{ ucfirst(str_replace('_', ' ', $peasant->meta->relationship_status ? \UserConstants::selectableField('smoking_habits', $peasant->roles[0]->name)[$peasant->meta->relationship_status] : 'Nog niet ingevuld')) }}
+                                        {{ ucfirst(str_replace('_', ' ', $peasant->meta->smoking_habits ? \UserConstants::selectableField('smoking_habits', $peasant->roles[0]->name)[$peasant->meta->smoking_habits] : 'Nog niet ingevuld')) }}
                                     </div>
                                     <div> <strong>Drinking:</strong>
-                                        {{ ucfirst(str_replace('_', ' ', $peasant->meta->relationship_status ? \UserConstants::selectableField('drinking_habits', $peasant->roles[0]->name)[$peasant->meta->relationship_status] : 'Nog niet ingevuld')) }}
+                                        {{ ucfirst(str_replace('_', ' ', $peasant->meta->drinking_habits ? \UserConstants::selectableField('drinking_habits', $peasant->roles[0]->name)[$peasant->meta->drinking_habits] : 'Nog niet ingevuld')) }}
                                     </div>
                                 </div>
                             </div>
