@@ -3,6 +3,45 @@
     display: block;
   }
 
+  .imageModalArrow {
+    position: fixed;
+    top: 48%;
+    color: #ededed;
+    font-size: 70px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.4);
+    cursor: pointer;
+    background-color: #da8975;
+
+    @media screen and (max-width: $screen-xs-max) {
+      font-size: 40px;
+    }
+
+    &:hover {
+      background-color: darken(#da8975, 10%);
+    }
+
+    &:active {
+      background-color: darken(#da8975, 10%);
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.4);
+    }
+  }
+
+  .leftArrow {
+    left: 40px;
+
+    @media screen and (max-width: $screen-xs-max) {
+      left: 15px;
+    }
+  }
+
+  .rightArrow {
+    right: 40px;
+
+    @media screen and (max-width: $screen-xs-max) {
+      right: 15px;
+    }
+  }
+
   .modal-body {
     padding: 0;
   }

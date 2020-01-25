@@ -6,8 +6,9 @@
                     <a href="#" class="modalImage">
                         <div class="UserSummary__profileImageWrapper">
                             <img
-                                class="UserSummary__profileImage"
+                                class="UserSummary__profileImage JS--galleryImage"
                                 src="{{ \StorageHelper::profileImageUrl($user) }}"
+                                data-src="{{ \StorageHelper::profileImageUrl($user) }}"
                                 alt="user image"
                             >
                         </div>
@@ -25,7 +26,7 @@
                 <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}">
                     <div class="UserSummary__profileImageWrapper">
                         <img
-                            class="UserSummary__profileImage"
+                            class="UserSummary__profileImage JS--galleryImage"
                                 src="{{ \StorageHelper::profileImageUrl($user) }}"
                             alt="user image"
                         >
@@ -56,7 +57,7 @@
             <div class="UserSummary__otherImages JS--UserSummary__otherImages">
                 {{-- DON'T reformat this loop, it is structured like this to avoid spacing between inline blocks --}}
                 @foreach($user->imagesNotProfile as $image)<a href="#" class="modalImage UserSummary__nonProfileImageModalWrapper"><div class="UserSummary__nonProfileImageWrapper JS--UserSummary__nonProfileImageWrapper"><img
-                                class="UserSummary__nonProfileImage"
+                                class="UserSummary__nonProfileImage JS--galleryImage"
                                 src="{{ \StorageHelper::userImageUrl($user->getId(), $image->getFilename(), true) }}"
                                 data-src="{{ \StorageHelper::userImageUrl($user->getId(), $image->getFilename()) }}"
                                 alt="user image"
