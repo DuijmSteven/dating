@@ -32,27 +32,33 @@
         @endif
 
         @if(isset($authenticatedUser) && $authenticatedUser != null)
-            <private-chat
-                v-model="conversationPartners"
-                v-for="(partner, index) in conversationPartners"
-                :index="index"
-                :key="partner.id"
-                :user="{{ $authenticatedUser }}"
-                :partner="partner"
-            >
-            </private-chat>
+{{--            <private-chat--}}
+{{--                v-model="conversationPartners"--}}
+{{--                v-for="(partner, index) in conversationPartners"--}}
+{{--                :index="index"--}}
+{{--                :key="partner.id"--}}
+{{--                :user="{{ $authenticatedUser }}"--}}
+{{--                :partner="partner"--}}
+{{--            >--}}
+{{--            </private-chat>--}}
 
-            <private-chat-manager
-                ref="privateChatManager"
-                :user="{{ $authenticatedUser }}"
-            >
-            </private-chat-manager>
+{{--            <private-chat-manager--}}
+{{--                ref="privateChatManager"--}}
+{{--                :user="{{ $authenticatedUser }}"--}}
+{{--            >--}}
+{{--            </private-chat-manager>--}}
 
             @include('frontend.layouts.default.partials.search-bar')
 
         @endif
 
     </div>
+</div>
+
+<div class="ScrollTopButton JS--ScrollTopButton hidden">
+    <i class="material-icons">
+        arrow_upward
+    </i>
 </div>
 
 <!-- Creates the bootstrap modal where the image will appear -->

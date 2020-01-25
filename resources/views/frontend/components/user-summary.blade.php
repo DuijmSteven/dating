@@ -58,7 +58,7 @@
                 {{-- DON'T reformat this loop, it is structured like this to avoid spacing between inline blocks --}}
                 @foreach($user->imagesNotProfile as $image)<a href="#" class="modalImage UserSummary__nonProfileImageModalWrapper"><div class="UserSummary__nonProfileImageWrapper JS--UserSummary__nonProfileImageWrapper"><img
                                 class="UserSummary__nonProfileImage JS--galleryImage"
-                                src="{{ \StorageHelper::userImageUrl($user->getId(), $image->getFilename(), true) }}"
+                                src="{{ \StorageHelper::userImageUrl($user->getId(), $image->getFilename()) }}"
                                 data-src="{{ \StorageHelper::userImageUrl($user->getId(), $image->getFilename()) }}"
                                 alt="user image"
                             ></div></a>@endforeach

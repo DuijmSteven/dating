@@ -47,7 +47,7 @@
                                 <span style="margin-left: 5px">iDeal</span>
                             </label>
                             <span class="paymentMethodLogo">
-                                <img src="{{ asset('img/icons/ideal.png') }}"/>
+                                <img style="height: 29px" src="{{ asset('img/icons/ideal_logo.svg') }}"/>
                             </span>
                             <div class="break" style="flex-basis: 100%; height: 0;"></div>
                             <div class="JS--banksContainer" style="display: none; margin-top: 20px">
@@ -80,7 +80,7 @@
                                 <input type="radio" name="paymentMethod" value="paysafe">
                                 <span style="margin-left: 5px">Paysafecard</span>
                             </label>
-                            <span class="paymentMethodLogo"><img src="{{ asset('img/icons/paysafecard.png') }}"/></span>
+                            <span class="paymentMethodLogo"><img style="height: 29px" src="{{ asset('img/icons/paysafecard_logo.svg') }}"/></span>
                         </li>
                     </ul>
                 </div>

@@ -8,6 +8,7 @@ body {
     font-size: map_get($fontSize, body-mobile) + px;
     color: $textColor;
     width: 100%;
+    position: relative;
 }
 
 @media (min-width: $screen-sm-min) {

@@ -74,6 +74,20 @@ function getCoordinatesAndFillInputs() {
 $(window).on('load', function () {
     require('./global_helpers');
 
+    if ($('.JS--ScrollTopButton').length > 0) {
+        $('.JS--ScrollTopButton').click(() => {
+            $('html, body').animate({scrollTop:0}, 500, 'swing');
+        });
+
+        $(window).scroll(() => {
+            if ( $(window).scrollTop() > 400) {
+                $('.JS--ScrollTopButton').removeClass('hidden');
+            } else {
+                $('.JS--ScrollTopButton').addClass('hidden');
+            }
+        });
+    }
+
     if ($('.Shoutbox').length > 0) {
         require('./modules/shoutbox');
     }

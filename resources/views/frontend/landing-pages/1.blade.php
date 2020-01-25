@@ -680,8 +680,7 @@
                     <h5 class="small">{{ $user->username }}</h5>
                     <p class="offset-0 user-info">
                         <small class="text-muted">{{ @trans('lp1.age') }}
-                            : {{ $user->meta->dob->diffInYears($carbonNow) }}
-                            , {{ $user->meta->city }}</small>
+                            : {{ $user->meta->dob->diffInYears($carbonNow) }}, {{ $user->meta->city }}</small>
                     </p>
                 </div>
             @endforeach
