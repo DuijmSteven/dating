@@ -37,95 +37,105 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li class="searchBarContainer">
-                    <a href="#" class="JS--searchToggle searchToggle">
-                        <div class="searchToggleButton JS--searchToggleButton">
-                            <span class="searchToggleButtonText">{{ @trans('search.search') }}</span>
-                            <i class="material-icons">
-                                search
-                            </i>
-                        </div>
-                    </a>
-                </li>
-                <li class="userCredits">
-                    <div class="userCredits">
-                        <a href="{{ route('credits.show') }}">
-                            <credits-count></credits-count>
-                        </a>
-                    </div>
-
-                    <div class="vertical-separator"></div>
-                </li>
-                <li class="dropdown userDropdown">
-                    <a href="#"
-                       class="dropdown-toggle"
-                       data-toggle="dropdown"
-                       role="button"
-                       aria-haspopup="true"
-                       aria-expanded="false"
-                    >
-                        <img
-                            class="userDropdown__image"
-                            src="{{ \StorageHelper::profileImageUrl($authenticatedUser, true) }}" alt=""
-                        >
-
-                        {{ $authenticatedUser->username }} <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{!! route('users.edit-profile.get', ['userId' => $authenticatedUser->getUsername()]) !!}">{{ @trans('navbar.edit_profile') }}</a></li>
-                        <li><a href="{{ route('credits.show') }}">{{ @trans('navbar.credits') }}</a></li>
-
-                        <li class="dropdown-submenu languagesSubmenu">
-                            <a class="JS--showLanguagesSubmenu" tabindex="-1" href="#">{{ @trans('navbar.language') }} <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="languagesSubmenu__item" href="{{ route('users.set-locale', ['locale' => 'en']) }}">
-                                        <div class="flagImageWrapper">
-                                            <img class="flagImage" src="{{ asset('img/flags/uk.svg') }}" alt="">
-                                        </div>
-                                        <span>{{ @trans('navbar.english') }}</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="languagesSubmenu__item" href="{{ route('users.set-locale', ['locale' => 'nl']) }}">
-                                        <div class="flagImageWrapper">
-                                            <img class="flagImage" src="{{ asset('img/flags/nl.png') }}" alt="">
-                                        </div>
-                                        <span>{{ @trans('navbar.dutch') }}</span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <div class="showSelectedLanguage">
-                                <div class="flagImageWrapper">
-                                    @if($authenticatedUser->getLocale() === 'en')
-                                        <img class="flagImage" src="{{ asset('img/flags/uk.svg') }}" alt="">
-                                    @elseif($authenticatedUser->getLocale() === 'nl')
-                                        <img class="flagImage" src="{{ asset('img/flags/nl.png') }}" alt="">
-                                    @endif
-                                </div>
+                @if (isset($authenticatedUser))
+                    <li class="searchBarContainer">
+                        <a href="#" class="JS--searchToggle searchToggle">
+                            <div class="searchToggleButton JS--searchToggleButton">
+                                <span class="searchToggleButtonText">{{ @trans('search.search') }}</span>
+                                <i class="material-icons">
+                                    search
+                                </i>
                             </div>
-                        </li>
-
-                        <li>
-                            <a href="{!!  route('logout.post') !!}"
-                               onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();">{{ @trans('navbar.logout') }}
+                        </a>
+                    </li>
+                    <li class="userCredits">
+                        <div class="userCredits">
+                            <a href="{{ route('credits.show') }}">
+                                <credits-count></credits-count>
                             </a>
+                        </div>
 
-                            <form id="logout-form" action="{!!  route('logout.post') !!}" method="POST"
-                                  style="display: none;">
-                                {{ csrf_field() }}
-                            </form>
-                        </li>
+                        <div class="vertical-separator"></div>
+                    </li>
+                    <li class="dropdown userDropdown">
+                        <a href="#"
+                           class="dropdown-toggle"
+                           data-toggle="dropdown"
+                           role="button"
+                           aria-haspopup="true"
+                           aria-expanded="false"
+                        >
+                            <img
+                                class="userDropdown__image"
+                                src="{{ \StorageHelper::profileImageUrl($authenticatedUser, true) }}" alt=""
+                            >
 
-                    </ul>
+                            {{ $authenticatedUser->username }} <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{!! route('users.edit-profile.get', ['userId' => $authenticatedUser->getUsername()]) !!}">{{ @trans('navbar.edit_profile') }}</a></li>
+                            <li><a href="{{ route('credits.show') }}">{{ @trans('navbar.credits') }}</a></li>
 
-                    <div class="vertical-separator"></div>
-                </li>
+                            <li class="dropdown-submenu languagesSubmenu">
+                                <a class="JS--showLanguagesSubmenu" tabindex="-1" href="#">{{ @trans('navbar.language') }} <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="languagesSubmenu__item" href="{{ route('users.set-locale', ['locale' => 'en']) }}">
+                                            <div class="flagImageWrapper">
+                                                <img class="flagImage" src="{{ asset('img/flags/uk.svg') }}" alt="">
+                                            </div>
+                                            <span>{{ @trans('navbar.english') }}</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="languagesSubmenu__item" href="{{ route('users.set-locale', ['locale' => 'nl']) }}">
+                                            <div class="flagImageWrapper">
+                                                <img class="flagImage" src="{{ asset('img/flags/nl.png') }}" alt="">
+                                            </div>
+                                            <span>{{ @trans('navbar.dutch') }}</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="showSelectedLanguage">
+                                    <div class="flagImageWrapper">
+                                        @if($authenticatedUser->getLocale() === 'en')
+                                            <img class="flagImage" src="{{ asset('img/flags/uk.svg') }}" alt="">
+                                        @elseif($authenticatedUser->getLocale() === 'nl')
+                                            <img class="flagImage" src="{{ asset('img/flags/nl.png') }}" alt="">
+                                        @endif
+                                    </div>
+                                </div>
+                            </li>
 
-                <li class="{!! str_contains(\Request::route()->getName(), 'home') ? 'active' : '' !!}"><a
-                        href="{{ route('home') }}"><i class="fa fa-fw fa-newspaper-o"></i>{{ @trans('navbar.home') }}</a>
-                </li>
+                            <li>
+                                <a href="{!!  route('logout.post') !!}"
+                                   onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">{{ @trans('navbar.logout') }}
+                                </a>
+
+                                <form id="logout-form" action="{!!  route('logout.post') !!}" method="POST"
+                                      style="display: none;">
+                                    {{ csrf_field() }}
+                                </form>
+                            </li>
+
+                        </ul>
+
+                        <div class="vertical-separator"></div>
+                    </li>
+
+                    <li class="{!! str_contains(\Request::route()->getName(), 'home') ? 'active' : '' !!}"><a
+                            href="{{ route('home') }}"><i class="fa fa-fw fa-newspaper-o"></i>{{ @trans('navbar.home') }}</a>
+                    </li>
+
+                @else
+                    <li class="{!! \Request::route()->getName() == 'login.get' ? 'active' : '' !!}">
+                        <a href="{{ route('landing-page.show') }}">{{ @trans('navbar.login') }}</a>
+                    </li>
+                    <li class="{!! \Request::route()->getName() == 'landing-page.show' ? 'active' : '' !!}">
+                        <a href="{{ route('landing-page.show') }}">{{ @trans('navbar.register') }}</a>
+                    </li>
+                @endif
 
             </ul>
         </div>
