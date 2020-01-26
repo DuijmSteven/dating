@@ -7,6 +7,12 @@
 // Style guide: Components.User Profile
 .User-profile__info {
     &__body {
+        padding: 0;
+
+        table {
+            margin-bottom: 0;
+        }
+
         hr {
             margin-top: 10px;
             margin-bottom: 10px;
@@ -33,6 +39,7 @@
     &__title {
         font-weight: 500;
         color: #444;
+        padding-left: 20px;
     }
 
     &__value {
@@ -51,9 +58,14 @@
 }
 
 .User-profile__about {
+    &__body {
+        padding: 20px 20px 10px;
+
+    }
+
     blockquote {
-        margin: 1.5em 10px;
-        padding: 0.5em 10px;
+        margin: 0;
+        padding: 0;
         border: 0;
         quotes: "\201C""\201D""\2018""\2019";
     }
@@ -76,8 +88,8 @@
     blockquote p {
         display: inline;
         font-style: italic;
-        font-size: 19px;
-        color: #777;
+        font-size: 1.9rem;
+        color: #555;
         font-weight: 400;
     }
 }

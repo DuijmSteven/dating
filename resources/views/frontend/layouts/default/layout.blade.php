@@ -55,6 +55,12 @@
     </div>
 </div>
 
+<div class="ScrollTopButton JS--ScrollTopButton hidden">
+    <i class="material-icons">
+        arrow_upward
+    </i>
+</div>
+
 <!-- Creates the bootstrap modal where the image will appear -->
 @include('frontend.components.image-modal')
 

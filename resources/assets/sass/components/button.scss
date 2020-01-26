@@ -57,13 +57,16 @@
 .Button--default {
     background-color: map_get($defaultButton, background-color);
     color: map_get($defaultButton, font-color);
+    border: 1px solid #ccc;
 
     &:hover {
         background-color: map_get($defaultButton, background-color__hover);
+        color: map_get($defaultButton, font-color);
     }
 
     &:active {
         background-color: map_get($defaultButton, background-color__active);
+        color: map_get($defaultButton, font-color);
     }
 }
 

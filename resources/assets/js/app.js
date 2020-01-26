@@ -4,6 +4,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 import isUndefined from "admin-lte/bower_components/moment/src/lib/utils/is-undefined";
+
 window.Vue = require('vue/dist/vue.js');
 
 import VuejsDialog from 'vuejs-dialog';
@@ -64,8 +65,7 @@ function getCoordinatesAndFillInputs() {
                 $('.js-hiddenLngInput').val('');
             }
         });
-    }
-    else {
+    } else {
         $('.js-hiddenLatInput').val('');
         $('.js-hiddenLngInput').val('');
     }
@@ -73,6 +73,30 @@ function getCoordinatesAndFillInputs() {
 
 $(window).on('load', function () {
     require('./global_helpers');
+
+    // this will disable right-click on all images
+    $("img").on("contextmenu",function(e){
+        return false;
+    });
+
+    // this will disable dragging of all images
+    $("img").mousedown(function(e){
+        e.preventDefault()
+    });
+
+    if ($('.JS--ScrollTopButton').length > 0) {
+        $('.JS--ScrollTopButton').click(() => {
+            $('html, body').animate({scrollTop:0}, 500, 'swing');
+        });
+
+        $(window).scroll(() => {
+            if ( $(window).scrollTop() > 400) {
+                $('.JS--ScrollTopButton').removeClass('hidden');
+            } else {
+                $('.JS--ScrollTopButton').addClass('hidden');
+            }
+        });
+    }
 
     if ($('.Shoutbox').length > 0) {
         require('./modules/shoutbox');
@@ -135,12 +159,12 @@ $(window).on('load', function () {
         });
     }
 
-    if($('.SearchBar .city').hasClass('has-error')) {
+    if ($('.SearchBar .city').hasClass('has-error')) {
         $('.SearchBar').toggleClass('hidden');
     }
 
     if ($('.modalImage').length > 0) {
-        $(".modalImage").on("click", function(event) {
+        $(".modalImage").on("click", function (event) {
             event.preventDefault();
 
             if ($(this).find('img').data('src') && $(this).find('img').data('src').length > 0) {
@@ -150,6 +174,79 @@ $(window).on('load', function () {
             }
 
             $('#imageModal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
+        });
+    }
+
+    if ($('.JS--galleryImage').length > 0) {
+
+        $('.JS--galleryImage').click((event) => {
+            let imageSourcesArraysBuilt = false;
+
+            if ($('.JS--galleryImage').length > 1) {
+                let clickedImageSrc = $(event.target).data('src');
+
+                let leftImageSourcesArray = [];
+                let rightImageSourcesArray = [];
+
+                $('.JS--imageModalArrow').removeClass('hidden');
+
+                $('.JS--rightArrow').click(() => {
+                    if (!imageSourcesArraysBuilt) {
+                        $('.JS--galleryImage').each((index, element) => {
+                            let imageSource = $(element).data('src');
+
+                            if (imageSource !== clickedImageSrc) {
+                                rightImageSourcesArray.push(imageSource);
+                            }
+                        });
+
+                        leftImageSourcesArray.push(clickedImageSrc);
+                        imageSourcesArraysBuilt = true;
+                    }
+
+                    if (rightImageSourcesArray.length > 0) {
+                        leftImageSourcesArray.push($('#imagePreview').attr('src'));
+                        $('#imagePreview').attr('src', rightImageSourcesArray.shift());
+                    } else {
+                        $('.JS--imageModalArrow.JS--rightArrow').addClass('hidden');
+                    }
+
+                    if (leftImageSourcesArray.length > 0) {
+                        $('.JS--imageModalArrow.JS--leftArrow').removeClass('hidden');
+                    }
+                });
+
+                $('.JS--leftArrow').click(() => {
+                    if (!imageSourcesArraysBuilt) {
+                        $('.JS--galleryImage').each((index, element) => {
+                            let imageSource = $(element).data('src');
+
+                            if (imageSource !== clickedImageSrc) {
+                                leftImageSourcesArray.unshift(imageSource);
+                            }
+                        });
+
+                        rightImageSourcesArray.unshift(clickedImageSrc);
+                        imageSourcesArraysBuilt = true;
+                    }
+
+                    if (leftImageSourcesArray.length > 0) {
+                        rightImageSourcesArray.unshift($('#imagePreview').attr('src'));
+                        $('#imagePreview').attr('src', leftImageSourcesArray.pop());
+                    } else {
+                        $('.JS--imageModalArrow.JS--leftArrow').addClass('hidden');
+                    }
+
+                    if (rightImageSourcesArray.length > 0) {
+                        $('.JS--imageModalArrow.JS--rightArrow').removeClass('hidden');
+                    }
+                });
+            }
+
+        });
+
+        $('#imageModal').on('hidden.bs.modal', function () {
+            $('.JS--imageModalArrow').addClass('hidden');
         });
     }
 
@@ -174,8 +271,8 @@ $(window).on('load', function () {
         });
     }
 
-    if($('.JS--banksContainer').length > 0) {
-        $('input:radio[name="paymentMethod"]').change( function(){
+    if ($('.JS--banksContainer').length > 0) {
+        $('input:radio[name="paymentMethod"]').change(function () {
             if ($(this).is(':checked') && $(this).val() == 'ideal') {
                 $('.JS--banksContainer').show();
             } else
@@ -183,8 +280,8 @@ $(window).on('load', function () {
         });
     }
 
-    if($('.JS--banksContainer').length > 0) {
-        $('input:radio[name="paymentMethod"]').change( function(){
+    if ($('.JS--banksContainer').length > 0) {
+        $('input:radio[name="paymentMethod"]').change(function () {
             if ($(this).is(':checked') && $(this).val() == 'ideal') {
                 $('.JS--banksContainer').show();
             } else
@@ -192,15 +289,23 @@ $(window).on('load', function () {
         });
     }
 
-    if ($('.JS--roundImageWrapper').length > 0) {
-        $('.JS--roundImageWrapper').each((index, element) => {
-            fitRoundImageToContainer($(element));
-        });
-    }
-
-    if($('.JS--UserSummary').length > 0) {
+    if ($('.JS--UserSummary').length > 0) {
         $('.JS--UserSummary__user-image').each((index, element) => {
             fitGeneralImageToContainer($(element));
+        });
+
+        $(window).resize(() => {
+            setTimeout(() => {
+                $('.JS--UserSummary__user-image').each((index, element) => {
+                    fitGeneralImageToContainer($(element));
+                });
+
+                if ($('.JS--UserSummary__otherImages').length > 0) {
+                    $('.JS--UserSummary__nonProfileImageWrapper').each((index, element) => {
+                        fitGeneralImageToContainer($(element));
+                    });
+                }
+            }, 20);
         });
 
         if ($('.JS--UserSummary__otherImages').length > 0) {
@@ -208,19 +313,6 @@ $(window).on('load', function () {
                 fitGeneralImageToContainer($(element));
             });
         }
-
-        // $(window).resize(function() {
-        //     $('.JS--UserSummary__user-image').each((index, element) => {
-        //         fitImageToContainer($(element));
-        //     });
-        //
-        //     if ($('.JS--UserSummary__otherImages').length > 0) {
-        //         $('.JS--UserSummary__nonProfileImageWrapper').each((index, element) => {
-        //
-        //             fitImageToContainer($(element));
-        //         });
-        //     }
-        // });
     }
 
     if ($('.JS--searchToggle').length > 0) {
@@ -238,7 +330,7 @@ $(window).on('load', function () {
     }
 
     if ($('.dropdown-submenu').length > 0) {
-        $('.dropdown-submenu a.JS--showLanguagesSubmenu').on("click", function(e){
+        $('.dropdown-submenu a.JS--showLanguagesSubmenu').on("click", function (e) {
             $(this).next('ul').toggle();
             e.stopPropagation();
             e.preventDefault();
@@ -251,29 +343,26 @@ function fitGeneralImageToContainer(element) {
     var containerHeight = element.height();
     var containerWidth = element.width();
 
-    const $profileImage = $(element).find('img');
+    const $image = $(element).find('img');
 
-    var profileImageHeight = $profileImage.height();
+    var imageHeight = $image.height();
 
-    if (profileImageHeight < containerHeight + 5) {
-        $profileImage.css("width", "auto");
-        $profileImage.css("height", containerHeight);
+    if (imageHeight < containerHeight) {
+        $image.css("width", "auto");
+        $image.css("height", containerHeight);
 
-        const profileImageWidth = $profileImage.css('width');
+        const imageWidth = $image.css('width');
 
-        const imageWidth = parseInt(profileImageWidth.replace('px', ''));
-        $profileImage.css("margin-left", - (imageWidth - containerWidth)/2);
+        const imageWidthAsInteger = parseInt(imageWidth.replace('px', ''));
+        $image.css("margin-left", -(imageWidthAsInteger - containerWidth) / 2);
+    } else {
+        if ($image.css('width') !== "100%") {
+            $image.css("width", "100%");
+            $image.css("height", "auto");
+            $image.css("margin-left", 'initial');
+        }
     }
 }
 
-function fitRoundImageToContainer(element) {
-    let containerHeight = element.height();
-    let $imageToFit = $(element).find('img');
-    let imageToFitHeight = $imageToFit.height();
-
-    if (containerHeight > imageToFitHeight) {
-        $imageToFit.addClass('fitVertically');
-    }
-}
 
 

@@ -2,9 +2,14 @@
     &__title {
         font-weight: 500;
         color: #444;
+        padding-left: 20px;
     }
 
     &__value {
         font-style: italic;
     }
+}
+
+.CompanyInfo__Tile__body {
+    padding: 0;
 }

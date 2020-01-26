@@ -1,17 +1,38 @@
 <template>
     <div class="PrivateChatItem__textarea__wrapper">
         <div v-if="url" id="PrivateChatItem__imagePreview" class="PrivateChatItem__imagePreview">
+            <i
+                v-on:click="clearImagePreview()"
+                class="material-icons material-icon PrivateChatItem__clearImagePreview"
+            >clear
+            </i>
             <img v-if="url" :src="url"/>
         </div>
 
         <div class="PrivateChatItem__textarea__container">
-            <textarea id="PrivateChatItem__textarea" class="PrivateChatItem__textarea"
+            <textarea id="PrivateChatItem__textarea" class="PrivateChatItem__textarea JS--PrivateChatItem__textarea"
                       placeholder="Uw bericht..."
                       v-model.trim="text"
                       v-on:keyup.enter="sendMessage"
                       @focus="chatFocused()"
             >
             </textarea>
+
+            <div class="PrivateChatItem__attachmentIcon">
+                <label>
+                    <i class="material-icons">attach_file</i>
+                    <form enctype="multipart/form-data" @change="previewImage($event)">
+                        <input
+                            type="file"
+                            accept=".png,.jpg,.jpeg"
+                            id="attachment"
+                            name="attachment"
+                            style="display: none;"
+                            class="PrivateChatItem__imageAttachmentInput"
+                        >
+                    </form>
+                </label>
+            </div>
 
             <i
                 v-if="!sendingMessage"
@@ -24,14 +45,14 @@
                 class="loader"
             ></div>
         </div>
-        <div class="PrivateChatItem__textarea__buttons">
+<!--        <div class="PrivateChatItem__textarea__buttons">
             <label style="margin-bottom: 0; cursor: pointer">
                 <i class="material-icons">attach_file</i>
                 <form enctype="multipart/form-data" @change="previewImage($event)">
                     <input type="file" accept=".png,.jpg,.jpeg" id="attachment" name="attachment" style="display: none;">
                 </form>
             </label>
-        </div>
+        </div>-->
     </div>
 </template>
 
@@ -48,7 +69,8 @@
             return {
                 text: '',
                 url: null,
-                file: null
+                file: null,
+                lineCount: 1
             }
         },
 
@@ -76,7 +98,14 @@
                     $('.PrivateChatItem--' + this.index).removeClass('PrivateChatItem--showingPreview');
                 }
             },
+            clearImagePreview() {
+                this.url = null;
+                this.file = null;
 
+                $('.PrivateChatItem__imageAttachmentInput').prop('value', '');
+
+                $('.PrivateChatItem--' + this.index).removeClass('PrivateChatItem--showingPreview');
+            },
             previewImage(e) {
                 this.file = e.target.files[0];
                 this.url = URL.createObjectURL(this.file);

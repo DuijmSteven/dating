@@ -6,6 +6,7 @@ use App\UserImage;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
+use Intervention\Image\Constraint;
 use Intervention\Image\Facades\Image;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -79,6 +80,7 @@ class StorageManager
      * @param $userId
      * @param string $location
      * @return bool
+     * @throws \Exception
      */
     public function saveUserPhoto(UploadedFile $uploadedFile, int $userId, $location = 'cloud')
     {
@@ -89,6 +91,13 @@ class StorageManager
         );
     }
 
+    /**
+     * @param UploadedFile $uploadedFile
+     * @param int $articleId
+     * @param string $location
+     * @return mixed
+     * @throws \Exception
+     */
     public function saveArticleImage(UploadedFile $uploadedFile, int $articleId, $location = 'cloud')
     {
         return $this->saveFile(
@@ -153,6 +162,7 @@ class StorageManager
      */
     private function imageResize(UploadedFile $uploadedFile, int $height, int $width = null)
     {
+        /** @var \Intervention\Image\Image $img */
         $img = Image::make($uploadedFile);
 
         if (is_null($width)) {

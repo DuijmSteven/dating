@@ -6,7 +6,7 @@
 
     width: 370px;
 
-    box-shadow: 0 0 24px rgba(0,0,0,0.2);
+    box-shadow: 0 0 24px rgba(0, 0, 0, 0.2);
 
     &__head {
         cursor: pointer;
@@ -62,11 +62,12 @@
         &__deleteIcon {
             display: none !important;
             position: absolute;
-            top: 23px;
+            top: 27px;
             right: 36px;
             background-color: #fff;
             border-radius: 50%;
             color: #ff5b49;
+            font-size: 24px;
 
             @media (max-width: $screen-sm-max) {
                 display: inline-block !important;
@@ -74,12 +75,12 @@
             }
 
             &:hover {
-                box-shadow: 0 0 4px rgba(0,0,0,0.2);
+                box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
                 color: #ff2718;
             }
 
             &:active {
-                box-shadow: 0 0 4px rgba(0,0,0,0.2);
+                box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
                 color: #ff5b49;
             }
         }
@@ -88,7 +89,7 @@
             display: none !important;
             position: absolute;
             right: 10px;
-            bottom: 8px;
+            bottom: 5px;
             font-size: 20px !important;
             color: #ff5b49;
         }
@@ -126,6 +127,12 @@
         &__profilePicture {
             @include roundImage;
 
+            position: absolute;
+            left: 2px;
+            top: 13px;
+            width: 40px;
+            height: 40px;
+
             &__secondWrapper {
                 position: relative;
                 width: fit-content;
@@ -143,11 +150,9 @@
             }
 
             &__wrapper {
-                @include roundImageWrapper;
-
+                position: relative;
                 width: 45px;
                 height: 45px;
-                top: 4px;
             }
         }
 
@@ -158,6 +163,7 @@
             flex: 5;
 
             margin-right: 15px;
+            padding: 5px 0;
 
             &__topPart {
                 display: flex;
@@ -192,8 +198,9 @@
 
         &__lastMessage {
             flex: 1;
-            color: #888;
-            font-size: 12px;
+            color: darken($secondaryColor, 10%);
+            font-size: 1.4rem;
+            line-height: 19px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -206,6 +213,7 @@
                 right: 0;
                 top: -2px;
                 font-size: 21px;
+                color: #777;
             }
         }
     }
@@ -248,6 +256,12 @@
                         padding-left: 0;
                     }
                 }
+            }
+        }
+
+        &__item {
+            &__deleteIcon {
+                font-size: 21px !important;
             }
         }
 
@@ -298,6 +312,7 @@
             &__right {
                 max-width: initial;
                 flex: 10;
+                margin-right: 0;
             }
 
             &__date {

@@ -35,6 +35,6 @@ class MessageReceived extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->subject(trans('emails.message_received'))->view('emails.message-received');
+        return $this->subject(trans('emails.subjects.message_received'))->view('emails.message-received');
     }
 }

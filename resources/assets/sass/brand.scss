@@ -216,7 +216,7 @@ $defaultButton: (
         'background-color': $white,
         'border-color': $white,
         'font-color': #555,
-        'background-color__hover': $lightGrey,
+        'background-color__hover': #f7f6f6,
         'background-color__active': $lightGrey
 );
 
@@ -266,14 +266,14 @@ $userProfileItem: (
 // Chat
 $privateChatItem: (
         'width': 320,
-        'headHeightMobileMaximized': 70
+        'headHeightMobileMaximized': 57
 );
 
 $privateChatManager: (
         'headBackGroundColor': $tertiaryColor,
-        'headColor': $sugar,
+        'headColor': $white,
         'headHeight': 50,
-        'headHeightMobileMaximized': 70
+        'headHeightMobileMaximized': 57
 );
 
 $pagination: (

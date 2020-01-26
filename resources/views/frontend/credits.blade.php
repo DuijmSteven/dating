@@ -47,7 +47,7 @@
                                 <span style="margin-left: 5px">iDeal</span>
                             </label>
                             <span class="paymentMethodLogo">
-                                <img src="{{ asset('img/icons/ideal.png') }}"/>
+                                <img style="height: 29px" src="{{ asset('img/icons/ideal_logo.svg') }}"/>
                             </span>
                             <div class="break" style="flex-basis: 100%; height: 0;"></div>
                             <div class="JS--banksContainer" style="display: none; margin-top: 20px">
@@ -71,7 +71,7 @@
                                 <input type="radio" name="paymentMethod" value="paysafe">
                                 <span style="margin-left: 5px">Paysafecard</span>
                             </label>
-                            <span class="paymentMethodLogo"><img src="{{ asset('img/icons/paysafecard.png') }}"/></span>
+                            <span class="paymentMethodLogo"><img style="height: 29px" src="{{ asset('img/icons/paysafecard_logo.svg') }}"/></span>
                         </li>
                     </ul>
                 </div>
@@ -100,25 +100,25 @@
         </div>
 
         <div class="row mt-5 recent-container text-center currentMembers pricing-10">
-            <h3>{{ @trans('credits.they_are_waiting') }}</h3>
+            <h3 style="margin-bottom: 30px">{{ @trans('credits.they_are_waiting') }}</h3>
             @foreach ($users as $user)
-                <div class="col-lg-2 col-md-4 col-sm-12">
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
                     <a href="{{ route('users.show', ['username' => $user->getUsername()]) }}">
-                        <div class="imageWrapper JS--roundImageWrapper">
-                            <img
-                                src="{{ \StorageHelper::profileImageUrl($user, true) }}"
-                                class="profileImage"
-                                alt=""
-                            >
-                        </div>
+                        <img
+                            src="{{ \StorageHelper::profileImageUrl($user, true) }}"
+                            class="profileImage"
+                            alt=""
+                        >
                     </a>
-                    <h5 class="small">{{ $user->username }}</h5>
-                    <p class="offset-0">
-                        <small class="text-muted">{{ @trans('credits.age') }}: {{ $user->meta->dob->diffInYears($carbonNow) }}
-                            , {{ $user->meta->city }}</small>
+                    <a href="{{ route('users.show', ['username' => $user->getUsername()]) }}" style="text-decoration: none">
+                        <h5 class="small" style="margin-bottom: 0">{{ $user->username }}</h5>
+                    </a>
+
+                    <p class="offset-0" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">
+                        <small class="text-muted">{{ @trans('credits.age') }}: {{ $user->meta->dob->diffInYears($carbonNow) }}, {{ $user->meta->city }}</small>
                     </p>
-                    <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}"
-                       class="btn btn-lg btn-white">{{ @trans('credits.more_info') }}</a>
+{{--                    <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}"--}}
+{{--                       class="btn btn-lg btn-white">{{ @trans('credits.more_info') }}</a>--}}
                 </div>
             @endforeach
         </div>

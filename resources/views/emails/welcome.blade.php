@@ -12,6 +12,12 @@
         Bedankt voor je registratie op <b>Altijdsex.nl</b>. Middels de gekozen inloggegevens kun je nu direct inloggen om je profiel compleet te maken.
     </p>
 
+    <div style="text-align: center">
+        <div style="display: inline-block; padding: 7px 20px; background-color: #ef4f2b; color: #fff; border: 1px solid #ef4f2b; border-radius: 4px; margin: 20px 0; cursor: pointer">
+            <a style="color: #fff" href="{{ route('landing-page.show') }}">Naar Altijdsex.nl</a>
+        </div>
+    </div>
+
     <p>
         Heb je nog vragen over je account of over de website? Lees de veelgestelde vragen eens of neem gerust contact met ons op!
     </p>

@@ -46,7 +46,7 @@
             >
                 <div class="PrivateChatManager__item__left">
                     <div class="PrivateChatManager__item__profilePicture__secondWrapper">
-                        <div class="PrivateChatManager__item__profilePicture__wrapper JS--roundImageWrapper">
+                        <div class="PrivateChatManager__item__profilePicture__wrapper">
                             <img class="PrivateChatManager__item__profilePicture"
                                  :src="profileImageUrl(conversation.otherUserId, conversation.otherUserProfileImage, conversation.otherUserGender)"
                                  alt="profile-image"
@@ -67,10 +67,7 @@
                         <span class="PrivateChatManager__item__date">{{ conversation.conversation_updated_at | moment("add", "1 hours") | formatDate }}</span>
                     </div>
                     <div class="PrivateChatManager__item__lastMessage">
-                        {{ conversation.last_message_type === 'generic' ?
-                           conversation.last_message_body :
-                           'flirt'
-                        }}
+                        {{ conversation.last_message_body ? conversation.last_message_body : '&nbsp;' }}
                         <i class="material-icons attachmentIcon" v-if="conversation.last_message_has_attachment">attachment</i>
                     </div>
                 </div>
@@ -149,12 +146,12 @@
             },
             confirmDeleteConversation: function (conversationId) {
                 this.$dialog.confirm({
-                    title: 'Delete conversation',
-                    body: 'Are you sure you want to delete this conversation?'
+                    title: this.$parent.chatTranslations['delete_conversation'],
+                    body: this.$parent.chatTranslations['delete_conversation_confirm']
                 }, {
                     customClass: 'ConfirmDialog',
-                    okText: 'Yes',
-                    cancelText: 'No'
+                    okText: this.$parent.chatTranslations['yes'],
+                    cancelText: this.$parent.chatTranslations['no']
                 })
                     .then(() => {
                         this.deleteConversation(conversationId);
@@ -247,10 +244,6 @@
         mounted() {
             this.$root.$on('fetchUserConversations', () => {
                 this.fetchUserConversations();
-            });
-
-            $('.JS--roundImageWrapper').each((index, element) => {
-                this.$parent.fitRoundImageToContainer($(element));
             });
         }
     }

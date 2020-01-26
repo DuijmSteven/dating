@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Tacs\TacCreateRequest;
 use App\Http\Requests\Admin\Tacs\TacUpdateRequest;
 use App\Tac;
 use Carbon\Carbon;
@@ -100,5 +101,43 @@ class TacController extends Controller
         }
 
         return redirect()->back()->with('alerts', $alerts);
+    }
+
+    /**
+     * @param TacCreateRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function post(TacCreateRequest $request)
+    {
+        try {
+            Tac::create($request->all());
+
+            $alerts[] = [
+                'type' => 'success',
+                'message' => 'The tac was created.'
+            ];
+        } catch (\Exception $exception) {
+            $alerts[] = [
+                'type' => 'error',
+                'message' => 'The tac was not created due to an exception.'
+            ];
+        }
+
+        return redirect()->back()->with('alerts', $alerts);
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getCreate()
+    {
+        return view(
+            'admin.tacs.create',
+            [
+                'title' => 'Create tac - ' . \config('app.name'),
+                'headingLarge' => 'Tacs',
+                'headingSmall' => 'Create'
+            ]
+        );
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 return [
-
+    'not_filled' => 'Not filled',
     'role' => [
         1 => 'Admin',
         2 => 'Peasant',

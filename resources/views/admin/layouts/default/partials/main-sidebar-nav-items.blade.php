@@ -298,6 +298,12 @@
                         Overview
                     </a>
                 </li>
+                <li class="{!! \Request::route()->getName() == 'admin.tacs.create' ? 'active' : '' !!}">
+                    <a href="{!! route('admin.tacs.create') !!}">
+                        <i class="fa fa-plus"></i>
+                        Create
+                    </a>
+                </li>
             </ul>
         </li>
     </ul>

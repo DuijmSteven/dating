@@ -51,6 +51,8 @@ return [
     'previous' => 'Vorig',
     'next' => 'Volgende',
     'age' => 'Leeftijd',
-    'accept' => 'Akkord',
-    'select_city_again' => 'Kies nog een keer'
+    'accept' => 'Akkoord',
+    'select_city_again' => 'Kies nog een keer',
+    'forgot_password' => 'Wachtwoord vergeten?',
+    'reset_password' => 'Wachtwoord opnieuw instellen'
 ];

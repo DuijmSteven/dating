@@ -1,7 +1,7 @@
 <?php
 
 return [
-
+    'not_filled' => 'Nog niet ingevuld',
     'role' => [
         1 => 'Admin',
         2 => 'Peasant',

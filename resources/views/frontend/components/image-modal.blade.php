@@ -12,4 +12,12 @@
             </div>
         </div>
     </div>
+
+    <i class="material-icons imageModalArrow leftArrow hidden JS--imageModalArrow JS--leftArrow">
+        chevron_left
+    </i>
+
+    <i class="material-icons imageModalArrow rightArrow hidden JS--imageModalArrow JS--rightArrow">
+        chevron_right
+    </i>
 </div>

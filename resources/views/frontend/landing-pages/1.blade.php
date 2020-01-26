@@ -158,6 +158,20 @@
         color: #fff;
     }
 
+    .btn-forgot-password {
+        background-color: #fff;
+        border-color: #ccc;
+        color: #555;
+    }
+
+    .btn-forgot-password:hover,
+    .btn-forgot-password:focus,
+    .btn-forgot-password:active {
+        background-color: #eee;
+        border-color: #ccc;
+        color: #555;
+    }
+
     .cookie-popup {
         position: fixed;
         background-color: #fff;
@@ -209,7 +223,7 @@
     }
 
     .btn-register-login:hover {
-        background-color: #ef4f2b;
+        background-color: #f96431;
         color: #fff;
     }
 
@@ -309,21 +323,6 @@
         padding-right: 0;
     }
 
-    .roundImageWrapper {
-        display: inline-block;
-        position: relative;
-        overflow: hidden;
-        border-radius: 50%;
-
-        width: 150px;
-        height: 150px;
-    }
-
-    .roundImage {
-        height: auto;
-        width: 100%;
-    }
-
     .Footer__section-title {
         font-size: 1.8rem;
     }
@@ -388,9 +387,17 @@
         width: 40px;
     }
 
-    .roundImage.fitVertically {
-        height: 100%;
-        width: auto;
+    .roundImage {
+        width: 11rem;
+        height: 11rem;
+        border-radius: 50%;
+        object-fit: cover;
+        transform: translateY(-0.5rem);
+    }
+
+    .testimonials-container .roundImage {
+        width: 14rem;
+        height: 14rem;
     }
 
     .datepicker {
@@ -611,6 +618,21 @@
                             </button>
                         </div>
                     </div>
+                    <div class="form-row" style="margin-top: 20px">
+                        <div class="col-sm-10">
+                            <h4 class="mt-3">{{ @trans('lp1.forgot_password') }}</h4>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-sm-12">
+                            @include('frontend.components.button', [
+                                'url' => route('password.reset.get'),
+                                'buttonContext' => 'general',
+                                'buttonText' => trans('lp1.reset_password'),
+                                'buttonClasses' => 'btn btn-block btn-lg btn-forgot-password'
+                            ])
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -644,28 +666,22 @@
         </div>
     </div>
     <div class="container recent-container text-center currentMembers">
-        <h3>{{ @trans('lp1.a_group_of_members') }}</h3>
+        <h3 style="margin-bottom: 40px">{{ @trans('lp1.a_group_of_members') }}</h3>
         <div class="row mt-5">
             @foreach ($users as $user)
                 <div class="col-lg-2 col-md-4 col-sm-12 mb-4">
                     <a href="{{ route('users.show', ['username' => $user->getUsername()]) }}">
-                        <div class="roundImageWrapper">
-                            <img
-{{--                                data-src="{{ \StorageHelper::profileImageUrl($user, true) }}"--}}
-                                src="{{ \StorageHelper::profileImageUrl($user, true) }}"
-                                class="roundImage"
-                                alt=""
-                            >
-                        </div>
+                        <img
+                            src="{{ \StorageHelper::profileImageUrl($user, true) }}"
+                            class="roundImage"
+                            alt="profile-image"
+                        >
                     </a>
                     <h5 class="small">{{ $user->username }}</h5>
                     <p class="offset-0 user-info">
                         <small class="text-muted">{{ @trans('lp1.age') }}
-                            : {{ $user->meta->dob->diffInYears($carbonNow) }}
-                            , {{ $user->meta->city }}</small>
+                            : {{ $user->meta->dob->diffInYears($carbonNow) }}, {{ $user->meta->city }}</small>
                     </p>
-                    {{--                    <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}"--}}
-                    {{--                       class="btn btn-lg btn-white">{{ @trans('lp1.more_info') }}</a>--}}
                 </div>
             @endforeach
         </div>
@@ -673,16 +689,13 @@
     <div class="container testimonials-container text-center">
         <h3>{{ @trans('lp1.success_stories') }}</h3>
         <div id="carouselExampleControls" class="carousel slide mt-5">
-            <div class="carousel-inner">
+            <div class="carousel-inner" style="padding-top: 15px">
                 @foreach($testimonials as $testimonial)
                     <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
                         <div class="text-center">
-                            <div class="roundImageWrapper">
-                                <img class="roundImage"
-{{--                                     data-src="{{ $testimonial['imgSource'] }}"--}}
-                                     src="{{ $testimonial['imgSource'] }}"
-                                     alt="">
-                            </div>
+                            <img class="roundImage"
+                                 src="{{ $testimonial['imgSource'] }}"
+                                 alt="">
                         </div>
                         <div class="text-center">
                             <blockquote class="quote">
@@ -788,7 +801,7 @@
         <strong>Altijdsex.nl</strong> maakt gebruik van cookies om de website continu te kunnen blijven verbeteren. Als
         je op “Akkoord”
         klikt of je registreert op deze website, ga je automatisch akkoord met het <a
-            href="{{ route('privacy.show') }}">Privacy</a>- en Cookiebeleid
+            href="{{ route('privacy.show') }}">Privacy- en Cookiebeleid</a>
     </p>
 
     <div>

@@ -21,15 +21,27 @@
             <a class="navbar-brand" href="{!! route('home') !!}">
                 <img src="{!! asset('img/site_logos/Altijdsex_LogoSmall_Pos@1x.png') !!}">
             </a>
+
+            @if(isset($authenticatedUser))
+                <a href="#" class="JS--searchToggle searchToggle mobile">
+                    <div class="searchToggleButton JS--searchToggleButton">
+                        <span class="searchToggleButtonText">{{ @trans('search.search') }}</span>
+                        <i class="material-icons">
+                            search
+                        </i>
+                    </div>
+                </a>
+            @endif
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                @if(isset($authenticatedUser))
-                    <li>
+                @if (isset($authenticatedUser))
+                    <li class="searchBarContainer">
                         <a href="#" class="JS--searchToggle searchToggle">
                             <div class="searchToggleButton JS--searchToggleButton">
+                                <span class="searchToggleButtonText">{{ @trans('search.search') }}</span>
                                 <i class="material-icons">
                                     search
                                 </i>
@@ -53,12 +65,10 @@
                            aria-haspopup="true"
                            aria-expanded="false"
                         >
-                            <div class="userDropdown__imageContainer JS--roundImageWrapper">
-                                <img
-                                    class="userDropdown__image"
-                                    src="{{ \StorageHelper::profileImageUrl($authenticatedUser, true) }}" alt=""
-                                >
-                            </div>
+                            <img
+                                class="userDropdown__image"
+                                src="{{ \StorageHelper::profileImageUrl($authenticatedUser, true) }}" alt=""
+                            >
 
                             {{ $authenticatedUser->username }} <span class="caret"></span>
                         </a>
@@ -71,7 +81,7 @@
                                 <ul class="dropdown-menu">
                                     <li>
                                         <a class="languagesSubmenu__item" href="{{ route('users.set-locale', ['locale' => 'en']) }}">
-                                            <div class="flagImageWrapper JS--roundImageWrapper">
+                                            <div class="flagImageWrapper">
                                                 <img class="flagImage" src="{{ asset('img/flags/uk.svg') }}" alt="">
                                             </div>
                                             <span>{{ @trans('navbar.english') }}</span>
@@ -79,7 +89,7 @@
                                     </li>
                                     <li>
                                         <a class="languagesSubmenu__item" href="{{ route('users.set-locale', ['locale' => 'nl']) }}">
-                                            <div class="flagImageWrapper JS--roundImageWrapper">
+                                            <div class="flagImageWrapper">
                                                 <img class="flagImage" src="{{ asset('img/flags/nl.png') }}" alt="">
                                             </div>
                                             <span>{{ @trans('navbar.dutch') }}</span>
@@ -87,7 +97,7 @@
                                     </li>
                                 </ul>
                                 <div class="showSelectedLanguage">
-                                    <div class="flagImageWrapper JS--roundImageWrapper">
+                                    <div class="flagImageWrapper">
                                         @if($authenticatedUser->getLocale() === 'en')
                                             <img class="flagImage" src="{{ asset('img/flags/uk.svg') }}" alt="">
                                         @elseif($authenticatedUser->getLocale() === 'nl')
@@ -117,6 +127,7 @@
                     <li class="{!! str_contains(\Request::route()->getName(), 'home') ? 'active' : '' !!}"><a
                             href="{{ route('home') }}"><i class="fa fa-fw fa-newspaper-o"></i>{{ @trans('navbar.home') }}</a>
                     </li>
+
                 @else
                     <li class="{!! \Request::route()->getName() == 'login.get' ? 'active' : '' !!}">
                         <a href="{{ route('landing-page.show') }}">{{ @trans('navbar.login') }}</a>
@@ -125,6 +136,7 @@
                         <a href="{{ route('landing-page.show') }}">{{ @trans('navbar.register') }}</a>
                     </li>
                 @endif
+
             </ul>
         </div>
 

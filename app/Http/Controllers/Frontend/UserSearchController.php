@@ -120,6 +120,7 @@ class UserSearchController extends FrontendController
     {
         // get searchParameters from session
         $searchParameters = $request->session()->get('searchParameters');
+        $searchParameters['active'] = true;
 
         $users = $this->userSearchManager->searchUsers(
             $searchParameters,
@@ -145,6 +146,13 @@ class UserSearchController extends FrontendController
      */
     public function showInitialSearchResults(Request $request)
     {
+        $user = $this->authenticatedUser;
+
+        if (!$user->getActive()) {
+            $user->setActive(true);
+            $user->save();
+        }
+
         $searchParameters = [
             'city' => $this->authenticatedUser->meta->getCity(),
             'lat' => $this->authenticatedUser->meta->getLat(),

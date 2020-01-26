@@ -74,7 +74,7 @@ Table of Contents End
     }
 
     small, .small {
-        font-size: 1.6rem;
+        font-size: 1.4rem;
         line-height: 1.2;
         font-weight: 400;
     }
@@ -119,6 +119,10 @@ Table of Contents End
         width: 100%;
         padding-right: 200px;
         z-index: 20;
+
+        @media (max-width: $screen-xs-max) {
+            padding-right: 40%;
+        }
     }
 
     .paymentMethodsList {
@@ -513,13 +517,14 @@ Table of Contents End
 
     .recent-container {
         margin-top: 20px;
+        margin-bottom: 30px;
     }
 
     .recent-container h5.small {
-        font-size: 1.6rem;
+        font-size: 1.8rem;
         font-weight: 700;
         color: #ef4f2b;
-        letter-spacing: .1em;
+        letter-spacing: 1px;
         margin-top: 1.375rem;
     }
 
@@ -532,16 +537,11 @@ Table of Contents End
     }
 
     .currentMembers {
-        .imageWrapper {
-            @include roundImageWrapper;
+        .profileImage {
+            @include roundImage;
 
             width: 150px;
             height: 150px;
-            margin-top: 20px;
-        }
-
-        .profileImage {
-            @include roundImage;
         }
     }
 }

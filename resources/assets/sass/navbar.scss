@@ -29,8 +29,7 @@
     }
 
     .flagImageWrapper {
-        @include roundImageWrapper;
-
+        position: relative;
         margin-right: 10px;
 
         width: 24px;
@@ -39,6 +38,12 @@
 
     .flagImage {
         @include roundImage;
+
+        position: absolute;
+        top: 6px;
+        left: 0;
+        width: 24px;
+        height: 24px;
     }
 
     &__item {
@@ -51,11 +56,14 @@
 }
 
 .navbar-default {
-    border: $navbarBorderWidth + px solid #d3e0e9;
+    border: $navbarBorderWidth + px solid $navbarBgColor;
     background-color: $navbarBgColor;
     position: relative;
+    border-radius: 0;
 
     .navbar-toggle {
+        margin-top: 17px;
+
         &:focus,
         &:hover {
             background-color: initial;
@@ -88,7 +96,7 @@
                 position: relative;
                 align-items: center;
                 justify-content: center;
-                width: 114px;
+                width: 123px;
                 height: $navbarHeight + px;
                 font-size: 20px;
 
@@ -128,6 +136,7 @@
             }
 
             &.userDropdown {
+                position: relative;
                 display: flex;
                 flex-direction: row;
 
@@ -141,6 +150,7 @@
 
                     li {
                         border-bottom: 1px solid lighten($mainColor, 2%);
+
                         &:last-of-type {
                             border-bottom: 0;
                         }
@@ -229,19 +239,14 @@
             margin-left: 4px;
         }
 
-        &__imageContainer {
-            @include roundImageWrapper;
-
-            position: absolute;
-            bottom: 17px;
-            left: 13px;
-
-            width: $userMenuImageContainerDimension + px;
-            height: $userMenuImageContainerDimension + px;
-        }
-
         &__image {
             @include roundImage;
+
+            position: absolute;
+            left: 12px;
+            top: 25px;
+            width: 33px;
+            height: 33px;
         }
 
         .dropdown-toggle {
@@ -276,6 +281,7 @@
 @media (max-width: $screen-sm-max) {
     .navbar-header {
         float: none;
+        position: relative;
     }
     .navbar-left, .navbar-right {
         float: none !important;
@@ -329,22 +335,66 @@
     .searchToggle {
         position: relative;
         display: inline-block;
+
+        @media (max-width: $screen-sm-max) {
+            display: none;
+        }
+
+        &.mobile {
+            display: none;
+            position: static;
+
+            .searchToggleButton {
+                left: 400px;
+                top: 19px;
+                width: 131px;
+                height: 31px;
+                border-radius: 20px;
+
+                @media (max-width: $screen-xs-max) {
+                    left: 177px;
+                    top: 15px;
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                }
+            }
+
+            @media (max-width: $screen-sm-max) {
+                display: inline-block;
+            }
+        }
+    }
+
+    @media (max-width: $screen-sm-max) {
+        .searchBarContainer {
+            height: 70px;
+        }
     }
 
     .searchToggleButton {
         position: absolute;
-        left: -17px;
-        bottom: -12px;
+        display: flex;
+        flex-direction: row;
+        align-content: center;
+        justify-content: center;
+        left: -128px;
+        bottom: -5px;
         text-align: center;
-        width: 42px;
-        height: 42px;
-        border-radius: 50%;
+        width: 131px;
+        height: 31px;
+        border-radius: 20px;
         border: 1px solid $secondaryColor;
-        box-shadow: 0 0 3px rgba(0,0,0,0.3);
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
 
         background-color: lighten($secondaryColor, 5%);
         color: #fff;
 
+        span {
+            display: flex;
+            align-items: center;
+            margin-right: 5px;
+        }
 
         @media (max-width: $screen-sm-max) {
             left: 12px;
@@ -353,13 +403,31 @@
 
         &.pressed {
             border: 1px solid $secondaryColor;
-            box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
+            box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
             background-color: $secondaryColor;
         }
 
         .material-icons {
             position: relative;
-            top: 7px;
+            top: 3px;
+            width: 14px;
+
+            @media (max-width: $screen-xs-max) {
+                top: 7px;
+                width: 21px;
+            }
+        }
+    }
+
+    @media (max-width: $screen-sm-max) {
+        .searchBarContainer {
+            display: none
+        }
+    }
+
+    @media (max-width: $screen-xs-max) {
+        span.searchToggleButtonText {
+            display: none;
         }
     }
 }

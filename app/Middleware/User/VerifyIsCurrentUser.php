@@ -16,14 +16,15 @@ class VerifyIsCurrentUser
     public function handle($request, Closure $next)
     {
         $usernameRouteParameter = $request->route('username');
+        $userIdRouteParameter = $request->route('userId');
 
         if (
-            is_null($usernameRouteParameter) ||
-            \Auth::user()->getUserName() !== $usernameRouteParameter
+            $usernameRouteParameter && \Auth::user()->getUserName() === $usernameRouteParameter ||
+            $userIdRouteParameter && \Auth::user()->getId() === (int) $userIdRouteParameter
         ) {
-            return redirect()->route('home');
+            return $next($request);
         }
 
-        return $next($request);
+        return redirect()->route('home');
     }
 }
