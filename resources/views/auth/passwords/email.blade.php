@@ -31,11 +31,14 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group text-right">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ trans('reset_password.send_reset_link') }}
-                                </button>
+                                @include('frontend.components.button', [
+                                 'buttonContext' => 'form',
+                                 'buttonType' => 'submit',
+                                 'buttonState' => 'primary',
+                                 'buttonText' => @trans('reset_password.send_reset_link')
+                             ])
                             </div>
                         </div>
                     </form>

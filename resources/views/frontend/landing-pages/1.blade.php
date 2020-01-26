@@ -677,10 +677,9 @@
                             alt="profile-image"
                         >
                     </a>
-                    <h5 class="small">{{ $user->username }}</h5>
-                    <p class="offset-0 user-info">
-                        <small class="text-muted">{{ @trans('lp1.age') }}
-                            : {{ $user->meta->dob->diffInYears($carbonNow) }}, {{ $user->meta->city }}</small>
+                    <h5 class="small" style="font-size: 1.9rem; width: 170px; overflow: hidden; text-overflow: ellipsis; margin: 10px auto 5px auto">{{ $user->username }}</h5>
+                    <p class="offset-0 user-info" style="line-height: 14px">
+                        <small class="text-muted" style="font-size: 1.4rem">{{ @trans('lp1.age') }}: {{ $user->meta->dob->diffInYears($carbonNow) }}, {{ $user->meta->city }}</small>
                     </p>
                 </div>
             @endforeach
