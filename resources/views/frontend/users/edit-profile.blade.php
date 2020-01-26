@@ -53,7 +53,7 @@
 
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="JS--imagesWrapper imagesWrapper">
+                        <div class="JS--imagesWrapper imagesWrapper {{ count($user->images) > 3 ? 'overflown' : '' }}">
                             <div class="col-xs-12 col-sm-6 col-md-4">
                                 <div class="userImageFullItem {{ !$user->hasProfileImage() ? 'noImage' : '' }}">
                                     @if($user->hasProfileImage())
