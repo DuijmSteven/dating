@@ -43,6 +43,7 @@ class PeasantUpdateRequest extends Request
             'lat' => 'required_with:city|numeric',
             'lng' => 'required_with:city|numeric',
             'about_me' => 'string|max:1000',
+            'profile_image' => 'image|max:4000',
         ];
 
         if (!is_null($this->files->get('user_images'))) {

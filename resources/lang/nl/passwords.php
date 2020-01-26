@@ -15,7 +15,7 @@ return [
 
     'password' => 'Wachtwoorden moeten minimaal acht tekens bevatten en overeenkomen met de bevestiging.',
     'reset' => 'Jouw wachtwoord is gereset!',
-    'sent' => 'We hebben uw wachtwoordresetlink gemaild!',
+    'sent' => 'We hebben jouw wachtwoordresetlink gemaild!',
     'token' => 'Dit token voor het opnieuw instellen van het wachtwoord is ongeldig.',
     'user' => "We kunnen geen gebruiker vinden met dat e-mailadres.",
 

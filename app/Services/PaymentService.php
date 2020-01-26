@@ -3,17 +3,10 @@
 namespace App\Services;
 
 use App\Interfaces\PaymentProvider;
-
 use App\Payment;
-use App\User;
 use App\UserAccount;
 use DigiWallet\Transaction;
 use Illuminate\Support\Facades\Auth;
-use TPWeb\TargetPay\Exception\TargetPayException;
-use TPWeb\TargetPay\TargetPay;
-use TPWeb\TargetPay\Transaction\IDeal;
-use TPWeb\TargetPay\Transaction\IVR;
-use TPWeb\TargetPay\Transaction\Paysafecard;
 
 /**
  * Class PaymentService
@@ -92,11 +85,10 @@ class PaymentService implements PaymentProvider
     }
 
     /**
-     * @param  string  $bank
-     * @param  float  $amount
-     * @param  string  $description
-     * @return array
-     * @throws \DigiWallet\Exception
+     * @param string $bank
+     * @param float $amount
+     * @param string $description
+     * @return array|mixed
      */
     public function idealPayment(string $bank, float $amount, string $description)
     {
@@ -116,10 +108,9 @@ class PaymentService implements PaymentProvider
     }
 
     /**
-     * @param  float  $amount
-     * @param  string  $description
-     * @return array
-     * @throws \DigiWallet\Exception
+     * @param float $amount
+     * @param string $description
+     * @return array|mixed
      */
     public function paysafePayment(float $amount, string $description)
     {
@@ -152,8 +143,6 @@ class PaymentService implements PaymentProvider
             ->returnUrl($this->returnUrl)
             ->test(config('targetpay.test'))
             ->start();
-
-        dd($startPaymentResult);
 
         return [
             'redirectUrl' => $startPaymentResult->url,

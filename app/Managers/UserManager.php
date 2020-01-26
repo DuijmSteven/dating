@@ -72,6 +72,17 @@ class UserManager
         DB::beginTransaction();
         $this->updateUserDetails($userData, $userId);
 
+        if (isset($userData['profile_image']) && ($userData['profile_image'] instanceof UploadedFile)) {
+            $profileImage = User::find($userId)->profileImage;
+
+            if ($profileImage instanceof UserImage) {
+                $profileImage->profile = 0;
+                $profileImage->save();
+            }
+
+            $this->persistProfileImage($userData['profile_image'], $userId);
+        }
+
         if (isset($userData['user_images'])) {
             $this->persistImages($userData['user_images'], $userId);
         }

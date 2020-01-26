@@ -12,12 +12,10 @@ return [
      |
      */
 
-//    'enabled' => !in_array(env('APP_ENV'), [
-//        'production',
-//        'prod'
-//    ]),
-    'enabled' => true,
-
+    'enabled' => !in_array(env('APP_ENV'), [
+        'production',
+        'prod'
+    ]),
 
     /*
      |--------------------------------------------------------------------------
