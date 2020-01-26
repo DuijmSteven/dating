@@ -83,45 +83,46 @@
                                     </div>
                                 @endif
                             </div>
-
-                            <?php $userImagesNotProfile = $user->imagesNotProfile; ?>
-                            @foreach($userImagesNotProfile as $image)
-                                <div class="col-xs-12 col-sm-6 col-md-4">
-                                    <div class="userImageFullItem">
-                                        <a href="#" class="modalImage">
-                                            <div class="imageResourceWrapper">
-                                                <img alt="galleryImage" class="imageResource"
-                                                     src="{!! \StorageHelper::userImageUrl($user->id, $image->filename) !!}"
-                                                />
-                                            </div>
-                                        </a>
-                                        @include('frontend.components.button', [
-                                             'url' => route('users.set-profile-image', ['userId' => $user->id, 'imageId' => $image->id]),
-                                             'buttonType' => 'submit',
-                                             'buttonState' => 'primary',
-                                             'buttonText' => @trans('edit_profile.set_profile'),
-                                             'buttonClasses' => 'Button-fw bottom-spacing'
-                                         ])
-
-                                        <form method="POST"
-                                              action="{!! route('images.destroy', ['imageId' => $image->id]) !!}">
-                                            {!! csrf_field() !!}
-                                            {!! method_field('DELETE') !!}
-
-                                            @include('frontend.components.button', [
-                                                'buttonContext' => 'form',
-                                                'buttonType' => 'submit',
-                                                'buttonState' => 'danger',
-                                                'buttonText' => trans('edit_profile.delete'),
-                                                'buttonClasses' => 'Button-fw'
-                                            ])
-
-                                        </form>
-                                    </div>
-                                </div>
-                            @endforeach
-
                         </div>
+
+
+                        <?php $userImagesNotProfile = $user->imagesNotProfile; ?>
+                        @foreach($userImagesNotProfile as $image)
+                            <div class="col-xs-12 col-sm-6 col-md-4">
+                                <div class="userImageFullItem">
+                                    <a href="#" class="modalImage">
+                                        <div class="imageResourceWrapper">
+                                            <img alt="galleryImage" class="imageResource"
+                                                 src="{!! \StorageHelper::userImageUrl($user->id, $image->filename) !!}"
+                                            />
+                                        </div>
+                                    </a>
+                                    @include('frontend.components.button', [
+                                         'url' => route('users.set-profile-image', ['userId' => $user->id, 'imageId' => $image->id]),
+                                         'buttonType' => 'submit',
+                                         'buttonState' => 'primary',
+                                         'buttonText' => @trans('edit_profile.set_profile'),
+                                         'buttonClasses' => 'Button-fw bottom-spacing'
+                                     ])
+
+                                    <form method="POST"
+                                          action="{!! route('images.destroy', ['imageId' => $image->id]) !!}">
+                                        {!! csrf_field() !!}
+                                        {!! method_field('DELETE') !!}
+
+                                        @include('frontend.components.button', [
+                                            'buttonContext' => 'form',
+                                            'buttonType' => 'submit',
+                                            'buttonState' => 'danger',
+                                            'buttonText' => trans('edit_profile.delete'),
+                                            'buttonClasses' => 'Button-fw'
+                                        ])
+
+                                    </form>
+                                </div>
+                            </div>
+                        @endforeach
+
 
                         <div class="col-xs-12">
                             <hr/>
