@@ -8,6 +8,7 @@ return [
         'new_message' => 'New message received',
         'new_message_help' => 'Receive an email when a user sends you a message and you are not logged in',
     ],
+    'image_limit_reached' => 'You cannot have more that 10 images. In order to upload more images, you first need to delete some of the current ones.',
     'select_your' => 'Select your',
     'upload_images' => 'Upload images',
     'manage_images' => 'Manage images',

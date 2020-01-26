@@ -11,6 +11,10 @@
         position: relative;
     }
 
+    .userImageFullItem.noImage {
+        height: initial;
+    }
+
     @media screen and (max-width: $screen-xs-max) {
         .userImageFullItem {
             margin-bottom: 30px;

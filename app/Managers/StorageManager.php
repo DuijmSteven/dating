@@ -36,11 +36,13 @@ class StorageManager
                     .'_thumb'
                     . '.' . $uploadedFile->extension();
 
-                $resource = $this->imageResize($uploadedFile, 180);
+                $thumbResource = $this->imageResize($uploadedFile, 180);
+                $uploadThumb = Storage::disk($location)->put($path . $fileNameThumb, $thumbResource);
 
-                $uploadThumb = Storage::disk($location)->put($path . $fileNameThumb, $resource);
+                $mainResource = $this->imageResize($uploadedFile, 800);
+                $uploadThumb = Storage::disk($location)->put($path . $fileNameMain, $mainResource);
 
-                $uploadedFile->storeAs($path, $fileNameMain, $location);
+                //$uploadedFile->storeAs($path, $fileNameMain, $location);
 
                 return $fileNameMain;
             } catch (\Exception $exception) {
@@ -168,6 +170,7 @@ class StorageManager
         if (is_null($width)) {
             $img->resize(null, $height, function ($constraint) {
                 $constraint->aspectRatio();
+                $constraint->upsize();
             });
         } else {
             $img->resize($width, $height);

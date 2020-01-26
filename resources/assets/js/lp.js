@@ -46,6 +46,16 @@ window.addEventListener('load', function () {
 $(window).on('load', function () {
     require('./global_helpers');
 
+    // this will disable right-click on all images
+    $("img").on("contextmenu",function(e){
+        return false;
+    });
+
+    // this will disable dragging of all images
+    $("img").mousedown(function(e){
+        e.preventDefault()
+    });
+
     var formSelected = Cookies.get("lpFormSelection");
     var cookiesAccepted = Cookies.get("lpCookiesAccepted");
 

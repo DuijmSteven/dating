@@ -388,8 +388,8 @@
     }
 
     .roundImage {
-        width: 11rem;
-        height: 11rem;
+        width: 150px;
+        height: 150px;
         border-radius: 50%;
         object-fit: cover;
         transform: translateY(-0.5rem);

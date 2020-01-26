@@ -160,6 +160,30 @@ class UserController extends FrontendController
         $peasantUpdateRequest->formatInput();
         $peasantData = $peasantUpdateRequest->all();
 
+
+        if (isset($peasantData['user_images']) || isset($peasantData['profile_image'])) {
+            /** @var User $peasant */
+            $peasant = User::find($peasantUpdateRequest->route('userId'));
+
+            $peasantImagesCount = $peasant->images->count();
+
+            $uploadedImagesCount = 0;
+
+            if (isset($peasantData['user_images'])) {
+                $uploadedImagesCount += count($peasantData['user_images']);
+            }
+
+            if (isset($peasantData['profile_image'])) {
+                $uploadedImagesCount += 1;
+            }
+
+            if ($peasantImagesCount + $uploadedImagesCount > 10) {
+                toast()->message(trans('edit_profile.image_limit_reached'), 'error');
+
+                return redirect()->back();
+            }
+        }
+
         try {
             $this->peasantManager->updatePeasant($peasantData, $peasantUpdateRequest->route('userId'));
 
