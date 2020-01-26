@@ -69,12 +69,13 @@ class LandingPageController extends FrontendController
             ],
         ];
 
+
         return view(
             'frontend.landing-pages.1',
             [
                 'title' => config('app.name'),
                 'users' => $users,
-                'carbonNow' => Carbon::now(),
+                'carbonNow' => Carbon::now('UTC'),
                 'testimonials' => $testimonials
             ]
         );

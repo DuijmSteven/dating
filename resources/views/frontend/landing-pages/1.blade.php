@@ -507,7 +507,6 @@
                                 data-date-format="dd-mm-yyyy"
                                 data-date-start-view="decade"
                                 data-date-start-date="01-01-1900"
-                                data-date-end-date="{{ $carbonNow->subYears(18) }}"
                             >
                                 <input type="text" class="form-control" name="dob" required value="{{ old('dob') }}">
                                 <div class="input-group-addon">
