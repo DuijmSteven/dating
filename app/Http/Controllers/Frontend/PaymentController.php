@@ -26,8 +26,8 @@ class PaymentController extends FrontendController
 
     /**
      * PaymentController constructor.
-     * @param PaymentManager $paymentManager
-     * @param PaymentService $paymentProvider
+     * @param  PaymentManager  $paymentManager
+     * @param  PaymentProvider  $paymentProvider
      */
     public function __construct(PaymentManager $paymentManager, PaymentProvider $paymentProvider)
     {

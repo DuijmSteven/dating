@@ -161,35 +161,6 @@ class PaymentService implements PaymentProvider
         ];
     }
 
-    /**
-     * @param string $bank
-     * @param int $amount
-     * @param string $description
-     */
-    public function ivrPayment(string $bank, float $amount, string $description)
-    {
-        /** @var TargetPay $targetPay */
-        $targetPay = new \TargetPay(new IVR());
-
-        /** @var IVR $transaction */
-        $transaction = $targetPay->transaction;
-
-        $transaction->setCountry(IVR::NETHERLAND);
-        $targetPay->setAmount($amount);
-        $transaction->setMode('PC');
-        $transaction->setAdult(false);
-
-        $targetPay->getPaymentInfo();
-
-        $currency = $transaction->getCurrency();
-        $amount = $targetPay->getAmount();
-        $serviceNumber = $transaction->getServiceNumber();
-        $payCode = $transaction->getPayCode();
-        $mode = $transaction->getMode();
-        $callCost = $transaction->getAmountPerAction();
-        $duration = $transaction->getMode() == "PM" ? $transaction->getDuration() . "s" : "";
-    }
-
     public function paymentCheck(string $paymentMethod, int $transactionId)
     {
         switch ($paymentMethod) {
