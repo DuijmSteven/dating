@@ -43,9 +43,11 @@
                             </div>
                         </div>
 
-                        <div class="col-xs-12 col-sm-6 col-md-4">
+                        <div class="col-xs-12">
                             <label>{{ @trans('edit_profile.your_images') }}</label>
+                        </div>
 
+                        <div class="col-xs-12 col-sm-6 col-md-4">
                             <div class="userImageFullItem">
                                 @if($user->hasProfileImage())
                                     <a href="#" class="modalImage">
