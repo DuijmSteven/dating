@@ -56,7 +56,7 @@ interface PaymentProvider
      * @param string $description
      * @return mixed
      */
-    public function ivrPayment(string $bank, float $amount, string $description);
+    public function creditPayment(float $amount, string $description);
 
     /**
      * @param  string  $paymentMethod
