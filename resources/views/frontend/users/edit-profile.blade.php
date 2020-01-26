@@ -69,13 +69,15 @@
 
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="relationship_status">{{ @trans('user_constants.labels.relationship_status') }}</label>
+                                <label
+                                    for="relationship_status">{{ @trans('user_constants.labels.relationship_status') }}</label>
                                 <select name="relationship_status"
                                         id="relationship_status"
                                         class="form-control"
                                 >
                                     @if(!$user->meta['relationship_status'])
-                                        <option value="" disabled selected>{{ trans('edit_profile.select_your') }} {{ strtolower(@trans('user_constants.labels.relationship_status')) }}</option>
+                                        <option value="" disabled
+                                                selected>{{ trans('edit_profile.select_your') }} {{ strtolower(@trans('user_constants.labels.relationship_status')) }}</option>
                                     @endif
 
                                     @foreach(\UserConstants::selectableField('relationship_status') as $key => $value)
@@ -96,7 +98,8 @@
                                         class="form-control"
                                 >
                                     @if(!$user->meta['body_type'])
-                                        <option value="" disabled selected>{{ trans('edit_profile.select_your') }} {{ strtolower(@trans('user_constants.labels.body_type')) }}</option>
+                                        <option value="" disabled
+                                                selected>{{ trans('edit_profile.select_your') }} {{ strtolower(@trans('user_constants.labels.body_type')) }}</option>
                                     @endif
 
                                     @foreach(\UserConstants::selectableField('body_type') as $key => $value)
@@ -117,7 +120,8 @@
                                         class="form-control"
                                 >
                                     @if(!$user->meta['height'])
-                                        <option value="" disabled selected>{{ trans('edit_profile.select_your') }} {{ strtolower(@trans('user_constants.labels.height')) }}</option>
+                                        <option value="" disabled
+                                                selected>{{ trans('edit_profile.select_your') }} {{ strtolower(@trans('user_constants.labels.height')) }}</option>
                                     @endif
 
                                     @foreach(\UserConstants::selectableField('height') as $key => $value)
@@ -138,7 +142,8 @@
                                         class="form-control"
                                 >
                                     @if(!$user->meta['eye_color'])
-                                        <option value="" disabled selected>{{ trans('edit_profile.select_your') }} {{ strtolower(@trans('user_constants.labels.eye_color')) }}</option>
+                                        <option value="" disabled
+                                                selected>{{ trans('edit_profile.select_your') }} {{ strtolower(@trans('user_constants.labels.eye_color')) }}</option>
                                     @endif
 
                                     @foreach(\UserConstants::selectableField('eye_color') as $key => $value)
@@ -159,7 +164,8 @@
                                         class="form-control"
                                 >
                                     @if(!$user->meta['hair_color'])
-                                        <option value="" disabled selected>{{ trans('edit_profile.select_your') }} {{ strtolower(@trans('user_constants.labels.hair_color')) }}</option>
+                                        <option value="" disabled
+                                                selected>{{ trans('edit_profile.select_your') }} {{ strtolower(@trans('user_constants.labels.hair_color')) }}</option>
                                     @endif
 
                                     @foreach(\UserConstants::selectableField('hair_color') as $key => $value)
@@ -180,7 +186,8 @@
                                         class="form-control"
                                 >
                                     @if(!$user->meta['smoking_habits'])
-                                        <option value="" disabled selected>{{ trans('edit_profile.select_your') }} {{ strtolower(@trans('user_constants.labels.smoking_habits')) }}</option>
+                                        <option value="" disabled
+                                                selected>{{ trans('edit_profile.select_your') }} {{ strtolower(@trans('user_constants.labels.smoking_habits')) }}</option>
                                     @endif
 
                                     @foreach(\UserConstants::selectableField('smoking_habits') as $key => $value)
@@ -202,7 +209,8 @@
                                         class="form-control"
                                 >
                                     @if(!$user->meta['drinking_habits'])
-                                        <option value="" disabled selected>{{ trans('edit_profile.select_your') }} {{ strtolower(@trans('user_constants.labels.drinking_habits')) }}</option>
+                                        <option value="" disabled
+                                                selected>{{ trans('edit_profile.select_your') }} {{ strtolower(@trans('user_constants.labels.drinking_habits')) }}</option>
                                     @endif
 
                                     @foreach(\UserConstants::selectableField('drinking_habits') as $key => $value)
@@ -268,7 +276,8 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="user_images">{{ @trans('edit_profile.upload_images') }}</label>
-                                <input type="file" accept=".png,.jpg,.jpeg" class="form-control" id="user_images" name="user_images[]" multiple>
+                                <input type="file" accept=".png,.jpg,.jpeg" class="form-control" id="user_images"
+                                       name="user_images[]" multiple>
                                 @if ($errors->has('user_images.0'))
                                     {!! $errors->first('user_images.0', '<small class="form-error">:message</small>') !!}
                                 @endif
@@ -296,110 +305,83 @@
 
             <label for="">{{ @trans('edit_profile.manage_images') }}</label>
 
-            <div class="table-responsive" id="images-section">
-                <table class="table table-striped">
-                    <?php $tableColumnAmount = 2; ?>
-                    <thead>
-                    <tr>
-                        <th>{{ @trans('edit_profile.profile_image') }}</th>
-                        <th>{{ @trans('edit_profile.actions') }}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @if($user->hasProfileImage())
-                        <tr>
-                            <td>
-                                <a href="#" class="modalImage">
-                                    <img alt="profileImage" class="imageResource" width="200"
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="userImageFullItem">
+                        @if($user->hasProfileImage())
+                            <a href="#" class="modalImage">
+                                <div class="imageResourceWrapper">
+                                        <span
+                                            class="profileImageLabel">{{ @trans('edit_profile.profile_image') }}</span>
+
+                                    <img alt="profileImage" class="imageResource"
                                          src="{!! \StorageHelper::profileImageUrl($user) !!}"
                                     />
-                                </a>
-                            </td>
-                            <td class="action-buttons">
-                                <form method="POST"
-                                      action="{!! route('images.destroy', ['imageId' => $user->profileImage->id]) !!}">
-                                    {!! csrf_field() !!}
-                                    {!! method_field('DELETE') !!}
+                                </div>
+                            </a>
+                            <form method="POST"
+                                  action="{!! route('images.destroy', ['imageId' => $user->profileImage->id]) !!}">
+                                {!! csrf_field() !!}
+                                {!! method_field('DELETE') !!}
 
-                                    @include('frontend.components.button', [
-                                        'buttonContext' => 'form',
-                                        'buttonType' => 'submit',
-                                        'buttonState' => 'danger',
-                                        'buttonText' => trans('edit_profile.delete'),
-                                        'buttonClasses' => 'Button-fw'
-                                    ])
+                                @include('frontend.components.button', [
+                                    'buttonContext' => 'form',
+                                    'buttonType' => 'submit',
+                                    'buttonState' => 'danger',
+                                    'buttonText' => trans('edit_profile.delete'),
+                                    'buttonClasses' => 'Button-fw'
+                                ])
 
-                                </form>
-                            </td>
-                        </tr>
-                    @else
-                        <tr>
-                            <td colspan="<?= $tableColumnAmount; ?>">
-                                {{ @trans('edit_profile.no_profile_image_set') }}
-                            </td>
-                        </tr>
-                    @endif
-                </table>
-            </div>
+                            </form>
+                        @else
+                            <div class="imageResourceWrapper">
+                                <span class="profileImageLabel">{{ @trans('edit_profile.profile_image') }}</span>
 
+                                <img alt="profileImage" class="imageResource"
+                                     src="{!! \StorageHelper::profileImageUrl($user) !!}"
+                                />
+                            </div>
+                        @endif
+                    </div>
+                </div>
 
-            <div class="table-responsive" id="images-section">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>{{ @trans('edit_profile.other_images') }}</th>
-                        <th>{{ @trans('edit_profile.actions') }}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+                <?php $userImagesNotProfile = $user->imagesNotProfile; ?>
+                @foreach($userImagesNotProfile as $image)
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <div class="userImageFullItem">
+                            <a href="#" class="modalImage">
+                                <div class="imageResourceWrapper">
+                                    <img alt="galleryImage" class="imageResource"
+                                         src="{!! \StorageHelper::userImageUrl($user->id, $image->filename) !!}"
+                                    />
+                                </div>
+                            </a>
+                            @include('frontend.components.button', [
+                                 'url' => route('users.set-profile-image', ['userId' => $user->id, 'imageId' => $image->id]),
+                                 'buttonType' => 'submit',
+                                 'buttonState' => 'primary',
+                                 'buttonText' => @trans('edit_profile.set_profile'),
+                                 'buttonClasses' => 'Button-fw bottom-spacing'
+                             ])
 
-                    <?php $userImagesNotProfile = $user->imagesNotProfile; ?>
-                    @if(!is_null($userImagesNotProfile))
-                        @foreach($userImagesNotProfile as $image)
-                            <tr>
-                                <td>
-                                    <a href="#" class="modalImage">
-                                        <img alt="galleryImage" class="imageResource" width="200"
-                                             src="{!! \StorageHelper::userImageUrl($user->id, $image->filename, true) !!}"
-                                             data-src="{!! \StorageHelper::userImageUrl($user->id, $image->filename) !!}"
-                                        />
-                                    </a>
-                                </td>
-                                <td class="action-buttons">
-                                    @include('frontend.components.button', [
-                                        'url' => route('users.set-profile-image', ['userId' => $user->id, 'imageId' => $image->id]),
-                                        'buttonType' => 'submit',
-                                        'buttonState' => 'primary',
-                                        'buttonText' => @trans('edit_profile.set_profile'),
-                                        'buttonClasses' => 'Button-fw bottom-spacing'
-                                    ])
+                            <form method="POST"
+                                  action="{!! route('images.destroy', ['imageId' => $image->id]) !!}">
+                                {!! csrf_field() !!}
+                                {!! method_field('DELETE') !!}
 
-                                    <form method="POST"
-                                          action="{!! route('images.destroy', ['imageId' => $image->id]) !!}">
-                                        {!! csrf_field() !!}
-                                        {!! method_field('DELETE') !!}
+                                @include('frontend.components.button', [
+                                    'buttonContext' => 'form',
+                                    'buttonType' => 'submit',
+                                    'buttonState' => 'danger',
+                                    'buttonText' => trans('edit_profile.delete'),
+                                    'buttonClasses' => 'Button-fw'
+                                ])
 
-                                        @include('frontend.components.button', [
-                                            'buttonContext' => 'form',
-                                            'buttonType' => 'submit',
-                                            'buttonState' => 'danger',
-                                            'buttonText' => trans('edit_profile.delete'),
-                                            'buttonClasses' => 'Button-fw'
-                                        ])
+                            </form>
+                        </div>
+                    </div>
+                @endforeach
 
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                    @else
-                        <tr>
-                            <td colspan="<?= $tableColumnAmount; ?>">
-                                {{ @trans('edit_profile.no_images') }}
-                            </td>
-                        </tr>
-                    @endif
-                    </tbody>
-                </table>
             </div>
 
             <div class="row">
@@ -416,7 +398,8 @@
                     <p>{{ trans('edit_profile.deactivation_text') }}</p>
 
                     <div class="text-left">
-                        <button type="button" class="Button Button--danger" data-toggle="modal" data-target=".ConfirmModalDeactivate">
+                        <button type="button" class="Button Button--danger" data-toggle="modal"
+                                data-target=".ConfirmModalDeactivate">
                             <span class="Button__content">{{ @trans('edit_profile.deactivate') }}</span>
                         </button>
                     </div>

@@ -503,12 +503,12 @@
                             <label for="password">{{ @trans('lp1.form.dob') }}</label>
                             <div
                                 class="input-group date dateOfBirthGroup"
-                                data-provide="datepicker"
-                                data-date-format="dd-mm-yyyy"
-                                data-date-start-view="decade"
-                                data-date-start-date="01-01-1900"
+{{--                                data-provide="datepicker"--}}
+{{--                                data-date-format="dd-mm-yyyy"--}}
+{{--                                data-date-start-view="decade"--}}
+{{--                                data-date-start-date="01-01-1900"--}}
                             >
-                                <input type="text" class="form-control" name="dob" required value="{{ old('dob') }}">
+                                <input id="datepicker_dob" type="text" class="form-control" name="dob" required value="{{ old('dob') }}">
                                 <div class="input-group-addon">
                                     <i class="material-icons calendar">
                                         calendar_today

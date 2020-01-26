@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Http\Requests\Request;
+use Illuminate\Support\Carbon;
 
 /**
  * Class RegisterRequest
@@ -32,7 +33,7 @@ class RegisterRequest extends Request
             'username' => 'required|max:50|string|unique:users',
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed|min:6',
-            'dob' => 'date_format:d-m-Y|required',
+            'dob' => 'date_format:d-m-Y|required|before:' . Carbon::now()->subYears(18)->format('d-m-Y'),
             'city' => 'required|in:' . implode(',', UserConstants::$cities['nl']),
         ];
     }

@@ -178,7 +178,6 @@ $(window).on('load', function () {
     }
 
     if ($('.JS--galleryImage').length > 0) {
-
         $('.JS--galleryImage').click((event) => {
             let imageSourcesArraysBuilt = false;
 
@@ -190,55 +189,81 @@ $(window).on('load', function () {
 
                 $('.JS--imageModalArrow').removeClass('hidden');
 
+                let justClickedAnArrow = false;
+
                 $('.JS--rightArrow').click(() => {
-                    if (!imageSourcesArraysBuilt) {
-                        $('.JS--galleryImage').each((index, element) => {
-                            let imageSource = $(element).data('src');
+                    if (!justClickedAnArrow) {
+                        justClickedAnArrow = true;
 
-                            if (imageSource !== clickedImageSrc) {
-                                rightImageSourcesArray.push(imageSource);
+                        setTimeout(() => {
+                            justClickedAnArrow = false;
+                        }, 100);
+
+                        if (!imageSourcesArraysBuilt) {
+                            $('.JS--galleryImage').each((index, element) => {
+                                let imageSource = $(element).data('src');
+
+                                if (imageSource !== clickedImageSrc) {
+                                    rightImageSourcesArray.push(imageSource);
+                                }
+                            });
+
+                            leftImageSourcesArray.push(clickedImageSrc);
+                            imageSourcesArraysBuilt = true;
+                        }
+
+                        if (rightImageSourcesArray.length > 0) {
+                            leftImageSourcesArray.push($('#imagePreview').attr('src'));
+                            $('#imagePreview').attr('src', rightImageSourcesArray.shift());
+
+                            if (rightImageSourcesArray.length === 0) {
+                                $('.JS--imageModalArrow.JS--rightArrow').addClass('hidden');
                             }
-                        });
+                        } else {
+                            $('.JS--imageModalArrow.JS--rightArrow').addClass('hidden');
+                        }
 
-                        leftImageSourcesArray.push(clickedImageSrc);
-                        imageSourcesArraysBuilt = true;
-                    }
-
-                    if (rightImageSourcesArray.length > 0) {
-                        leftImageSourcesArray.push($('#imagePreview').attr('src'));
-                        $('#imagePreview').attr('src', rightImageSourcesArray.shift());
-                    } else {
-                        $('.JS--imageModalArrow.JS--rightArrow').addClass('hidden');
-                    }
-
-                    if (leftImageSourcesArray.length > 0) {
-                        $('.JS--imageModalArrow.JS--leftArrow').removeClass('hidden');
+                        if (leftImageSourcesArray.length > 0) {
+                            $('.JS--imageModalArrow.JS--leftArrow').removeClass('hidden');
+                        }
                     }
                 });
 
                 $('.JS--leftArrow').click(() => {
-                    if (!imageSourcesArraysBuilt) {
-                        $('.JS--galleryImage').each((index, element) => {
-                            let imageSource = $(element).data('src');
+                    if (!justClickedAnArrow) {
+                        justClickedAnArrow = true;
 
-                            if (imageSource !== clickedImageSrc) {
-                                leftImageSourcesArray.unshift(imageSource);
+                        setTimeout(() => {
+                            justClickedAnArrow = false;
+                        }, 100);
+
+                        if (!imageSourcesArraysBuilt) {
+                            $('.JS--galleryImage').each((index, element) => {
+                                let imageSource = $(element).data('src');
+
+                                if (imageSource !== clickedImageSrc) {
+                                    leftImageSourcesArray.unshift(imageSource);
+                                }
+                            });
+
+                            rightImageSourcesArray.unshift(clickedImageSrc);
+                            imageSourcesArraysBuilt = true;
+                        }
+
+                        if (leftImageSourcesArray.length > 0) {
+                            rightImageSourcesArray.unshift($('#imagePreview').attr('src'));
+                            $('#imagePreview').attr('src', leftImageSourcesArray.pop());
+
+                            if (leftImageSourcesArray.length === 0) {
+                                $('.JS--imageModalArrow.JS--lefttArrow').addClass('hidden');
                             }
-                        });
+                        } else {
+                            $('.JS--imageModalArrow.JS--leftArrow').addClass('hidden');
+                        }
 
-                        rightImageSourcesArray.unshift(clickedImageSrc);
-                        imageSourcesArraysBuilt = true;
-                    }
-
-                    if (leftImageSourcesArray.length > 0) {
-                        rightImageSourcesArray.unshift($('#imagePreview').attr('src'));
-                        $('#imagePreview').attr('src', leftImageSourcesArray.pop());
-                    } else {
-                        $('.JS--imageModalArrow.JS--leftArrow').addClass('hidden');
-                    }
-
-                    if (rightImageSourcesArray.length > 0) {
-                        $('.JS--imageModalArrow.JS--rightArrow').removeClass('hidden');
+                        if (rightImageSourcesArray.length > 0) {
+                            $('.JS--imageModalArrow.JS--rightArrow').removeClass('hidden');
+                        }
                     }
                 });
             }
@@ -289,32 +314,6 @@ $(window).on('load', function () {
         });
     }
 
-    if ($('.JS--UserSummary').length > 0) {
-        $('.JS--UserSummary__user-image').each((index, element) => {
-            fitGeneralImageToContainer($(element));
-        });
-
-        $(window).resize(() => {
-            setTimeout(() => {
-                $('.JS--UserSummary__user-image').each((index, element) => {
-                    fitGeneralImageToContainer($(element));
-                });
-
-                if ($('.JS--UserSummary__otherImages').length > 0) {
-                    $('.JS--UserSummary__nonProfileImageWrapper').each((index, element) => {
-                        fitGeneralImageToContainer($(element));
-                    });
-                }
-            }, 20);
-        });
-
-        if ($('.JS--UserSummary__otherImages').length > 0) {
-            $('.JS--UserSummary__nonProfileImageWrapper').each((index, element) => {
-                fitGeneralImageToContainer($(element));
-            });
-        }
-    }
-
     if ($('.JS--searchToggle').length > 0) {
         $('.JS--searchToggle').click((event) => {
             event.preventDefault();
@@ -339,30 +338,6 @@ $(window).on('load', function () {
 
 });
 
-function fitGeneralImageToContainer(element) {
-    var containerHeight = element.height();
-    var containerWidth = element.width();
-
-    const $image = $(element).find('img');
-
-    var imageHeight = $image.height();
-
-    if (imageHeight < containerHeight) {
-        $image.css("width", "auto");
-        $image.css("height", containerHeight);
-
-        const imageWidth = $image.css('width');
-
-        const imageWidthAsInteger = parseInt(imageWidth.replace('px', ''));
-        $image.css("margin-left", -(imageWidthAsInteger - containerWidth) / 2);
-    } else {
-        if ($image.css('width') !== "100%") {
-            $image.css("width", "100%");
-            $image.css("height", "auto");
-            $image.css("margin-left", 'initial');
-        }
-    }
-}
 
 
 

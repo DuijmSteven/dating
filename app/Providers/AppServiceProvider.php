@@ -22,8 +22,7 @@ class AppServiceProvider extends ServiceProvider
             \DB::enableQueryLog();
         }
 
-        Carbon::setWeekStartsAt(Carbon::MONDAY);
-        Carbon::setWeekEndsAt(Carbon::SUNDAY);
+        Carbon::setLocale('nl');
     }
 
     /**

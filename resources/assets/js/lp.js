@@ -81,6 +81,24 @@ $(window).on('load', function () {
         Cookies.set("lpFormSelection", 'login');
     });
 
+    var date = new Date();
+    date.setFullYear( date.getFullYear() - 18 );
+    let formatted = ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2) + '-' + date.getFullYear();
+
+    console.log(formatted);
+
+    $("#datepicker_dob").datepicker({
+        format: 'dd-mm-yyyy',
+        weekStart: 1,
+        autoclose: 1,
+        startView: 2,
+        minView: 2,
+        startDate : new Date('01-01-1920'),
+        endDate : new Date(formatted),
+    });
+
+
+
     if ($('.JS--autoCompleteCites').length > 0) {
         // Auto-completes Dutch cities in bot creation view text field
         $.getJSON(DP.baseUrl + '/api/cities/nl')

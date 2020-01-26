@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'heading' => 'Ontmoet hier je volgende liefde!',
+    'heading' => 'ONTMOET JE VOLGENDE AFSPRAAKJE HIER!',
     'form' => [
         'i_am' => 'Ik ben een',
         'man_looking_for_woman' => 'Man op zoek naar een vrouw',
@@ -27,10 +27,7 @@ return [
         'login' => 'Log in',
     ],
     'welcome' => 'Welkom!',
-    'welcome_text' => 'Welcome to the leading dating site for singles interested in serious dating. Search our women
-            personals and browse through 1000s of profiles. If you\'re looking for long term relationships with beautiful
-            women or handsome men, you\'ve come to the right place. Start interacting with singles via chat - join free
-            now!',
+    'welcome_text' => 'Welkom op de meest succesvolle seksdating site: Altijdsex.nl! Ben je op zoek naar een sexdate? Een geil gesprek? Of gewoon naar een seksbuddy? Op Altijdsex.nl kom je duizenden gelijkgestemden tegen, waar je direct op veilige en anonieme wijze mee kan communiceren. Maak een gratis account aan en kom direct in contact met anderen!',
     'usps' => [
         'satisfied_users' => [
             'title' => 'Tevreden gebruikers',

@@ -91,7 +91,7 @@
                             class="User-profile__info__value"
                         >
                             @if($user->meta->hair_color)
-                                {{ trans('user_constants.eye_color.' . $user->meta->hair_color) }}
+                                {{ trans('user_constants.hair_color.' . $user->meta->hair_color) }}
                             @else
                                 {{ trans('user_constants.not_filled') }}
                             @endif
@@ -106,7 +106,7 @@
                             class="User-profile__info__value"
                         >
                             @if($user->meta->smoking_habits)
-                                {{ trans('user_constants.eye_color.' . $user->meta->smoking_habits) }}
+                                {{ trans('user_constants.smoking_habits.' . $user->meta->smoking_habits) }}
                             @else
                                 {{ trans('user_constants.not_filled') }}
                             @endif
@@ -121,7 +121,7 @@
                             class="User-profile__info__value"
                         >
                             @if($user->meta->drinking_habits)
-                                {{ trans('user_constants.eye_color.' . $user->meta->drinking_habits) }}
+                                {{ trans('user_constants.drinking_habits.' . $user->meta->drinking_habits) }}
                             @else
                                 {{ trans('user_constants.not_filled') }}
                             @endif

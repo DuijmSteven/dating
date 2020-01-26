@@ -51,7 +51,7 @@ class UserSearchManager
         }
 
         // initial part of query
-        $query = $this->user->with(['meta', 'roles']);
+        $query = $this->user->with(['meta', 'roles'])->select();
 
         // append to query
         if (isset($parameters['query'])) {
@@ -121,7 +121,7 @@ class UserSearchManager
 
         if (!$paginated) {
             if (null !== $ordering) {
-                if ($ordering['type'] = self::ORDERING_TYPE_RANDOMIZED) {
+                if ($ordering['type'] === self::ORDERING_TYPE_RANDOMIZED) {
                     $query->inRandomOrder($ordering['randomization_key']);
                 }
             }
@@ -130,7 +130,7 @@ class UserSearchManager
         }
 
         if (null !== $ordering) {
-            if ($ordering['type'] = self::ORDERING_TYPE_RANDOMIZED) {
+            if ($ordering['type'] === self::ORDERING_TYPE_RANDOMIZED) {
                 $query->inRandomOrder($ordering['randomization_key']);
             }
         }

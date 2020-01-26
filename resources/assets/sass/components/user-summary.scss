@@ -26,7 +26,6 @@
 
     &__profileImage {
         position: relative;
-        vertical-align: top;
     }
 
     &__nonProfileImageWrapper {
@@ -35,10 +34,16 @@
         overflow: hidden;
         width: 100%;
         height: 200px;
+
+        @media screen and (max-width: $screen-xs-max) {
+            height: 120px;
+        }
     }
 
     &__nonProfileImage {
         width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
     &__user-image {
@@ -52,6 +57,8 @@
 
         img {
             width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     }
 

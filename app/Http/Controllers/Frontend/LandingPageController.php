@@ -75,7 +75,7 @@ class LandingPageController extends FrontendController
             [
                 'title' => config('app.name'),
                 'users' => $users,
-                'carbonNow' => Carbon::now('UTC'),
+                'carbonNow' => Carbon::now(),
                 'testimonials' => $testimonials
             ]
         );
