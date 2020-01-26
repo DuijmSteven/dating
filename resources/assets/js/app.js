@@ -102,6 +102,10 @@ $(window).on('load', function () {
         require('./modules/shoutbox');
     }
 
+    if ($('.JS--imagesWrapper').length > 0) {
+        $('.JS--imagesWrapper').addClass('overflown');
+    }
+
     if ($('.JS--Search__autoCompleteCites').length > 0) {
         require('./modules/search');
     }

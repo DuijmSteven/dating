@@ -51,83 +51,90 @@
                     <label>{{ @trans('edit_profile.your_images') }}</label>
                 </div>
 
-                <div class="col-xs-12 col-sm-6 col-md-4">
-                    <div class="userImageFullItem {{ !$user->hasProfileImage() ? 'noImage' : '' }}">
-                        @if($user->hasProfileImage())
-                            <a href="#" class="modalImage">
-                                <div class="imageResourceWrapper">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="JS--imagesWrapper imagesWrapper">
+                            <div class="col-xs-12 col-sm-6 col-md-4">
+                                <div class="userImageFullItem {{ !$user->hasProfileImage() ? 'noImage' : '' }}">
+                                    @if($user->hasProfileImage())
+                                        <a href="#" class="modalImage">
+                                            <div class="imageResourceWrapper">
+                                        <span
+                                            class="profileImageLabel">{{ @trans('edit_profile.profile_image') }}</span>
+
+                                                <img alt="profileImage" class="imageResource"
+                                                     src="{!! \StorageHelper::profileImageUrl($user) !!}"
+                                                />
+                                            </div>
+                                        </a>
+                                        <form method="POST"
+                                              action="{!! route('images.destroy', ['imageId' => $user->profileImage->id]) !!}">
+                                            {!! csrf_field() !!}
+                                            {!! method_field('DELETE') !!}
+
+                                            @include('frontend.components.button', [
+                                                'buttonContext' => 'form',
+                                                'buttonType' => 'submit',
+                                                'buttonState' => 'danger',
+                                                'buttonText' => trans('edit_profile.delete'),
+                                                'buttonClasses' => 'Button-fw'
+                                            ])
+
+                                        </form>
+                                    @else
+                                        <div class="imageResourceWrapper">
                                     <span
-                                        class="profileImageLabel">{{ @trans('edit_profile.profile_image') }}</span>
+                                        class="profileImageLabel">{{ @trans('edit_profile.profile_image') }}
+                                    </span>
 
-                                    <img alt="profileImage" class="imageResource"
-                                         src="{!! \StorageHelper::profileImageUrl($user) !!}"
-                                    />
+                                            <img alt="profileImage" class="imageResource"
+                                                 src="{!! \StorageHelper::profileImageUrl($user) !!}"
+                                            />
+                                        </div>
+                                    @endif
                                 </div>
-                            </a>
-                            <form method="POST"
-                                  action="{!! route('images.destroy', ['imageId' => $user->profileImage->id]) !!}">
-                                {!! csrf_field() !!}
-                                {!! method_field('DELETE') !!}
-
-                                @include('frontend.components.button', [
-                                    'buttonContext' => 'form',
-                                    'buttonType' => 'submit',
-                                    'buttonState' => 'danger',
-                                    'buttonText' => trans('edit_profile.delete'),
-                                    'buttonClasses' => 'Button-fw'
-                                ])
-
-                            </form>
-                        @else
-                            <div class="imageResourceWrapper">
-                                <span
-                                    class="profileImageLabel">{{ @trans('edit_profile.profile_image') }}
-                                </span>
-
-                                <img alt="profileImage" class="imageResource"
-                                     src="{!! \StorageHelper::profileImageUrl($user) !!}"
-                                />
                             </div>
-                        @endif
-                    </div>
-                </div>
 
-                <?php $userImagesNotProfile = $user->imagesNotProfile; ?>
-                @foreach($userImagesNotProfile as $image)
-                    <div class="col-xs-12 col-sm-6 col-md-4">
-                        <div class="userImageFullItem">
-                            <a href="#" class="modalImage">
-                                <div class="imageResourceWrapper">
-                                    <img alt="galleryImage" class="imageResource"
-                                         src="{!! \StorageHelper::userImageUrl($user->id, $image->filename) !!}"
-                                    />
+                            <?php $userImagesNotProfile = $user->imagesNotProfile; ?>
+                            @foreach($userImagesNotProfile as $image)
+                                <div class="col-xs-12 col-sm-6 col-md-4">
+                                    <div class="userImageFullItem">
+                                        <a href="#" class="modalImage">
+                                            <div class="imageResourceWrapper">
+                                                <img alt="galleryImage" class="imageResource"
+                                                     src="{!! \StorageHelper::userImageUrl($user->id, $image->filename) !!}"
+                                                />
+                                            </div>
+                                        </a>
+                                        @include('frontend.components.button', [
+                                             'url' => route('users.set-profile-image', ['userId' => $user->id, 'imageId' => $image->id]),
+                                             'buttonType' => 'submit',
+                                             'buttonState' => 'primary',
+                                             'buttonText' => @trans('edit_profile.set_profile'),
+                                             'buttonClasses' => 'Button-fw bottom-spacing'
+                                         ])
+
+                                        <form method="POST"
+                                              action="{!! route('images.destroy', ['imageId' => $image->id]) !!}">
+                                            {!! csrf_field() !!}
+                                            {!! method_field('DELETE') !!}
+
+                                            @include('frontend.components.button', [
+                                                'buttonContext' => 'form',
+                                                'buttonType' => 'submit',
+                                                'buttonState' => 'danger',
+                                                'buttonText' => trans('edit_profile.delete'),
+                                                'buttonClasses' => 'Button-fw'
+                                            ])
+
+                                        </form>
+                                    </div>
                                 </div>
-                            </a>
-                            @include('frontend.components.button', [
-                                 'url' => route('users.set-profile-image', ['userId' => $user->id, 'imageId' => $image->id]),
-                                 'buttonType' => 'submit',
-                                 'buttonState' => 'primary',
-                                 'buttonText' => @trans('edit_profile.set_profile'),
-                                 'buttonClasses' => 'Button-fw bottom-spacing'
-                             ])
+                            @endforeach
 
-                            <form method="POST"
-                                  action="{!! route('images.destroy', ['imageId' => $image->id]) !!}">
-                                {!! csrf_field() !!}
-                                {!! method_field('DELETE') !!}
-
-                                @include('frontend.components.button', [
-                                    'buttonContext' => 'form',
-                                    'buttonType' => 'submit',
-                                    'buttonState' => 'danger',
-                                    'buttonText' => trans('edit_profile.delete'),
-                                    'buttonClasses' => 'Button-fw'
-                                ])
-
-                            </form>
                         </div>
                     </div>
-                @endforeach
+                </div>
 
 
                 <div class="col-xs-12">
