@@ -125,7 +125,7 @@
                     </li>
 
                     <li class="{!! str_contains(\Request::route()->getName(), 'home') ? 'active' : '' !!}"><a
-                            href="{{ route('home') }}"><i class="fa fa-fw fa-newspaper-o"></i>{{ @trans('navbar.home') }}</a>
+                            href="{{ route('home') }}">{{ @trans('navbar.home') }}</a>
                     </li>
 
                 @else
