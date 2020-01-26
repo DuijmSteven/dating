@@ -9,7 +9,7 @@
             <div class="row">
 
                 <form role="form" method="POST"
-                      action="{!! route('users.update', ['userId' => $user->id]) !!}"
+                      action="{!! route('users.images.update', ['userId' => $user->id]) !!}"
                       enctype="multipart/form-data">
                     {!! csrf_field() !!}
                     {!! method_field('PUT') !!}

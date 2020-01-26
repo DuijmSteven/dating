@@ -78,6 +78,15 @@ Route::group([
     'prefix' => 'users',
     'middleware' => ['auth']
 ], function () {
+
+    Route::group([
+        'prefix' => 'users',
+        'middleware' => ['auth']
+    ], function () {
+        Route::put('{userId}/images/update', 'UserImageController@update')
+            ->name('users.images.update');
+    });
+
     Route::get('/', 'Frontend\UserController@index')
         ->name('users.overview');
     Route::get('search', 'Frontend\UserSearchController@getSearch')

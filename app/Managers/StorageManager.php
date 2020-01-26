@@ -42,8 +42,6 @@ class StorageManager
                 $mainResource = $this->imageResize($uploadedFile, 800);
                 $uploadThumb = Storage::disk($location)->put($path . $fileNameMain, $mainResource);
 
-                //$uploadedFile->storeAs($path, $fileNameMain, $location);
-
                 return $fileNameMain;
             } catch (\Exception $exception) {
                 throw $exception;
