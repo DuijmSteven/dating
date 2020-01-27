@@ -12,7 +12,7 @@ return [
     'search_results' => 'Zoek resultaten',
     'faq' => 'FAQ',
     'home' => 'Home',
-    'tac' => 'Algemene Voorwarden',
+    'tac' => 'Algemene Voorwaarden',
     'deactivated' => 'Gedeactiveerd',
 
 ];

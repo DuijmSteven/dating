@@ -27,6 +27,10 @@
                             <td><span class="CompanyInfo__value">{!! config('company.address') !!}, {!! config('company.city') !!}</span></td>
                         </tr>
                         <tr>
+                            <td><span class="CompanyInfo__title">{{ @trans('contact.postal_code') }}</span></td>
+                            <td><span class="CompanyInfo__value">{!! config('company.post_code') !!}</span></td>
+                        </tr>
+                        <tr>
                             <td><span class="CompanyInfo__title">{{ @trans('contact.support_email') }}</span></td>
                             <td><span class="CompanyInfo__value">{!! config('company.info_email') !!}</span></td>
                         </tr>
