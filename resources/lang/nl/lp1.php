@@ -29,17 +29,17 @@ return [
     'welcome' => 'Welkom!',
     'welcome_text' => 'Welkom op de meest succesvolle seksdating site: Altijdsex.nl! Ben je op zoek naar een sexdate? Een geil gesprek? Of gewoon naar een seksbuddy? Op Altijdsex.nl kom je duizenden gelijkgestemden tegen, waar je direct op veilige en anonieme wijze mee kan communiceren. Maak een gratis account aan en kom direct in contact met anderen!',
     'usps' => [
-        'satisfied_users' => [
-            'title' => 'Tevreden gebruikers',
-            'text' => 'One of the best dating site in Netherlands',
+        'free_access' => [
+            'title' => 'Gratis Toegang',
+            'text' => 'Je kunt je gratis inschrijven op Altijdsex.nl en direct gebruiken maken van onze diensten. Geen kleine letters en geen abonnement, lidmaatschap of automatische afschrijving van je rekening. Jij bepaalt wat je betaalt!',
         ],
-        'find_your_love' => [
-            'title' => 'Find your love',
-            'text' => 'Countless profiles for what you are looking for',
+        'live_chat' => [
+            'title' => 'Live Chat',
+            'text' => 'Op Altijdsex.nl maak je gebruik van een moderne live chat. Je bent dus niet langer afhankelijk van een ouderwetse berichtenbox die je dient te verversen. Hierdoor zie je het direct als je een nieuw bericht krijgt en je kunt hier dan ook direct op reageren. Maak gratis een account aan en ga vrijblijvend op zoek!',
         ],
         'privacy_anonymity' => [
-            'title' => 'Privacy & Anonymity',
-            'text' => 'Your data stay safe with us',
+            'title' => 'Veiligheid & Privacy',
+            'text' => 'Jouw persoonlijke gegevens zijn veilig bij ons en worden versleuteld voor verwerking. Dit wil zeggen dat je volledig anoniem blijft. Leden kunnen elkaar opzoeken, willekeurige bezoekers aan de website kunnen jouw profiel dus niet bekijken.',
         ]
     ],
     'a_group_of_members' => 'Een greep uit onze leden',
