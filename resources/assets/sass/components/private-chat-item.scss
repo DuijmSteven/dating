@@ -451,12 +451,26 @@
             }
         }
 
-        .PrivateChatItem__textarea {
-            height: 100%;
+        &--showingPreview {
+            .PrivateChatItem__textarea {
+                height: -webkit-calc(100% - 176px);
+                height: -moz-calc(100% - 176px);
+                height: calc(100% - 176px);
+            }
+
+            .PrivateChatItem__textarea__container {
+                height: 100px;
+            }
         }
 
-        .PrivateChatItem__textarea__container {
-            height: 100%;
+        &:not(.PrivateChatItem--showingPreview) {
+            .PrivateChatItem__textarea {
+                height: 100%;
+            }
+
+            .PrivateChatItem__textarea__container {
+                height: 100%;
+            }
         }
 
         .PrivateChatItem__textarea__wrapper {
@@ -471,19 +485,24 @@
         &.PrivateChatItem--showingPreview {
             .PrivateChatItem__body {
                 &__content {
-                    height: -webkit-calc(90% - 150px);
-                    height: -moz-calc(90% - 150px);
-                    height: calc(90% - 150px);
+                    height: -webkit-calc(90% - 220px);
+                    height: -moz-calc(90% - 220px);
+                    height: calc(90% - 220px);
                 }
             }
 
             .PrivateChatItem__textarea__wrapper {
-                height: -webkit-calc(10% + 150px);
-                height: -moz-calc(10% + 150px);
-                height: calc(10% + 150px);
+                height: -webkit-calc(10% + 220px);
+                height: -moz-calc(10% + 220px);
+                height: calc(10% + 220px);
             }
         }
     }
+
+    .PrivateChatItem:not(.showingPreview) {
+
+    }
+
 }
 
 .PrivateChatItem.fullScreen {
