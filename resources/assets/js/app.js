@@ -191,8 +191,7 @@ $(window).on('load', function () {
             if ($('.JS--galleryImage').length > 1) {
                 let clickedImageSrc = $(event.target).data('src');
 
-                let leftImageSourcesArray = [];
-                let rightImageSourcesArray = [];
+                let imageSourcesArray = [];
 
                 $('.JS--imageModalArrow').removeClass('hidden');
 
@@ -204,33 +203,26 @@ $(window).on('load', function () {
 
                         setTimeout(() => {
                             justClickedAnArrow = false;
-                        }, 100);
+                        }, 200);
 
                         if (!imageSourcesArraysBuilt) {
                             $('.JS--galleryImage').each((index, element) => {
                                 let imageSource = $(element).data('src');
 
                                 if (imageSource !== clickedImageSrc) {
-                                    rightImageSourcesArray.push(imageSource);
+                                    imageSourcesArray.push(imageSource);
                                 }
                             });
 
-                            leftImageSourcesArray.push(clickedImageSrc);
+                            //imageSourcesArray.push(clickedImageSrc);
                             imageSourcesArraysBuilt = true;
                         }
 
-                        if (rightImageSourcesArray.length > 0) {
-                            leftImageSourcesArray.push($('#imagePreview').attr('src'));
-                            $('#imagePreview').attr('src', rightImageSourcesArray.shift());
-
-                            if (rightImageSourcesArray.length === 0) {
-                                $('.JS--imageModalArrow.JS--rightArrow').addClass('hidden');
-                            }
+                        if (imageSourcesArray.length > 1) {
+                            imageSourcesArray.push($('#imagePreview').attr('src'));
+                            $('#imagePreview').attr('src', imageSourcesArray.shift());
                         } else {
                             $('.JS--imageModalArrow.JS--rightArrow').addClass('hidden');
-                        }
-
-                        if (leftImageSourcesArray.length > 0) {
                             $('.JS--imageModalArrow.JS--leftArrow').removeClass('hidden');
                         }
                     }
@@ -242,34 +234,27 @@ $(window).on('load', function () {
 
                         setTimeout(() => {
                             justClickedAnArrow = false;
-                        }, 100);
+                        }, 200);
 
                         if (!imageSourcesArraysBuilt) {
                             $('.JS--galleryImage').each((index, element) => {
                                 let imageSource = $(element).data('src');
 
                                 if (imageSource !== clickedImageSrc) {
-                                    leftImageSourcesArray.unshift(imageSource);
+                                    imageSourcesArray.unshift(imageSource);
                                 }
                             });
 
-                            rightImageSourcesArray.unshift(clickedImageSrc);
+                            //imageSourcesArray.unshift(clickedImageSrc);
                             imageSourcesArraysBuilt = true;
                         }
 
-                        if (leftImageSourcesArray.length > 0) {
-                            rightImageSourcesArray.unshift($('#imagePreview').attr('src'));
-                            $('#imagePreview').attr('src', leftImageSourcesArray.pop());
-
-                            if (leftImageSourcesArray.length === 0) {
-                                $('.JS--imageModalArrow.JS--lefttArrow').addClass('hidden');
-                            }
+                        if (imageSourcesArray.length > 1) {
+                            imageSourcesArray.unshift($('#imagePreview').attr('src'));
+                            $('#imagePreview').attr('src', imageSourcesArray.pop());
                         } else {
-                            $('.JS--imageModalArrow.JS--leftArrow').addClass('hidden');
-                        }
-
-                        if (rightImageSourcesArray.length > 0) {
-                            $('.JS--imageModalArrow.JS--rightArrow').removeClass('hidden');
+                            $('.JS--imageModalArrow.JS--rightArrow').addClass('hidden');
+                            $('.JS--imageModalArrow.JS--leftArrow').removeClass('hidden');
                         }
                     }
                 });
