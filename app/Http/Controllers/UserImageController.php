@@ -87,14 +87,18 @@ class UserImageController extends Controller
         try {
             $image = UserImage::findOrFail($imageId);
             $image->delete();
+
+            if ($this->storageManager->fileExists($image->filename, \StorageHelper::userImagesPath($image->user_id))) {
+
+                $this->storageManager->deleteUserImage($image->user_id, $image->filename);
+            }
+
+            toastr()->success(trans('user_profile.feedback.profile_updated'));
         } catch (\Exception $exception) {
+            toastr()->error(trans('user_profile.feedback.profile_not_updated'));
             throw $exception;
         }
 
-        if ($this->storageManager->fileExists($image->filename, \StorageHelper::userImagesPath($image->user_id))) {
-
-            $this->storageManager->deleteUserImage($image->user_id, $image->filename);
-        }
 
         return Redirect::to(URL::previous() . "#images-section");
     }
