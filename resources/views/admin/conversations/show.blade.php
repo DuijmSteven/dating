@@ -173,10 +173,13 @@
                                     <input type="hidden" value="{!! $conversation->userA->id !!}" name="sender_id">
                                     <input type="hidden" value="{!! $conversation->userB->id !!}" name="recipient_id">
                                     <input type="hidden" value="{!! $invisibleImage->id !!}" name="image_id_error_check">
+
+                                    <textarea name="body" cols="30" rows="10" style="width: 100%; height: 200px" class="hidden"></textarea>
+                                    
                                     <img style=""
                                          src="{{ \App\Helpers\StorageHelper::userImageUrl($bot->getId(), $invisibleImage->filename) }}"
                                          alt="">
-                                    <input type="radio" value="{!! $invisibleImage->id!!}" name="image_id">
+                                    <input class="selectInvisibleImage" type="radio" value="{!! $invisibleImage->id!!}" name="image_id">
                                     @if ($errors->has('image_id') && old('image_id_error_check') == $invisibleImage->getId())
                                         {!! $errors->first('image_id', '<small class="form-error">:message</small>') !!}
                                     @endif

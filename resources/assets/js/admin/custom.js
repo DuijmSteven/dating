@@ -16,8 +16,7 @@ $(window).load(function () {
                     source: response.cities
                 })
             }).fail(function () {
-            console.log("Error: Ajax call to users/cities endpoint failed");
-        });
+body        });
 
         $('.JS--autoCompleteCites').keyup(function(){
             var geocoder =  new google.maps.Geocoder();
@@ -90,6 +89,23 @@ $(window).load(function () {
             $('#js-botSmoking').text($(this).closest('li').data('bot-smoking'));
             $('#js-botDrinking').text($(this).closest('li').data('bot-drinking'));
             $('#js-aboutMe').text($(this).closest('li').data('bot-about-me'));
+        });
+    }
+
+    if ($('.conversation__invisibleImages').length > 0) {
+        $('.selectInvisibleImage').mousedown(function (event) {
+            if ($(event.target).is(':checked')) {
+                $(event.target).prop('checked', false);
+                $(event.target).closest('form').find('textarea').addClass('hidden');
+            } else {
+                $(event.target).closest('.conversation__invisibleImages').find('.selectInvisibleImage').each(function (index, element) {
+                    $(element).prop('checked', false);
+                });
+                $(event.target).prop('checked', true);
+
+                $('.conversation__invisibleImages').find('textarea').addClass('hidden');
+                $(event.target).closest('form').find('textarea').removeClass('hidden');
+            }
         });
     }
 

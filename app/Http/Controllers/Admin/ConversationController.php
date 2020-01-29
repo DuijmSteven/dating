@@ -184,6 +184,7 @@ class ConversationController extends Controller
     {
         /** @var integer $conversationId */
         $conversationId = $request->get('conversation_id');
+        $body = $request->get('body') ?? null;
 
         /** @var UserImage $image */
         $image = UserImage::find($request->get('image_id'));
@@ -200,6 +201,7 @@ class ConversationController extends Controller
         $message->setHasAttachment(true);
         $message->setConversationId($conversationId);
         $message->setType('generic');
+        $message->setBody($body);
         $message->save();
 
         $fileExists = $this->storageManager->fileExists(
