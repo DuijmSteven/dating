@@ -8,6 +8,7 @@ use App\Managers\StorageManager;
 use App\Managers\UserImageManager;
 use App\User;
 use App\UserImage;
+use Illuminate\Support\Facades\DB;
 use Redirect;
 use URL;
 
@@ -84,21 +85,27 @@ class UserImageController extends Controller
      */
     public function destroy(int $imageId)
     {
+        DB::beginTransaction();
+
         try {
             $image = UserImage::findOrFail($imageId);
             $image->delete();
+        } catch (\Exception $exception) {
+            toastr()->error(trans('user_profile.feedback.profile_not_updated'));
+        }
 
+        try {
             if ($this->storageManager->fileExists($image->filename, \StorageHelper::userImagesPath($image->user_id))) {
-
                 $this->storageManager->deleteUserImage($image->user_id, $image->filename);
             }
 
+            DB::commit();
+
             toastr()->success(trans('user_profile.feedback.profile_updated'));
         } catch (\Exception $exception) {
+            DB::rollBack();
             toastr()->error(trans('user_profile.feedback.profile_not_updated'));
-            throw $exception;
         }
-
 
         return Redirect::to(URL::previous() . "#images-section");
     }
@@ -110,7 +117,13 @@ class UserImageController extends Controller
      */
     public function setProfileImage(int $userId, int $imageId)
     {
-        $this->userImageManager->setProfileImage($userId, $imageId);
+        try {
+            $this->userImageManager->setProfileImage($userId, $imageId);
+            toastr()->success(trans('user_profile.feedback.profile_updated'));
+        } catch (\Exception $exception) {
+            toastr()->error(trans('user_profile.feedback.profile_not_updated'));
+        }
+
         return Redirect::to(URL::previous() . "#images-section");
     }
 
