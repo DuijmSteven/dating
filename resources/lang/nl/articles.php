@@ -2,6 +2,6 @@
 
 return [
     'articles' => 'Artikels',
-    'read_more' => 'Less verder',
+    'read_more' => 'Lees verder',
     'posted_on' => 'Gepost op',
 ];

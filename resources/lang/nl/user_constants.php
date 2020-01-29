@@ -57,12 +57,12 @@ return [
     ],
     'smoking_habits' => [
         1 => 'Regelmatig',
-        2 => 'Social',
+        2 => 'Sociaal',
         3 => 'Ik rook nooit'
     ],
     'drinking_habits' => [
         1 => 'Regelmatig',
-        2 => 'Social',
+        2 => 'Sociaal',
         3 => 'Ik drink nooit'
     ],
     'about_me' => 'Over mij',
@@ -76,13 +76,13 @@ return [
     'labels' => [
         'gender' => 'Geslacht',
         'looking_for_gender' => 'Op zoek naar',
-        'relationship_status' => 'Relatie status',
-        'body_type' => 'Lichaambouw',
-        'height' => 'Hoogte',
+        'relationship_status' => 'Relatiestatus',
+        'body_type' => 'Lichaamsbouw',
+        'height' => 'Lengte',
         'eye_color' => 'Oogkleur',
         'hair_color' => 'Haarkleur',
-        'smoking_habits' => 'Roken',
-        'drinking_habits' => 'Drink gewoontes',
+        'smoking_habits' => 'Rookgedrag',
+        'drinking_habits' => 'Drinkgewoontes',
     ]
 
 ];

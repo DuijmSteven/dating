@@ -19,7 +19,7 @@ return [
     'no_images' => 'Nog geen foto\'s',
     'actions' => 'Acties',
     'delete' => 'Verwijderen',
-    'set_profile' => 'Instellen als profiel foto',
+    'set_profile' => 'Instellen als profielfoto',
     'no_profile_image_set' => 'Geen profielfoto ingesteld',
     'about_me_placeholder' => 'Laat anderen je een beetje leren kennen. Wat maakt je blij? Wat irriteert je? Wat maakt je enthousiast? Gebruikers die iets over zichzelf delen, hebben de neiging om veel meer aandacht te krijgen!',
     'account_deactivation' => 'Account deactiveren',

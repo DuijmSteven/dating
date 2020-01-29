@@ -17,7 +17,7 @@
                                     </h1>
                                     <ul>
                                         <li><b class="package-credits">{{ $creditpack->credits }}</b> {{ trans('credits.credits') }}</li>
-                                        <li><b>{{ round($creditpack->price/$creditpack->credits, 2) }}</b> {{ trans('credits.per_message') }}
+                                        <li><b>&euro;{{ round($creditpack->price/$creditpack->credits / 100, 2) }}</b> {{ trans('credits.per_message') }}
                                         </li>
                                     </ul>
 
