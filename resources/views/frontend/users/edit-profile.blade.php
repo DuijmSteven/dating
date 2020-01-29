@@ -201,10 +201,6 @@
                             </div>
                         </div>
 
-                        <div class="col-xs-12">
-                            <hr/>
-                        </div>
-
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label
@@ -361,10 +357,6 @@
                             </div>
                         </div>
 
-                        <div class="col-xs-12">
-                            <hr/>
-                        </div>
-
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="about_me">{{ @trans('user_constants.about_me') }}</label>
@@ -377,10 +369,6 @@
                                 >{!! $user->meta['about_me'] !!}</textarea>
                                 @include('helpers.forms.error_message', ['field' => 'about_me'])
                             </div>
-                        </div>
-
-                        <div class="col-xs-12">
-                            <hr/>
                         </div>
 
                         <div class="col-xs-12">
