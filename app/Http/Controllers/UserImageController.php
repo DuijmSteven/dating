@@ -61,21 +61,17 @@ class UserImageController extends Controller
             }
 
             if ($peasantImagesCount + $uploadedImagesCount > 10) {
-                toast()->message(trans('edit_profile.image_limit_reached'), 'error');
-
+                toastr()->error(trans('edit_profile.image_limit_reached'));
                 return redirect()->back();
             }
         }
 
         try {
             $this->peasantManager->updatePeasant($peasantData, $peasantUpdateRequest->route('userId'));
-
-            toast()->message(trans('user_profile.feedback.profile_updated'), 'success');
-
+            toastr()->success(trans('user_profile.feedback.profile_updated'));
         } catch (\Exception $exception) {
             \Log::error($exception);
-
-            toast()->message(trans('user_profile.feedback.profile_not_updated'), 'error');
+            toastr()->error(trans('user_profile.feedback.profile_not_updated'));
         }
 
         return redirect()->back();

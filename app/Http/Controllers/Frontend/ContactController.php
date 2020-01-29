@@ -36,18 +36,11 @@ class ContactController extends FrontendController
             Mail::to(config('company.info_email'))
                 ->queue($contactEmail);
 
-            toast()->message(
-                trans('contact.feedback.message_sent'),
-                'success'
-            );
-
+            toastr()->success(trans('contact.feedback.message_sent'));
         } catch (\Exception $exception) {
             \Log::error($exception);
 
-            toast()->message(
-                trans('contact.feedback.message_not_sent'),
-                'error'
-            );
+            toastr()->error(trans('contact.feedback.message_not_sent'));
         }
 
         return redirect()->back()->with('errors');

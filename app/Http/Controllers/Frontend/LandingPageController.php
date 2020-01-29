@@ -43,7 +43,7 @@ class LandingPageController extends FrontendController
                 'names' => 'Amber, 24'
             ],
             [
-                'quote' => 'Was op zoek naar een leuke date en gevonden...Super geslaagd dus',
+                'quote' => 'Was op zoek naar een leuke date en gevonden... Super geslaagd dus',
                 'imgSource' => asset('img/lp/testimonials/remco.jpg'),
                 'names' => 'Remco, 36'
             ],

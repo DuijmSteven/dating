@@ -5,7 +5,7 @@
  */
 import isUndefined from "admin-lte/bower_components/moment/src/lib/utils/is-undefined";
 
-window.Vue = require('vue/dist/vue.js');
+window.Vue = require('vue/dist/vue.min.js');
 
 import VuejsDialog from 'vuejs-dialog';
 

@@ -17,5 +17,6 @@
     <![endif]-->
 
     <script src="https://maps.googleapis.com/maps/api/js?key={{ config('googlmapper.key') }}&libraries=places" async defer></script>
+    @toastr_css
 
 </head>

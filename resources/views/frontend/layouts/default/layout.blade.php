@@ -7,8 +7,6 @@
     @include('frontend.layouts.default.partials.header')
 
     <div class="container" style="position: relative">
-        @include('toast::messages')
-
         @if(isset($sidebarCount) && $sidebarCount > 0)
             <div class="row">
                 @if($leftSidebar)
@@ -84,5 +82,8 @@
     };
 </script>
 <script src="{{ mix('js/app.js') }}"></script>
+
+@toastr_js
+@toastr_render
 </body>
 </html>

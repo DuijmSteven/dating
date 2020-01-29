@@ -189,6 +189,8 @@ return [
         TPWeb\TargetPay\TargetPayServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
         Cornford\Googlmapper\MapperServiceProvider::class,
+        Spatie\Geocoder\GeocoderServiceProvider::class,
+        Yoeunes\Toastr\ToastrServiceProvider::class,
 
         /*
          * Ours
@@ -196,9 +198,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
         App\Providers\FacadeServiceProvider::class,
-        App\Providers\ValidationServiceProvider::class,
-
-        Spatie\Geocoder\GeocoderServiceProvider::class
+        App\Providers\ValidationServiceProvider::class
     ],
 
     /*

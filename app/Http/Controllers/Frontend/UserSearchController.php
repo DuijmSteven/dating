@@ -13,6 +13,7 @@ use App\Http\Requests\UserRequests\UserSearchRequest;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 use Mapper;
+use Session;
 
 /**
  * Class UserSearchController
@@ -99,7 +100,7 @@ class UserSearchController extends FrontendController
         } catch (\Exception $exception) {
             \Log::error($exception->getMessage() . $exception->getTraceAsString());
 
-            toast()->message(trans('user_search.feedback.search_error'), 'error');
+            toastr()->error(trans('user_search.feedback.search_error'));
 
             return redirect()->back();
         }
@@ -186,8 +187,7 @@ class UserSearchController extends FrontendController
             );
         } catch (\Exception $exception) {
             \Log::error($exception->getMessage() . $exception->getTraceAsString());
-
-            toast()->message(trans('user_search.feedback.search_error'), 'error');
+            toastr()->error(trans('user_search.feedback.search_error'));
         }
 
         $viewData = [
@@ -195,6 +195,9 @@ class UserSearchController extends FrontendController
             'carbonNow' => Carbon::now(),
             'title' => $this->buildTitleWith(trans('view_titles.home')),
         ];
+
+        toastr()->error(trans('user_search.feedback.search_error'));
+
 
         return view(
             'frontend.users.search.results',
