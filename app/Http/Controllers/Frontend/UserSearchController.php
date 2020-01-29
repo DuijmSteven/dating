@@ -196,9 +196,6 @@ class UserSearchController extends FrontendController
             'title' => $this->buildTitleWith(trans('view_titles.home')),
         ];
 
-        toastr()->error(trans('user_search.feedback.search_error'));
-
-
         return view(
             'frontend.users.search.results',
             $viewData
