@@ -430,8 +430,8 @@
                             <select class="form-control" id="lookingFor" name="lookingFor">
                                 <option value="male-female">{{ @trans('lp1.form.man_looking_for_woman') }}</option>
                                 <option value="female-male">{{ @trans('lp1.form.woman_looking_for_man') }}</option>
-                                <option value="female-female">{{ @trans('lp1.form.woman_looking_for_woman') }}</option>
-                                <option value="male-male">{{ @trans('lp1.form.man_looking_for_man') }}</option>
+{{--                                <option value="female-female">{{ @trans('lp1.form.woman_looking_for_woman') }}</option>--}}
+{{--                                <option value="male-male">{{ @trans('lp1.form.man_looking_for_man') }}</option>--}}
                             </select>
                         </div>
                     </div>
