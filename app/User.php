@@ -287,6 +287,14 @@ class User extends Authenticatable
     /**
      * @return mixed
      */
+    public function invisibleImages()
+    {
+        return $this->hasMany('App\UserImage')->where('visible', 0);
+    }
+
+    /**
+     * @return mixed
+     */
     public function imagesNotProfile()
     {
         return $this->hasMany('App\UserImage')->where('profile', 0)->orderBy('visible', 'desc');

@@ -436,11 +436,14 @@ Route::group([
         Route::get('new/{userAId}/{userBId}', 'Admin\ConversationController@showNew')
             ->name('operator-platform.new-conversation.show');
 
-        Route::post('/', 'ConversationController@store')
+        Route::post('/store', 'ConversationController@store')
             ->name('conversations.store');
 
-        Route::post('/', 'Admin\ConversationController@store')
+        Route::post('/admin/store', 'Admin\ConversationController@store')
             ->name('admin.conversations.store');
+
+        Route::post('/admin/add-invisible-image', 'Admin\ConversationController@addInvisibleImageToConversation')
+            ->name('admin.conversations.add-invisible-image');
 
         Route::group([
             'prefix' => 'notes'

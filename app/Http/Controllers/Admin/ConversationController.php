@@ -3,17 +3,26 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Conversation;
+use App\ConversationMessage;
 use App\ConversationNote;
 use App\EmailType;
+use App\Facades\Helpers\StorageHelper;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Conversations\AddInvisibleImageToConversationRequest;
 use App\Http\Requests\Admin\Conversations\MessageCreateRequest;
 use App\Mail\MessageReceived;
 use App\Managers\ConversationManager;
+use App\Managers\StorageManager;
+use App\MessageAttachment;
+use App\OpenConversationPartner;
 use App\User;
+use App\UserImage;
 use Carbon\Carbon;
+use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Kim\Activity\Activity;
 
 /**
@@ -26,13 +35,21 @@ class ConversationController extends Controller
     private $conversationManager;
 
     /**
+     * @var StorageManager
+     */
+    private StorageManager $storageManager;
+
+    /**
      * ConversationController constructor.
      * @param ConversationManager $conversationManager
      */
-    public function __construct(ConversationManager $conversationManager)
-    {
+    public function __construct(
+        ConversationManager $conversationManager,
+        StorageManager $storageManager
+    ) {
         $this->conversationManager = $conversationManager;
         parent::__construct();
+        $this->storageManager = $storageManager;
     }
 
     /**
@@ -76,7 +93,9 @@ class ConversationController extends Controller
         $conversation = Conversation::with(['userA', 'userB', 'messages'])->findOrFail($conversationId);
         $conversation = $this->prepareConversationObject($conversation);
 
-        list($userANotes, $userBNotes) = $this->getParticipantNotes($conversation);
+        //dd($conversation);
+
+        [$userANotes, $userBNotes] = $this->getParticipantNotes($conversation);
 
         return view(
             'admin.conversations.show',
@@ -158,6 +177,105 @@ class ConversationController extends Controller
     }
 
     /**
+     * @param AddInvisibleImageToConversationRequest $request
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    public function addInvisibleImageToConversation(AddInvisibleImageToConversationRequest $request)
+    {
+        /** @var integer $conversationId */
+        $conversationId = $request->get('conversation_id');
+
+        /** @var UserImage $image */
+        $image = UserImage::find($request->get('image_id'));
+
+        /** @var User $sender */
+        $sender = User::find($request->get('sender_id'));
+
+        /** @var User $recipient */
+        $recipient = User::find($request->get('recipient_id'));
+
+        $message = new ConversationMessage();
+        $message->setSenderId($sender->getId());
+        $message->setRecipientId($recipient->getId());
+        $message->setHasAttachment(true);
+        $message->setConversationId($conversationId);
+        $message->setType('generic');
+        $message->save();
+
+        $fileExists = $this->storageManager->fileExists(
+            $image->getFilename(),
+            StorageHelper::userImagesPath($sender->getId()),
+            'cloud'
+        );
+
+        if (!$fileExists) {
+            throw new \Exception('File does not exist');
+        }
+
+        $existingFilepath = StorageHelper::userImagesPath($sender->getId()) . $image->getFilename();
+
+        $fileExtension = explode('.', $image->getFilename())[1];
+        $filenameWithoutExtension = explode('.', $image->getFilename())[0];
+
+        $thumbFilename = $filenameWithoutExtension . '_thumb';
+
+        $existingThumbFilepath = StorageHelper::userImagesPath($sender->getId()) . $thumbFilename . '.' . $fileExtension;
+
+        $messageAttachmentsPath = StorageHelper::messageAttachmentsPath($conversationId);
+
+        $newFilenameWithoutExtension = md5(microtime() . $filenameWithoutExtension);
+        $newFilename = $newFilenameWithoutExtension . '.' . $fileExtension;
+        $newThumbFilename = $newFilenameWithoutExtension . '_thumb.' . $fileExtension;
+        $newFilepath = $messageAttachmentsPath . $newFilename;
+        $newThumbFilepath = $messageAttachmentsPath . $newThumbFilename;
+
+        Storage::disk('cloud')->copy(
+            $existingFilepath,
+            $newFilepath
+        );
+
+        Storage::disk('cloud')->copy(
+            $existingThumbFilepath,
+            $newThumbFilepath
+        );
+
+        $messageAttachment = new MessageAttachment();
+        $messageAttachment->setConversationId($conversationId);
+        $messageAttachment->setFilename($newFilename);
+        $message->attachment()->save($messageAttachment);
+
+        $recipientPartnerIds = OpenConversationPartner::where('user_id', $recipient->getId())
+            ->get()
+            ->pluck('partner_id')
+            ->toArray();
+
+        if (!in_array($sender->getId(), $recipientPartnerIds)) {
+            $recipient->addOpenConversationPartner($sender, 1);
+        }
+
+        $recipientEmailTypeIds = $recipient->emailTypes->pluck('id')->toArray();
+
+        $recipientHasMessageNotificationsEnabled = in_array(
+            EmailType::MESSAGE_RECEIVED,
+            $recipientEmailTypeIds
+        );
+
+        if ($recipientHasMessageNotificationsEnabled) {
+            $onlineUserIds = Activity::users(1)->pluck('user_id')->toArray();
+
+            if (!in_array($recipient->getId(), $onlineUserIds)) {
+
+                $messageReceivedEmail = (new MessageReceived($sender, $recipient))->onQueue('emails');
+
+                Mail::to($recipient)
+                    ->queue($messageReceivedEmail);
+            }
+        }
+
+        return redirect()->back();
+    }
+
+    /**
      * @param MessageCreateRequest $messageCreateRequest
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -168,8 +286,20 @@ class ConversationController extends Controller
         try {
             $conversationMessage = $this->conversationManager->createMessage($messageData);
 
+            /** @var User $recipient */
             $recipient = User::find($messageData['recipient_id']);
+
+            /** @var User $sender */
             $sender = User::find($messageData['sender_id']);
+
+            $recipientPartnerIds = OpenConversationPartner::where('user_id', $recipient->getId())
+                ->get()
+                ->pluck('partner_id')
+                ->toArray();
+
+            if (!in_array($sender->getId(), $recipientPartnerIds)) {
+                $recipient->addOpenConversationPartner($sender, 1);
+            }
 
             $recipientEmailTypeIds = $recipient->emailTypes->pluck('id')->toArray();
 

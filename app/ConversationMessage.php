@@ -3,6 +3,7 @@
 namespace App;
 
 use Carbon\Carbon;
+use http\Encoding\Stream\Inflate;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -66,5 +67,45 @@ class ConversationMessage extends TimeZonedModel
 
     public function getConversationId() {
         return $this->conversation_id;
+    }
+
+    public function getSenderId()
+    {
+        return $this->sender_id;
+    }
+
+    public function setSenderId(int $senderId)
+    {
+        $this->sender_id = $senderId;
+    }
+
+    public function getRecipientId()
+    {
+        return $this->recipient_id;
+    }
+
+    public function setRecipientId(int $recipientId)
+    {
+        $this->recipient_id = $recipientId;
+    }
+
+    public function setBody(string $body)
+    {
+        $this->body = $body;
+    }
+
+    public function setType(string $type)
+    {
+        $this->type = $type;
+    }
+
+    public function setHasAttachment(bool $hasAttachment)
+    {
+        $this->has_attachment = $hasAttachment;
+    }
+
+    public function setConversationId(int $conversationId)
+    {
+        $this->conversation_id = $conversationId;
     }
 }

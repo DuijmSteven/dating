@@ -17,7 +17,7 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="profile_image">{{ @trans('edit_profile.profile_image') }}</label>
-                        <input type="file" class="form-control" id="profile_image" name="profile_image">
+                        <input type="file" accept=".png,.jpg,.jpeg" class="form-control" id="profile_image" name="profile_image">
                         @if ($errors->has('profile_image'))
                             {!! $errors->first('profile_image', '<small class="form-error">:message</small>') !!}
                         @endif

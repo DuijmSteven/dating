@@ -20,7 +20,7 @@ class StorageManager
      * @return mixed
      * @throws \Exception
      */
-    public function saveFile(UploadedFile $uploadedFile, string $path, $location = 'cloud')
+    public function saveFile(File $uploadedFile, string $path, $location = 'cloud')
     {
         //Check if uploaded file is valid and upload it to cloud or save it locally
         if ($uploadedFile->isValid()) {
@@ -51,6 +51,12 @@ class StorageManager
         }
     }
 
+    /**
+     * @param string $fileName
+     * @param string $path
+     * @param string $location
+     * @return bool|string
+     */
     public function getFile(string $fileName, string $path, $location = 'cloud')
     {
         $disk = Storage::disk($location);
@@ -58,10 +64,24 @@ class StorageManager
         //Check if file exists and return url
         if ($disk->has($path . $fileName)) {
             return $disk->url($path . $fileName);
+            return $disk->url($path . $fileName);
         } else {
             return false;
         }
     }
+
+//    /**
+//     * @param string $fileName
+//     * @param string $path
+//     * @param string $location
+//     * @return bool|string
+//     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+//     */
+//    public function retrieveFile(string $fileName, string $path, $location = 'cloud')
+//    {
+//        $disk = Storage::disk($location);
+//        return $disk->get($path . $fileName);
+//    }
 
     public function fileExists(string $fileName, string $path, $location = 'cloud')
     {
@@ -126,7 +146,14 @@ class StorageManager
         return false;
     }
 
-    public function saveConversationImage(UploadedFile $uploadedFile, int $conversationId, $location = 'cloud')
+    /**
+     * @param File $uploadedFile
+     * @param int $conversationId
+     * @param string $location
+     * @return mixed
+     * @throws \Exception
+     */
+    public function saveConversationImage(File $uploadedFile, int $conversationId, $location = 'cloud')
     {
         return $this->saveFile(
             $uploadedFile,

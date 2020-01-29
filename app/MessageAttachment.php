@@ -10,11 +10,22 @@ class MessageAttachment extends Model
 
     protected $fillable = [
         'message_id',
-        'filename'
+        'filename',
+        'conversation_id',
     ];
 
     public function conversationMessage()
     {
         return $this->belongsTo('App\ConversationMessage', 'message_id', 'id');
+    }
+
+    public function setFilename(string $filename)
+    {
+        $this->filename = $filename;
+    }
+
+    public function setConversationId(int $conversationId)
+    {
+        $this->conversation_id = $conversationId;
     }
 }

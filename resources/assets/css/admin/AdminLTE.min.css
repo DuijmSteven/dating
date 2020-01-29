@@ -6115,3 +6115,15 @@ table .action-buttons .btn {
 .DashboardWidget_count {
     float: right;
 }
+
+.conversation__invisibleImages img {
+    width: 100%;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+@media screen and (min-width: 768px) {
+    .conversation__invisibleImages img {
+        height: 100px;
+    }
+}

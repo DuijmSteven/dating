@@ -119,7 +119,7 @@ class ConversationsMessagesFlirtsSeeder extends Seeder
                     $conversationIsNew = rand(0, 1);
 
                     // determines if message is going to be a flirt
-                    $messageIsFlirt = rand(0, 1);
+                    $messageIsFlirt = 0;
 
                     $dateTime = $startDate->addMinutes(rand(1, 30))->addSeconds(rand(1, 59))->toDateTimeString();
 
