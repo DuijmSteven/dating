@@ -113,7 +113,7 @@ class UserConstants
                     3 => 'none'
                 ],
                 'drinking_habits' => [
-                    1 => 'yes',
+                    1 => 'regular',
                     2 => 'social',
                     3 => 'none'
                 ]
