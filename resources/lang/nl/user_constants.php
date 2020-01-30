@@ -21,12 +21,11 @@ return [
         3 => 'Gecompliceerd'
     ],
     'body_type' => [
-        1 => 'Skinny',
-        2 => 'Slank',
-        3 => 'Gemiddeld',
-        4 => 'Atletisch',
-        5 => 'Ronder',
-        6 => 'Groot'
+        1 => 'Slank',
+        2 => 'Normaal',
+        3 => 'Atletisch',
+        4 => 'Vol',
+        5 => 'Dik'
     ],
     'height' => [
         1 => 'Korter dan 140cm',
@@ -40,7 +39,7 @@ return [
     ],
     'eye_color' => [
         1 => 'Groen',
-        2 => 'Blue',
+        2 => 'Blauw',
         3 => 'Bruin',
         4 => 'Hazelbruin',
         5 => 'Zwart'
@@ -51,17 +50,17 @@ return [
         3 => 'Wit',
         4 => 'Bruin',
         5 => 'Blond',
-        6 => 'Donker blond',
+        6 => 'Donkerblond',
         7 => 'Rood',
-        8 => 'Roze'
+        8 => 'Anders geverfd'
     ],
     'smoking_habits' => [
-        1 => 'Regelmatig',
+        1 => 'Ik rook vaak',
         2 => 'Sociaal',
         3 => 'Ik rook nooit'
     ],
     'drinking_habits' => [
-        1 => 'Regelmatig',
+        1 => 'Ik drink vaak',
         2 => 'Sociaal',
         3 => 'Ik drink nooit'
     ],

@@ -224,7 +224,7 @@ class UserTablesSeeder extends Seeder
         $createdUser = factory(App\User::class)->create([
             'username' => $username,
             'email' => $username . '@gmail.com',
-            'password' => bcrypt(env('LOCAL_USERS_PASSWORD'))
+            'password' => bcrypt('12qwaszx')
         ]);
 
         $createdUser->account()->save(factory(App\UserAccount::class)->make([

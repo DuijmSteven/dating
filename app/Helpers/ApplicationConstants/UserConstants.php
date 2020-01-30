@@ -74,12 +74,11 @@ class UserConstants
                     3 => 'complicated'
                 ],
                 'body_type' => [
-                    1 => 'skinny',
-                    2 => 'slender',
-                    3 => 'average',
-                    4 => 'athletic',
-                    5 => 'curvy',
-                    6 => 'big'
+                    1 => 'slender',
+                    2 => 'average',
+                    3 => 'athletic',
+                    4 => 'curvy',
+                    5 => 'big'
                 ],
                 'height' => [
                     1 => '<140',
