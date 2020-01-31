@@ -1,17 +1,17 @@
 <div class="SearchBar JS--SearchBar hidden {{ count($errors) ? 'with-errors' : '' }}">
     <form method="POST" action="{{ route('users.search.form.get') }}">
         {{ csrf_field() }}
-        <div class="form-group city {{ $errors->has('city') ? ' has-error' : '' }}">
+        <div class="form-group city {{ $errors->has('city_name') ? ' has-error' : '' }}">
             <label for="city">{!! @trans('user_constants.city') !!}</label>
             <input type="text"
                    class="JS--autoCompleteCites JS--bar form-control"
-                   name="city"
-                   value="{!! old('city') ?? Session::get('searchParameters')['city'] !!}"
+                   name="city_name"
+                   value="{!! old('city_name') ?? Session::get('searchParameters')['city_name'] !!}"
             >
             @if ($errors->has('city'))
                 <span class="help-block">
-                                <strong>{{ $errors->first('city') }}</strong>
-                            </span>
+                    <strong>{{ $errors->first('city_name') }}</strong>
+                </span>
             @endif
             <input type="hidden"
                    name="lat"

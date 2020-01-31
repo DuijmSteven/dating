@@ -160,7 +160,6 @@ class UserController extends FrontendController
         $peasantUpdateRequest->formatInput();
         $peasantData = $peasantUpdateRequest->all();
 
-
         if (isset($peasantData['user_images']) || isset($peasantData['profile_image'])) {
             /** @var User $peasant */
             $peasant = User::find($peasantUpdateRequest->route('userId'));

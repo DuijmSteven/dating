@@ -3,7 +3,9 @@
 use App\EmailTypeUser;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\RoleUser;
+use App\Services\GeocoderService;
 use Faker\Generator as Faker;
+use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -136,6 +138,17 @@ class UserTablesSeeder extends Seeder
                     ]);
 
                     $randomCityWithCoordinates = $this->citiesWithCoordinates[rand(0, count($this->citiesWithCoordinates) - 1)];
+
+//
+//                    $city = UserConstants::$cities['nl'][rand(0 , count(UserConstants::$cities['nl']) - 1)];
+//
+//                    $client = new Client();
+//                    $geocoder = new GeocoderService($client);
+//
+//                    $coordinates = $geocoder->getCoordinatesForAddress($city);
+//
+//                    $lat = $coordinates['lat'];
+//                    $lng = $coordinates['lng'];
 
                     $createdUser->meta()->save(factory(App\UserMeta::class)->make([
                         'user_id' => $createdUser->id,

@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Frontend;
 use App\Creditpack;
 use App\Mail\CreditsBought;
 use App\Mail\Welcome;
+use App\User;
 use Illuminate\Http\Request;
 use App\Interfaces\PaymentProvider;
 use App\Managers\PaymentManager;
 use App\Services\PaymentService;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 
@@ -36,6 +38,12 @@ class PaymentController extends FrontendController
         parent::__construct();
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     * @throws \Exception
+     */
     public function makePayment(Request $request)
     {
         $this->validate($request,[
@@ -89,12 +97,13 @@ class PaymentController extends FrontendController
         $check = $this->paymentProvider->paymentCheck($paymentMethod, $transactionId);
 
         if($check['status']) {
-            /*$user = \Auth::user();
+            /** @var User $user */
+            $user = \Auth::user();
             $creditsBoughtEmail = (new CreditsBought($user, $creditPack))
                 ->onQueue('emails');
 
             Mail::to($user)
-                ->queue($creditsBoughtEmail);*/
+                ->queue($creditsBoughtEmail);
         }
 
         return view('frontend.thank-you', [

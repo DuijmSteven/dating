@@ -5,10 +5,12 @@ namespace App\Managers;
 
 use App\Facades\Helpers\ApplicationConstants\UserConstants;
 use App\RoleUser;
+use App\Services\GeocoderService;
 use App\Session;
 use App\User;
 use App\UserImage;
 use App\UserMeta;
+use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Kim\Activity\Activity;
@@ -70,6 +72,7 @@ class UserManager
     public function updateUser(array $userData, int $userId)
     {
         DB::beginTransaction();
+
         $this->updateUserDetails($userData, $userId);
 
         if (isset($userData['profile_image']) && ($userData['profile_image'] instanceof UploadedFile)) {

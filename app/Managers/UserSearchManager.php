@@ -5,8 +5,12 @@ namespace App\Managers;
 use App\Helpers\ApplicationConstants\PaginationConstants;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Role;
+use App\Services\GeocoderService;
 use App\User;
+use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class UserSearchManager
@@ -15,6 +19,7 @@ use Illuminate\Database\Eloquent\Collection;
 class UserSearchManager
 {
     const ORDERING_TYPE_RANDOMIZED = 'randomized';
+    const ORDERING_TYPE_RADIUS = 'radius';
 
     /**
      * @var User
@@ -81,9 +86,22 @@ class UserSearchManager
                 });
             }
 
-            if (isset($parameters['city']) && isset($parameters['lat']) && isset($parameters['lng'])) {
-                $latInRadians = deg2rad($parameters['lat']);
-                $lngInRadians = deg2rad($parameters['lng']);
+            if (isset($parameters['city_name'])) {
+                $lat = $parameters['lat'];
+                $lng = $parameters['lng'];
+
+                if (!$lat || $lat == 0 || is_null($lat) || !$lng || $lng == 0 || is_null($lng)) {
+                    $client = new Client();
+                    $geocoder = new GeocoderService($client);
+
+                    $coordinates = $geocoder->getCoordinatesForAddress($parameters['city_name']);
+
+                    $lat = $coordinates['lat'];
+                    $lng = $coordinates['lng'];
+                }
+
+                $latInRadians = deg2rad($lat);
+                $lngInRadians = deg2rad($lng);
 
                 $angularRadius = $parameters['radius']/6371;
 
@@ -132,10 +150,20 @@ class UserSearchManager
         if (null !== $ordering) {
             if ($ordering['type'] === self::ORDERING_TYPE_RANDOMIZED) {
                 $query->inRandomOrder($ordering['randomization_key']);
-            }
-        }
 
-        $results = $query->paginate(PaginationConstants::$perPage['user_profiles'], ['*'], 'page', $page);
-        return $results;
+                return $query->paginate(PaginationConstants::$perPage['user_profiles'], ['*'], 'page', $page);
+            } else if ($ordering['type'] === self::ORDERING_TYPE_RADIUS) {
+
+                $results = $query->paginate(PaginationConstants::$perPage['user_profiles'], ['*'], 'page', $page);
+
+                $users = $results->sortBy(function($result) use ($parameters, $lat, $lng) {
+                    return - (3959 * acos( cos( deg2rad($lat) ) * cos( deg2rad( $result->meta->lat ) ) * cos( deg2rad( $result->meta->lng ) - deg2rad(-$lng) ) + sin( deg2rad($lat) ) * sin(deg2rad($result->meta->lat)) ));
+                });
+
+                return new LengthAwarePaginator($users, $results->total(), $results->perPage(), null, ['path' => 'search-results']);
+            }
+        } else {
+            return $query->paginate(PaginationConstants::$perPage['user_profiles'], ['*'], 'page', $page);
+        }
     }
 }

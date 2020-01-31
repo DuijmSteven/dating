@@ -58,6 +58,8 @@ trait RegistersUsers
 
         if (!$lat || $lat == 0 || is_null($lat) || !$lng || $lng == 0 || is_null($lng)) {
 
+            \Log::debug('User ID: ' . $createdUser->getId() . ' - Registration attempt without coordinates');
+
             $client = new Client();
             $geocoder = new GeocoderService($client);
 

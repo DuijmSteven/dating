@@ -3,17 +3,10 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Helpers\ApplicationConstants\UserConstants;
-use App\Managers\UserSearchManager;
-use App\Services\UserLocationService;
-use App\User;
-use Carbon\Carbon;
-use Cornford\Googlmapper\Models\Location;
-use Illuminate\Http\Request;
 use App\Http\Requests\UserRequests\UserSearchRequest;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Str;
-use Mapper;
-use Session;
+use App\Managers\UserSearchManager;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 /**
  * Class UserSearchController
@@ -21,24 +14,18 @@ use Session;
  */
 class UserSearchController extends FrontendController
 {
+    /** @var UserSearchManager */
     private $userSearchManager;
-
-    /**
-     * @var UserLocationService
-     */
-    private $userLocationService;
 
     /**
      * UserSearchController constructor.
      * @param UserSearchManager $userSearchManager
      */
     public function __construct(
-        UserSearchManager $userSearchManager,
-        UserLocationService $userLocationService
+        UserSearchManager $userSearchManager
     ) {
         $this->userSearchManager = $userSearchManager;
         parent::__construct();
-        $this->userLocationService = $userLocationService;
     }
 
     /**
@@ -126,7 +113,10 @@ class UserSearchController extends FrontendController
         $users = $this->userSearchManager->searchUsers(
             $searchParameters,
             true,
-            $request->input('page')
+            $request->input('page'),
+            [
+                'type' => UserSearchManager::ORDERING_TYPE_RADIUS
+            ]
         );
 
         $viewData = [
@@ -155,7 +145,7 @@ class UserSearchController extends FrontendController
         }
 
         $searchParameters = [
-            'city' => $this->authenticatedUser->meta->getCity(),
+            'city_name' => $this->authenticatedUser->meta->getCity(),
             'lat' => $this->authenticatedUser->meta->getLat(),
             'lng' => $this->authenticatedUser->meta->getLng(),
             'radius' => 40,

@@ -4,6 +4,7 @@ namespace App\Managers;
 
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\User;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 
 class PeasantManager extends UserManager
@@ -39,6 +40,11 @@ class PeasantManager extends UserManager
         $this->persistUser($peasantData);
     }
 
+    /**
+     * @param array $peasantData
+     * @param int $peasantId
+     * @throws \Exception
+     */
     public function updatePeasant(array $peasantData, int $peasantId)
     {
         $peasantData = $this->buildPeasantArrayToPersist($peasantData, 'update');
@@ -52,7 +58,7 @@ class PeasantManager extends UserManager
      */
     private function buildPeasantArrayToPersist(array $peasantData, string $action)
     {
-        $usersTableData = array_where($peasantData, function ($value, $key) {
+        $usersTableData = Arr::where($peasantData, function ($value, $key) {
             return in_array(
                 $key,
                 array_merge(
@@ -62,7 +68,7 @@ class PeasantManager extends UserManager
             );
         });
 
-        $userMetaTableData = array_where($peasantData, function ($value, $key) {
+        $userMetaTableData = Arr::where($peasantData, function ($value, $key) {
             return in_array(
                 $key,
                 array_merge(
