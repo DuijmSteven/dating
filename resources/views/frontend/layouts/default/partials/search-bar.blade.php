@@ -2,13 +2,13 @@
     <form method="POST" action="{{ route('users.search.form.get') }}">
         {{ csrf_field() }}
         <div class="form-group city {{ $errors->has('city_name') ? ' has-error' : '' }}">
-            <label for="city">{!! @trans('user_constants.city') !!}</label>
+            <label for="city_name">{!! @trans('user_constants.city') !!}</label>
             <input type="text"
                    class="JS--autoCompleteCites JS--bar form-control"
                    name="city_name"
                    value="{!! old('city_name') ?? Session::get('searchParameters')['city_name'] !!}"
             >
-            @if ($errors->has('city'))
+            @if ($errors->has('city_name'))
                 <span class="help-block">
                     <strong>{{ $errors->first('city_name') }}</strong>
                 </span>

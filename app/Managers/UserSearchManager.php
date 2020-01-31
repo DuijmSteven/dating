@@ -153,11 +153,16 @@ class UserSearchManager
 
                 return $query->paginate(PaginationConstants::$perPage['user_profiles'], ['*'], 'page', $page);
             } else if ($ordering['type'] === self::ORDERING_TYPE_RADIUS) {
-
                 $results = $query->paginate(PaginationConstants::$perPage['user_profiles'], ['*'], 'page', $page);
 
                 $users = $results->sortBy(function($result) use ($parameters, $lat, $lng) {
-                    return - (3959 * acos( cos( deg2rad($lat) ) * cos( deg2rad( $result->meta->lat ) ) * cos( deg2rad( $result->meta->lng ) - deg2rad(-$lng) ) + sin( deg2rad($lat) ) * sin(deg2rad($result->meta->lat)) ));
+                    //return - (3959 * acos( cos( deg2rad($lat) ) * cos( deg2rad( $result->meta->lat ) ) * cos( deg2rad( $result->meta->lng ) - deg2rad(-$lng) ) + sin( deg2rad($lat) ) * sin(deg2rad($result->meta->lat)) ));
+                    return 6371 * acos (
+                            cos ( deg2rad($result->meta->lat) )
+                            * cos( deg2rad( $lat ) )
+                            * cos( deg2rad( $lng ) - deg2rad($result->meta->lng) )
+                            + sin ( deg2rad($result->meta->lat) )
+                            * sin( deg2rad( $lat ) ));
                 });
 
                 return new LengthAwarePaginator($users, $results->total(), $results->perPage(), null, ['path' => 'search-results']);
