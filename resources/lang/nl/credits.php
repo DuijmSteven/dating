@@ -4,7 +4,7 @@ return [
     'select_package' => 'Selecteer een pakket',
     'credits' => 'credits',
     'per_message' => 'per bericht',
-    'select' => 'Kiezen',
+    'select' => 'Selecteer betaalmethode',
     'payment_methods' => 'Betaalmethodes',
     'register' => 'Registreren',
     'age' => 'Leeftijd',
@@ -12,6 +12,6 @@ return [
     'they_are_waiting' => 'Zij zijn aan het wachten...',
     'more_info' => 'Meer informatie',
     'to_checkout' => 'Ga door met afrekenen',
-    'cart' => 'Cart',
-    'total' => 'Totaal',
+    'cart' => 'Besteloverzicht',
+    'total' => 'Totaalbedrag',
 ];

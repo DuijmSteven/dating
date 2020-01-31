@@ -10,13 +10,13 @@
         </div>
 
         <div class="PrivateChatItem__textarea__container">
-            <textarea id="PrivateChatItem__textarea" class="PrivateChatItem__textarea JS--PrivateChatItem__textarea"
-                      placeholder="Uw bericht..."
-                      v-model.trim="text"
-                      v-on:keyup.enter="sendMessage"
-                      @focus="chatFocused()"
-            >
-            </textarea>
+            <textarea
+                id="PrivateChatItem__textarea" class="PrivateChatItem__textarea JS--PrivateChatItem__textarea"
+                :placeholder="chatTranslations['your_message']"
+                v-model.trim="text"
+                v-on:keyup.enter="sendMessage"
+                @focus="chatFocused()"
+            ></textarea>
 
             <div class="PrivateChatItem__attachmentIcon">
                 <label>
@@ -45,14 +45,14 @@
                 class="loader"
             ></div>
         </div>
-<!--        <div class="PrivateChatItem__textarea__buttons">
-            <label style="margin-bottom: 0; cursor: pointer">
-                <i class="material-icons">attach_file</i>
-                <form enctype="multipart/form-data" @change="previewImage($event)">
-                    <input type="file" accept=".png,.jpg,.jpeg" id="attachment" name="attachment" style="display: none;">
-                </form>
-            </label>
-        </div>-->
+        <!--        <div class="PrivateChatItem__textarea__buttons">
+                    <label style="margin-bottom: 0; cursor: pointer">
+                        <i class="material-icons">attach_file</i>
+                        <form enctype="multipart/form-data" @change="previewImage($event)">
+                            <input type="file" accept=".png,.jpg,.jpeg" id="attachment" name="attachment" style="display: none;">
+                        </form>
+                    </label>
+                </div>-->
     </div>
 </template>
 
@@ -62,7 +62,8 @@
             'user',
             'index',
             'conversation',
-            'sendingMessage'
+            'sendingMessage',
+            'chatTranslations'
         ],
 
         data() {

@@ -149,6 +149,10 @@
         img {
             height: 150px;
             border-radius: 5px;
+
+            @media screen and (max-width: $screen-xs-max) {
+                height: 100px;
+            }
         }
     }
 
@@ -352,15 +356,17 @@
     }
 
     &__textarea {
-        height: 44px;
+        height: 72px;
+        display: block;
         border: medium none;
-        width: 100%;
-        overflow: hidden;
+        width: 74%;
+        overflow: scroll;
         resize: none;
         font-size: 16px;
         letter-spacing: 0.3px;
         line-height: 18px;
-        padding: 13px 78px 16px 10px;
+        padding: 8px 14px 7px 5px;
+        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
 
         &:focus {
             outline: 0;
@@ -453,13 +459,15 @@
 
         &--showingPreview {
             .PrivateChatItem__textarea {
-                height: -webkit-calc(100% - 176px);
-                height: -moz-calc(100% - 176px);
-                height: calc(100% - 176px);
+                height: 100%;
             }
 
             .PrivateChatItem__textarea__container {
-                height: 100px;
+                height: calc(100% - 176px);
+
+                @media screen and (max-width: $screen-xs-max) {
+                    height: calc(100% - 126px);
+                }
             }
         }
 
@@ -579,6 +587,12 @@
                 height: -moz-calc(90% - 150px);
                 height: calc(90% - 150px);
             }
+        }
+
+        .PrivateChatItem__textarea__container {
+            height: -webkit-calc(90% - 150px);
+            height: -moz-calc(90% - 150px);
+            height: calc(90% - 150px);
         }
 
         .PrivateChatItem__textarea__wrapper {

@@ -28,14 +28,14 @@ return [
         5 => 'Dik'
     ],
     'height' => [
-        1 => 'Korter dan 140cm',
+        1 => 'Kleiner dan 140cm',
         2 => '140cm - 149cm',
         3 => '150cm - 159cm',
         4 => '160cm - 169cm',
         5 => '170cm - 179cm',
         6 => '180cm - 189cm',
         7 => '190cm - 200cm',
-        8 => 'Groter dan 200cm'
+        8 => 'Langer dan 200cm'
     ],
     'eye_color' => [
         1 => 'Groen',
@@ -52,7 +52,7 @@ return [
         5 => 'Blond',
         6 => 'Donkerblond',
         7 => 'Rood',
-        8 => 'Anders geverfd'
+        8 => 'Geverfd'
     ],
     'smoking_habits' => [
         1 => 'Ik rook vaak',

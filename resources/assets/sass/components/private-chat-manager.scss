@@ -218,6 +218,12 @@
         }
     }
 
+    &.maximized {
+        .PrivateChatManager__body {
+            display: block;
+        }
+    }
+
     &__body {
         display: none;
         max-height: 600px;

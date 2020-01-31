@@ -76,7 +76,7 @@
                     </ul>
                 </div>
                 <div class="col-md-6">
-                    <h4>{{ @trans('credits.cart') }}</h4>
+                    <h4>&euro; {{ @trans('credits.cart') }}</h4>
                     <ul class="list-group mb-3">
                         <li class="list-group-item d-flex justify-content-between">
                             <div>
@@ -90,7 +90,7 @@
                                     class="cart-value">{{ $creditpacks[1]->price/100 }}</span>€</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between">
-                            <span>&euro; {{ @trans('credits.total') }}</span>
+                            <span>{{ @trans('credits.total') }}:</span>
                             <strong><span class="cart-value">{{ $creditpacks[1]->price/100 }}</span>€</strong>
                         </li>
                     </ul>

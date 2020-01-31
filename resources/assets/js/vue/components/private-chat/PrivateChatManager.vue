@@ -1,5 +1,6 @@
 <template>
     <div class="PrivateChatManager"
+         v-if="fullyLoaded"
          v-bind:class="{
             'maximized': this.isMaximized,
             'minimized': !this.isMaximized,
@@ -97,18 +98,17 @@
             return {
                 conversations: [],
                 currentUser: undefined,
-                isMaximized: true
+                isMaximized: true,
+                fullyLoaded: false
             };
         },
 
         created() {
-            this.fetchUserConversations();
+            this.fetchUserConversations(true);
 
             setInterval(() => {
                 this.fetchUserConversations();
             }, 10000);
-
-            this.fetchConversationManagerStatus();
         },
 
         methods: {
@@ -171,16 +171,16 @@
 
                         this.isMaximized = this.conversationManagerState.data === 1;
 
+                        this.fullyLoaded = true;
+                        
                         if (this.isMaximized) {
-                            $('#PrivateChatManager__body').css('display', 'block');
-                        } else {
-                            $('#PrivateChatManager__body').css('display', 'none');
+                            $('.PrivateChatManager').addClass('maximized');
                         }
                     }
                 );
             },
 
-            fetchUserConversations: function () {
+            fetchUserConversations: function (fetchStatus) {
                 axios.get('/api/conversations/' + this.user.id).then(response => {
                     this.conversations = response.data;
 
@@ -217,6 +217,10 @@
                             }
                         }
                     });
+
+                    if (fetchStatus) {
+                        this.fetchConversationManagerStatus();
+                    }
                 }).catch(function (error) {
                 });
             },

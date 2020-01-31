@@ -10,6 +10,7 @@ return [
     'no_messages_yet' => 'No messages yet',
     'yes' => 'Yes',
     'no' => 'No',
+    'your_message' => 'Your message',
     'delete_conversation' => 'Delete conversation',
     'delete_conversation_confirm' => 'Are you sure you want to delete this conversation?'
 ];

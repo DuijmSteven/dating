@@ -4,7 +4,7 @@ return [
     'select_package' => 'Select a package',
     'credits' => 'credits',
     'per_message' => 'per message',
-    'select' => 'Select',
+    'select' => 'Select payment method',
     'payment_methods' => 'Payment methods',
     'register' => 'Register',
     'age' => 'Age',

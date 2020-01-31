@@ -24,5 +24,5 @@ return [
     'about_me_placeholder' => 'Laat anderen je een beetje leren kennen. Wat maakt je blij? Wat irriteert je? Wat maakt je enthousiast? Gebruikers die iets over zichzelf delen, hebben de neiging om veel meer aandacht te krijgen!',
     'account_deactivation' => 'Account deactiveren',
     'deactivate' => 'Nu deactiveren',
-    'deactivation_text' => 'Als je jouw profiel deactiveert, verlies je geen toegang tot het profiel. Andere leden kunnen je niet vinden of berichten naar jouw verzenden. De volgende keer dat je inlogt, wordt jouw profiel automatisch geactiveerd.',
+    'deactivation_text' => 'Je verliest geen toegang tot je profiel wanneer je je profiel deactiveert. Andere leden kunnen je echter niet meer vinden en ook geen berichten meer naar je sturen. Mocht je weer inloggen, dan zal je profiel automatisch weer geactiveerd worden.',
 ];

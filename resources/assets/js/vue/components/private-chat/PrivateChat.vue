@@ -126,11 +126,13 @@
                     ></chat-message>
                 </div>
                 <chat-form
+                    v-if="this.$parent.chatTranslations"
                     v-on:message-sent="addMessage"
                     :user="user"
                     :index="index"
                     :conversation="conversation"
                     :sendingMessage="sendingMessage"
+                    :chatTranslations="this.$parent.chatTranslations"
                 ></chat-form>
             </div>
         </div>

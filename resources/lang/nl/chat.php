@@ -10,6 +10,7 @@ return [
     'no_messages_yet' => 'Geen berichten',
     'yes' => 'Ja',
     'no' => 'Nee',
+    'your_message' => 'Jouw bericht',
     'delete_conversation' => 'Verwijder gesprek',
     'delete_conversation_confirm' => 'Weet je zeker dat je dit gesprek wilt verwijderen?',
 ];
