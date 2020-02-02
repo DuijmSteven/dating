@@ -114,7 +114,7 @@ class PaymentService implements PaymentProvider
      */
     public function paysafePayment(float $amount, string $description)
     {
-        $startPaymentResult = Transaction::model("PaysafeCard")
+        $startPaymentResult = Transaction::model("Paysafecard")
             ->outletId(config('targetpay.layoutcode'))
             ->amount($amount)
             ->description($description)
@@ -157,7 +157,7 @@ class PaymentService implements PaymentProvider
                 $targetPay = Transaction::model("Ideal");
                 break;
             case 'paysafe':
-                $targetPay = Transaction::model("PaysafeCard");
+                $targetPay = Transaction::model("Paysafecard");
                 break;
             case 'credit':
                 $targetPay = Transaction::model("Creditcard");
