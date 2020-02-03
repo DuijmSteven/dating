@@ -52,25 +52,6 @@ require("jquery-ui/ui/widgets/autocomplete");
 
 let cityList;
 
-function getCoordinatesAndFillInputs() {
-    var geocoder = new google.maps.Geocoder();
-
-    if ($.inArray($('.JS--autoCompleteCites').val(), cityList) > 0 || isUndefined(cityList)) {
-        geocoder.geocode({'address': $('.JS--autoCompleteCites').val() + ', nl'}, function (results, status) {
-            if (status === google.maps.GeocoderStatus.OK) {
-                $('.js-hiddenLatInput').val(results[0].geometry.location.lat());
-                $('.js-hiddenLngInput').val(results[0].geometry.location.lng());
-            } else {
-                $('.js-hiddenLatInput').val('');
-                $('.js-hiddenLngInput').val('');
-            }
-        });
-    } else {
-        $('.js-hiddenLatInput').val('');
-        $('.js-hiddenLngInput').val('');
-    }
-}
-
 $(window).on('load', function () {
     require('./global_helpers');
 
@@ -140,20 +121,6 @@ $(window).on('load', function () {
                     $searchRadiusInput.addClass('hidden');
                 }
             }
-        });
-
-        getCoordinatesAndFillInputs();
-
-        $('.JS--autoCompleteCites').keyup(function () {
-            getCoordinatesAndFillInputs();
-        });
-    }
-
-    if ($('.JS--SearchBar').length > 0 || $('.JS--Edit-Profile').length > 0) {
-        getCoordinatesAndFillInputs();
-
-        $('.JS--autoCompleteCites').keyup(function () {
-            getCoordinatesAndFillInputs();
         });
     }
 

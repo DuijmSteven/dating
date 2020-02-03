@@ -3,7 +3,9 @@
 namespace App\Managers;
 
 use App\Helpers\ApplicationConstants\UserConstants;
+use App\Services\GeocoderService;
 use App\User;
+use GuzzleHttp\Client;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 
@@ -55,6 +57,7 @@ class PeasantManager extends UserManager
      * @param array $peasantData
      * @param string $action
      * @return array
+     * @throws \Spatie\Geocoder\Exceptions\CouldNotGeocode
      */
     private function buildPeasantArrayToPersist(array $peasantData, string $action)
     {
@@ -83,6 +86,14 @@ class PeasantManager extends UserManager
         $userDataToPersist['user_meta'] = $userMetaTableData;
 
         $userDataToPersist['user']['active'] = 1;
+
+        $client = new Client();
+        $geocoder = new GeocoderService($client);
+
+        $coordinates = $geocoder->getCoordinatesForAddress($userDataToPersist['user_meta']['city']);
+
+        $userDataToPersist['user_meta']['lat'] = $coordinates['lat'];
+        $userDataToPersist['user_meta']['lng'] = $coordinates['lng'];
 
         if (empty($peasantData['user_images'][0])) {
             $userDataToPersist['user_images'] = [];

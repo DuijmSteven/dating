@@ -16,20 +16,6 @@ $(window).load(function () {
                     source: response.cities
                 })
             }).fail(function () {
-body        });
-
-        $('.JS--autoCompleteCites').keyup(function(){
-            var geocoder =  new google.maps.Geocoder();
-
-            geocoder.geocode( { 'address': $('.JS--autoCompleteCites').val() + ', nl'}, function(results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    $('.js-hiddenLatInput').val(results[0].geometry.location.lat());
-                    $('.js-hiddenLngInput').val(results[0].geometry.location.lng());
-                } else {
-                    $('.js-hiddenLatInput').val('');
-                    $('.js-hiddenLngInput').val('');
-                }
-            });
         });
     }
 
