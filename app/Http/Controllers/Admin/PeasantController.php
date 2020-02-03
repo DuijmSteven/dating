@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Peasants\PeasantCreateRequest;
 use App\Http\Requests\Admin\Peasants\PeasantUpdateRequest;
 use App\Managers\PeasantManager;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Input;
 
 class PeasantController extends Controller
 {
