@@ -87,18 +87,13 @@ class UserSearchManager
             }
 
             if (isset($parameters['city_name'])) {
-                $lat = $parameters['lat'];
-                $lng = $parameters['lng'];
+                $client = new Client();
+                $geocoder = new GeocoderService($client);
 
-                if (!$lat || $lat == 0 || is_null($lat) || !$lng || $lng == 0 || is_null($lng)) {
-                    $client = new Client();
-                    $geocoder = new GeocoderService($client);
+                $coordinates = $geocoder->getCoordinatesForAddress($parameters['city_name']);
 
-                    $coordinates = $geocoder->getCoordinatesForAddress($parameters['city_name']);
-
-                    $lat = $coordinates['lat'];
-                    $lng = $coordinates['lng'];
-                }
+                $lat = $coordinates['lat'];
+                $lng = $coordinates['lng'];
 
                 $latInRadians = deg2rad($lat);
                 $lngInRadians = deg2rad($lng);
