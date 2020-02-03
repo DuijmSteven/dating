@@ -87,13 +87,15 @@ class PeasantManager extends UserManager
 
         $userDataToPersist['user']['active'] = 1;
 
-        $client = new Client();
-        $geocoder = new GeocoderService($client);
+        if (isset($userDataToPersist['user_meta']['city'])) {
+            $client = new Client();
+            $geocoder = new GeocoderService($client);
 
-        $coordinates = $geocoder->getCoordinatesForAddress($userDataToPersist['user_meta']['city']);
+            $coordinates = $geocoder->getCoordinatesForAddress($userDataToPersist['user_meta']['city']);
 
-        $userDataToPersist['user_meta']['lat'] = $coordinates['lat'];
-        $userDataToPersist['user_meta']['lng'] = $coordinates['lng'];
+            $userDataToPersist['user_meta']['lat'] = $coordinates['lat'];
+            $userDataToPersist['user_meta']['lng'] = $coordinates['lng'];
+        }
 
         if (empty($peasantData['user_images'][0])) {
             $userDataToPersist['user_images'] = [];

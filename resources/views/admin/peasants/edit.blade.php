@@ -78,18 +78,6 @@
                                    name="city"
                                    value="{!! ucfirst($peasant->meta->city) !!}"
                             >
-                            <input type="text"
-                                   name="lat"
-                                   class="js-hiddenLatInput"
-                                   readonly
-                                   value="{!! $peasant->meta->lat !!}"
-                            >
-                            <input type="text"
-                                   name="lng"
-                                   class="js-hiddenLngInput"
-                                   readonly
-                                   value="{!! $peasant->meta->lng !!}"
-                            >
                             @if ($errors->has('city'))
                                 {!! $errors->first('city', '<small class="form-error">:message</small>') !!}
                             @endif
