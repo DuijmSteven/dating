@@ -6,7 +6,7 @@ return [
     'refill' => 'Koop credits',
     'conversations' => 'Gesprekken',
     'older_messages' => 'Oudere berichten',
-    'no_more_messages' => 'Geen meer berichten',
+    'no_more_messages' => 'Geen oudere berichten',
     'no_messages_yet' => 'Geen berichten',
     'yes' => 'Ja',
     'no' => 'Nee',
