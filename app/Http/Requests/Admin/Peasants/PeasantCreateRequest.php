@@ -42,8 +42,6 @@ class PeasantCreateRequest extends Request
             'smoking_habits' => 'in:'. implode(',', array_keys($userProfileFields['drinking_habits'])),
             'drinking_habits' => 'in:'. implode(',', array_keys($userProfileFields['smoking_habits'])),
             'city' => 'string|min:3|max:40',
-            'lat' => 'required_with:city|float',
-            'lng' => 'required_with:city|float',
             'about_me' => 'string|max:1000',
             'looking_for' => 'string|max:1000',
             'profile_image' => 'image|max:4000',

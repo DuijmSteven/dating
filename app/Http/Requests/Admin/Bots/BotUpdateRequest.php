@@ -44,8 +44,6 @@ class BotUpdateRequest extends Request
             'smoking_habits' => 'in:'. implode(',', array_keys($userProfileFields['drinking_habits'])),
             'drinking_habits' => 'in:'. implode(',', array_keys($userProfileFields['smoking_habits'])),
             'city' => 'string|min:3|max:40',
-            'lat' => 'required_with:city|numeric',
-            'lng' => 'required_with:city|numeric',
             'about_me' => 'string|max:1000',
             'looking_for' => 'string|max:1000'
         ];
