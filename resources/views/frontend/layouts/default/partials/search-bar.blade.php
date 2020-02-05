@@ -13,14 +13,6 @@
                     <strong>{{ $errors->first('city_name') }}</strong>
                 </span>
             @endif
-            <input type="hidden"
-                   name="lat"
-                   class="js-hiddenLatInput"
-            >
-            <input type="hidden"
-                   name="lng"
-                   class="js-hiddenLngInput"
-            >
         </div>
         <div class="form-group radius hidden JS--radiusSearchInput">
             <label for="">{!! @trans('search.distance') !!}</label>

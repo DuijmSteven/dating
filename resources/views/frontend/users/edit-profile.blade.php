@@ -174,14 +174,6 @@
                                        name="city"
                                        value="{!! ucfirst($user->meta->city) !!}"
                                 >
-                                <input type="hidden"
-                                       name="lat"
-                                       class="js-hiddenLatInput"
-                                >
-                                <input type="hidden"
-                                       name="lng"
-                                       class="js-hiddenLngInput"
-                                >
                                 @if ($errors->has('city'))
                                     {!! $errors->first('city', '<small class="form-error">:message</small>') !!}
                                 @endif

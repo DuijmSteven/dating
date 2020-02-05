@@ -7,7 +7,7 @@
                 class="modalImage"
             >
                 <img class="PrivateChatItem__image"
-                     v-bind:src="messageAttachmentUrl(this.conversation.id, message.attachment.filename, true)"
+                     v-bind:src="messageAttachmentUrl(this.conversation.id, message.attachment.filename)"
                      alt=""
                      v-bind:data-src="messageAttachmentUrl(this.conversation.id, message.attachment.filename)"
                 >

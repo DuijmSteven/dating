@@ -3,7 +3,9 @@
 namespace App\Managers;
 
 use App\Helpers\ApplicationConstants\UserConstants;
+use App\Services\GeocoderService;
 use App\User;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Hash;
 
 /**
@@ -36,6 +38,7 @@ class BotManager extends UserManager
      * user table, role_user table and user_meta table
      *
      * @param array $botData
+     * @throws \Exception
      */
     public function createBot(array $botData)
     {
@@ -47,6 +50,7 @@ class BotManager extends UserManager
     /**Alice in a court of justice before, but she remembered how small she was not a moment to think that will be When t…
      * @param array $botData
      * @param int $botId
+     * @throws \Exception
      */
     public function updateBot(array $botData, int $botId)
     {
@@ -59,6 +63,7 @@ class BotManager extends UserManager
      * @param array $botData
      * @param string $action
      * @return array
+     * @throws \Spatie\Geocoder\Exceptions\CouldNotGeocode
      */
     private function buildBotArrayToPersist(array $botData, string $action)
     {
@@ -85,6 +90,14 @@ class BotManager extends UserManager
 
         $userDataToPersist['user'] = $usersTableData;
         $userDataToPersist['user_meta'] = $userMetaTableData;
+
+        $client = new Client();
+        $geocoder = new GeocoderService($client);
+
+        $coordinates = $geocoder->getCoordinatesForAddress($userDataToPersist['user_meta']['city']);
+
+        $userDataToPersist['user_meta']['lat'] = $coordinates['lat'];
+        $userDataToPersist['user_meta']['lng'] = $coordinates['lng'];
 
         if (isset($userDataToPersist['user_meta']['city'])) {
             $userDataToPersist['user_meta']['city'] = ucfirst($userDataToPersist['user_meta']['city']);

@@ -106,16 +106,6 @@
                                    name="city"
                                    value="{!! old('city', '') !!}"
                             >
-                            <input type="text"
-                                   name="lat"
-                                   class="js-hiddenLatInput"
-                                   readonly
-                            >
-                            <input type="text"
-                                   name="lng"
-                                   class="js-hiddenLngInput"
-                                   readonly
-                            >
                             @if ($errors->has('city'))
                                 {!! $errors->first('city', '<small class="form-error">:message</small>') !!}
                             @endif
