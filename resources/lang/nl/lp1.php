@@ -23,7 +23,7 @@ return [
                 en Cookiebeleid</a> en de
             <a target='_blank' href=\":tacRoute\">Algemene Voorwaarden</a>.",
         'have_an_account' => 'Heb al een account?',
-        'not_have_an_account' => 'Heb geen account?',
+        'not_have_an_account' => 'Heb je geen account?',
         'login' => 'Log in',
     ],
     'welcome' => 'Welkom!',

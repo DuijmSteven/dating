@@ -41,33 +41,28 @@ Route::get('/dashboard', 'Frontend\DashboardController@index')
     ->name('dashboard')
     ->middleware('auth');
 
-Route::redirect('/', '/home', 301);
-
 Route::get('/home', 'Frontend\UserSearchController@showInitialSearchResults')
     ->name('home')
     ->middleware('auth');
 
-Route::group([
-    'prefix' => 'register',
-    'middleware' => ['guest']
-], function () {
-    Route::get('/', 'Auth\RegisterController@showRegistrationForm')
-        ->name('register.get');
-});
+//Route::group([
+//    'prefix' => 'register',
+//    'middleware' => ['guest']
+//], function () {
+//    Route::get('/', 'Auth\RegisterController@showRegistrationForm')
+//        ->name('register.get');
+//});
 
-Route::get('login', 'Frontend\LandingPageController@show')
-    ->name('login.show');
+//Route::get('login', 'Frontend\LandingPageController@show')
+//    ->name('login.show');
 
-Route::group([
-    'prefix' => 'welcome',
-    'middleware' => ['guest']
-], function () {
-    Route::get('/', 'Frontend\LandingPageController@show')
-        ->name('landing-page.show');
-    Route::post('/', 'Auth\RegisterController@register')
-        ->name('register.post');
-});
 
+Route::get('/', 'Frontend\LandingPageController@show')
+    ->middleware('guest')
+    ->name('landing-page.show');
+Route::post('/', 'Auth\RegisterController@register')
+    ->middleware('guest')
+    ->name('register.post');
 
 
 Route::get('deactivated', 'Frontend\UserController@showDeactivated')
