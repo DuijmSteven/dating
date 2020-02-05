@@ -49,7 +49,7 @@
                     >
                         <i class="material-icons material-icon minimize">minimize</i>
                     </div>
-                    <div v-on:click="clear(partner)"
+                    <div v-on:click="clear(partner.id)"
                          :id="'PrivateChatItem__clear--' + index"
                          class="PrivateChatItem__clear"
                     >
@@ -183,6 +183,12 @@
             this.isMaximized = this.partner.chatState === '1';
 
             this.fetchMessagesAndListenToChannel();
+
+            this.$root.$on('conversationDeleted', conversationId => {
+                if (conversationId === this.conversation.id) {
+                    this.clear(this.partner.id);
+                }
+            });
         },
 
         methods: {
@@ -460,7 +466,7 @@
                 });
             },
 
-            clear(partner) {
+            clear(partnerId) {
                 this.setConversationActivityForUserFalse();
 
                 Vue.delete(this.$parent.conversationPartners, this.index);
@@ -470,7 +476,7 @@
                     '/api/conversations/conversation-partner-ids/remove/' +
                     parseInt(DP.authenticatedUser.id) +
                     '/' +
-                    parseInt(partner.id)
+                    parseInt(partnerId)
                 ).then(
                     response => {
                     }

@@ -14,4 +14,6 @@ return [
     'to_checkout' => 'Continue to checkout',
     'cart' => 'Cart',
     'total' => 'Total',
+    'most_popular' => 'Most popular!',
+    'best_value' => 'Best value!',
 ];

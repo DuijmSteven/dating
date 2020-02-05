@@ -217,6 +217,8 @@ $(window).on('load', function () {
 
     if ($('.JS--creditpack').length > 0) {
         $('.JS--creditpack').click(function () {
+            $('html, body').animate({scrollTop: $('.JS--paymentMethods__title').offset().top}, 500, 'swing');
+
             $('.table-rose').removeClass('table-rose');
             $('.block-raised').removeClass('block-raised');
             $('.btn-white').removeClass('btn-white').addClass('btn-rose');
