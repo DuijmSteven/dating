@@ -9,6 +9,7 @@ use App\Managers\PeasantManager;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Kim\Activity\Activity;
 
 class PeasantController extends Controller
 {
@@ -41,6 +42,29 @@ class PeasantController extends Controller
                 'title' => 'Peasant Overview - ' . \config('app.name'),
                 'headingLarge' => 'Peasant',
                 'headingSmall' => 'Overview',
+                'carbonNow' => Carbon::now(),
+                'peasants' => $peasants
+            ]
+        );
+    }
+
+    public function showOnline()
+    {
+        $onlineIds = Activity::users(3)->pluck('id')->toArray();
+
+        $peasants = User::with(['meta', 'roles', 'profileImage'])->whereHas('roles', function ($query) {
+            $query->where('name', 'peasant');
+        })
+            ->whereIn('id', $onlineIds)
+            ->orderBy('id')
+            ->get();
+
+        return view(
+            'admin.peasants.online',
+            [
+                'title' => 'Online peasants - ' . \config('app.name'),
+                'headingLarge' => 'Peasant',
+                'headingSmall' => 'Online',
                 'carbonNow' => Carbon::now(),
                 'peasants' => $peasants
             ]
