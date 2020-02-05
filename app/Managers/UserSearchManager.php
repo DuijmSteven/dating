@@ -56,19 +56,20 @@ class UserSearchManager
         }
 
         // initial part of query
-        $query = $this->user->with(['meta', 'roles'])->select();
+        $query = $this->user->with(['meta', 'roles'])->select()
+            ->join('user_meta', 'users.id', '=', 'user_meta.user_id');
 
         // append to query
         if (isset($parameters['query'])) {
-            $query = $query->where('username', 'like', '%' . $parameters['query'] . '%')
-                ->orWhere('email', 'like', '%' . $parameters['query'] . '%');
+            $query = $query->where('users.username', 'like', '%' . $parameters['query'] . '%')
+                ->orWhere('users.email', 'like', '%' . $parameters['query'] . '%');
         } else {
             if (isset($parameters['username'])) {
-                $query = $query->where('username', 'like', '%' . $parameters['username'] . '%');
+                $query = $query->where('users.username', 'like', '%' . $parameters['username'] . '%');
             }
 
             if (isset($parameters['active'])) {
-                $query = $query->where('active', '=', $parameters['active']);
+                $query = $query->where('users.active', '=', $parameters['active']);
             }
 
             foreach (UserConstants::selectableFields('peasant') as $field => $values) {
@@ -130,7 +131,7 @@ class UserSearchManager
             $query->whereIn('id', [Role::ROLE_PEASANT, Role::ROLE_BOT]);
         });
 
-        $query->where('id', '!=', \Auth::user()->getId());
+        $query->where('users.id', '!=', \Auth::user()->getId());
 
         if (!$paginated) {
             if (null !== $ordering) {
@@ -142,28 +143,20 @@ class UserSearchManager
             return $query->get();
         }
 
+        $perPage = PaginationConstants::$perPage['user_profiles'];
         if (null !== $ordering) {
             if ($ordering['type'] === self::ORDERING_TYPE_RANDOMIZED) {
                 $query->inRandomOrder($ordering['randomization_key']);
 
-                return $query->paginate(PaginationConstants::$perPage['user_profiles'], ['*'], 'page', $page);
+                return $query->paginate($perPage, ['*'], 'page', $page);
             } else if ($ordering['type'] === self::ORDERING_TYPE_RADIUS) {
-                $results = $query->paginate(PaginationConstants::$perPage['user_profiles'], ['*'], 'page', $page);
+                return $query->orderByRaw('
+                    ( 3959 * acos( cos( radians('. $lat .') ) * cos( radians( user_meta.lat ) ) * cos( radians( user_meta.lng ) - radians('. $lng .') ) + sin( radians('. $lat .') ) * sin( radians( user_meta.lat ) ) ) )
+                ', 'ASC')->paginate(PaginationConstants::$perPage['user_profiles'], ['*'], 'page', $page);
 
-                $users = $results->sortBy(function($result) use ($parameters, $lat, $lng) {
-                    //return - (3959 * acos( cos( deg2rad($lat) ) * cos( deg2rad( $result->meta->lat ) ) * cos( deg2rad( $result->meta->lng ) - deg2rad(-$lng) ) + sin( deg2rad($lat) ) * sin(deg2rad($result->meta->lat)) ));
-                    return 6371 * acos (
-                            cos ( deg2rad($result->meta->lat) )
-                            * cos( deg2rad( $lat ) )
-                            * cos( deg2rad( $lng ) - deg2rad($result->meta->lng) )
-                            + sin ( deg2rad($result->meta->lat) )
-                            * sin( deg2rad( $lat ) ));
-                });
-
-                return new LengthAwarePaginator($users, $results->total(), $results->perPage(), null, ['path' => 'search-results']);
             }
         } else {
-            return $query->paginate(PaginationConstants::$perPage['user_profiles'], ['*'], 'page', $page);
+            return $query->paginate($perPage, ['*'], 'page', $page);
         }
     }
 }
