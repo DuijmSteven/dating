@@ -645,14 +645,14 @@
         <div class="row icons" style="margin-top: 75px">
             <div class="col-md-4 col-sm-12">
                 <i class="material-icons">
-                    star
+                    how_to_reg
                 </i>
                 <h4>{{ @trans('lp1.usps.free_access.title') }}</h4>
                 <p>{{ @trans('lp1.usps.free_access.text') }}</p>
             </div>
             <div class="col-md-4 col-sm-12">
                 <i class="material-icons">
-                    favorite
+                    chat
                 </i>                <h4>{{ @trans('lp1.usps.live_chat.title') }}</h4>
                 <p>{{ @trans('lp1.usps.live_chat.text') }}</p>
             </div>
