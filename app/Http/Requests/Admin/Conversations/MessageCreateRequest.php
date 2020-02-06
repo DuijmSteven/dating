@@ -28,7 +28,7 @@ class MessageCreateRequest extends Request
             'sender_id' => 'integer',
             'recipient_id' => 'integer',
             'message' => 'string|max:1000',
-            'attachment' => 'image|max:1000',
+            'attachment' => 'image|max:4000',
         ];
 
         return $rules;
