@@ -27,6 +27,16 @@
                                     >
                                         {{ trans('credits.select') }}
                                     </a>
+
+                                    @if($creditpack->id === 2)
+                                        <div class="usp-label most-popular">
+                                            {{ trans('credits.most_popular') }}
+                                        </div>
+                                    @elseif($creditpack->id === 3)
+                                        <div class="usp-label best-value">
+                                            {{ trans('credits.best_value') }}
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -38,7 +48,7 @@
             <form method="post" action="{{ route('credits.store') }}">
                 {{ csrf_field() }}
                 <div class="col-md-6">
-                    <h4>{{ trans('credits.select') }}</h4>
+                    <h4 class="JS--paymentMethods__title">{{ trans('credits.select') }}</h4>
                     <ul class="list-group mb-3 JS--paymentMethods paymentMethodsList">
                         <li class="list-group-item d-flex justify-content-between"
                             style="margin-bottom: 10px; flex-wrap: wrap;">
@@ -47,7 +57,7 @@
                                 <span style="margin-left: 5px">iDeal</span>
                             </label>
                             <span class="paymentMethodLogo">
-                                <img style="height: 29px" src="{{ asset('img/icons/ideal_logo.svg') }}"/>
+                                <img src="{{ asset('img/icons/ideal_logo.svg') }}"/>
                             </span>
                             <div class="break" style="flex-basis: 100%; height: 0;"></div>
                             <div class="JS--banksContainer" style="display: none; margin-top: 20px">
@@ -71,7 +81,7 @@
                                 <input type="radio" name="paymentMethod" value="paysafe">
                                 <span style="margin-left: 5px">Paysafecard</span>
                             </label>
-                            <span class="paymentMethodLogo"><img style="height: 29px" src="{{ asset('img/icons/paysafecard_logo.svg') }}"/></span>
+                            <span class="paymentMethodLogo"><img src="{{ asset('img/icons/paysafecard_logo.svg') }}"/></span>
                         </li>
                     </ul>
                 </div>

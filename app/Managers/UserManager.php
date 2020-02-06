@@ -255,7 +255,7 @@ class UserManager
     {
         $randomUsers = $this->user->with(['roles', 'meta'])
             ->whereHas('roles', function ($query) {
-                $query->whereIn('id', [2, 3]);
+                $query->whereIn('id', [2]);
             })
             ->orderByRaw('RAND()')->take($userAmount)
             ->get();

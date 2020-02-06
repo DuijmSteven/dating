@@ -159,8 +159,12 @@
                     });
             },
             deleteConversation: function (conversationId) {
+                this.$root.$emit('conversationDeleted', conversationId);
+
                 axios.delete('/api/conversations/' + conversationId).then(response => {
                     this.fetchUserConversations();
+
+                    this.eventHub.$emit('conversationDeleted', conversationId);
                 }).catch(function (error) {
                 });
             },
@@ -172,7 +176,7 @@
                         this.isMaximized = this.conversationManagerState.data === 1;
 
                         this.fullyLoaded = true;
-                        
+
                         if (this.isMaximized) {
                             $('.PrivateChatManager').addClass('maximized');
                         }
@@ -247,7 +251,7 @@
         },
         mounted() {
             this.$root.$on('fetchUserConversations', () => {
-                this.fetchUserConversations();
+                this.fetchUserConversations(true);
             });
         }
     }

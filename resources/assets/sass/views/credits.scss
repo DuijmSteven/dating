@@ -130,9 +130,19 @@ Table of Contents End
     }
 
     .paymentMethodLogo {
+        height: 29px;
         position: absolute;
         right: 15px;
         top: 13px;
+
+        @media screen and (max-width: $screen-xs-max) {
+            height: 20px;
+            top: 16px;
+        }
+
+        img {
+            height: 100%;
+        }
     }
 
     .block .category:not([class*="text-"]) {
@@ -196,6 +206,35 @@ Table of Contents End
 
 
     .block-pricing {
+        .table {
+            position: relative;
+        }
+
+        .usp-label {
+            position: absolute;
+            margin: 0 auto;
+            top: -16px;
+            right: 0px;
+            height: 30px;
+            font-size: 1.8rem;
+            padding-left: 15px;
+            padding-right: 15px;
+            color: $white;
+            font-weight: 500;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 35px 3px 0px;
+
+            &.most-popular {
+                background-color: #41808e;
+            }
+
+            &.best-value {
+                background-color: #67a243;
+            }
+        }
+
         text-align: center;
     }
 

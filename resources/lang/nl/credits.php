@@ -14,4 +14,6 @@ return [
     'to_checkout' => 'Ga door met afrekenen',
     'cart' => 'Besteloverzicht',
     'total' => 'Totaalbedrag',
+    'most_popular' => 'Meest Gekozen!',
+    'best_value' => 'Voordeligste pakket!',
 ];
