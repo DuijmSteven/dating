@@ -3,6 +3,7 @@
 namespace App\Managers;
 
 use App\ConversationMessage;
+use App\Facades\Helpers\PaymentsHelper;
 use App\Payment;
 use App\User;
 use Carbon\Carbon;
@@ -11,6 +12,7 @@ class StatisticsManager
 {
     public function revenueOnDate($date) {
         return Payment::whereDate('created_at', $date)
+            ->where('status', 3)
             ->sum('amount');
     }
 
@@ -20,6 +22,7 @@ class StatisticsManager
                 $startDate,
                 $endDate
             ])
+            ->where('status', 3)
             ->sum('amount');
     }
 
