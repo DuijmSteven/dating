@@ -11,6 +11,7 @@ use App\OpenConversationPartner;
 use App\User;
 use App\UserAccount;
 use DB;
+use Illuminate\Http\JsonResponse;
 use Kim\Activity\Activity;
 use Mail;
 
@@ -52,7 +53,6 @@ class ConversationController extends Controller
 
     /**
      * @param MessageCreateRequest $messageCreateRequest
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(MessageCreateRequest $messageCreateRequest)
     {
@@ -68,8 +68,9 @@ class ConversationController extends Controller
 
         $senderCredits = $sender->account->credits;
 
-        if ($senderCredits < 1) {
-            throw new \Exception('Not enough credits');
+        if ($senderCredits < 1)
+        {
+            return JsonResponse::create('Not enough credits', 403);
         }
 
         try {

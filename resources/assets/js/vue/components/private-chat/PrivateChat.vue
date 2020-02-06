@@ -430,7 +430,7 @@
 
                     this.fetchUserConversations();
                 }).catch((error) => {
-                    if (error && error.response && error.response.data.message === 'Not enough credits') {
+                    if (error && error.response.status === 403 && error.response.data === 'Not enough credits') {
                         this.showNoCredits = true;
 
                         setTimeout(() => {
