@@ -4,9 +4,15 @@
     </div>
     <div class="Tile__body User-profile__about__body">
         <div class="User-profile__text">
-            <blockquote>
-                <p>{{ $user->meta->about_me }}</p>
-            </blockquote>
+            @if($user->meta->about_me)
+                <blockquote>
+                    <p>{{ $user->meta->about_me }}</p>
+                </blockquote>
+            @else
+                <p>
+                    {{ trans('user_constants.not_filled') }}
+                </p>
+            @endif
         </div>
     </div>
 </div>
