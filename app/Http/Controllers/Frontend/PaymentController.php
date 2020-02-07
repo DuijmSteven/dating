@@ -96,15 +96,13 @@ class PaymentController extends FrontendController
 
         $check = $this->paymentProvider->paymentCheck($paymentMethod, $transactionId);
 
-        /*if($check['status']) {
-            //
-            $user = \Auth::user();
-            $creditsBoughtEmail = (new CreditsBought($user, $creditPack))
+        if($check['status']) {
+            $creditsBoughtEmail = (new CreditsBought($this->authenticatedUser, $creditPack))
                 ->onQueue('emails');
 
-            Mail::to($user)
+            Mail::to($this->authenticatedUser)
                 ->queue($creditsBoughtEmail);
-        }*/
+        }
 
         return view('frontend.thank-you', [
             'title' => $this->buildTitleWith(trans('view_titles.payment')),
