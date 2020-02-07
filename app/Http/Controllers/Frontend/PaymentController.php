@@ -97,10 +97,12 @@ class PaymentController extends FrontendController
         $check = $this->paymentProvider->paymentCheck($paymentMethod, $transactionId);
 
         if($check['status']) {
-            $creditsBoughtEmail = (new CreditsBought($this->authenticatedUser, $creditPack))
+            $user = User::find($this->authenticatedUser->getId());
+
+            $creditsBoughtEmail = (new CreditsBought($user, $creditPack))
                 ->onQueue('emails');
 
-            Mail::to($this->authenticatedUser)
+            Mail::to($user)
                 ->queue($creditsBoughtEmail);
         }
 
