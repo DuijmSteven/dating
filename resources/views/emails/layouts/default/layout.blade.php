@@ -223,7 +223,7 @@
         <tr>
             <td style="font-family: sans-serif; font-size: 12px; line-height: 15px; text-align: center; color: #888888;">
                 <br><br>
-                Altijdtsex.nl<br><span class="unstyle-auto-detected-links">{{ config('company.address') }}, {{ config('company.city') }}, {{ config('company.post_code') }}<br></span>
+                Contact: <span class="unstyle-auto-detected-links">{{ config('company.email') }}<br></span>
                 <br><br>
 {{--                <unsubscribe style="color: #888888; text-decoration: underline;">unsubscribe</unsubscribe>--}}
             </td>
