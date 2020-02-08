@@ -26,7 +26,7 @@ class CreditsBought extends Mailable implements ShouldQueue
         Creditpack $creditPack
     ) {
         $this->user = $user;
-        $this->creditpack = $creditPack;
+        $this->creditPack = $creditPack;
     }
 
     /**
