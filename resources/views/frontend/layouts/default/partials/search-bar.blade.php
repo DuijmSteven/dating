@@ -3,10 +3,25 @@
         {{ csrf_field() }}
         <div class="form-group city {{ $errors->has('city_name') ? ' has-error' : '' }}">
             <label for="city_name">{!! @trans('user_constants.city') !!}</label>
+
+            <?php
+                $city = '';
+
+                if (old('city_name')) {
+                    $city = old('city_name');
+                } else {
+                    if (Session::get('searchParameters') && Session::get('searchParameters')['city_name']) {
+                        $city = Session::get('searchParameters')['city_name'];
+                    } else {
+                        $city = '';
+                    }
+                }
+            ?>
+
             <input type="text"
                    class="JS--autoCompleteCites JS--bar form-control"
                    name="city_name"
-                   value="{!! old('city_name') ?? Session::get('searchParameters')['city_name'] !!}"
+                   value="{{ $city }}"
             >
             @if ($errors->has('city_name'))
                 <span class="help-block">
@@ -19,7 +34,7 @@
             <select name="radius" class="form-control">
                 @foreach(\UserConstants::getRadiuses() as $radius)
                     <option
-                        {{ Session::get('searchParameters')['radius'] == $radius ? 'selected' : ''}}
+                        {{  Session::get('searchParameters') && Session::get('searchParameters')['radius'] == $radius ? 'selected' : ''}}
                         value="{{ $radius }}">{{ $radius }}km
                     </option>
                 @endforeach
@@ -31,7 +46,7 @@
                 <option value="">{!! @trans('search.all') !!}</option>
                 @foreach(\UserConstants::getAgeGroups() as $key => $value)
                     <option
-                        {{ Session::get('searchParameters')['age'] == $key ? 'selected' : ''}}
+                        {{ Session::get('searchParameters') && Session::get('searchParameters')['age'] == $key ? 'selected' : ''}}
                         value="{{ $key }}">{{ $value }}
                     </option>
                 @endforeach
@@ -43,7 +58,7 @@
                 <option value="">{!! @trans('search.all') !!}</option>
                 @foreach(\UserConstants::selectableField('body_type') as $key => $value)
                     <option
-                        {{ Session::get('searchParameters')['body_type'] == $key ? 'selected' : ''}}
+                        {{ Session::get('searchParameters') && Session::get('searchParameters')['body_type'] == $key ? 'selected' : ''}}
                         value="{{ $key }}">{{ @trans('user_constants.body_type.' . $key) }}
                     </option>
                 @endforeach
@@ -55,7 +70,7 @@
                 <option value="">{!! @trans('search.all') !!}</option>
                 @foreach(\UserConstants::selectableField('height') as $key => $value)
                     <option
-                        {{ Session::get('searchParameters')['height'] == $key ? 'selected' : ''}}
+                        {{ Session::get('searchParameters') && Session::get('searchParameters')['height'] == $key ? 'selected' : ''}}
                         value="{{ $key }}">{{ @trans('user_constants.height.' . $key) }}
                     </option>
                 @endforeach
