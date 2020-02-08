@@ -29,7 +29,7 @@
 
     .vh-70 .container {
         position: absolute;
-        top: 60%;
+        top: 85%;
         left: 0;
         right: 0;
         -moz-transform: translateY(-50%);
@@ -50,7 +50,7 @@
     }
 
     .form-container {
-        margin-top: -13rem;
+        margin-top: -4rem;
         max-width: 1200px;
         margin-right: auto;
         margin-left: auto;
@@ -273,7 +273,7 @@
 
     @media (min-width: 768px) {
         h1 {
-            font-size: 6rem;
+            font-size: 5.5rem;
         }
 
         header .navbar-brand img {
@@ -301,6 +301,16 @@
 
         .recent-container .col-sm-12 {
             margin-bottom: 1.5em;
+        }
+
+        .form-container {
+            margin-top: 0rem;
+        }
+    }
+
+    @media (min-width: 768px) and (max-width: 991.98px) {
+        h1 {
+            font-size: 4.8rem;
         }
     }
 
@@ -413,7 +423,18 @@
     </div>
 </header>
 <main>
-    <div class="vh-70 bg-image text-center" style="background-image: url('img/lp_header_bg.webp'); position: relative">
+    <div class="vh-70 bg-image text-center" style="background-image: url('img/lp/dating-bg.jpg'); position: relative">
+        <div class="row vh-70 align-items-center" style="margin-left: 0; margin-right: 0;">
+            <div class="col-md-6 d-none d-md-block">
+
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <video class="img-fluid" playsinline="" autoplay="" muted="" loop="" no-controls="" style="max-width: 80%">
+                    <source type="video/mp4" src="{{ asset('img/lp/altijdSex-preview.mp4') }}">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
         <div class="container">
             <h1>{{ @trans('lp1.heading') }}</h1>
         </div>
