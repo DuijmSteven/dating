@@ -25,7 +25,7 @@ class LandingPageController extends FrontendController
         app()->setLocale($locale);
 
         $users = User::whereHas('roles', function ($query) {
-            $query->orWhere('name', 'bot');
+            $query->where('name', 'bot');
         })
             ->inRandomOrder()->take(6)->get();
 

@@ -12,7 +12,7 @@ class CreditsController extends FrontendController
     public function show()
     {
         $users = User::whereHas('roles', function ($query) {
-            $query->orWhere('name', 'bot');
+            $query->where('name', 'bot');
         })
             ->whereHas('meta', function ($query) {
                 $query->where(

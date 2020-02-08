@@ -211,7 +211,7 @@ class User extends Authenticatable
      */
     public function meta()
     {
-        return $this->hasOne('App\UserMeta', 'user_id', 'id');
+        return $this->hasOne('App\UserMeta');
     }
 
     /**
