@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Interfaces\PaymentProvider;
 use App\Payment;
 use App\UserAccount;
+use DigiWallet\Methods\Bancontact;
 use DigiWallet\Transaction;
 use Illuminate\Support\Facades\Auth;
 
@@ -44,8 +45,8 @@ class PaymentService implements PaymentProvider
             case 'credit':
                 $transaction = $this->creditPayment($amount, $description);
                 break;
-            case 'ivr':
-                $this->ivrPayment($bank, $amount, $description);
+            case 'bancontact':
+                $transaction = $this->bancontactPayment($amount, $description);
                 break;
             default:
                 throw new \Exception('Payment method invalid');
@@ -150,6 +151,22 @@ class PaymentService implements PaymentProvider
         ];
     }
 
+    public function bancontactPayment(float $amount, string $description)
+    {
+        $startPaymentResult = Transaction::model("Bancontact")
+            ->outletId(config('targetpay.layoutcode'))
+            ->amount($amount)
+            ->description($description)
+            ->returnUrl($this->returnUrl)
+            ->test(config('targetpay.test'))
+            ->start();
+
+        return [
+            'redirectUrl' => $startPaymentResult->url,
+            'transaction_id' => $startPaymentResult->transactionId
+        ];
+    }
+
     public function paymentCheck(string $paymentMethod, int $transactionId)
     {
         switch ($paymentMethod) {
@@ -161,6 +178,9 @@ class PaymentService implements PaymentProvider
                 break;
             case 'credit':
                 $targetPay = Transaction::model("Creditcard");
+                break;
+            case 'bancontact':
+                $targetPay = Transaction::model("Bancontact");
                 break;
             default:
                 throw new \Exception('Payment method invalid');

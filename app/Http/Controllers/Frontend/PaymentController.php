@@ -50,7 +50,7 @@ class PaymentController extends FrontendController
             'paymentMethod' => [
                 'required',
                 Rule::in([
-                    'ideal', 'credit', 'paysafe'
+                    'ideal', 'credit', 'paysafe', 'bancontact'
                 ])
             ],
         ]);
