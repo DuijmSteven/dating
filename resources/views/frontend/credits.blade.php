@@ -13,11 +13,11 @@
                             >
                                 <div class="table {{ $loop->iteration == 2 ? 'table-rose' : '' }}">
                                     <h6 class="category">{{ $creditpack->name }}</h6>
-                                    <h1 class="block-caption"><small>€</small><span>{{ $creditpack->price/100 }}</span>
+                                    <h1 class="block-caption"><small>€</small><span>{{ number_format($creditpack->price / 100, 2, ',', '.') }}</span>
                                     </h1>
                                     <ul>
                                         <li><b class="package-credits">{{ $creditpack->credits }}</b> {{ trans('credits.credits') }}</li>
-                                        <li><b>&euro;{{ round($creditpack->price/$creditpack->credits / 100, 2) }}</b> {{ trans('credits.per_message') }}
+                                        <li><b>&euro;{{ number_format($creditpack->price/$creditpack->credits / 100, 2, ',', '.') }}</b> {{ trans('credits.per_message') }}
                                         </li>
                                     </ul>
 
@@ -97,11 +97,11 @@
                                 <input name="creditpack_id" type="hidden" value="{{ $creditpacks[1]->id }}">
                             </div>
                             <span class="text-muted"><span
-                                    class="cart-value">&euro;{{ $creditpacks[1]->price/100 }}</span></span>
+                                    class="cart-value">&euro;{{ number_format($creditpacks[1]->price / 100, 2, ',', '.') }}</span></span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between">
                             <span>{{ @trans('credits.total') }}:</span>
-                            <strong><span class="cart-value">&euro;{{ $creditpacks[1]->price/100 }}</span></strong>
+                            <strong><span class="cart-value">&euro;{{ number_format($creditpacks[1]->price / 100, 2, ',', '.') }}</span></strong>
                         </li>
                     </ul>
                     <button class="btn btn-primary btn-lg btn-block" type="submit">{{ @trans('credits.to_checkout') }}</button>
