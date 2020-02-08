@@ -504,18 +504,8 @@
                                    value="{{ old('city') }}"
                                    required
                             >
-                            <input type="hidden"
-                                   name="lat"
-                                   class="js-hiddenLatInput"
-                            >
-                            <input type="hidden"
-                                   name="lng"
-                                   class="js-hiddenLngInput"
-                            >
                             @if ($errors->has('city'))
                                 {!! $errors->first('city', '<small class="form-error">:message</small>') !!}
-{{--                            @elseif ($errors->has('lat') || $errors->has('lat'))--}}
-{{--                                <small class="form-error">{{ @trans('lp1.select_city_again') }}</small>--}}
                             @endif
                         </div>
                     </div>

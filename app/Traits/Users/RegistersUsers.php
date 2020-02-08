@@ -54,21 +54,13 @@ trait RegistersUsers
             throw $exception;
         }
 
-        $lat = $request->all()['lat'];
-        $lng = $request->all()['lng'];
+        $client = new Client();
+        $geocoder = new GeocoderService($client);
 
-        if (!$lat || $lat == 0 || is_null($lat) || !$lng || $lng == 0 || is_null($lng)) {
+        $coordinates = $geocoder->getCoordinatesForAddress($request->all()['city']);
 
-            \Log::debug('User ID: ' . $createdUser->getId() . ' - Registration attempt without coordinates');
-
-            $client = new Client();
-            $geocoder = new GeocoderService($client);
-
-            $coordinates = $geocoder->getCoordinatesForAddress($request->all()['city']);
-
-            $lat = $coordinates['lat'];
-            $lng = $coordinates['lng'];
-        }
+        $lat = $coordinates['lat'];
+        $lng = $coordinates['lng'];
 
         try {
             /** @var UserMeta $userMetaInstance */

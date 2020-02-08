@@ -180,7 +180,7 @@
                             <?= ($peasant->profileImage->visible) ? 'Yes' : 'No' ; ?>
                         </td>
                         <td class="action-buttons">
-                            <form method="POST" action="{!! route('images.destroy', ['imageId' => $peasant->profile_image->id]) !!}">
+                            <form method="POST" action="{!! route('images.destroy', ['imageId' => $peasant->profileImage->id]) !!}">
                                 {!! csrf_field() !!}
                                 {!! method_field('DELETE') !!}
                                 <button type="submit" class="btn btn-danger">Delete</button>
