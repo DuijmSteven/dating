@@ -1,4 +1,5 @@
 {
+<<<<<<< Updated upstream
     "/js/app.js": "/js/app.js?id=b473499ef8b49fb38e37",
     "/css/app.css": "/css/app.css?id=c0883684eaaba38b6d1e",
     "/js/app.js.map": "/js/app.js.map?id=31d9bd80500e4cdaee50",
@@ -7,4 +8,9 @@
     "/js/lp.js.map": "/js/lp.js.map?id=90f8d7df24cd5b14c324",
     "/admin/css/plugins.css": "/admin/css/plugins.css?id=c14806b2d7aee1a1597b",
     "/admin/js/plugins.js": "/admin/js/plugins.js?id=2b26b5e27fc39e7094a4"
+=======
+    "/js/app.js": "/js/app.js?id=241f596df575cd0a615c",
+    "/admin/css/plugins.css": "/admin/css/plugins.css?id=f08b518f1770696398ef",
+    "/admin/js/plugins.js": "/admin/js/plugins.js?id=a33f60342d4cc448b2b7"
+>>>>>>> Stashed changes
 }
