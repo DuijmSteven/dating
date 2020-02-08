@@ -101,6 +101,9 @@ return [
         'city' => [
             'in' => 'Het stad veld moet worden geselecteerd uit de verstrekte lijst',
         ],
+        'city_name' => [
+            'in' => 'Het stad veld moet worden geselecteerd uit de verstrekte lijst',
+        ],
         'user_images.*.max' => 'Elke foto kan niet groter zijn dan :max kB',
         'user_images.*.image' => 'De fotos moeten van het volgende type zijn: jpg, jpeg of png',
         'email' => [
