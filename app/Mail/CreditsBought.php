@@ -14,7 +14,7 @@ class CreditsBought extends Mailable implements ShouldQueue
     use Queueable, SerializesModels;
 
     public $user;
-    public $creditpack;
+    public $creditPack;
 
     /**
      * Create a new message instance.
@@ -23,10 +23,10 @@ class CreditsBought extends Mailable implements ShouldQueue
      */
     public function __construct(
         User $user,
-        Creditpack $creditpack
+        Creditpack $creditPack
     ) {
         $this->user = $user;
-        $this->creditpack = $creditpack;
+        $this->creditPack = $creditPack;
     }
 
     /**
