@@ -2,6 +2,7 @@
 
 namespace App\Traits\Users;
 
+use App\EmailType;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Http\Requests\RegisterRequest;
 use App\Mail\Contact;
@@ -102,6 +103,14 @@ trait RegistersUsers
         }
 
         try {
+            $createdUser->emailTypes()->attach(EmailType::MESSAGE_RECEIVED);
+            $createdUser->save();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
+
+        try {
             /** @var RoleUser $roleUserInstance */
             $roleUserInstance = new RoleUser([
                 'role_id' => \UserConstants::selectableField('role', 'common', 'array_flip')['peasant'],
@@ -115,7 +124,7 @@ trait RegistersUsers
         }
         DB::commit();
 
-        $welcomeEmail = (new    Welcome($createdUser))->onQueue('emails');
+        $welcomeEmail = (new Welcome($createdUser))->onQueue('emails');
 
         Mail::to($createdUser)
             ->queue($welcomeEmail);

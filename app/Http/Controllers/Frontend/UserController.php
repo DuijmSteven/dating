@@ -125,8 +125,6 @@ class UserController extends FrontendController
      */
     public function showEditProfile()
     {
-        //dd($this->authenticatedUser->imagesNotProfile);
-
         $viewData = [
             'user' => $this->authenticatedUser,
             'pageHeading' => 'Edit profile',
