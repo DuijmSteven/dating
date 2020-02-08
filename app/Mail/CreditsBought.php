@@ -13,8 +13,8 @@ class CreditsBought extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public User $user;
-    public Creditpack $creditpack;
+    public $user;
+    public $creditpack;
 
     /**
      * Create a new message instance.
