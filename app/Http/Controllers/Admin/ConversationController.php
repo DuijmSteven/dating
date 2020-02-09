@@ -34,7 +34,7 @@ class ConversationController extends Controller
     /** @var ConversationManager */
     private $conversationManager;
 
-    /**
+    /**••••••••
      * @var StorageManager
      */
     private StorageManager $storageManager;
@@ -70,7 +70,7 @@ class ConversationController extends Controller
         );
 
         $paginator = new LengthAwarePaginator($conversations, $conversationsTotalCount, 20, $page);
-        $paginator->setPath('/backend/conversations');
+        $paginator->setPath('/admin/conversations');
         return view(
             'admin.conversations.overview',
             [

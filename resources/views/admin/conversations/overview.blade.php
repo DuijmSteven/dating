@@ -7,7 +7,7 @@
 
         <div class="col-xs-12">
             <div class="pagination__container text-right">
-                {!! $conversations->render() !!}
+                {!! $conversations->links() !!}
             </div>
         </div>
 
@@ -98,7 +98,7 @@
 
         <div class="col-xs-12">
             <div class="pagination__container text-right">
-                {!! $conversations->render() !!}
+                {!! $conversations->links() !!}
             </div>
         </div>
 
