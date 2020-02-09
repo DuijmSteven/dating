@@ -90,10 +90,8 @@ class ConversationController extends Controller
     public function show(int $conversationId)
     {
         /** @var Conversation $conversation */
-        $conversation = Conversation::with(['userA', 'userB', 'messages'])->findOrFail($conversationId);
+        $conversation = Conversation::with(['userA', 'userB', 'messages'])->withTrashed()->find($conversationId);
         $conversation = $this->prepareConversationObject($conversation);
-
-        //dd($conversation);
 
         [$userANotes, $userBNotes] = $this->getParticipantNotes($conversation);
 
