@@ -50,7 +50,7 @@ class PaymentController extends FrontendController
             'paymentMethod' => [
                 'required',
                 Rule::in([
-                    'ideal', 'credit', 'paysafe'
+                    'ideal', 'credit', 'paysafe', 'bancontact'
                 ])
             ],
         ]);
@@ -97,7 +97,7 @@ class PaymentController extends FrontendController
         $check = $this->paymentProvider->paymentCheck($paymentMethod, $transactionId);
 
         if($check['status']) {
-            //current user
+            //Get current user
             $user = \Auth::user();
             $creditsBoughtEmail = (new CreditsBought($user, $creditPack))
                 ->onQueue('emails');

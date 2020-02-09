@@ -51,12 +51,18 @@ interface PaymentProvider
     public function paysafePayment(float $amount, string $description);
 
     /**
-     * @param string $bank
      * @param float $amount
      * @param string $description
      * @return mixed
      */
     public function creditPayment(float $amount, string $description);
+
+    /**
+     * @param  float  $amount
+     * @param  string  $description
+     * @return mixed
+     */
+    public function bancontactPayment(float $amount, string $description);
 
     /**
      * @param  string  $paymentMethod

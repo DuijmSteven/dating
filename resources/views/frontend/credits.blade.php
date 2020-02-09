@@ -76,6 +76,13 @@
                             </label>
                             <span class="paymentMethodLogo"><img src="{{ asset('img/icons/credit-cards.png') }}"/></span>
                         </li>--}}
+                        <li class="list-group-item d-flex justify-content-between" style="margin-bottom: 10px">
+                            <label class="paymentMethodsLabel">
+                                <input type="radio" name="paymentMethod" value="bancontact">
+                                <span style="margin-left: 5px">Bancontact</span>
+                            </label>
+                            <span class="paymentMethodLogo"><img src="{{ asset('img/icons/bancontact_logo.svg') }}"/></span>
+                        </li>
                         <li class="list-group-item d-flex justify-content-between">
                             <label class="paymentMethodsLabel">
                                 <input type="radio" name="paymentMethod" value="paysafe">
