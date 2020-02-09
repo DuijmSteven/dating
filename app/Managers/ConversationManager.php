@@ -215,7 +215,7 @@ class ConversationManager
                               JOIN user_meta user_b_meta ON user_b_meta.user_id = c.user_b_id';
         }
 
-        $query = 'SELECT  c.id as conversation_id, c.created_at as conversation_created_at,
+        $query = 'SELECT  c.id as conversation_id, c.created_at as conversation_created_at, c.deleted_at as conversation_deleted_at,
                           m.id as last_message_id, m.created_at as last_message_created_at, m.body as last_message_body,
                           m.has_attachment as last_message_has_attachment, m.type as last_message_type,
                           m.sender_id as last_message_sender_id, m.recipient_id as last_message_recipient_id,
@@ -636,6 +636,7 @@ class ConversationManager
     {
         $conversation['id'] = $result->conversation_id;
         $conversation['created_at'] = new Carbon($result->conversation_created_at);
+        $conversation['deleted_at'] = $result->conversation_deleted_at ? new Carbon($result->conversation_created_at) : null;
     }
 
     /**

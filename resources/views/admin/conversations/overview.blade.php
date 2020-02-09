@@ -35,7 +35,13 @@
                                     $userB = $conversation['user_b'];
                                 @endphp
                                 <tr>
-                                    <td>{!! $conversation['id'] !!}</td>
+                                    <td>
+                                        {!! $conversation['id'] !!}
+                                        @if($conversation['deleted_at'])
+                                            <br>
+                                            <span style="color: red; font-weight: bold">DELETED</span>
+                                        @endif
+                                    </td>
                                     <td>
                                         <a href="{{ route('operator-platform.conversations.show', ['id' => $conversation['id']]) }}">
                                             <img width="80"
