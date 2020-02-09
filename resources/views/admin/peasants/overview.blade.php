@@ -25,6 +25,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Profile image</th>
+                            <th>Credits</th>
                             <th>User data</th>
                             <th>Meta data</th>
                             <th>Actions</th>
@@ -40,6 +41,7 @@
                                              alt="">
                                     </a>
                                 </td>
+                                <td>{{ $peasant->account->getCredits() }}</td>
                                 <td>
                                     <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $peasant->username !!} <br>
                                     <strong>{!! @trans('user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($peasant->meta->dob) !!} <br>

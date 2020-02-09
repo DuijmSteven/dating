@@ -32,9 +32,9 @@ class PeasantController extends Controller
      */
     public function index()
     {
-        $peasants = User::with(['meta', 'roles', 'profileImage'])->whereHas('roles', function ($query) {
+        $peasants = User::with(['meta', 'account', 'roles', 'profileImage'])->whereHas('roles', function ($query) {
             $query->where('name', 'peasant');
-        })->paginate(10);
+        })->paginate(20);
 
         return view(
             'admin.peasants.overview',
