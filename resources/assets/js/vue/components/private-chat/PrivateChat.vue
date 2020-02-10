@@ -427,6 +427,7 @@
                     }
 
                     this.$root.$emit('updateUserCredits');
+                    this.$root.$emit('messageSent');
 
                     this.fetchUserConversations();
                 }).catch((error) => {

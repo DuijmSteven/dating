@@ -11,11 +11,13 @@
 
         <div class="PrivateChatItem__textarea__container">
             <textarea
-                id="PrivateChatItem__textarea" class="PrivateChatItem__textarea JS--PrivateChatItem__textarea"
+                id="PrivateChatItem__textarea"
+                class="PrivateChatItem__textarea JS--PrivateChatItem__textarea"
+                maxlength="1000"
                 :placeholder="chatTranslations['your_message']"
-                v-model.trim="text"
                 v-on:keyup.enter="sendMessage"
                 @focus="chatFocused()"
+                v-model="text"
             ></textarea>
 
             <div class="PrivateChatItem__attachmentIcon">
@@ -44,15 +46,11 @@
                 v-if="sendingMessage"
                 class="loader"
             ></div>
+
+            <div class="PrivateChatItem__messageCounter">
+                <span class="currentCount">{{ characterCount }}</span>/<span class="maxCharacters">1000</span>
+            </div>
         </div>
-        <!--        <div class="PrivateChatItem__textarea__buttons">
-                    <label style="margin-bottom: 0; cursor: pointer">
-                        <i class="material-icons">attach_file</i>
-                        <form enctype="multipart/form-data" @change="previewImage($event)">
-                            <input type="file" accept=".png,.jpg,.jpeg" id="attachment" name="attachment" style="display: none;">
-                        </form>
-                    </label>
-                </div>-->
     </div>
 </template>
 
@@ -76,6 +74,17 @@
         },
 
         mounted: function () {
+            this.$root.$on('messageSent', () => {
+                this.text = '';
+                this.file = null;
+                this.url = null;
+            })
+        },
+
+        computed: {
+            characterCount() {
+                return this.text.length;
+            }
         },
 
         methods: {
@@ -89,10 +98,6 @@
                         text: this.text,
                         attachment: this.file != null ? this.file : null
                     });
-
-                    this.text = '';
-                    this.file = null;
-                    this.url = null;
                 }
 
                 if ($('.PrivateChatItem--' + this.index).hasClass('PrivateChatItem--showingPreview')) {

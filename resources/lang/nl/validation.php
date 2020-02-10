@@ -112,7 +112,10 @@ return [
         'password' => [
             'confirmed' => 'Het wachtwoord komt niet overeen. Probeer het nog eens.'
         ],
-        'date' => 'Dit is geen geldige datum.'
+        'date' => 'Dit is geen geldige datum.',
+        'message' => [
+            'max' => 'Het bericht mag niet groter zijn dan :max characters.'
+        ],
     ],
 
     /*
