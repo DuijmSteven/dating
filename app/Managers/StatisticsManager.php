@@ -146,7 +146,7 @@ class StatisticsManager
         })->whereHas('payments', function($query) {
             $query->orderBy('created_at', 'desc')->take(1);
         })->get()->filter(function ($user) use ($creditpackId) {
-            return $user->payments[0]->getCreditpackId() == $creditpackId;
+            return $user->payments[count($user->payments) - 1]->getCreditpackId() == $creditpackId;
         })->count();
     }
 }
