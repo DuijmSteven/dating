@@ -2,7 +2,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ isset ($title) ? $title : 'Title'  }}</title>
-    <meta name="description" content="Dating app">
+    <meta name="description" content="Op zoek naar een flirt, casual date of losse sekscontacten? Maak een account aan op de beste gratis sexdating site en kom in contact via de unieke Live Chat!">
     <meta name="author" content="Dating">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @if(App::environment('production'))
