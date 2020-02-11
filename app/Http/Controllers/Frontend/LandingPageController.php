@@ -72,7 +72,7 @@ class LandingPageController extends FrontendController
         return view(
             'frontend.landing-pages.1',
             [
-                'title' => config('app.name'),
+                'title' => 'De beste datingsite voor sex dating | ' . config('app.name'),
                 'users' => $users,
                 'carbonNow' => Carbon::now(),
                 'testimonials' => $testimonials
