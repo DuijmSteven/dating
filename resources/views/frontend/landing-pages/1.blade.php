@@ -436,7 +436,7 @@
             </div>
         </div>
         <div class="container">
-            <h1>{{ @trans('lp1.heading') }}</h1>
+            <h1 style="text-transform: none">{{ @trans('lp1.heading') }}</h1>
         </div>
     </div>
     <div class="form-container hidden">
