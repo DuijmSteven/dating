@@ -282,6 +282,7 @@ class ConversationController extends Controller
     public function store(MessageCreateRequest $messageCreateRequest)
     {
         $messageData = $messageCreateRequest->all();
+        $messageData['operator_id'] = $this->authenticatedUser->getId();
 
         try {
             $conversationMessage = $this->conversationManager->createMessage($messageData);

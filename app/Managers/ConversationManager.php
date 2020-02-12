@@ -65,6 +65,7 @@ class ConversationManager
                 'recipient_id' => $messageData['recipient_id'],
                 'body' => $messageData['message'],
                 'has_attachment' => $hasAttachment,
+                'operator_id' => isset($messageData['operator_id']) ? $messageData['operator_id'] : null
             ]);
 
             $messageInstance->save();

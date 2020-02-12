@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'heading' => 'ONTMOET JE VOLGENDE AFSPRAAKJE HIER!',
+    'heading' => 'Tijd Voor Live Chat Sex Dating!',
     'form' => [
         'i_am' => 'Ik ben een',
         'man_looking_for_woman' => 'Man op zoek naar een vrouw',

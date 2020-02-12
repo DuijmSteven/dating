@@ -15,6 +15,7 @@ class ConversationMessage extends TimeZonedModel
 
     protected $fillable = [
         'conversation_id',
+        'operator_id',
         'sender_id',
         'recipient_id',
         'body',
