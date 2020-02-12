@@ -159,7 +159,7 @@ class ConversationManager
             $types
         );
 
-        $query = 'SELECT c.id as conversation_id
+        $query = 'SELECT DISTINCT (c.id) as conversation_id
                     FROM conversations as c
                     JOIN conversation_messages cm ON cm.conversation_id = c.id
                     JOIN conversation_messages lm
@@ -178,7 +178,7 @@ class ConversationManager
                     ' . $roleQuery .
                     $typesQuery .
                     $ageQuery .
-                    ' ORDER BY c.created_at DESC ';
+                    ' ORDER BY c.id DESC ';
 
         if ($limit) {
             $query .= ' LIMIT ' . $limit . ' ';
@@ -256,7 +256,7 @@ class ConversationManager
                               LIMIT 1
                           )
                     WHERE c.id IN (' . implode(',', $conversationIds) . ')
-                    ORDER BY c.created_at DESC ';
+                    ORDER BY c.id DESC ';
 
         $results = \DB::select($query);
 
@@ -306,7 +306,7 @@ class ConversationManager
             $types
         );
 
-        $query = 'SELECT count(c.id) as total
+        $query = 'SELECT count(DISTINCT (c.id)) as total
                     FROM conversations as c
                     JOIN conversation_messages cm ON cm.conversation_id = c.id
                     JOIN conversation_messages lm

@@ -99,10 +99,10 @@ return [
 
     'custom' => [
         'city' => [
-            'in' => 'Het stad veld moet worden geselecteerd uit de verstrekte lijst',
+            'in' => 'Selecteer de gewenste stad uit de lijst',
         ],
         'city_name' => [
-            'in' => 'Het stad veld moet worden geselecteerd uit de verstrekte lijst',
+            'in' => 'Selecteer de gewenste stad uit de lijst',
         ],
         'user_images.*.max' => 'Elke foto kan niet groter zijn dan :max kB',
         'user_images.*.image' => 'De fotos moeten van het volgende type zijn: jpg, jpeg of png',
