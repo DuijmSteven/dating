@@ -33,7 +33,7 @@ class RegisterRequest extends Request
             'username' => 'required|max:50|string|unique:users',
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed|min:6',
-            'dob' => 'date_format:d-m-Y|required|before:' . Carbon::now()->subYears(18)->format('d-m-Y'),
+            'dob' => 'date_format:d-m-Y|required|before:' . Carbon::now()->subYears(18)->format('d-m-Y') . '|after:' . Carbon::now()->subYears(100)->format('d-m-Y'),
             'city' => 'required|in:' . implode(',', UserConstants::$cities['nl']),
         ];
     }

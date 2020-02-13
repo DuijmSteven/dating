@@ -116,6 +116,10 @@ return [
         'message' => [
             'max' => 'Het bericht mag niet groter zijn dan :max characters.'
         ],
+        'dob' => [
+            'before' => 'Je moet 18+ zijn om deze website te gebruiken',
+            'after' => 'Je moet 120- zijn om deze website te gebruiken!',
+        ]
     ],
 
     /*

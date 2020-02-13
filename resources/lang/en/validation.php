@@ -105,7 +105,21 @@ return [
             'in' => 'The city must be selected from the provided list of cities',
         ],
         'user_images.*.max' => 'Each image cannot be larger than :max kB',
-        'user_images.*.image' => 'The files must be images of the types jpg, jpeg or png'
+        'user_images.*.image' => 'The files must be images of the types jpg, jpeg or png',
+        'email' => [
+            'unique' => 'This email address is already taken'
+        ],
+        'password' => [
+            'confirmed' => 'The passwords do not match. Please try again'
+        ],
+        'date' => 'This is not a valid date',
+        'message' => [
+            'max' => 'The message cannot be larger than :max characters'
+        ],
+        'dob' => [
+            'before' => 'You must be older that 18 years old in order to register',
+            'after' => 'You must be younger that 120 years old in order to register!',
+        ]
     ],
 
     /*

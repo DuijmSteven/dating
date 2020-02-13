@@ -95,7 +95,7 @@ $(window).on('load', function () {
     date.setFullYear( date.getFullYear() - 18 );
     let formatted = ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2) + '-' + date.getFullYear();
 
-    console.log(formatted);
+    var firstOpen = true;
 
     $("#datepicker_dob").datepicker({
         format: 'dd-mm-yyyy',
@@ -103,18 +103,17 @@ $(window).on('load', function () {
         autoclose: 1,
         startView: 2,
         minView: 2,
-        startDate : new Date('01-01-1920'),
-        endDate : new Date(formatted),
+        useCurrent: false,
+        defaultViewDate: new Date(1990, 11, 24)
+        // startDate : new Date('01-01-1920'),
+        // endDate : new Date(formatted),
     });
-
-
 
     if ($('.JS--autoCompleteCites').length > 0) {
         // Auto-completes Dutch cities in bot creation view text field
         $.getJSON(DP.baseUrl + '/api/cities/nl')
             .done(function (response) {
                 cityList = response.cities;
-
 
                 $('.JS--autoCompleteCites').autocomplete({
                     source: response.cities,

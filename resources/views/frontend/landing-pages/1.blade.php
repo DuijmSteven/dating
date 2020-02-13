@@ -73,11 +73,15 @@
         margin-bottom: 10rem;
     }
 
-    .welcome-container h3, .recent-container h3, .testimonials-container h3 {
+    .welcome-container h3, .recent-container h3, .testimonials-container h3, .secondWelcome h3 {
         font-family: comfortaa, sans-serif;
         font-size: 3.125rem;
         text-transform: uppercase;
         color: #2e3142;
+    }
+
+    p {
+        text-align: justify;
     }
 
     /*.welcome-container p {*/
@@ -492,8 +496,8 @@
                             >
                             @if ($errors->has('email'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
+                                    <strong>{{ $errors->first('email') }}</strong>
+                                </span>
                             @endif
                         </div>
                     </div>
@@ -518,10 +522,6 @@
                             <label for="password">{{ @trans('lp1.form.dob') }}</label>
                             <div
                                 class="input-group date dateOfBirthGroup"
-{{--                                data-provide="datepicker"--}}
-{{--                                data-date-format="dd-mm-yyyy"--}}
-{{--                                data-date-start-view="decade"--}}
-{{--                                data-date-start-date="01-01-1900"--}}
                             >
                                 <input id="datepicker_dob" type="text" class="form-control" name="dob" required value="{{ old('dob') }}">
                                 <div class="input-group-addon">
@@ -530,6 +530,9 @@
                                     </i>
                                 </div>
                             </div>
+                            @if ($errors->has('dob'))
+                                {!! $errors->first('dob', '<small class="form-error">:message</small>') !!}
+                            @endif
                         </div>
                     </div>
                     <div class="form-row">
@@ -700,6 +703,22 @@
             @endforeach
         </div>
     </div>
+
+    <div class="container text-center secondWelcome" style="margin-bottom: 10rem">
+        <h3 style="margin-bottom: 40px">{{ @trans('lp1.online_sex_dating') }}</h3>
+        <div class="row mt-5">
+           <p>
+               {!! @trans(
+                'lp1.second_welcome',
+                [
+                    'articlesRoute' => route('articles.overview'),
+                ]
+            )
+        !!}
+           </p>
+        </div>
+    </div>
+
     <div class="container testimonials-container text-center">
         <h3>{{ @trans('lp1.success_stories') }}</h3>
         <div id="carouselExampleControls" class="carousel slide mt-5">
