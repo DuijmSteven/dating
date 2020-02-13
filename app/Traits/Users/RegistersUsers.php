@@ -82,10 +82,12 @@ trait RegistersUsers
         }
 
         try {
+            $amountOfFreeCredits = 2;
+
             /** @var UserAccount $userAccountInstance */
             $userAccountInstance = new UserAccount([
                 'user_id' => $createdUser->id,
-                'credits' => 1
+                'credits' => $amountOfFreeCredits
             ]);
 
             $userAccountInstance->save();
