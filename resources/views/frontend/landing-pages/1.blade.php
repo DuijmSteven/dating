@@ -413,6 +413,10 @@
     .datepicker {
         font-size: 1.7rem;
     }
+
+    .screenCapturePreview {
+        box-shadow: 6px 0 28px rgba(0,0,0,0.3);
+    }
 </style>
 <body class="landingPage">
 <header>
@@ -429,7 +433,7 @@
 
             </div>
             <div class="col-md-6 col-sm-12">
-                <video class="img-fluid" playsinline="" autoplay="" muted="" loop="" no-controls="" style="max-width: 80%">
+                <video class="img-fluid screenCapturePreview" playsinline="" autoplay="" muted="" loop="" no-controls="" style="max-width: 80%">
                     <source type="video/mp4" src="{{ asset('img/lp/altijdSex-preview.mp4') }}">
                     Your browser does not support the video tag.
                 </video>
