@@ -666,20 +666,20 @@
                     how_to_reg
                 </i>
                 <h4>{{ @trans('lp1.usps.free_access.title') }}</h4>
-                <p>{{ @trans('lp1.usps.free_access.text') }}</p>
+                <p style="text-align: center">{{ @trans('lp1.usps.free_access.text') }}</p>
             </div>
             <div class="col-md-4 col-sm-12">
                 <i class="material-icons">
                     chat
                 </i>                <h4>{{ @trans('lp1.usps.live_chat.title') }}</h4>
-                <p>{{ @trans('lp1.usps.live_chat.text') }}</p>
+                <p style="text-align: center">{{ @trans('lp1.usps.live_chat.text') }}</p>
             </div>
             <div class="col-md-4 col-sm-12">
                 <i class="material-icons">
                     vpn_lock
                 </i>
                 <h4>{{ @trans('lp1.usps.privacy_anonymity.title') }}</h4>
-                <p>{{ @trans('lp1.usps.privacy_anonymity.text') }}</p>
+                <p style="text-align: center">{{ @trans('lp1.usps.privacy_anonymity.text') }}</p>
             </div>
         </div>
     </div>
@@ -696,7 +696,7 @@
                         >
                     </a>
                     <h5 class="small" style="font-size: 1.9rem; width: 170px; overflow: hidden; text-overflow: ellipsis; margin: 10px auto 5px auto">{{ $user->username }}</h5>
-                    <p class="offset-0 user-info" style="line-height: 14px">
+                    <p class="offset-0 user-info" style="line-height: 14px; text-align: center">
                         <small class="text-muted" style="font-size: 1.4rem">{{ @trans('lp1.age') }}: {{ $user->meta->dob->diffInYears($carbonNow) }}, {{ $user->meta->city }}</small>
                     </p>
                 </div>
@@ -706,7 +706,7 @@
 
     <div class="container text-center secondWelcome" style="margin-bottom: 10rem">
         <h3 style="margin-bottom: 40px">{{ @trans('lp1.online_sex_dating') }}</h3>
-        <div class="row mt-5">
+        <div class="mt-5">
            <p>
                {!! @trans(
                 'lp1.second_welcome',
