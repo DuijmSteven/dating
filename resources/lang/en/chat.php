@@ -12,5 +12,6 @@ return [
     'no' => 'No',
     'your_message' => 'Your message',
     'delete_conversation' => 'Delete conversation',
-    'delete_conversation_confirm' => 'Are you sure you want to delete this conversation?'
+    'delete_conversation_confirm' => 'Are you sure you want to delete this conversation?',
+    'no_conversations' => 'You have no active conversations yet. Once you start chatting all your conversations will be visible here!'
 ];

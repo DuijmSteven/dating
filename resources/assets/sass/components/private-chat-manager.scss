@@ -8,6 +8,14 @@
 
     box-shadow: 0 0 24px rgba(0, 0, 0, 0.2);
 
+    &__body {
+        &__empty {
+            background-color: white;
+            padding: 15px 15px;
+            font-size: 1.6rem;
+        }
+    }
+
     &__head {
         cursor: pointer;
         border-radius: 2px 2px 0 0;

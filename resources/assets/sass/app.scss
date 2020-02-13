@@ -61,5 +61,12 @@
 .ui-autocomplete.ui-widget.ui-widget-content {
   max-height: 600px;
   overflow: scroll;
+  list-style: none;
+  padding-left: 15px;
+
+  li {
+    font-size: 1.8rem;
+    color: #555;
+  }
 }
 
