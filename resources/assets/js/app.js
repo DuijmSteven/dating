@@ -49,11 +49,20 @@ require('./vue/vue-js-app');
  */
 require("jquery-ui/ui/widgets/datepicker");
 require("jquery-ui/ui/widgets/autocomplete");
+require('disableautofill');
 
 let cityList;
 
 $(window).on('load', function () {
     require('./global_helpers');
+
+    if ($('#JS--SearchBarForm')) {
+        $('#JS--SearchBarForm').disableAutoFill();
+    }
+
+    if ($('#JS--EditProfileUserDetailsForm')) {
+        $('#JS--EditProfileUserDetailsForm').disableAutoFill();
+    }
 
     // this will disable right-click on all images
     $("img").on("contextmenu",function(e){

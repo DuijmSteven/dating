@@ -1,6 +1,7 @@
 require('./bootstrap');
 require('bootstrap-datepicker');
-require("jquery-ui/ui/widgets/autocomplete");
+require('jquery-ui/ui/widgets/autocomplete');
+require('disableautofill');
 
 import isUndefined from "admin-lte/bower_components/moment/src/lib/utils/is-undefined";
 
@@ -27,13 +28,6 @@ function getCoordinatesAndFillInputs() {
 }
 
 window.addEventListener('load', function () {
-    // var allimages = document.getElementsByTagName('img');
-    // for (var i = 0; i < allimages.length; i++) {
-    //     if (allimages[i].getAttribute('data-src')) {
-    //         allimages[i].setAttribute('src', allimages[i].getAttribute('data-src'));
-    //     }
-    // }
-
     setTimeout(() => {
         $('.roundImageWrapper').each((index, element) => {
             fitRoundImageToContainer($(element));
@@ -45,6 +39,8 @@ window.addEventListener('load', function () {
 
 $(window).on('load', function () {
     require('./global_helpers');
+
+    $('#JS--registrationForm').disableAutoFill();
 
     // this will disable right-click on all images
     $("img").on("contextmenu",function(e){

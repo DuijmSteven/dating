@@ -1,5 +1,5 @@
 <div class="SearchBar JS--SearchBar hidden {{ count($errors) ? 'with-errors' : '' }}">
-    <form method="POST" action="{{ route('users.search.form.get') }}">
+    <form method="POST" action="{{ route('users.search.form.get') }}" id="JS--SearchBarForm">
         {{ csrf_field() }}
         <div class="form-group city {{ $errors->has('city_name') ? ' has-error' : '' }}">
             <label for="city_name">{!! @trans('user_constants.city') !!}</label>

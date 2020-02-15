@@ -33,6 +33,7 @@
     "webpack-dev-server": "^3.10.1"
   },
   "dependencies": {
+    "disableautofill": "^1.2.8",
     "jquery-ui": "^1.12.1",
     "lodash.mergewith": "^4.6.2",
     "moment": "^2.24.0",
