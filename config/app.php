@@ -182,7 +182,6 @@ return [
          * Plugins
          */
         Kim\Activity\ActivityServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         GrahamCampbell\Markdown\MarkdownServiceProvider::class,
         TPWeb\TargetPay\TargetPayServiceProvider::class,
