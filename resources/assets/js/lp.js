@@ -65,12 +65,12 @@ $(window).on('load', function () {
         Cookies.set("lpCookiesAccepted", 'true');
     });
 
-    if (formSelected === 'register') {
-        $('.form-container').removeClass('hidden');
-        $('#JS--registrationForm').toggle('fast');
-    } else {
+    if (formSelected === 'login') {
         $('.form-container').removeClass('hidden');
         $('#JS--loginForm').toggle('fast');
+    } else {
+        $('.form-container').removeClass('hidden');
+        $('#JS--registrationForm').toggle('fast');
     }
 
     $('#JS--registerButton').click(function(){

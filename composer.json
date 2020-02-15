@@ -79,7 +79,8 @@
         "laravel": {
             "dont-discover": [
                 "laravel/dusk",
-                "barryvdh/laravel-ide-helper"
+                "barryvdh/laravel-ide-helper",
+                "barryvdh/laravel-debugbar"
             ]
         }
     }
