@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-12 text-center" style="margin: 30% 20px 30% 20px">
             @if($status == true)
-                <h1 style="font-size: 60px; font-weight: 700;">{{ @trans('credits_bought_feedback.thanks') }}</h1>
+                <h1 id="analytics--successfulPayment" style="font-size: 60px; font-weight: 700;">{{ @trans('credits_bought_feedback.thanks') }}</h1>
                 <i class="fa fa-check" style="font-size: 10rem; color: #2ab27b"></i>
                 <h4>{{ @trans('credits_bought_feedback.success_message') }}</h4>
                 <a href="{{ route('home') }}" class="btn btn-success btn-lg btn-block" style="margin-top: 30px">
