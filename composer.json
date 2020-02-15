@@ -10,7 +10,6 @@
         "kim/activity": "^1.1",
         "league/flysystem-aws-s3-v3": "^1.0",
         "predis/predis": "^1.1",
-        "barryvdh/laravel-debugbar": "^3.1.5",
         "fzaninotto/faker": "~1.4",
         "intervention/image": "^2.3",
         "graham-campbell/markdown": "^10.2",
@@ -36,6 +35,7 @@
         "nunomaduro/collision": "^3.0",
         "squizlabs/php_codesniffer": "^2.7",
         "barryvdh/laravel-ide-helper": "^2.3.2",
+        "barryvdh/laravel-debugbar": "^3.1.5",
         "laravel/dusk": "^5.9"
     },
     "autoload": {
@@ -69,8 +69,6 @@
         ],
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-            "php artisan ide-helper:generate",
-            "php artisan ide-helper:meta",
             "php artisan optimize"
         ]
     },
