@@ -21,6 +21,14 @@
     color: map_get($button, font-color);
     text-align: center;
 
+    &.whiteFont {
+        color: $white;
+
+        &:hover {
+            color: $white;
+        }
+    }
+
     &.Button-fw {
         width: 100%;
     }

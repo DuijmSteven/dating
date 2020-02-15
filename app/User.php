@@ -223,6 +223,19 @@ class User extends Authenticatable
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function milestones()
+    {
+        return $this->belongsToMany('App\Milestone');
+    }
+
+    public function hasMilestone(int $milestoneId)
+    {
+        return in_array($milestoneId, $this->milestones->pluck('id')->toArray());
+    }
+
+    /**
      * Get the user that owns the meta.
      */
     public function emailTypes()

@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Request;
 use App\Managers\UserManager;
+use App\Milestone;
+use App\MilestoneUser;
+use App\User;
 use Illuminate\Http\JsonResponse;
 use Kim\Activity\Activity;
 
@@ -65,6 +68,25 @@ class UserController
     public function getOnlineUserIds()
     {
         return JsonResponse::create(Activity::users(1)->pluck('user_id')->toArray());
+    }
+
+    /**
+     * @param int $userId
+     * @return JsonResponse
+     */
+    public function acceptedWelcomeMessageMilestone(int $userId)
+    {
+        /** @var User $user */
+        $user = User::find($userId);
+
+        $acceptedWelcomeMessageMilestone = MilestoneUser::where('user_id', $userId)
+            ->where('milestone_id', Milestone::ACCEPTED_WELCOME_MESSAGE)->first();
+
+        if (!$acceptedWelcomeMessageMilestone) {
+            $user->milestones()->attach(Milestone::ACCEPTED_WELCOME_MESSAGE);
+        }
+
+        return JsonResponse::create('success');
     }
 
 }

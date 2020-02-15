@@ -119,6 +119,7 @@ return [
         'dob' => [
             'before' => 'Je moet 18+ zijn om deze website te gebruiken',
             'after' => 'Je moet 120- zijn om deze website te gebruiken!',
+            'format' => 'De geboortedatum moet overeenkomen met het formaat dd-mm-yyyy',
         ]
     ],
 

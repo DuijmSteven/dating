@@ -65,6 +65,15 @@ $(window).on('load', function () {
         e.preventDefault()
     });
 
+    if ($('.welcomeModal').length > 0) {
+        $('.welcomeModal').modal('show');
+
+        setTimeout(() => {
+            $.get(DP.baseUrl + '/api/users/' + DP.authenticatedUser.id + '/milestones/accepted-welcome-message', function( data ) {
+            });
+        }, 1000);
+    }
+
     if ($('.JS--ScrollTopButton').length > 0) {
         $('.JS--ScrollTopButton').click(() => {
             $('html, body').animate({scrollTop:0}, 500, 'swing');

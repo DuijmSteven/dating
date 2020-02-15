@@ -149,6 +149,19 @@ class UserController extends FrontendController
         );
     }
 
+    public function milestoneReached(Request $request)
+    {
+        $userId = $request->get('user_id');
+        $milestoneId = $request->get('milestone_id');
+        /** @var User $user */
+        $user = $this->user->find($userId);
+
+        $user->milestones()->attach($milestoneId);
+        $user->save();
+
+        return redirect()->back();
+    }
+
     /**
      * @param PeasantUpdateRequest $peasantUpdateRequest
      * @return \Illuminate\Http\RedirectResponse

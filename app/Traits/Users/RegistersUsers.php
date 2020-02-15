@@ -7,6 +7,7 @@ use App\Helpers\ApplicationConstants\UserConstants;
 use App\Http\Requests\RegisterRequest;
 use App\Mail\Contact;
 use App\Mail\Welcome;
+use App\Milestone;
 use App\Services\GeocoderService;
 use App\User;
 use App\UserAccount;

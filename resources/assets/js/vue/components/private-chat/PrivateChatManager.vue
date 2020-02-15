@@ -180,13 +180,15 @@
                     response => {
                         this.conversationManagerState = response;
 
-                        this.isMaximized = this.conversationManagerState.data === 1;
+                        if (!(this.$mq === 'xs' || this.$mq === 'sm')) {
+                            this.isMaximized = this.conversationManagerState.data === 1;
+
+                            if (this.isMaximized) {
+                                $('.PrivateChatManager').addClass('maximized');
+                            }
+                        }
 
                         this.fullyLoaded = true;
-
-                        if (this.isMaximized) {
-                            $('.PrivateChatManager').addClass('maximized');
-                        }
                     }
                 );
             },
@@ -260,6 +262,19 @@
             this.$root.$on('fetchUserConversations', () => {
                 this.fetchUserConversations(true);
             });
+
+            if (this.$mq === 'xs' || this.$mq === 'sm') {
+                console.log('mobile');
+                $('#PrivateChatManager__body').slideToggle('fast');
+                this.isMaximized = !this.isMaximized;
+
+                if (['xs', 'sm'].includes(this.$mq) && this.isMaximized) {
+                    $('body').css('overflow-y', 'hidden');
+                } else {
+                    $('body').css('overflow-y', 'scroll');
+                }
+
+            }
         }
     }
 </script>

@@ -53,6 +53,9 @@ Route::post('/', 'Auth\RegisterController@register')
 Route::get('deactivated', 'Frontend\UserController@showDeactivated')
     ->name('users.deactivated.get');
 
+Route::post('milestone-reached', 'Frontend\UserController@milestoneReached')
+    ->name('users.milestone-reached');
+
 /* User routes */
 Route::group([
     'prefix' => 'users',

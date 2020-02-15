@@ -2,4 +2,5 @@
 
 return [
     'cancel' => 'Annuleren',
+    'close' => 'Sluiten',
 ];

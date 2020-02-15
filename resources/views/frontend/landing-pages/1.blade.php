@@ -513,7 +513,9 @@
                                    required
                             >
                             @if ($errors->has('city'))
-                                {!! $errors->first('city', '<small class="form-error">:message</small>') !!}
+                                <span class="help-block">
+                                    <strong>{!! $errors->first('city', ':message') !!}</strong>
+                                </span>
                             @endif
                         </div>
                     </div>
@@ -531,7 +533,9 @@
                                 </div>
                             </div>
                             @if ($errors->has('dob'))
-                                {!! $errors->first('dob', '<small class="form-error">:message</small>') !!}
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('dob', ':message') }}</strong>
+                                </span>
                             @endif
                         </div>
                     </div>
@@ -542,8 +546,8 @@
                                    placeholder="{{ @trans('lp1.form.password') }}" required>
                             @if ($errors->has('password'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
+                                    <strong>{{ $errors->first('password') }}</strong>
+                                </span>
                             @endif
                         </div>
                     </div>

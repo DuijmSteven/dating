@@ -27,6 +27,9 @@ Route::group([
 
     Route::get('{userId}/credits', 'Api\UserController@getUserCredits')
         ->name('users.get-user-credits');
+
+    Route::get('{userId}/milestones/accepted-welcome-message', 'Api\UserController@acceptedWelcomeMessageMilestone')
+        ->name('users.get-user-credits');
 });
 
 
