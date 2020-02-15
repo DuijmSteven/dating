@@ -19,7 +19,7 @@ deploy_production:
     - ssh opalampo@178.62.249.225 "cd /var/www/dating &&
       git checkout master &&
       git pull origin master &&
-      composer install --no-interaction --prefer-dist --optimize-autoloader &&
+      composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader &&
       php artisan migrate --force &&
       php artisan config:cache &&
       php artisan route:cache &&
