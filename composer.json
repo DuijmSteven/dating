@@ -76,5 +76,13 @@
     },
     "config": {
         "preferred-install": "dist"
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": [
+                "laravel/dusk",
+                "barryvdh/laravel-ide-helper"
+            ]
+        }
     }
 }
