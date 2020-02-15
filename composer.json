@@ -24,7 +24,8 @@
         "ext-SimpleXML": "*",
         "spatie/geocoder": "^3.6",
         "digiwallet/transaction-sdk": "^1.0",
-        "yoeunes/toastr": "^1.2"
+        "yoeunes/toastr": "^1.2",
+        "symfony/process": "^4.4.4"
     },
     "require-dev": {
         "mockery/mockery": "^1.0",
