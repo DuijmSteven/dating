@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,7 +20,7 @@ class AppServiceProvider extends ServiceProvider
     {
         if (config('app.env') == 'local') {
             \DB::enableQueryLog();
-            $this->app->register(IdeHelperServiceProvider::class);
+            $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
             $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
         }
 
