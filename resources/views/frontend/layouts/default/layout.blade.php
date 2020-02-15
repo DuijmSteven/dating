@@ -59,7 +59,7 @@
     </div>
 </div>
 
-@if(!$authenticatedUser->hasMilestone(\App\Milestone::ACCEPTED_WELCOME_MESSAGE))
+@if(isset($authenticatedUser) && !$authenticatedUser->hasMilestone(\App\Milestone::ACCEPTED_WELCOME_MESSAGE))
 <div id="analytics--welcomeModal" class="modal welcomeModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document" style="position: relative; z-index: 10000">
         <div class="modal-content">
