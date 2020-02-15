@@ -35,7 +35,8 @@
         "symfony/dom-crawler": "3.1.*",
         "nunomaduro/collision": "^3.0",
         "squizlabs/php_codesniffer": "^2.7",
-        "barryvdh/laravel-ide-helper": "^2.3.2"
+        "barryvdh/laravel-ide-helper": "^2.3.2",
+        "laravel/dusk": "^5.9"
     },
     "autoload": {
         "classmap": [
@@ -50,7 +51,9 @@
     },
     "autoload-dev": {
         "classmap": [
-            "tests/TestCase.php"
+            "tests/TestCase.php",
+            "tests/DuskTestCase.php",
+            "tests/CreatesApplication.php"
         ]
     },
     "scripts": {

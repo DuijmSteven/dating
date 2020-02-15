@@ -9,27 +9,17 @@ class HomeControllerTest extends TestCase
 {
     use DatabaseMigrations;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->createUsers();
-
     }
 
     /** @test */
     public function unauthenticatedRedirectsToLogin()
     {
         $response = $this->get('/');
-        $response->assertSee('login');
-    }
-
-   /* /** @test */
-    public function showsHomepage()
-    {
-        $this->be(\App\User::find(1));
-
-        $response = $this->get('/');
-        $response->assertSee('Homepage');
+        $response->assertSee('landingPage');
     }
 
     /** @test */
@@ -38,7 +28,6 @@ class HomeControllerTest extends TestCase
         $this->be(\App\User::find(1));
 
         $response = $this->get('/contact');
-        $response->assertSee('Contact');
-        $response->assertSee('Contact -');
+        $response->assertSee('CompanyInfo__Tile__body');
     }
 }

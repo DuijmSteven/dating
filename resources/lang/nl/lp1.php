@@ -15,14 +15,14 @@ return [
         'password' => 'Wachtwoord',
         'password_confirmation' => 'Wachtwoordbevestiging',
         'register_now' => 'Registreer nu!',
-        'register' => 'Registreer',
+        'register' => 'Gratis Registreren',
         'register_info' => "Het gebruik van deze website is niet geschikt voor personen jonger dan 18 jaar. Je verklaart 18
             jaar of ouder te zijn wanneer je deze website gebruikt. Als je nog geen 18 jaar oud bent, dan
             dien je deze website direct te verlaten. Wanneer je je registreert op deze website, door op
             “Registreer Nu!” te klikken, ga je akkoord met het <a target='_blank' href=\":privacyRoute\">Privacy-
                 en Cookiebeleid</a> en de
             <a target='_blank' href=\":tacRoute\">Algemene Voorwaarden</a>.",
-        'have_an_account' => 'Heb al een account?',
+        'have_an_account' => 'Heb je al een account?',
         'not_have_an_account' => 'Heb je geen account?',
         'login' => 'Log in',
     ],

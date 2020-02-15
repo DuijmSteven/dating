@@ -450,8 +450,10 @@
     <div class="form-container hidden">
         <div class="row">
             <div class="form-box col-xs-12 offset-xs-0 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
-                <form method="POST" action="{{ route('register.post') }}" id="JS--registrationForm"
-                      style="display: none">
+                <form class="test--RegistrationForm" method="POST" action="{{ route('register.post') }}"
+                      id="JS--registrationForm"
+                      style="display: none"
+                >
                     {{ csrf_field() }}
                     <div class="form-row">
                         <div class="form-group col-md-12">
@@ -595,7 +597,13 @@
                     </div>
                 </form>
 
-                <form method="POST" action="{{ route('login.post') }}" id="JS--loginForm" style="display: none">
+                <form
+                    method="POST"
+                    action="{{ route('login.post') }}"
+                    class="test--LoginForm"
+                    id="JS--loginForm"
+                    style="display: none"
+                >
                     {{ csrf_field() }}
                     <div class="form-row">
                         <div class="form-group col-md-12 {{ $errors->has('username') ? ' has-error' : '' }}">

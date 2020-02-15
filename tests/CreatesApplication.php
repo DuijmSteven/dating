@@ -1,19 +1,11 @@
 <?php
 
-use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+namespace Tests;
 
-/**
- * Class TestCase
- */
-abstract class TestCase extends BaseTestCase
+use Illuminate\Contracts\Console\Kernel;
+
+trait CreatesApplication
 {
-    /**
-     * The base URL to use while testing the application.
-     *
-     * @var string
-     */
-    protected $baseUrl = 'http://localhost';
-
     /**
      * Creates the application.
      *
@@ -21,11 +13,9 @@ abstract class TestCase extends BaseTestCase
      */
     public function createApplication()
     {
-       // putenv('DB_CONNECTION=sqlite_testing');
-
         $app = require __DIR__.'/../bootstrap/app.php';
 
-        $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
+        $app->make(Kernel::class)->bootstrap();
 
         return $app;
     }
@@ -37,6 +27,8 @@ abstract class TestCase extends BaseTestCase
      */
     protected function createUsers(int $amount = 1, int $roleId = 2)
     {
+        factory(\App\User::class)->create();
+
         return factory(\App\User::class, $amount)
             ->create()
             ->each(function (\App\User $user) use ($roleId) {
