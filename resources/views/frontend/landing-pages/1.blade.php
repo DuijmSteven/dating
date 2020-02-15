@@ -858,7 +858,8 @@
      * can be defined here
      */
     var DP = {
-        baseUrl: '{!! url('/') !!}'
+        baseUrl: '{!! url('/') !!}',
+        locale: '{{ app()->getLocale() }}'
     };
 
 </script>

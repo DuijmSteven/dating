@@ -103,12 +103,6 @@ $(window).on('load', function () {
         require('./modules/search');
     }
 
-    if ($('#JS--datepicker__date').length > 0) {
-        $('#JS--datepicker__date').datepicker({
-            dateFormat: 'dd-mm-yy'
-        });
-    }
-
     if ($('.JS--autoCompleteCites').length > 0) {
         // Auto-completes Dutch cities in bot creation view text field
         $.getJSON(DP.baseUrl + '/api/cities/nl')

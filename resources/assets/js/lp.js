@@ -87,22 +87,29 @@ $(window).on('load', function () {
         Cookies.set("lpFormSelection", 'login');
     });
 
-    var date = new Date();
-    date.setFullYear( date.getFullYear() - 18 );
-    let formatted = ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2) + '-' + date.getFullYear();
+    // Setup locale and bootstrap datepicker options
+    $.fn.datepicker.dates['nl'] = {
+        days: ["Zondag", "Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag"],
+        daysShort: ["zo", "ma", "di", "wo", "do", "vr", "za"],
+        daysMin: ["zo", "ma", "di", "wo", "do", "vr", "za"],
+        months: ["Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "December"],
+        monthsShort: ["Jan", "Feb", "Mrt", "Apr", "Mei", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"],
+        today: "Vandaag",
+        monthsTitle: "Maanden",
+        clear: "Wissen",
+        weekStart: 1,
+        format: "dd-mm-yyyy"
+    };
 
-    var firstOpen = true;
+    $.fn.datepicker.defaults.language = DP.locale;
 
     $("#datepicker_dob").datepicker({
-        format: 'dd-mm-yyyy',
         weekStart: 1,
         autoclose: 1,
         startView: 2,
         minView: 2,
         useCurrent: false,
-        defaultViewDate: new Date(1990, 11, 24)
-        // startDate : new Date('01-01-1920'),
-        // endDate : new Date(formatted),
+        defaultViewDate: new Date(1990, 11, 24),
     });
 
     if ($('.JS--autoCompleteCites').length > 0) {
