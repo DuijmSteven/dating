@@ -162,6 +162,7 @@
         color: #555;
         padding: 30px;
         text-align: center;
+        z-index: 2000;
     }
 
     @media screen and (max-width: 700px) {
