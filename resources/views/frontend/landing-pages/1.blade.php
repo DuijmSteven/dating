@@ -501,7 +501,11 @@
 
     @media screen and (max-width: 767px) {
         .welcome-container {
-            margin-top: 685px;
+            margin-top: 340px;
+        }
+
+        .welcome-container.withRegistrationForm {
+            margin-top: 650px;
         }
     }
 
@@ -519,10 +523,8 @@
     </div>
 </header>
 <main>
-    <div class="vh-70 bg-image text-center" style="background-image: url('img/lp/dating-bg.jpg'); position: relative">
-
+    <div class="vh-70 bg-image text-center JS--header" style="background-image: url('img/lp/dating-bg.jpg'); position: relative">
         <div class="container" style="position:relative; height: 100%">
-
             <h1 style="text-transform: none">{{ @trans('lp1.heading') }}</h1>
 
             <video class="img-fluid screenCapturePreview" playsinline="" autoplay="" muted="" loop="" no-controls=""
@@ -530,7 +532,7 @@
                 <source type="video/mp4" src="{{ asset('img/lp/altijdSex-preview.mp4') }}">
             </video>
 
-            <div class="form-wrapper hidden">
+            <div class="JS--form-wrapper form-wrapper hidden">
                 <div class="form-box">
                     <form class="test--RegistrationForm" method="POST" action="{{ route('register.post') }}"
                           id="JS--registrationForm"
@@ -751,29 +753,10 @@
 
             </div>
         </div>
-        {{--        <div class="row vh-70 align-items-center" style="margin-left: 0; margin-right: 0;">--}}
-        {{--            <div class="col-md-6 d-none d-md-block">--}}
 
-        {{--            </div>--}}
-        {{--            <div class="col-md-6 col-sm-12">--}}
-        {{--                <video class="img-fluid screenCapturePreview" playsinline="" autoplay="" muted="" loop="" no-controls="" style="max-width: 80%">--}}
-        {{--                    <source type="video/mp4" src="{{ asset('img/lp/altijdSex-preview.mp4') }}">--}}
-        {{--                    Your browser does not support the video tag.--}}
-        {{--                </video>--}}
-        {{--            </div>--}}
-        {{--        </div>--}}
-        {{--        <div class="container">--}}
-        {{--            <h1 style="text-transform: none">{{ @trans('lp1.heading') }}</h1>--}}
-        {{--        </div>--}}
     </div>
-    {{--    <div class="form-container hidden">--}}
-    {{--        <div class="row">--}}
-    {{--            <div class="form-box col-xs-12 offset-xs-0 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4">--}}
 
-    {{--            </div>--}}
-    {{--        </div>--}}
-    {{--    </div>--}}
-    <div class="container welcome-container text-center">
+    <div class="container welcome-container text-center JS--welcome-container">
         <h3>{{ @trans('lp1.welcome') }}</h3>
         <div>
             <p class="mt-5">{{ @trans('lp1.welcome_text') }}</p>

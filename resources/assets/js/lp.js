@@ -65,17 +65,42 @@ $(window).on('load', function () {
         Cookies.set("lpCookiesAccepted", 'true');
     });
 
+    function calculateExcessOfForm() {
+        let bottomOfForm = $('.JS--form-wrapper').offset().top + $('.JS--form-wrapper').height();
+        return  bottomOfForm - $('.JS--header').height();
+    }
+
     if (formSelected === 'login') {
-        $('.form-wrapper').removeClass('hidden');
+        $('.JS--form-wrapper').removeClass('hidden');
         $('#JS--loginForm').toggle('fast');
+
+        console.log($(window).width() <= 767);
+
+        if ($(window).width() <= 767) {
+            setTimeout(() => {
+                $('.JS--welcome-container').css('margin-top', calculateExcessOfForm() + 60);
+            }, 200);
+        }
     } else {
-        $('.form-wrapper').removeClass('hidden');
+        $('.JS--form-wrapper').removeClass('hidden');
         $('#JS--registrationForm').toggle('fast');
+        $('.JS--welcome-container').addClass('withRegistrationForm');
+        if ($(window).width() <= 767) {
+            setTimeout(() => {
+                $('.JS--welcome-container').css('margin-top', calculateExcessOfForm() + 60);
+            }, 200);
+        }
     }
 
     $('#JS--registerButton').click(function(){
         $('#JS--loginForm').toggle('fast');
         $('#JS--registrationForm').toggle('fast');
+        $('.JS--welcome-container').addClass('withRegistrationForm');
+        if ($(window).width() <= 767) {
+            setTimeout(() => {
+                $('.JS--welcome-container').css('margin-top', calculateExcessOfForm() + 60);
+            }, 200);
+        }
 
         Cookies.set("lpFormSelection", 'register');
     });
@@ -83,6 +108,12 @@ $(window).on('load', function () {
     $('#JS--loginButton').click(function(){
         $('#JS--registrationForm').toggle('fast');
         $('#JS--loginForm').toggle('fast');
+        $('.JS--welcome-container').removeClass('withRegistrationForm');
+        if ($(window).width() <= 767) {
+            setTimeout(() => {
+                $('.JS--welcome-container').css('margin-top', calculateExcessOfForm() + 60);
+            }, 200);
+        }
 
         Cookies.set("lpFormSelection", 'login');
     });
