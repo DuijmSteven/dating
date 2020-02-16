@@ -42,11 +42,11 @@ class ExportDb extends Command
         set_time_limit(0);
 
         // define target file
-        $tempLocation     = '/tmp/' . env('DB_DATABASE') . '_' . date("Y-m-d_Hi") . '.sql';
-        $targetFilePath   = '/mysql/' . env('DB_DATABASE') . '_' . date("Y-m-d_Hi") . '.sql';
+        $tempLocation     = '/tmp/' . config('database.connections.mysql.database') . '_' . date("Y-m-d_Hi") . '.sql';
+        $targetFilePath   = '/mysql/' . config('database.connections.mysql.database') . '_' . date("Y-m-d_Hi") . '.sql';
 
         // run the cli job
-        $process = new Process('mysqldump -u' . env('DB_USERNAME') . ' -p' .env('DB_PASSWORD') . ' ' . env('DB_DATABASE') . ' > ' . $tempLocation);
+        $process = new Process('mysqldump -u' . config('database.connections.mysql.username') . ' -p' .config('database.connections.mysql.password') . ' ' . config('database.connections.mysql.database') . ' > ' . $tempLocation);
         $process->run();
 
         try {

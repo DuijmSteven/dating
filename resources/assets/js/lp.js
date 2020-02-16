@@ -66,10 +66,10 @@ $(window).on('load', function () {
     });
 
     if (formSelected === 'login') {
-        $('.form-container').removeClass('hidden');
+        $('.form-wrapper').removeClass('hidden');
         $('#JS--loginForm').toggle('fast');
     } else {
-        $('.form-container').removeClass('hidden');
+        $('.form-wrapper').removeClass('hidden');
         $('#JS--registrationForm').toggle('fast');
     }
 

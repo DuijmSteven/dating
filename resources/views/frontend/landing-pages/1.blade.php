@@ -27,47 +27,17 @@
         height: 70vh;
     }
 
-    .vh-70 .container {
-        position: absolute;
-        top: 85%;
-        left: 0;
-        right: 0;
-        -moz-transform: translateY(-50%);
-        -ms-transform: translateY(-50%);
-        -o-transform: translateY(-50%);
-        -webkit-transform: translateY(-50%);
-        transform: translateY(-50%);
-    }
-
-    h1 {
-        font-family: comfortaa, sans-serif;
-        font-size: 2.8rem;
-        letter-spacing: .02em;
-        text-transform: uppercase;
-        font-weight: 700;
-        color: #ef4f2b;
-        margin: 0;
-    }
-
-    .form-container {
-        margin-top: -4rem;
-        max-width: 1200px;
-        margin-right: auto;
-        margin-left: auto;
-        padding-left: 15px;
-        padding-right: 15px;
-    }
-
-    .form-container .form-box {
-        padding: 40px;
-        background-color: #ffffff;
-        box-shadow: 0px 22px 44px 0px rgba(46, 49, 66, 0.3);
-        border-radius: 2px;
-    }
-
-    .welcome-container, .recent-container {
-        margin-top: 10rem;
-    }
+    /*.vh-70 .container {*/
+    /*    position: absolute;*/
+    /*    top: 85%;*/
+    /*    left: 0;*/
+    /*    right: 0;*/
+    /*    -moz-transform: translateY(-50%);*/
+    /*    -ms-transform: translateY(-50%);*/
+    /*    -o-transform: translateY(-50%);*/
+    /*    -webkit-transform: translateY(-50%);*/
+    /*    transform: translateY(-50%);*/
+    /*}*/
 
     .recent-container, .testimonials-container {
         margin-bottom: 10rem;
@@ -107,9 +77,11 @@
     }
 
     form label {
-        font-family: comfortaa, sans-serif;
         color: #ef4f2b;
-        font-size: 18px;
+        font-size: 1.6rem;
+        letter-spacing: 0.2px;
+        font-weight: 400;
+        margin-bottom: 0px;
     }
 
     .form-control {
@@ -133,6 +105,7 @@
         text-align: left;
         margin-top: 2rem;
         margin-left: 0;
+        padding-left: 0;
     }
 
     header {
@@ -184,7 +157,7 @@
         bottom: 0;
         height: 200px;
         max-height: 400px;
-        box-shadow: 20px 0 30px rgba(0,0,0,0.4);
+        box-shadow: 20px 0 30px rgba(0, 0, 0, 0.4);
         font-size: 1.8rem;
         color: #555;
         padding: 30px;
@@ -276,10 +249,6 @@
     }
 
     @media (min-width: 768px) {
-        h1 {
-            font-size: 5.5rem;
-        }
-
         header .navbar-brand img {
             width: 150px;
             height: 150px;
@@ -419,12 +388,131 @@
     }
 
     .screenCapturePreview {
-        box-shadow: 6px 0 28px rgba(0,0,0,0.3);
+        box-shadow: 6px 0 28px rgba(0, 0, 0, 0.3);
     }
+
+    .form-box .form-row {
+        text-align: left;
+    }
+
+    .form-container {
+        margin-top: -4rem;
+        max-width: 1200px;
+        margin-right: auto;
+        margin-left: auto;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .form-box {
+        padding: 20px;
+        background-color: #ffffff;
+        box-shadow: 0px 22px 44px 0px rgba(46, 49, 66, 0.3);
+        border-radius: 2px;
+    }
+
+    .form-wrapper {
+        width: 400px;
+        position: absolute;
+        right: 15px;
+        top: 48px;
+        z-index: 1000;
+    }
+
+    @media screen and (max-width: 1000px) {
+        .form-wrapper {
+            width: 300px;
+        }
+    }
+
+    @media screen and (max-width: 767px) {
+        .form-wrapper {
+            width: 100%;
+            top: 390px;
+            z-index: 1000;
+            left: 50%;
+            margin-left: -50%;
+            right: initial;
+        }
+    }
+
+    video {
+        position: absolute;
+        width: 468px;
+        bottom: -111px;
+        left: 15px;
+    }
+
+    @media screen and (max-width: 1000px) {
+        video {
+            width: 370px;
+            bottom: -100px;
+        }
+    }
+
+    @media screen and (max-width: 767px) {
+        video {
+            display: none;
+        }
+    }
+
+    h1 {
+        font-size: 4.2rem;
+        letter-spacing: .02em;
+        text-transform: uppercase;
+        color: #ef4f2b;
+        margin: 0;
+        position: absolute;
+        bottom: 258px;
+        left: 15px;
+        text-shadow: 2px 2px #564f4f;
+        width: 412px;
+        font-weight: 400;
+        text-align: left;
+    }
+
+    @media screen and (max-width: 1000px) {
+        h1 {
+            width: 370px;
+            bottom: 150px;
+        }
+    }
+
+    @media screen and (max-width: 767px) {
+        h1 {
+            width: 93%;
+            text-align: center;
+            left: initial;
+            bottom: initial;
+            top: 225px;
+            font-size: 32px;
+        }
+    }
+
+    .welcome-container {
+        margin-top: 18rem;
+    }
+
+    @media screen and (max-width: 1000px) {
+        .welcome-container {
+            margin-top: 15rem;
+        }
+    }
+
+    @media screen and (max-width: 767px) {
+        .welcome-container {
+            margin-top: 685px;
+        }
+    }
+
+    .recent-container {
+        margin-top: 10rem;
+    }
+
 </style>
 <body class="landingPage">
 <header>
-    <div class="container">
+    <div class="container" style="z-index: 50; position:relative;">
         <div class="navbar-brand">
             <img src="img/site_logos/Altijdsex_LogoBig_Pos.svg" title="Altijdsex.nl Logo" alt="Altijdsex.nl Logo"/>
         </div>
@@ -432,241 +520,259 @@
 </header>
 <main>
     <div class="vh-70 bg-image text-center" style="background-image: url('img/lp/dating-bg.jpg'); position: relative">
-        <div class="row vh-70 align-items-center" style="margin-left: 0; margin-right: 0;">
-            <div class="col-md-6 d-none d-md-block">
 
-            </div>
-            <div class="col-md-6 col-sm-12">
-                <video class="img-fluid screenCapturePreview" playsinline="" autoplay="" muted="" loop="" no-controls="" style="max-width: 80%">
-                    <source type="video/mp4" src="{{ asset('img/lp/altijdSex-preview.mp4') }}">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-        </div>
-        <div class="container">
+        <div class="container" style="position:relative; height: 100%">
+
             <h1 style="text-transform: none">{{ @trans('lp1.heading') }}</h1>
-        </div>
-    </div>
-    <div class="form-container hidden">
-        <div class="row">
-            <div class="form-box col-xs-12 offset-xs-0 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
-                <form class="test--RegistrationForm" method="POST" action="{{ route('register.post') }}"
-                      id="JS--registrationForm"
-                      style="display: none"
-                >
-                    {{ csrf_field() }}
-                    <div class="form-row">
-                        <div class="form-group col-md-12">
-                            <label for="lookingFor">{{ @trans('lp1.form.i_am') }}:</label>
-                            <select class="form-control" id="lookingFor" name="lookingFor">
-                                <option value="male-female">{{ @trans('lp1.form.man_looking_for_woman') }}</option>
-                                <option value="female-male">{{ @trans('lp1.form.woman_looking_for_man') }}</option>
-{{--                                <option value="female-female">{{ @trans('lp1.form.woman_looking_for_woman') }}</option>--}}
-{{--                                <option value="male-male">{{ @trans('lp1.form.man_looking_for_man') }}</option>--}}
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-12 {{ $errors->has('username') ? ' has-error' : '' }}">
-                            <label for="name">{{ @trans('lp1.form.username') }}</label>
-                            <input type="text"
-                                   class="form-control"
-                                   id="username"
-                                   name="username"
-                                   placeholder="{{ @trans('lp1.form.username') }}"
-                                   value="{{ old('username') }}"
-                                   required
-                                   autofocus
-                            >
-                            @if ($errors->has('username'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('username') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-12 {{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email">{{ @trans('lp1.form.email') }}</label>
-                            <input type="email"
-                                   class="form-control"
-                                   id="email"
-                                   name="email"
-                                   placeholder="{{ @trans('lp1.form.email') }}"
-                                   value="{{ old('email') }}"
-                                   required
-                            >
-                            @if ($errors->has('email'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('email') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-12 {{ $errors->has('city') ? ' has-error' : '' }}">
-                            <label for="city">{{ @trans('lp1.form.city') }}</label>
-                            <input type="text"
-                                   class="JS--autoCompleteCites form-control JS--Search"
-                                   id="city"
-                                   name="city"
-                                   placeholder="{{ @trans('lp1.form.city') }}"
-                                   value="{{ old('city') }}"
-                                   required
-                            >
-                            @if ($errors->has('city'))
-                                <span class="help-block">
-                                    <strong>{!! $errors->first('city', ':message') !!}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-12 {{ $errors->has('dob') ? ' has-error' : '' }}">
-                            <label for="password">{{ @trans('lp1.form.dob') }}</label>
-                            <div
-                                class="input-group date dateOfBirthGroup"
-                            >
-                                <input id="datepicker_dob" type="text" class="form-control" name="dob" required value="{{ old('dob') }}">
-                                <div class="input-group-addon">
-                                    <i class="material-icons calendar">
-                                        calendar_today
-                                    </i>
-                                </div>
+
+            <video class="img-fluid screenCapturePreview" playsinline="" autoplay="" muted="" loop="" no-controls=""
+                   style="max-width: 80%">--}}
+                <source type="video/mp4" src="{{ asset('img/lp/altijdSex-preview.mp4') }}">
+            </video>
+
+            <div class="form-wrapper hidden">
+                <div class="form-box">
+                    <form class="test--RegistrationForm" method="POST" action="{{ route('register.post') }}"
+                          id="JS--registrationForm"
+                          style="display: none"
+                    >
+                        {{ csrf_field() }}
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="lookingFor">{{ @trans('lp1.form.i_am') }}:</label>
+                                <select class="form-control" id="lookingFor" name="lookingFor">
+                                    <option value="male-female">{{ @trans('lp1.form.man_looking_for_woman') }}</option>
+                                    <option value="female-male">{{ @trans('lp1.form.woman_looking_for_man') }}</option>
+                                    {{--                                <option value="female-female">{{ @trans('lp1.form.woman_looking_for_woman') }}</option>--}}
+                                    {{--                                <option value="male-male">{{ @trans('lp1.form.man_looking_for_man') }}</option>--}}
+                                </select>
                             </div>
-                            @if ($errors->has('dob'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('dob', ':message') }}</strong>
-                                </span>
-                            @endif
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-12 {{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password">{{ @trans('lp1.form.password') }}</label>
-                            <input type="password" class="form-control" id="password" name="password"
-                                   placeholder="{{ @trans('lp1.form.password') }}" required>
-                            @if ($errors->has('password'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('password') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-12">
-                            <label for="password-confirm">{{ @trans('lp1.form.password_confirmation') }}</label>
-                            <input type="password" class="form-control" id="password-confirm"
-                                   name="password_confirmation" placeholder="{{ @trans('lp1.form.password') }}"
-                                   required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-sm-12 submit">
-                            <button type="submit"
-                                    class="btn btn-secondary btn-lg btn-block">{{ @trans('lp1.form.register_now') }}</button>
-                        </div>
-
-                        <div class="col-xs-12">
-                            <p class="mt-3" style="font-size: 1.3rem; text-align: justify">
-                                {!! @trans(
-                                        'lp1.form.register_info',
-                                        [
-                                            'privacyRoute' => route('privacy.show'),
-                                            'tacRoute' => route('tac.show'),
-                                        ]
-                                    )
-                                !!}
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="form-row" style="margin-top: 20px">
-                        <div class="col-sm-10">
-                            <h4 class="mt-3">{{ @trans('lp1.form.have_an_account') }}</h4>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-sm-12 submit">
-                            <button id="JS--loginButton" type="button"
-                                    class="btn btn-block btn-lg btn-register-login loginButton"
-                            >
-                                {{ @trans('lp1.form.login') }}
-                            </button>
-                        </div>
-                    </div>
-                </form>
-
-                <form
-                    method="POST"
-                    action="{{ route('login.post') }}"
-                    class="test--LoginForm"
-                    id="JS--loginForm"
-                    style="display: none"
-                >
-                    {{ csrf_field() }}
-                    <div class="form-row">
-                        <div class="form-group col-md-12 {{ $errors->has('username') ? ' has-error' : '' }}">
-                            <label for="login-username">{{ @trans('lp1.form.username') }}</label>
-                            <input type="text" class="form-control" id="login-username" name="username"
-                                   placeholder="{{ @trans('lp1.form.username') }}" value="{{ old('username') }}"
-                                   required autofocus>
-                            @if ($errors->has('username'))
-                                <span class="help-block">
+                        <div class="form-row">
+                            <div class="form-group col-md-12 {{ $errors->has('username') ? ' has-error' : '' }}">
+                                <label for="name">{{ @trans('lp1.form.username') }}</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="username"
+                                       name="username"
+                                       placeholder="{{ @trans('lp1.form.username') }}"
+                                       value="{{ old('username') }}"
+                                       required
+                                       autofocus
+                                >
+                                @if ($errors->has('username'))
+                                    <span class="help-block">
                                         <strong>{{ $errors->first('username') }}</strong>
                                     </span>
-                            @endif
+                                @endif
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-12 {{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="login-password">{{ @trans('lp1.form.password') }}</label>
-                            <input type="password" class="form-control" id="login-password" name="password"
-                                   placeholder="{{ @trans('lp1.form.password') }}" required>
-                            @if ($errors->has('password'))
-                                <span class="help-block">
+                        <div class="form-row">
+                            <div class="form-group col-md-12 {{ $errors->has('email') ? ' has-error' : '' }}">
+                                <label for="email">{{ @trans('lp1.form.email') }}</label>
+                                <input type="email"
+                                       class="form-control"
+                                       id="email"
+                                       name="email"
+                                       placeholder="{{ @trans('lp1.form.email') }}"
+                                       value="{{ old('email') }}"
+                                       required
+                                >
+                                @if ($errors->has('email'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12 {{ $errors->has('city') ? ' has-error' : '' }}">
+                                <label for="city">{{ @trans('lp1.form.city') }}</label>
+                                <input type="text"
+                                       class="JS--autoCompleteCites form-control JS--Search"
+                                       id="city"
+                                       name="city"
+                                       placeholder="{{ @trans('lp1.form.city') }}"
+                                       value="{{ old('city') }}"
+                                       required
+                                >
+                                @if ($errors->has('city'))
+                                    <span class="help-block">
+                                        <strong>{!! $errors->first('city', ':message') !!}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12 {{ $errors->has('dob') ? ' has-error' : '' }}">
+                                <label for="password">{{ @trans('lp1.form.dob') }}</label>
+                                <div
+                                    class="input-group date dateOfBirthGroup"
+                                >
+                                    <input id="datepicker_dob" type="text" class="form-control" name="dob" required
+                                           value="{{ old('dob') }}">
+                                    <div class="input-group-addon">
+                                        <i class="material-icons calendar">
+                                            calendar_today
+                                        </i>
+                                    </div>
+                                </div>
+                                @if ($errors->has('dob'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('dob', ':message') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12 {{ $errors->has('password') ? ' has-error' : '' }}">
+                                <label for="password">{{ @trans('lp1.form.password') }}</label>
+                                <input type="password" class="form-control" id="password" name="password"
+                                       placeholder="{{ @trans('lp1.form.password') }}" required>
+                                @if ($errors->has('password'))
+                                    <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
-                            @endif
+                                @endif
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-sm-12 submit">
-                            <button type="submit"
-                                    class="btn btn-secondary btn-lg btn-block">{{ @trans('lp1.form.login') }}</button>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="password-confirm">{{ @trans('lp1.form.password_confirmation') }}</label>
+                                <input type="password" class="form-control" id="password-confirm"
+                                       name="password_confirmation" placeholder="{{ @trans('lp1.form.password') }}"
+                                       required>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-row" style="margin-top: 20px">
-                        <div class="col-sm-10">
-                            <h4 class="mt-3">{{ @trans('lp1.form.not_have_an_account') }}</h4>
+                        <div class="form-row">
+                            <div class="col-sm-12 submit">
+                                <button type="submit"
+                                        class="btn btn-secondary btn-lg btn-block">{{ @trans('lp1.form.register_now') }}</button>
+                            </div>
+
+                            <div class="col-xs-12">
+                                <p class="mt-3" style="font-size: 1.3rem; text-align: justify">
+                                    {!! @trans(
+                                            'lp1.form.register_info',
+                                            [
+                                                'privacyRoute' => route('privacy.show'),
+                                                'tacRoute' => route('tac.show'),
+                                            ]
+                                        )
+                                    !!}
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-sm-12 submit">
-                            <button id="JS--registerButton" type="button"
-                                    class="btn btn-block btn-lg btn-register-login registerButton">{{ @trans('lp1.form.register') }}
-                            </button>
+
+                        <div class="form-row">
+                            <div class="col-sm-10">
+                                <h4 class="mt-3">{{ @trans('lp1.form.have_an_account') }}</h4>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-row" style="margin-top: 20px">
-                        <div class="col-sm-10">
-                            <h4 class="mt-3">{{ @trans('lp1.forgot_password') }}</h4>
+                        <div class="form-row">
+                            <div class="col-sm-12 submit">
+                                <button id="JS--loginButton" type="button"
+                                        class="btn btn-block btn-lg btn-register-login loginButton"
+                                >
+                                    {{ @trans('lp1.form.login') }}
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-sm-12">
-                            @include('frontend.components.button', [
-                                'url' => route('password.reset.get'),
-                                'buttonContext' => 'general',
-                                'buttonText' => trans('lp1.reset_password'),
-                                'buttonClasses' => 'btn btn-block btn-lg btn-forgot-password'
-                            ])
+                    </form>
+
+                    <form
+                        method="POST"
+                        action="{{ route('login.post') }}"
+                        class="test--LoginForm"
+                        id="JS--loginForm"
+                        style="display: none"
+                    >
+                        {{ csrf_field() }}
+                        <div class="form-row">
+                            <div class="form-group col-md-12 {{ $errors->has('username') ? ' has-error' : '' }}">
+                                <label for="login-username">{{ @trans('lp1.form.username') }}</label>
+                                <input type="text" class="form-control" id="login-username" name="username"
+                                       placeholder="{{ @trans('lp1.form.username') }}" value="{{ old('username') }}"
+                                       required autofocus>
+                                @if ($errors->has('username'))
+                                    <span class="help-block">
+                                            <strong>{{ $errors->first('username') }}</strong>
+                                        </span>
+                                @endif
+                            </div>
                         </div>
-                    </div>
-                </form>
+                        <div class="form-row">
+                            <div class="form-group col-md-12 {{ $errors->has('password') ? ' has-error' : '' }}">
+                                <label for="login-password">{{ @trans('lp1.form.password') }}</label>
+                                <input type="password" class="form-control" id="login-password" name="password"
+                                       placeholder="{{ @trans('lp1.form.password') }}" required>
+                                @if ($errors->has('password'))
+                                    <span class="help-block">
+                                            <strong>{{ $errors->first('password') }}</strong>
+                                        </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-sm-12 submit">
+                                <button type="submit"
+                                        class="btn btn-secondary btn-lg btn-block">{{ @trans('lp1.form.login') }}</button>
+                            </div>
+                        </div>
+                        <div class="form-row" style="margin-top: 20px">
+                            <div class="col-sm-10">
+                                <h4 class="mt-3">{{ @trans('lp1.form.not_have_an_account') }}</h4>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-sm-12 submit">
+                                <button id="JS--registerButton" type="button"
+                                        class="btn btn-block btn-lg btn-register-login registerButton">{{ @trans('lp1.form.register') }}
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-row" style="margin-top: 20px">
+                            <div class="col-sm-10">
+                                <h4 class="mt-3">{{ @trans('lp1.forgot_password') }}</h4>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-sm-12">
+                                @include('frontend.components.button', [
+                                    'url' => route('password.reset.get'),
+                                    'buttonContext' => 'general',
+                                    'buttonText' => trans('lp1.reset_password'),
+                                    'buttonClasses' => 'btn btn-block btn-lg btn-forgot-password'
+                                ])
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
             </div>
         </div>
+        {{--        <div class="row vh-70 align-items-center" style="margin-left: 0; margin-right: 0;">--}}
+        {{--            <div class="col-md-6 d-none d-md-block">--}}
+
+        {{--            </div>--}}
+        {{--            <div class="col-md-6 col-sm-12">--}}
+        {{--                <video class="img-fluid screenCapturePreview" playsinline="" autoplay="" muted="" loop="" no-controls="" style="max-width: 80%">--}}
+        {{--                    <source type="video/mp4" src="{{ asset('img/lp/altijdSex-preview.mp4') }}">--}}
+        {{--                    Your browser does not support the video tag.--}}
+        {{--                </video>--}}
+        {{--            </div>--}}
+        {{--        </div>--}}
+        {{--        <div class="container">--}}
+        {{--            <h1 style="text-transform: none">{{ @trans('lp1.heading') }}</h1>--}}
+        {{--        </div>--}}
     </div>
+    {{--    <div class="form-container hidden">--}}
+    {{--        <div class="row">--}}
+    {{--            <div class="form-box col-xs-12 offset-xs-0 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4">--}}
+
+    {{--            </div>--}}
+    {{--        </div>--}}
+    {{--    </div>--}}
     <div class="container welcome-container text-center">
         <h3>{{ @trans('lp1.welcome') }}</h3>
         <div>
@@ -707,9 +813,11 @@
                             alt="profile-image"
                         >
                     </a>
-                    <h5 class="small" style="font-size: 1.9rem; width: 170px; overflow: hidden; text-overflow: ellipsis; margin: 10px auto 5px auto">{{ $user->username }}</h5>
+                    <h5 class="small"
+                        style="font-size: 1.9rem; width: 170px; overflow: hidden; text-overflow: ellipsis; margin: 10px auto 5px auto">{{ $user->username }}</h5>
                     <p class="offset-0 user-info" style="line-height: 14px; text-align: center">
-                        <small class="text-muted" style="font-size: 1.4rem">{{ @trans('lp1.age') }}: {{ $user->meta->dob->diffInYears($carbonNow) }}, {{ $user->meta->city }}</small>
+                        <small class="text-muted" style="font-size: 1.4rem">{{ @trans('lp1.age') }}
+                            : {{ $user->meta->dob->diffInYears($carbonNow) }}, {{ $user->meta->city }}</small>
                     </p>
                 </div>
             @endforeach
@@ -719,15 +827,15 @@
     <div class="container text-center secondWelcome" style="margin-bottom: 10rem">
         <h3 style="margin-bottom: 40px">{{ @trans('lp1.online_sex_dating') }}</h3>
         <div class="mt-5">
-           <p>
-               {!! @trans(
-                'lp1.second_welcome',
-                [
-                    'articlesRoute' => route('articles.overview'),
-                ]
-            )
-        !!}
-           </p>
+            <p>
+                {!! @trans(
+                 'lp1.second_welcome',
+                 [
+                     'articlesRoute' => route('articles.overview'),
+                 ]
+             )
+         !!}
+            </p>
         </div>
     </div>
 

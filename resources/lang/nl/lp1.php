@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'heading' => 'Tijd Voor Live Chat Sex Dating!',
+    'heading' => 'Op zoek naar leuke contacten en meer? Registreer nu gratis!',
     'form' => [
         'i_am' => 'Ik ben een',
         'man_looking_for_woman' => 'Man op zoek naar een vrouw',
@@ -9,19 +9,15 @@ return [
         'woman_looking_for_woman' => 'Vrouw op zoek naar een vrouw',
         'man_looking_for_man' => 'Man op zoek naar een man',
         'username' => 'Gebruikersnaam',
-        'email' => 'E-mail',
+        'email' => 'E-mail (niet zichtbaar voor anderen)',
         'city' => 'Stad',
         'dob' => 'Geboortedatum',
         'password' => 'Wachtwoord',
         'password_confirmation' => 'Wachtwoordbevestiging',
-        'register_now' => 'Registreer nu!',
-        'register' => 'Gratis Registreren',
-        'register_info' => "Het gebruik van deze website is niet geschikt voor personen jonger dan 18 jaar. Je verklaart 18
-            jaar of ouder te zijn wanneer je deze website gebruikt. Als je nog geen 18 jaar oud bent, dan
-            dien je deze website direct te verlaten. Wanneer je je registreert op deze website, door op
-            “Registreer Nu!” te klikken, ga je akkoord met het <a target='_blank' href=\":privacyRoute\">Privacy-
-                en Cookiebeleid</a> en de
-            <a target='_blank' href=\":tacRoute\">Algemene Voorwaarden</a>.",
+        'register_now' => 'Registreer nu gratis!',
+        'register' => 'Gratis Registreren!',
+        'register_info' => "Wanneer je op “Registreer nu gratis!” klikt, ga je akkoord met het <a target='_blank' href=\":privacyRoute\">Privacy-
+                en Cookiebeleid</a> en de <a target='_blank' href=\":tacRoute\">Algemene Voorwaarden</a> en bevestig je dat je 18 jaar of ouder bent",
         'have_an_account' => 'Heb je al een account?',
         'not_have_an_account' => 'Heb je geen account?',
         'login' => 'Log in',
