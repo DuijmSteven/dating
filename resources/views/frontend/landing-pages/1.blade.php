@@ -514,6 +514,21 @@
         margin-top: 10rem;
     }
 
+    .ui-autocomplete.ui-widget.ui-widget-content {
+        max-height: 600px;
+        overflow: scroll;
+        list-style: none;
+        padding-left: 15px;
+        position: relative;
+        z-index: 3000;
+        max-width: 250px;
+    }
+
+    .ui-autocomplete.ui-widget.ui-widget-content li {
+        font-size: 1.8rem;
+        color: #555;
+    }
+
 </style>
 <body class="landingPage">
 <header>
