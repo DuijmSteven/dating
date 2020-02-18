@@ -11,7 +11,7 @@ class PaymentsHelper
     public static $methods = [
         1 => 'ideal',
         2 => 'paysafe',
-        3 => 'ivr'
+        3 => 'bancontact'
     ];
 
     public static $statuses = [
