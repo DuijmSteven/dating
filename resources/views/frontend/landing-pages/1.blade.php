@@ -650,24 +650,24 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12 {{ $errors->has('city') ? ' has-error' : '' }}">
-                                <label for="city">{{ @trans('lp1.form.city') }}</label>
-                                <input type="text"
-                                       class="JS--autoCompleteCites form-control"
-                                       id="city"
-                                       name="city"
-                                       placeholder="{{ @trans('lp1.form.city') }}"
-                                       value="{{ old('city') }}"
-                                       required
-                                >
-                                @if ($errors->has('city'))
-                                    <span class="help-block">
-                                        <strong>{!! $errors->first('city', ':message') !!}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+{{--                        <div class="form-row">--}}
+{{--                            <div class="form-group col-md-12 {{ $errors->has('city') ? ' has-error' : '' }}">--}}
+{{--                                <label for="city">{{ @trans('lp1.form.city') }}</label>--}}
+{{--                                <input type="text"--}}
+{{--                                       class="JS--autoCompleteCites form-control"--}}
+{{--                                       id="city"--}}
+{{--                                       name="city"--}}
+{{--                                       placeholder="{{ @trans('lp1.form.city') }}"--}}
+{{--                                       value="{{ old('city') }}"--}}
+{{--                                       required--}}
+{{--                                >--}}
+{{--                                @if ($errors->has('city'))--}}
+{{--                                    <span class="help-block">--}}
+{{--                                        <strong>{!! $errors->first('city', ':message') !!}</strong>--}}
+{{--                                    </span>--}}
+{{--                                @endif--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
 {{--                        <div class="form-row">--}}
 {{--                            <div class="form-group col-md-12 {{ $errors->has('dob') ? ' has-error' : '' }}">--}}
 {{--                                <label for="password">{{ @trans('lp1.form.dob') }}</label>--}}

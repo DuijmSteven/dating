@@ -55,13 +55,13 @@ trait RegistersUsers
             throw $exception;
         }
 
-        $client = new Client();
-        $geocoder = new GeocoderService($client);
-
-        $coordinates = $geocoder->getCoordinatesForAddress($request->all()['city']);
-
-        $lat = $coordinates['lat'];
-        $lng = $coordinates['lng'];
+//        $client = new Client();
+//        $geocoder = new GeocoderService($client);
+//
+//        $coordinates = $geocoder->getCoordinatesForAddress($request->all()['city']);
+//
+//        $lat = $coordinates['lat'];
+//        $lng = $coordinates['lng'];
 
         try {
             /** @var UserMeta $userMetaInstance */
@@ -71,9 +71,9 @@ trait RegistersUsers
                 'gender' => UserConstants::selectableField('gender', 'peasant', 'array_flip')[$gender],
                 'looking_for_gender' => UserConstants::selectableField('gender', 'peasant', 'array_flip')[$lookingFor],
                 //'dob' =>  new Carbon($request->all()['dob']),
-                'lat' => $lat,
-                'lng' => $lng,
-                'city' => $request->all()['city'],
+//                'lat' => $lat,
+//                'lng' => $lng,
+//                'city' => $request->all()['city'],
             ]);
 
             $userMetaInstance->save();
