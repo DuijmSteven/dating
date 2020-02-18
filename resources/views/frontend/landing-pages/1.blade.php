@@ -808,7 +808,7 @@
                 </div>
 
                 <div class="topQuote">
-                    <span class="quoteMark">"</span><span class="quoteText">De beste chat die ik heb gebruikt in een datingsite</span><span class="quoteMark">"</span>
+                    <span class="quoteMark">"</span><span class="quoteText">{{ trans('lp1.top_quote') }}</span><span class="quoteMark">"</span>
                     <div class="signature">- Tom, 41</div>
                 </div>
             </div>
