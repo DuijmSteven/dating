@@ -68,20 +68,22 @@ if ($('#app').length > 0) {
             getConversationPartners: function () {
                 axios.get('/api/conversations/conversation-partner-ids/' + parseInt(DP.authenticatedUser.id)).then(
                     response => {
-                        this.currentConversationPartnersResponse = response;
+                        if (response.data && response.data.length > 0) {
+                            this.currentConversationPartnersResponse = response;
 
-                        for (let key in response.data) {
-                            let split = response.data[key].split(':');
+                            response.data.forEach((key) => {
+                                let split = key.split(':');
 
-                            let userBId = +split[0];
-                            let state = split[1];
+                                let userBId = +split[0];
+                                let state = split[1];
 
-                            if (!this.conversationPartners.map(partner => partner.id).includes(userBId)) {
-                                this.addChat(DP.authenticatedUser.id, userBId, state);
-                            }
+                                if (!this.conversationPartners.map(partner => partner.id).includes(userBId)) {
+                                    this.addChat(DP.authenticatedUser.id, userBId, state);
+                                }
+                            });
+
+                            this.previousConversationPartnersResponse = this.currentConversationPartnersResponse;
                         }
-
-                        this.previousConversationPartnersResponse = this.currentConversationPartnersResponse;
                     }
                 );
             },

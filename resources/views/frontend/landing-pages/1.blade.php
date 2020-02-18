@@ -155,26 +155,12 @@
         left: 0;
         right: 0;
         bottom: 0;
-        height: 200px;
-        max-height: 400px;
         box-shadow: 20px 0 30px rgba(0, 0, 0, 0.4);
         font-size: 1.8rem;
         color: #555;
-        padding: 30px;
+        padding: 15px;
         text-align: center;
         z-index: 2000;
-    }
-
-    @media screen and (max-width: 700px) {
-        .cookie-popup {
-            height: 250px;
-        }
-    }
-
-    @media screen and (max-width: 500px) {
-        .cookie-popup {
-            height: 350px;
-        }
     }
 
     @media screen and (min-width: 1100px) {
@@ -185,7 +171,8 @@
 
     .cookie-popup p {
         display: inline-block;
-        margin-bottom: 30px;
+        margin-bottom: 10px;
+        font-size: 1.6rem;
     }
 
     .cookie-popup button {
@@ -416,7 +403,7 @@
         width: 400px;
         position: absolute;
         right: 15px;
-        top: 48px;
+        top: 200px;
         z-index: 1000;
     }
 
@@ -474,7 +461,7 @@
 
     @media screen and (max-width: 1000px) {
         h1 {
-            width: 370px;
+            width: 370px;32
             bottom: 150px;
         }
     }
@@ -486,7 +473,7 @@
             left: initial;
             bottom: initial;
             top: 225px;
-            font-size: 32px;
+            font-size: 29px;
         }
     }
 
@@ -527,6 +514,54 @@
     .ui-autocomplete.ui-widget.ui-widget-content li {
         font-size: 1.8rem;
         color: #555;
+    }
+
+    .freeCreditsUsp {
+        position: absolute;
+        top: -15px;
+        left: 50%;
+        width: 254px;
+        margin-left: -127px;
+        background-color: red;
+        border-radius: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 30px;
+        font-size: 1.9rem;
+        font-weight: 500;
+        padding-left: 10px;
+        padding-right: 10px;
+        color: #fff;
+    }
+
+    .topQuote {
+        position: absolute;
+        top: -165px;
+        left: -6px;
+        font-size: 1.9rem;
+        color: saddlebrown;
+        font-weight: 400;
+        width: 286px;
+    }
+
+    .topQuote .signature {
+        position: absolute;
+        right: 28px;
+        bottom: -30px;
+    }
+
+    .topQuote .quoteMark {
+        font-size: 3rem;
+        line-height: 1.7rem;
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+
+    @media screen and (max-width: 767px) {
+        .topQuote {
+            display: none;
+        }
     }
 
 </style>
@@ -586,13 +621,25 @@
                             </div>
                         </div>
                         <div class="form-row">
+                            <div class="form-group col-md-12 {{ $errors->has('password') ? ' has-error' : '' }}">
+                                <label for="password">{{ @trans('lp1.form.password') }}</label>
+                                <input type="password" class="form-control" id="password" name="password"
+                                       placeholder="{{ @trans('lp1.form.password') }}" required>
+                                @if ($errors->has('password'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-row">
                             <div class="form-group col-md-12 {{ $errors->has('email') ? ' has-error' : '' }}">
                                 <label for="email">{{ @trans('lp1.form.email') }}</label>
                                 <input type="email"
                                        class="form-control"
                                        id="email"
                                        name="email"
-                                       placeholder="{{ @trans('lp1.form.email') }}"
+                                       placeholder="{{ @trans('lp1.form.email_placeholder') }}"
                                        value="{{ old('email') }}"
                                        required
                                 >
@@ -607,7 +654,7 @@
                             <div class="form-group col-md-12 {{ $errors->has('city') ? ' has-error' : '' }}">
                                 <label for="city">{{ @trans('lp1.form.city') }}</label>
                                 <input type="text"
-                                       class="JS--autoCompleteCites form-control JS--Search"
+                                       class="JS--autoCompleteCites form-control"
                                        id="city"
                                        name="city"
                                        placeholder="{{ @trans('lp1.form.city') }}"
@@ -621,47 +668,35 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12 {{ $errors->has('dob') ? ' has-error' : '' }}">
-                                <label for="password">{{ @trans('lp1.form.dob') }}</label>
-                                <div
-                                    class="input-group date dateOfBirthGroup"
-                                >
-                                    <input id="datepicker_dob" type="text" class="form-control" name="dob" required
-                                           value="{{ old('dob') }}">
-                                    <div class="input-group-addon">
-                                        <i class="material-icons calendar">
-                                            calendar_today
-                                        </i>
-                                    </div>
-                                </div>
-                                @if ($errors->has('dob'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('dob', ':message') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12 {{ $errors->has('password') ? ' has-error' : '' }}">
-                                <label for="password">{{ @trans('lp1.form.password') }}</label>
-                                <input type="password" class="form-control" id="password" name="password"
-                                       placeholder="{{ @trans('lp1.form.password') }}" required>
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label for="password-confirm">{{ @trans('lp1.form.password_confirmation') }}</label>
-                                <input type="password" class="form-control" id="password-confirm"
-                                       name="password_confirmation" placeholder="{{ @trans('lp1.form.password') }}"
-                                       required>
-                            </div>
-                        </div>
+{{--                        <div class="form-row">--}}
+{{--                            <div class="form-group col-md-12 {{ $errors->has('dob') ? ' has-error' : '' }}">--}}
+{{--                                <label for="password">{{ @trans('lp1.form.dob') }}</label>--}}
+{{--                                <div--}}
+{{--                                    class="input-group date dateOfBirthGroup"--}}
+{{--                                >--}}
+{{--                                    <input id="datepicker_dob" type="text" class="form-control" name="dob" required--}}
+{{--                                           value="{{ old('dob') }}">--}}
+{{--                                    <div class="input-group-addon">--}}
+{{--                                        <i class="material-icons calendar">--}}
+{{--                                            calendar_today--}}
+{{--                                        </i>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                @if ($errors->has('dob'))--}}
+{{--                                    <span class="help-block">--}}
+{{--                                        <strong>{{ $errors->first('dob', ':message') }}</strong>--}}
+{{--                                    </span>--}}
+{{--                                @endif--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="form-row">--}}
+{{--                            <div class="form-group col-md-12">--}}
+{{--                                <label for="password-confirm">{{ @trans('lp1.form.password_confirmation') }}</label>--}}
+{{--                                <input type="password" class="form-control" id="password-confirm"--}}
+{{--                                       name="password_confirmation" placeholder="{{ @trans('lp1.form.password') }}"--}}
+{{--                                       required>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                         <div class="form-row">
                             <div class="col-sm-12 submit">
                                 <button type="submit"
@@ -695,6 +730,11 @@
                                     {{ @trans('lp1.form.login') }}
                                 </button>
                             </div>
+                        </div>
+
+
+                        <div class="freeCreditsUsp">
+                            <span>{{ trans('lp1.free_credits_usp') }}</span>
                         </div>
                     </form>
 
@@ -767,6 +807,10 @@
                     </form>
                 </div>
 
+                <div class="topQuote">
+                    <span class="quoteMark">"</span><span class="quoteText">De beste chat die ik heb gebruikt in een datingsite</span><span class="quoteMark">"</span>
+                    <div class="signature">- Tom, 41</div>
+                </div>
             </div>
         </div>
 

@@ -27,7 +27,6 @@ Vue.use(VuejsDialog);
 require('./bootstrap');
 require('bootstrap-datepicker');
 
-
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -47,7 +46,6 @@ require('./vue/vue-js-app');
 /**
  * Other Javascript
  */
-require("jquery-ui/ui/widgets/datepicker");
 require("jquery-ui/ui/widgets/autocomplete");
 require('disableautofill');
 
@@ -73,6 +71,39 @@ $(window).on('load', function () {
     $("img").mousedown(function(e){
         e.preventDefault()
     });
+
+    if ($("#datepicker_dob").length > 0) {
+        //Setup locale and bootstrap datepicker options
+        // $.fn.datepicker.dates['nl'] = {
+        //     days: ["Zondag", "Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag"],
+        //     daysShort: ["zo", "ma", "di", "wo", "do", "vr", "za"],
+        //     daysMin: ["zo", "ma", "di", "wo", "do", "vr", "za"],
+        //     months: ["Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "December"],
+        //     today: "Vandaag",
+        //     monthsTitle: "Maanden",
+        //     clear: "Wissen",
+        //     format: "dd-mm-yyyy"
+        // };
+
+        // $.fn.datepicker.defaults.language = DP.locale;
+
+        $("#datepicker_dob").datepicker({
+            weekStart: 1,
+            autoclose: 1,
+            startView: 2,
+            minView: 2,
+            useCurrent: false,
+            defaultViewDate: new Date(1990, 11, 24),
+            days: ["Zondag", "Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag"],
+            daysShort: ["zo", "ma", "di", "wo", "do", "vr", "za"],
+            daysMin: ["zo", "ma", "di", "wo", "do", "vr", "za"],
+            months: ["Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "December"],
+            today: "Vandaag",
+            monthsTitle: "Maanden",
+            clear: "Wissen",
+            format: "dd-mm-yyyy"
+        });
+    }
 
     if ($('.welcomeModal').length > 0) {
         $('.welcomeModal').modal('show');
@@ -108,7 +139,6 @@ $(window).on('load', function () {
         $.getJSON(DP.baseUrl + '/api/cities/nl')
             .done(function (response) {
                 cityList = response.cities;
-
 
                 $('.JS--autoCompleteCites').autocomplete({
                     source: response.cities,

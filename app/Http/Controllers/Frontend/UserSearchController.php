@@ -145,10 +145,10 @@ class UserSearchController extends FrontendController
         }
 
         $searchParameters = [
-            'city_name' => $this->authenticatedUser->meta->getCity(),
+            //'city_name' => $this->authenticatedUser->meta->getCity(),
             'lat' => $this->authenticatedUser->meta->getLat(),
             'lng' => $this->authenticatedUser->meta->getLng(),
-            'radius' => 40,
+            //'radius' => 40,
             'age' => null,
             'body_type' => null,
             'height' => null,

@@ -185,14 +185,26 @@
 
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="dob">{{ trans('user_constants.dob') }}</label>
-                                <input type="text"
-                                       class="form-control"
-                                       id="dob"
-                                       name="dob"
-                                       disabled
-                                       value="{!! $user->meta->dob->format('d M Y') !!}"
-                                >
+                                <label for="dob">{{ @trans('user_constants.dob') }}</label>
+                                <div class="input-group date dateOfBirthGroup">
+                                    <input id="datepicker_dob"
+                                           type="text"
+                                           class="form-control"
+                                           name="dob"
+                                           required
+                                           value="{{ $user->meta->dob ? $user->meta->dob->format('m-d-Y') : '' }}"
+                                    >
+                                    <div class="input-group-addon" style="padding: 3px 12px">
+                                        <i class="material-icons calendar">
+                                            calendar_today
+                                        </i>
+                                    </div>
+                                </div>
+                                @if ($errors->has('dob'))
+                                    @if ($errors->has('dob'))
+                                        {!! $errors->first('dob', '<small class="form-error">:message</small>') !!}
+                                    @endif
+                                @endif
                             </div>
                         </div>
 

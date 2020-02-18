@@ -70,7 +70,7 @@ trait RegistersUsers
                 'country' => 'nl',
                 'gender' => UserConstants::selectableField('gender', 'peasant', 'array_flip')[$gender],
                 'looking_for_gender' => UserConstants::selectableField('gender', 'peasant', 'array_flip')[$lookingFor],
-                'dob' =>  new Carbon($request->all()['dob']),
+                //'dob' =>  new Carbon($request->all()['dob']),
                 'lat' => $lat,
                 'lng' => $lng,
                 'city' => $request->all()['city'],

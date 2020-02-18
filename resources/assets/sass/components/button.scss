@@ -20,6 +20,8 @@
     border: 0;
     color: map_get($button, font-color);
     text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     &.whiteFont {
         color: $white;

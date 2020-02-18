@@ -74,8 +74,6 @@ $(window).on('load', function () {
         $('.JS--form-wrapper').removeClass('hidden');
         $('#JS--loginForm').toggle('fast');
 
-        console.log($(window).width() <= 767);
-
         if ($(window).width() <= 767) {
             setTimeout(() => {
                 $('.JS--welcome-container').css('margin-top', calculateExcessOfForm() + 60);
@@ -118,68 +116,66 @@ $(window).on('load', function () {
         Cookies.set("lpFormSelection", 'login');
     });
 
-    // Setup locale and bootstrap datepicker options
-    $.fn.datepicker.dates['nl'] = {
-        days: ["Zondag", "Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag"],
-        daysShort: ["zo", "ma", "di", "wo", "do", "vr", "za"],
-        daysMin: ["zo", "ma", "di", "wo", "do", "vr", "za"],
-        months: ["Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "December"],
-        monthsShort: ["Jan", "Feb", "Mrt", "Apr", "Mei", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"],
-        today: "Vandaag",
-        monthsTitle: "Maanden",
-        clear: "Wissen",
-        weekStart: 1,
-        format: "dd-mm-yyyy"
-    };
+    // // Setup locale and bootstrap datepicker options
+    // $.fn.datepicker.dates['nl'] = {
+    //     days: ["Zondag", "Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag"],
+    //     daysShort: ["zo", "ma", "di", "wo", "do", "vr", "za"],
+    //     daysMin: ["zo", "ma", "di", "wo", "do", "vr", "za"],
+    //     months: ["Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "December"],
+    //     monthsShort: ["Jan", "Feb", "Mrt", "Apr", "Mei", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"],
+    //     today: "Vandaag",
+    //     monthsTitle: "Maanden",
+    //     clear: "Wissen",
+    //     weekStart: 1,
+    //     format: "dd-mm-yyyy"
+    // };
+    //
+    // $.fn.datepicker.defaults.language = DP.locale;
+    //
+    // $("#datepicker_dob").datepicker({
+    //     weekStart: 1,
+    //     autoclose: 1,
+    //     startView: 2,
+    //     minView: 2,
+    //     useCurrent: false,
+    //     defaultViewDate: new Date(1990, 11, 24),
+    // });
 
-    $.fn.datepicker.defaults.language = DP.locale;
+    // Auto-completes Dutch cities in bot creation view text field
+    $.getJSON(DP.baseUrl + '/api/cities/nl')
+        .done(function (response) {
+            cityList = response.cities;
 
-    $("#datepicker_dob").datepicker({
-        weekStart: 1,
-        autoclose: 1,
-        startView: 2,
-        minView: 2,
-        useCurrent: false,
-        defaultViewDate: new Date(1990, 11, 24),
+            $('.JS--autoCompleteCites').autocomplete({
+                source: response.cities,
+                minLength: 2
+            })
+        }).fail(function () {
     });
 
-    if ($('.JS--autoCompleteCites').length > 0) {
-        // Auto-completes Dutch cities in bot creation view text field
-        $.getJSON(DP.baseUrl + '/api/cities/nl')
-            .done(function (response) {
-                cityList = response.cities;
-
-                $('.JS--autoCompleteCites').autocomplete({
-                    source: response.cities,
-                    minLength: 2
-                })
-            }).fail(function () {
-        });
-
-        const $searchRadiusInput = $('.JS--radiusSearchInput');
-
-        if ($('.JS--autoCompleteCites').length > 0 && $('.JS--autoCompleteCites').val().length > 0) {
-            $searchRadiusInput.removeClass('hidden');
-        }
-
-        $('.JS--autoCompleteCites').keyup(function () {
-            if ($(this).val().length > 0) {
-                if ($searchRadiusInput.hasClass('hidden')) {
-                    $searchRadiusInput.removeClass('hidden');
-                }
-            } else {
-                if (!$searchRadiusInput.hasClass('hidden')) {
-                    $searchRadiusInput.addClass('hidden');
-                }
-            }
-        });
-
-        getCoordinatesAndFillInputs();
-
-        $('.JS--autoCompleteCites').keyup(function () {
-            getCoordinatesAndFillInputs();
-        });
-    }
+        // const $searchRadiusInput = $('.JS--radiusSearchInput');
+        //
+        // if ($('.JS--autoCompleteCites').length > 0 && $('.JS--autoCompleteCites').val().length > 0) {
+        //     $searchRadiusInput.removeClass('hidden');
+        // }
+        //
+        // $('.JS--autoCompleteCites').keyup(function () {
+        //     if ($(this).val().length > 0) {
+        //         if ($searchRadiusInput.hasClass('hidden')) {
+        //             $searchRadiusInput.removeClass('hidden');
+        //         }
+        //     } else {
+        //         if (!$searchRadiusInput.hasClass('hidden')) {
+        //             $searchRadiusInput.addClass('hidden');
+        //         }
+        //     }
+        // });
+        //
+        // getCoordinatesAndFillInputs();
+        //
+        // $('.JS--autoCompleteCites').keyup(function () {
+        //     getCoordinatesAndFillInputs();
+        // });
 });
 
 function fitRoundImageToContainer(element) {

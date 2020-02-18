@@ -9,7 +9,8 @@ return [
         'woman_looking_for_woman' => 'Vrouw op zoek naar een vrouw',
         'man_looking_for_man' => 'Man op zoek naar een man',
         'username' => 'Gebruikersnaam',
-        'email' => 'E-mail (niet zichtbaar voor anderen)',
+        'email' => 'E-mail adres (niet zichtbaar voor anderen)',
+        'email_placeholder' => 'E-mail adres',
         'city' => 'Stad',
         'dob' => 'Geboortedatum',
         'password' => 'Wachtwoord',
@@ -49,5 +50,6 @@ return [
     'forgot_password' => 'Wachtwoord vergeten?',
     'reset_password' => 'Wachtwoord opnieuw instellen',
     'online_sex_dating' => 'ONLINE SEX DATING',
+    'free_credits_usp' => 'TIJDELIJK! 2 gratis credits!',
     'second_welcome' => "Online op zoek gaan naar sekscontact kan in het begin heel spannend zijn. Je staat op het punt om een spannend avontuur aan te gaan met één of meerdere sekscontacten. Het is daarom verstandig om je goed voor te bereiden op online sex dating. Denk goed na over waar je een seks date wilt hebben. Hou je van spanning en openbare gelegenheden? Dan zou een (verlaten) parkeerplaats, een bos of natuurgebied perfect aansluiten. Iets meer spanning kun je natuurlijk vinden in drukkere gelegenheden, zoals het openbaar vervoer wellicht, een restaurant of kledingzaak. Als je liever op veilig speelt dan kun je ook gewoon thuis een sex afspraak regelen, of bij je date thuis. Misschien wil je voor de veiligheid op een neutrale plek afspreken, een hotel kan dan uitkomst bieden. Er zijn tegenwoordig ook mogelijkheden om voor slechts enkele uren een hotelkamer te huren. Je kunt dan ergens afspreken met je sekscontact en na de snelle seks date weer naar huis gaan, alsof er niets is gebeurd! Online sex dating ligt aan de basis van je geile date, sekscontacten en seksrelaties. Wil je je inlezen voor je van start gaat om je kans op succes op sekscontact te vergroten? Lees dan onze handige <a target='_blank' href=\":articlesRoute\">artikelen</a> voor je van start gaat."
 ];

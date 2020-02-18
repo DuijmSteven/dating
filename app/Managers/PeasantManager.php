@@ -5,6 +5,7 @@ namespace App\Managers;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Services\GeocoderService;
 use App\User;
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
@@ -84,6 +85,10 @@ class PeasantManager extends UserManager
 
         $userDataToPersist['user'] = $usersTableData;
         $userDataToPersist['user_meta'] = $userMetaTableData;
+
+        if (isset($userDataToPersist['user_meta']['dob'])) {
+            $userDataToPersist['user_meta']['dob'] = Carbon::createFromFormat('m-d-Y', $userDataToPersist['user_meta']['dob'], 'Europe/Amsterdam')->format('Y-m-d');
+        }
 
         $userDataToPersist['user']['active'] = 1;
 

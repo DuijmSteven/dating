@@ -4,6 +4,7 @@ namespace App\Http\Requests\Admin\Peasants;
 
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Http\Requests\Request;
+use Carbon\Carbon;
 
 class PeasantUpdateRequest extends Request
 {
@@ -29,7 +30,7 @@ class PeasantUpdateRequest extends Request
         $rules = [
             //'username' => 'min:5|max:50|string|unique:users,username,' . trim($this->route('userId') . ',id'),
             'active' => 'boolean',
-            'dob' => 'date_format:Y-m-d',
+            'dob' => 'date_format:d-m-Y|before:' . Carbon::now()->subYears(18)->format('d-m-Y') . '|after:' . Carbon::now()->subYears(100)->format('d-m-Y'),
             'gender' => 'in:'. implode(',', array_keys($userProfileFields['gender'])),
             'looking_for_gender' => 'in:'. implode(',', array_keys($userProfileFields['looking_for_gender'])),
             'relationship_status' => 'in:'. implode(',', array_keys($userProfileFields['relationship_status'])),

@@ -133,6 +133,7 @@
         femalePlaceholderImageUrl: '{{ url('/') . '/img/' . 'avatars/female.jpg' }}',
         creditsUrl: '{{ route('credits.show') }}',
         singleProfileUrl: '{{ url('/') . '/users/' }}',
+        locale: '{{ app()->getLocale() }}'
     };
 </script>
 <script src="{{ mix('js/app.js') }}"></script>
