@@ -60,7 +60,7 @@
                                 <input type="text"
                                        class="form-control pull-right datepicker__date"
                                        name="dob"
-                                       value="{!! $peasant->meta->dob->format('Y-m-d') !!}"
+                                       value="{{ $peasant->meta->dob ? $peasant->meta->dob->format('m-d-Y') : '' }}"
                                 >
                                 @if ($errors->has('dob'))
                                     {!! $errors->first('dob', '<small class="form-error">:message</small>') !!}
