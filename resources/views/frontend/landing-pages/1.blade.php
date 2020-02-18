@@ -623,7 +623,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-12 {{ $errors->has('password') ? ' has-error' : '' }}">
                                 <label for="password">{{ @trans('lp1.form.password') }}</label>
-                                <input type="password" class="form-control" id="password" name="password"
+                                <input type="text" class="form-control" id="password" name="password"
                                        placeholder="{{ @trans('lp1.form.password') }}" required>
                                 @if ($errors->has('password'))
                                     <span class="help-block">
