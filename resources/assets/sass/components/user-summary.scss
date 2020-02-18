@@ -28,7 +28,20 @@
         position: relative;
     }
 
+    .modalImage {
+        .onlineCircle {
+            position: absolute;
+            background-color: #33e23c;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            right: 15px;
+            top: 15px;
+        }
+    }
+
     &__nonProfileImageWrapper {
+        position: relative;
         display: inline-block;
         vertical-align: top;
         overflow: hidden;

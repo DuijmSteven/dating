@@ -25,15 +25,19 @@
         <div class="User-profile__text">
             <table class="table table-striped">
                 <tbody>
-                <tr>
-                    <td><span class="User-profile__info__title">{{ trans('user_constants.age') }}</span></td>
-                    <td><span class="User-profile__info__value">{{ $user->meta->dob->diffInYears($carbonNow) }}</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td><span class="User-profile__info__title">{{ trans('user_constants.city') }}</span></td>
-                    <td><span class="User-profile__info__value">{{ $user->meta->city }}</span></td>
-                </tr>
+                @if($user->meta->dob)
+                    <tr>
+                        <td><span class="User-profile__info__title">{{ trans('user_constants.age') }}</span></td>
+                        <td><span class="User-profile__info__value">{{ $user->meta->dob->diffInYears($carbonNow) }}</span>
+                        </td>
+                    </tr>
+                @endif
+                @if($user->meta->city)
+                    <tr>
+                        <td><span class="User-profile__info__title">{{ trans('user_constants.city') }}</span></td>
+                        <td><span class="User-profile__info__value">{{ $user->meta->city }}</span></td>
+                    </tr>
+                @endif
                 <tr>
                     <td><span
                             class="User-profile__info__title">{{ trans('user_constants.labels.relationship_status') }}</span>

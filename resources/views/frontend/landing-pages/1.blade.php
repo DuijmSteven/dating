@@ -542,7 +542,7 @@
         font-size: 1.9rem;
         color: saddlebrown;
         font-weight: 400;
-        width: 286px;
+        width: 310px;
     }
 
     .topQuote .signature {

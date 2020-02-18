@@ -10,6 +10,7 @@
                             data-src="{{ \StorageHelper::profileImageUrl($user) }}"
                             alt="user image"
                         >
+
                     </a>
                 @else
                     <div class="UserSummary__profileImageWrapper">
@@ -18,6 +19,8 @@
                             src="{{ \StorageHelper::profileImageUrl($user) }}"
                             alt="user image"
                         >
+
+                        <div class="onlineCircle"></div>
                     </div>
                 @endif
             @else
@@ -39,8 +42,10 @@
                     {{ $user->username }}
                 </a>
                 <div class="UserSummary__userInfo__additional">
-                    {!! isset($user->meta->city) ? $user->meta->city . " <span>&centerdot;</span>" : '' !!}
-                    {{ $user->meta->dob->diffInYears($carbonNow) }} Jaar
+                    {!! isset($user->meta->city) ? $user->meta->city : '' !!}
+                    {!! isset($user->meta->city) && $user->meta->dob ? ' <span>&centerdot;</span> ' : '' !!}
+                    {!! $user->meta->dob ? $user->meta->dob->diffInYears($carbonNow) . ' Jaar' : '' !!}
+                    {!! !isset($user->meta->city) && !$user->meta->dob ? '&nbsp' : '' !!}
                 </div>
             </div>
             <div class="UserSummary__sendMessage"
