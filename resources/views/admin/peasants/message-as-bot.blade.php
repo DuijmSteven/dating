@@ -16,7 +16,7 @@
                 <li data-bot-id="{!! $bot->getId() !!}"
                     data-bot-profile-image="{!! \StorageHelper::profileImageUrl($bot) !!}"
                     data-bot-username="{!! $bot->username !!}"
-                    data-bot-age="{!! $bot->meta->dob->diffInYears($carbonNow) !!}"
+                    data-bot-age="{!! $bot->meta->dob ? $bot->meta->dob->diffInYears($carbonNow) : 'Not set'!!}"
                     data-bot-status="{!! ucfirst(str_replace('_', ' ', $bot->meta->relationship_status ? \UserConstants::selectableField('relationship_status', $bot->roles[0]->name)[$bot->meta->relationship_status] : 'Nog niet ingevuld')) !!}"
                     data-bot-city="{!! $bot->meta->city !!}"
                     data-bot-height="{!! ucfirst(str_replace('_', ' ', $bot->meta->height ? \UserConstants::selectableField('height', $bot->roles[0]->name)[$bot->meta->height] : 'Nog niet ingevuld')) !!}"
@@ -134,7 +134,7 @@
                             <div style="margin-bottom: 40px"
                                  class="row User-profile__text">
                                 <div class="col-xs-6">
-                                    <div> <strong>Age:</strong> {{ $peasant->meta->dob->diffInYears($carbonNow) }}</div>
+                                    <div> <strong>Age:</strong> {{ $peasant->meta->dob ? $peasant->meta->dob->diffInYears($carbonNow) : 'Nog niet ingevuld' }}</div>
                                     <div> <strong>Status:</strong>
                                         {{ ucfirst(str_replace('_', ' ', $peasant->meta->relationship_status ? \UserConstants::selectableField('relationship_status', $peasant->roles[0]->name)[$peasant->meta->relationship_status] : 'Nog niet ingevuld')) }}
                                     </div>
