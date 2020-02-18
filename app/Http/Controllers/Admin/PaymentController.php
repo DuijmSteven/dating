@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Creditpack;
 use App\Helpers\ApplicationConstants\MetaConstants;
 use App\Helpers\ApplicationConstants\PaginationConstants;
 use App\Http\Controllers\Controller;
@@ -22,6 +23,13 @@ class PaymentController extends Controller
         $payments = Payment::with('peasant')
             ->orderBy('created_at', 'desc')->paginate(PaginationConstants::$perPage['backend']['default']);
 
+        $creditpacks = Creditpack::all();
+        $creditpackNamePerId = [];
+
+        foreach ($creditpacks as $creditpack) {
+            $creditpackNamePerId[$creditpack->id] = $creditpack->name;
+        }
+
         return view(
             'admin.payments.overview',
             [
@@ -29,7 +37,8 @@ class PaymentController extends Controller
                 'headingLarge' => 'Payments',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
-                'payments' => $payments
+                'payments' => $payments,
+                'creditpackNamePerId' => $creditpackNamePerId
             ]
         );
     }
