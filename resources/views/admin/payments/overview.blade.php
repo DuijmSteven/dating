@@ -35,8 +35,11 @@
                                 <tr>
                                     <td>{!! $payment->id !!}</td>
                                     <td>
-                                        <strong>ID:</strong> {{ $payment->peasant->username }}<br>
-                                        <strong>ID:</strong> <a href="{{ route('admin.peasants.edit.get', ['id' => $payment->peasant->id]) }}">{{ $payment->peasant->id }}</a><br>
+                                        <strong>ID:</strong> {{ $payment->peasant ? $payment->peasant->username : 'The user does not exist' }}<br>
+
+                                        @if($payment->peasant)
+                                            <strong>ID:</strong> <a href="{{ route('admin.peasants.edit.get', ['id' => $payment->peasant->id]) }}">{{ $payment->peasant->id }}</a><br>
+                                        @endif
                                     </td>
                                     <td>{{ $payment->type }}</td>
                                     <td>{{ \App\Helpers\PaymentsHelper::$statuses[$payment->status] }}</td>
