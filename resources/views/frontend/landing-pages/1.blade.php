@@ -569,12 +569,12 @@
 <header>
     <div class="container" style="z-index: 50; position:relative;">
         <div class="navbar-brand">
-            <img src="img/site_logos/Altijdsex_LogoBig_Pos.svg" title="Altijdsex.nl Logo" alt="Altijdsex.nl Logo"/>
+            <img src="img/site_logos/Altijdsex_LogoBig_Neg.svg" title="Altijdsex.nl Logo" alt="Altijdsex.nl Logo"/>
         </div>
     </div>
 </header>
 <main>
-    <div class="vh-70 bg-image text-center JS--header" style="background-image: url('img/lp/dating-bg.jpg'); position: relative">
+    <div class="vh-70 bg-image text-center JS--header" style="background-image: url('img/lp/datingsite-lp-bg.jpg'); position: relative">
         <div class="container" style="position:relative; height: 100%">
             <h1 style="text-transform: none">{{ @trans('lp1.heading') }}</h1>
 
