@@ -2,7 +2,7 @@
 
 return [
     'edit_profile' => 'Edit profile',
-    'credits' => 'Credits',
+    'credits' => 'Buy Credits!',
     'logout' => 'Logout',
     'home' => 'Home',
     'login' => 'Login',

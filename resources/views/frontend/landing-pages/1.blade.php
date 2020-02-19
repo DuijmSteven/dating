@@ -415,12 +415,10 @@
 
     @media screen and (max-width: 767px) {
         .form-wrapper {
-            width: 100%;
-            top: 390px;
+            width: 84%;
+            top: 210px;
             z-index: 1000;
-            left: 50%;
-            margin-left: -50%;
-            right: initial;
+            right: 0;
         }
     }
 
@@ -461,19 +459,19 @@
 
     @media screen and (max-width: 1000px) {
         h1 {
-            width: 370px;32
+            width: 370px;
             bottom: 150px;
         }
     }
 
     @media screen and (max-width: 767px) {
         h1 {
-            width: 93%;
+            width: 208px;
             text-align: center;
+            right: 9px;
+            top: 59px;
+            font-size: 17px;
             left: initial;
-            bottom: initial;
-            top: 225px;
-            font-size: 29px;
         }
     }
 

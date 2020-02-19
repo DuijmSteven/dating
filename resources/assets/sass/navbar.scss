@@ -333,6 +333,36 @@
         position: relative;
     }
 
+    .buyCreditsButton {
+        position: absolute;
+        left: 480px;
+        top: 20px;
+
+        width: 150px;
+        height: 31px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 500;
+        font-size: 2rem;
+        background-color: #9c7853;
+        border-radius: 20px;
+        color: $white;
+        text-decoration: none;
+
+        @media (max-width: 1199px) {
+            left: 270px;
+        }
+
+        @media (max-width: $screen-sm-max) {
+            left: 220px;
+        }
+
+        @media (max-width: $screen-xs-max) {
+            display: none;
+        }
+    }
+
     .searchToggle {
         position: relative;
         display: inline-block;

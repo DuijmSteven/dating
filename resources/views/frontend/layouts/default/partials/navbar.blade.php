@@ -23,6 +23,10 @@
             </a>
 
             @if(isset($authenticatedUser))
+                <a class="buyCreditsButton" href="{{ route('credits.show') }}">
+                    {{ trans('navbar.credits') }}
+                </a>
+
                 <a href="#" class="JS--searchToggle searchToggle mobile">
                     <div class="searchToggleButton JS--searchToggleButton">
                         <span class="searchToggleButtonText">{{ @trans('search.search') }}</span>
