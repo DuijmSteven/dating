@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Managers\UserManager;
 use Illuminate\Console\Command;
 
-class SetRandomUsersOnline extends Command
+class SetRandomBotsOnline extends Command
 {
     /**
      * The name and signature of the console command.

@@ -451,7 +451,7 @@
         position: absolute;
         bottom: 258px;
         left: 15px;
-        text-shadow: 2px 2px #564f4f;
+        text-shadow: 1px 2px #5a1f12;
         width: 412px;
         font-weight: 400;
         text-align: left;
@@ -472,6 +472,8 @@
             top: 59px;
             font-size: 17px;
             left: initial;
+            text-shadow: 1px 2px #ce9191;
+            color: #82230d;
         }
     }
 

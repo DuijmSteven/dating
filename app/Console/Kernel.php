@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\SetRandomUsersOnline::class,
+        Commands\SetRandomBotsOnline::class,
         Commands\ExportDb::class,
     ];
 
