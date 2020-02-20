@@ -24,7 +24,7 @@ return [
         'login' => 'Log in',
     ],
     'welcome' => 'Welkom!',
-    'welcome_text' => 'Welkom op de beste datingsite van Nederland: Altijdsex.nl! Ben je op zoek naar een sexdate? Een geil gesprek? Of gewoon naar een seksbuddy? Op Altijdsex.nl kom je duizenden gelijkgestemden tegen, waar je direct op veilige en anonieme wijze mee kan communiceren. Maak een gratis account aan en kom direct in contact met anderen!',
+    'welcome_text' => 'Welkom op de beste datingsite van Nederland: Altijdsex.nl! Ben je op zoek naar een sexdate? Geil chatten? Of gewoon naar een seksbuddy? Op Altijdsex.nl kom je duizenden gelijkgestemden tegen, waar je direct op veilige en anonieme wijze mee kan sekschatten. Maak nu gratis een account aan en kom direct in contact met anderen!',
     'usps' => [
         'free_access' => [
             'title' => 'Gratis Toegang',
