@@ -72,6 +72,14 @@ $(window).on('load', function () {
         e.preventDefault()
     });
 
+    $('#JS--search-city-input').keydown(function(e){
+        if(e.keyCode === 13)
+        {
+            e.preventDefault();
+            $('#JS--SearchBarForm').find('.Button').click();
+        }
+    });
+
     if ($("#datepicker_dob").length > 0) {
         //Setup locale and bootstrap datepicker options
         // $.fn.datepicker.dates['nl'] = {

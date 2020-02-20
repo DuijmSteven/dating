@@ -58,6 +58,34 @@
     }
 }
 
+.User-profile__backButton {
+    margin-top: -10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    background-color: $tertiaryColor;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    margin-bottom: 15px;
+    width: 100px;
+    text-decoration: none;
+    padding: 3px;
+    font-weight: 400;
+
+    &:hover {
+        text-decoration: none;
+        color: #fff;
+        background-color: darken($tertiaryColor, 4%);
+    }
+
+    &:focus {
+        text-decoration: none;
+        color: #fff;
+        background-color: darken($tertiaryColor, 4%);
+    }
+}
+
 .User-profile__about {
     &__body {
         padding: 20px 20px 10px;

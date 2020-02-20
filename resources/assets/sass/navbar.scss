@@ -345,10 +345,14 @@
         align-items: center;
         font-weight: 500;
         font-size: 2rem;
-        background-color: #9c7853;
+        background-color: #bf5252;
         border-radius: 20px;
         color: $white;
         text-decoration: none;
+
+        &:hover {
+            background-color: darken(#bf5252, 4%);
+        }
 
         @media (max-width: 1199px) {
             left: 270px;
@@ -420,6 +424,10 @@
 
         background-color: lighten($secondaryColor, 5%);
         color: #fff;
+
+        &:hover {
+            background-color: $secondaryColor;
+        }
 
         span {
             display: flex;
