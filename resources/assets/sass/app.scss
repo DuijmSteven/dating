@@ -69,3 +69,19 @@
     color: #555;
   }
 }
+
+.welcomeModal {
+  .show-mobile {
+    display: none;
+
+    @media screen and (max-width: $screen-xs-max) {
+      display: block;
+    }
+  }
+
+  .hide-mobile {
+    @media screen and (max-width: $screen-xs-max) {
+      display: none;
+    }
+  }
+}

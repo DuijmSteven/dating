@@ -67,7 +67,13 @@
                     v-if="showNoCredits"
                     class="PrivateChatItem__feedback PrivateChatItem__feedback--notEnoughCredits">
                     <div>{{ this.$parent.chatTranslations['not_enough_credits'] }}</div>
-                    <div><a :href="creditsUrl">{{ this.$parent.chatTranslations['refill'] }}</a></div>
+                    <div>
+                        <a href=""
+                            v-on:click="minimizeAllChatActivity($event)"
+                        >
+                            {{ this.$parent.chatTranslations['refill'] }}
+                        </a>
+                    </div>
                 </div>
 
                 <div
@@ -517,7 +523,38 @@
                     }
                 );
             },
+            minimizeAllChatActivity($event) {
+                $event.preventDefault();
 
+                if (['xs'].includes(this.$mq)) {
+                    axios.get(
+                        '/api/conversations/conversation-partner-ids/remove/' +
+                        parseInt(DP.authenticatedUser.id) +
+                        '/' +
+                        parseInt(this.partner.id)
+                    ).then(
+                        response => {
+                        }
+                    );
+
+                    axios.get(
+                        '/api/conversations/conversation-manager-state/' +
+                        parseInt(DP.authenticatedUser.id) + '/' +
+                        '0'
+                    ).then(
+                        response => {
+                            axios.get('/api/conversations/set-conversation-activity-for-user/' + this.user.id + '/' + this.partner.id + '/' + this.user.id + '/' + '0').then(
+                                response => {
+                                    window.location = this.creditsUrl;
+                                }
+                            );
+                        }
+                    );
+                } else {
+                    window.location = this.creditsUrl;
+
+                }
+            },
             maximize() {
                 this.setConversationActivityForUserFalse();
 

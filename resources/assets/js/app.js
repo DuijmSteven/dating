@@ -106,9 +106,7 @@ $(window).on('load', function () {
     }
 
     if ($('.welcomeModal').length > 0) {
-        if ($(window).width() > 767) {
-            $('.welcomeModal').modal('show');
-        }
+        $('.welcomeModal').modal('show');
 
         setTimeout(() => {
             $.get(DP.baseUrl + '/api/users/' + DP.authenticatedUser.id + '/milestones/accepted-welcome-message', function( data ) {
