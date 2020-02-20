@@ -5,18 +5,18 @@ namespace App\Console\Commands;
 use App\Managers\UserManager;
 use Illuminate\Console\Command;
 
-class SetRandomUsersOnline extends Command
+class SetRandomBotsOnline extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'users:set-random-online {userAmount=40}';
+    protected $signature = 'bots:set-random-online {notAmount=40}';
 
     /**
      * The console command description.
-     *
+     *ExportDb
      * @var string
      */
     protected $description = 'Sets an amount of random users online. The amount of users can be passed as a parameter';
@@ -42,7 +42,7 @@ class SetRandomUsersOnline extends Command
      */
     public function handle()
     {
-        $userAmount = $this->argument('userAmount');
-        $this->userManager->setRandomUsersOnline($userAmount);
+        $botAmount = $this->argument('notAmount');
+        $this->userManager->setRandomBotsOnline($botAmount);
     }
 }

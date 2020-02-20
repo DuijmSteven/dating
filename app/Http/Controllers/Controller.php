@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Kim\Activity\Activity;
 
 /**
  * Class Controller
@@ -19,6 +20,7 @@ class Controller extends BaseController
 
     /** @var User|null */
     protected $authenticatedUser;
+    protected $onlineUserIds;
 
     /**
      * Controller constructor.
@@ -28,7 +30,12 @@ class Controller extends BaseController
         $this->middleware(function ($request, $next) {
             $this->authenticatedUser = UserManager::getAndFormatAuthenticatedUser();
 
+            $onlineIds = Activity::users(1)->pluck('user_id')->toArray();
+
+            $this->onlineUserIds = $onlineIds;
+
             view()->share('authenticatedUser', $this->authenticatedUser);
+            view()->share('onlineUserIds', $this->onlineUserIds);
 
             return $next($request);
         });

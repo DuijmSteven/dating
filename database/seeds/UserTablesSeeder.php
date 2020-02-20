@@ -103,7 +103,7 @@ class UserTablesSeeder extends Seeder
         /* -- Create peasants and bots for all genders -- */
         foreach (['peasant', 'bot'] as $role) {
             foreach (UserConstants::selectableField('gender') as $key => $value) {
-                $userAmount = 25;
+                $userAmount = 100;
 
                 for ($count = 0; $count < $userAmount; $count++) {
                     if ($role == 'bot') {

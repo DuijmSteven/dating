@@ -19,8 +19,6 @@
                             src="{{ \StorageHelper::profileImageUrl($user) }}"
                             alt="user image"
                         >
-
-                        <div class="onlineCircle"></div>
                     </div>
                 @endif
             @else
@@ -31,6 +29,10 @@
                         alt="user image"
                     >
                 </a>
+            @endif
+
+            @if(in_array($user->getId(), $onlineUserIds))
+                <div class="onlineCircle"></div>
             @endif
         </div>
     </div>

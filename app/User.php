@@ -14,6 +14,11 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    const TYPE_ADMIN = 1;
+    const TYPE_PEASANT = 2;
+    const TYPE_BOT = 3;
+    const TYPE_OPERATOR = 4;
+
     protected $primaryKey = 'id';
 
     public function __construct(array $attributes = [])

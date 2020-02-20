@@ -46,6 +46,8 @@ if ($('#app').length > 0) {
                 axios.get('/api/users/online/ids').then(
                     response => {
                         this.onlineUserIds = response.data;
+
+                        console.log(this.onlineUserIds);
                     }
                 );
             },

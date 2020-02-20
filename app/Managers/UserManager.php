@@ -251,11 +251,11 @@ class UserManager
      * @param $userAmount
      * @return mixed
      */
-    public function setRandomUsersOnline($userAmount)
+    public function setRandomBotsOnline($userAmount)
     {
         $randomUsers = $this->user->with(['roles', 'meta'])
             ->whereHas('roles', function ($query) {
-                $query->whereIn('id', [2]);
+                $query->whereIn('id', [User::TYPE_BOT]);
             })
             ->orderByRaw('RAND()')->take($userAmount)
             ->get();
