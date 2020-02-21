@@ -4,7 +4,7 @@
     <div class="User-profile">
         <div class="row">
             <div class="col-xs-12">
-                <a href="{{ url()->previous() }}" class="User-profile__backButton">
+                <a href="{{ url()->previous() }}" class="GeneralBackButton">
                     <i class="material-icons">
                         chevron_left
                     </i>{{ trans('user_profile.back') }}

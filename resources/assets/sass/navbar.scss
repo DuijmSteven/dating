@@ -424,6 +424,7 @@
 
         background-color: lighten($secondaryColor, 5%);
         color: #fff;
+        font-weight: 400;
 
         &:hover {
             background-color: $secondaryColor;

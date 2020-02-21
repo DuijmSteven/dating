@@ -126,6 +126,14 @@ $(window).on('load', function () {
         $('.JS--ScrollTopButton').click(() => {
             $('html, body').animate({scrollTop:0}, 500, 'swing');
         });
+
+        $(window).scroll(() => {
+            if ( $(window).scrollTop() > 400) {
+                $('.JS--ScrollTopButton').removeClass('hidden');
+            } else {
+                $('.JS--ScrollTopButton').addClass('hidden');
+            }
+        });
     }
 
     if ($('.Shoutbox').length > 0) {
