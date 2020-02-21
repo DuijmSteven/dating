@@ -13,11 +13,20 @@
             class="PrivateChatManager__head"
         >
             <div class="PrivateChatManager__head__title">
-                <span
+                <div
                     v-if="$parent.chatTranslations"
                     class="PrivateChatManager__head__title__text">
                     {{ $parent.chatTranslations['conversations'] }} ({{ conversations.length }})
-                </span>
+
+                    <div
+                        v-if="newMessagesExist"
+                        class="PrivateChatManager__head__newMessages"
+                    >
+                        <i class="material-icons">
+                            email
+                        </i>
+                    </div>
+                </div>
             </div>
             <div class="PrivateChatManager__head__actionIcons">
                 <div id="PrivateChatManager__toggle"
@@ -31,6 +40,15 @@
                     >
                         message
                     </i>
+
+                    <div
+                        v-if="newMessagesExist"
+                        class="PrivateChatManager__head__newMessages mobile"
+                    >
+                        <i class="material-icons">
+                            email
+                        </i>
+                    </div>
                 </div>
             </div>
         </div>
@@ -106,7 +124,9 @@
                 conversations: [],
                 currentUser: undefined,
                 isMaximized: true,
-                fullyLoaded: false
+                fullyLoaded: false,
+                countConversationsWithNewMessages: 0,
+                newMessagesExist: false
             };
         },
 
@@ -149,6 +169,10 @@
                 this.removeIsNewOrHasNewMessageClass(itemIndex);
             },
             removeIsNewOrHasNewMessageClass: function (index) {
+                if ($('#PrivateChatManager__item--' + index).hasClass('isNewOrHasNewMessage') && this.countConversationsWithNewMessages === 1) {
+                    this.newMessagesExist = false;
+                }
+
                 $('#PrivateChatManager__item--' + index).removeClass('isNewOrHasNewMessage');
             },
             confirmDeleteConversation: function (conversationId) {
@@ -197,6 +221,8 @@
                 axios.get('/api/conversations/' + this.user.id).then(response => {
                     this.conversations = response.data;
 
+                    this.countConversationsWithNewMessages = 0;
+
                     this.conversations.map(conversation => {
                         if (conversation.user_a_id === this.user.id) {
                             conversation.otherUserId = conversation.user_b_id;
@@ -210,6 +236,8 @@
 
                             if (conversation.conversation_new_activity_for_user_a) {
                                 conversation.newActivity = true;
+
+                                this.countConversationsWithNewMessages++;
                             } else {
                                 conversation.newActivity = false;
                             }
@@ -225,9 +253,17 @@
 
                             if (conversation.conversation_new_activity_for_user_b) {
                                 conversation.newActivity = true;
+
+                                this.countConversationsWithNewMessages++;
                             } else {
                                 conversation.newActivity = false;
                             }
+                        }
+
+                        if (this.countConversationsWithNewMessages > 0) {
+                            this.newMessagesExist = true;
+                        } else {
+                            this.newMessagesExist = false;
                         }
                     });
 

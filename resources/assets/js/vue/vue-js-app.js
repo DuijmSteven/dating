@@ -77,7 +77,7 @@ if ($('#app').length > 0) {
                                 let userBId = +split[0];
                                 let state = split[1];
 
-                                if (!this.conversationPartners.map(partner => partner.id).includes(userBId)) {
+                                if (!this.conversationPartners.map(partner => partner.id).includes(userBId) && !['xs', 'sm'].includes(this.$mq)) {
                                     this.addChat(DP.authenticatedUser.id, userBId, state);
                                 }
                             });

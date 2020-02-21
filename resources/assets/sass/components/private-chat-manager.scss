@@ -8,6 +8,8 @@
 
     box-shadow: 0 0 24px rgba(0, 0, 0, 0.2);
 
+
+
     &__body {
         &__empty {
             background-color: white;
@@ -17,6 +19,7 @@
     }
 
     &__head {
+        position: relative;
         cursor: pointer;
         border-radius: 2px 2px 0 0;
         text-align: center;
@@ -35,10 +38,41 @@
             justify-content: flex-start;
             flex: 3;
             padding-left: 15px;
+
+            &__text {
+                position: relative;
+            }
         }
 
         &__actionIcons {
             flex: 1;
+        }
+
+        &__newMessages {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            right: -25px;
+            bottom: 6px;
+            color: #ff5b49;
+
+            .material-icons {
+                font-size: 1.7rem;
+            }
+
+            &.mobile {
+                right: -6px;
+                bottom: initial;
+                top: -6px;
+                background-color: #2c2c2c;
+                padding: 5px;
+                border-radius: 50%;
+
+                .material-icons {
+                    font-size: 1.5rem;
+                }
+            }
         }
     }
 
@@ -319,6 +353,10 @@
                 &__icon--message.material-icons {
                     display: none;
                 }
+
+                .PrivateChatManager__head__newMessages.mobile {
+                    display: none;
+                }
             }
         }
 
@@ -352,6 +390,10 @@
             }
 
             &__icon--message.material-icons {
+                display: none;
+            }
+
+            .PrivateChatManager__head__newMessages.mobile {
                 display: none;
             }
         }
