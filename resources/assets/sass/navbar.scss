@@ -70,6 +70,32 @@
         }
     }
 
+    .userCreditsNumber {
+        font-weight: 400;
+        color: lighten($secondaryColor, 10%);
+    }
+
+    .userCreditsText {
+        @media screen and (max-width: $screen-xs-max) {
+            display: none;
+        }
+    }
+
+    .userCredits__smallScreens {
+        display: none;
+        position: absolute;
+        left: 534px;
+        top: 21px;
+
+        @media screen and (max-width: $screen-sm-max) {
+            display: block;
+        }
+
+        @media screen and (max-width: $screen-xs-max) {
+            left: 230px;
+        }
+    }
+
     .navbar-nav {
         .vertical-separator {
             position: absolute;
@@ -85,9 +111,8 @@
             }
         }
 
-        .userCreditsNumber {
-            font-weight: 400;
-            color: lighten($secondaryColor, 10%);
+        .userCreditsNumber .userCreditsText {
+            display: inline-block;
         }
 
         > li {
@@ -142,6 +167,21 @@
 
                 @media (max-width: $screen-sm-max) {
                     flex-direction: column;
+                }
+
+                .userDropdown__username {
+                    max-width: 120px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+
+                    @media (max-width: $screen-md-max) {
+                        max-width: 100px;
+                    }
+
+                    @media (max-width: $screen-sm-max) {
+                        max-width: 200px;
+                    }
                 }
 
                 .dropdown-menu {
@@ -335,7 +375,7 @@
 
     .buyCreditsButton {
         position: absolute;
-        left: 480px;
+        left: 340px;
         top: 20px;
 
         width: 150px;
@@ -354,12 +394,12 @@
             background-color: darken(#bf5252, 4%);
         }
 
-        @media (max-width: 1199px) {
-            left: 270px;
+        @media (max-width: $screen-md-max) {
+            left: 240px;
         }
 
         @media (max-width: $screen-sm-max) {
-            left: 220px;
+            left: 180px;
         }
 
         @media (max-width: $screen-xs-max) {
@@ -375,7 +415,7 @@
         flex-direction: row;
         align-content: center;
         justify-content: center;
-        left: 666px;
+        left: 600px;
         top: 20px;
         font-size: 2rem;
         text-align: center;
@@ -390,11 +430,11 @@
         font-weight: 400;
 
         @media (max-width: $screen-md-max) {
-            left: 450px;
+            left: 415px;
         }
 
         @media (max-width: $screen-sm-max) {
-            left: 400px;
+            left: 360px;
         }
 
         @media (max-width: $screen-xs-max) {

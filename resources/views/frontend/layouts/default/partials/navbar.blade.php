@@ -33,6 +33,12 @@
                         search
                     </i>
                 </div>
+
+                <div class="userCredits__smallScreens">
+                    <a href="{{ route('credits.show') }}">
+                        <credits-count></credits-count>
+                    </a>
+                </div>
             @endif
         </div>
 
@@ -41,7 +47,7 @@
             <ul class="nav navbar-nav navbar-right">
                 @if (isset($authenticatedUser))
                     <li class="userCredits">
-                        <div class="userCredits">
+                        <div>
                             <a href="{{ route('credits.show') }}">
                                 <credits-count></credits-count>
                             </a>
@@ -62,7 +68,8 @@
                                 src="{{ \StorageHelper::profileImageUrl($authenticatedUser, true) }}" alt=""
                             >
 
-                            {{ $authenticatedUser->username }} <span class="caret"></span>
+                            <span class="userDropdown__username">{{ $authenticatedUser->username }}</span>
+                            <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="{!! route('users.edit-profile.get', ['userId' => $authenticatedUser->getUsername()]) !!}">{{ @trans('navbar.edit_profile') }}</a></li>
