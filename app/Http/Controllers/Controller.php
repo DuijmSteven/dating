@@ -30,7 +30,7 @@ class Controller extends BaseController
         $this->middleware(function ($request, $next) {
             $this->authenticatedUser = UserManager::getAndFormatAuthenticatedUser();
 
-            $onlineIds = Activity::users(1)->pluck('user_id')->toArray();
+            $onlineIds = Activity::users(9)->pluck('user_id')->toArray();
 
             $this->onlineUserIds = $onlineIds;
 
