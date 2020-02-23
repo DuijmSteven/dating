@@ -36,10 +36,12 @@ class Kernel extends ConsoleKernel
 
         $numberOfBotsToHaveOnline = rand(10,20);
 
-        if ($timeNow->hour > 6 && $timeNow->hour < 16) {
+        if ($timeNow->hour > 6 && $timeNow->hour < 18) {
             $numberOfBotsToHaveOnline = rand(20, 35);
-        } elseif (($timeNow->hour >= 18 && $timeNow->hour <= 23) || ($timeNow->hour >= 0 && $timeNow->hour <= 6)) {
+        } elseif (($timeNow->hour >= 18 && $timeNow->hour <= 23) || ($timeNow->hour >= 0 && $timeNow->hour <= 1)) {
             $numberOfBotsToHaveOnline = rand(35, 45);
+        } elseif ($timeNow->hour > 1 && $timeNow->hour <= 6) {
+            $numberOfBotsToHaveOnline = rand(10, 20);
         }
 
         $schedule->command('bots:set-random-online ' . $numberOfBotsToHaveOnline)->everyTenMinutes();
