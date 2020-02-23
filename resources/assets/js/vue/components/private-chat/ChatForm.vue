@@ -14,7 +14,7 @@
                 id="PrivateChatItem__textarea"
                 class="PrivateChatItem__textarea JS--PrivateChatItem__textarea"
                 maxlength="1000"
-                :placeholder="chatTranslations['your_message']"
+                :placeholder="chatTranslations ? chatTranslations['your_message'] : ''"
                 v-on:keyup.enter="sendMessage"
                 @focus="chatFocused()"
                 v-model="text"

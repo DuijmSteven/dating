@@ -61,7 +61,7 @@
                 v-if="conversations.length === 0"
                 class="PrivateChatManager__body__empty"
             >
-                {{ this.$parent.chatTranslations['no_conversations'] }}
+                {{ this.$parent.chatTranslations ? this.$parent.chatTranslations['no_conversations'] : '' }}
             </div>
 
             <div v-for="(conversation, index) in conversations" :key="'A' + index"
