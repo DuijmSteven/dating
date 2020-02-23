@@ -101,7 +101,7 @@ class ConversationController extends Controller
             );
 
             if ($recipientHasMessageNotificationsEnabled) {
-                $onlineUserIds = Activity::users(10)->pluck('user_id')->toArray();
+                $onlineUserIds = Activity::users(5)->pluck('user_id')->toArray();
 
                 if (!in_array($recipient->getId(), $onlineUserIds)) {
 
