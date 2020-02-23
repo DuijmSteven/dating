@@ -367,54 +367,17 @@
         }
     }
 
-    .searchToggle {
-        position: relative;
-        display: inline-block;
-
-        @media (max-width: $screen-sm-max) {
-            display: none;
-        }
-
-        &.mobile {
-            display: none;
-            position: static;
-
-            .searchToggleButton {
-                left: 400px;
-                top: 19px;
-                width: 131px;
-                height: 31px;
-                border-radius: 20px;
-
-                @media (max-width: $screen-xs-max) {
-                    left: 177px;
-                    top: 15px;
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 50%;
-                }
-            }
-
-            @media (max-width: $screen-sm-max) {
-                display: inline-block;
-            }
-        }
-    }
-
-    @media (max-width: $screen-sm-max) {
-        .searchBarContainer {
-            height: 70px;
-        }
-    }
-
     .searchToggleButton {
         position: absolute;
+        cursor: pointer;
+
         display: flex;
         flex-direction: row;
         align-content: center;
         justify-content: center;
-        left: -128px;
-        bottom: -5px;
+        left: 666px;
+        top: 20px;
+        font-size: 2rem;
         text-align: center;
         width: 131px;
         height: 31px;
@@ -426,6 +389,27 @@
         color: #fff;
         font-weight: 400;
 
+        @media (max-width: $screen-md-max) {
+            left: 450px;
+        }
+
+        @media (max-width: $screen-sm-max) {
+            left: 400px;
+        }
+
+        @media (max-width: $screen-xs-max) {
+            left: 176px;
+
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            top: 14px;
+
+            .searchToggleButtonText {
+                display: none;
+            }
+        }
+
         &:hover {
             background-color: $secondaryColor;
         }
@@ -436,10 +420,6 @@
             margin-right: 5px;
         }
 
-        @media (max-width: $screen-sm-max) {
-            left: 12px;
-            bottom: -12px;
-        }
 
         &.pressed {
             border: 1px solid $secondaryColor;

@@ -27,14 +27,12 @@
                     {{ trans('navbar.credits') }}
                 </a>
 
-                <a href="#" class="JS--searchToggle searchToggle mobile">
-                    <div class="searchToggleButton JS--searchToggleButton">
-                        <span class="searchToggleButtonText">{{ @trans('search.search') }}</span>
-                        <i class="material-icons">
-                            search
-                        </i>
-                    </div>
-                </a>
+                <div class="searchToggleButton JS--searchToggleButton">
+                    <span class="searchToggleButtonText">{{ @trans('search.search') }}</span>
+                    <i class="material-icons">
+                        search
+                    </i>
+                </div>
             @endif
         </div>
 
@@ -42,16 +40,6 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 @if (isset($authenticatedUser))
-                    <li class="searchBarContainer">
-                        <a href="#" class="JS--searchToggle searchToggle">
-                            <div class="searchToggleButton JS--searchToggleButton">
-                                <span class="searchToggleButtonText">{{ @trans('search.search') }}</span>
-                                <i class="material-icons">
-                                    search
-                                </i>
-                            </div>
-                        </a>
-                    </li>
                     <li class="userCredits">
                         <div class="userCredits">
                             <a href="{{ route('credits.show') }}">

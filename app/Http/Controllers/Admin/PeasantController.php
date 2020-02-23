@@ -55,7 +55,7 @@ class PeasantController extends Controller
         $peasants = User::with(['meta', 'roles', 'profileImage'])->whereHas('roles', function ($query) {
             $query->where('name', 'peasant');
         })
-            ->whereIn('id', $onlineIds)
+            ->whereIn('id', $onlineIds) 
             ->orderBy('id')
             ->get();
 

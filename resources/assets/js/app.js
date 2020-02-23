@@ -314,9 +314,8 @@ $(window).on('load', function () {
         });
     }
 
-    if ($('.JS--searchToggle').length > 0) {
-        $('.JS--searchToggle').click((event) => {
-            event.preventDefault();
+    if ($('.JS--searchToggleButton').length > 0) {
+        $('.JS--searchToggleButton').click(() => {
             $('.JS--SearchBar').toggleClass('hidden');
             $('.JS--searchToggleButton').toggleClass('pressed');
 
