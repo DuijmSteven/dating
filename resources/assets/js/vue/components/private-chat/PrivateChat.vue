@@ -437,6 +437,8 @@
 
                     this.fetchUserConversations();
                 }).catch((error) => {
+                    this.$root.$emit('errorMessageSent');
+
                     if (error && error.response.status === 403 && error.response.data === 'Not enough credits') {
                         this.showNoCredits = true;
 

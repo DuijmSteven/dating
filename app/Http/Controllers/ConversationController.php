@@ -53,6 +53,7 @@ class ConversationController extends Controller
 
     /**
      * @param MessageCreateRequest $messageCreateRequest
+     * @throws \Exception
      */
     public function store(MessageCreateRequest $messageCreateRequest)
     {
@@ -122,10 +123,7 @@ class ConversationController extends Controller
 
             DB::rollBack();
 
-            $alerts[] = [
-                'type' => 'error',
-                'message' => 'The message was not sent due to an exception.'
-            ];
+            throw new \Exception();
         }
     }
 
