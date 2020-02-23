@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Collection;
+use Kim\Activity\Activity;
 
 /**
  * Class BotController
@@ -47,6 +48,29 @@ class BotController extends Controller
                 'title' => 'Bot Overview - ' . \MetaConstants::getSiteName(),
                 'headingLarge' => 'Bot',
                 'headingSmall' => 'Overview',
+                'carbonNow' => Carbon::now(),
+                'bots' => $bots
+            ]
+        );
+    }
+
+    public function showOnline()
+    {
+        $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
+
+        $bots = User::with(['meta', 'roles', 'profileImage'])->whereHas('roles', function ($query) {
+            $query->where('id', User::TYPE_BOT);
+        })
+            ->whereIn('id', $onlineIds)
+            ->orderBy('id')
+            ->get();
+
+        return view(
+            'admin.bots.online',
+            [
+                'title' => 'Online bots - ' . \config('app.name'),
+                'headingLarge' => 'Bots',
+                'headingSmall' => 'Online',
                 'carbonNow' => Carbon::now(),
                 'bots' => $bots
             ]

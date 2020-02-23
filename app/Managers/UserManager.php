@@ -252,28 +252,26 @@ class UserManager
      */
     public function setRandomBotsOnline($userAmount) : void
     {
-//        $randomUsers = $this->user->with(['roles', 'meta'])
-//            ->whereHas('roles', function ($query) {
-//                $query->where('id', User::TYPE_BOT);
-//            })
-//            ->orderByRaw('RAND()')->take($userAmount)
-//            ->get();
-//
-//        // This method is nly used in dev env so it is ok to do this
-//        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-//        Model::unguard();
-//
-//        foreach ($randomUsers as $user) {
-//            Session::create([
-//                'id' => md5(uniqid(rand(), true)),
-//                'user_id' => $user->id,
-//                'payload' => base64_encode('test'),
-//                'last_activity' => time()
-//            ]);
-//        }
-//        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        $randomUsers = $this->user->with(['roles', 'meta'])
+            ->whereHas('roles', function ($query) {
+                $query->where('id', User::TYPE_BOT);
+            })
+            ->orderByRaw('RAND()')->take($userAmount)
+            ->get();
 
-        \Log::debug('setRandomBotsOnline');
+        // This method is nly used in dev env so it is ok to do this
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Model::unguard();
+
+        foreach ($randomUsers as $user) {
+            Session::create([
+                'id' => md5(uniqid(rand(), true)),
+                'user_id' => $user->id,
+                'payload' => base64_encode('test'),
+                'last_activity' => time()
+            ]);
+        }
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
     /**

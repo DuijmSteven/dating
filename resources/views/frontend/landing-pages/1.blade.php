@@ -583,11 +583,10 @@
                 <source type="video/mp4" src="{{ asset('img/lp/altijdSex-preview.mp4') }}">
             </video>
 
-            <div class="JS--form-wrapper form-wrapper hidden">
+            <div class="JS--form-wrapper form-wrapper">
                 <div class="form-box">
                     <form class="test--RegistrationForm" method="POST" action="{{ route('register.post') }}"
                           id="JS--registrationForm"
-                          style="display: none"
                     >
                         {{ csrf_field() }}
                         <div class="form-row">
@@ -816,7 +815,7 @@
 
     </div>
 
-    <div class="container welcome-container text-center JS--welcome-container">
+    <div class="container welcome-container text-center JS--welcome-container withRegistrationForm">
         <h3>{{ @trans('lp1.welcome') }}</h3>
         <div>
             <p class="mt-5">{{ @trans('lp1.welcome_text') }}</p>

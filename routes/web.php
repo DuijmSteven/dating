@@ -190,6 +190,10 @@ Route::group([
     ], function () {
         Route::get('/', 'Admin\BotController@index')
             ->name('admin.bots.retrieve');
+
+        Route::get('/online', 'Admin\BotController@showOnline')
+            ->name('admin.bots.online.show');
+
         Route::get('/create', 'Admin\BotController@create')
             ->name('admin.bots.create.get');
         Route::post('/create', 'Admin\BotController@store')

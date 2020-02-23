@@ -63,7 +63,7 @@ class PeasantController extends Controller
             'admin.peasants.online',
             [
                 'title' => 'Online peasants - ' . \config('app.name'),
-                'headingLarge' => 'Peasant',
+                'headingLarge' => 'Peasants',
                 'headingSmall' => 'Online',
                 'carbonNow' => Carbon::now(),
                 'peasants' => $peasants

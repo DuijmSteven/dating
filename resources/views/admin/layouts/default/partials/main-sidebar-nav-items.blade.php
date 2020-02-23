@@ -26,6 +26,12 @@
                 Create
             </a>
         </li>
+        <li class="{!! \Request::route()->getName() == 'admin.bots.online.show' ? 'active' : '' !!}">
+            <a href="{!! route('admin.bots.online.show') !!}">
+                <i class="fa fa-list"></i>
+                Online
+            </a>
+        </li>
     </ul>
 </li>
 <li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.peasants') ? 'active' : '' !!}">

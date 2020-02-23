@@ -52,7 +52,6 @@ $(window).on('load', function () {
         e.preventDefault()
     });
 
-    var formSelected = Cookies.get("lpFormSelection");
     var cookiesAccepted = Cookies.get("lpCookiesAccepted");
 
     if (cookiesAccepted !== 'true') {
@@ -70,25 +69,27 @@ $(window).on('load', function () {
         return  bottomOfForm - $('.JS--header').height();
     }
 
-    if (formSelected === 'login') {
-        $('.JS--form-wrapper').removeClass('hidden');
-        $('#JS--loginForm').toggle('fast');
+    //var formSelected = Cookies.get("lpFormSelection");
 
-        if ($(window).width() <= 767) {
-            setTimeout(() => {
-                $('.JS--welcome-container').css('margin-top', calculateExcessOfForm() + 60);
-            }, 200);
-        }
-    } else {
-        $('.JS--form-wrapper').removeClass('hidden');
-        $('#JS--registrationForm').toggle('fast');
-        $('.JS--welcome-container').addClass('withRegistrationForm');
-        if ($(window).width() <= 767) {
-            setTimeout(() => {
-                $('.JS--welcome-container').css('margin-top', calculateExcessOfForm() + 60);
-            }, 200);
-        }
+    // if (formSelected === 'login') {
+    //     $('.JS--form-wrapper').removeClass('hidden');
+    //     $('#JS--loginForm').toggle('fast');
+    //
+    //     if ($(window).width() <= 767) {
+    //         setTimeout(() => {
+    //             $('.JS--welcome-container').css('margin-top', calculateExcessOfForm() + 60);
+    //         }, 200);
+    //     }
+    // } else {
+    //     $('.JS--form-wrapper').removeClass('hidden');
+    //     $('#JS--registrationForm').toggle('fast');
+    //     $('.JS--welcome-container').addClass('withRegistrationForm');
+    if ($(window).width() <= 767) {
+        setTimeout(() => {
+            $('.JS--welcome-container').css('margin-top', calculateExcessOfForm() + 60);
+        }, 200);
     }
+    //};
 
     $('#JS--registerButton').click(function(){
         $('#JS--loginForm').toggle('fast');
