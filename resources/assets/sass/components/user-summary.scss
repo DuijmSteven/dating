@@ -65,8 +65,8 @@
         .onlineCircle {
             position: absolute;
             background-color: #33e23c;
-            width: 11px;
-            height: 11px;
+            width: 13px;
+            height: 13px;
             border-radius: 50%;
             right: 15px;
             top: 15px;
@@ -121,11 +121,23 @@
     &__userInfo {
         text-align: center;
 
-        a {
+        &__primary {
+            display: inline-block;
             text-decoration: none;
             color: #555;
             font-weight: 500;
             font-size: 19px;
+            position: relative;
+
+            .onlineCircle {
+                position: absolute;
+                background-color: #33e23c;
+                width: 13px;
+                height: 13px;
+                border-radius: 50%;
+                right: -22px;
+                top: 8px;
+            }
         }
 
         &__additional {

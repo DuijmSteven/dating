@@ -56,7 +56,7 @@ class BotController extends Controller
 
     public function showOnline()
     {
-        $onlineIds = Activity::users(9)->pluck('user_id')->toArray();
+        $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
 
         $bots = User::with(['meta', 'roles', 'profileImage'])->whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_BOT);

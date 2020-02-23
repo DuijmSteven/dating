@@ -67,7 +67,7 @@ class UserController
      */
     public function getOnlineUserIds()
     {
-        return JsonResponse::create(Activity::users(9)->pluck('user_id')->toArray());
+        return JsonResponse::create(Activity::users(10)->pluck('user_id')->toArray());
     }
 
     /**

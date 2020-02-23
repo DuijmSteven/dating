@@ -42,6 +42,10 @@
                 <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}"
                    class="UserSummary__userInfo__primary">
                     {{ $user->username }}
+
+                    @if(in_array($user->getId(), $onlineUserIds))
+                        <div class="onlineCircle"></div>
+                    @endif
                 </a>
                 <div class="UserSummary__userInfo__additional">
                     {!! isset($user->meta->city) ? $user->meta->city : '' !!}
