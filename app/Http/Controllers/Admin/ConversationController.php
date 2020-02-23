@@ -21,6 +21,7 @@ use Carbon\Carbon;
 use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Kim\Activity\Activity;
@@ -355,16 +356,23 @@ class ConversationController extends Controller
     public function destroy(int $conversationId)
     {
         try {
+            DB::beginTransaction();
+
             Conversation::destroy($conversationId);
+            ConversationMessage::where('conversation_id', $conversationId)->delete();
+
+            DB::commit();
 
             $alerts[] = [
                 'type' => 'success',
-                'message' => 'The article was deleted.'
+                'message' => 'The conversation was deleted.'
             ];
         } catch (\Exception $exception) {
+            DB::rollBack();
+
             $alerts[] = [
                 'type' => 'error',
-                'message' => 'The article was not deleted due to an exception.'
+                'message' => 'The conversation was not deleted due to an exception.'
             ];
         }
 

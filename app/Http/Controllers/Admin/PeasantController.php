@@ -50,10 +50,10 @@ class PeasantController extends Controller
 
     public function showOnline()
     {
-        $onlineIds = Activity::users(3)->pluck('id')->toArray();
+        $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
 
         $peasants = User::with(['meta', 'roles', 'profileImage'])->whereHas('roles', function ($query) {
-            $query->where('name', 'peasant');
+            $query->where('id', User::TYPE_PEASANT);
         })
             ->whereIn('id', $onlineIds) 
             ->orderBy('id')
