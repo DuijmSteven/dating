@@ -45,5 +45,11 @@
       color: lighten($secondaryColor, 10%);
       font-size: 30px;
     }
+
+    &:active,
+    &:focus,
+    &:hover {
+      font-size: 30px;
+    }
   }
 }

@@ -53,6 +53,7 @@ class ConversationController extends Controller
 
     /**
      * @param MessageCreateRequest $messageCreateRequest
+     * @throws \Exception
      */
     public function store(MessageCreateRequest $messageCreateRequest)
     {
@@ -100,7 +101,7 @@ class ConversationController extends Controller
             );
 
             if ($recipientHasMessageNotificationsEnabled) {
-                $onlineUserIds = Activity::users(1)->pluck('user_id')->toArray();
+                $onlineUserIds = Activity::users(5)->pluck('user_id')->toArray();
 
                 if (!in_array($recipient->getId(), $onlineUserIds)) {
 
@@ -122,10 +123,7 @@ class ConversationController extends Controller
 
             DB::rollBack();
 
-            $alerts[] = [
-                'type' => 'error',
-                'message' => 'The message was not sent due to an exception.'
-            ];
+            throw new \Exception();
         }
     }
 

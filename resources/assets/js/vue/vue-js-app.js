@@ -14,7 +14,9 @@ if ($('#app').length > 0) {
             intervalToFetchData: undefined,
             userCredits: undefined,
             onlineUserIds: undefined,
-            chatTranslations: undefined
+            chatTranslations: undefined,
+            gettingPartners: false,
+            gettingOnlineIds: false
         },
 
         created() {
@@ -28,8 +30,13 @@ if ($('#app').length > 0) {
                 });
 
                 this.intervalToFetchData = setInterval(() => {
-                    this.getConversationPartners();
-                    this.getOnlineUserIds();
+                    if (!this.gettingPartners) {
+                        this.getConversationPartners();
+                    }
+
+                    if (!this.gettingOnlineIds) {
+                        this.getOnlineUserIds();
+                    }
                 }, 5000);
             }
         },
@@ -43,11 +50,12 @@ if ($('#app').length > 0) {
                 );
             },
             getOnlineUserIds: function () {
+                this.gettingOnlineIds = true;
+
                 axios.get('/api/users/online/ids').then(
                     response => {
                         this.onlineUserIds = response.data;
-
-                        console.log(this.onlineUserIds);
+                        this.gettingOnlineIds = false;
                     }
                 );
             },
@@ -68,6 +76,8 @@ if ($('#app').length > 0) {
                 }
             },
             getConversationPartners: function () {
+                this.gettingPartners = true;
+
                 axios.get('/api/conversations/conversation-partner-ids/' + parseInt(DP.authenticatedUser.id)).then(
                     response => {
                         if (response.data && response.data.length > 0) {
@@ -79,12 +89,13 @@ if ($('#app').length > 0) {
                                 let userBId = +split[0];
                                 let state = split[1];
 
-                                if (!this.conversationPartners.map(partner => partner.id).includes(userBId)) {
+                                if (!this.conversationPartners.map(partner => partner.id).includes(userBId) && !['xs', 'sm'].includes(this.$mq)) {
                                     this.addChat(DP.authenticatedUser.id, userBId, state);
                                 }
                             });
 
                             this.previousConversationPartnersResponse = this.currentConversationPartnersResponse;
+                            this.gettingPartners = false;
                         }
                     }
                 );

@@ -72,6 +72,14 @@ $(window).on('load', function () {
         e.preventDefault()
     });
 
+    $('#JS--search-city-input').keydown(function(e){
+        if(e.keyCode === 13)
+        {
+            e.preventDefault();
+            $('#JS--SearchBarForm').find('.Button').click();
+        }
+    });
+
     if ($("#datepicker_dob").length > 0) {
         //Setup locale and bootstrap datepicker options
         // $.fn.datepicker.dates['nl'] = {
@@ -117,6 +125,14 @@ $(window).on('load', function () {
     if ($('.JS--ScrollTopButton').length > 0) {
         $('.JS--ScrollTopButton').click(() => {
             $('html, body').animate({scrollTop:0}, 500, 'swing');
+        });
+
+        $(window).scroll(() => {
+            if ( $(window).scrollTop() > 400) {
+                $('.JS--ScrollTopButton').removeClass('hidden');
+            } else {
+                $('.JS--ScrollTopButton').addClass('hidden');
+            }
         });
     }
 
@@ -298,9 +314,8 @@ $(window).on('load', function () {
         });
     }
 
-    if ($('.JS--searchToggle').length > 0) {
-        $('.JS--searchToggle').click((event) => {
-            event.preventDefault();
+    if ($('.JS--searchToggleButton').length > 0) {
+        $('.JS--searchToggleButton').click(() => {
             $('.JS--SearchBar').toggleClass('hidden');
             $('.JS--searchToggleButton').toggleClass('pressed');
 

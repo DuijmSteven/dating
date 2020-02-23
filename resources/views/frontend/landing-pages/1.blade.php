@@ -849,13 +849,11 @@
         <div class="row mt-5">
             @foreach ($users as $user)
                 <div class="col-lg-2 col-md-4 col-sm-12 mb-4">
-                    <a href="{{ route('users.show', ['username' => $user->getUsername()]) }}">
-                        <img
+                    <img
                             src="{{ \StorageHelper::profileImageUrl($user, true) }}"
                             class="roundImage"
                             alt="profile-image"
-                        >
-                    </a>
+                    >
                     <h5 class="small"
                         style="font-size: 1.9rem; width: 170px; overflow: hidden; text-overflow: ellipsis; margin: 10px auto 5px auto">{{ $user->username }}</h5>
                     <p class="offset-0 user-info" style="line-height: 14px; text-align: center">

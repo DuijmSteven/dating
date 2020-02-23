@@ -114,7 +114,8 @@ return [
         ],
         'date' => 'This is not a valid date',
         'message' => [
-            'max' => 'The message cannot be larger than :max characters'
+            'max' => 'The message cannot be larger than :max characters',
+            'required_without' => 'A message or an image is required',
         ],
         'dob' => [
             'before' => 'You must be older that 18 years old in order to use this site',

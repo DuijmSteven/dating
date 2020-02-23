@@ -43,6 +43,7 @@
                                 </td>
                                 <td>{{ $peasant->account->getCredits() }}</td>
                                 <td>
+                                    <strong>{!! @trans('user_constants.email') !!}:</strong> {!! $peasant->email !!} <br>
                                     <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $peasant->username !!} <br>
                                     <strong>{!! @trans('user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($peasant->meta->dob) !!} <br>
                                 </td>

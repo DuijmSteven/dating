@@ -54,6 +54,36 @@
 
 @import "vue-apps/private-chat/main";
 
+.GeneralBackButton {
+  margin-top: -10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #434865;
+  background-color: $white;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  margin-bottom: 15px;
+  width: 100px;
+  text-decoration: none;
+  padding: 3px;
+  font-weight: 400;
+  box-shadow: 0 1px 1px 0 rgba(45,49,66,.2);
+
+  &:hover {
+    text-decoration: none;
+    color: #434865;
+    background-color: #eee;
+  }
+
+  &:focus {
+    text-decoration: none;
+    color: #434865;
+    background-color: $white;
+  }
+}
+
+
 .help-block {
   font-size: 13px;
 }

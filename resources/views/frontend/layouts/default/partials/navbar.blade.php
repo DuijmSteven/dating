@@ -27,14 +27,18 @@
                     {{ trans('navbar.credits') }}
                 </a>
 
-                <a href="#" class="JS--searchToggle searchToggle mobile">
-                    <div class="searchToggleButton JS--searchToggleButton">
-                        <span class="searchToggleButtonText">{{ @trans('search.search') }}</span>
-                        <i class="material-icons">
-                            search
-                        </i>
-                    </div>
-                </a>
+                <div class="searchToggleButton JS--searchToggleButton">
+                    <span class="searchToggleButtonText">{{ @trans('search.search') }}</span>
+                    <i class="material-icons">
+                        search
+                    </i>
+                </div>
+
+                <div class="userCredits__smallScreens">
+                    <a href="{{ route('credits.show') }}">
+                        <credits-count></credits-count>
+                    </a>
+                </div>
             @endif
         </div>
 
@@ -42,18 +46,8 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 @if (isset($authenticatedUser))
-                    <li class="searchBarContainer">
-                        <a href="#" class="JS--searchToggle searchToggle">
-                            <div class="searchToggleButton JS--searchToggleButton">
-                                <span class="searchToggleButtonText">{{ @trans('search.search') }}</span>
-                                <i class="material-icons">
-                                    search
-                                </i>
-                            </div>
-                        </a>
-                    </li>
                     <li class="userCredits">
-                        <div class="userCredits">
+                        <div>
                             <a href="{{ route('credits.show') }}">
                                 <credits-count></credits-count>
                             </a>
@@ -74,7 +68,8 @@
                                 src="{{ \StorageHelper::profileImageUrl($authenticatedUser, true) }}" alt=""
                             >
 
-                            {{ $authenticatedUser->username }} <span class="caret"></span>
+                            <span class="userDropdown__username">{{ $authenticatedUser->username }}</span>
+                            <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="{!! route('users.edit-profile.get', ['userId' => $authenticatedUser->getUsername()]) !!}">{{ @trans('navbar.edit_profile') }}</a></li>

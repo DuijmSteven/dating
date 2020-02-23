@@ -1,12 +1,12 @@
 <template>
     <div class="PrivateChatItem__textarea__wrapper">
-        <div v-if="url" id="PrivateChatItem__imagePreview" class="PrivateChatItem__imagePreview">
+        <div v-if="imagePreviewUrl" id="PrivateChatItem__imagePreview" class="PrivateChatItem__imagePreview">
             <i
                 v-on:click="clearImagePreview()"
                 class="material-icons material-icon PrivateChatItem__clearImagePreview"
             >clear
             </i>
-            <img v-if="url" :src="url"/>
+            <img v-if="imagePreviewUrl" :src="imagePreviewUrl"/>
         </div>
 
         <div class="PrivateChatItem__textarea__container">
@@ -14,7 +14,7 @@
                 id="PrivateChatItem__textarea"
                 class="PrivateChatItem__textarea JS--PrivateChatItem__textarea"
                 maxlength="1000"
-                :placeholder="chatTranslations['your_message']"
+                :placeholder="chatTranslations ? chatTranslations['your_message'] : ''"
                 v-on:keyup.enter="sendMessage"
                 @focus="chatFocused()"
                 v-model="text"
@@ -67,9 +67,12 @@
         data() {
             return {
                 text: '',
-                url: null,
+                imagePreviewUrl: null,
                 file: null,
-                lineCount: 1
+                lineCount: 1,
+                textBeingSent: '',
+                fileBeingSent: null,
+                imagePreviewUrlBackup: null,
             }
         },
 
@@ -77,8 +80,18 @@
             this.$root.$on('messageSent', () => {
                 this.text = '';
                 this.file = null;
-                this.url = null;
-            })
+                this.imagePreviewUrl = null;
+            });
+
+            this.$root.$on('errorMessageSent', () => {
+                this.text = this.textBeingSent;
+                this.file = this.fileBeingSent;
+                this.imagePreviewUrl = this.imagePreviewUrlBackup;
+
+                this.textBeingSent = '';
+                this.fileBeingSent = null;
+                this.imagePreviewUrlBackup = null;
+            });
         },
 
         computed: {
@@ -93,19 +106,30 @@
                 this.$parent.setConversationActivityForUserFalse();
             },
             sendMessage() {
-                if (this.text.length > 0 || this.file != null) {
-                    this.$emit('message-sent', {
-                        text: this.text,
-                        attachment: this.file != null ? this.file : null
-                    });
-                }
+                if (!this.sendingMessage) {
+                    this.textBeingSent = this.text;
+                    this.text = '';
 
-                if ($('.PrivateChatItem--' + this.index).hasClass('PrivateChatItem--showingPreview')) {
-                    $('.PrivateChatItem--' + this.index).removeClass('PrivateChatItem--showingPreview');
+                    this.fileBeingSent = this.file;
+                    this.file = null;
+
+                    this.imagePreviewUrlBackup = this.imagePreviewUrl;
+                    this.imagePreviewUrl = null;
+
+                    if (this.textBeingSent.length > 0 || this.fileBeingSent != null) {
+                        this.$emit('message-sent', {
+                            text: this.textBeingSent,
+                            attachment: this.fileBeingSent != null ? this.fileBeingSent : null
+                        });
+                    }
+
+                    if ($('.PrivateChatItem--' + this.index).hasClass('PrivateChatItem--showingPreview')) {
+                        $('.PrivateChatItem--' + this.index).removeClass('PrivateChatItem--showingPreview');
+                    }
                 }
             },
             clearImagePreview() {
-                this.url = null;
+                this.imagePreviewUrl = null;
                 this.file = null;
 
                 $('.PrivateChatItem__imageAttachmentInput').prop('value', '');
@@ -114,7 +138,7 @@
             },
             previewImage(e) {
                 this.file = e.target.files[0];
-                this.url = URL.createObjectURL(this.file);
+                this.imagePreviewUrl = URL.createObjectURL(this.file);
 
                 $('.PrivateChatItem--' + this.index).addClass('PrivateChatItem--showingPreview');
             },

@@ -1,6 +1,6 @@
 <div class="SearchBar JS--SearchBar hidden {{ count($errors) ? 'with-errors' : '' }}">
     <form method="POST" action="{{ route('users.search.form.get') }}" id="JS--SearchBarForm">
-        {{ csrf_field() }}
+        @csrf
         <div class="form-group city {{ $errors->has('city_name') ? ' has-error' : '' }}">
             <label for="city_name">{!! @trans('user_constants.city') !!}</label>
 
@@ -22,6 +22,7 @@
                    class="JS--autoCompleteCites JS--bar form-control"
                    name="city_name"
                    value="{{ $city }}"
+                   id="JS--search-city-input"
             >
             @if ($errors->has('city_name'))
                 <span class="help-block">

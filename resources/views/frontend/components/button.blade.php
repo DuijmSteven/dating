@@ -6,7 +6,7 @@
     </a>
 @else
     <button
-        type="{{ $buttonType ?? 'submit' }}"
+        type="{{ isset($buttonType) ? $buttonType : 'submit' }}"
         class="Button Button--{{ $buttonState ?? 'default' }}  {{ $buttonClasses ?? '' }}"
     >
         <span class="Button__content">{!! $buttonText ?? 'Dummy button' !!}</span>

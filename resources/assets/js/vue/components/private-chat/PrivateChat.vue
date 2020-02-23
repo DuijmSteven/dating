@@ -132,7 +132,6 @@
                     ></chat-message>
                 </div>
                 <chat-form
-                    v-if="this.$parent.chatTranslations"
                     v-on:message-sent="addMessage"
                     :user="user"
                     :index="index"
@@ -437,6 +436,8 @@
 
                     this.fetchUserConversations();
                 }).catch((error) => {
+                    this.$root.$emit('errorMessageSent');
+
                     if (error && error.response.status === 403 && error.response.data === 'Not enough credits') {
                         this.showNoCredits = true;
 

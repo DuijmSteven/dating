@@ -114,7 +114,8 @@ return [
         ],
         'date' => 'Dit is geen geldige datum.',
         'message' => [
-            'max' => 'Het bericht mag niet groter zijn dan :max characters.'
+            'max' => 'Het bericht mag niet groter zijn dan :max characters.',
+            'required_without' => 'Een bericht of afbeelding is vereist',
         ],
         'dob' => [
             'before' => 'Je moet 18+ zijn om deze website te gebruiken',

@@ -70,6 +70,32 @@
         }
     }
 
+    .userCreditsNumber {
+        font-weight: 400;
+        color: lighten($secondaryColor, 10%);
+    }
+
+    .userCreditsText {
+        @media screen and (max-width: $screen-xs-max) {
+            display: none;
+        }
+    }
+
+    .userCredits__smallScreens {
+        display: none;
+        position: absolute;
+        left: 534px;
+        top: 21px;
+
+        @media screen and (max-width: $screen-sm-max) {
+            display: block;
+        }
+
+        @media screen and (max-width: $screen-xs-max) {
+            left: 230px;
+        }
+    }
+
     .navbar-nav {
         .vertical-separator {
             position: absolute;
@@ -85,9 +111,8 @@
             }
         }
 
-        .userCreditsNumber {
-            font-weight: 400;
-            color: lighten($secondaryColor, 10%);
+        .userCreditsNumber .userCreditsText {
+            display: inline-block;
         }
 
         > li {
@@ -142,6 +167,21 @@
 
                 @media (max-width: $screen-sm-max) {
                     flex-direction: column;
+                }
+
+                .userDropdown__username {
+                    max-width: 120px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+
+                    @media (max-width: $screen-md-max) {
+                        max-width: 100px;
+                    }
+
+                    @media (max-width: $screen-sm-max) {
+                        max-width: 200px;
+                    }
                 }
 
                 .dropdown-menu {
@@ -335,7 +375,7 @@
 
     .buyCreditsButton {
         position: absolute;
-        left: 480px;
+        left: 340px;
         top: 20px;
 
         width: 150px;
@@ -345,17 +385,21 @@
         align-items: center;
         font-weight: 500;
         font-size: 2rem;
-        background-color: #9c7853;
+        background-color: #bf5252;
         border-radius: 20px;
         color: $white;
         text-decoration: none;
 
-        @media (max-width: 1199px) {
-            left: 270px;
+        &:hover {
+            background-color: darken(#bf5252, 4%);
+        }
+
+        @media (max-width: $screen-md-max) {
+            left: 240px;
         }
 
         @media (max-width: $screen-sm-max) {
-            left: 220px;
+            left: 180px;
         }
 
         @media (max-width: $screen-xs-max) {
@@ -363,54 +407,17 @@
         }
     }
 
-    .searchToggle {
-        position: relative;
-        display: inline-block;
-
-        @media (max-width: $screen-sm-max) {
-            display: none;
-        }
-
-        &.mobile {
-            display: none;
-            position: static;
-
-            .searchToggleButton {
-                left: 400px;
-                top: 19px;
-                width: 131px;
-                height: 31px;
-                border-radius: 20px;
-
-                @media (max-width: $screen-xs-max) {
-                    left: 177px;
-                    top: 15px;
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 50%;
-                }
-            }
-
-            @media (max-width: $screen-sm-max) {
-                display: inline-block;
-            }
-        }
-    }
-
-    @media (max-width: $screen-sm-max) {
-        .searchBarContainer {
-            height: 70px;
-        }
-    }
-
     .searchToggleButton {
         position: absolute;
+        cursor: pointer;
+
         display: flex;
         flex-direction: row;
         align-content: center;
         justify-content: center;
-        left: -128px;
-        bottom: -5px;
+        left: 600px;
+        top: 20px;
+        font-size: 2rem;
         text-align: center;
         width: 131px;
         height: 31px;
@@ -420,6 +427,32 @@
 
         background-color: lighten($secondaryColor, 5%);
         color: #fff;
+        font-weight: 400;
+
+        @media (max-width: $screen-md-max) {
+            left: 415px;
+        }
+
+        @media (max-width: $screen-sm-max) {
+            left: 360px;
+        }
+
+        @media (max-width: $screen-xs-max) {
+            left: 176px;
+
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            top: 14px;
+
+            .searchToggleButtonText {
+                display: none;
+            }
+        }
+
+        &:hover {
+            background-color: $secondaryColor;
+        }
 
         span {
             display: flex;
@@ -427,10 +460,6 @@
             margin-right: 5px;
         }
 
-        @media (max-width: $screen-sm-max) {
-            left: 12px;
-            bottom: -12px;
-        }
 
         &.pressed {
             border: 1px solid $secondaryColor;
