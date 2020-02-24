@@ -740,9 +740,8 @@
                     <form
                         method="POST"
                         action="{{ route('login.post') }}"
-                        class="test--LoginForm"
+                        class="test--LoginForm hidden"
                         id="JS--loginForm"
-                        style="display: none"
                     >
                         {{ csrf_field() }}
                         <div class="form-row">

@@ -69,8 +69,6 @@ $(window).on('load', function () {
         return  bottomOfForm - $('.JS--header').height();
     }
 
-    //var formSelected = Cookies.get("lpFormSelection");
-
     // if (formSelected === 'login') {
     //     $('.JS--form-wrapper').removeClass('hidden');
     //     $('#JS--loginForm').toggle('fast');
@@ -91,9 +89,23 @@ $(window).on('load', function () {
     }
     //};
 
+    var formSelected = Cookies.get("lpFormSelection");
+
+    if (formSelected === 'login') {
+        $('#JS--registrationForm').addClass('hidden');
+        $('#JS--loginForm').removeClass('hidden');
+        $('.JS--welcome-container').removeClass('withRegistrationForm');
+
+        if ($(window).width() <= 767) {
+            setTimeout(() => {
+                $('.JS--welcome-container').css('margin-top', calculateExcessOfForm() + 60);
+            }, 200);
+        }
+    }
+
     $('#JS--registerButton').click(function(){
-        $('#JS--loginForm').toggle('fast');
-        $('#JS--registrationForm').toggle('fast');
+        $('#JS--loginForm').addClass('hidden');
+        $('#JS--registrationForm').removeClass('hidden');
         $('.JS--welcome-container').addClass('withRegistrationForm');
         if ($(window).width() <= 767) {
             setTimeout(() => {
@@ -105,8 +117,8 @@ $(window).on('load', function () {
     });
 
     $('#JS--loginButton').click(function(){
-        $('#JS--registrationForm').toggle('fast');
-        $('#JS--loginForm').toggle('fast');
+        $('#JS--registrationForm').addClass('hidden');
+        $('#JS--loginForm').removeClass('hidden');
         $('.JS--welcome-container').removeClass('withRegistrationForm');
         if ($(window).width() <= 767) {
             setTimeout(() => {
