@@ -62,6 +62,9 @@
                                     <td class="action-buttons">
                                         <a href="{!! route('admin.bots.edit.get', [$bot->id]) !!}" class="btn btn-default">Edit</a>
 
+                                        <a href="{!! route('admin.bots.message-with-bot.get', ['botId' =>  $bot->id, 'onlyOnlinePeasants' => false]) !!}" class="btn btn-default">Message peasant with bot</a>
+                                        <a href="{!! route('admin.bots.message-with-bot.get', ['botId' => $bot->id, 'onlyOnlinePeasants' => true]) !!}" class="btn btn-default">Message online peasant with bot</a>
+
                                         <form method="POST" action="{!! route('admin.users.destroy', ['userId' => $bot->id]) !!}">
                                             {!! csrf_field() !!}
                                             {!! method_field('DELETE') !!}

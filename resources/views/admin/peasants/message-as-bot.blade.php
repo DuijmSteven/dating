@@ -8,39 +8,43 @@
             <h3 class="box-title">Select bot to send message from</h3>
         </div>
 
-        <ul style="max-height: 230px;
-                    overflow-y: scroll;
-                    border: 1px solid #ccc;"
-        >
-            @foreach($bots as $bot)
-                <li data-bot-id="{!! $bot->getId() !!}"
-                    data-bot-profile-image="{!! \StorageHelper::profileImageUrl($bot) !!}"
-                    data-bot-username="{!! $bot->username !!}"
-                    data-bot-age="{!! $bot->meta->dob ? $bot->meta->dob->diffInYears($carbonNow) : 'Not set'!!}"
-                    data-bot-status="{!! ucfirst(str_replace('_', ' ', $bot->meta->relationship_status ? \UserConstants::selectableField('relationship_status', $bot->roles[0]->name)[$bot->meta->relationship_status] : 'Nog niet ingevuld')) !!}"
-                    data-bot-city="{!! $bot->meta->city !!}"
-                    data-bot-height="{!! ucfirst(str_replace('_', ' ', $bot->meta->height ? \UserConstants::selectableField('height', $bot->roles[0]->name)[$bot->meta->height] : 'Nog niet ingevuld')) !!}"
-                    data-bot-body-type="{!! ucfirst(str_replace('_', ' ', $bot->meta->body_type ? \UserConstants::selectableField('body_type', $bot->roles[0]->name)[$bot->meta->body_type] : 'Nog niet ingevuld')) !!}"
-                    data-bot-eye-color="{!! ucfirst(str_replace('_', ' ', $bot->meta->eye_color ? \UserConstants::selectableField('eye_color', $bot->roles[0]->name)[$bot->meta->eye_color] : 'Nog niet ingevuld')) !!}"
-                    data-bot-hair-color="{!! ucfirst(str_replace('_', ' ', $bot->meta->hair_color ? \UserConstants::selectableField('hair_color', $bot->roles[0]->name)[$bot->meta->hair_color] : 'Nog niet ingevuld')) !!}"
-                    data-bot-smoking="{!! ucfirst(str_replace('_', ' ', $bot->meta->smoking_habits ?\UserConstants::selectableField('smoking_habits', $bot->roles[0]->name)[$bot->meta->smoking_habits] : 'Nog niet ingevuld')) !!}"
-                    data-bot-drinking="{!! ucfirst(str_replace('_', ' ', $bot->meta->drinking_habits ? \UserConstants::selectableField('drinking_habits', $bot->roles[0]->name)[$bot->meta->drinking_habits] : 'Nog niet ingevuld')) !!}"
-                    data-bot-about-me="{!! $bot->meta->about_me !!}"
-                >
-                    <img style="width: 50px"
-                         src="{!! \StorageHelper::profileImageUrl($bot, true) !!}"
-                         alt="bot image">
-                    (ID :<a href="{{ route('admin.bots.edit.get', $bot->getId()) }}">{!! $bot->getId() !!}</a>)
-                    <span class="js-fillBotData botUsername" style="cursor:pointer;">
-                        {!! $bot->username !!}
+        @if(count($bots) === 0)
+            <div style="padding-left: 15px; font-weight: bold; font-size: 23px; color: #245269"><p>No bots</p></div>
+        @else
+            <ul style="max-height: 230px;
+                        overflow-y: scroll;
+                        border: 1px solid #ccc;"
+            >
+                @foreach($bots as $bot)
+                    <li data-bot-id="{!! $bot->getId() !!}"
+                        data-bot-profile-image="{!! \StorageHelper::profileImageUrl($bot) !!}"
+                        data-bot-username="{!! $bot->username !!}"
+                        data-bot-age="{!! $bot->meta->dob ? $bot->meta->dob->diffInYears($carbonNow) : 'Not set'!!}"
+                        data-bot-status="{!! ucfirst(str_replace('_', ' ', $bot->meta->relationship_status ? \UserConstants::selectableField('relationship_status', $bot->roles[0]->name)[$bot->meta->relationship_status] : 'Nog niet ingevuld')) !!}"
+                        data-bot-city="{!! $bot->meta->city !!}"
+                        data-bot-height="{!! ucfirst(str_replace('_', ' ', $bot->meta->height ? \UserConstants::selectableField('height', $bot->roles[0]->name)[$bot->meta->height] : 'Nog niet ingevuld')) !!}"
+                        data-bot-body-type="{!! ucfirst(str_replace('_', ' ', $bot->meta->body_type ? \UserConstants::selectableField('body_type', $bot->roles[0]->name)[$bot->meta->body_type] : 'Nog niet ingevuld')) !!}"
+                        data-bot-eye-color="{!! ucfirst(str_replace('_', ' ', $bot->meta->eye_color ? \UserConstants::selectableField('eye_color', $bot->roles[0]->name)[$bot->meta->eye_color] : 'Nog niet ingevuld')) !!}"
+                        data-bot-hair-color="{!! ucfirst(str_replace('_', ' ', $bot->meta->hair_color ? \UserConstants::selectableField('hair_color', $bot->roles[0]->name)[$bot->meta->hair_color] : 'Nog niet ingevuld')) !!}"
+                        data-bot-smoking="{!! ucfirst(str_replace('_', ' ', $bot->meta->smoking_habits ?\UserConstants::selectableField('smoking_habits', $bot->roles[0]->name)[$bot->meta->smoking_habits] : 'Nog niet ingevuld')) !!}"
+                        data-bot-drinking="{!! ucfirst(str_replace('_', ' ', $bot->meta->drinking_habits ? \UserConstants::selectableField('drinking_habits', $bot->roles[0]->name)[$bot->meta->drinking_habits] : 'Nog niet ingevuld')) !!}"
+                        data-bot-about-me="{!! $bot->meta->about_me !!}"
+                    >
+                        <img style="width: 50px"
+                             src="{!! \StorageHelper::profileImageUrl($bot, true) !!}"
+                             alt="bot image">
+                        (ID :<a href="{{ route('admin.bots.edit.get', $bot->getId()) }}">{!! $bot->getId() !!}</a>)
+                        <span class="js-fillBotData botUsername" style="cursor:pointer;">
+                            {!! $bot->username !!}
 
-                        @if(in_array($bot->getId(), $onlineBotIds))
-                            <span class="onlineDot"></span>
-                        @endif
-                    </span>
-                </li>
-            @endforeach
-        </ul>
+                            @if(in_array($bot->getId(), $onlineBotIds))
+                                <span class="onlineDot"></span>
+                            @endif
+                        </span>
+                    </li>
+                @endforeach
+            </ul>
+        @endif
 
         <div class="Tile Bot-profile">
             <div class="col-xs-12">

@@ -204,7 +204,7 @@ Route::group([
         Route::put('/edit/{id}', 'Admin\BotController@update')
             ->name('admin.bots.update');
 
-        Route::get('{botId}/message-with-bot', 'Admin\BotController@messagePeasantWithBot')
+        Route::get('{botId}/message-with-bot/{onlyOnlinePeasants}', 'Admin\BotController@messagePeasantWithBot')
             ->name('admin.bots.message-with-bot.get');
     });
 
@@ -227,7 +227,7 @@ Route::group([
         Route::put('edit/{id}', 'Admin\PeasantController@update')
             ->name('admin.peasants.update');
 
-        Route::get('{peasantId}/message-as-bot', 'Admin\PeasantController@messagePeasantAsBot')
+        Route::get('{peasantId}/message-as-bot/{onlyOnlineBots}', 'Admin\PeasantController@messagePeasantAsBot')
             ->name('admin.peasants.message-as-bot.get');
     });
 

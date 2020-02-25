@@ -8,39 +8,43 @@
             <h3 class="box-title">Select peasant to send message to</h3>
         </div>
 
-        <ul style="max-height: 230px;
-                    overflow-y: scroll;
-                    border: 1px solid #ccc;"
-        >
-            @foreach($peasants as $peasant)
-                <li data-peasant-id="{!! $peasant->getId() !!}"
-                    data-peasant-profile-image="{!! \StorageHelper::profileImageUrl($peasant) !!}"
-                    data-peasant-username="{!! $peasant->username !!}"
-                    data-peasant-age="{!! $peasant->meta->dob ? $peasant->meta->dob->diffInYears($carbonNow) : 'Not set'!!}"
-                    data-peasant-status="{!! ucfirst(str_replace('_', ' ', $peasant->meta->relationship_status ? \UserConstants::selectableField('relationship_status', $peasant->roles[0]->name)[$peasant->meta->relationship_status] : 'Nog niet ingevuld')) !!}"
-                    data-peasant-city="{!! $peasant->meta->city !!}"
-                    data-peasant-height="{!! ucfirst(str_replace('_', ' ', $peasant->meta->height ? \UserConstants::selectableField('height', $peasant->roles[0]->name)[$peasant->meta->height] : 'Nog niet ingevuld')) !!}"
-                    data-peasant-body-type="{!! ucfirst(str_replace('_', ' ', $peasant->meta->body_type ? \UserConstants::selectableField('body_type', $peasant->roles[0]->name)[$peasant->meta->body_type] : 'Nog niet ingevuld')) !!}"
-                    data-peasant-eye-color="{!! ucfirst(str_replace('_', ' ', $peasant->meta->eye_color ? \UserConstants::selectableField('eye_color', $peasant->roles[0]->name)[$peasant->meta->eye_color] : 'Nog niet ingevuld')) !!}"
-                    data-peasant-hair-color="{!! ucfirst(str_replace('_', ' ', $peasant->meta->hair_color ? \UserConstants::selectableField('hair_color', $peasant->roles[0]->name)[$peasant->meta->hair_color] : 'Nog niet ingevuld')) !!}"
-                    data-peasant-smoking="{!! ucfirst(str_replace('_', ' ', $peasant->meta->smoking_habits ?\UserConstants::selectableField('smoking_habits', $peasant->roles[0]->name)[$peasant->meta->smoking_habits] : 'Nog niet ingevuld')) !!}"
-                    data-peasant-drinking="{!! ucfirst(str_replace('_', ' ', $peasant->meta->drinking_habits ? \UserConstants::selectableField('drinking_habits', $peasant->roles[0]->name)[$peasant->meta->drinking_habits] : 'Nog niet ingevuld')) !!}"
-                    data-peasant-about-me="{!! $peasant->meta->about_me !!}"
-                >
-                    <img style="width: 50px"
-                         src="{!! \StorageHelper::profileImageUrl($peasant, true) !!}"
-                         alt="peasant image">
-                    (ID :<a href="{{ route('admin.peasants.edit.get', $peasant->getId()) }}">{!! $peasant->getId() !!}</a>)
-                    <span class="js-fillPeasantData peasantUsername" style="cursor:pointer;">
-                        {!! $peasant->username !!}
+        @if(count($peasants) === 0)
+            <div style="padding-left: 15px; font-weight: bold; font-size: 23px; color: #245269"><p>No peasants</p></div>
+        @else
+            <ul style="max-height: 230px;
+                        overflow-y: scroll;
+                        border: 1px solid #ccc;"
+            >
+                @foreach($peasants as $peasant)
+                    <li data-peasant-id="{!! $peasant->getId() !!}"
+                        data-peasant-profile-image="{!! \StorageHelper::profileImageUrl($peasant) !!}"
+                        data-peasant-username="{!! $peasant->username !!}"
+                        data-peasant-age="{!! $peasant->meta->dob ? $peasant->meta->dob->diffInYears($carbonNow) : 'Not set'!!}"
+                        data-peasant-status="{!! ucfirst(str_replace('_', ' ', $peasant->meta->relationship_status ? \UserConstants::selectableField('relationship_status', $peasant->roles[0]->name)[$peasant->meta->relationship_status] : 'Nog niet ingevuld')) !!}"
+                        data-peasant-city="{!! $peasant->meta->city !!}"
+                        data-peasant-height="{!! ucfirst(str_replace('_', ' ', $peasant->meta->height ? \UserConstants::selectableField('height', $peasant->roles[0]->name)[$peasant->meta->height] : 'Nog niet ingevuld')) !!}"
+                        data-peasant-body-type="{!! ucfirst(str_replace('_', ' ', $peasant->meta->body_type ? \UserConstants::selectableField('body_type', $peasant->roles[0]->name)[$peasant->meta->body_type] : 'Nog niet ingevuld')) !!}"
+                        data-peasant-eye-color="{!! ucfirst(str_replace('_', ' ', $peasant->meta->eye_color ? \UserConstants::selectableField('eye_color', $peasant->roles[0]->name)[$peasant->meta->eye_color] : 'Nog niet ingevuld')) !!}"
+                        data-peasant-hair-color="{!! ucfirst(str_replace('_', ' ', $peasant->meta->hair_color ? \UserConstants::selectableField('hair_color', $peasant->roles[0]->name)[$peasant->meta->hair_color] : 'Nog niet ingevuld')) !!}"
+                        data-peasant-smoking="{!! ucfirst(str_replace('_', ' ', $peasant->meta->smoking_habits ?\UserConstants::selectableField('smoking_habits', $peasant->roles[0]->name)[$peasant->meta->smoking_habits] : 'Nog niet ingevuld')) !!}"
+                        data-peasant-drinking="{!! ucfirst(str_replace('_', ' ', $peasant->meta->drinking_habits ? \UserConstants::selectableField('drinking_habits', $peasant->roles[0]->name)[$peasant->meta->drinking_habits] : 'Nog niet ingevuld')) !!}"
+                        data-peasant-about-me="{!! $peasant->meta->about_me !!}"
+                    >
+                        <img style="width: 50px"
+                             src="{!! \StorageHelper::profileImageUrl($peasant, true) !!}"
+                             alt="peasant image">
+                        (ID :<a href="{{ route('admin.peasants.edit.get', $peasant->getId()) }}">{!! $peasant->getId() !!}</a>)
+                        <span class="js-fillPeasantData peasantUsername" style="cursor:pointer;">
+                            {!! $peasant->username !!}
 
-                        @if(in_array($peasant->getId(), $onlinePeasantIds))
-                            <span class="onlineDot"></span>
-                        @endif
-                    </span>
-                </li>
-            @endforeach
-        </ul>
+                            @if(in_array($peasant->getId(), $onlinePeasantIds))
+                                <span class="onlineDot"></span>
+                            @endif
+                        </span>
+                    </li>
+                @endforeach
+            </ul>
+        @endif
 
         <div class="Tile Peasant-profile">
             <div class="col-xs-12">
@@ -105,7 +109,7 @@
         </div>
 
             <div class="col-xs-12"
-                 style="text-align: right; margin-peasanttom: 20px"
+                 style="text-align: right; margin-bottom: 20px"
             >
                 <a id="js-goToConversation" href="#" class="btn btn-info">
                     Go to conversation

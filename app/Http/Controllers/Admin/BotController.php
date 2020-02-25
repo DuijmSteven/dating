@@ -54,7 +54,7 @@ class BotController extends Controller
         );
     }
 
-    public function messagePeasantWithBot(int $botId)
+    public function messagePeasantWithBot(int $botId, bool $onlyOnlinePeasants = false)
     {
         $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
 
@@ -64,6 +64,15 @@ class BotController extends Controller
             ->whereIn('id', $onlineIds)
             ->get()->pluck('id')->toArray();
 
+        $peasantsQueryBuilder = User::with('meta', 'roles', 'profileImage')
+            ->whereHas('roles', function ($query) {
+                $query->where('id', User::TYPE_PEASANT);
+            });
+
+        if ($onlyOnlinePeasants) {
+            $peasantsQueryBuilder->whereIn('id', $onlinePeasantIds);
+        }
+
         return view(
             'admin.bots.message-with-bot',
             [
@@ -72,10 +81,7 @@ class BotController extends Controller
                 'headingSmall' => 'Message peasant with bot',
                 'carbonNow' => Carbon::now(),
                 'bot' => User::with('meta', 'profileImage')->find($botId),
-                'peasants' => User::with('meta', 'roles', 'profileImage')
-                    ->whereHas('roles', function ($query) {
-                        $query->where('id', User::TYPE_PEASANT);
-                    })
+                'peasants' => $peasantsQueryBuilder
                     ->get(),
                 'onlinePeasantIds' => $onlinePeasantIds
             ]

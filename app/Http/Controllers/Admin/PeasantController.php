@@ -173,7 +173,7 @@ class PeasantController extends Controller
         return redirect()->back()->with('alerts', $alerts);
     }
 
-    public function messagePeasantAsBot(int $peasantId)
+    public function messagePeasantAsBot(int $peasantId, bool $onlyOnlineBots = false)
     {
         $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
 
@@ -183,6 +183,15 @@ class PeasantController extends Controller
             ->whereIn('id', $onlineIds)
             ->get()->pluck('id')->toArray();
 
+        $botsQueryBuilder = User::with('meta', 'roles', 'profileImage')
+            ->whereHas('roles', function ($query) {
+                $query->where('id', User::TYPE_BOT);
+            });
+
+        if ($onlyOnlineBots) {
+            $botsQueryBuilder->whereIn('id', $onlineBotIds);
+        }
+
         return view(
             'admin.peasants.message-as-bot',
             [
@@ -191,10 +200,7 @@ class PeasantController extends Controller
                 'headingSmall' => 'Message peasant as bot',
                 'carbonNow' => Carbon::now(),
                 'peasant' => User::with('meta', 'profileImage')->find($peasantId),
-                'bots' => User::with('meta', 'roles', 'profileImage')
-                    ->whereHas('roles', function ($query) {
-                        $query->where('id', User::TYPE_BOT);
-                    })
+                'bots' => $botsQueryBuilder
                     ->get(),
                 'onlineBotIds' => $onlineBotIds
             ]
