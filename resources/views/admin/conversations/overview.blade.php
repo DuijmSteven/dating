@@ -50,7 +50,12 @@
                                         </a>
                                         <b>ID</b>:
                                             @php
-                                                $userRoleName = \UserConstants::selectableField('role')[$userA['role']];
+                                                if ($userA['role'] === \App\User::TYPE_ADMIN) {
+                                                    $userRoleName = 'peasant';
+                                                } else {
+                                                    $userRoleName = \UserConstants::selectableField('role')[$userA['role']];
+                                                }
+
                                                 $routeName = 'admin.' . $userRoleName . 's.edit.get';
                                             @endphp
                                             <a href="{{ route($routeName,['id' => $userA['id']]) }}">
@@ -68,8 +73,13 @@
                                         </a>
                                         <b>ID</b>:
                                             @php
-                                                $userRoleName = \UserConstants::selectableField('role')[$userB['role']];
-                                                $routeName = 'admin.' . $userRoleName . 's.edit.get';
+                                              if ($userB['role'] === \App\User::TYPE_ADMIN) {
+                                                   $userRoleName = 'peasant';
+                                               } else {
+                                                   $userRoleName = \UserConstants::selectableField('role')[$userB['role']];
+                                               }
+                                               $userRoleName = \UserConstants::selectableField('role')[$userB['role']];
+                                               $routeName = 'admin.' . $userRoleName . 's.edit.get';
                                             @endphp
                                             <a href="{{ route($routeName,['id' => $userB['id']]) }}">
                                                 {{ $userB['id'] }}
