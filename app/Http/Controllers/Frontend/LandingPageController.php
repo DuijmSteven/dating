@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Spatie\Geocoder\Geocoder;
+use function foo\func;
 
 class LandingPageController extends FrontendController
 {
@@ -24,10 +25,13 @@ class LandingPageController extends FrontendController
 
         app()->setLocale($locale);
 
-        $users = User::whereHas('roles', function ($query) {
+        $users = User::with(['roles', 'meta'])->whereHas('roles', function ($query) {
             $query->where('name', 'bot');
         })
-            ->inRandomOrder()->take(6)->get();
+            ->whereHas('meta', function ($query) {
+                $query->where('gender', 2);
+            })
+            ->inRandomOrder()->take(12)->get();
 
         $testimonials = [
             [
