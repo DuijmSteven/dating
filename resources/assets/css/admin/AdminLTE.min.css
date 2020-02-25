@@ -6142,3 +6142,13 @@ table .action-buttons .btn {
     background-color: #00a65a;
     border-radius: 50%;
 }
+
+.peasantUsername .onlineDot {
+    position: absolute;
+    width: 11px;
+    height: 11px;
+    top: 3px;
+    right: -15px;
+    background-color: #00a65a;
+    border-radius: 50%;
+}
