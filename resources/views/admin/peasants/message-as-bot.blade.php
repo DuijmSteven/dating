@@ -31,8 +31,12 @@
                          src="{!! \StorageHelper::profileImageUrl($bot) !!}"
                          alt="bot image">
                     (ID :<a href="{{ route('admin.bots.edit.get', $bot->getId()) }}">{!! $bot->getId() !!}</a>)
-                    <span class="js-fillBotData" style="cursor:pointer;">
+                    <span class="js-fillBotData botUsername" style="cursor:pointer;">
                         {!! $bot->username !!}
+
+                        @if(in_array($bot->getId(), $onlineBotIds))
+                            <span class="onlineDot"></span>
+                        @endif
                     </span>
                 </li>
             @endforeach

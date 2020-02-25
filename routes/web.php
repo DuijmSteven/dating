@@ -203,6 +203,9 @@ Route::group([
             ->name('admin.bots.edit.get');
         Route::put('/edit/{id}', 'Admin\BotController@update')
             ->name('admin.bots.update');
+
+        Route::get('{botId}/message-with-bot', 'Admin\BotController@messagePeasantWithBot')
+            ->name('admin.bots.message-with-bot.get');
     });
 
     Route::group([

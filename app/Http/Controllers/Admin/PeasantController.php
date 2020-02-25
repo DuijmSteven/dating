@@ -175,6 +175,14 @@ class PeasantController extends Controller
 
     public function messagePeasantAsBot(int $peasantId)
     {
+        $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
+
+        $onlineBotIds = User::whereHas('roles', function ($query) {
+            $query->where('id', User::TYPE_BOT);
+        })
+            ->whereIn('id', $onlineIds)
+            ->get()->pluck('id')->toArray();
+
         return view(
             'admin.peasants.message-as-bot',
             [
@@ -185,9 +193,10 @@ class PeasantController extends Controller
                 'peasant' => User::with('meta', 'profileImage')->find($peasantId),
                 'bots' => User::with('meta', 'roles')
                     ->whereHas('roles', function ($query) {
-                        $query->where('id', 3);
+                        $query->where('id', User::TYPE_BOT);
                     })
-                    ->get()
+                    ->get(),
+                'onlineBotIds' => $onlineBotIds
             ]
         );
     }

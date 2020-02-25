@@ -31,40 +31,40 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($bots as $peasant)
+                        @foreach($bots as $bot)
                             <tr>
-                                <td>{!! $peasant->id !!}</td>
+                                <td>{!! $bot->id !!}</td>
                                 <td>
                                     <a href="">
-                                        <img width="120" src="{!! \StorageHelper::profileImageUrl($peasant, true) !!}"
+                                        <img width="120" src="{!! \StorageHelper::profileImageUrl($bot, true) !!}"
                                              alt="">
                                     </a>
                                 </td>
                                 <td>
-                                    <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $peasant->username !!} <br>
-                                    <strong>{!! @trans('user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($peasant->meta->dob) !!} <br>
+                                    <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $bot->username !!} <br>
+                                    <strong>{!! @trans('user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($bot->meta->dob) !!} <br>
                                 </td>
                                 <td>
                                     @foreach(\UserConstants::selectableFields('peasant') as $fieldName => $a)
-                                        @if(isset($peasant->meta->{$fieldName}))
+                                        @if(isset($bot->meta->{$fieldName}))
                                             <strong>{!! ucfirst(str_replace('_', ' ', $fieldName)) !!}:
-                                            </strong> {!! @trans('user_constants.' . $fieldName . '.' . $peasant->meta->{$fieldName}) !!} <br>
+                                            </strong> {!! @trans('user_constants.' . $fieldName . '.' . $bot->meta->{$fieldName}) !!} <br>
                                         @endif
                                     @endforeach
 
                                     @foreach(array_merge(\UserConstants::textFields('peasant'), \UserConstants::textInputs('peasant')) as $fieldName)
-                                        @if(isset($peasant->meta->{$fieldName}) && $peasant->meta->{$fieldName} != '')
+                                        @if(isset($bot->meta->{$fieldName}) && $bot->meta->{$fieldName} != '')
                                             <strong>{!! @trans('user_constants.' . $fieldName) !!}:
-                                            </strong> {!! $peasant->meta->{$fieldName} !!}<br>
+                                            </strong> {!! $bot->meta->{$fieldName} !!}<br>
                                         @endif
                                     @endforeach
                                 </td>
                                 <td class="action-buttons">
-                                    <a href="{!! route('admin.peasants.edit.get', [$peasant->id]) !!}" class="btn btn-default">Edit</a>
+                                    <a href="{!! route('admin.peasants.edit.get', [$bot->id]) !!}" class="btn btn-default">Edit</a>
 
-                                    <a href="{!! route('admin.peasants.message-as-bot.get', [$peasant->id]) !!}" class="btn btn-default">Message as a bot</a>
+                                    <a href="{!! route('admin.bots.message-with-bot.get', [$bot->id]) !!}" class="btn btn-default">Message peasant with bot</a>
 
-                                    <form method="POST" action="{!! route('admin.users.destroy', ['userId' => $peasant->id]) !!}">
+                                    <form method="POST" action="{!! route('admin.users.destroy', ['userId' => $bot->id]) !!}">
                                         {!! csrf_field() !!}
                                         {!! method_field('DELETE') !!}
                                         <button type="submit"

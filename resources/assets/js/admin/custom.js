@@ -49,7 +49,6 @@ $(window).load(function () {
         $('#note_user_id').val(userId);
     });
 
-    // scrolls all the elements on the page with a class "scroll-bottom" to the bottom
     if ($('#js-BotSelection').length > 0) {
         $('.js-fillBotData').click(function () {
             $('#js-goToConversation').attr(
@@ -75,6 +74,34 @@ $(window).load(function () {
             $('#js-botSmoking').text($(this).closest('li').data('bot-smoking'));
             $('#js-botDrinking').text($(this).closest('li').data('bot-drinking'));
             $('#js-aboutMe').text($(this).closest('li').data('bot-about-me'));
+        });
+    }
+
+    if ($('#js-PeasantSelection').length > 0) {
+        $('.js-fillPeasantData').click(function () {
+            $('#js-goToConversation').attr(
+                'href',
+                DP.baseUrl +
+                '/' +
+                'operator-platform/conversations/' +
+                $(this).closest('li').data('peasant-id') +
+                '/' +
+                $('#js-peasant-profile').data('bot-id')
+            );
+
+            $('#js-peasantProfileImage').attr('src', $(this).closest('li').data('peasant-profile-image'));
+
+            $('#js-peasantUsername').text($(this).closest('li').data('peasant-username'));
+            $('#js-peasantAge').text($(this).closest('li').data('peasant-age'));
+            $('#js-peasantStatus').text($(this).closest('li').data('peasant-status'));
+            $('#js-peasantCity').text($(this).closest('li').data('peasant-city'));
+            $('#js-peasantHeight').text($(this).closest('li').data('peasant-height'));
+            $('#js-peasantBodyType').text($(this).closest('li').data('peasant-body-type'));
+            $('#js-peasantEyeColor').text($(this).closest('li').data('peasant-eye-color'));
+            $('#js-peasantHairColor').text($(this).closest('li').data('peasant-hair-color'));
+            $('#js-peasantSmoking').text($(this).closest('li').data('peasant-smoking'));
+            $('#js-peasantDrinking').text($(this).closest('li').data('peasant-drinking'));
+            $('#js-aboutMe').text($(this).closest('li').data('peasant-about-me'));
         });
     }
 

@@ -54,6 +54,34 @@ class BotController extends Controller
         );
     }
 
+    public function messagePeasantWithBot(int $botId)
+    {
+        $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
+
+        $onlinePeasantIds = User::whereHas('roles', function ($query) {
+            $query->where('id', User::TYPE_PEASANT);
+        })
+            ->whereIn('id', $onlineIds)
+            ->get()->pluck('id')->toArray();
+
+        return view(
+            'admin.bots.message-with-bot',
+            [
+                'title' => 'Message Peasant With Bot- ' . \config('app.name'),
+                'headingLarge' => 'Bots',
+                'headingSmall' => 'Message peasant with bot',
+                'carbonNow' => Carbon::now(),
+                'bot' => User::with('meta', 'profileImage')->find($botId),
+                'peasants' => User::with('meta', 'roles')
+                    ->whereHas('roles', function ($query) {
+                        $query->where('id', User::TYPE_PEASANT);
+                    })
+                    ->get(),
+                'onlinePeasantIds' => $onlinePeasantIds
+            ]
+        );
+    }
+
     public function showOnline()
     {
         $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
