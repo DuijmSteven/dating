@@ -7,9 +7,7 @@
 
 // BootstrapPrev
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
-@media (min-width: $screen-xs-min) {
-  @include make-grid(xs);
-}
+
 @import "~bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css";
 
 // Jquery Autocomplete
