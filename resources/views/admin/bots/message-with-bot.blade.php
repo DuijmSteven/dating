@@ -28,7 +28,7 @@
                     data-peasant-about-me="{!! $peasant->meta->about_me !!}"
                 >
                     <img style="width: 50px"
-                         src="{!! \StorageHelper::profileImageUrl($peasant) !!}"
+                         src="{!! \StorageHelper::profileImageUrl($peasant, true) !!}"
                          alt="peasant image">
                     (ID :<a href="{{ route('admin.peasants.edit.get', $peasant->getId()) }}">{!! $peasant->getId() !!}</a>)
                     <span class="js-fillPeasantData peasantUsername" style="cursor:pointer;">

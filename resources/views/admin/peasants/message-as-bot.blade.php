@@ -28,7 +28,7 @@
                     data-bot-about-me="{!! $bot->meta->about_me !!}"
                 >
                     <img style="width: 50px"
-                         src="{!! \StorageHelper::profileImageUrl($bot) !!}"
+                         src="{!! \StorageHelper::profileImageUrl($bot, true) !!}"
                          alt="bot image">
                     (ID :<a href="{{ route('admin.bots.edit.get', $bot->getId()) }}">{!! $bot->getId() !!}</a>)
                     <span class="js-fillBotData botUsername" style="cursor:pointer;">
