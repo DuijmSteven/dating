@@ -65,8 +65,8 @@
                                 <td class="action-buttons">
                                     <a href="{!! route('admin.peasants.edit.get', [$peasant->id]) !!}" class="btn btn-default">Edit</a>
 
-                                    <a href="{!! route('admin.peasants.message-as-bot.get', ['peasantId' => $peasant->id, 'onlyOnlineBots' => false]) !!}" class="btn btn-default">Message user as bot</a>
-                                    <a href="{!! route('admin.peasants.message-as-bot.get', [ 'peasantId' => $peasant->id, 'onlyOnlineBots' => true]) !!}" class="btn btn-default">Message user as online bot</a>
+                                    <a href="{!! route('admin.peasants.message-as-bot.get', ['peasantId' => $peasant->id, 'onlyOnlineBots' => '0']) !!}" class="btn btn-default">Message user as bot</a>
+                                    <a href="{!! route('admin.peasants.message-as-bot.get', [ 'peasantId' => $peasant->id, 'onlyOnlineBots' => '1']) !!}" class="btn btn-default">Message user as online bot</a>
 
                                     <form method="POST" action="{!! route('admin.users.destroy', ['userId' => $peasant->id]) !!}">
                                         {!! csrf_field() !!}
