@@ -191,7 +191,7 @@ class PeasantController extends Controller
                 'headingSmall' => 'Message peasant as bot',
                 'carbonNow' => Carbon::now(),
                 'peasant' => User::with('meta', 'profileImage')->find($peasantId),
-                'bots' => User::with('meta', 'roles')
+                'bots' => User::with('meta', 'roles', 'profileImage')
                     ->whereHas('roles', function ($query) {
                         $query->where('id', User::TYPE_BOT);
                     })

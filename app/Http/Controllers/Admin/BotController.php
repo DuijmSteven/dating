@@ -72,7 +72,7 @@ class BotController extends Controller
                 'headingSmall' => 'Message peasant with bot',
                 'carbonNow' => Carbon::now(),
                 'bot' => User::with('meta', 'profileImage')->find($botId),
-                'peasants' => User::with('meta', 'roles')
+                'peasants' => User::with('meta', 'roles', 'profileImage')
                     ->whereHas('roles', function ($query) {
                         $query->where('id', User::TYPE_PEASANT);
                     })
