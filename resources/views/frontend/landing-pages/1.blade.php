@@ -423,6 +423,7 @@
     }
 
     video {
+        display: none;
         position: absolute;
         width: 468px;
         bottom: -111px;
@@ -478,7 +479,7 @@
     }
 
     .welcome-container {
-        margin-top: 18rem;
+        margin-top: 50px;
     }
 
     @media screen and (max-width: 1000px) {
