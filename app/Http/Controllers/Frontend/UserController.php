@@ -81,12 +81,12 @@ class UserController extends FrontendController
             redirect(route('welcome'));
         }
 
-//        if ($this->authenticatedUser->isPeasant()) {
-//            $this->userManager->setProfileViewedEmail(
-//                $user,
-//                $this->authenticatedUser
-//            );
-//        }
+        if ($this->authenticatedUser->isPeasant()) {
+            $this->userManager->setProfileViewedEmail(
+                $user,
+                $this->authenticatedUser
+            );
+        }
 
         $viewData = [
             'user' => $user,
