@@ -38,7 +38,7 @@ class BotController extends Controller
     public function index()
     {
         /** @var Collection $bots */
-        $bots = User::with(['meta', 'roles', 'profileImage', 'images'])->whereHas('roles', function ($query) {
+        $bots = User::with(['meta', 'roles', 'profileImage', 'images', ''])->whereHas('roles', function ($query) {
             $query->where('name', 'bot');
         })->orderBy('created_at', 'desc')->paginate(10);
 
@@ -92,7 +92,7 @@ class BotController extends Controller
     {
         $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
 
-        $bots = User::with(['meta', 'roles', 'profileImage'])->whereHas('roles', function ($query) {
+        $bots = User::with(['meta', 'roles', 'profileImage', 'views'])->whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_BOT);
         })
             ->whereIn('id', $onlineIds)

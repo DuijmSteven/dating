@@ -50,7 +50,7 @@
                 <div class="UserSummary__userInfo__additional">
                     {!! isset($user->meta->city) ? $user->meta->city : '' !!}
 
-                    @if(!isset($email)))
+                    @if(!isset($email))
                         {!! isset($user->meta->city) && $user->meta->dob ? ' <span>&centerdot;</span> ' : '' !!}
                     @else
                         {!! isset($user->meta->city) && $user->meta->dob ? ', ' : '' !!}

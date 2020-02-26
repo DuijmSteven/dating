@@ -360,6 +360,11 @@ class User extends Authenticatable
     }
 
 
+    public function views()
+    {
+        return $this->hasMany(UserView::class, 'viewed_id', 'id');
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

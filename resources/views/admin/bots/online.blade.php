@@ -25,6 +25,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Profile image</th>
+                            <th>Views</th>
                             <th>User data</th>
                             <th>Meta data</th>
                             <th>Actions</th>
@@ -39,6 +40,9 @@
                                         <img width="120" src="{!! \StorageHelper::profileImageUrl($bot, true) !!}"
                                              alt="">
                                     </a>
+                                </td>
+                                <td>
+                                    {{ $bot->views->count() }}
                                 </td>
                                 <td>
                                     <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $bot->username !!} <br>

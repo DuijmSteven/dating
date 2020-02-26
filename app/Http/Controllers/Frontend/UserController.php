@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Frontend;
 use App\EmailType;
 use App\Http\Requests\Admin\Peasants\PeasantUpdateRequest;
 use App\Mail\Deactivated;
-use App\Mail\ProfileViewed;
-use App\Mail\Welcome;
 use App\Managers\PeasantManager;
 use App\Managers\UserManager;
 use App\User;
+use App\UserView;
+use App\UserViews;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -86,6 +86,11 @@ class UserController extends FrontendController
                 $user,
                 $this->authenticatedUser
             );
+
+            $userView = new UserView();
+            $userView->setViewerId($this->authenticatedUser->getId());
+            $userView->setViewedId($user->getId());
+            $userView->save();
         }
 
         $viewData = [
