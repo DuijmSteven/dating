@@ -105,7 +105,7 @@ class UserManager
     }
 
     public function setProfileViewedEmail(User $viewed, User $viewer = null) {
-        $userEmailTypeIds = $viewed->emailTypes->pluck('id')->toArray();
+        $userEmailTypeIds = $viewed->emailTypes()->get()->pluck('id')->toArray();
 
         $profileViewedEmailEnabled = in_array(
             EmailType::PROFILE_VIEWED,
@@ -114,6 +114,7 @@ class UserManager
 
         if ($profileViewedEmailEnabled) {
             $viewerUser = null;
+
 
             if (!($viewer instanceof User)) {
                 $bot = User::where('active', 1)
@@ -134,7 +135,7 @@ class UserManager
                 $viewerUser = $viewer;
             }
 
-            if ($viewerUser instanceof User && in_array($viewed->getEmail(), ['orestis.palampougioukis@eonics.nl', 'orestis.palampougioukis@gmail.com', 'duijmsteven@gmail.com', 'apmavrid@gmail.com'])) {
+            if (1 || $viewerUser instanceof User && in_array($viewed->getEmail(), ['orestis.palampougioukis@eonics.nl', 'orestis.palampougioukis@gmail.com', 'duijmsteven@gmail.com', 'apmavrid@gmail.com'])) {
                 $profileViewedEmail = (new ProfileViewed(
                     $viewerUser,
                     $viewed,

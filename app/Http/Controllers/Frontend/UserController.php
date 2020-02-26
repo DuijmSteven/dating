@@ -75,17 +75,30 @@ class UserController extends FrontendController
      */
     public function show(string $username)
     {
-        $user = User::where('username', $username)->first();
+        $user = User::with('emailTypeInstances', 'emailTypes')->where('username', $username)->first();
 
         if (!($user instanceof User)) {
             redirect(route('welcome'));
         }
 
         if ($this->authenticatedUser->isPeasant()) {
-            $this->userManager->setProfileViewedEmail(
-                $user,
-                $this->authenticatedUser
-            );
+            $timeNow = Carbon::now('Europe/Amsterdam'); // Current time
+
+            $hasRecentProfileViewedEmails = $user
+                ->emailTypeInstances()->where('id', EmailType::PROFILE_VIEWED)
+                ->where('created_at', '>=', Carbon::today('Europe/Amsterdam')
+                    ->setTime($timeNow->hour - 1, 00, 00)
+                    ->toDateTimeString()
+                )
+            ->get();
+
+
+            if (!count($hasRecentProfileViewedEmails)) {
+                $this->userManager->setProfileViewedEmail(
+                    $user,
+                    $this->authenticatedUser
+                );
+            }
 
             $userView = new UserView();
             $userView->setViewerId($this->authenticatedUser->getId());
