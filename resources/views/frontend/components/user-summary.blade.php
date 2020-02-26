@@ -57,7 +57,11 @@
                     @endif
 
                     {!! $user->meta->dob ? $user->meta->dob->diffInYears($carbonNow) . ' Jaar' : '' !!}
-                    {!! !isset($user->meta->city) && !$user->meta->dob ? '&nbsp' : '' !!}
+
+                    @if(!isset($email))
+                        {!! !isset($user->meta->city) && !$user->meta->dob ? '&nbsp' : '' !!}
+                    @endif
+
                 </div>
             </div>
             @if(!isset($email))
