@@ -3,19 +3,21 @@
 
 namespace App\Managers;
 
-use App\Facades\Helpers\ApplicationConstants\UserConstants;
+use App\EmailType;
+use App\Mail\ProfileViewed;
 use App\RoleUser;
-use App\Services\GeocoderService;
 use App\Session;
 use App\User;
+use App\UserEmailTypeInstance;
 use App\UserImage;
 use App\UserMeta;
-use GuzzleHttp\Client;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Kim\Activity\Activity;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Illuminate\Support\Facades\DB;
 
 /**
  * Class UserManager
@@ -93,7 +95,6 @@ class UserManager
         if (isset($userData['email_notifications'])) {
 
             $user = User::with('emailTypes')->where('id', $userId)->get()[0];
-
             $user->emailTypes()->detach();
 
             foreach ($userData['email_notifications'] as $emailTypeId) {
@@ -101,6 +102,58 @@ class UserManager
             }
         }
         DB::commit();
+    }
+
+    public function setProfileViewedEmail(User $viewed, User $viewer = null) {
+        $userEmailTypeIds = $viewed->emailTypes->pluck('id')->toArray();
+
+        $profileViewedEmailEnabled = in_array(
+            EmailType::PROFILE_VIEWED,
+            $userEmailTypeIds
+        );
+
+        if ($profileViewedEmailEnabled) {
+            $viewerUser = null;
+
+            if (!($viewer instanceof User)) {
+                $bot = User::where('active', 1)
+                    ->whereHas('meta', function ($query) use ($viewed) {
+                        $query->where('looking_for_gender', $viewed->meta->gender);
+                        $query->where('gender', $viewed->meta->looking_for_gender);
+                    })
+                    ->whereHas('roles', function ($query) {
+                        $query->where('id', User::TYPE_BOT);
+                    })
+                    ->orderBy(\DB::raw('RAND()'))
+                    ->first();
+
+                if ($bot instanceof User) {
+                    $viewerUser = $bot;
+                }
+            } else {
+                $viewerUser = $viewer;
+            }
+
+            if ($viewerUser instanceof User && in_array($viewed->getEmail(), ['orestis.palampougioukis@eonics.nl', 'orestis.palampougioukis@gmail.com', 'steven.duijm@gmail.com'])) {
+                $profileViewedEmail = (new ProfileViewed(
+                    $viewerUser,
+                    $viewed,
+                    $viewerUser,
+                    new Carbon('now')
+                ))->onQueue('emails');
+
+                Mail::to($viewed)
+                    ->queue($profileViewedEmail);
+
+                $userEmailTypeInstance = new UserEmailTypeInstance();
+                $userEmailTypeInstance->setEmail($viewed->getEmail());
+                $userEmailTypeInstance->setViewerId($viewerUser->getId());
+                $userEmailTypeInstance->setViewedId($viewed->getId());
+                $userEmailTypeInstance->setEmailTypeId(EmailType::PROFILE_VIEWED);
+
+                $userEmailTypeInstance->save();
+            }
+        }
     }
 
     /**

@@ -3,8 +3,8 @@
 namespace App;
 
 use App\Notifications\MailResetPasswordNotification;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 /**
  * Class User
@@ -202,6 +202,18 @@ class User extends Authenticatable
     /**
      * @return bool
      */
+    public function isPeasant()
+    {
+        $userRoles = [];
+        foreach ($this->roles as $role) {
+            $userRoles[] = $role['name'];
+        }
+        return in_array('peasant', $userRoles);
+    }
+
+    /**
+     * @return bool
+     */
     public function isOperator()
     {
         $userRoles = [];
@@ -238,6 +250,11 @@ class User extends Authenticatable
     public function hasMilestone(int $milestoneId)
     {
         return in_array($milestoneId, $this->milestones->pluck('id')->toArray());
+    }
+
+    public function emailTypeInstances()
+    {
+        return $this->belongsToMany(EmailType::class, 'user_email_type_instances', 'viewed_id', 'email_type_id')->withTimestamps();
     }
 
     /**

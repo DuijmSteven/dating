@@ -7,6 +7,8 @@ return [
     'user_email_types' => [
         'new_message' => 'New message received',
         'new_message_help' => 'Receive an email when a user sends you a message and you are not logged in',
+        'profile_viewed' => 'Profile viewed',
+        'profile_viewed_help' => 'Receive an email when a user views your profile'
     ],
     'image_limit_reached' => 'You cannot have more that 10 images. In order to upload more images, you first need to delete some of the current ones.',
     'select_your' => 'Select your',

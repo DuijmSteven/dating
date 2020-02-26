@@ -31,7 +31,7 @@
                 </a>
             @endif
 
-            @if(in_array($user->getId(), $onlineUserIds))
+            @if(!isset($email) && in_array($user->getId(), $onlineUserIds))
                 <div class="onlineCircle"></div>
             @endif
         </div>
@@ -43,23 +43,31 @@
                    class="UserSummary__userInfo__primary">
                     {{ $user->username }}
 
-                    @if(in_array($user->getId(), $onlineUserIds))
+                    @if(!isset($email) && in_array($user->getId(), $onlineUserIds))
                         <div class="onlineCircle"></div>
                     @endif
                 </a>
                 <div class="UserSummary__userInfo__additional">
                     {!! isset($user->meta->city) ? $user->meta->city : '' !!}
-                    {!! isset($user->meta->city) && $user->meta->dob ? ' <span>&centerdot;</span> ' : '' !!}
+
+                    @if(!isset($email)))
+                        {!! isset($user->meta->city) && $user->meta->dob ? ' <span>&centerdot;</span> ' : '' !!}
+                    @else
+                        {!! isset($user->meta->city) && $user->meta->dob ? ', ' : '' !!}
+                    @endif
+
                     {!! $user->meta->dob ? $user->meta->dob->diffInYears($carbonNow) . ' Jaar' : '' !!}
                     {!! !isset($user->meta->city) && !$user->meta->dob ? '&nbsp' : '' !!}
                 </div>
             </div>
-            <div class="UserSummary__sendMessage"
-                 v-on:click="addChat({!! $authenticatedUser->getId() !!}, {!! $user->getId() !!}, '1', true)"
-            >
-                <span class="UserSummary__sendMessage__text">Chat</span>
-                <i class="material-icons material-icon UserSummary__sendMessage__icon">textsms</i>
-            </div>
+            @if(!isset($email))
+                <div class="UserSummary__sendMessage"
+                     v-on:click="addChat({!! $authenticatedUser->getId() !!}, {!! $user->getId() !!}, '1', true)"
+                >
+                    <span class="UserSummary__sendMessage__text">Chat</span>
+                    <i class="material-icons material-icon UserSummary__sendMessage__icon">textsms</i>
+                </div >
+            @endif
         </div>
 
         @if(isset($showOtherImages) && $showOtherImages)

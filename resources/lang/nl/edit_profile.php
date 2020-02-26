@@ -7,6 +7,8 @@ return [
     'user_email_types' => [
         'new_message' => 'Nieuw bericht ontvangen',
         'new_message_help' => 'Ontvang een e-mail wanneer een gebruiker je een bericht stuurt en je niet bent ingelogd',
+        'profile_viewed' => 'Profiel bekeken',
+        'profile_viewed_help' => 'Ontvang een e-mail wanneer een gebruiker naar jouw profiel kijkt'
     ],
     'image_limit_reached' => 'Je kan niet meer dan 10 afbeeldingen hebben. Verwijder eerst andere foto\'s.',
 

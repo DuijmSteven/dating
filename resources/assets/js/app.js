@@ -55,7 +55,7 @@ $(window).on('load', function () {
     require('./global_helpers');
 
     if ($('#JS--SearchBarForm')) {
-        $('#JS--SearchBarForm').disableAutoFill();
+       // $('#JS--SearchBarForm').disableAutoFill();
     }
 
     if ($('#JS--EditProfileUserDetailsForm')) {

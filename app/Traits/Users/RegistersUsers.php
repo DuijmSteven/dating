@@ -99,6 +99,7 @@ trait RegistersUsers
 
         try {
             $createdUser->emailTypes()->attach(EmailType::MESSAGE_RECEIVED);
+            $createdUser->emailTypes()->attach(EmailType::PROFILE_VIEWED);
             $createdUser->save();
         } catch (\Exception $exception) {
             DB::rollBack();

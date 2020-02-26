@@ -15,7 +15,6 @@ class EmailTypeUser extends Model
      */
     protected $fillable = [
         'user_id',
-        'email_type_id',
-        'active'
+        'email_type_id'
     ];
 }

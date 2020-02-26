@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\EmailType;
 use App\Http\Requests\Admin\Peasants\PeasantUpdateRequest;
 use App\Mail\Deactivated;
+use App\Mail\ProfileViewed;
 use App\Mail\Welcome;
 use App\Managers\PeasantManager;
 use App\Managers\UserManager;
@@ -79,6 +80,13 @@ class UserController extends FrontendController
         if (!($user instanceof User)) {
             redirect(route('welcome'));
         }
+
+//        if ($this->authenticatedUser->isPeasant()) {
+//            $this->userManager->setProfileViewedEmail(
+//                $user,
+//                $this->authenticatedUser
+//            );
+//        }
 
         $viewData = [
             'user' => $user,

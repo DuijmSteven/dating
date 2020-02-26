@@ -172,6 +172,18 @@
                 font-size: 17px !important;
             }
         }
+
+        .UserSummary__profileImage {
+            width: 60%;
+            padding: 50px 0;
+        }
+
+        @media screen and (max-width: 767px) {
+            .UserSummary__profileImage {
+                width: 80%;
+                padding: 30px 0;
+            }
+        }
     </style>
     <!-- Progressive Enhancements : END -->
 

@@ -6,6 +6,7 @@ use App\Creditpack;
 use App\Mail\Contact;
 use App\Mail\Welcome;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redis;
 
@@ -64,8 +65,23 @@ class TestController extends Controller
         $recipient = User::find(4);
 
         return view('emails.message-received', [
-            'sender' => $sender,
-            'recipient' => $recipient,
+            'user' => $sender,
+            'messageSender' => $sender,
+            'messageRecipient' => $recipient,
+            'carbonNow' => Carbon::now()
+        ]);
+    }
+
+    public function showProfileViewedEmail()
+    {
+        $sender = User::find(3);
+        $recipient = User::find(4);
+
+        return view('emails.profile-viewed', [
+            'user' => $sender,
+            'messageSender' => $sender,
+            'messageRecipient' => $recipient,
+            'carbonNow' => Carbon::now()
         ]);
     }
 

@@ -20,6 +20,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\SetRandomBotsOnline::class,
         Commands\ExportDb::class,
+        Commands\SendProfileViewedEmails::class,
     ];
 
     /**
@@ -45,6 +46,7 @@ class Kernel extends ConsoleKernel
         }
 
         $schedule->command('bots:set-random-online ' . $numberOfBotsToHaveOnline)->everyTenMinutes();
+        $schedule->command('users:emails:send-profile-viewed')->everyMinute();
     }
 
     /**
