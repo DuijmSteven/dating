@@ -746,21 +746,15 @@
                     >
                         {{ csrf_field() }}
                         <div class="form-row">
-                            <div class="form-group col-md-12 {{ $errors->has('identity') || $errors->has('username') || $errors->has('email') ? ' has-error' : '' }}">
-                                <label for="login-identity">{{ @trans('lp1.form.identity') }}</label>
-                                <input type="text" class="form-control" id="login-identity" name="identity"
-                                       placeholder="{{ @trans('lp1.form.identity') }}" value="{{ old('identity') }}"
+                            <div class="form-group col-md-12 {{ $errors->has('username') ? ' has-error' : '' }}">
+                                <label for="login-username">{{ @trans('lp1.form.username') }}</label>
+                                <input type="text" class="form-control" id="login-username" name="username"
+                                       placeholder="{{ @trans('lp1.form.username') }}" value="{{ old('username') }}"
                                        required autofocus>
-                                @if ($errors->has('identity') || $errors->has('username') || $errors->has('email'))
+                                @if ($errors->has('username'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('identity') }}</strong>
-                                    </span>
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('username') }}</strong>
-                                    </span>
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
+                                            <strong>{{ $errors->first('username') }}</strong>
+                                        </span>
                                 @endif
                             </div>
                         </div>
