@@ -9,6 +9,7 @@ return [
         'woman_looking_for_woman' => 'Woman looking for a Woman',
         'man_looking_for_man' => 'Man looking for a Man',
         'username' => 'Username',
+        'identity' => 'Email or Username',
         'email' => 'Email (not visible by others)',
         'email_placeholder' => 'E-mail adres',
         'city' => 'City',

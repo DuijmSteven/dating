@@ -9,6 +9,7 @@ return [
         'woman_looking_for_woman' => 'Vrouw op zoek naar een vrouw',
         'man_looking_for_man' => 'Man op zoek naar een man',
         'username' => 'Gebruikersnaam',
+        'identity' => 'E-mail adres of Gebruikersnaam',
         'email' => 'E-mail adres (niet zichtbaar voor anderen)',
         'email_placeholder' => 'E-mail adres',
         'city' => 'Stad',

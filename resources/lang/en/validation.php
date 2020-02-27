@@ -109,6 +109,9 @@ return [
         'email' => [
             'unique' => 'This email address is already taken'
         ],
+        'identity' => [
+            'required' => 'An email or username is required'
+        ],
         'password' => [
             'confirmed' => 'The passwords do not match. Please try again'
         ],

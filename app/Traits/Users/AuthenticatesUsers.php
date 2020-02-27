@@ -66,8 +66,10 @@ trait AuthenticatesUsers
     protected function validateLogin(Request $request)
     {
         $request->validate([
-            $this->username() => 'required|string',
+            'identity' => 'required|string',
             'password' => 'required|string',
+            'email' => 'string|exists:users',
+            'username' => 'string|exists:users',
         ]);
     }
 
@@ -145,7 +147,12 @@ trait AuthenticatesUsers
      */
     public function username()
     {
-        return 'username';
+        $login = request()->input('identity');
+
+        $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        request()->merge([$field => $login]);
+
+        return $field;
     }
 
     /**

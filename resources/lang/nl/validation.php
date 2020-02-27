@@ -109,6 +109,9 @@ return [
         'email' => [
             'unique' => 'Dit e-mailadres is al in gebruik.'
         ],
+        'identity' => [
+            'required' => 'Een e-mail adres of gebruikersnaam is verplicht'
+        ],
         'password' => [
             'confirmed' => 'Het wachtwoord komt niet overeen. Probeer het nog eens.'
         ],
