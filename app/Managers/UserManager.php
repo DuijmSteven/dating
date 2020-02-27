@@ -112,7 +112,7 @@ class UserManager
             $userEmailTypeIds
         );
 
-        if ($profileViewedEmailEnabled) {
+        if ($profileViewedEmailEnabled && $viewed->isPeasant()) {
             $viewerUser = null;
 
             if (!($viewer instanceof User)) {
