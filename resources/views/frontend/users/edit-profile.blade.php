@@ -429,7 +429,7 @@
                     <p>{{ trans('edit_profile.deactivation_text') }}</p>
 
                     <div class="text-left">
-                        <button type="button" class="Button Button--danger" data-toggle="modal"
+                        <button type="button" class="Button Button--primary" data-toggle="modal"
                                 data-target=".ConfirmModalDeactivate">
                             <span class="Button__content">{{ @trans('edit_profile.deactivate') }}</span>
                         </button>

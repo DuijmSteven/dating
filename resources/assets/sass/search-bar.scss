@@ -3,11 +3,24 @@
     top: - 23px;
     left: 0px;
     right: 0px;
-    background-color: $navbarBgColor;
     box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
     border-top: 0;
     border-radius: 0 0 5px 5px;
     padding: 10px;
+    background: linear-gradient(60deg, #313648, #434f62);
+
+
+    @media (max-width: $screen-md-max) {
+        background: linear-gradient(94deg, #2f3446, #455166);
+    }
+
+    @media (max-width: $screen-sm-max) {
+        background: linear-gradient(110deg, #343a4c, #434f63);
+    }
+
+    @media (max-width: $screen-xs-max) {
+        background: linear-gradient(97deg, #2e3244, #475469);
+    }
 
     &.with-errors {
         padding-bottom: 30px;

@@ -23,6 +23,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
 
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.54);
+
     &.whiteFont {
         color: $white;
 
@@ -42,10 +44,11 @@
     &:hover {
         text-decoration: none;
         color: $white;
+        box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.60);
     }
 
     &:active {
-        box-shadow: map_get($button, box-shadow__active);
+        box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.4);
         color: map_get($button, font-color);
         outline: 0;
         text-decoration: none;
@@ -81,16 +84,16 @@
 }
 
 .Button--primary {
-    background-color: map_get($primaryButton, background-color);
     color: map_get($primaryButton, font-color);
     border-color: map_get($primaryButton, border-color);
+    background: linear-gradient(60deg, #d47762, #cc877a);
 
     &:hover {
-        background-color: map_get($primaryButton, background-color__hover);
+        background: linear-gradient(60deg, darken(#d47762, 2%), darken(#cc877a, 2%));
     }
 
     &:active {
-        background-color: map_get($primaryButton, background-color__active);
+        background: linear-gradient(60deg, darken(#d47762, 2%), darken(#cc877a, 2%));
     }
 }
 

@@ -9,7 +9,7 @@
     position: relative;
     z-index: 5;
     padding: 30px 0;
-    background-color: $footerBgColor;
+    background: linear-gradient(60deg, $mainColor, darken($tertiaryColor, 4%));
     color: $white;
 
     &__logo {

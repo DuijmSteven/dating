@@ -32,6 +32,8 @@
         background-color: map_get($privateChatManager, 'headBackGroundColor');
         color: map_get($privateChatManager, 'headColor');
 
+        background: linear-gradient(94deg, #2f3446, #455166);
+
         &__title {
             display: flex;
             align-items: center;
