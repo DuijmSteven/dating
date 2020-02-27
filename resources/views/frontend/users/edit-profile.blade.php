@@ -385,8 +385,9 @@
 
                                 @foreach($availableEmailTypes as $emailType)
                                     <div class="checkbox notificationSettingsItem">
-                                        <label>
+                                        <label for="emailType{{ $emailType->id }}">
                                             <input
+                                                id="emailType{{ $emailType->id }}"
                                                 type="checkbox"
                                                 value="{{ $emailType->id }}"
                                                 name="email_notifications[]"
