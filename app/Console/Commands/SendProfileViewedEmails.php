@@ -65,7 +65,7 @@ class SendProfileViewedEmails extends Command
                     $query->where('id', EmailType::PROFILE_VIEWED);
                 })->whereDoesntHave('emailTypeInstances', function ($query) use ($timeNow) {
                     $query->where('email_type_id', EmailType::PROFILE_VIEWED);
-                    $query->where('created_at', '>=', Carbon::today('Europe/Amsterdam')->subMinutes(1)->toDateTimeString());
+                    $query->where('created_at', '>=', Carbon::now('Europe/Amsterdam')->subMinutes(1)->toDateTimeString());
                 })
                 ->get();
 
