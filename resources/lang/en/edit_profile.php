@@ -2,6 +2,7 @@
 
 return [
     'update' => 'Update',
+    'upload_photos' => 'Upload photos',
     'edit_profile' => 'Edit profile',
     'email_notification_settings' => 'Email notification settings',
     'user_email_types' => [

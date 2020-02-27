@@ -41,7 +41,7 @@
                             'buttonContext' => 'form',
                             'buttonType' => 'submit',
                             'buttonState' => 'primary',
-                            'buttonText' => @trans('edit_profile.update')
+                            'buttonText' => @trans('edit_profile.upload_photos')
                         ])
                     </div>
                 </div>

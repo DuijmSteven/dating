@@ -36,6 +36,7 @@ $yellowLight: #f9ce89;
 $mainColor: $dark;
 $secondaryColor: $tomato;
 $tertiaryColor: $slate;
+$fourthColor: #e27e67;
 $textColor: $black;
 
 // layout colors
@@ -221,10 +222,10 @@ $defaultButton: (
 );
 
 $primaryButton: (
-        'background-color': $tertiaryColor,
-        'border-color': $tertiaryColor,
-        'background-color__hover': lighten($tertiaryColor, 6%),
-        'background-color__active': darken($tertiaryColor, 6%)
+        'background-color': $secondaryColor,
+        'border-color': $secondaryColor,
+        'background-color__hover': lighten($secondaryColor, 6%),
+        'background-color__active': darken($secondaryColor, 6%)
 );
 
 $successButton: (
