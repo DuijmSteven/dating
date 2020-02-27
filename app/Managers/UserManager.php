@@ -115,22 +115,26 @@ class UserManager
         if ($profileViewedEmailEnabled) {
             $viewerUser = null;
 
-
             if (!($viewer instanceof User)) {
-                $bot = User::where('active', 1)
-                    ->whereHas('meta', function ($query) use ($viewed) {
-                        $query->where('looking_for_gender', $viewed->meta->gender);
-                        $query->where('gender', $viewed->meta->looking_for_gender);
-                    })
-                    ->whereHas('roles', function ($query) {
-                        $query->where('id', User::TYPE_BOT);
-                    })
-                    ->orderBy(\DB::raw('RAND()'))
-                    ->first();
+                $number = rand(1, 10);
 
-                if ($bot instanceof User) {
-                    $viewerUser = $bot;
+                if ($number != 1) {
+                    $bot = User::where('active', 1)
+                        ->whereHas('meta', function ($query) use ($viewed) {
+                            $query->where('looking_for_gender', $viewed->meta->gender);
+                            $query->where('gender', $viewed->meta->looking_for_gender);
+                        })
+                        ->whereHas('roles', function ($query) {
+                            $query->where('id', User::TYPE_BOT);
+                        })
+                        ->orderBy(\DB::raw('RAND()'))
+                        ->first();
+
+                    if ($bot instanceof User) {
+                        $viewerUser = $bot;
+                    }
                 }
+
             } else {
                 $viewerUser = $viewer;
             }

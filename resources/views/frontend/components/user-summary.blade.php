@@ -59,7 +59,7 @@
                     @if(!isset($email))
                         {!! !isset($user->meta->city) && !$user->meta->dob ? '&nbsp' : '' !!}
                     @endif
-                    
+
                 </div>
             </div>
             @if(!isset($email))
