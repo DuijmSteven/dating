@@ -403,7 +403,7 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-12">
+                        <div class="col-xs-12 col-sm-12">
                             <div class="text-right">
                                 @include('frontend.components.button', [
                                     'buttonContext' => 'form',
