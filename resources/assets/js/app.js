@@ -59,7 +59,7 @@ $(window).on('load', function () {
     }
 
     if ($('#JS--EditProfileUserDetailsForm')) {
-        $('#JS--EditProfileUserDetailsForm').disableAutoFill();
+        //$('#JS--EditProfileUserDetailsForm').disableAutoFill();
     }
 
     // this will disable right-click on all images
