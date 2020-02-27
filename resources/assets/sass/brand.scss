@@ -247,9 +247,9 @@ $warningButton: (
 );
 
 $dangerButton: (
-        'background-color': $secondaryColor,
-        'background-color__hover': lighten($secondaryColor, 6%),
-        'background-color__active': darken($secondaryColor, 6%)
+        'background-color': #b15844,
+        'background-color__hover': lighten(#b15844, 6%),
+        'background-color__active': darken(#b15844, 6%)
 );
 
 // Search

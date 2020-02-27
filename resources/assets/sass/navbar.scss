@@ -423,7 +423,7 @@
         height: 31px;
         border-radius: 20px;
 
-        background-color: lighten($secondaryColor, 5%);
+        background-color: $secondaryColor;
         color: #fff;
         font-weight: 400;
 
@@ -449,7 +449,7 @@
         }
 
         &:hover {
-            background-color: $secondaryColor;
+            background-color: darken($secondaryColor, 3%);
         }
 
         span {
@@ -460,8 +460,8 @@
 
 
         &.pressed {
-            border: 1px solid $secondaryColor;
-            background-color: $secondaryColor;
+            border: 1px solid darken($secondaryColor, 3%);
+            background-color: darken($secondaryColor, 3%);
         }
 
         .material-icons {
