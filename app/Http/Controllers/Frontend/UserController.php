@@ -232,6 +232,7 @@ class UserController extends FrontendController
         try {
             $user = $this->authenticatedUser;
             $user->setActive(false);
+            $user->setDeactivatedAt(new Carbon('now'));
             $user->save();
 
             $deactivatedEmail = (new Deactivated($user))->onQueue('emails');

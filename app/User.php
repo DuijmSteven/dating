@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Notifications\MailResetPasswordNotification;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -166,6 +167,11 @@ class User extends Authenticatable
     public function setActive(bool $active)
     {
         $this->active = $active;
+    }
+
+    public function setDeactivatedAt(Carbon $deactivatedAt)
+    {
+        $this->deactivated_at = $deactivatedAt;
     }
 
     /**
