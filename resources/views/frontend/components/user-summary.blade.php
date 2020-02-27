@@ -48,12 +48,10 @@
                     @endif
                 </a>
                 <div class="UserSummary__userInfo__additional">
-                    {!! isset($user->meta->city) ? $user->meta->city : '' !!}
-
                     @if(!isset($email))
-                        {!! isset($user->meta->city) && $user->meta->dob ? ' <span>&centerdot;</span> ' : '' !!}
+                        {!! isset($user->meta->city) && $user->meta->dob ? $user->meta->city . ' <span>&centerdot;</span> ' : '' !!}
                     @else
-                        {!! isset($user->meta->city) && $user->meta->dob ? ', ' : '' !!}
+                        {!! isset($user->meta->city) && $user->meta->dob ? $user->meta->city . ', ' : '' !!}
                     @endif
 
                     {!! $user->meta->dob ? $user->meta->dob->diffInYears($carbonNow) . ' Jaar' : '' !!}
@@ -61,7 +59,7 @@
                     @if(!isset($email))
                         {!! !isset($user->meta->city) && !$user->meta->dob ? '&nbsp' : '' !!}
                     @endif
-
+                    
                 </div>
             </div>
             @if(!isset($email))

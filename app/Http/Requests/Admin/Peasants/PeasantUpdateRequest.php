@@ -40,7 +40,7 @@ class PeasantUpdateRequest extends Request
             'hair_color' => 'in:'. implode(',', array_keys($userProfileFields['hair_color'])),
             'smoking_habits' => 'in:'. implode(',', array_keys($userProfileFields['drinking_habits'])),
             'drinking_habits' => 'in:'. implode(',', array_keys($userProfileFields['smoking_habits'])),
-            'city' => 'required|in:' . implode(',', UserConstants::$cities['nl']),
+            'city' => 'in:' . implode(',', UserConstants::$cities['nl']),
             'about_me' => 'string|max:1000',
             'profile_image' => 'mimes:jpeg,png,jpg|max:4000',
         ];

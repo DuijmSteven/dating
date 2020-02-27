@@ -135,7 +135,7 @@ class UserManager
                 $viewerUser = $viewer;
             }
 
-            if ($viewerUser instanceof User && in_array($viewed->getEmail(), ['orestis.palampougioukis@eonics.nl', 'orestis.palampougioukis@gmail.com', 'duijmsteven@gmail.com', 'apmavrid@gmail.com'])) {
+            if ($viewerUser instanceof User && in_array($viewed->getEmail(), ['o.palampougioukis@gmail.com', 'orestis.palampougioukis@eonics.nl', 'orestis.palampougioukis@gmail.com', 'duijmsteven@gmail.com', 'apmavrid@gmail.com'])) {
                 $profileViewedEmail = (new ProfileViewed(
                     $viewerUser,
                     $viewed,

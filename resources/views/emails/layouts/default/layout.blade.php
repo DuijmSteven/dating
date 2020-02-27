@@ -174,7 +174,7 @@
         }
 
         .UserSummary__profileImage {
-            width: 60%;
+            width: 40%;
             padding: 50px 0;
         }
 
