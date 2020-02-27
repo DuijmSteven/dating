@@ -92,7 +92,6 @@ class UserController extends FrontendController
                 )
             ->get();
 
-
             if (!count($hasRecentProfileViewedEmails)) {
                 $this->userManager->setProfileViewedEmail(
                     $user,
@@ -100,6 +99,7 @@ class UserController extends FrontendController
                 );
             }
 
+            // Add user view to user whose profile is being loaded
             $userView = new UserView();
             $userView->setViewerId($this->authenticatedUser->getId());
             $userView->setViewedId($user->getId());

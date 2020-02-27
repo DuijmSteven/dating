@@ -51,7 +51,7 @@ class SendProfileViewedEmails extends Command
     {
         $timeNow = Carbon::now('Europe/Amsterdam'); // Current time
 
-        if ($timeNow->hour >= 10 || $timeNow->hour <= 1) {
+        if ($timeNow->hour >= 8 || $timeNow->hour <= 2) {
             $users = User::whereHas('meta', function ($query) {
                 $query->where('email', '!=', null);
                 $query->where('gender', 1);
@@ -65,14 +65,14 @@ class SendProfileViewedEmails extends Command
                     $query->where('id', EmailType::PROFILE_VIEWED);
                 })->whereDoesntHave('emailTypeInstances', function ($query) use ($timeNow) {
                     $query->where('email_type_id', EmailType::PROFILE_VIEWED);
-                    $query->where('created_at', '>=', Carbon::now('Europe/Amsterdam')->subMinutes(1)->toDateTimeString());
+                    $query->where('created_at', '>=', Carbon::now('Europe/Amsterdam')->subHours(6)->toDateTimeString());
                 })
                 ->get();
 
             /** @var User $user */
             foreach ($users as $user) {
                 try {
-                    $number = rand(1, 10);
+                    $number = rand(1, 480);
 
                     if ($number === 1) {
                         $this->userManager->setProfileViewedEmail($user);

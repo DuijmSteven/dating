@@ -233,10 +233,13 @@
     <!-- Email Footer : BEGIN -->
     <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="margin: auto;" class="email-container">
         <tr>
-            <td style="font-family: sans-serif; font-size: 12px; line-height: 15px; text-align: center; color: #888888;">
+            <td style="font-family: sans-serif; font-size: 16px; line-height: 15px; text-align: center; color: #ddd;">
                 <br><br>
                 Contact: <span class="unstyle-auto-detected-links">{{ config('company.info_email') }}<br></span>
                 <br><br>
+                <span style="font-size: 12px; color: #aaa">
+                    Je kunt je voorkeuren voor e-mailmeldingen wijzigen door in te loggen op je account en op 'Bewerk Profiel' te klikken.
+                </span>
 {{--                <unsubscribe style="color: #888888; text-decoration: underline;">unsubscribe</unsubscribe>--}}
             </td>
         </tr>
