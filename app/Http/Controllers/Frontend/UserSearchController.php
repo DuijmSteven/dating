@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Http\Requests\UserRequests\UserSearchRequest;
 use App\Managers\UserSearchManager;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -144,11 +145,21 @@ class UserSearchController extends FrontendController
             $user->save();
         }
 
+        if (!$this->authenticatedUser->meta->getCity()) {
+            $city = 'Amsterdam';
+            $lat = 52.379189;
+            $lng = 4.899431;
+        } else {
+            $city = $this->authenticatedUser->meta->getCity();
+            $lat = $this->authenticatedUser->meta->getLat();
+            $lng = $this->authenticatedUser->meta->getLng();
+        }
+
         $searchParameters = [
-            //'city_name' => $this->authenticatedUser->meta->getCity(),
-            'lat' => $this->authenticatedUser->meta->getLat(),
-            'lng' => $this->authenticatedUser->meta->getLng(),
-            //'radius' => 40,
+            'city_name' => $city,
+            'lat' => $lat,
+            'lng' => $lng,
+            'radius' => 40,
             'age' => null,
             'body_type' => null,
             'height' => null,

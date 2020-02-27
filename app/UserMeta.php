@@ -73,4 +73,14 @@ class UserMeta extends Model
     {
         return $this->lng;
     }
+
+    public function getAboutMe()
+    {
+        return $this->about_me;
+    }
+
+    public function getDob()
+    {
+        return $this->dob;
+    }
 }

@@ -61,6 +61,29 @@ class User extends Authenticatable
         return \StorageHelper::profileImageUrl($this, true);
     }
 
+    public function getProfileRatioFilledAttribute()
+    {
+        $countFilled = 0;
+
+        if ($this->meta->getAboutMe()) {
+            $countFilled++;
+        }
+
+        if ($this->meta->getDob()) {
+            $countFilled++;
+        }
+
+        if ($this->meta->getCity()) {
+            $countFilled++;
+        }
+
+        if ($this->profileImage) {
+            $countFilled++;
+        }
+
+        return $countFilled/4;
+    }
+
     /**
      * The attributes that are mass assignable.
      *

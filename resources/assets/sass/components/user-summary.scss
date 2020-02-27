@@ -129,6 +129,10 @@
             font-size: 19px;
             position: relative;
 
+            &:hover {
+                text-decoration: none;
+            }
+
             .onlineCircle {
                 position: absolute;
                 background-color: #33e23c;

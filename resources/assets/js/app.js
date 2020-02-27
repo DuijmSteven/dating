@@ -316,15 +316,24 @@ $(window).on('load', function () {
 
     if ($('.JS--searchToggleButton').length > 0) {
         $('.JS--searchToggleButton').click(() => {
-            $('.JS--SearchBar').toggleClass('hidden');
+            $('.JS--SearchBar').removeClass('hidden');
             $('.JS--searchToggleButton').toggleClass('pressed');
+            Cookies.set('searchBarState', 'open');
+        });
 
-            if ($('.JS--SearchBar').hasClass('hidden')) {
+        $(document).mouseup(function(e)
+        {
+            var container = $(".JS--SearchBar");
+
+            // if the target of the click isn't the container nor a descendant of the container
+            if (!container.is(e.target) && container.has(e.target).length === 0)
+            {
+                container.addClass('hidden');
+                $('.JS--searchToggleButton').removeClass('pressed');
                 Cookies.set('searchBarState', 'hidden');
-            } else {
-                Cookies.set('searchBarState', 'open');
             }
         });
+
     }
 
     if ($('.dropdown-submenu').length > 0) {
