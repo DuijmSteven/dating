@@ -583,6 +583,42 @@ Table of Contents End
             height: 150px;
         }
     }
+
+    .block-pricing h1 {
+        font-size: 4.1rem;
+    }
+
+    .block-caption {
+        color: #ea7961;
+    }
+
+
+    @media screen and (max-width: $screen-xs-max) {
+        .block-pricing .block-caption {
+            margin-top: 10px;
+            font-size: 22px;
+        }
+
+        .block-pricing h1 small:first-child {
+            position: relative;
+            top: 0;
+            font-size: 20px;
+        }
+
+        .block-pricing h6 {
+            margin-top: 4px;
+            margin-bottom: 12px;
+        }
+
+        .block-pricing ul li {
+            padding: 0 0;
+            font-size: 16px;
+        }
+
+        .block-pricing .usp-label {
+            top: -22px;
+        }
+    }
 }
 
 

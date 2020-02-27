@@ -275,7 +275,7 @@ $(window).on('load', function () {
 
     if ($('.JS--creditpack').length > 0) {
         $('.JS--creditpack').click(function () {
-            $('html, body').animate({scrollTop: $('.JS--paymentMethods__title').offset().top}, 500, 'swing');
+            $('html, body').animate({scrollTop: $('.JS--paymentMethods__title').offset().top}, 1000, 'swing');
 
             $('.table-rose').removeClass('table-rose');
             $('.block-raised').removeClass('block-raised');
@@ -288,8 +288,8 @@ $(window).on('load', function () {
             let creditPackId = $('.block-raised').data('creditpack-id');
 
             //change cart values based on selected credits package
-            $('span.cart-value').html($('.block-raised .block-caption span').html());
-            $('input[name="amount"]').val($('.block-raised .block-caption span').html());
+            $('span.cart-value').html($('.block-raised .JS--price').html());
+            $('input[name="amount"]').val($('.block-raised .JS--price').html());
             $('span.cart-credits').html($('.block-raised b.package-credits').html());
             $('input[name="creditpack_id"]').val(creditPackId);
             $('span.cart-package').html($('.block-raised .category').html());

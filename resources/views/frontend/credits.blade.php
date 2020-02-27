@@ -13,10 +13,10 @@
                             >
                                 <div class="table {{ $loop->iteration == 2 ? 'table-rose' : '' }}">
                                     <h6 class="category">{{ $creditpack->name }}</h6>
-                                    <h1 class="block-caption"><small>€</small><span>{{ number_format($creditpack->price / 100, 2, ',', '.') }}</span>
+                                    <h1 class="block-caption"><b class="package-credits">{{ $creditpack->credits }}</b> {{ trans('credits.credits') }}
                                     </h1>
                                     <ul>
-                                        <li><b class="package-credits">{{ $creditpack->credits }}</b> {{ trans('credits.credits') }}</li>
+                                        <li><small>€</small><span class="JS--price">{{ number_format($creditpack->price / 100, 2, ',', '.') }}</span></li>
                                         <li><b>&euro;{{ number_format($creditpack->price/$creditpack->credits / 100, 2, ',', '.') }}</b> {{ trans('credits.per_message') }}
                                         </li>
                                     </ul>
