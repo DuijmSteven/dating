@@ -214,6 +214,19 @@ class User extends Authenticatable
     /**
      * @return bool
      */
+    public function isBot()
+    {
+        $userRoles = [];
+        foreach ($this->roles as $role) {
+            $userRoles[] = $role['name'];
+        }
+        return in_array('bot', $userRoles);
+    }
+
+
+    /**
+     * @return bool
+     */
     public function isOperator()
     {
         $userRoles = [];

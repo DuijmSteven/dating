@@ -34,7 +34,9 @@ class PeasantController extends Controller
     {
         $peasants = User::with(['meta', 'account', 'roles', 'profileImage'])->whereHas('roles', function ($query) {
             $query->where('name', 'peasant');
-        })->paginate(20);
+        })
+            ->orderBy('id', 'desc')
+            ->paginate(20);
 
         return view(
             'admin.peasants.overview',
@@ -52,7 +54,7 @@ class PeasantController extends Controller
     {
         $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
 
-        $peasants = User::with(['meta', 'roles', 'profileImage'])->whereHas('roles', function ($query) {
+        $peasants = User::with(['meta', 'account', 'roles', 'profileImage'])->whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_PEASANT);
         })
             ->whereIn('id', $onlineIds) 

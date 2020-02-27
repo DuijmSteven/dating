@@ -75,28 +75,30 @@ class UserController extends FrontendController
      */
     public function show(string $username)
     {
-        $user = User::with('emailTypeInstances', 'emailTypes')->where('username', $username)->first();
+        $user = User::with('emailTypeInstances', 'emailTypes', 'roles')->where('username', $username)->first();
 
         if (!($user instanceof User)) {
             redirect(route('welcome'));
         }
 
         if ($this->authenticatedUser->isPeasant()) {
-            $timeNow = Carbon::now('Europe/Amsterdam'); // Current time
+            if (!$user->isBot()) {
+                $timeNow = Carbon::now('Europe/Amsterdam'); // Current time
 
-            $hasRecentProfileViewedEmails = $user
-                ->emailTypeInstances()->where('id', EmailType::PROFILE_VIEWED)
-                ->where('created_at', '>=', Carbon::today('Europe/Amsterdam')
-                    ->setTime($timeNow->hour - 1, 00, 00)
-                    ->toDateTimeString()
-                )
-            ->get();
+                $hasRecentProfileViewedEmails = $user
+                    ->emailTypeInstances()->where('id', EmailType::PROFILE_VIEWED)
+                    ->where('created_at', '>=', Carbon::today('Europe/Amsterdam')
+                        ->setTime($timeNow->hour - 2, 00, 00)
+                        ->toDateTimeString()
+                    )
+                    ->get();
 
-            if (!count($hasRecentProfileViewedEmails)) {
-                $this->userManager->setProfileViewedEmail(
-                    $user,
-                    $this->authenticatedUser
-                );
+                if (!count($hasRecentProfileViewedEmails)) {
+                    $this->userManager->setProfileViewedEmail(
+                        $user,
+                        $this->authenticatedUser
+                    );
+                }
             }
 
             // Add user view to user whose profile is being loaded
