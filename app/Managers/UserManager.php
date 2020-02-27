@@ -118,7 +118,7 @@ class UserManager
             if (!($viewer instanceof User)) {
                 $number = rand(1, 10);
 
-                if ($number !== 1) {
+                if ($number === 1) {
                     $bot = User::where('active', 1)
                         ->whereHas('meta', function ($query) use ($viewed) {
                             $query->where('looking_for_gender', $viewed->meta->gender);
