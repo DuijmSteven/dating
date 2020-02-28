@@ -298,10 +298,17 @@ $(window).on('load', function () {
 
     if ($('.JS--banksContainer').length > 0) {
         $('input:radio[name="paymentMethod"]').change(function () {
+            $('.JS--paymentMethodListItem').removeClass('selected');
+
             if ($(this).is(':checked') && $(this).val() == 'ideal') {
                 $('.JS--banksContainer').show();
-            } else
+            } else {
                 $('.JS--banksContainer').hide();
+            }
+
+            if ($(this).is(':checked')) {
+                $(this).closest('.JS--paymentMethodListItem').addClass('selected');
+            }
         });
     }
 
@@ -309,8 +316,9 @@ $(window).on('load', function () {
         $('input:radio[name="paymentMethod"]').change(function () {
             if ($(this).is(':checked') && $(this).val() == 'ideal') {
                 $('.JS--banksContainer').show();
-            } else
+            } else {
                 $('.JS--banksContainer').hide();
+            }
         });
     }
 

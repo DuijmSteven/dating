@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="credits-page-content">
-        <h4>{{ trans('credits.select_package') }}</h4>
+        <h4><span class="step">Stap 1</span><span class="stepTitle">{{ trans('credits.select_package') }}</span></h4>
         <div class="pricing-3">
             <div>
                 <div class="row">
@@ -48,9 +48,9 @@
             <form method="post" action="{{ route('credits.store') }}">
                 {{ csrf_field() }}
                 <div class="col-md-6">
-                    <h4 class="JS--paymentMethods__title">{{ trans('credits.select') }}</h4>
+                    <h4 class="JS--paymentMethods__title"><span class="step">Stap 2</span><span class="stepTitle">{{ trans('credits.select') }}</span></h4>
                     <ul class="list-group mb-3 JS--paymentMethods paymentMethodsList">
-                        <li class="list-group-item d-flex justify-content-between"
+                        <li class="list-group-item d-flex justify-content-between paymentMethodsListItem JS--paymentMethodListItem"
                             style="margin-bottom: 10px; flex-wrap: wrap;">
                             <label class="paymentMethodsLabel">
                                 <input type="radio" name="paymentMethod" value="ideal" required>
@@ -76,14 +76,14 @@
                             </label>
                             <span class="paymentMethodLogo"><img src="{{ asset('img/icons/credit-cards.png') }}"/></span>
                         </li>--}}
-                        <li class="list-group-item d-flex justify-content-between" style="margin-bottom: 10px">
+                        <li class="list-group-item d-flex justify-content-between paymentMethodsListItem JS--paymentMethodListItem" style="margin-bottom: 10px">
                             <label class="paymentMethodsLabel">
                                 <input type="radio" name="paymentMethod" value="bancontact">
                                 <span style="margin-left: 5px">Bancontact</span>
                             </label>
                             <span class="paymentMethodLogo"><img src="{{ asset('img/icons/bancontact_logo.svg') }}"/></span>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between">
+                        <li class="list-group-item d-flex justify-content-between paymentMethodsListItem JS--paymentMethodListItem">
                             <label class="paymentMethodsLabel">
                                 <input type="radio" name="paymentMethod" value="paysafe">
                                 <span style="margin-left: 5px">Paysafecard</span>
@@ -93,7 +93,7 @@
                     </ul>
                 </div>
                 <div class="col-md-6">
-                    <h4>{{ @trans('credits.cart') }}</h4>
+                    <h4><span class="step">Stap 3</span><span class="stepTitle">{{ @trans('credits.cart') }}</span></h4>
                     <ul class="list-group mb-3">
                         <li class="list-group-item d-flex justify-content-between">
                             <div>

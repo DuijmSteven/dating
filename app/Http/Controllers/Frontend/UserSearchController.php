@@ -162,6 +162,7 @@ class UserSearchController extends FrontendController
             'radius' => 40,
             'age' => null,
             'body_type' => null,
+            'active' => 1,
             'height' => null,
             'gender' => $this->authenticatedUser->meta->getLookingForGender(),
             'looking_for_gender' => $this->authenticatedUser->meta->getGender(),
