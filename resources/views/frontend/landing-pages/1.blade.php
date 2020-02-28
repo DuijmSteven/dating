@@ -523,7 +523,7 @@
         left: 50%;
         width: 254px;
         margin-left: -127px;
-        background-color: red;
+        background-color: #7d87c1;
         border-radius: 30px;
         display: flex;
         justify-content: center;
@@ -817,10 +817,10 @@
                     </form>
                 </div>
 
-                <div class="topQuote">
-                    <span class="quoteMark">"</span><span class="quoteText">{{ trans('lp1.top_quote') }}</span><span class="quoteMark">"</span>
-                    <div class="signature">- Tom, 41</div>
-                </div>
+{{--                <div class="topQuote">--}}
+{{--                    <span class="quoteMark">"</span><span class="quoteText">{{ trans('lp1.top_quote') }}</span><span class="quoteMark">"</span>--}}
+{{--                    <div class="signature">- Tom, 41</div>--}}
+{{--                </div>--}}
             </div>
         </div>
 
