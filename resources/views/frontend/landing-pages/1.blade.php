@@ -40,7 +40,7 @@
     /*}*/
 
     .recent-container, .testimonials-container {
-        margin-bottom: 10rem;
+        margin-bottom: 6rem;
     }
 
     .welcome-container h3, .recent-container h3, .testimonials-container h3, .secondWelcome h3 {
@@ -499,7 +499,7 @@
     }
 
     .recent-container {
-        margin-top: 10rem;
+        margin-top: 5rem;
     }
 
     .ui-autocomplete.ui-widget.ui-widget-content {
