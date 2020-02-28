@@ -64,7 +64,7 @@ class User extends Authenticatable
 
     public function getHasRecentlyAcceptedProfileCompletionMessageAttribute()
     {
-        $milestones = $this->whereHas('milestones', function ($query) {
+        $milestones = $this->where('id', \Auth::user()->getId())->whereHas('milestones', function ($query) {
             $query->where('id', Milestone::ACCEPTED_PROFILE_COMPLETION_MESSAGE);
             $query->where('milestone_user.created_at', '>=', Carbon::now('Europe/Amsterdam')->subDays(5)->toDateTimeString());
         })->get();
