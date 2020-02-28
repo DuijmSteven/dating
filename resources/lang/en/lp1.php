@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'heading' => 'It\'s Time for Live Chat Sex Dating!',
+    'heading' => 'Looking for Sex Dating? Register now for Free!',
     'form' => [
         'i_am' => 'I am a',
         'man_looking_for_woman' => 'Man looking for a Woman',
