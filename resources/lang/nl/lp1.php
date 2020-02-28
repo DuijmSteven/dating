@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'heading' => 'Op zoek naar leuke contacten en meer? Registreer nu Gratis!',
+    'heading' => 'Op zoek naar Sekscontacten? Registreer nu Gratis!',
     'form' => [
         'i_am' => 'Ik ben een',
         'man_looking_for_woman' => 'Man op zoek naar een vrouw',
@@ -29,15 +29,15 @@ return [
     'usps' => [
         'free_access' => [
             'title' => 'Gratis Toegang',
-            'text' => 'Je kunt je gratis inschrijven op Altijdsex.nl en direct gebruiken maken van onze diensten. Geen kleine letters en geen abonnement, lidmaatschap of automatische afschrijving van je rekening. Jij bepaalt wat je betaalt!',
+            'text' => 'Je kunt je gratis inschrijven op Altijdsex.nl en direct gebruiken maken van onze diensten. Geen kleine letters en geen abonnement, lidmaatschap of automatische afschrijving van je rekening. Jij bepaalt wat je betaalt! Het maakt op onze datingsite dus niet uit of je als vrouw zoekt man of als man zoekt vrouw inschrijft. Voor zowel mannen als vrouwen is de inschrijving geheel gratis.',
         ],
         'live_chat' => [
             'title' => 'Live Chat',
-            'text' => 'Op Altijdsex.nl maak je gebruik van een moderne live chat. Je bent dus niet langer afhankelijk van een ouderwetse berichtenbox die je dient te verversen. Hierdoor zie je het direct als je een nieuw bericht krijgt en je kunt hier dan ook direct op reageren. Maak gratis een account aan en ga vrijblijvend op zoek!',
+            'text' => 'Op Altijdsex.nl maak je gebruik van een moderne live chat. Je bent dus niet langer afhankelijk van een ouderwetse berichtenbox die je dient te verversen. Hierdoor zie je het direct als je een nieuw bericht krijgt en je kunt dan gelijk door met sekschatten. Maak gratis een account aan en ga vrijblijvend op zoek naar een sex afspraak!',
         ],
         'privacy_anonymity' => [
             'title' => 'Veiligheid & Privacy',
-            'text' => 'Jouw persoonlijke gegevens zijn veilig bij ons en worden versleuteld voor verwerking. Dit wil zeggen dat je volledig anoniem blijft. Leden kunnen elkaar opzoeken, willekeurige bezoekers aan de website kunnen jouw profiel dus niet bekijken.',
+            'text' => 'Jouw persoonlijke gegevens zijn veilig bij ons en worden versleuteld voor verwerking. Dit wil zeggen dat je volledig anoniem blijft. Leden kunnen elkaar opzoeken, willekeurige bezoekers aan de website kunnen jouw profiel dus niet bekijken. Jij kunt dus gewoon onbezorgd, discreet & anoniem sekscontact leggen met andere leden.',
         ]
     ],
     'a_group_of_members' => 'Een greep uit onze leden',
