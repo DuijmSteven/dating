@@ -43,7 +43,7 @@
                 @include('frontend.components.button', [
                   'buttonContext' => 'form',
                   'buttonType' => 'submit',
-                  'buttonState' => 'info',
+                  'buttonState' => 'primary',
                   'buttonText' => @trans('low_profile_completion.close_message')
                 ])
             </div>
