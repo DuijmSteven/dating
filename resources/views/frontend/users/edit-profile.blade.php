@@ -171,6 +171,19 @@
 
                         <div class="col-sm-6">
                             <div class="form-group">
+                                <label for="username">{{ trans('user_constants.email') }}</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="email"
+                                       name="email"
+                                       disabled
+                                       value="{!! $user->email !!}"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
                                 <label for="city">{{ @trans('user_constants.city') }}</label>
                                 <input type="text"
                                        class="JS--autoCompleteCites JS--edit form-control"

@@ -144,7 +144,7 @@ class StatisticsManager
         })->whereHas('account', function($query) {
             $query->where('credits', '>', 0);
         })->whereHas('payments', function($query) {
-            $query->orderBy('created_at', 'desc')->take(1);
+            $query->where('status', Payment::STATUS_COMPLETED)->orderBy('created_at', 'desc')->take(1);
         })->get()->filter(function ($user) use ($creditpackId) {
             return $user->payments[count($user->payments) - 1]->getCreditpackId() == $creditpackId;
         })->count();

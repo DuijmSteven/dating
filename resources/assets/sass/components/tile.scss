@@ -17,12 +17,14 @@
     text-align: justify;
 
     &__heading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         padding: map_get($tileHeading, padding) + px;
         font-size: map_get($tileHeading, fontSize) + px;
         font-weight: 500;
         color: map_get($tileHeading, fontColor);
         text-align: map_get($tileHeading, textAlign);
-        border-bottom: map_get($tileHeading, borderWidth) + px solid $borderColor;
     }
 
     &__body {
@@ -49,6 +51,6 @@
     }
 
     &__footer {
-
+        padding: map_get($tileHeading, padding) + px;
     }
 }

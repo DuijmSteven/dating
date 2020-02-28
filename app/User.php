@@ -62,6 +62,16 @@ class User extends Authenticatable
         return \StorageHelper::profileImageUrl($this, true);
     }
 
+    public function getHasRecentlyAcceptedProfileCompletionMessageAttribute()
+    {
+        $milestones = $this->whereHas('milestones', function ($query) {
+            $query->where('id', Milestone::ACCEPTED_PROFILE_COMPLETION_MESSAGE);
+            $query->where('milestone_user.created_at', '>=', Carbon::now('Europe/Amsterdam')->subDays(5)->toDateTimeString());
+        })->get();
+
+        return count($milestones) !== 0;
+    }
+
     public function getProfileRatioFilledAttribute()
     {
         $countFilled = 0;
@@ -78,11 +88,39 @@ class User extends Authenticatable
             $countFilled++;
         }
 
+        if ($this->meta->getDrinkingHabits()) {
+            $countFilled++;
+        }
+
+        if ($this->meta->getSmokingHabits()) {
+            $countFilled++;
+        }
+
+        if ($this->meta->getEyeColor()) {
+            $countFilled++;
+        }
+
+        if ($this->meta->getHairColor()) {
+            $countFilled++;
+        }
+
+        if ($this->meta->getHeight()) {
+            $countFilled++;
+        }
+
+        if ($this->meta->getRelationshipStatus()) {
+            $countFilled++;
+        }
+
+        if ($this->meta->getBodyType()) {
+            $countFilled++;
+        }
+
         if ($this->profileImage) {
             $countFilled++;
         }
 
-        return $countFilled/4;
+        return round($countFilled/11, 2);
     }
 
     /**
@@ -286,7 +324,7 @@ class User extends Authenticatable
      */
     public function milestones()
     {
-        return $this->belongsToMany('App\Milestone');
+        return $this->belongsToMany('App\Milestone')->withTimestamps();
     }
 
     public function hasMilestone(int $milestoneId)

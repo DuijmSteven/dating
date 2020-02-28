@@ -1,0 +1,65 @@
+.LowProfileCompletion {
+    font-weight: 400;
+
+    .Tile__body {
+        position: relative;
+    }
+
+    .progress-bar {
+        position: relative;
+        background-color: #bf5152;
+    }
+
+    .progress {
+        position: absolute;
+        height: 17px;
+        right: 20px;
+        top: 15px;
+        width: 30%;
+
+        @media screen and (max-width: $screen-xs-max) {
+            left: 20px;
+            width: initial;
+        }
+    }
+
+    .itemNotDone {
+        color: red;
+        position: relative;
+        top: 5px;
+    }
+
+    .itemMedium {
+        color: orange;
+        position: relative;
+        top: 5px;
+    }
+
+    .itemDone {
+        color: green;
+        position: relative;
+        top: 5px;
+    }
+
+    .warningSign {
+        color: #ffb951;
+        font-size: 2.5rem;
+        margin-right: 5px;
+    }
+
+    .percentageText {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        right: 11px;
+        color: #fff;
+        top: 0;
+        bottom: 0;
+        font-size: 14px;
+        font-weight: 400;
+
+        @media screen and (max-width: $screen-xs-max) {
+
+        }
+    }
+}

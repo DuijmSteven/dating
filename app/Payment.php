@@ -4,6 +4,12 @@ namespace App;
 
 class Payment extends TimeZonedModel
 {
+    const STATUS_STARTED = 1;
+    const STATUS_PROCESSING = 2;
+    const STATUS_COMPLETED = 3;
+    const STATUS_CANCELLED = 4;
+    const STATUS_ERROR = 5;
+
     public $table = 'payments';
 
     protected $fillable = [

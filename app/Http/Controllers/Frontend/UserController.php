@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\Peasants\PeasantUpdateRequest;
 use App\Mail\Deactivated;
 use App\Managers\PeasantManager;
 use App\Managers\UserManager;
+use App\Milestone;
 use App\User;
 use App\UserView;
 use App\UserViews;
@@ -67,6 +68,12 @@ class UserController extends FrontendController
                 ]
             )
         );
+    }
+
+    public function acceptProfileCompletionMessage()
+    {
+        Auth::user()->milestones()->attach(Milestone::ACCEPTED_PROFILE_COMPLETION_MESSAGE);
+        return redirect()->back();
     }
 
     /**

@@ -40,6 +40,12 @@ window.addEventListener('load', function () {
 $(window).on('load', function () {
     require('./global_helpers');
 
+    $('.scrollToRegistration').click(() => {
+        $('html, body').animate({scrollTop:0}, 500, 'swing');
+
+        $('#JS--registrationForm #email').focus();
+    });
+
     $('#JS--registrationForm').disableAutoFill();
 
     // this will disable right-click on all images

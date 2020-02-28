@@ -565,6 +565,10 @@
         }
     }
 
+    .scrollToRegistration:hover {
+        text-decoration: none;
+    }
+
 </style>
 <body class="landingPage">
 <header>
@@ -602,6 +606,24 @@
                             </div>
                         </div>
                         <div class="form-row">
+                            <div class="form-group col-md-12 {{ $errors->has('email') ? ' has-error' : '' }}">
+                                <label for="email">{{ @trans('lp1.form.email') }}</label>
+                                <input type="email"
+                                       class="form-control"
+                                       id="email"
+                                       name="email"
+                                       placeholder="{{ @trans('lp1.form.email_placeholder') }}"
+                                       value="{{ old('email') }}"
+                                       required
+                                >
+                                @if ($errors->has('email'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-row">
                             <div class="form-group col-md-12 {{ $errors->has('username') ? ' has-error' : '' }}">
                                 <label for="name">{{ @trans('lp1.form.username') }}</label>
                                 <input type="text"
@@ -632,24 +654,7 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12 {{ $errors->has('email') ? ' has-error' : '' }}">
-                                <label for="email">{{ @trans('lp1.form.email') }}</label>
-                                <input type="email"
-                                       class="form-control"
-                                       id="email"
-                                       name="email"
-                                       placeholder="{{ @trans('lp1.form.email_placeholder') }}"
-                                       value="{{ old('email') }}"
-                                       required
-                                >
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+
 {{--                        <div class="form-row">--}}
 {{--                            <div class="form-group col-md-12 {{ $errors->has('city') ? ' has-error' : '' }}">--}}
 {{--                                <label for="city">{{ @trans('lp1.form.city') }}</label>--}}
@@ -854,17 +859,19 @@
         <div class="row mt-5">
             @foreach ($users as $user)
                 <div class="col-lg-2 col-md-4 col-sm-6 mb-4">
-                    <img
-                            src="{{ \StorageHelper::profileImageUrl($user, true) }}"
-                            class="roundImage"
-                            alt="profile-image"
-                    >
-                    <h5 class="small"
-                        style="font-size: 1.9rem; width: 170px; overflow: hidden; text-overflow: ellipsis; margin: 10px auto 5px auto">{{ $user->username }}</h5>
-                    <p class="offset-0 user-info" style="line-height: 14px; text-align: center">
-                        <small class="text-muted" style="font-size: 1.4rem">{{ @trans('lp1.age') }}
-                            : {{ $user->meta->dob->diffInYears($carbonNow) }}, {{ $user->meta->city }}</small>
-                    </p>
+                    <a href="#" class="scrollToRegistration">
+                        <img
+                                src="{{ \StorageHelper::profileImageUrl($user, true) }}"
+                                class="roundImage"
+                                alt="profile-image"
+                        >
+                        <h5 class="small"
+                            style="font-size: 1.9rem; width: 170px; overflow: hidden; text-overflow: ellipsis; margin: 10px auto 5px auto">{{ $user->username }}</h5>
+                        <p class="offset-0 user-info" style="line-height: 14px; text-align: center">
+                            <small class="text-muted" style="font-size: 1.4rem">{{ @trans('lp1.age') }}
+                                : {{ $user->meta->dob->diffInYears($carbonNow) }}, {{ $user->meta->city }}</small>
+                        </p>
+                    </a>
                 </div>
             @endforeach
         </div>

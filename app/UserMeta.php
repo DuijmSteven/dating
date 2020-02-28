@@ -54,6 +54,41 @@ class UserMeta extends Model
         return $this->looking_for_gender;
     }
 
+    public function getDrinkingHabits()
+    {
+        return $this->drinking_habits;
+    }
+
+    public function getSmokingHabits()
+    {
+        return $this->smoking_habits;
+    }
+
+    public function getEyeColor()
+    {
+        return $this->eye_color;
+    }
+
+    public function getHairColor()
+    {
+        return $this->hair_color;
+    }
+
+    public function getHeight()
+    {
+        return $this->height;
+    }
+
+    public function getRelationshipStatus()
+    {
+        return $this->relationship_status;
+    }
+
+    public function getBodyType()
+    {
+        return $this->body_type;
+    }
+
     public function getGender()
     {
         return $this->gender;

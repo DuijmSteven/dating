@@ -52,7 +52,7 @@ $roundImageDimensions: (
 );
 
 // layout tweaks
-$borderRadius: 2;
+$borderRadius: 5;
 $borderWidth: 1;
 
 // font tweaks
@@ -82,7 +82,7 @@ $footerLinkTextColor: $lightBlueDull;
 $tileBgColor: $white;
 $tileHeading: (
         'padding': 15,
-        'fontSize': 18,
+        'fontSize': 24,
         'fontColor': $mainColor,
         'textAlign': center,
         'borderWidth': 2
@@ -204,7 +204,7 @@ $alertDanger: (
 $button: (
         'font-color': $white,
         'height': 44,
-        'border-radius': 2,
+        'border-radius': $borderRadius,
         'border-width': 1,
         'border-color': #ccc,
         'font-size': 1.8,
@@ -235,9 +235,9 @@ $successButton: (
 );
 
 $infoButton: (
-        'background-color': $babyBlue,
-        'background-color__hover': $babyBlueLight,
-        'background-color__active': $babyBlue
+        'background-color': $tertiaryColor,
+        'background-color__hover': lighten($tertiaryColor, 3%),
+        'background-color__active': $tertiaryColor
 );
 
 $warningButton: (

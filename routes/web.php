@@ -98,6 +98,9 @@ Route::group([
         ->name('users.deactivate.get')
         ->middleware('current_user');
 
+    Route::post('current/accept-profile-completion-message', 'Frontend\UserController@acceptProfileCompletionMessage')
+        ->name('users.current.accept-profile-completion-message');
+
     Route::group([
         'prefix' => 'favorites'
     ], function () {

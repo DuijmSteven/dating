@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Milestone extends Model
 {
     const ACCEPTED_WELCOME_MESSAGE = 1;
+    const ACCEPTED_PROFILE_COMPLETION_MESSAGE = 2;
 
     public $table = 'milestones';
 
