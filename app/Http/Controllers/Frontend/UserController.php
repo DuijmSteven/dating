@@ -88,22 +88,24 @@ class UserController extends FrontendController
             redirect(route('welcome'));
         }
 
-        if ($this->authenticatedUser->isPeasant() && $user->isPeasant()) {
-            $timeNow = Carbon::now('Europe/Amsterdam'); // Current time
+        if ($this->authenticatedUser->isPeasant()) {
+            if ($user->isPeasant()) {
+                $timeNow = Carbon::now('Europe/Amsterdam'); // Current time
 
-            $hasRecentProfileViewedEmails = $user
-                ->emailTypeInstances()->where('id', EmailType::PROFILE_VIEWED)
-                ->where('created_at', '>=', Carbon::today('Europe/Amsterdam')
-                    ->setTime($timeNow->hour - 2, 00, 00)
-                    ->toDateTimeString()
-                )
-                ->get();
+                $hasRecentProfileViewedEmails = $user
+                    ->emailTypeInstances()->where('id', EmailType::PROFILE_VIEWED)
+                    ->where('created_at', '>=', Carbon::today('Europe/Amsterdam')
+                        ->setTime($timeNow->hour - 2, 00, 00)
+                        ->toDateTimeString()
+                    )
+                    ->get();
 
-            if (!count($hasRecentProfileViewedEmails)) {
-                $this->userManager->setProfileViewedEmail(
-                    $user,
-                    $this->authenticatedUser
-                );
+                if (!count($hasRecentProfileViewedEmails)) {
+                    $this->userManager->setProfileViewedEmail(
+                        $user,
+                        $this->authenticatedUser
+                    );
+                }
             }
 
             // Add user view to user whose profile is being loaded
