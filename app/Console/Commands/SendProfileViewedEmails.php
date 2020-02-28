@@ -72,7 +72,7 @@ class SendProfileViewedEmails extends Command
             /** @var User $user */
             foreach ($users as $user) {
                 try {
-                    $number = rand(1, 600);
+                    $number = rand(1, 1000);
 
                     if ($number === 1) {
                         $this->userManager->setProfileViewedEmail($user);
