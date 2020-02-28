@@ -478,22 +478,22 @@
         }
     }
 
-    .welcome-container {
+    .currentMembers {
         margin-top: 50px;
     }
 
     @media screen and (max-width: 1000px) {
-        .welcome-container {
+        .currentMembers {
             margin-top: 15rem;
         }
     }
 
     @media screen and (max-width: 767px) {
-        .welcome-container {
+        .currentMembers {
             margin-top: 340px;
         }
 
-        .welcome-container.withRegistrationForm {
+        .currentMembers.withRegistrationForm {
             margin-top: 650px;
         }
     }
@@ -559,9 +559,20 @@
         padding-right: 6px;
     }
 
+    .language-selection {
+        top: 25px;
+        right: 20px;
+    }
+
     @media screen and (max-width: 767px) {
         .topQuote {
             display: none;
+        }
+
+
+        .language-selection.header {
+            top: 10px;
+            right: 20px;
         }
     }
 
@@ -569,12 +580,26 @@
         text-decoration: none;
     }
 
+
 </style>
 <body class="landingPage">
 <header>
     <div class="container" style="z-index: 50; position:relative;">
         <div class="navbar-brand">
             <img src="img/site_logos/Altijdsex_LogoBig_Neg.svg" title="Altijdsex.nl Logo" alt="Altijdsex.nl Logo"/>
+        </div>
+
+        <div class="language-selection header">
+            <a href="{{ route('landing-page.show', ['locale' => 'nl']) }}">
+                <div class="flagImageWrapper">
+                    <img class="flagImage" src="{{ asset('img/flags/nl.png') }}" alt="">
+                </div>
+            </a> |
+            <a href="{{ route('landing-page.show', ['locale' => 'en']) }}">
+                <div class="flagImageWrapper">
+                    <img class="flagImage" src="{{ asset('img/flags/uk.svg') }}" alt="">
+                </div>
+            </a>
         </div>
     </div>
 </header>
@@ -705,7 +730,7 @@
                         <div class="form-row">
                             <div class="col-sm-12 submit">
                                 <button type="submit"
-                                        class="btn btn-secondary btn-lg btn-block">{{ @trans('lp1.form.register_now') }}</button>
+                                        class="btn btn-register-login btn-lg btn-block">{{ @trans('lp1.form.register_now') }}</button>
                             </div>
 
                             <div class="col-xs-12">
@@ -730,7 +755,7 @@
                         <div class="form-row">
                             <div class="col-sm-12 submit">
                                 <button id="JS--loginButton" type="button"
-                                        class="btn btn-block btn-lg btn-register-login loginButton"
+                                        class="btn btn-block btn-lg btn-secondary loginButton"
                                 >
                                     {{ @trans('lp1.form.login') }}
                                 </button>
@@ -826,10 +851,33 @@
 
     </div>
 
-    <div class="container welcome-container text-center JS--welcome-container withRegistrationForm">
+    <div class="container recent-container text-center currentMembers JS--currentMembers withRegistrationForm">
+        <h3 style="margin-bottom: 40px">{{ @trans('lp1.a_group_of_members') }}</h3>
+        <div class="row mt-5">
+            @foreach ($users as $user)
+                <div class="col-lg-2 col-md-4 col-sm-6 mb-4">
+                    <a href="#" class="scrollToRegistration">
+                        <img
+                            src="{{ \StorageHelper::profileImageUrl($user, true) }}"
+                            class="roundImage"
+                            alt="profile-image"
+                        >
+                        <h5 class="small"
+                            style="font-size: 1.9rem; width: 170px; overflow: hidden; text-overflow: ellipsis; margin: 10px auto 5px auto">{{ $user->username }}</h5>
+                        <p class="offset-0 user-info" style="line-height: 14px; text-align: center">
+                            <small class="text-muted" style="font-size: 1.4rem">{{ @trans('lp1.age') }}
+                                : {{ $user->meta->dob->diffInYears($carbonNow) }}, {{ $user->meta->city }}</small>
+                        </p>
+                    </a>
+                </div>
+            @endforeach
+        </div>
+    </div>
+
+    <div class="container welcome-container text-center JS--welcome-container">
         <h3>{{ @trans('lp1.welcome') }}</h3>
         <div>
-            <p class="mt-5">{{ @trans('lp1.welcome_text') }}</p>
+            <p class="mt-4">{{ @trans('lp1.welcome_text') }}</p>
         </div>
         <div class="row icons" style="margin-top: 75px">
             <div class="col-md-4 col-sm-12">
@@ -854,30 +902,8 @@
             </div>
         </div>
     </div>
-    <div class="container recent-container text-center currentMembers">
-        <h3 style="margin-bottom: 40px">{{ @trans('lp1.a_group_of_members') }}</h3>
-        <div class="row mt-5">
-            @foreach ($users as $user)
-                <div class="col-lg-2 col-md-4 col-sm-6 mb-4">
-                    <a href="#" class="scrollToRegistration">
-                        <img
-                                src="{{ \StorageHelper::profileImageUrl($user, true) }}"
-                                class="roundImage"
-                                alt="profile-image"
-                        >
-                        <h5 class="small"
-                            style="font-size: 1.9rem; width: 170px; overflow: hidden; text-overflow: ellipsis; margin: 10px auto 5px auto">{{ $user->username }}</h5>
-                        <p class="offset-0 user-info" style="line-height: 14px; text-align: center">
-                            <small class="text-muted" style="font-size: 1.4rem">{{ @trans('lp1.age') }}
-                                : {{ $user->meta->dob->diffInYears($carbonNow) }}, {{ $user->meta->city }}</small>
-                        </p>
-                    </a>
-                </div>
-            @endforeach
-        </div>
-    </div>
 
-    <div class="container text-center secondWelcome" style="margin-bottom: 10rem">
+    <div class="container text-center secondWelcome" style="margin-bottom: 10rem; margin-top: 7rem">
         <h3 style="margin-bottom: 40px">{{ @trans('lp1.online_sex_dating') }}</h3>
         <div class="mt-5">
             <p>
