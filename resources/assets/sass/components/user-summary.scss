@@ -6,6 +6,10 @@
 //
 // Style guide: Components.User Summary
 .UserSummary {
+    &__footer {
+       padding: 0;
+    }
+
     &__body {
         position: relative;
         width: 100%;
