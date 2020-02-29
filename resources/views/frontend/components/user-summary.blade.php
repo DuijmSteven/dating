@@ -22,7 +22,6 @@
                     </div>
                 @endif
             @else
-                {{ $authenticatedUser->isPayingUser() ? 'asdas dasdad' : '' }}
                 <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}">
                     <img
                         class="UserSummary__profileImage JS--galleryImage"
@@ -89,7 +88,13 @@
                                 src="{{ \StorageHelper::userImageUrl($user->getId(), $image->getFilename()) }}"
                                 data-src="{{ \StorageHelper::userImageUrl($user->getId(), $image->getFilename()) }}"
                                 alt="user image"
-                            ></div></a>@endforeach
+                            ><div class="nonPayingUserOverlay {{ !$authenticatedUser->isPayingUser() ? 'showIfNonPayingUser' : '' }}">
+                            <i class="material-icons">
+                                search
+                            </i>
+                        </div></div></a>@endforeach
+
+
             </div>
         @endif
     </div>

@@ -120,6 +120,30 @@
 
     &__otherImages {
         position: relative;
+
+        .nonPayingUserOverlay {
+            display: none;
+            position: absolute;
+            justify-content: center;
+            align-items: center;
+            font-weight: 500;
+            font-size: 4rem;
+            color: #fff;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            &.showIfNonPayingUser {
+                display: flex;
+            }
+
+            .material-icons {
+                font-size: 45px;
+                color: $secondaryColor;
+                font-weight: 500;
+            }
+        }
     }
 
     &__userInfo {

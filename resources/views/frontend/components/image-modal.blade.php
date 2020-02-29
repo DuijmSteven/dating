@@ -18,7 +18,7 @@
                         'buttonContext' => 'general',
                         'buttonState' => 'primary',
                         'buttonText' => trans('navbar.credits'),
-                        'buttonClasses' => 'centered',
+                        'buttonClasses' => 'centered Button--tall Button--highlighted',
                         'url' => route('credits.show'),
                     ])
             </div>
