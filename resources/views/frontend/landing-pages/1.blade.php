@@ -569,6 +569,9 @@
             display: none;
         }
 
+        .col-xs-6 {
+            width: 50% !important;
+        }
 
         .language-selection.header {
             top: 10px;
@@ -855,7 +858,7 @@
         <h3 style="margin-bottom: 40px">{{ @trans('lp1.a_group_of_members') }}</h3>
         <div class="row mt-5">
             @foreach ($users as $user)
-                <div class="col-lg-2 col-md-4 col-sm-6 mb-4">
+                <div class="col-xs-6 col-lg-2 col-md-4 col-sm-6 mb-4 {{ $loop->index > 5 ? 'hidden-xs' : '' }}">
                     <a href="#" class="scrollToRegistration">
                         <img
                             src="{{ \StorageHelper::profileImageUrl($user, true) }}"
@@ -865,8 +868,7 @@
                         <h5 class="small"
                             style="font-size: 1.9rem; width: 170px; overflow: hidden; text-overflow: ellipsis; margin: 10px auto 5px auto">{{ $user->username }}</h5>
                         <p class="offset-0 user-info" style="line-height: 14px; text-align: center">
-                            <small class="text-muted" style="font-size: 1.4rem">{{ @trans('lp1.age') }}
-                                : {{ $user->meta->dob->diffInYears($carbonNow) }}, {{ $user->meta->city }}</small>
+                            <small class="text-muted" style="font-size: 1.4rem">{{ $user->meta->dob->diffInYears($carbonNow) }}, {{ $user->meta->city }}</small>
                         </p>
                     </a>
                 </div>
@@ -874,26 +876,26 @@
         </div>
     </div>
 
-    <div class="container welcome-container text-center JS--welcome-container">
+    <div class="container welcome-container text-center JS--welcome-container" style="margin-bottom: 8rem;">
         <h3>{{ @trans('lp1.welcome') }}</h3>
         <div>
             <p class="mt-4">{{ @trans('lp1.welcome_text') }}</p>
         </div>
         <div class="row icons" style="margin-top: 75px">
-            <div class="col-md-4 col-sm-12">
+            <div class="col-xs-12 col-md-4 col-sm-12">
                 <i class="material-icons">
                     how_to_reg
                 </i>
                 <h4>{{ @trans('lp1.usps.free_access.title') }}</h4>
                 <p style="text-align: center">{{ @trans('lp1.usps.free_access.text') }}</p>
             </div>
-            <div class="col-md-4 col-sm-12">
+            <div class="col-xs-12 col-md-4 col-sm-12">
                 <i class="material-icons">
                     chat
                 </i>                <h4>{{ @trans('lp1.usps.live_chat.title') }}</h4>
                 <p style="text-align: center">{{ @trans('lp1.usps.live_chat.text') }}</p>
             </div>
-            <div class="col-md-4 col-sm-12">
+            <div class="col-xs-12 col-md-4 col-sm-12">
                 <i class="material-icons">
                     vpn_lock
                 </i>
@@ -903,22 +905,7 @@
         </div>
     </div>
 
-    <div class="container text-center secondWelcome" style="margin-bottom: 10rem; margin-top: 7rem">
-        <h3 style="margin-bottom: 40px">{{ @trans('lp1.online_sex_dating') }}</h3>
-        <div class="mt-5">
-            <p>
-                {!! @trans(
-                 'lp1.second_welcome',
-                 [
-                     'articlesRoute' => route('articles.overview'),
-                 ]
-             )
-         !!}
-            </p>
-        </div>
-    </div>
-
-    <div class="container testimonials-container text-center">
+    <div class="container testimonials-container text-center" style="margin-bottom: 8rem;">
         <h3>{{ @trans('lp1.success_stories') }}</h3>
         <div id="carouselExampleControls" class="carousel slide mt-5">
             <div class="carousel-inner" style="padding-top: 15px">
@@ -930,7 +917,7 @@
                                  alt="">
                         </div>
                         <div class="text-center">
-                            <blockquote class="quote">
+                            <blockquotZe class="quote">
                                 <p class="q">
                                     <q>{{ $testimonial['quote'] }}</q>
                                 </p>
@@ -940,7 +927,7 @@
                                         - {{ $testimonial['names'] }}
                                     </cite>
                                 </p>
-                            </blockquote>
+                            </blockquotZe>
                         </div>
                     </div>
                 @endforeach
@@ -955,6 +942,22 @@
             </a>
         </div>
     </div>
+
+    <div class="container text-center secondWelcome" style="margin-bottom: 10rem;">
+        <h3 style="margin-bottom: 40px">{{ @trans('lp1.online_sex_dating') }}</h3>
+        <div class="mt-5">
+            <p>
+                {!! @trans(
+                 'lp1.second_welcome',
+                 [
+                     'articlesRoute' => route('articles.overview'),
+                 ]
+             )
+         !!}
+            </p>
+        </div>
+    </div>
+
 </main>
 <footer class="Footer">
     <div class="container">

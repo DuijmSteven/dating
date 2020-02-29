@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'select_package' => 'Selecteer een pakket',
+    'select_package' => 'Selecteer pakket',
     'credits' => 'credits',
     'per_message' => 'per bericht',
     'select' => 'Selecteer betaalmethode',

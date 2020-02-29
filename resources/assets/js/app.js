@@ -300,7 +300,7 @@ $(window).on('load', function () {
         $('input:radio[name="paymentMethod"]').change(function () {
             $('.JS--paymentMethodListItem').removeClass('selected');
 
-            if ($(this).is(':checked') && $(this).val() == 'ideal') {
+            if ($(this).is(':checked') && $(this).val() === 'ideal') {
                 $('.JS--banksContainer').show();
             } else {
                 $('.JS--banksContainer').hide();
@@ -308,18 +308,19 @@ $(window).on('load', function () {
 
             if ($(this).is(':checked')) {
                 $(this).closest('.JS--paymentMethodListItem').addClass('selected');
-            }
-        });
-    }
 
-    if ($('.JS--banksContainer').length > 0) {
-        $('input:radio[name="paymentMethod"]').change(function () {
-            if ($(this).is(':checked') && $(this).val() == 'ideal') {
-                $('.JS--banksContainer').show();
-            } else {
-                $('.JS--banksContainer').hide();
+                if ($(this).val() !== 'ideal') {
+                    $('html, body').animate({scrollTop: $('.JS--finalizePaymentTitle').offset().top}, 1000, 'swing');
+                }
             }
         });
+
+        $('#bank').change(function () {
+            if ($(this).val().length > 0) {
+                $('html, body').animate({scrollTop: $('.JS--finalizePaymentTitle').offset().top}, 1000, 'swing');
+            }
+        });
+
     }
 
     if ($('.JS--searchToggleButton').length > 0) {

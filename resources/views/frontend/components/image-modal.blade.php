@@ -8,9 +8,21 @@
                     </i>
                 </button>
 
-                <img alt="imagePreview" src="" id="imagePreview" style="width: 100%" >
+                <img class="{{ !$authenticatedUser->isPayingUser() ? 'blurred' : '' }}" alt="imagePreview" src="" id="imagePreview" style="width: 100%" >
             </div>
         </div>
+
+        @if(!$authenticatedUser->isPayingUser())
+            <div class="nonPayingUserMessage">
+                @include('frontend.components.button', [
+                        'buttonContext' => 'general',
+                        'buttonState' => 'primary',
+                        'buttonText' => trans('navbar.credits'),
+                        'buttonClasses' => 'centered',
+                        'url' => route('credits.show'),
+                    ])
+            </div>
+        @endif
     </div>
 
     <i class="material-icons imageModalArrow leftArrow hidden JS--imageModalArrow JS--leftArrow">

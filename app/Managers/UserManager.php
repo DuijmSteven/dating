@@ -397,7 +397,7 @@ class UserManager
             return null;
         }
 
-        $user = User::with('profileImage', 'images', 'meta', 'emailTypes', 'account', 'milestones')->where('id', $user->getId())->get()[0];
+        $user = User::with('profileImage', 'images', 'meta', 'emailTypes', 'account', 'milestones', 'payments')->where('id', $user->getId())->get()[0];
 
         return $user;
     }

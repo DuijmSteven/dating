@@ -7,7 +7,7 @@
             <div>
                 <div class="row">
                     @foreach($creditpacks as $creditpack)
-                        <div class="col-md-4">
+                        <div class="col-xs-12 col-md-4">
                             <div data-creditpack-id="{{ $creditpack->id }}"
                                  class="block block-pricing {{ $loop->iteration == 2 ? 'block-raised' : '' }} JS--creditpack"
                             >
@@ -25,7 +25,7 @@
                                         href="#"
                                         class="btn {{ $loop->iteration == 2 ? 'btn-white' : 'btn-rose' }} btn-round JS--prevent-default__click"
                                     >
-                                        {{ trans('credits.select') }}
+                                        {{ trans('credits.select_package') }}
                                     </a>
 
                                     @if($creditpack->id === 2)
@@ -47,10 +47,10 @@
         <div class="row pricing-10">
             <form method="post" action="{{ route('credits.store') }}">
                 {{ csrf_field() }}
-                <div class="col-md-6">
+                <div class="col-xs-12 col-md-12">
                     <h4 class="JS--paymentMethods__title"><span class="step">Stap 2</span><span class="stepTitle">{{ trans('credits.select') }}</span></h4>
                     <ul class="list-group mb-3 JS--paymentMethods paymentMethodsList">
-                        <li class="list-group-item d-flex justify-content-between paymentMethodsListItem JS--paymentMethodListItem"
+                        <li class=" Tile list-group-item d-flex justify-content-between paymentMethodsListItem JS--paymentMethodListItem"
                             style="margin-bottom: 10px; flex-wrap: wrap;">
                             <label class="paymentMethodsLabel">
                                 <input type="radio" name="paymentMethod" value="ideal" required>
@@ -76,14 +76,14 @@
                             </label>
                             <span class="paymentMethodLogo"><img src="{{ asset('img/icons/credit-cards.png') }}"/></span>
                         </li>--}}
-                        <li class="list-group-item d-flex justify-content-between paymentMethodsListItem JS--paymentMethodListItem" style="margin-bottom: 10px">
+                        <li class="Tile list-group-item d-flex justify-content-between paymentMethodsListItem JS--paymentMethodListItem" style="margin-bottom: 10px">
                             <label class="paymentMethodsLabel">
                                 <input type="radio" name="paymentMethod" value="bancontact">
                                 <span style="margin-left: 5px">Bancontact</span>
                             </label>
                             <span class="paymentMethodLogo"><img src="{{ asset('img/icons/bancontact_logo.svg') }}"/></span>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between paymentMethodsListItem JS--paymentMethodListItem">
+                        <li class="Tile list-group-item d-flex justify-content-between paymentMethodsListItem JS--paymentMethodListItem">
                             <label class="paymentMethodsLabel">
                                 <input type="radio" name="paymentMethod" value="paysafe">
                                 <span style="margin-left: 5px">Paysafecard</span>
@@ -92,9 +92,9 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col-md-6">
-                    <h4><span class="step">Stap 3</span><span class="stepTitle">{{ @trans('credits.cart') }}</span></h4>
-                    <ul class="list-group mb-3">
+                <div class="col-xs-12 col-md-12">
+                    <h4><span class="step">Stap 3</span><span class="stepTitle JS--finalizePaymentTitle">{{ @trans('credits.cart') }}</span></h4>
+                    <ul class="Tile list-group mb-3">
                         <li class="list-group-item d-flex justify-content-between">
                             <div>
                                 <h6 class="my-0"><span class="cart-package">{{ $creditpacks[1]->name }}</span> {{ @trans('credits.package') }}
@@ -111,7 +111,12 @@
                             <strong><span class="cart-value">&euro;{{ number_format($creditpacks[1]->price / 100, 2, ',', '.') }}</span></strong>
                         </li>
                     </ul>
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">{{ @trans('credits.to_checkout') }}</button>
+                    <button class="Button btn btn-primary btn-lg btn-block" type="submit">
+                        {{ @trans('credits.to_checkout') }}
+                        <i class="material-icons paymentButtonCheck">
+                            done
+                        </i>
+                    </button>
                 </div>
             </form>
         </div>

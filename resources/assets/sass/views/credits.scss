@@ -112,12 +112,16 @@ Table of Contents End
         display: inline-block;
         position: relative;
         width: 100%;
-        margin-bottom: 30px;
+        margin-bottom: 20px;
         border-radius: 6px;
         color: rgba(0, 0, 0, 0.87);
         background: #fff;
         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
         cursor: pointer;
+
+        @media (max-width: $screen-xs-max) {
+            margin-bottom: 30px;
+        }
     }
 
     .block-caption {
@@ -209,10 +213,10 @@ Table of Contents End
     }
 
     [class*="pricing-"] {
-        padding: 0px 0 60px 0;
+        padding: 0 0 0 0;
 
         @media (max-width: $screen-sm-max) {
-            padding: 0px 0 10px 0;
+            padding: 0 0 0 0;
         }
     }
 
@@ -547,13 +551,6 @@ Table of Contents End
         box-shadow: 0 4px 4px 0 rgba(153, 153, 153, 0.24), 0 3px 1px -2px rgba(153, 153, 153, 0.3), 0 1px 5px 0 rgba(153, 153, 153, 0.32);
     }
 
-
-    /* Bootstrap col-md-12 class */
-    .col-md-12 {
-        padding-right: 0px;
-        padding-left: 0px;
-    }
-
     /* FontAwesome fa class */
     .fa {
         font-size: 12px;
@@ -639,6 +636,16 @@ Table of Contents End
         .block-pricing .usp-label {
             top: -22px;
         }
+    }
+
+    .paymentButtonCheck {
+        color: #00a65a;
+        font-size: 17px;
+        font-weight: 500;
+        background-color: #fff;
+        padding: 6px;
+        border-radius: 50%;
+        margin-left: 5px;
     }
 }
 

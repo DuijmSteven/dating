@@ -13,8 +13,11 @@
 //
 // Style guide: Components.Button
 .Button {
-    display: inline-block;
-    padding: 4px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    margin-left: auto;
     border-radius: map_get($button, border-radius) + px;
     border-width: map_get($button, border-width) + px;
     border: 0;
@@ -22,6 +25,11 @@
     text-align: center;
     overflow: hidden;
     text-overflow: ellipsis;
+    box-shadow: 0 1px 2px 0 rgba(45, 49, 66, 0.25);
+
+    &.centered {
+        margin-left: initial;
+    }
 
     &.whiteFont {
         color: $white;

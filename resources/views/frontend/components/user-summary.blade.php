@@ -22,10 +22,11 @@
                     </div>
                 @endif
             @else
+                {{ $authenticatedUser->isPayingUser() ? 'asdas dasdad' : '' }}
                 <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}">
                     <img
                         class="UserSummary__profileImage JS--galleryImage"
-                            src="{{ \StorageHelper::profileImageUrl($user) }}"
+                        src="{{ \StorageHelper::profileImageUrl($user) }}"
                         alt="user image"
                     >
                 </a>
@@ -84,7 +85,7 @@
             <div class="UserSummary__otherImages">
                 {{-- DON'T reformat this loop, it is structured like this to avoid spacing between inline blocks --}}
                 @foreach($user->imagesNotProfile as $image)<a href="#" class="modalImage UserSummary__nonProfileImageModalWrapper"><div class="UserSummary__nonProfileImageWrapper"><img
-                                class="UserSummary__nonProfileImage JS--galleryImage"
+                                class="UserSummary__nonProfileImage JS--galleryImage {{ !$authenticatedUser->isPayingUser() ? 'blurred' : '' }}"
                                 src="{{ \StorageHelper::userImageUrl($user->getId(), $image->getFilename()) }}"
                                 data-src="{{ \StorageHelper::userImageUrl($user->getId(), $image->getFilename()) }}"
                                 alt="user image"

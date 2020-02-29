@@ -62,6 +62,27 @@ class User extends Authenticatable
         return \StorageHelper::profileImageUrl($this, true);
     }
 
+    public function isPayingUser(): bool
+    {
+        if ($this->account->credits > 0) {
+            $completedPaymentsCount = 0;
+
+            foreach ($this->payments as $payment) {
+                if ($payment->status == Payment::STATUS_COMPLETED) {
+                    $completedPaymentsCount++;
+                }
+            }
+
+            if ($completedPaymentsCount < 1) {
+                return false;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
     public function getHasRecentlyAcceptedProfileCompletionMessageAttribute()
     {
         $milestones = $this->where('id', \Auth::user()->getId())->whereHas('milestones', function ($query) {
