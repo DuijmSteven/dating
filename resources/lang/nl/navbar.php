@@ -2,7 +2,7 @@
 
 return [
     'edit_profile' => 'Bewerk profiel',
-    'credits' => 'Koop Credits!',
+    'credits' => 'Credits Kopen',
     'logout' => 'Uitloggen',
     'home' => 'Home',
     'login' => 'Log in',
