@@ -229,6 +229,10 @@ Table of Contents End
     .block-pricing {
         .table {
             position: relative;
+
+            &:not(.table-rose):hover {
+                background: #fce8e4;
+            }
         }
 
         .usp-label {
@@ -472,7 +476,7 @@ Table of Contents End
     .btn.btn-primary:focus,
     .btn.btn-primary:active,
     .btn.btn-primary:hover {
-        background-color: #595e72;
+        background-color: lighten(#9e4737, 4%);
         //box-shadow: 0 14px 26px -12px rgba(156, 39, 176, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(156, 39, 176, 0.2);
     }
 
