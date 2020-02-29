@@ -316,15 +316,22 @@
     padding-top: ($navbarHeight - $logoHeight - 2 * $navbarBorderWidth) / 2 + px;
     padding-bottom: ($navbarHeight - $logoHeight - 2 * $navbarBorderWidth) / 2 + px;
 
+    @media screen and (min-width: $screen-md-min) {
+        padding-top: 6px;
+        padding-bottom: 6px;
+    }
+
     > img {
         height: $logoHeight + px;
 
         @media screen and (max-width: $screen-sm-max) {
             height: 30px;
         }
+
+        @media screen and (min-width: $screen-md-min) {
+            height: 36px;
+        }
     }
-
-
 }
 
 // change navbar collapse breakpoint
