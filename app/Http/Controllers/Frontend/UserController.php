@@ -164,8 +164,11 @@ class UserController extends FrontendController
             'user' => $this->authenticatedUser,
             'pageHeading' => 'Edit profile',
             'carbonNow' => Carbon::now(),
-            'availableEmailTypes' => EmailType::all(),
-            'userEmailTypeIds' => $this->authenticatedUser->emailTypes()->pluck('id')->toArray()
+            'availableEmailTypes' => EmailType::where('editable', true)->get(),
+            'userEmailTypeIds' => $this->authenticatedUser->emailTypes()
+                ->where('editable', 1)
+                ->pluck('id')
+                ->toArray()
         ];
 
         $emailTypes = $this->authenticatedUser->emailTypes;

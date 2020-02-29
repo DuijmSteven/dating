@@ -147,8 +147,8 @@ class UserManager
 
                 $userEmailTypeInstance = new UserEmailTypeInstance();
                 $userEmailTypeInstance->setEmail($viewed->getEmail());
-                $userEmailTypeInstance->setViewerId($viewerUser->getId());
-                $userEmailTypeInstance->setViewedId($viewed->getId());
+                $userEmailTypeInstance->setActorId($viewerUser->getId());
+                $userEmailTypeInstance->setReceiverId($viewed->getId());
                 $userEmailTypeInstance->setEmailTypeId(EmailType::PROFILE_VIEWED);
 
                 $userEmailTypeInstance->save();

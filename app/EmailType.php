@@ -8,10 +8,13 @@ class EmailType extends Model
 {
     const MESSAGE_RECEIVED = 1;
     const PROFILE_VIEWED = 2;
+    const WELCOME = 3;
 
     public $table = 'email_types';
 
     private $emailTypeId;
+
+    public $timestamps = false;
 
     /**
      * Get the user that owns the meta.
@@ -27,5 +30,9 @@ class EmailType extends Model
 
     public function setEmailTypeId($emailTypeId) {
         $this->email_type_id = $emailTypeId;
+    }
+
+    public function setEditable(bool $editable) {
+        $this->editable = $editable;
     }
 }

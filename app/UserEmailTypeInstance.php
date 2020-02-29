@@ -16,8 +16,8 @@ class UserEmailTypeInstance extends TimeZonedModel
      * @var array
      */
     protected $fillable = [
-        'viewed_id',
-        'viewer_id',
+        'receiver_id',
+        'actor_id',
         'email_type_id',
         'email'
     ];
@@ -26,12 +26,12 @@ class UserEmailTypeInstance extends TimeZonedModel
         $this->email_type_id = $emailTypeId;
     }
 
-    public function setViewedId(int $viewedId) {
-        $this->viewed_id = $viewedId;
+    public function setReceiverId(int $receiverId) {
+        $this->receiver_id = $receiverId;
     }
 
-    public function setViewerId(int $viewerId) {
-        $this->viewer_id = $viewerId;
+    public function setActorId(int $actorId) {
+        $this->actor_id = $actorId;
     }
 
     public function setEmail(string $email) {

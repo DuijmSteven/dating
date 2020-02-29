@@ -334,7 +334,7 @@ class User extends Authenticatable
 
     public function emailTypeInstances()
     {
-        return $this->belongsToMany(EmailType::class, 'user_email_type_instances', 'viewed_id', 'email_type_id')->withTimestamps();
+        return $this->belongsToMany(EmailType::class, 'user_email_type_instances', 'receiver_id', 'email_type_id')->withTimestamps();
     }
 
     /**

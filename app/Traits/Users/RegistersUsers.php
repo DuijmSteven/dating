@@ -11,6 +11,7 @@ use App\Milestone;
 use App\Services\GeocoderService;
 use App\User;
 use App\UserAccount;
+use App\UserEmailTypeInstance;
 use App\UserMeta;
 use App\RoleUser;
 use Carbon\Carbon;
@@ -100,7 +101,6 @@ trait RegistersUsers
         try {
             $createdUser->emailTypes()->attach(EmailType::MESSAGE_RECEIVED);
             $createdUser->emailTypes()->attach(EmailType::PROFILE_VIEWED);
-            $createdUser->save();
         } catch (\Exception $exception) {
             DB::rollBack();
             throw $exception;
@@ -118,12 +118,25 @@ trait RegistersUsers
             DB::rollBack();
             throw $exception;
         }
+
+        try {
+            $welcomeEmail = (new Welcome($createdUser))->onQueue('emails');
+
+            Mail::to($createdUser)
+                ->queue($welcomeEmail);
+
+            $createdUser->emailTypeInstances()->attach(EmailType::WELCOME, [
+                'email' => $createdUser->getEmail(),
+                'email_type_id' => EmailType::WELCOME,
+                'actor_id' => null
+            ]);
+
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
+
         DB::commit();
-
-        $welcomeEmail = (new Welcome($createdUser))->onQueue('emails');
-
-        Mail::to($createdUser)
-            ->queue($welcomeEmail);
 
         $this->guard()->login($createdUser);
 
