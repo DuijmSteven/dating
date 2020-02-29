@@ -175,7 +175,7 @@
         border-radius: 2px 2px 0 0;
         padding: 10px;
         //background-color: $tertiaryColor;
-        background: linear-gradient(90deg, #312c2c 13%, #584747 100%);
+        background: linear-gradient(90deg, lighten(#312c2c, 5%) 13%, lighten(#312c2c, 10%) 100%);
 
         &__wrapper {
             display: flex;
@@ -184,7 +184,7 @@
 
         &__notify {
             //background-color: #b53d22;
-            background: linear-gradient(90deg, darken($secondaryColor, 20%) 13%, $secondaryColor 100%);
+            background: linear-gradient(90deg, darken($secondaryColor, 10%) 13%, $secondaryColor 100%);
         }
 
         &__onlineBar {
