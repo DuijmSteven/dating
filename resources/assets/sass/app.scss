@@ -119,6 +119,10 @@
 }
 
 img.blurred {
+  filter: blur(9px);
+}
+
+img.very-blurred {
   filter: blur(13px);
 }
 

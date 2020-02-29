@@ -8,7 +8,7 @@
                     </i>
                 </button>
 
-                <img class="{{ !$authenticatedUser->isPayingUser() ? 'blurred' : '' }}" alt="imagePreview" src="" id="imagePreview" style="width: 100%" >
+                <img class="{{ !$authenticatedUser->isPayingUser() ? 'very-blurred' : '' }}" alt="imagePreview" src="" id="imagePreview" style="width: 100%" >
             </div>
         </div>
 
