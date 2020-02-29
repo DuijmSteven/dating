@@ -366,6 +366,13 @@
         transform: translateY(-0.5rem);
     }
 
+    @media screen and (max-width: 767px) {
+        .roundImage {
+            width: 120px;
+            height: 120px;
+        }
+    }
+
     .testimonials-container .roundImage {
         width: 14rem;
         height: 14rem;
@@ -583,6 +590,23 @@
         text-decoration: none;
     }
 
+    .recentUsername {
+        font-size: 1.9rem;
+        width: 170px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin: 10px auto 5px auto;
+    }
+
+    @media screen and (max-width: 767px) {
+        .recentUsername {
+            width: 130px;
+        }
+
+        h3 {
+            font-size: 26px !important;
+        }
+    }
 
 </style>
 <body class="landingPage">
@@ -865,8 +889,7 @@
                             class="roundImage"
                             alt="profile-image"
                         >
-                        <h5 class="small"
-                            style="font-size: 1.9rem; width: 170px; overflow: hidden; text-overflow: ellipsis; margin: 10px auto 5px auto">{{ $user->username }}</h5>
+                        <h5 class="small recentUsername">{{ $user->username }}</h5>
                         <p class="offset-0 user-info" style="line-height: 14px; text-align: center">
                             <small class="text-muted" style="font-size: 1.4rem">{{ $user->meta->dob->diffInYears($carbonNow) }}, {{ $user->meta->city }}</small>
                         </p>
@@ -944,7 +967,7 @@
     </div>
 
     <div class="container text-center secondWelcome" style="margin-bottom: 10rem;">
-        <h3 style="margin-bottom: 40px">{{ @trans('lp1.online_sex_dating') }}</h3>
+        <h3 style="margin-bottom: 40px">{!! @trans('lp1.online_sex_dating') !!}</h3>
         <div class="mt-5">
             <p>
                 {!! @trans(

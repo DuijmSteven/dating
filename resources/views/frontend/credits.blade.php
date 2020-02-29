@@ -137,7 +137,7 @@
                     </a>
 
                     <p class="offset-0" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">
-                        <small class="text-muted">{{ @trans('credits.age') }}: {{ $user->meta->dob->diffInYears($carbonNow) }}, {{ $user->meta->city }}</small>
+                        <small class="text-muted">{{ $user->meta->dob->diffInYears($carbonNow) }}, {{ $user->meta->city }}</small>
                     </p>
 {{--                    <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}"--}}
 {{--                       class="btn btn-lg btn-white">{{ @trans('credits.more_info') }}</a>--}}
