@@ -9,6 +9,8 @@
     border-radius: 0 0 5px 5px;
     padding: 10px;
 
+    background: linear-gradient(90deg, #312c2c 13%, #584747 100%);
+
     &.with-errors {
         padding-bottom: 30px;
     }

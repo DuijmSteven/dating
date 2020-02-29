@@ -13,7 +13,7 @@
     </p>
 
     <div style="text-align: center">
-        <div style="display: inline-block; padding: 7px 20px; background-color: #ef4f2b; color: #fff; border: 1px solid #ef4f2b; border-radius: 4px; margin: 20px 0; cursor: pointer">
+        <div style="display: inline-block; padding: 7px 20px; background-color: #ce5338; color: #fff; border: 1px solid #ce5338; border-radius: 4px; margin: 20px 0; cursor: pointer">
             <a style="color: #fff" href="{{ route('landing-page.show') }}">Naar Altijdsex.nl</a>
         </div>
     </div>

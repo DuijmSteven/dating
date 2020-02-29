@@ -175,6 +175,7 @@
         border-radius: 2px 2px 0 0;
         padding: 10px;
         background-color: $tertiaryColor;
+        background: linear-gradient(90deg, #312c2c 13%, #584747 100%);
 
         &__wrapper {
             display: flex;
@@ -326,9 +327,10 @@
         min-height: 10px;
         border-radius: 5px;
         margin-bottom: 10px;
+        font-weight: 400;
         overflow: hidden;
         width: 75%;
-        font-size: 15px;
+        font-size: 16px;
         letter-spacing: 0.2px;
         line-height: 18px;
 

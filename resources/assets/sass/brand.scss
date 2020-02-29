@@ -34,7 +34,7 @@ $yellowLight: #f9ce89;
 
 // brand colors
 $mainColor: $dark;
-$secondaryColor: $tomato;
+$secondaryColor: #ce5338;
 $tertiaryColor: $slate;
 $fourthColor: #e27e67;
 $textColor: $black;
@@ -83,7 +83,7 @@ $tileBgColor: $white;
 $tileHeading: (
         'padding': 15,
         'fontSize': 24,
-        'fontColor': $mainColor,
+        'fontColor': darken(#734e4e, 5%),
         'textAlign': center,
         'borderWidth': 2
 );

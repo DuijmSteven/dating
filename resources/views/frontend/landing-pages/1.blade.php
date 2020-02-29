@@ -65,19 +65,19 @@
 
     .icons i {
         font-size: 8em;
-        color: #ef4f2b;
+        color: #ce5338;
     }
 
     .recent-container h5.small {
         font-size: 1.6rem;
         font-weight: 700;
-        color: #ef4f2b;
+        color: #ce5338;
         letter-spacing: .1em;
         margin-top: 1.375rem;
     }
 
     form label {
-        color: #ef4f2b;
+        color: #ce5338;
         font-size: 1.6rem;
         letter-spacing: 0.2px;
         font-weight: 400;
@@ -124,14 +124,23 @@
     }
 
     .btn-secondary {
-        background-color: #2e3142;
-        border-color: #2e3142;
+        background-color: #82554b !important;
+        border-color: #82554b !important;
+        color: #fff;
+    }
+
+    .btn-secondary:hover,
+    .btn-secondary:focus,
+    .btn-secondary:active {
+        background-color: #98695f !important;
+        border-color: #82554b !important;
+        color: #fff;
     }
 
     .btn-register-login,
     .btn-accept-cookies {
-        background-color: #ef4f2b;
-        border-color: #ef4f2b;
+        background-color: #ce5338;
+        border-color: #ce5338;
         color: #fff;
     }
 
@@ -187,8 +196,9 @@
         color: #fff;
     }
 
-    .btn-register-login:hover {
-        background-color: #f96431;
+    .btn-register-login:hover, .btn-register-login:focus, .btn-register-login:active {
+        background-color: #e4543a;
+        border-color: #ce5338;
         color: #fff;
     }
 
@@ -217,7 +227,7 @@
     }
 
     footer h4 {
-        color: #ef4f2b;
+        color: #ce5338;
     }
 
     footer .Footer__logo img {
@@ -454,7 +464,7 @@
         font-size: 4.2rem;
         letter-spacing: .02em;
         text-transform: uppercase;
-        color: #ef4f2b;
+        color: #ce5338;
         margin: 0;
         position: absolute;
         bottom: 258px;
@@ -530,7 +540,7 @@
         left: 50%;
         width: 254px;
         margin-left: -127px;
-        background-color: #7d87c1;
+        background-color: #504c4c;
         border-radius: 30px;
         display: flex;
         justify-content: center;

@@ -57,9 +57,11 @@
 
 .navbar-default {
     border: $navbarBorderWidth + px solid $navbarBgColor;
-    background-color: $navbarBgColor;
     position: relative;
     border-radius: 0;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.25);
+
+    background: linear-gradient(90deg, #312c2c 13%, #584747 100%);
 
     .navbar-toggle {
         margin-top: 17px;
@@ -71,8 +73,9 @@
     }
 
     .userCreditsNumber {
-        font-weight: 400;
-        color: lighten($secondaryColor, 10%);
+        font-weight: 500;
+        font-size: 20px;
+        color: #ffc3b5;
     }
 
     .userCreditsText {
@@ -141,7 +144,7 @@
             }
 
             > a {
-                background-color: $navbarBgColor;
+                //background-color: $navbarBgColor;
                 line-height: $navbarLineHeight + px;
                 padding-top: ($navbarHeight - $navbarLineHeight - 2 * $navbarBorderWidth) / 2 + px;
                 padding-bottom: ($navbarHeight - $navbarLineHeight - 2 * $navbarBorderWidth) / 2 + px;
@@ -186,10 +189,10 @@
 
                 .dropdown-menu {
                     padding: 0;
-                    background-color: $mainColor;
+                    background-color: #493d3d;
 
                     li {
-                        border-bottom: 1px solid lighten($mainColor, 2%);
+                        border-bottom: 1px solid lighten(#493d3d, 2%);
 
                         &:last-of-type {
                             border-bottom: 0;
@@ -203,12 +206,12 @@
                         font-size: 16px;
 
                         @media (min-width: $screen-md-min) {
-                            background-color: darken($mainColor, 2%);
+                            background-color: #493d3d;
                         }
 
                         &:hover {
-                            background-color: darken($mainColor, 2%);
-                            color: darken($navbarLinkColor, 15%);
+                            background-color: lighten(#493d3d, 2%);
+                            color: #fff;
                         }
 
 
@@ -218,7 +221,7 @@
                 @media (min-width: $screen-md-min) {
                     &.open {
                         > a {
-                            background-color: darken($mainColor, 2%);
+                            background-color: darken(#493d3d, 2%);
                             color: $white;
                         }
                     }
@@ -385,13 +388,13 @@
         align-items: center;
         font-weight: 500;
         font-size: 2rem;
-        background-color: #bf5252;
-        border-radius: 20px;
+        background-color: #ad5845;
+        border-radius: 6px;
         color: $white;
         text-decoration: none;
 
         &:hover {
-            background-color: darken(#bf5252, 4%);
+            background-color: darken(#ad5845, 4%);
         }
 
         @media (max-width: $screen-md-max) {
@@ -421,7 +424,7 @@
         text-align: center;
         width: 131px;
         height: 31px;
-        border-radius: 20px;
+        border-radius: 6px;
 
         background-color: $secondaryColor;
         color: #fff;

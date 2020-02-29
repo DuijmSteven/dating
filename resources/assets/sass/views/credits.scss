@@ -449,8 +449,8 @@ Table of Contents End
     /* btn-rose */
     .btn.btn-rose {
         color: #FFFFFF;
-        background-color: #ce5439;
-        border-color: #ce5439;
+        background-color: #9e4737;
+        border-color: #9e4737;
         //box-shadow: 0 2px 2px 0 rgba(233, 30, 99, 0.14), 0 3px 1px -2px rgba(233, 30, 99, 0.2), 0 1px 5px 0 rgba(233, 30, 99, 0.12);
     }
 
@@ -464,7 +464,7 @@ Table of Contents End
     /* btn-primary */
     .btn.btn-primary {
         color: #FFFFFF;
-        background-color: #686d82;
+        background-color: #9e4737;
         //border-color: #ce5439;
         //box-shadow: 0 2px 2px 0 rgba(156, 39, 176, 0.14), 0 3px 1px -2px rgba(156, 39, 176, 0.2), 0 1px 5px 0 rgba(156, 39, 176, 0.12);
     }
@@ -480,8 +480,8 @@ Table of Contents End
     /* btn-danger */
     .btn.btn-danger {
         color: #FFFFFF;
-        background-color: #f44336;
-        border-color: #f44336;
+        background-color: #9e4737;
+        border-color: #9e4737;
         box-shadow: 0 2px 2px 0 rgba(244, 67, 54, 0.14), 0 3px 1px -2px rgba(244, 67, 54, 0.2), 0 1px 5px 0 rgba(244, 67, 54, 0.12);
     }
 
@@ -577,7 +577,7 @@ Table of Contents End
     .recent-container h5.small {
         font-size: 1.8rem;
         font-weight: 700;
-        color: #ef4f2b;
+        color: $secondaryColor;
         letter-spacing: 1px;
         margin-top: 1.375rem;
     }

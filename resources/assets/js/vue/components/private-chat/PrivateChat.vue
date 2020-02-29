@@ -297,6 +297,8 @@
                             }
                         });
 
+                        console.log(newActivity);
+
                         if (newActivity) {
                             this.setNewActivity();
                         }

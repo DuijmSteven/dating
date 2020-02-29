@@ -9,7 +9,7 @@
     position: relative;
     z-index: 5;
     padding: 30px 0;
-    background-color: $footerBgColor;
+    background: linear-gradient(90deg, #312c2c 13%, #584747 100%);
     color: $white;
 
     &__logo {
@@ -38,10 +38,11 @@
         &-listItem {
             a {
                 text-decoration: none;
-                color: $footerLinkTextColor;
+                color: #d4cbce;
+                font-weight: 400;
 
                 &:hover {
-                    color: darken($footerLinkTextColor, 10%)
+                    color: lighten(#d4cbce, 10%)
                 }
             }
         }

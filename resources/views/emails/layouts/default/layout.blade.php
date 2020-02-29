@@ -178,11 +178,26 @@
             padding: 50px 0;
         }
 
+        .UserSummary__userInfo__primary {
+            color: #555;
+            font-weight: 500;
+            font-size: 19px;
+        }
+
+        .UserSummary__userInfo__additional {
+            font-size: 16px;
+            color: #ce5338;
+            font-weight: 400;
+            margin-top: 5px;
+        }
+
         @media screen and (max-width: 767px) {
             .UserSummary__profileImage {
                 width: 80%;
                 padding: 30px 0;
             }
+
+
         }
     </style>
     <!-- Progressive Enhancements : END -->
