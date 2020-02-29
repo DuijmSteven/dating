@@ -106,9 +106,14 @@ class ConversationController extends Controller
                 if (!in_array($recipient->getId(), $onlineUserIds)) {
 
                     $messageReceivedEmail = (new MessageReceived($sender, $recipient))->onQueue('emails');
-
                     Mail::to($recipient)
                         ->queue($messageReceivedEmail);
+
+                    $recipient->emailTypeInstances()->attach(EmailType::MESSAGE_RECEIVED, [
+                        'email' => $recipient->getEmail(),
+                        'email_type_id' => EmailType::MESSAGE_RECEIVED,
+                        'actor_id' => $sender->getId()
+                    ]);
                 }
             }
 
