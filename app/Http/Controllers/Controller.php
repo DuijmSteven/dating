@@ -28,7 +28,7 @@ class Controller extends BaseController
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            $this->authenticatedUser = UserManager::getAndFormatAuthenticatedUser();
+            $this->authenticatedUser = UserManager::getAndFormatAuthenticatedUser2();
 
             $onlineIds = Activity::users(9)->pluck('user_id')->toArray();
 

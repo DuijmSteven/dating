@@ -389,6 +389,24 @@ class UserManager
     /**
      * @return User
      */
+    public static function getAndFormatAuthenticatedUser2()
+    {
+        $user = Auth::user();
+
+        if (!($user instanceof User)) {
+            return null;
+        }
+
+        $relations = ['profileImage', 'images', 'meta', 'emailTypes', 'account', 'milestones', 'payments'];
+
+        $user = User::with($relations)->where('id', $user->getId())->get()[0];
+
+        return $user;
+    }
+
+    /**
+     * @return User
+     */
     public static function getAndFormatAuthenticatedUser()
     {
         $user = Auth::user();
