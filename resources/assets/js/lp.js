@@ -70,6 +70,59 @@ $(window).on('load', function () {
         Cookies.set("lpCookiesAccepted", 'true');
     });
 
+    $('.JS--enhancedFormGroup').each((index, element) => {
+        if ($(element).find('input').val().length === 0) {
+            $(element).removeClass('open');
+        }
+
+        if ($(element).find('input').val().length > 0) {
+            $(element).addClass('open');
+        }
+    });
+
+    $('.JS--enhancedFormGroup').click(($event) => {
+        $('.JS--enhancedFormGroup').each((index, element) => {
+
+            console.log($(element).find('input').val().length === 0);
+            if ($(element).find('input').val().length === 0) {
+                $(element).removeClass('open');
+            }
+        });
+
+        $($event.currentTarget).addClass('open');
+    });
+
+    $('.JS--enhancedFormGroup input').keyup(function (e) {
+        $('.JS--enhancedFormGroup').each((index, element) => {
+            if ($(element).find('input').val().length === 0) {
+                $(element).removeClass('open');
+            }
+
+            if ($(element).find('input').val().length > 0) {
+                $(element).addClass('open');
+            }
+        });
+    });
+
+    $(document).mouseup(function(e)
+    {
+        var container = $('.JS--enhancedFormGroup');
+
+        // if the target of the click isn't the container nor a descendant of the container
+        if (!container.is(e.target) && container.has(e.target).length === 0)
+        {
+            $('.JS--enhancedFormGroup').each((index, element) => {
+                if ($(element).find('input').val().length === 0) {
+                    $(element).removeClass('open');
+                }
+
+                if ($(element).find('input').val().length > 0) {
+                    $(element).addClass('open');
+                }
+            });
+        }
+    });
+
     function calculateExcessOfForm() {
         let bottomOfForm = $('.JS--form-wrapper').offset().top + $('.JS--form-wrapper').height();
         return  bottomOfForm - $('.JS--header').height();

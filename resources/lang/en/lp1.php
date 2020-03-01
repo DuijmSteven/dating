@@ -10,7 +10,7 @@ return [
         'man_looking_for_man' => 'Man looking for a Man',
         'username' => 'Username',
         'identity' => 'Email or Username',
-        'email' => 'Email (not visible by others)',
+        'email' => 'Email <span>(not visible by others)</span>',
         'email_placeholder' => 'E-mail adres',
         'city' => 'City',
         'dob' => 'Date of birth',

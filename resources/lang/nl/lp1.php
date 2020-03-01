@@ -10,7 +10,7 @@ return [
         'man_looking_for_man' => 'Man op zoek naar een man',
         'username' => 'Gebruikersnaam',
         'identity' => 'E-mailadres of Gebruikersnaam',
-        'email' => 'E-mailadres (niet zichtbaar voor anderen)',
+        'email' => 'E-mailadres <span>(niet zichtbaar voor anderen)</span>',
         'email_placeholder' => 'E-mail adres',
         'city' => 'Stad',
         'dob' => 'Geboortedatum',

@@ -618,6 +618,44 @@
         }
     }
 
+    .form-wrapper form input {
+        padding: 30px 20px;
+        font-size: 20px;
+    }
+
+    .enhancedFormGroup {
+        position: relative;
+
+    }
+
+    .enhancedFormGroup label {
+        position: absolute;
+        top: 21px;
+        left: 28px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        max-width: 83%;
+        overflow: hidden;
+    }
+
+    .enhancedFormGroup.open label {
+        top: -7px;
+        left: 5px;
+        background: #fff;
+        padding: 1px 5px;
+        font-size: 14px;
+        border-radius: 6px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        max-width: 90%;
+        overflow: hidden;
+    }
+
+    .enhancedFormGroup .formLabelSmall span {
+        font-size: 13px;
+    }
+
 </style>
 <body class="landingPage">
 <header>
@@ -668,13 +706,12 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-12 {{ $errors->has('email') ? ' has-error' : '' }}">
-                                <label for="email">{{ @trans('lp1.form.email') }}</label>
+                            <div class="form-group enhancedFormGroup JS--enhancedFormGroup col-md-12 {{ $errors->has('email') ? ' has-error' : '' }}">
+                                <label class="formLabelSmall" for="email">{!! @trans('lp1.form.email') !!}</label>
                                 <input type="email"
                                        class="form-control"
                                        id="email"
                                        name="email"
-                                       placeholder="{{ @trans('lp1.form.email_placeholder') }}"
                                        value="{{ old('email') }}"
                                        required
                                 >
@@ -686,13 +723,12 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-12 {{ $errors->has('username') ? ' has-error' : '' }}">
+                            <div class="form-group enhancedFormGroup JS--enhancedFormGroup col-md-12 {{ $errors->has('username') ? ' has-error' : '' }}">
                                 <label for="name">{{ @trans('lp1.form.username') }}</label>
                                 <input type="text"
                                        class="form-control"
                                        id="username"
                                        name="username"
-                                       placeholder="{{ @trans('lp1.form.username') }}"
                                        value="{{ old('username') }}"
                                        required
                                        autofocus
@@ -705,10 +741,11 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-12 {{ $errors->has('password') ? ' has-error' : '' }}">
+                            <div class="form-group enhancedFormGroup JS--enhancedFormGroup col-md-12 {{ $errors->has('password') ? ' has-error' : '' }}">
                                 <label for="password">{{ @trans('lp1.form.password') }}</label>
                                 <input type="text" class="form-control" id="password" name="password"
-                                       placeholder="{{ @trans('lp1.form.password') }}" required>
+                                       required
+                                >
                                 @if ($errors->has('password'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
@@ -813,11 +850,12 @@
                     >
                         {{ csrf_field() }}
                         <div class="form-row">
-                            <div class="form-group col-md-12 {{ $errors->has('identity') || $errors->has('username') || $errors->has('email') ? ' has-error' : '' }}">
+                            <div class="enhancedFormGroup JS--enhancedFormGroup form-group col-md-12 {{ $errors->has('identity') || $errors->has('username') || $errors->has('email') ? ' has-error' : '' }}">
                                 <label for="login-identity">{{ @trans('lp1.form.identity') }}</label>
                                 <input type="text" class="form-control" id="login-identity" name="identity"
-                                       placeholder="{{ @trans('lp1.form.identity') }}" value="{{ old('identity') }}"
-                                       required autofocus>
+                                       value="{{ old('identity') }}"
+                                       required autofocus
+                                >
                                 @if ($errors->has('identity') || $errors->has('username') || $errors->has('email'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('identity') }}</strong>
@@ -832,10 +870,11 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-12 {{ $errors->has('password') ? ' has-error' : '' }}">
+                            <div class="enhancedFormGroup JS--enhancedFormGroup form-group col-md-12 {{ $errors->has('password') ? ' has-error' : '' }}">
                                 <label for="login-password">{{ @trans('lp1.form.password') }}</label>
                                 <input type="password" class="form-control" id="login-password" name="password"
-                                       placeholder="{{ @trans('lp1.form.password') }}" required>
+                                       required
+                                >
                                 @if ($errors->has('password'))
                                     <span class="help-block">
                                             <strong>{{ $errors->first('password') }}</strong>
