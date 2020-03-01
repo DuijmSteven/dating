@@ -399,9 +399,9 @@ class UserManager
 
         $relations = ['profileImage', 'images', 'meta', 'emailTypes', 'account', 'milestones', 'payments'];
 
-        if ($user->isAdmin() || $user->isEditor()) {
-            $relations[] = 'createdBots';
-        }
+//        if ($user->isAdmin() || $user->isEditor()) {
+//            $relations[] = 'createdBots';
+//        }
 
         $user = User::with($relations)->where('id', $user->getId())->get()[0];
 

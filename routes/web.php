@@ -47,10 +47,6 @@ Route::get('/', 'Frontend\LandingPageController@showRegister')
     ->middleware('guest')
     ->name('landing-page.show-register');
 
-Route::get('/register', 'Frontend\LandingPageController@showRegister')
-    ->middleware('guest')
-    ->name('landing-page.show-register');
-
 Route::get('/login', 'Frontend\LandingPageController@showLogin')
     ->middleware('guest')
     ->name('landing-page.show-login');

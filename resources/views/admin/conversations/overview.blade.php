@@ -96,9 +96,11 @@
                                             <span style="font-weight: bold; color: red">User does not exist</span>
                                         @endif
                                     </td>
-                                    <td>{{ $conversation['created_at']->format('d-m-Y H:i:s') }}</td>
+                                    <td>{{ $conversation->created_at->format('d-m-Y H:i:s') }}</td>
                                     <td class="action-buttons">
-                                        <a href="{!! route('operator-platform.conversations.show', [$conversation->id]) !!}" class="btn btn-default">View</a>
+                                        @if($userA && $userB) {
+                                            <a href="{!! route('operator-platform.conversations.show', [$conversation->id]) !!}" class="btn btn-default">View</a>
+                                        @endif
 
                                         <form method="POST" action="{{ route('admin.conversations.destroy', ['conversationId' => $conversation->id]) }}">
                                             {!! csrf_field() !!}
