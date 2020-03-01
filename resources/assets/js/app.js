@@ -330,12 +330,13 @@ $(window).on('load', function () {
             Cookies.set('searchBarState', 'open');
         });
 
-        $(document).mouseup(function(e)
+        $(document).on("mousedown", function(e)
         {
             var container = $(".JS--SearchBar");
+            var autocompleteCities = $(".ui-autocomplete");
 
             // if the target of the click isn't the container nor a descendant of the container
-            if (!container.is(e.target) && container.has(e.target).length === 0)
+            if ((!container.is(e.target) && container.has(e.target).length === 0) && (!autocompleteCities.is(e.target) && autocompleteCities.has(e.target).length === 0))
             {
                 container.addClass('hidden');
                 $('.JS--searchToggleButton').removeClass('pressed');
