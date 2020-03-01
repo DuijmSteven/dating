@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -26,6 +27,7 @@ class MessageReceived extends Mailable implements ShouldQueue
     ) {
         $this->messageSender = $messageSender;
         $this->messageRecipient = $messageRecipient;
+        $this->carbonNow = Carbon::now('Europe/Amsterdam');
     }
 
     /**
