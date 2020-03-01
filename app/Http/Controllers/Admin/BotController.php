@@ -42,6 +42,7 @@ class BotController extends Controller
             ->whereHas('roles', function ($query) {
                 $query->where('name', 'bot');
             });
+        
 
         if ($this->authenticatedUser->isEditor()) {
             $queryBuilder->where('active', '=', '0');
