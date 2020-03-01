@@ -405,8 +405,6 @@ class UserManager
 
         $user = User::with($relations)->where('id', $user->getId())->get()[0];
 
-       // dd($user);
-
         return $user;
     }
 
