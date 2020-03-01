@@ -66,7 +66,7 @@
                                             <b>Gender</b>: {{ @trans('user_constants')['gender'][$userA->meta->gender] }} <br>
                                             <b>Role</b>: {{ @trans('user_constants')['role'][$userA->roles[0]->id] }} <br>
                                         @else
-                                            <span>User does not exist</span>
+                                            <span style="font-weight: bold; color: red">User does not exist</span>
                                         @endif
                                     </td>
                                     <td>
@@ -93,7 +93,7 @@
                                             <b>Gender</b>: {{ @trans('user_constants')['gender'][$userB->meta->gender] }}<br>
                                             <b>Role</b>: {{ @trans('user_constants')['role'][$userB->roles[0]->id] }}<br>
                                         @else
-                                            <span>User does not exist</span>
+                                            <span style="font-weight: bold; color: red">User does not exist</span>
                                         @endif
                                     </td>
                                     <td>{{ $conversation['created_at']->format('d-m-Y H:i:s') }}</td>
