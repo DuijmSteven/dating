@@ -642,7 +642,7 @@
         top: -7px;
         left: 5px;
         background: #fff;
-        padding: 1px 5px;
+        padding: 0px 5px;
         font-size: 14px;
         border-radius: 6px;
         box-shadow: 0 1px 2px rgba(0,0,0,0.2);

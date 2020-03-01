@@ -71,7 +71,7 @@
 <div id="analytics--welcomeModal" class="modal welcomeModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document" style="position: relative; z-index: 10000">
         <div class="modal-content">
-            <div class="modal-header" style="text-align: center; background-color: #2d3042">
+            <div class="modal-header" style="text-align: center; background-color: #312c2c">
                 <img style="width: 40%" src="{!! asset('img/site_logos/Altijdsex_LogoSmall_Pos@1x.png') !!}">
             </div>
             <div class="modal-body">

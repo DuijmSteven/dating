@@ -82,8 +82,6 @@ $(window).on('load', function () {
 
     $('.JS--enhancedFormGroup').click(($event) => {
         $('.JS--enhancedFormGroup').each((index, element) => {
-
-            console.log($(element).find('input').val().length === 0);
             if ($(element).find('input').val().length === 0) {
                 $(element).removeClass('open');
             }
