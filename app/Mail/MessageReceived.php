@@ -15,6 +15,7 @@ class MessageReceived extends Mailable implements ShouldQueue
 
     public $messageSender;
     public $messageRecipient;
+    public $carbonNow;
 
     /**
      * Create a new message instance.
