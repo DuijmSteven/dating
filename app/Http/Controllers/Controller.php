@@ -27,9 +27,6 @@ class Controller extends BaseController
      */
     public function __construct()
     {
-        return response()->view('errors.500', [], 500);
-
-
         $this->middleware(function ($request, $next) {
             $this->authenticatedUser = UserManager::getAndFormatAuthenticatedUser();
 
