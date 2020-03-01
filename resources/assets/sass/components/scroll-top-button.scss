@@ -6,7 +6,7 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background-color: lighten($tertiaryColor, 7%);
+  background-color: $secondaryColor;
   left: 50px;
   bottom: 80px;
   z-index: 7;
@@ -15,23 +15,23 @@
   box-shadow: 0 0 5px rgba(0,0,0,0.2);
 
   .material-icons {
-    color: lighten($secondaryColor, 10%);
+    color: $dark;
     font-size: 48px;
   }
 
 
   &:hover {
-    background-color: $tertiaryColor;
+    background-color: darken($secondaryColor, 7%);
     box-shadow: 0 0 8px rgba(0,0,0,0.4);
 
     .material-icons {
-      color: $secondaryColor;
-      font-size: 54px;
+      color: $dark;
+      font-size: 52px;
     }
   }
 
   &:active {
-    background-color: $tertiaryColor;
+    background-color: darken($secondaryColor, 7%);
     box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
   }
 

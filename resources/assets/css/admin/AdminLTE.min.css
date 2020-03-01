@@ -5910,15 +5910,31 @@ table .action-buttons .btn {
     display: flex;
     flex-direction: row;
     height: 30px;
-    background-color: #378186;
+    background-color: #d47d69;
 }
 
 .convo-tile img {
     width: 40px;
 }
 
+.counterLabelContainer {
+    position: relative;
+}
+
+.counterLabel {
+    position: absolute;
+    right: -64px;
+    top: -5px;
+    background-color: #c34a26;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    font-size: 17px !important;
+    line-height: 17px;
+}
+
 .convo-tile.bot {
-    background-color: #b96d6d;
+    background-color: #635d5c;
 }
 
 .convo-tile_text {
@@ -6098,8 +6114,50 @@ table .action-buttons .btn {
     cursor: pointer;
 }
 
+.operatorDashboard .profileImage {
+    height: 25px;
+    width: 35;
+    object-fit: cover;
+}
+
 .no-wrap {
     white-space: nowrap;
+}
+
+.skin-blue .left-side, .skin-blue .main-sidebar, .skin-blue .wrapper {
+    background-color: #302c2c;
+}
+
+.skin-blue .sidebar-menu>li:hover>a, .skin-blue .sidebar-menu>li.active>a, .skin-blue .sidebar-menu>li.menu-open>a
+{
+    background: #483333;
+    border-left: 3px solid #795656;
+    font-weight: 600;
+    text-decoration: none;
+    color: #c7544f !important;
+}
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+    background-color: #d9534e !important;
+    border-color: #9a6563 !important;
+    color: #fff !important;
+}
+
+.pagination>li>a, .pagination>li>span {
+    border-color: #c3c3c3 !important;
+    color: #c7544f !important;
+}
+
+.skin-blue .sidebar-menu>li>.treeview-menu {
+    margin-left: 0 !important;
+}
+
+.skin-blue .sidebar-menu>li>.treeview-menu {
+    background: #795656;
+}
+
+.skin-blue .sidebar-menu .treeview-menu>li>a {
+    color: #fff !important;
+    text-decoration: none;
 }
 
 .main-header .logo img {

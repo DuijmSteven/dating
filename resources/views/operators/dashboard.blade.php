@@ -5,7 +5,7 @@
 
 
 
-    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel-group operatorDashboard" id="accordion" role="tablist" aria-multiselectable="true">
 
         <?php $counter = 0 ?>
 
@@ -24,8 +24,8 @@
                        href="#{!! $conversationType !!}"
                        aria-expanded="false"
                        aria-controls="collapseOne"
-                       class="collapsed">
-                        {!! ucfirst($typeName) !!} <span class="label label-success">{!! count(${$conversationType}) !!}</span>
+                       class="collapsed counterLabelContainer">
+                        {!! ucfirst($typeName) !!} <span class="label counterLabel">{!! count(${$conversationType}) !!}</span>
                     </a>
                 </h4>
             </div>
@@ -49,7 +49,7 @@
                                         <div class="convo-tile_text">
                                             <div class="username">
                                                 @if(isset($conversation['user_a']['profile_image_url']))
-                                                    <img height="25" src="{!! $conversation['user_a']['profile_image_url'] !!}" />
+                                                    <img class="profileImage" src="{!! $conversation['user_a']['profile_image_url'] !!}" />
                                                 @endif
                                                 <a href="{!! route('admin.' . \UserConstants::selectableField('role')[$conversation['user_a']['role']] . 's.edit.get', ['id' => $conversation['user_a']['id']]) !!}">
                                                     {!! $conversation['user_a']['username'] !!} (ID: {!! $conversation['user_a']['id'] !!})
@@ -62,7 +62,7 @@
                                         <div class="convo-tile_text">
                                             <div class="username">
                                                 @if(isset($conversation['user_b']['profile_image_url']))
-                                                    <img height="25" src="{!! $conversation['user_b']['profile_image_url'] !!}" />
+                                                    <img class="profileImage" src="{!! $conversation['user_b']['profile_image_url'] !!}" />
                                                 @endif
                                                 <a href="{!! route('admin.' . \UserConstants::selectableField('role')[$conversation['user_b']['role']] . 's.edit.get', ['id' => $conversation['user_b']['id']]) !!}">
                                                     {!! $conversation['user_b']['username'] !!} (ID: {!! $conversation['user_b']['id'] !!})
