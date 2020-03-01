@@ -43,9 +43,18 @@ Route::get('/home', 'Frontend\UserSearchController@showInitialSearchResults')
     ->name('home')
     ->middleware(['auth', 'not_editor']);
 
-Route::get('/', 'Frontend\LandingPageController@show')
+Route::get('/', 'Frontend\LandingPageController@showRegister')
     ->middleware('guest')
-    ->name('landing-page.show');
+    ->name('landing-page.show-register');
+
+Route::get('/register', 'Frontend\LandingPageController@showRegister')
+    ->middleware('guest')
+    ->name('landing-page.show-register');
+
+Route::get('/login', 'Frontend\LandingPageController@showLogin')
+    ->middleware('guest')
+    ->name('landing-page.show-login');
+
 Route::post('/', 'Auth\RegisterController@register')
     ->middleware('guest')
     ->name('register.post');

@@ -167,7 +167,7 @@ trait AuthenticatesUsers
 
         $request->session()->invalidate();
 
-        return $this->loggedOut($request) ?: redirect(route('landing-page.show'));
+        return $this->loggedOut($request) ?: redirect(route('landing-page.show-login'));
     }
 
     /**

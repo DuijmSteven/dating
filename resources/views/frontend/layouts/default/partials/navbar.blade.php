@@ -129,10 +129,10 @@
 
                 @else
                     <li class="{!! \Request::route()->getName() == 'login.get' ? 'active' : '' !!}">
-                        <a href="{{ route('landing-page.show') }}">{{ @trans('navbar.login') }}</a>
+                        <a href="{{ route('landing-page.show-login') }}">{{ @trans('navbar.login') }}</a>
                     </li>
                     <li class="{!! \Request::route()->getName() == 'landing-page.show' ? 'active' : '' !!}">
-                        <a href="{{ route('landing-page.show') }}">{{ @trans('navbar.register') }}</a>
+                        <a href="{{ route('landing-page.show-register') }}">{{ @trans('navbar.register') }}</a>
                     </li>
                 @endif
 

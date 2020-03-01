@@ -17,7 +17,7 @@ class VerifyOperator
     public function handle($request, Closure $next)
     {
         if (is_null(\Auth::user()) || !in_array(\Auth::user()->roles()->get()[0]->name, ['admin', 'operator'])) {
-            return redirect()->route('landing-page.show');
+            return redirect()->route('landing-page.show-login');
         }
 
         return $next($request);

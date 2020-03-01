@@ -490,8 +490,8 @@
             top: 59px;
             font-size: 17px;
             left: initial;
-            text-shadow: 1px 2px #ce9191;
-            color: #82230d;
+            text-shadow: 0px 1px #4a4141;
+            color: #ce5338;
         }
     }
 
@@ -673,12 +673,12 @@
         </div>
 
         <div class="language-selection header">
-            <a href="{{ route('landing-page.show', ['locale' => 'nl']) }}">
+            <a href="{{ route('landing-page.show-login', ['locale' => 'nl']) }}">
                 <div class="flagImageWrapper">
                     <img class="flagImage" src="{{ asset('img/flags/nl.png') }}" alt="">
                 </div>
             </a> |
-            <a href="{{ route('landing-page.show', ['locale' => 'en']) }}">
+            <a href="{{ route('landing-page.show-login', ['locale' => 'en']) }}">
                 <div class="flagImageWrapper">
                     <img class="flagImage" src="{{ asset('img/flags/uk.svg') }}" alt="">
                 </div>
@@ -698,232 +698,188 @@
 
             <div class="JS--form-wrapper form-wrapper">
                 <div class="form-box">
-                    <form class="test--RegistrationForm" method="POST" action="{{ route('register.post') }}"
-                          id="JS--registrationForm"
-                    >
-                        {{ csrf_field() }}
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label for="lookingFor">{{ @trans('lp1.form.i_am') }}:</label>
-                                <select class="form-control" id="lookingFor" name="lookingFor">
-                                    <option value="male-female">{{ @trans('lp1.form.man_looking_for_woman') }}</option>
-                                    <option value="female-male">{{ @trans('lp1.form.woman_looking_for_man') }}</option>
-                                    {{--                                <option value="female-female">{{ @trans('lp1.form.woman_looking_for_woman') }}</option>--}}
-                                    {{--                                <option value="male-male">{{ @trans('lp1.form.man_looking_for_man') }}</option>--}}
-                                </select>
+                    @if($formType === 'register')
+                        <form class="test--RegistrationForm" method="POST" action="{{ route('register.post') }}"
+                              id="JS--registrationForm"
+                        >
+                            {{ csrf_field() }}
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="lookingFor">{{ @trans('lp1.form.i_am') }}:</label>
+                                    <select class="form-control" id="lookingFor" name="lookingFor">
+                                        <option value="male-female">{{ @trans('lp1.form.man_looking_for_woman') }}</option>
+                                        <option value="female-male">{{ @trans('lp1.form.woman_looking_for_man') }}</option>
+                                        {{--                                <option value="female-female">{{ @trans('lp1.form.woman_looking_for_woman') }}</option>--}}
+                                        {{--                                <option value="male-male">{{ @trans('lp1.form.man_looking_for_man') }}</option>--}}
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group enhancedFormGroup JS--enhancedFormGroup col-md-12 {{ $errors->has('email') ? ' has-error' : '' }}">
-                                <label class="formLabelSmall" for="email">{!! @trans('lp1.form.email') !!}</label>
-                                <input type="email"
-                                       class="form-control"
-                                       id="email"
-                                       name="email"
-                                       value="{{ old('email') }}"
-                                       required
-                                >
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
+                            <div class="form-row">
+                                <div class="form-group enhancedFormGroup JS--enhancedFormGroup col-md-12 {{ $errors->has('email') ? ' has-error' : '' }}">
+                                    <label class="formLabelSmall" for="email">{!! @trans('lp1.form.email') !!}</label>
+                                    <input type="email"
+                                           class="form-control"
+                                           id="email"
+                                           name="email"
+                                           value="{{ old('email') }}"
+                                           required
+                                    >
+                                    @if ($errors->has('email'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('email') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group enhancedFormGroup JS--enhancedFormGroup col-md-12 {{ $errors->has('username') ? ' has-error' : '' }}">
-                                <label for="name">{{ @trans('lp1.form.username') }}</label>
-                                <input type="text"
-                                       class="form-control"
-                                       id="username"
-                                       name="username"
-                                       value="{{ old('username') }}"
-                                       required
-                                       autofocus
-                                >
-                                @if ($errors->has('username'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('username') }}</strong>
-                                    </span>
-                                @endif
+                            <div class="form-row">
+                                <div class="form-group enhancedFormGroup JS--enhancedFormGroup col-md-12 {{ $errors->has('username') ? ' has-error' : '' }}">
+                                    <label for="name">{{ @trans('lp1.form.username') }}</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="username"
+                                           name="username"
+                                           value="{{ old('username') }}"
+                                           required
+                                           autofocus
+                                    >
+                                    @if ($errors->has('username'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('username') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group enhancedFormGroup JS--enhancedFormGroup col-md-12 {{ $errors->has('password') ? ' has-error' : '' }}">
-                                <label for="password">{{ @trans('lp1.form.password') }}</label>
-                                <input type="text" class="form-control" id="password" name="password"
-                                       required
-                                >
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-{{--                        <div class="form-row">--}}
-{{--                            <div class="form-group col-md-12 {{ $errors->has('city') ? ' has-error' : '' }}">--}}
-{{--                                <label for="city">{{ @trans('lp1.form.city') }}</label>--}}
-{{--                                <input type="text"--}}
-{{--                                       class="JS--autoCompleteCites form-control"--}}
-{{--                                       id="city"--}}
-{{--                                       name="city"--}}
-{{--                                       placeholder="{{ @trans('lp1.form.city') }}"--}}
-{{--                                       value="{{ old('city') }}"--}}
-{{--                                       required--}}
-{{--                                >--}}
-{{--                                @if ($errors->has('city'))--}}
-{{--                                    <span class="help-block">--}}
-{{--                                        <strong>{!! $errors->first('city', ':message') !!}</strong>--}}
-{{--                                    </span>--}}
-{{--                                @endif--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        <div class="form-row">--}}
-{{--                            <div class="form-group col-md-12 {{ $errors->has('dob') ? ' has-error' : '' }}">--}}
-{{--                                <label for="password">{{ @trans('lp1.form.dob') }}</label>--}}
-{{--                                <div--}}
-{{--                                    class="input-group date dateOfBirthGroup"--}}
-{{--                                >--}}
-{{--                                    <input id="datepicker_dob" type="text" class="form-control" name="dob" required--}}
-{{--                                           value="{{ old('dob') }}">--}}
-{{--                                    <div class="input-group-addon">--}}
-{{--                                        <i class="material-icons calendar">--}}
-{{--                                            calendar_today--}}
-{{--                                        </i>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                @if ($errors->has('dob'))--}}
-{{--                                    <span class="help-block">--}}
-{{--                                        <strong>{{ $errors->first('dob', ':message') }}</strong>--}}
-{{--                                    </span>--}}
-{{--                                @endif--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        <div class="form-row">--}}
-{{--                            <div class="form-group col-md-12">--}}
-{{--                                <label for="password-confirm">{{ @trans('lp1.form.password_confirmation') }}</label>--}}
-{{--                                <input type="password" class="form-control" id="password-confirm"--}}
-{{--                                       name="password_confirmation" placeholder="{{ @trans('lp1.form.password') }}"--}}
-{{--                                       required>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-                        <div class="form-row">
-                            <div class="col-sm-12 submit">
-                                <button type="submit"
-                                        class="btn btn-register-login btn-lg btn-block">{{ @trans('lp1.form.register_now') }}</button>
-                            </div>
-
-                            <div class="col-xs-12">
-                                <p class="mt-3" style="font-size: 1.3rem; text-align: justify">
-                                    {!! @trans(
-                                            'lp1.form.register_info',
-                                            [
-                                                'privacyRoute' => route('privacy.show'),
-                                                'tacRoute' => route('tac.show'),
-                                            ]
-                                        )
-                                    !!}
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="col-sm-10">
-                                <h4 class="mt-3">{{ @trans('lp1.form.have_an_account') }}</h4>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-sm-12 submit">
-                                <button id="JS--loginButton" type="button"
-                                        class="btn btn-block btn-lg btn-secondary loginButton"
-                                >
-                                    {{ @trans('lp1.form.login') }}
-                                </button>
-                            </div>
-                        </div>
-
-
-                        <div class="freeCreditsUsp">
-                            <span>{{ trans('lp1.free_credits_usp') }}</span>
-                        </div>
-                    </form>
-
-                    <form
-                        method="POST"
-                        action="{{ route('login.post') }}"
-                        class="test--LoginForm hidden"
-                        id="JS--loginForm"
-                    >
-                        {{ csrf_field() }}
-                        <div class="form-row">
-                            <div class="enhancedFormGroup JS--enhancedFormGroup form-group col-md-12 {{ $errors->has('identity') || $errors->has('username') || $errors->has('email') ? ' has-error' : '' }}">
-                                <label for="login-identity">{{ @trans('lp1.form.identity') }}</label>
-                                <input type="text" class="form-control" id="login-identity" name="identity"
-                                       value="{{ old('identity') }}"
-                                       required autofocus
-                                >
-                                @if ($errors->has('identity') || $errors->has('username') || $errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('identity') }}</strong>
-                                    </span>
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('username') }}</strong>
-                                    </span>
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="enhancedFormGroup JS--enhancedFormGroup form-group col-md-12 {{ $errors->has('password') ? ' has-error' : '' }}">
-                                <label for="login-password">{{ @trans('lp1.form.password') }}</label>
-                                <input type="password" class="form-control" id="login-password" name="password"
-                                       required
-                                >
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
+                            <div class="form-row">
+                                <div class="form-group enhancedFormGroup JS--enhancedFormGroup col-md-12 {{ $errors->has('password') ? ' has-error' : '' }}">
+                                    <label for="password">{{ @trans('lp1.form.password') }}</label>
+                                    <input type="text" class="form-control" id="password" name="password"
+                                           required
+                                    >
+                                    @if ($errors->has('password'))
+                                        <span class="help-block">
                                             <strong>{{ $errors->first('password') }}</strong>
                                         </span>
-                                @endif
+                                    @endif
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-sm-12 submit">
-                                <button type="submit"
-                                        class="btn btn-secondary btn-lg btn-block">{{ @trans('lp1.form.login') }}</button>
+                            <div class="form-row">
+                                <div class="col-sm-12 submit">
+                                    <button type="submit"
+                                            class="btn btn-register-login btn-lg btn-block">{{ @trans('lp1.form.register_now') }}</button>
+                                </div>
+
+                                <div class="col-xs-12">
+                                    <p class="mt-3" style="font-size: 1.3rem; text-align: justify">
+                                        {!! @trans(
+                                                'lp1.form.register_info',
+                                                [
+                                                    'privacyRoute' => route('privacy.show'),
+                                                    'tacRoute' => route('tac.show'),
+                                                ]
+                                            )
+                                        !!}
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-row" style="margin-top: 20px">
-                            <div class="col-sm-10">
-                                <h4 class="mt-3">{{ @trans('lp1.form.not_have_an_account') }}</h4>
+
+                            <div class="form-row">
+                                <div class="col-sm-10">
+                                    <h4 class="mt-3">{{ @trans('lp1.form.have_an_account') }}</h4>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-sm-12 submit">
-                                <button id="JS--registerButton" type="button"
-                                        class="btn btn-block btn-lg btn-register-login registerButton">{{ @trans('lp1.form.register') }}
-                                </button>
+                            <div class="form-row">
+                                <div class="col-sm-12 submit">
+                                    <a href="{{ route('landing-page.show-login') }}" type="button"
+                                            class="btn btn-block btn-lg btn-secondary loginButton"
+                                    >
+                                        {{ @trans('lp1.form.login') }}
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-row" style="margin-top: 20px">
-                            <div class="col-sm-10">
-                                <h4 class="mt-3">{{ @trans('lp1.forgot_password') }}</h4>
+
+
+                            <div class="freeCreditsUsp">
+                                <span>{{ trans('lp1.free_credits_usp') }}</span>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-sm-12">
-                                @include('frontend.components.button', [
-                                    'url' => route('password.reset.get'),
-                                    'buttonContext' => 'general',
-                                    'buttonText' => trans('lp1.reset_password'),
-                                    'buttonClasses' => 'btn btn-block btn-lg btn-forgot-password'
-                                ])
+                        </form>
+                    @endif
+
+                    @if($formType === 'login')
+                        <form
+                            method="POST"
+                            action="{{ route('login.post') }}"
+                            class="test--LoginForm"
+                            id="JS--loginForm"
+                        >
+                            {{ csrf_field() }}
+                            <div class="form-row">
+                                <div class="enhancedFormGroup JS--enhancedFormGroup form-group col-md-12 {{ $errors->has('identity') || $errors->has('username') || $errors->has('email') ? ' has-error' : '' }}">
+                                    <label for="login-identity">{{ @trans('lp1.form.identity') }}</label>
+                                    <input type="text" class="form-control" id="login-identity" name="identity"
+                                           value="{{ old('identity') }}"
+                                           required autofocus
+                                    >
+                                    @if ($errors->has('identity') || $errors->has('username') || $errors->has('email'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('identity') }}</strong>
+                                        </span>
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('username') }}</strong>
+                                        </span>
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('email') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                            <div class="form-row">
+                                <div class="enhancedFormGroup JS--enhancedFormGroup form-group col-md-12 {{ $errors->has('password') ? ' has-error' : '' }}">
+                                    <label for="login-password">{{ @trans('lp1.form.password') }}</label>
+                                    <input type="password" class="form-control" id="login-password" name="password"
+                                           required
+                                    >
+                                    @if ($errors->has('password'))
+                                        <span class="help-block">
+                                                <strong>{{ $errors->first('password') }}</strong>
+                                            </span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-sm-12 submit">
+                                    <button type="submit"
+                                            class="btn btn-secondary btn-lg btn-block">{{ @trans('lp1.form.login') }}</button>
+                                </div>
+                            </div>
+                            <div class="form-row" style="margin-top: 20px">
+                                <div class="col-sm-10">
+                                    <h4 class="mt-3">{{ @trans('lp1.form.not_have_an_account') }}</h4>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-sm-12 submit">
+                                    <a href="{{ route('landing-page.show-register') }}" type="button"
+                                            class="btn btn-block btn-lg btn-register-login registerButton">{{ @trans('lp1.form.register') }}
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="form-row" style="margin-top: 20px">
+                                <div class="col-sm-10">
+                                    <h4 class="mt-3">{{ @trans('lp1.forgot_password') }}</h4>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-sm-12">
+                                    @include('frontend.components.button', [
+                                        'url' => route('password.reset.get'),
+                                        'buttonContext' => 'general',
+                                        'buttonText' => trans('lp1.reset_password'),
+                                        'buttonClasses' => 'btn btn-block btn-lg btn-forgot-password'
+                                    ])
+                                </div>
+                            </div>
+                        </form>
+                    @endif
                 </div>
 
 {{--                <div class="topQuote">--}}
@@ -935,7 +891,7 @@
 
     </div>
 
-    <div class="container recent-container text-center currentMembers JS--currentMembers withRegistrationForm">
+    <div class="container recent-container text-center currentMembers JS--currentMembers {{ $formType === 'register' ? 'withRegistrationForm' : '' }}">
         <h3 style="margin-bottom: 40px">{{ @trans('lp1.a_group_of_members') }}</h3>
         <div class="row mt-5">
             @foreach ($users as $user)
@@ -1096,12 +1052,12 @@
             </div>
 
             <div class="language-selection">
-                <a href="{{ route('landing-page.show', ['locale' => 'nl']) }}">
+                <a href="{{ route('landing-page.show-login', ['locale' => 'nl']) }}">
                     <div class="flagImageWrapper">
                         <img class="flagImage" src="{{ asset('img/flags/nl.png') }}" alt="">
                     </div>
                 </a> |
-                <a href="{{ route('landing-page.show', ['locale' => 'en']) }}">
+                <a href="{{ route('landing-page.show-login', ['locale' => 'en']) }}">
                     <div class="flagImageWrapper">
                         <img class="flagImage" src="{{ asset('img/flags/uk.svg') }}" alt="">
                     </div>

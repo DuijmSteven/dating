@@ -8,11 +8,11 @@
                     </i>
                 </button>
 
-                <img class="{{ !$authenticatedUser->isPayingUser() ? 'very-blurred' : '' }}" alt="imagePreview" src="" id="imagePreview" style="width: 100%" >
+                <img class="{{ isset($authenticatedUser) && !$authenticatedUser->isPayingUser() ? 'very-blurred' : '' }}" alt="imagePreview" src="" id="imagePreview" style="width: 100%" >
             </div>
         </div>
 
-        @if(!$authenticatedUser->isPayingUser())
+        @if(isset($authenticatedUser) && !$authenticatedUser->isPayingUser())
             <div class="nonPayingUserMessage">
                 @include('frontend.components.button', [
                         'buttonContext' => 'general',

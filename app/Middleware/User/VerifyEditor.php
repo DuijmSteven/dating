@@ -20,7 +20,7 @@ class VerifyEditor
             is_null(\Auth::user()) ||
             (\Auth::user()->roles()->get()[0]->name !== 'editor' && \Auth::user()->roles()->get()[0]->name !== 'admin')
         ) {
-            return redirect()->route('landing-page.show');
+            return redirect()->route('landing-page.show-login');
         }
 
         return $next($request);

@@ -153,63 +153,63 @@ $(window).on('load', function () {
     }
     //};
 
-    var formSelected = Cookies.get("lpFormSelection");
-
-    if (formSelected === 'login') {
-        $('#JS--registrationForm').addClass('hidden');
-        $('#JS--loginForm').removeClass('hidden');
-        $('.JS--currentMembers').removeClass('withRegistrationForm');
-
-        if ($(window).width() <= 767) {
-            setTimeout(() => {
-                let excessOfForm = calculateExcessOfForm() + 60;
-
-                if (!(excessOfForm > 60)) {
-                    excessOfForm = 60;
-                }
-
-                $('.JS--currentMembers').css('margin-top', excessOfForm);
-            }, 200);
-        }
-    }
-
-    $('#JS--registerButton').click(function(){
-        $('#JS--loginForm').addClass('hidden');
-        $('#JS--registrationForm').removeClass('hidden');
-        $('.JS--currentMembers').addClass('withRegistrationForm');
-        if ($(window).width() <= 767) {
-            setTimeout(() => {
-                let excessOfForm = calculateExcessOfForm() + 60;
-
-                if (!(excessOfForm > 60)) {
-                    excessOfForm = 60;
-                }
-
-                $('.JS--currentMembers').css('margin-top', excessOfForm);
-            }, 200);
-        }
-
-        Cookies.set("lpFormSelection", 'register');
-    });
-
-    $('#JS--loginButton').click(function(){
-        $('#JS--registrationForm').addClass('hidden');
-        $('#JS--loginForm').removeClass('hidden');
-        $('.JS--currentMembers').removeClass('withRegistrationForm');
-        if ($(window).width() <= 767) {
-            setTimeout(() => {
-                let excessOfForm = calculateExcessOfForm() + 60;
-
-                if (!(excessOfForm > 60)) {
-                    excessOfForm = 60;
-                }
-
-                $('.JS--currentMembers').css('margin-top', excessOfForm);
-            }, 200);
-        }
-
-        Cookies.set("lpFormSelection", 'login');
-    });
+    // var formSelected = Cookies.get("lpFormSelection");
+    //
+    // if (formSelected === 'login') {
+    //     $('#JS--registrationForm').addClass('hidden');
+    //     $('#JS--loginForm').removeClass('hidden');
+    //     $('.JS--currentMembers').removeClass('withRegistrationForm');
+    //
+    //     if ($(window).width() <= 767) {
+    //         setTimeout(() => {
+    //             let excessOfForm = calculateExcessOfForm() + 60;
+    //
+    //             if (!(excessOfForm > 60)) {
+    //                 excessOfForm = 60;
+    //             }
+    //
+    //             $('.JS--currentMembers').css('margin-top', excessOfForm);
+    //         }, 200);
+    //     }
+    // }
+    //
+    // $('#JS--registerButton').click(function(){
+    //     $('#JS--loginForm').addClass('hidden');
+    //     $('#JS--registrationForm').removeClass('hidden');
+    //     $('.JS--currentMembers').addClass('withRegistrationForm');
+    //     if ($(window).width() <= 767) {
+    //         setTimeout(() => {
+    //             let excessOfForm = calculateExcessOfForm() + 60;
+    //
+    //             if (!(excessOfForm > 60)) {
+    //                 excessOfForm = 60;
+    //             }
+    //
+    //             $('.JS--currentMembers').css('margin-top', excessOfForm);
+    //         }, 200);
+    //     }
+    //
+    //     Cookies.set("lpFormSelection", 'register');
+    // });
+    //
+    // $('#JS--loginButton').click(function(){
+    //     $('#JS--registrationForm').addClass('hidden');
+    //     $('#JS--loginForm').removeClass('hidden');
+    //     $('.JS--currentMembers').removeClass('withRegistrationForm');
+    //     if ($(window).width() <= 767) {
+    //         setTimeout(() => {
+    //             let excessOfForm = calculateExcessOfForm() + 60;
+    //
+    //             if (!(excessOfForm > 60)) {
+    //                 excessOfForm = 60;
+    //             }
+    //
+    //             $('.JS--currentMembers').css('margin-top', excessOfForm);
+    //         }, 200);
+    //     }
+    //
+    //     Cookies.set("lpFormSelection", 'login');
+    // });
 
     // // Setup locale and bootstrap datepicker options
     // $.fn.datepicker.dates['nl'] = {

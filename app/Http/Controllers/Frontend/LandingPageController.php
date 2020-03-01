@@ -13,26 +13,47 @@ use function foo\func;
 
 class LandingPageController extends FrontendController
 {
-    public function show(Request $request)
+    public function showRegister(Request $request)
     {
-        $locale = 'nl';
+        $this->setLocale($request);
+        $users = $this->getUsers();
+        $testimonials = $this->getTestimonials();
 
-        $localeFromRequest = $request->get('locale');
+        return view(
+            'frontend.landing-pages.1',
+            [
+                'title' => 'De beste datingsite voor sex dating | ' . config('app.name'),
+                'users' => $users,
+                'carbonNow' => Carbon::now(),
+                'testimonials' => $testimonials,
+                'formType' => 'register'
+            ]
+        );
+    }
 
-        if ($localeFromRequest && in_array($localeFromRequest, ['nl', 'en'])) {
-            $locale = $request->get('locale');
-        }
+    public function showLogin(Request $request)
+    {
+        $this->setLocale($request);
+        $users = $this->getUsers();
+        $testimonials = $this->getTestimonials();
 
-        app()->setLocale($locale);
+        return view(
+            'frontend.landing-pages.1',
+            [
+                'title' => 'De beste datingsite voor sex dating | ' . config('app.name'),
+                'users' => $users,
+                'carbonNow' => Carbon::now(),
+                'testimonials' => $testimonials,
+                'formType' => 'login'
+            ]
+        );
+    }
 
-        $users = User::with(['roles', 'meta'])->whereHas('roles', function ($query) {
-            $query->where('name', 'bot');
-        })
-            ->whereHas('meta', function ($query) {
-                $query->where('gender', 2);
-            })
-            ->inRandomOrder()->take(12)->get();
-
+    /**
+     * @return array
+     */
+    private function getTestimonials(): array
+    {
         $testimonials = [
             [
                 'quote' => 'Ik weet niet of ik zonder deze website ook zo snel contact gehad zou hebben. 
@@ -71,16 +92,37 @@ class LandingPageController extends FrontendController
                 'names' => 'Mr. Jones, 68'
             ],
         ];
+        return $testimonials;
+    }
 
+    /**
+     * @return User[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Query\Builder[]|\Illuminate\Support\Collection
+     */
+    private function getUsers()
+    {
+        $users = User::with(['roles', 'meta'])->whereHas('roles', function ($query) {
+            $query->where('name', 'bot');
+        })
+            ->whereHas('meta', function ($query) {
+                $query->where('gender', 2);
+            })
+            ->inRandomOrder()->take(12)->get();
+        return $users;
+    }
 
-        return view(
-            'frontend.landing-pages.1',
-            [
-                'title' => 'De beste datingsite voor sex dating | ' . config('app.name'),
-                'users' => $users,
-                'carbonNow' => Carbon::now(),
-                'testimonials' => $testimonials
-            ]
-        );
+    /**
+     * @param Request $request
+     */
+    private function setLocale(Request $request): void
+    {
+        $locale = 'nl';
+
+        $localeFromRequest = $request->get('locale');
+
+        if ($localeFromRequest && in_array($localeFromRequest, ['nl', 'en'])) {
+            $locale = $request->get('locale');
+        }
+
+        app()->setLocale($locale);
     }
 }
