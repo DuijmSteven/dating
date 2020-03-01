@@ -44,6 +44,10 @@ class LoginController extends Controller
         if ($user->isAdmin()) {
             return redirect()->route('admin.dashboard');
         }
+
+        if ($user->isEditor()) {
+            return redirect()->route('admin.bots.retrieve');
+        }
     }
 
     /**

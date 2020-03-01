@@ -191,21 +191,8 @@ Route::group([
     Route::group([
         'prefix' => 'bots'
     ], function () {
-        Route::get('/', 'Admin\BotController@index')
-            ->name('admin.bots.retrieve');
-
         Route::get('/online', 'Admin\BotController@showOnline')
             ->name('admin.bots.online.show');
-
-        Route::get('/create', 'Admin\BotController@create')
-            ->name('admin.bots.create.get');
-        Route::post('/create', 'Admin\BotController@store')
-            ->name('admin.bots.store');
-
-        Route::get('/edit/{id}', 'Admin\BotController@edit')
-            ->name('admin.bots.edit.get');
-        Route::put('/edit/{id}', 'Admin\BotController@update')
-            ->name('admin.bots.update');
 
         Route::get('{botId}/message-with-bot/{onlyOnlinePeasants}', 'Admin\BotController@messagePeasantWithBot')
             ->name('admin.bots.message-with-bot.get');
@@ -410,6 +397,27 @@ Route::group([
             ->name('admin.layout-parts.edit');
         Route::put('{moduleId}', 'Admin\LayoutPartController@update')
             ->name('admin.layout-parts.update');
+    });
+});
+
+Route::group([
+    'prefix' => 'admin',
+    'middleware' => ['editor']
+], function () {
+    Route::group([
+        'prefix' => 'bots'
+    ], function () {
+        Route::get('/', 'Admin\BotController@index')
+            ->name('admin.bots.retrieve');
+        Route::get('/create', 'Admin\BotController@create')
+            ->name('admin.bots.create.get');
+        Route::post('/create', 'Admin\BotController@store')
+            ->name('admin.bots.store');
+
+        Route::get('/edit/{id}', 'Admin\BotController@edit')
+            ->name('admin.bots.edit.get');
+        Route::put('/edit/{id}', 'Admin\BotController@update')
+            ->name('admin.bots.update');
     });
 });
 

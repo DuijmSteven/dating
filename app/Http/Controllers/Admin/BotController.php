@@ -38,9 +38,19 @@ class BotController extends Controller
     public function index()
     {
         /** @var Collection $bots */
-        $bots = User::with(['meta', 'roles', 'profileImage', 'images', 'views'])->whereHas('roles', function ($query) {
-            $query->where('name', 'bot');
-        })->orderBy('created_at', 'desc')->paginate(10);
+        $queryBuilder = User::with(['meta', 'roles', 'profileImage', 'images', 'views'])
+            ->whereHas('roles', function ($query) {
+                $query->where('name', 'bot');
+            });
+
+        if ($this->authenticatedUser->isEditor()) {
+            $queryBuilder->where('active', '=', '0');
+            $queryBuilder->where('created_by_id', $this->authenticatedUser->getId());
+        }
+
+        $bots = $queryBuilder
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
 
         return view(
             'admin.bots.overview',
@@ -171,11 +181,38 @@ class BotController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function edit(Request $request)
     {
         $bot = User::with(['meta', 'profileImage', 'nonProfileImages'])->findOrFail($request->route('id'));
+
+        if ($this->authenticatedUser->isEditor()) {
+            $authorizationProblems = 0;
+
+            if (!in_array($bot->getId(), $this->authenticatedUser->createdBotIds)) {
+                \Log::debug('Editor ' . ($this->authenticatedUser->getId() . ' attempted to edit bot ' . $bot->getId() . ', which he did not create'));
+
+                $authorizationProblems++;
+                $alerts[] = [
+                    'type' => 'error',
+                    'message' => 'You don\'t have permission to edit bots you have not created'
+                ];
+            }
+            if ($bot->active) {
+                \Log::debug('Editor ' . ($this->authenticatedUser->getId() . ' attempted to edit active bot ' . $bot->getId() . ', which he created'));
+
+                $authorizationProblems++;
+                $alerts[] = [
+                    'type' => 'error',
+                    'message' => 'You don\'t have permission to edit active bots'
+                ];
+            }
+
+            if ($authorizationProblems) {
+                return redirect()->route('admin.bots.retrieve')->with('alerts', $alerts);
+            }
+        }
 
         return view(
             'admin.bots.edit',

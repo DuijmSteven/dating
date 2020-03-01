@@ -18,12 +18,7 @@ class AddEditableColumnToEmailTypesTableAndInsertWelcomeType extends Migration
             $table->boolean('editable')->default(false);
         });
 
-        $emailTypes = EmailType::all();
-
-        foreach ($emailTypes as $emailType) {
-            $emailType->setEditable(true);
-            $emailType->save();
-        }
+        EmailType::query()->update(['editable' => true]);
 
         EmailType::insert([
             [

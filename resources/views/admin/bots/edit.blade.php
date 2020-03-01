@@ -30,20 +30,41 @@
                         </div>
                     </div>
                     <div class="col-sm-6">
-                        <div class="form-group">
-                            <label for="active">Active</label>
-                            <select name="active"
-                                    id="active"
-                                    class="form-control"
-                                    required
-                            >
-                                <option value="1" {!! ($bot->active == 1) ? 'selected' : '' !!}>Active</option>
-                                <option value="0" {!! ($bot->active == 0) ? 'selected' : '' !!}>Inactive</option>
-                            </select>
-                            @if ($errors->has('active'))
-                                {!! $errors->first('active', '<small class="form-error">:message</small>') !!}
-                            @endif
-                        </div>
+
+                        @if(\Auth::user()->isAdmin())
+                            <div class="form-group">
+                                <label for="active">Active</label>
+                                <select name="active"
+                                        id="active"
+                                        class="form-control"
+                                        required
+                                >
+                                    <option value="1" {!! ($bot->active == 1) ? 'selected' : '' !!}>Active</option>
+                                    <option value="0" {!! ($bot->active == 0) ? 'selected' : '' !!}>Inactive</option>
+                                </select>
+                                @if ($errors->has('active'))
+                                    {!! $errors->first('active', '<small class="form-error">:message</small>') !!}
+                                @endif
+                            </div>
+                        @else
+                            <div class="form-group">
+                                <label for="active">Active</label>
+                                <select name="active"
+                                        id="active"
+                                        class="form-control"
+                                        required
+                                >
+                                    @if($bot->active == 1)
+                                        <option value="1" {!! ($bot->active == 1) ? 'selected' : '' !!}>Active</option>
+                                    @else
+                                        <option value="0" {!! ($bot->active == 0) ? 'selected' : '' !!}>Inactive</option>
+                                    @endif
+                                </select>
+                                @if ($errors->has('active'))
+                                    {!! $errors->first('active', '<small class="form-error">:message</small>') !!}
+                                @endif
+                            </div>
+                        @endif
                     </div>
 
                     <div class="col-xs-12">

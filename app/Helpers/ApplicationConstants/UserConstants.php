@@ -123,7 +123,8 @@ class UserConstants
                     1 => 'admin',
                     2 => 'peasant',
                     3 => 'bot',
-                    4 => 'operator'
+                    4 => 'operator',
+                    5 => 'editor'
                 ],
                 'account_type' => [
                     1 => 'free',

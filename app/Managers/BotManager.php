@@ -89,6 +89,7 @@ class BotManager extends UserManager
         });
 
         $userDataToPersist['user'] = $usersTableData;
+        $userDataToPersist['user']['created_by_id'] = \Auth::user()->getId();
         $userDataToPersist['user_meta'] = $userMetaTableData;
 
         $client = new Client();

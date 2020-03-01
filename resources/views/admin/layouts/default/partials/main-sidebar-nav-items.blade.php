@@ -1,4 +1,4 @@
-<li class="{!! \Request::route()->getName() == 'admin.dashboard' ? 'active' : '' !!}">
+ <li class="{!! \Request::route()->getName() == 'admin.dashboard' ? 'active' : '' !!}">
     <a href="{!! route('admin.dashboard') !!}">
         <i class="fa fa-dashboard"></i>
         <span>Dashboard</span>

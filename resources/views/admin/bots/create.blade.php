@@ -31,12 +31,17 @@
                             @endif
                         </div>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="text" class="form-control" id="password" name="password" value="botpassword">
+                    @if(\Auth::user()->isAdmin())
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="text" class="form-control" id="password" name="password" value="botpassword">
+                            </div>
                         </div>
-                    </div>
+                    @else
+                        <input type="hidden" class="form-control" id="password" name="password" value="botpassword">
+                    @endif
+
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="active">Active</label>
@@ -45,7 +50,9 @@
                                     class="form-control"
                                     required
                             >
-                                <option value="1" {!! (old('active') === 1) ? 'selected' : '' !!}>Active</option>
+                                @if(\Auth::user()->isAdmin())
+                                    <option value="1" {!! (old('active') === 1) ? 'selected' : '' !!}>Active</option>
+                                @endif
                                 <option value="0" {!! (old('active') === 0) ? 'selected' : '' !!}>Inactive</option>
                             </select>
                             @if ($errors->has('active'))
@@ -109,6 +116,11 @@
 
                                         <option value="{!! $key === '' ? null : $key !!}"
                                                 {!! (old($field) != '' && old($field) == $key) ? 'selected' : '' !!}
+                                                {!! $field == 'gender' && (old($field) == '' && 2 == $key) ? 'selected' : '' !!}
+                                                {!! $field == 'looking_for_gender' && (old($field) == '' && 1 == $key) ? 'selected' : '' !!}
+                                                {!! $field == 'relationship_status' && (old($field) == '' && 1 == $key) ? 'selected' : '' !!}
+                                                {!! $field == 'drinking_habits' && (old($field) == '' && 2 == $key) ? 'selected' : '' !!}
+                                                {!! $field == 'smoking_habits' && (old($field) == '' && 3 == $key) ? 'selected' : '' !!}
                                         >
                                             {!! $value !!}
                                         </option>

@@ -52,6 +52,11 @@ class User extends Authenticatable
         $this->notify(new MailResetPasswordNotification($token));
     }
 
+    public function getCreatedBotIdsAttribute()
+    {
+        return $this->createdBots->pluck('id')->toArray();
+    }
+
     public function getProfileImageUrlAttribute()
     {
         return \StorageHelper::profileImageUrl($this);
@@ -154,7 +159,8 @@ class User extends Authenticatable
         'email',
         'password',
         'active',
-        'conversation_manager_state'
+        'conversation_manager_state',
+        'created_by_id'
     ];
 
     /**
@@ -290,6 +296,18 @@ class User extends Authenticatable
     /**
      * @return bool
      */
+    public function isEditor()
+    {
+        $userRoles = [];
+        foreach ($this->roles as $role) {
+            $userRoles[] = $role['name'];
+        }
+        return in_array('editor', $userRoles);
+    }
+
+    /**
+     * @return bool
+     */
     public function isPeasant()
     {
         $userRoles = [];
@@ -297,6 +315,16 @@ class User extends Authenticatable
             $userRoles[] = $role['name'];
         }
         return in_array('peasant', $userRoles);
+    }
+
+    public function getCreatedById(): ?int
+    {
+        return $this->created_by_id;
+    }
+
+    public function setCreatedById(int $createdById = null)
+    {
+        $this->created_by_id = $createdById;
     }
 
     /**
@@ -410,6 +438,14 @@ class User extends Authenticatable
     public function images()
     {
         return $this->hasMany('App\UserImage')->orderBy('visible', 'desc');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function createdBots()
+    {
+        return $this->hasMany(User::class, 'created_by_id');
     }
 
     /**

@@ -64,20 +64,24 @@
                                         @endforeach
                                     </td>
                                     <td class="action-buttons">
+                                        @if($authenticatedUser->isAdmin() || $authenticatedUser->isEditor() && in_array($bot->getId(), $authenticatedUser->createdBotIds))
+                                        @endif
                                         <a href="{!! route('admin.bots.edit.get', [$bot->id]) !!}" class="btn btn-default">Edit</a>
 
-                                        <a href="{!! route('admin.bots.message-with-bot.get', ['botId' =>  $bot->id, 'onlyOnlinePeasants' => '0']) !!}" class="btn btn-default">Message peasant with bot</a>
-                                        <a href="{!! route('admin.bots.message-with-bot.get', ['botId' => $bot->id, 'onlyOnlinePeasants' => '1']) !!}" class="btn btn-default">Message online peasant with bot</a>
+                                        @if($authenticatedUser->isAdmin())
+                                            <a href="{!! route('admin.bots.message-with-bot.get', ['botId' =>  $bot->id, 'onlyOnlinePeasants' => '0']) !!}" class="btn btn-default">Message peasant with bot</a>
+                                            <a href="{!! route('admin.bots.message-with-bot.get', ['botId' => $bot->id, 'onlyOnlinePeasants' => '1']) !!}" class="btn btn-default">Message online peasant with bot</a>
 
-                                        <form method="POST" action="{!! route('admin.users.destroy', ['userId' => $bot->id]) !!}">
-                                            {!! csrf_field() !!}
-                                            {!! method_field('DELETE') !!}
-                                            <button type="submit"
-                                                    class="btn btn-danger"
-                                                    onclick="return confirm('Are you sure you want to delete this bot?')">
-                                                Delete
-                                            </button>
-                                        </form>
+                                            <form method="POST" action="{!! route('admin.users.destroy', ['userId' => $bot->id]) !!}">
+                                                {!! csrf_field() !!}
+                                                {!! method_field('DELETE') !!}
+                                                <button type="submit"
+                                                        class="btn btn-danger"
+                                                        onclick="return confirm('Are you sure you want to delete this bot?')">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

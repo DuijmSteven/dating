@@ -12,8 +12,47 @@
             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
     </div>
-    <!-- sidebar menu: : style can be found in sidebar.less -->
-    @if(\Auth::user()->isOperator())
+
+    @if(\Auth::user()->isEditor())
+        <ul class="sidebar-menu">
+            <li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.bots') ? 'active' : '' !!}">
+                <a href="#">
+                    <i class="fa fa-android"></i>
+                    <span>Bots</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="{!! \Request::route()->getName() == 'admin.bots.retrieve' ? 'active' : '' !!}">
+                        <a href="{!! route('admin.bots.retrieve') !!}">
+                            <i class="fa fa-list"></i>
+                            Overview
+                        </a>
+                    </li>
+                    <li class="{!! \Request::route()->getName() == 'admin.bots.create.get' ? 'active' : '' !!}">
+                        <a href="{!! route('admin.bots.create.get') !!}">
+                            <i class="fa fa-user-plus"></i>
+                            Create
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="{!!  route('logout.post') !!}"
+                   onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+                    <i class="fa fa-sign-out"></i>
+                    <span>Log out</span>
+                </a>
+
+                <form id="logout-form" action="{!!  route('logout.post') !!}" method="POST"
+                      style="display: none;">
+                    {{ csrf_field() }}
+                </form>
+            </li>
+        </ul>
+    @elseif(\Auth::user()->isOperator())
         <ul class="sidebar-menu">
 {{--            <li class="header">MAIN NAVIGATION</li>--}}
             <li class="treeview
