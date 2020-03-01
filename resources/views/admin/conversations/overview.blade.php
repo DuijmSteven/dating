@@ -31,68 +31,68 @@
                         <tbody>
                             @foreach($conversations as $conversation)
                                 @php
-                                    $userA = $conversation['user_a'];
-                                    $userB = $conversation['user_b'];
+                                    $userA = $conversation->userA;
+                                    $userB = $conversation->userB;
                                 @endphp
                                 <tr>
                                     <td>
-                                        {!! $conversation['id'] !!}
-                                        @if($conversation['deleted_at'])
+                                        {!! $conversation->id !!}
+                                        @if($conversation->deleted_at)
                                             <br>
                                             <span style="color: red; font-weight: bold">DELETED</span>
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route('operator-platform.conversations.show', ['id' => $conversation['id']]) }}">
+                                        <a href="{{ route('operator-platform.conversations.show', ['id' => $conversation->id]) }}">
                                             <img width="80"
-                                                 src="{{ $userA['profile_image_url'] }}"
+                                                 src="{{ \App\Helpers\StorageHelper::profileImageUrl($userA) }}"
                                                  alt="User A profile image"><br>
                                         </a>
                                         <b>ID</b>:
                                             @php
-                                                if ($userA['role'] === \App\User::TYPE_ADMIN) {
+                                                if ($userA->isAdmin()) {
                                                     $userRoleName = 'peasant';
                                                 } else {
-                                                    $userRoleName = \UserConstants::selectableField('role')[$userA['role']];
+                                                    $userRoleName = \UserConstants::selectableField('role')[$userA->roles[0]->id];
                                                 }
 
                                                 $routeName = 'admin.' . $userRoleName . 's.edit.get';
                                             @endphp
-                                            <a href="{{ route($routeName,['id' => $userA['id']]) }}">
-                                                {{ $userA['id'] }}
+                                            <a href="{{ route($routeName,['id' => $userA->id]) }}">
+                                                {{ $userA->id }}
                                             </a> <br>
-                                        <b>Username</b>: {{ $userA['username'] }} <br>
-                                        <b>Gender</b>: {{ @trans('user_constants')['gender'][$userA['meta']['gender']] }} <br>
-                                        <b>Role</b>: {{ @trans('user_constants')['role'][$userA['role']] }} <br>
+                                        <b>Username</b>: {{ $userA->username }} <br>
+                                        <b>Gender</b>: {{ @trans('user_constants')['gender'][$userA->meta->gender] }} <br>
+                                        <b>Role</b>: {{ @trans('user_constants')['role'][$userA->roles[0]->id] }} <br>
                                     </td>
                                     <td>
-                                        <a href="{{ route('operator-platform.conversations.show', ['id' => $conversation['id']]) }}">
+                                        <a href="{{ route('operator-platform.conversations.show', ['id' => $conversation->id]) }}">
                                             <img width="80"
-                                                 src="{{ $userB['profile_image_url'] }}"
+                                                 src="{{ \App\Helpers\StorageHelper::profileImageUrl($userB) }}"
                                                  alt="User B profile image"><br>
                                         </a>
                                         <b>ID</b>:
                                             @php
-                                              if ($userB['role'] === \App\User::TYPE_ADMIN) {
+                                              if ($userB->isAdmin()) {
                                                    $userRoleName = 'peasant';
                                                } else {
-                                                   $userRoleName = \UserConstants::selectableField('role')[$userB['role']];
+                                                   $userRoleName = \UserConstants::selectableField('role')[$userB->roles[0]->id];
                                                }
-                                               $userRoleName = \UserConstants::selectableField('role')[$userB['role']];
+                                               $userRoleName = \UserConstants::selectableField('role')[$userB->roles[0]->id];
                                                $routeName = 'admin.' . $userRoleName . 's.edit.get';
                                             @endphp
-                                            <a href="{{ route($routeName,['id' => $userB['id']]) }}">
-                                                {{ $userB['id'] }}
+                                            <a href="{{ route($routeName,['id' => $userB->id]) }}">
+                                                {{ $userB->id }}
                                             </a> <br>
-                                        <b>Username</b>: {{ $userB['username'] }} <br>
-                                        <b>Gender</b>: {{ @trans('user_constants')['gender'][$userB['meta']['gender']] }}<br>
-                                        <b>Role</b>: {{ @trans('user_constants')['role'][$userB['role']] }}<br>
+                                        <b>Username</b>: {{ $userB->username }} <br>
+                                        <b>Gender</b>: {{ @trans('user_constants')['gender'][$userB->meta->gender] }}<br>
+                                        <b>Role</b>: {{ @trans('user_constants')['role'][$userB->roles[0]->id] }}<br>
                                     </td>
                                     <td>{{ $conversation['created_at']->format('d-m-Y H:i:s') }}</td>
                                     <td class="action-buttons">
-                                        <a href="{!! route('operator-platform.conversations.show', [$conversation['id']]) !!}" class="btn btn-default">View</a>
+                                        <a href="{!! route('operator-platform.conversations.show', [$conversation->id]) !!}" class="btn btn-default">View</a>
 
-                                        <form method="POST" action="{{ route('admin.conversations.destroy', ['conversationId' => $conversation['id']]) }}">
+                                        <form method="POST" action="{{ route('admin.conversations.destroy', ['conversationId' => $conversation->id]) }}">
                                             {!! csrf_field() !!}
                                             {!! method_field('DELETE') !!}
                                             <button type="submit"

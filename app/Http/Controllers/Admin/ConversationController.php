@@ -59,19 +59,24 @@ class ConversationController extends Controller
      */
     public function index(Request $request)
     {
-        $page = $this->resolveCurrentPage($request);
+//        $page = $this->resolveCurrentPage($request);
+//
+//        $conversationsTotalCount = $this->conversationManager->countConversations();
+//
+//        $conversations = $this->conversationManager->getPaginated(
+//            'any',
+//            'any',
+//            20,
+//            ($page - 1) * 20
+//        );
+//
+//        $paginator = new LengthAwarePaginator($conversations, $conversationsTotalCount, 20, $page);
+//        $paginator->setPath('/admin/conversations');
 
-        $conversationsTotalCount = $this->conversationManager->countConversations();
+        $conversations = Conversation::with('userA', 'userA.roles', 'userA.meta', 'userA.profileImage', 'userB', 'userB.roles', 'userB.meta', 'userB.profileImage')
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
 
-        $conversations = $this->conversationManager->getPaginated(
-            'any',
-            'any',
-            20,
-            ($page - 1) * 20
-        );
-
-        $paginator = new LengthAwarePaginator($conversations, $conversationsTotalCount, 20, $page);
-        $paginator->setPath('/admin/conversations');
         return view(
             'admin.conversations.overview',
             [
@@ -79,7 +84,7 @@ class ConversationController extends Controller
                 'headingLarge' => 'Conversations',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
-                'conversations' => $paginator
+                'conversations' => $conversations
             ]
         );
     }
