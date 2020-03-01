@@ -35,13 +35,13 @@ Route::get('contact', 'Frontend\ContactController@showContact')
 Route::post('contact', 'Frontend\ContactController@postContact')
     ->name('contact.post');
 
-Route::get('/dashboard', 'Frontend\DashboardController@index')
-    ->name('dashboard')
-    ->middleware('auth');
+//Route::get('/dashboard', 'Frontend\DashboardController@index')
+//    ->name('dashboard')
+//    ->middleware(['auth', 'not_editor']);
 
 Route::get('/home', 'Frontend\UserSearchController@showInitialSearchResults')
     ->name('home')
-    ->middleware('auth');
+    ->middleware(['auth', 'not_editor']);
 
 Route::get('/', 'Frontend\LandingPageController@show')
     ->middleware('guest')
@@ -50,8 +50,8 @@ Route::post('/', 'Auth\RegisterController@register')
     ->middleware('guest')
     ->name('register.post');
 
-Route::get('deactivated', 'Frontend\UserController@showDeactivated')
-    ->name('users.deactivated.get');
+//Route::get('deactivated', 'Frontend\UserController@showDeactivated')
+//    ->name('users.deactivated.get');
 
 Route::post('redirect-back', 'Frontend\UserController@redirectBack')
     ->name('users.redirect-back');
@@ -59,7 +59,7 @@ Route::post('redirect-back', 'Frontend\UserController@redirectBack')
 /* User routes */
 Route::group([
     'prefix' => 'users',
-    'middleware' => ['auth']
+    'middleware' => ['auth', 'not_editor']
 ], function () {
 
     Route::group([
@@ -123,7 +123,7 @@ Route::group([
 /* Conversations routes */
 Route::group([
     'prefix' => 'conversations',
-    'middleware' => ['auth']
+    'middleware' => ['auth', 'not_editor']
 ], function () {
     Route::get('/', 'ConversationController@index')
         ->name('conversations.overview');
@@ -134,7 +134,8 @@ Route::group([
 });
 
 Route::group([
-    'prefix' => 'images'
+    'prefix' => 'images',
+    'middleware' => ['auth', 'not_editor']
 ], function () {
     Route::delete('{imageId}/delete', 'UserImageController@destroy')
         ->name('images.destroy');
@@ -143,7 +144,8 @@ Route::group([
 });
 
 Route::group([
-    'prefix' => 'flirts'
+    'prefix' => 'flirts',
+    'middleware' => ['auth', 'not_editor']
 ], function () {
     Route::get('{senderId}/{recipientId}', 'Frontend\FlirtController@send');
 });
@@ -152,7 +154,8 @@ Route::get('cities/{countryCode}', 'Admin\UserController@getCities')
     ->name('cities.retrieve');
 
 Route::group([
-    'prefix' => 'payments'
+    'prefix' => 'payments',
+    'middleware' => ['auth', 'not_editor']
 ], function () {
     Route::post('/', 'Frontend\PaymentController@postPayment')
     ->name('payments.post');
@@ -171,7 +174,7 @@ Route::get('faq', 'Frontend\MiscController@showFaq')
 
 Route::group([
     'prefix' => 'credits',
-    'middleware' => ['auth']
+    'middleware' => ['auth', 'not_editor']
 ], function () {
     Route::get('/', 'Frontend\CreditsController@show')
         ->name('credits.show');
@@ -325,7 +328,7 @@ Route::group([
     });
 
     Route::group([
-        'prefix' => 'payments'
+        'prefix' => 'payments',
     ], function () {
         Route::get('/', 'Admin\PaymentController@index')
             ->name('admin.payments.overview');
