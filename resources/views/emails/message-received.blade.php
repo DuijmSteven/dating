@@ -27,7 +27,39 @@
     </p>
 
     <div style="text-align: center">
-        @include('frontend.components.user-summary', ['email' => true])
+        <div class="Tile UserSummary" data-user-id="{!! $messageSender->getId() !!}">
+            <div class="Tile__body UserSummary__body">
+                <div class="UserSummary__user-image">
+
+                    <a href="{{ route('users.show', ['username' => $messageSender->getUsername()])  }}">
+                        <img
+                            class="UserSummary__profileImage JS--galleryImage"
+                            src="{{ \StorageHelper::profileImageUrl($messageSender) }}"
+                            alt="user image"
+                        >
+                    </a>
+                </div>
+            </div>
+            <div class="Tile__footer UserSummary__footer">
+                <div class="UserSummary__footer__upperPart">
+                    <div class="UserSummary__userInfo">
+                        <a href="{{ route('users.show', ['username' => $messageSender->getUsername()])  }}"
+                           class="UserSummary__userInfo__primary">
+                            {{ $messageSender->username }}
+                        </a>
+                        <div class="UserSummary__userInfo__additional">
+                            @if(isset($messageSender->meta->city) && $messageSender->meta->dob)
+                                {{ $messageSender->meta->city . ', ' }}
+                            @elseif ($messageSender->meta->city)
+                                {{ $messageSender->meta->city }}
+                            @endif
+
+                            {!! $messageSender->meta->dob ? $messageSender->meta->dob->diffInYears($carbonNow) . ' Jaar' : '' !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div style="text-align: center">

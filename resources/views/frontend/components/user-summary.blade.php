@@ -31,7 +31,7 @@
                 </a>
             @endif
 
-            @if(!isset($email) && in_array($user->getId(), $onlineUserIds))
+            @if(in_array($user->getId(), $onlineUserIds))
                 <div class="onlineCircle"></div>
             @endif
         </div>
@@ -43,41 +43,29 @@
                    class="UserSummary__userInfo__primary">
                     {{ $user->username }}
 
-                    @if(!isset($email) && in_array($user->getId(), $onlineUserIds))
+                    @if(in_array($user->getId(), $onlineUserIds))
                         <div class="onlineCircle"></div>
                     @endif
                 </a>
                 <div class="UserSummary__userInfo__additional">
-                    @if(!isset($email))
-                        @if(isset($user->meta->city) && $user->meta->dob)
-                            {!! $user->meta->city . ' <span>&centerdot;</span> ' !!}
-                        @elseif ($user->meta->city)
-                            {{ $user->meta->city }}
-                        @endif
-                    @else
-                        @if(isset($user->meta->city) && $user->meta->dob)
-                            {{ $user->meta->city . ', ' }}
-                        @elseif ($user->meta->city)
-                            {{ $user->meta->city }}
-                        @endif
+                    @if(isset($user->meta->city) && $user->meta->dob)
+                        {!! $user->meta->city . ' <span>&centerdot;</span> ' !!}
+                    @elseif ($user->meta->city)
+                        {{ $user->meta->city }}
                     @endif
 
                     {!! $user->meta->dob ? $user->meta->dob->diffInYears($carbonNow) . ' Jaar' : '' !!}
 
-                    @if(!isset($email))
-                        {!! !isset($user->meta->city) && !$user->meta->dob ? '&nbsp' : '' !!}
-                    @endif
+                    {!! !isset($user->meta->city) && !$user->meta->dob ? '&nbsp' : '' !!}
 
                 </div>
             </div>
-            @if(!isset($email))
-                <div class="UserSummary__sendMessage"
-                     v-on:click="addChat({!! $authenticatedUser->getId() !!}, {!! $user->getId() !!}, '1', true)"
-                >
-                    <span class="UserSummary__sendMessage__text">Chat</span>
-                    <i class="material-icons material-icon UserSummary__sendMessage__icon">textsms</i>
-                </div >
-            @endif
+            <div class="UserSummary__sendMessage"
+                 v-on:click="addChat({!! $authenticatedUser->getId() !!}, {!! $user->getId() !!}, '1', true)"
+            >
+                <span class="UserSummary__sendMessage__text">Chat</span>
+                <i class="material-icons material-icon UserSummary__sendMessage__icon">textsms</i>
+            </div >
         </div>
 
         @if(isset($showOtherImages) && $showOtherImages)
