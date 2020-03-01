@@ -403,6 +403,7 @@ class UserManager
             $relations[] = 'createdBots';
         }
 
+
         $user = User::with($relations)->where('id', $user->getId())->get()[0];
 
         return $user;
