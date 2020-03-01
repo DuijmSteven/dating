@@ -6106,14 +6106,37 @@ table .action-buttons .btn {
     width: 150px;
 }
 
+.bg-primary {
+    background-color: #c14d31 !important;
+}
+
+.bg-info {
+    background-color: #3a7998 !important;
+    color: #fff !important;
+}
+
+.bg-pinkish {
+    background-color: #c58484;
+    color: #fff;
+}
+
 /* Dashboard */
 .DashboardWidget_header {
-    padding: 20px;
-    font-size: 18px;
+    padding: 7px 10px;
+    font-size: 15px;
 }
 
 .DashboardWidget_count {
     float: right;
+}
+
+.skin-blue .main-header .navbar,
+.skin-blue .main-header .logo {
+    background-color: #312c2c;
+}
+
+.nav.nav-stacked > li > a {
+    padding: 6px 15px;
 }
 
 .conversation__invisibleImages img {

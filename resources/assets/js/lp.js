@@ -88,6 +88,7 @@ $(window).on('load', function () {
         });
 
         $($event.currentTarget).addClass('open');
+        $($event.currentTarget).find('input').focus();
     });
 
     $('.JS--enhancedFormGroup input').keyup(function (e) {

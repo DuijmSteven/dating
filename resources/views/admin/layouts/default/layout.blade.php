@@ -9,7 +9,7 @@
     <header class="main-header">
         <!-- Logo -->
         <a href="{!! route('admin.dashboard') !!}" class="logo">
-            {{--<img src="{{ asset('') }}" alt="">--}}
+            <img class="site-logo" src="{!! asset('img/site_logos/Altijdsex_LogoSmall_Pos@1x.png') !!}">
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">

@@ -3,10 +3,36 @@
 @section('content')
 
     <div class="row">
-        <div class="col-sm-6 col-md-4">
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3">
+                    <div class="box box-widget DashboardWidget">
+                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                        <div class="bg-info">
+                            <div class="widget-us DashboardWidget_header" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
+                                <i class="fa fa-users DashboardWidget_header-icon"></i>
+                                <span class="DashboardWidget_header-title"><b>{{ $numberOfOnlineBots }} bots online</b></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3">
+                    <div class="box box-widget DashboardWidget">
+                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                        <div class="bg-pinkish">
+                            <div class="widget-us DashboardWidget_header" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
+                                <i class="fa fa-users DashboardWidget_header-icon"></i>
+                                <span class="DashboardWidget_header-title"><b>{{ $numberOfOnlinePeasants }} peasants online</b></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4">
             <div class="box box-widget DashboardWidget">
                 <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="bg-olive">
+                <div class="bg-primary">
                     <div class="widget-us DashboardWidget_header" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
                         <i class="fa fa-users DashboardWidget_header-icon"></i>
                         <span class="DashboardWidget_header-title">Revenue</span>
@@ -25,10 +51,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-6 col-md-4">
+        <div class="col-xs-12 col-sm-6 col-md-4">
             <div class="box box-widget DashboardWidget">
                 <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="bg-olive">
+                <div class="bg-primary">
                     <div class="widget-us DashboardWidget_header" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
                         <i class="fa fa-users DashboardWidget_header-icon"></i>
                         <span class="DashboardWidget_header-title">Registrations</span>
@@ -47,10 +73,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-6 col-md-4">
+        <div class="col-xs-12 col-sm-6 col-md-4">
             <div class="box box-widget DashboardWidget">
                 <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="bg-olive">
+                <div class="bg-primary">
                     <div class="widget-us DashboardWidget_header" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
                         <i class="fa fa-envelope DashboardWidget_header-icon"></i>
                         <span class="DashboardWidget_header-title">Messages Sent</span>
@@ -69,10 +95,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-6 col-md-4">
+        <div class="col-xs-12 col-sm-6 col-md-4">
             <div class="box box-widget DashboardWidget">
                 <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="bg-olive">
+                <div class="bg-primary">
                     <div class="widget-us DashboardWidget_header" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
                         <i class="fa fa-envelope DashboardWidget_header-icon"></i>
                         <i class="fa fa-user DashboardWidget_header-icon"></i>
@@ -92,10 +118,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-6 col-md-4">
+        <div class="col-xs-12 col-sm-6 col-md-4">
             <div class="box box-widget DashboardWidget">
                 <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="bg-olive">
+                <div class="bg-primary">
                     <div class="widget-us DashboardWidget_header" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
                         <i class="fa fa-envelope DashboardWidget_header-icon"></i>
                         <i class="fa fa-android DashboardWidget_header-icon"></i>
@@ -115,10 +141,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-6 col-md-4">
+        <div class="col-xs-12 col-sm-6 col-md-4">
             <div class="box box-widget DashboardWidget">
                 <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="bg-olive">
+                <div class="bg-primary">
                     <div class="widget-us DashboardWidget_header" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
                         <i class="fa fa-close DashboardWidget_header-icon"></i>
                         <span class="DashboardWidget_header-title">Deactivations</span>
@@ -137,10 +163,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-6 col-md-4">
+        <div class="col-xs-12 col-sm-6 col-md-4">
             <div class="box box-widget DashboardWidget">
                 <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="bg-olive">
+                <div class="bg-primary">
                     <div class="widget-us DashboardWidget_header" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
                         <i class="fa fa-close DashboardWidget_header-icon"></i>
                         <span class="DashboardWidget_header-title">User types</span>

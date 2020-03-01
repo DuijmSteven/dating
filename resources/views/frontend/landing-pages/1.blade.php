@@ -623,6 +623,13 @@
         font-size: 20px;
     }
 
+    @media screen and (max-width: 767px) {
+        .form-wrapper form input {
+            font-size: 16px;
+            padding: 30px 20px 16px;
+        }
+    }
+
     .enhancedFormGroup {
         position: relative;
 
@@ -636,6 +643,7 @@
         text-overflow: ellipsis;
         max-width: 83%;
         overflow: hidden;
+        font-weight: 300;
     }
 
     .enhancedFormGroup.open label {
