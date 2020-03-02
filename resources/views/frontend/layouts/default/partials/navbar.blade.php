@@ -9,6 +9,10 @@
     @endif
 
     <div class="container">
+        @if(isset($city) && isset($radius))
+            <h3 class="searchResultsHeader JS--searchResultsHeader">{!! trans('user_search.search_results_heading', ['city' => $city, 'radius' => $radius]) !!}</h3>
+        @endif
+
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"

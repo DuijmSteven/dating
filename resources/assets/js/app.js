@@ -80,15 +80,15 @@ $(window).on('load', function () {
         }
     });
 
-    if ($('.JS--searchResultsHeaderRow').length > 0) {
+    if ($('.JS--searchResultsHeader').length > 0) {
         $(window).scroll(function() {
             clearTimeout($.data(this, 'scrollTimer'));
 
             $.data(this, 'scrollTimer', setTimeout(function() {
                 if ($(window).scrollTop() > 120) {
-                    $('.JS--searchResultsHeaderRow').addClass('hidden');
+                    $('.JS--searchResultsHeader').addClass('hidden');
                 } else {
-                    $('.JS--searchResultsHeaderRow').removeClass('hidden');
+                    $('.JS--searchResultsHeader').removeClass('hidden');
                 }
             }, 100));
         });
