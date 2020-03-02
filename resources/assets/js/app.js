@@ -94,7 +94,9 @@ $(window).on('load', function () {
                 if ($(window).scrollTop() > 60) {
                     $('.JS--searchResultsHeader').addClass('hidden');
                 } else {
-                    $('.JS--searchResultsHeader').removeClass('hidden');
+                    if ($('body').css('position') !== 'fixed') {
+                        $('.JS--searchResultsHeader').removeClass('hidden');
+                    }
 
                     clearTimeout($.data(this, 'removeHeadingTimer'));
 
