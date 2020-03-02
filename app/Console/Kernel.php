@@ -48,11 +48,13 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('bots:set-random-online ' . $numberOfBotsToHaveOnline)->everyTenMinutes();
 
-        // DON'T remove this or e.g. emails will start going out to users due to local or staging cron jobs
         if (config('app.env') === 'production') {
             $schedule->command(ExportDb::class)->dailyAt("04:30");
-            $schedule->command(UpdateCurrentEnvDbAndAws::class)->dailyAt("05:30");
             $schedule->command('users:emails:send-profile-viewed')->everyMinute();
+        }
+        
+        if (config('app.env') === 'staging') {
+            $schedule->command(UpdateCurrentEnvDbAndAws::class)->dailyAt("05:30");
         }
     }
 
