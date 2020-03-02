@@ -80,6 +80,20 @@ $(window).on('load', function () {
         }
     });
 
+    if ($('.JS--searchResultsHeaderRow').length > 0) {
+        $(window).scroll(function() {
+            clearTimeout($.data(this, 'scrollTimer'));
+
+            $.data(this, 'scrollTimer', setTimeout(function() {
+                if ($(window).scrollTop() > 120) {
+                    $('.JS--searchResultsHeaderRow').addClass('hidden');
+                } else {
+                    $('.JS--searchResultsHeaderRow').removeClass('hidden');
+                }
+            }, 100));
+        });
+    }
+
     if ($("#datepicker_dob").length > 0) {
         //Setup locale and bootstrap datepicker options
         // $.fn.datepicker.dates['nl'] = {

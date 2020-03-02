@@ -57,11 +57,16 @@
 
 .navbar-default {
     border: $navbarBorderWidth + px solid $navbarBgColor;
-    position: relative;
     border-radius: 0;
     box-shadow: 0 4px 6px rgba(0,0,0,0.25);
-
     background: $navbarBgColor;
+
+    position: fixed;
+    width: 100%;
+    z-index: 300;
+    left: 0;
+    top: 0;
+    right: 0;
 
     .navbar-toggle {
         margin-top: 8px;

@@ -17,8 +17,8 @@ class UserConstants
 
     public static $radiuses = [
         '20',
-        '40',
-        '60',
+        '50',
+        '80',
     ];
 
     public static function getAgeGroups() {

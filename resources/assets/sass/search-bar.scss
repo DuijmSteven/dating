@@ -1,8 +1,5 @@
 .SearchBar {
-    position: absolute;
-    top: - 23px;
-    left: 0px;
-    right: 0px;
+    //position: absolute;
     background-color: $navbarBgColor;
     box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
     border-top: 0;
@@ -10,6 +7,13 @@
     padding: 10px;
 
     background: linear-gradient(90deg, #312c2c 13%, #312c2c 100%);
+
+    width: 100%;
+    left: 0;
+
+    position: fixed;
+    top: 51px;
+    z-index: 400;
 
     &.with-errors {
         padding-bottom: 30px;
@@ -25,13 +29,15 @@
     }
 
     @media (min-width: $screen-sm-min) {
-        left: 150px;
-        right: 150px;
+        width: 500px;
+        left: 50%;
+        margin-left:  -250px;
     }
 
     @media (min-width: $screen-md-min) {
-        left: 50px;
-        right: 50px;
+        width: 900px;
+        left: 50%;
+        margin-left:  -450px;
     }
 
     .form-group {

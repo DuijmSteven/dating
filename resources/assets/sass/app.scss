@@ -95,6 +95,7 @@
   overflow: scroll;
   list-style: none;
   padding-left: 15px;
+  z-index: 500;
 
   li {
     font-size: 1.8rem;
@@ -126,3 +127,34 @@ img.very-blurred {
   filter: blur(13px);
 }
 
+.searchResultsHeader {
+  position: fixed;
+  top: 49px;
+  left: 20px;
+  z-index: 400;
+
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  padding: 6px 20px 6px 20px;
+  background-color: #302c2c;
+  color: #fff;
+  width: -moz-fit-content;
+  width: fit-content;
+  border-radius: 6px;
+  margin: 0 0 20px 0;
+  font-size: 2.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 90%;
+}
+
+.searchResultsHeaderCity {
+  color: #ff8677;
+}
+
+@media screen and (max-width: $screen-xs-max) {
+  .searchResultsHeader {
+    font-size: 1.4rem;
+    left: 0px;
+  }
+}

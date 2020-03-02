@@ -8,8 +8,6 @@
 
     box-shadow: 0 0 24px rgba(0, 0, 0, 0.2);
 
-
-
     &__body {
         &__empty {
             background-color: white;
@@ -316,7 +314,7 @@
         }
 
         &.maximized {
-            top: 0;
+            top: 40%;
             left: 0;
             right: 0;
 

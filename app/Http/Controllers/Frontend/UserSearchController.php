@@ -124,6 +124,8 @@ class UserSearchController extends FrontendController
             'users' => $users,
             'carbonNow' => Carbon::now(),
             'title' => $this->buildTitleWith(trans('view_titles.search_results')),
+            'city' => $searchParameters['city_name'],
+            'radius' => $searchParameters['radius']
         ];
 
         return view(
@@ -145,21 +147,26 @@ class UserSearchController extends FrontendController
             $user->save();
         }
 
-        if (!$this->authenticatedUser->meta->getCity()) {
-            $city = 'Amsterdam';
-            $lat = 52.379189;
-            $lng = 4.899431;
-        } else {
-            $city = $this->authenticatedUser->meta->getCity();
-            $lat = $this->authenticatedUser->meta->getLat();
-            $lng = $this->authenticatedUser->meta->getLng();
-        }
+
+        $city = 'Amsterdam';
+        $lat = 52.379189;
+        $lng = 4.899431;
+
+//        if (!$this->authenticatedUser->meta->getCity()) {
+//            $city = 'Amsterdam';
+//            $lat = 52.379189;
+//            $lng = 4.899431;
+//        } else {
+//            $city = $this->authenticatedUser->meta->getCity();
+//            $lat = $this->authenticatedUser->meta->getLat();
+//            $lng = $this->authenticatedUser->meta->getLng();
+//        }
 
         $searchParameters = [
             'city_name' => $city,
             'lat' => $lat,
             'lng' => $lng,
-            'radius' => 40,
+            'radius' => 50,
             'age' => null,
             'body_type' => null,
             'active' => 1,

@@ -12,7 +12,7 @@
 <div id="app">
     @include('frontend.layouts.default.partials.header')
 
-    <div class="container" style="position: relative">
+    <div class="container" style="position: relative; padding-top: 80px">
         @if(
             isset($authenticatedUser) &&
             ($authenticatedUser->profileRatioFilled < 0.3 || !$authenticatedUser->profileImage) &&
