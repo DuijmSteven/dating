@@ -18,8 +18,8 @@ deploy_staging:
     name: staging
   script:
     - ssh opalampo@128.199.53.121 "cd /var/www/dating &&
-      git checkout master &&
-      git pull origin master &&
+      git checkout staging &&
+      git pull origin staging &&
       composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader &&
       php artisan migrate --force &&
       php artisan config:cache &&
