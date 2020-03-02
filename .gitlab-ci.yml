@@ -18,6 +18,7 @@ deploy_staging:
     name: staging
   script:
     - ssh opalampo@128.199.53.121 "cd /var/www/dating &&
+      git fetch &&
       git checkout staging &&
       git pull origin staging &&
       composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader &&
@@ -37,6 +38,7 @@ deploy_production:
     name: production
   script:
     - ssh opalampo@178.62.249.225 "cd /var/www/dating &&
+      git fetch &&
       git checkout master &&
       git pull origin master &&
       composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader &&
