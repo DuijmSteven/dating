@@ -67,30 +67,30 @@
                 @endforeach
             </select>
         </div>
-        <div class="form-group bodyType">
-            <label for="">{{ trans('user_constants.labels.body_type') }}</label>
-            <select name="body_type" class="form-control">
-                <option value="">{!! @trans('search.all') !!}</option>
-                @foreach(\UserConstants::selectableField('body_type') as $key => $value)
-                    <option
-                        {{ Session::get('searchParameters') && Session::get('searchParameters')['body_type'] == $key ? 'selected' : ''}}
-                        value="{{ $key }}">{{ @trans('user_constants.body_type.' . $key) }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-        <div class="form-group height">
-            <label for="">{{ trans('user_constants.labels.height') }}</label>
-            <select name="height" class="form-control">
-                <option value="">{!! @trans('search.all') !!}</option>
-                @foreach(\UserConstants::selectableField('height') as $key => $value)
-                    <option
-                        {{ Session::get('searchParameters') && Session::get('searchParameters')['height'] == $key ? 'selected' : ''}}
-                        value="{{ $key }}">{{ @trans('user_constants.height.' . $key) }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
+{{--        <div class="form-group bodyType">--}}
+{{--            <label for="">{{ trans('user_constants.labels.body_type') }}</label>--}}
+{{--            <select name="body_type" class="form-control">--}}
+{{--                <option value="">{!! @trans('search.all') !!}</option>--}}
+{{--                @foreach(\UserConstants::selectableField('body_type') as $key => $value)--}}
+{{--                    <option--}}
+{{--                        {{ Session::get('searchParameters') && Session::get('searchParameters')['body_type'] == $key ? 'selected' : ''}}--}}
+{{--                        value="{{ $key }}">{{ @trans('user_constants.body_type.' . $key) }}--}}
+{{--                    </option>--}}
+{{--                @endforeach--}}
+{{--            </select>--}}
+{{--        </div>--}}
+{{--        <div class="form-group height">--}}
+{{--            <label for="">{{ trans('user_constants.labels.height') }}</label>--}}
+{{--            <select name="height" class="form-control">--}}
+{{--                <option value="">{!! @trans('search.all') !!}</option>--}}
+{{--                @foreach(\UserConstants::selectableField('height') as $key => $value)--}}
+{{--                    <option--}}
+{{--                        {{ Session::get('searchParameters') && Session::get('searchParameters')['height'] == $key ? 'selected' : ''}}--}}
+{{--                        value="{{ $key }}">{{ @trans('user_constants.height.' . $key) }}--}}
+{{--                    </option>--}}
+{{--                @endforeach--}}
+{{--            </select>--}}
+{{--        </div>--}}
         <div class="form-group submit text-right">
             <label for="">&nbsp; </label>
 
