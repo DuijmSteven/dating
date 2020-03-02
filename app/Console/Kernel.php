@@ -3,12 +3,10 @@
 namespace App\Console;
 
 use App\Console\Commands\ExportDb;
-use App\Console\Commands\SetRandomBotsOnline;
+use App\Console\Commands\UpdateCurrentEnvDbAndAws;
 use Carbon\Carbon;
-use DateTime;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use Kim\Activity\Activity;
 
 class Kernel extends ConsoleKernel
 {
@@ -20,7 +18,10 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\SetRandomBotsOnline::class,
         Commands\ExportDb::class,
+        Commands\ImportLatestProductionDbExport::class,
         Commands\SendProfileViewedEmails::class,
+        Commands\DuplicateProductionS3BucketToCurrentEnvironmentBucket::class,
+        Commands\UpdateCurrentEnvDbAndAws::class
     ];
 
     /**
@@ -31,7 +32,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command(ExportDb::class)->daily();
+
 
         $timeNow = Carbon::now('Europe/Amsterdam'); // Current time
 
@@ -46,7 +47,13 @@ class Kernel extends ConsoleKernel
         }
 
         $schedule->command('bots:set-random-online ' . $numberOfBotsToHaveOnline)->everyTenMinutes();
-        $schedule->command('users:emails:send-profile-viewed')->everyMinute();
+
+        // DON'T remove this or e.g. emails will start going out to users due to local or staging cron jobs
+        if (config('app.env') === 'production') {
+            $schedule->command(ExportDb::class)->dailyAt("04:30");
+            $schedule->command(UpdateCurrentEnvDbAndAws::class)->dailyAt("05:30");
+            $schedule->command('users:emails:send-profile-viewed')->everyMinute();
+        }
     }
 
     /**

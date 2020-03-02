@@ -135,15 +135,17 @@ class UserManager
             }
 
             if ($viewerUser instanceof User) {
-                $profileViewedEmail = (new ProfileViewed(
-                    $viewerUser,
-                    $viewed,
-                    $viewerUser,
-                    new Carbon('now')
-                ))->onQueue('emails');
+                if (config('app.env') === 'production') {
+                    $profileViewedEmail = (new ProfileViewed(
+                        $viewerUser,
+                        $viewed,
+                        $viewerUser,
+                        new Carbon('now')
+                    ))->onQueue('emails');
 
-                Mail::to($viewed)
-                    ->queue($profileViewedEmail);
+                    Mail::to($viewed)
+                        ->queue($profileViewedEmail);
+                }
 
                 $userEmailTypeInstance = new UserEmailTypeInstance();
                 $userEmailTypeInstance->setEmail($viewed->getEmail());
