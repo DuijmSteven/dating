@@ -203,6 +203,8 @@ class UserSearchController extends FrontendController
             'users' => $users,
             'carbonNow' => Carbon::now(),
             'title' => $this->buildTitleWith(trans('view_titles.home')),
+            'city' => $city,
+            'radius' => 50
         ];
 
         return view(

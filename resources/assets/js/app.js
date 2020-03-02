@@ -81,14 +81,26 @@ $(window).on('load', function () {
     });
 
     if ($('.JS--searchResultsHeader').length > 0) {
+        clearTimeout($.data(this, 'removeHeadingTimer'));
+
+        $.data(this, 'removeHeadingTimer', setTimeout(function() {
+            $('.JS--searchResultsHeader').addClass('hidden');
+        }, 2500));
+
         $(window).scroll(function() {
             clearTimeout($.data(this, 'scrollTimer'));
 
             $.data(this, 'scrollTimer', setTimeout(function() {
-                if ($(window).scrollTop() > 120) {
+                if ($(window).scrollTop() > 60) {
                     $('.JS--searchResultsHeader').addClass('hidden');
                 } else {
                     $('.JS--searchResultsHeader').removeClass('hidden');
+
+                    clearTimeout($.data(this, 'removeHeadingTimer'));
+
+                    $.data(this, 'removeHeadingTimer', setTimeout(function() {
+                        $('.JS--searchResultsHeader').addClass('hidden');
+                    }, 2500));
                 }
             }, 100));
         });
