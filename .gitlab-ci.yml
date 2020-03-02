@@ -9,7 +9,27 @@ before_script:
   - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
 
 stages:
+  - deploy_staging
   - deploy_production
+
+deploy_staging:
+  stage: deploy_staging
+  environment:
+    name: staging
+  script:
+    - ssh opalampo@128.199.53.121 "cd /var/www/dating &&
+      git checkout master &&
+      git pull origin master &&
+      composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader &&
+      php artisan migrate --force &&
+      php artisan config:cache &&
+      php artisan route:cache &&
+      php artisan view:cache &&
+      php artisan optimize &&
+      php artisan queue:restart &&
+      exit"
+  only:
+    - staging
 
 deploy_production:
   stage: deploy_production
