@@ -28,8 +28,14 @@
         </li>
         <li class="{!! \Request::route()->getName() == 'admin.bots.online.show' ? 'active' : '' !!}">
             <a href="{!! route('admin.bots.online.show') !!}">
-                <i class="fa fa-list"></i>
+                <i class="fa fa-circle"></i>
                 Online
+            </a>
+        </li>
+        <li class="{!! \Request::route()->getName() == 'admin.bots.map.show' ? 'active' : '' !!}">
+            <a href="{!! route('admin.bots.map.show') !!}">
+                <i class="fa fa-map"></i>
+                On Map
             </a>
         </li>
     </ul>
@@ -57,8 +63,14 @@
         </li>
         <li class="{!! \Request::route()->getName() == 'admin.peasants.online.show' ? 'active' : '' !!}">
             <a href="{!! route('admin.peasants.online.show') !!}">
-                <i class="fa fa-list"></i>
+                <i class="fa fa-circle"></i>
                 Online
+            </a>
+        </li>
+        <li class="{!! \Request::route()->getName() == 'admin.peasants.map.show' ? 'active' : '' !!}">
+            <a href="{!! route('admin.peasants.map.show') !!}">
+                <i class="fa fa-map"></i>
+                On Map
             </a>
         </li>
     </ul>

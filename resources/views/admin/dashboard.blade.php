@@ -2,11 +2,12 @@
 
 @section('content')
 
+
     <div class="row">
         <div class="col-xs-12">
-            <div class="row">
+            <div class="row" style="margin-bottom: 20px">
                 <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3">
-                    <div class="box box-widget DashboardWidget">
+                    <a href="{{ route('admin.bots.online.show') }}" class="box box-widget DashboardWidget">
                         <!-- Add the bg color to the header using any of the bg-* classes -->
                         <div class="bg-info">
                             <div class="widget-us DashboardWidget_header" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
@@ -14,10 +15,10 @@
                                 <span class="DashboardWidget_header-title"><b>{{ $numberOfOnlineBots }} bots online</b></span>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3">
-                    <div class="box box-widget DashboardWidget">
+                    <a href="{{ route('admin.peasants.online.show') }}" class="box box-widget DashboardWidget">
                         <!-- Add the bg color to the header using any of the bg-* classes -->
                         <div class="bg-pinkish">
                             <div class="widget-us DashboardWidget_header" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
@@ -25,7 +26,7 @@
                                 <span class="DashboardWidget_header-title"><b>{{ $numberOfOnlinePeasants }} peasants online</b></span>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -184,6 +185,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 
 @endsection

@@ -212,6 +212,9 @@ Route::group([
         Route::get('/', 'Admin\PeasantController@index')
             ->name('admin.peasants.retrieve');
 
+        Route::get('/on-map', 'Admin\PeasantController@showOnMap')
+            ->name('admin.peasants.map.show');
+
         Route::get('/online', 'Admin\PeasantController@showOnline')
             ->name('admin.peasants.online.show');
 
@@ -417,6 +420,10 @@ Route::group([
     ], function () {
         Route::get('/', 'Admin\BotController@index')
             ->name('admin.bots.retrieve');
+
+        Route::get('/on-map', 'Admin\BotController@showOnMap')
+            ->name('admin.bots.map.show');
+
         Route::get('/create', 'Admin\BotController@create')
             ->name('admin.bots.create.get');
         Route::post('/create', 'Admin\BotController@store')

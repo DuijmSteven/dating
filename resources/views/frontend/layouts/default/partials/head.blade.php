@@ -25,7 +25,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
     <![endif]-->
 
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ config('googlmapper.key') }}&libraries=places" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ config('googlmapper.key') }}&libraries=places&callback=initMap" async defer></script>
     @toastr_css
 
 </head>

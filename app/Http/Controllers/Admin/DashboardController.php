@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Managers\StatisticsManager;
 use App\User;
 use Carbon\Carbon;
+use Cornford\Googlmapper\Mapper;
 use Kim\Activity\Activity;
 
 class DashboardController extends Controller

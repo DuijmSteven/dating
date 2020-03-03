@@ -36,6 +36,12 @@
                             Create
                         </a>
                     </li>
+                    <li class="{!! \Request::route()->getName() == 'admin.bots.map.show' ? 'active' : '' !!}">
+                        <a href="{!! route('admin.bots.map.show') !!}">
+                            <i class="fa fa-map"></i>
+                            On Map
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li>

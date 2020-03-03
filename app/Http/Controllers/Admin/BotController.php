@@ -65,6 +65,32 @@ class BotController extends Controller
         );
     }
 
+    public function showOnMap()
+    {
+        \Mapper::renderJavascript();
+        \Mapper::map(52.125927, 5.451147, ['zoom' => 8, 'markers' => ['title' => 'My Location', 'animation' => 'DROP']]);
+
+        $bots = User::with('meta')->whereHas('roles', function ($query) {
+            $query->where('id', User::TYPE_BOT);
+        })
+            ->get();
+
+        foreach ($bots as $bot) {
+            if ($bot->meta->lat && $bot->meta->lng) {
+                \Mapper::marker($bot->meta->lat,  $bot->meta->lng);
+            }
+        }
+
+        return view('admin.bots.map',
+            [
+                'title' => 'Bots on Map - ' . \config('app.name'),
+                'headingLarge' => 'Bots',
+                'headingSmall' => 'On Map',
+                'bots' => $bots
+            ]
+        );
+    }
+
     public function messagePeasantWithBot(int $botId, bool $onlyOnlinePeasants = false)
     {
         $onlineIds = Activity::users(10)->pluck('user_id')->toArray();

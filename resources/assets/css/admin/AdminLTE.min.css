@@ -6233,3 +6233,11 @@ table .action-buttons .btn {
     background-color: #00a65a;
     border-radius: 50%;
 }
+
+.DashboardWidget:hover {
+    text-decoration: none;
+}
+
+.fa.fa-circle {
+    color: #00a65a;
+}
