@@ -64,7 +64,9 @@ class SendProfileCompletionEmails extends Command
 
         /** @var User $user */
         foreach ($users as $user) {
-            $this->userManager->setProfileCompletionEmail($user);
+            if (!$user->isPayingUser()) {
+                $this->userManager->setProfileCompletionEmail($user);
+            }
         }
     }
 }
