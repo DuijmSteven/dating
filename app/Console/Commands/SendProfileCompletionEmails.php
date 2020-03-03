@@ -50,15 +50,16 @@ class SendProfileCompletionEmails extends Command
     public function handle()
     {
         $users = User::whereHas('roles', function ($query) {
-                $query->where('id', User::TYPE_PEASANT);
-            })->whereHas('emailTypes', function ($query) {
-                $query->where('id', EmailType::GENERAL);
-            })->whereDoesntHave('emailTypeInstances', function ($query) {
-                $query->where('email_type_id', EmailType::PROFILE_COMPLETION);
-                $query->where('created_at', '>=', Carbon::now('Europe/Amsterdam')->subDays(3)->toDateTimeString());
-            })
+            $query->where('id', User::TYPE_PEASANT);
+        })->whereHas('emailTypes', function ($query) {
+            $query->where('id', EmailType::GENERAL);
+        })->whereDoesntHave('emailTypeInstances', function ($query) {
+            $query->where('email_type_id', EmailType::PROFILE_COMPLETION);
+            $query->where('created_at', '>=', Carbon::now('Europe/Amsterdam')->subDays(10)->toDateTimeString());
+        })
             ->whereDoesntHave('profileImage')
-            ->where('created_at', '<=', Carbon::now('Europe/Amsterdam')->subMinutes(20)->toDateTimeString())
+            ->where('created_at', '<=', Carbon::now('Europe/Amsterdam')->subDays(1)->toDateTimeString())
+            ->where('created_at', '>=', Carbon::now('Europe/Amsterdam')->subDays(60)->toDateTimeString())
             ->where('active', true)
             ->get();
 
