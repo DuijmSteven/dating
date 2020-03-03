@@ -175,11 +175,17 @@ class UserSearchController extends FrontendController
             }
         }
 
+        $radius = 50;
+
+        if ($this->authenticatedUser->meta->looking_for_gender === 1) {
+            $radius = 80;
+        }
+
         $searchParameters = [
             'city_name' => $city,
             'lat' => $lat,
             'lng' => $lng,
-            'radius' => 50,
+            'radius' => $radius,
             'age' => null,
             'body_type' => null,
             'active' => 1,
