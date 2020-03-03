@@ -196,8 +196,30 @@
                 width: 80%;
                 padding: 30px 0;
             }
+        }
 
+        .LowProfileCompletion {
+            font-weight: 400;
+        }
 
+        .LowProfileCompletion .Tile__body {
+            position: relative;
+        }
+
+        .LowProfileCompletion .itemNotDone {
+            color: red;
+            position: relative;
+            top: 5px;
+        }
+
+        .LowProfileCompletion .itemMedium {
+            color: orange;
+            position: relative;
+        }
+
+        .LowProfileCompletion .itemDone {
+            color: green;
+            position: relative;
         }
     </style>
     <!-- Progressive Enhancements : END -->

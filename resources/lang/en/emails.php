@@ -7,7 +7,8 @@ return [
         'credits_bought' => 'Creditpack purchase',
         'deactivated' => 'Account deactivation',
         'reset_password' => 'Reset password',
-        'profile_viewed' => 'Profile Viewed'
+        'profile_viewed' => 'Profile Viewed',
+        'profile_completion' => 'Improve your profile!',
     ],
     'reset_password' => [
         'reason' => 'You are receiving this email because we received a password reset request for your account.',

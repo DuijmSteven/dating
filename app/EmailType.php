@@ -9,6 +9,8 @@ class EmailType extends Model
     const MESSAGE_RECEIVED = 1;
     const PROFILE_VIEWED = 2;
     const WELCOME = 3;
+    const PROFILE_COMPLETION = 4;
+    const GENERAL = 5;
 
     public $table = 'email_types';
 

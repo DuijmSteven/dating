@@ -102,7 +102,7 @@
                         Onthoud dat mensen die een <strong>profielafbeelding</strong></a> uploaden en hun profielinformatie invullen, veel grotere kansen hebben om mensen succesvol te ontmoeten!
                     </p>
                     <div class="well" style="text-align: justify; font-weight: 500;margin-bottom: 0">
-                        <strong style="font-size: 2.7rem;color: #ef4e27;margin-right: 11px;line-height: 2.7rem;">TIP</strong>Leden die een <a href="{{ route('users.edit-profile.get', ['username' => $authenticatedUser->username]) }}">profielafbeelding uploaden</a>
+                        <strong style="font-size: 2.7rem;color: #ef4e27;margin-right: 11px;line-height: 2.7rem;">TIP</strong>Leden die een <a href="{{ route('users.edit-profile.get', ['username' => $authenticatedUser->username]) }}">profielfoto uploaden</a>
                         en hun <a href="{{ route('users.edit-profile.get', ['username' => $authenticatedUser->username]) }}">profielinformatie invullen</a>,
                         hebben 70% meer kans op contact en een successvolle sexdate!
                     </div>

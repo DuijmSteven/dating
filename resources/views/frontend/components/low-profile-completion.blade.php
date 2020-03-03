@@ -24,16 +24,10 @@
         <br>
         <br>
 
-        Leden die een <a href="{{ route('users.edit-profile.get', ['username' => $authenticatedUser->username]) }}">profielafbeelding uploaden</a>
+        Leden die een <a href="{{ route('users.edit-profile.get', ['username' => $authenticatedUser->username]) }}">profielfoto uploaden</a>
         en hun <a href="{{ route('users.edit-profile.get', ['username' => $authenticatedUser->username]) }}">profielinformatie invullen</a>,
         hebben <b>70% meer kans op contact</b> en een successvolle sexdate!
 
-{{--        <div class="progress">--}}
-{{--            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ $user->profileRatioFilled*100 }}%;">--}}
-{{--                <span class="sr-only">{{ $user->profileRatioFilled*100 }}% Complete</span>--}}
-{{--                <span class="percentageText">{{ $user->profileRatioFilled*100 }}%</span>--}}
-{{--            </div>--}}
-{{--        </div>--}}
     </div>
     <div class="Tile__footer">
         <form method="post" action="{{ route('users.current.accept-profile-completion-message') }}">

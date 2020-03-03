@@ -85,6 +85,15 @@ class TestController extends Controller
         ]);
     }
 
+    public function showProfileCompletionEmail()
+    {
+        $user = User::find(1);
+
+        return view('emails.profile-completion', [
+            'user' => $user
+        ]);
+    }
+
     public function sendTestEmail()
     {
         $user = User::find(1);

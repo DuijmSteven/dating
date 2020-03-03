@@ -408,9 +408,11 @@
                                             >
                                             {{ @trans('edit_profile.user_email_types.' . $emailType->name) }}
                                         </label>
-                                        <div class="helpText">
-                                            {{ @trans('edit_profile.user_email_types.' . $emailType->name . '_help') }}
-                                        </div>
+                                        @if($emailType->id !== \App\EmailType::GENERAL)
+                                            <div class="helpText">
+                                                {{ @trans('edit_profile.user_email_types.' . $emailType->name . '_help') }}
+                                            </div>
+                                        @endif
                                     </div>
                                 @endforeach
                             </div>

@@ -4,6 +4,7 @@
 namespace App\Managers;
 
 use App\EmailType;
+use App\Mail\ProfileCompletion;
 use App\Mail\ProfileViewed;
 use App\RoleUser;
 use App\Session;
@@ -156,6 +157,12 @@ class UserManager
                 $userEmailTypeInstance->save();
             }
         }
+    }
+
+    public function setProfileCompletionEmail(User $user)
+    {
+        $profileCompletionEmail = (new ProfileCompletion($user))->onQueue('emails');
+        Mail::to($user)->queue($profileCompletionEmail);
     }
 
     /**
@@ -312,6 +319,7 @@ class UserManager
                 $query->where('id', User::TYPE_BOT);
             })
             ->orderByRaw('RAND()')->take($userAmount)
+            ->where('active', true)
             ->get();
 
         // This method is nly used in dev env so it is ok to do this

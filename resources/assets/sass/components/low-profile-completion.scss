@@ -5,24 +5,6 @@
         position: relative;
     }
 
-    .progress-bar {
-        position: relative;
-        background-color: #bf5152;
-    }
-
-    .progress {
-        position: absolute;
-        height: 17px;
-        right: 20px;
-        top: 15px;
-        width: 30%;
-
-        @media screen and (max-width: $screen-xs-max) {
-            left: 20px;
-            width: initial;
-        }
-    }
-
     .itemNotDone {
         color: red;
         position: relative;
@@ -57,9 +39,5 @@
         bottom: 0;
         font-size: 14px;
         font-weight: 400;
-
-        @media screen and (max-width: $screen-xs-max) {
-
-        }
     }
 }

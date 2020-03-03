@@ -21,7 +21,8 @@ class Kernel extends ConsoleKernel
         Commands\ImportLatestProductionDbExport::class,
         Commands\SendProfileViewedEmails::class,
         Commands\DuplicateProductionS3BucketToCurrentEnvironmentBucket::class,
-        Commands\UpdateCurrentEnvDbAndAws::class
+        Commands\UpdateCurrentEnvDbAndAws::class,
+        Commands\SendProfileCompletionEmails::class
     ];
 
     /**
@@ -32,8 +33,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-
-
         $timeNow = Carbon::now('Europe/Amsterdam'); // Current time
 
         $numberOfBotsToHaveOnline = rand(10,20);
@@ -51,6 +50,7 @@ class Kernel extends ConsoleKernel
         if (config('app.env') === 'production') {
             $schedule->command(ExportDb::class)->dailyAt("04:30");
             $schedule->command('users:emails:send-profile-viewed')->everyMinute();
+            $schedule->command('users:emails:send-profile-completion')->dailyAt("17:00");
         }
         
         if (config('app.env') === 'staging') {

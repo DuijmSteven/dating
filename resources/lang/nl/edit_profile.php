@@ -9,7 +9,8 @@ return [
         'new_message' => 'Nieuw bericht ontvangen',
         'new_message_help' => 'Ontvang een e-mail wanneer een gebruiker je een bericht stuurt en je niet bent ingelogd of actief',
         'profile_viewed' => 'Profiel bekeken',
-        'profile_viewed_help' => 'Ontvang een e-mail wanneer een gebruiker naar jouw profiel kijkt'
+        'profile_viewed_help' => 'Ontvang een e-mail wanneer een gebruiker naar jouw profiel kijkt',
+        'general' => 'Algemene meldingen',
     ],
     'image_limit_reached' => 'Je kan niet meer dan 10 afbeeldingen hebben. Verwijder eerst andere foto\'s.',
 

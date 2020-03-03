@@ -495,6 +495,9 @@ Route::group([
         Route::get('show-profile-viewed', 'TestController@showProfileViewedEmail')
             ->name('test.email.profile-viewed.show');
 
+        Route::get('show-profile-completion', 'TestController@showProfileCompletionEmail')
+            ->name('test.email.profile-completion.show');
+
         Route::get('send-test', 'TestController@sendTestEmail')
             ->name('test.email.send-test');
     });
