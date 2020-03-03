@@ -11,9 +11,10 @@
 
     <div class="col-xs-12">
         <div class="pagination__container text-right">
-            {!! $users->render() !!}
+            {!! $users->onEachSide(1)->links() !!}
         </div>
     </div>
 </div>
 
 @stop
+o

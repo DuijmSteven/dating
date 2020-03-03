@@ -84,6 +84,7 @@ return [
         'hair_color' => 'Hair color',
         'smoking_habits' => 'Smoking habits',
         'drinking_habits' => 'Drinking habits',
-    ]
+    ],
+    'with_profile_image' => 'Only with profile image'
 
 ];

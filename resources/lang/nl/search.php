@@ -3,5 +3,7 @@
 return [
     'distance' => 'Afstand',
     'all' => 'Alle',
-    'search' => 'Zoeken'
+    'search' => 'Zoeken',
+    'yes' => 'Ja',
+    'no' => 'Nee'
 ];

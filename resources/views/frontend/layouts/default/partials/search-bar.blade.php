@@ -67,6 +67,32 @@
                 @endforeach
             </select>
         </div>
+
+        <div class="form-group withProfileImage">
+            <?php
+                if (old('with_profile_image')) {
+                    $withProfileImage = old('with_profile_image');
+                } else {
+                    if (\Illuminate\Support\Facades\Cookie::get('searchWithProfileImageSet')) {
+                        $withProfileImage = \Illuminate\Support\Facades\Cookie::get('searchWithProfileImageSet');
+                    } else {
+                        $withProfileImage = !Session::get('searchParameters') || !isset(Session::get('searchParameters')['with_profile_image']) || Session::get('searchParameters')['with_profile_image'] == true ? true  : false;
+                    }
+                }
+            ?>
+
+            <label for="with_profile_image">{!! @trans('user_constants.with_profile_image') !!}</label>
+            <div>
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary {{ $withProfileImage ? 'active' : '' }}">
+                        <input name="with_profile_image" value="1" type="radio" {{ $withProfileImage ? 'checked' : '' }}> {{ trans('search.yes') }}
+                    </label>
+                    <label class="btn btn-primary {{ !$withProfileImage ? 'active' : '' }}">
+                        <input name="with_profile_image" value="0" type="radio" {{ !$withProfileImage ? 'checked' : '' }}> {{ trans('search.no') }}
+                    </label>
+                </div>
+            </div>
+        </div>
 {{--        <div class="form-group bodyType">--}}
 {{--            <label for="">{{ trans('user_constants.labels.body_type') }}</label>--}}
 {{--            <select name="body_type" class="form-control">--}}
@@ -92,8 +118,6 @@
 {{--            </select>--}}
 {{--        </div>--}}
         <div class="form-group submit text-right">
-            <label for="">&nbsp; </label>
-
             @include('frontend.components.button', [
                 'buttonContext' => 'form',
                 'buttonType' => 'submit',

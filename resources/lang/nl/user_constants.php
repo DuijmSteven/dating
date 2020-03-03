@@ -82,6 +82,7 @@ return [
         'hair_color' => 'Haarkleur',
         'smoking_habits' => 'Rookgedrag',
         'drinking_habits' => 'Drinkgewoontes',
-    ]
+    ],
+    'with_profile_image' => 'Alleen met profielfoto'
 
 ];

@@ -15,6 +15,10 @@
     top: 51px;
     z-index: 400;
 
+    form {
+        margin: 0;
+    }
+
     &.with-errors {
         padding-bottom: 30px;
     }
@@ -50,8 +54,40 @@
         width: 100%;
 
         @media (max-width: $screen-sm-max) {
+            margin-bottom: 10px;
+
             &.has-error {
                 padding-bottom: 30px;
+            }
+        }
+
+
+        &.withProfileImage {
+            .btn-primary {
+                background-color: #69595c;
+                border-color: #775e63;
+                color: #ccc;
+                font-weight: 500;
+                outline: 0;
+                height: 36px;
+
+                &:focus {
+                    outline: 0;
+                }
+
+                &:hover {
+                    outline: 0;
+                    background-color: #9d515e;
+                    border-color: #a98a90;
+                    color: #fff;
+                }
+
+                &.active {
+                    color: #fff;
+                    outline: 0;
+                    background-color: #c77c8a;
+                    border-color: #a98a90;
+                }
             }
         }
 
@@ -72,11 +108,15 @@
                 width: 20%;
             }
 
+            &.withProfileImage {
+                width: 25%;
+            }
+
             &.submit {
                 width: 70px;
                 position: absolute;
                 right: 10px;
-                bottom: 10px;
+                bottom: 9px;
                 padding-right: 0px;
 
                 button {
@@ -88,7 +128,6 @@
 
                 .material-icons {
                     position: relative;
-                    top: 4px;
                     font-size: 20px;
                     color: #fff;
                 }
@@ -108,7 +147,6 @@
 
             .material-icons {
                 position: relative;
-                top: 4px;
                 font-size: 20px;
                 color: #fff;
             }

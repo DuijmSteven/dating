@@ -128,6 +128,10 @@ class UserSearchManager
             }
         }
 
+        if (isset($parameters['with_profile_image']) && $parameters['with_profile_image']) {
+            $query = $query->whereHas('profileImage');
+        }
+
         $query = $query->whereHas('roles', function ($query) {
             $query->whereIn('id', [Role::ROLE_PEASANT, Role::ROLE_BOT]);
         });

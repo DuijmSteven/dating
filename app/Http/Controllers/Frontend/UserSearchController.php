@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Frontend;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Http\Requests\UserRequests\UserSearchRequest;
 use App\Managers\UserSearchManager;
-use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 
 /**
  * Class UserSearchController
@@ -58,6 +58,10 @@ class UserSearchController extends FrontendController
             $searchParameters = $userSearchRequest->all();
             $searchParameters['gender'] = $this->authenticatedUser->meta->getLookingForGender();
             $searchParameters['looking_for_gender'] = $this->authenticatedUser->meta->getGender();
+
+            if (isset($searchParameters['with_profile_image'])) {
+                Cookie::queue('searchWithProfileImageSet', $searchParameters['with_profile_image'], 60);
+            }
 
             if (isset($searchParameters['age'])) {
                 $ageMax = 100;
@@ -147,7 +151,6 @@ class UserSearchController extends FrontendController
             $user->save();
         }
 
-
         $city = 'Amsterdam';
         $lat = 52.379189;
         $lng = 4.899431;
@@ -162,6 +165,16 @@ class UserSearchController extends FrontendController
 //            $lng = $this->authenticatedUser->meta->getLng();
 //        }
 
+        if (Cookie::get('searchWithProfileImageSet')) {
+            $withProfileImage = Cookie::get('searchWithProfileImageSet');
+        } else {
+            if ($this->authenticatedUser->meta->looking_for_gender === 2) {
+                $withProfileImage = false;
+            } else {
+                $withProfileImage = true;
+            }
+        }
+
         $searchParameters = [
             'city_name' => $city,
             'lat' => $lat,
@@ -171,6 +184,7 @@ class UserSearchController extends FrontendController
             'body_type' => null,
             'active' => 1,
             'height' => null,
+            'with_profile_image' => $withProfileImage,
             'gender' => $this->authenticatedUser->meta->getLookingForGender(),
             'looking_for_gender' => $this->authenticatedUser->meta->getGender(),
         ];
