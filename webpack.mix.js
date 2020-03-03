@@ -51,8 +51,7 @@ mix.scripts([
     'resources/assets/js/admin/jquery.sparkline.min.js',
     'resources/assets/js/admin/moment.min.js',
     'resources/assets/js/admin/raphael.min.js',
-    'resources/assets/js/admin/custom.js',
-    'resources/assets/js/admin/markerclusterer.js',
+    'resources/assets/js/admin/custom.js'
 ], 'public/admin/js/plugins.js')
     .sourceMaps()
     .version();
