@@ -17,4 +17,4 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
-<script src="https://maps.googleapis.com/maps/api/js?key={{ config('googlmapper.key') }}&libraries=places" async defer></script>
+<script src="http://maps.googleapis.com/maps/api/js?key={{ config('googlmapper.key') }}&libraries=places"></script>
