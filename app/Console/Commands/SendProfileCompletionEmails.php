@@ -49,8 +49,6 @@ class SendProfileCompletionEmails extends Command
      */
     public function handle()
     {
-        $timeNow = Carbon::now('Europe/Amsterdam'); // Current time
-
         $users = User::whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_PEASANT);
             })->whereHas('emailTypes', function ($query) {
@@ -60,10 +58,9 @@ class SendProfileCompletionEmails extends Command
                 $query->where('created_at', '>=', Carbon::now('Europe/Amsterdam')->subDays(3)->toDateTimeString());
             })
             ->whereDoesntHave('profileImage')
+            ->where('created_at', '<=', Carbon::now('Europe/Amsterdam')->subMinutes(20)->toDateTimeString())
             ->where('active', true)
             ->get();
-
-        dd(count($users));
 
         /** @var User $user */
         foreach ($users as $user) {
