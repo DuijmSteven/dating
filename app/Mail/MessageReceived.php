@@ -20,7 +20,6 @@ class MessageReceived extends Mailable implements ShouldQueue
     /** @var string */
     public $message;
 
-
     /** @var bool */
     public $hasMessage;
 
