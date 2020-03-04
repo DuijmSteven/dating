@@ -83,7 +83,7 @@
         }
 
         p {
-            font-size: 16px;
+            font-size: 17px;
         }
         /* What it does: Prevents Gmail from changing the text color in conversation threads. */
         .im {
@@ -175,7 +175,7 @@
 
         .UserSummary__profileImage {
             width: 40%;
-            padding: 50px 0;
+            padding: 40px 0 10px;
         }
 
         .UserSummary__userInfo__primary {
@@ -194,7 +194,7 @@
         @media screen and (max-width: 767px) {
             .UserSummary__profileImage {
                 width: 80%;
-                padding: 30px 0;
+                padding: 30px 0 10px;
             }
         }
 

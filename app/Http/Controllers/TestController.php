@@ -68,6 +68,10 @@ class TestController extends Controller
             'user' => $sender,
             'messageSender' => $sender,
             'messageRecipient' => $recipient,
+            'hasAttachment' => true,
+            'hasBoth' => false,
+            'hasMessage' => false,
+            'message' => 'Hey there, it feels like it has been quite a while since we last talked! Are you up for a drink?',
             'carbonNow' => Carbon::now()
         ]);
     }

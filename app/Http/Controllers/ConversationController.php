@@ -105,7 +105,11 @@ class ConversationController extends Controller
 
                 if (!in_array($recipient->getId(), $onlineUserIds)) {
                     if (config('app.env') === 'production') {
-                        $messageReceivedEmail = (new MessageReceived($sender, $recipient))->onQueue('emails');
+                        $message = $messageData['message'];
+                        $hasAttachment = $messageData['attachment'];
+
+                        $messageReceivedEmail = (new MessageReceived($sender, $recipient, $message, $hasAttachment))
+                            ->onQueue('emails');
                         Mail::to($recipient)->queue($messageReceivedEmail);
                     }
 

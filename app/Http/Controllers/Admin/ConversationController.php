@@ -183,6 +183,7 @@ class ConversationController extends Controller
     /**
      * @param AddInvisibleImageToConversationRequest $request
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws \Exception
      */
     public function addInvisibleImageToConversation(AddInvisibleImageToConversationRequest $request)
     {
@@ -271,7 +272,7 @@ class ConversationController extends Controller
 
             if (!in_array($recipient->getId(), $onlineUserIds)) {
 
-                $messageReceivedEmail = (new MessageReceived($sender, $recipient))->onQueue('emails');
+                $messageReceivedEmail = (new MessageReceived($sender, $recipient, $body, true))->onQueue('emails');
 
                 Mail::to($recipient)
                     ->queue($messageReceivedEmail);
@@ -326,7 +327,7 @@ class ConversationController extends Controller
 
                 if (!in_array($recipient->getId(), $onlineUserIds)) {
                     if (config('app.env') === 'production') {
-                        $messageReceivedEmail = (new MessageReceived($sender, $recipient))->onQueue('emails');
+                        $messageReceivedEmail = (new MessageReceived($sender, $recipient, $messageData['message'], $messageData['attachment']))->onQueue('emails');
 
                         Mail::to($recipient)
                             ->queue($messageReceivedEmail);

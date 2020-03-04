@@ -22,15 +22,28 @@
 
     <p style="font-family: sans-serif; font-weight: normal; margin: 0; Margin-bottom: 15px;">Beste {{ $messageRecipient->username }},</p>
 
+
+
     <p style="margin-bottom: 0">
-        Je hebt een bericht ontvangen van <b> {{ $messageSender->username }}</b> op <b>Altijdsex.nl</b>. Klik op onderstaande link om het bericht direct te bekijken!
+        Je hebt {{ $hasMessage ? ' een bericht ' : '' }} {{  $hasBoth ? ' met ' : '' }} {{ $hasAttachment ? ' een foto ' : '' }} ontvangen van <b> {{ $messageSender->username }}</b> op <b>Altijdsex.nl</b>. Klik op onderstaande link om het bericht direct te bekijken!
     </p>
+
+    @if($hasMessage)
+        <h3 style="margin-bottom: 3px">Het bericht</h3>
+        <p style="border: 1px solid #ecebeb;
+            padding: 10px;
+            border-radius: 7px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            margin-top: 3px;"
+        >
+            {{ substr($message, 0, 50) }} {{ strlen($message) > 50 ? '...' : '' }}
+        </p>
+    @endif
 
     <div style="text-align: center">
         <div class="Tile UserSummary" data-user-id="{!! $messageSender->getId() !!}">
             <div class="Tile__body UserSummary__body">
                 <div class="UserSummary__user-image">
-
                     <a href="{{ route('users.show', ['username' => $messageSender->getUsername()])  }}">
                         <img
                             class="UserSummary__profileImage JS--galleryImage"

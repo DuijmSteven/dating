@@ -163,6 +163,13 @@ class UserManager
     {
         $profileCompletionEmail = (new ProfileCompletion($user))->onQueue('emails');
         Mail::to($user)->queue($profileCompletionEmail);
+
+        $userEmailTypeInstance = new UserEmailTypeInstance();
+        $userEmailTypeInstance->setEmail($user->getEmail());
+        $userEmailTypeInstance->setReceiverId($user->getId());
+        $userEmailTypeInstance->setEmailTypeId(EmailType::PROFILE_COMPLETION);
+
+        $userEmailTypeInstance->save();
     }
 
     /**
