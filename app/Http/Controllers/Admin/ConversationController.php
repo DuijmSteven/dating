@@ -268,11 +268,17 @@ class ConversationController extends Controller
         );
 
         if ($recipientHasMessageNotificationsEnabled) {
-            $onlineUserIds = Activity::users(1)->pluck('user_id')->toArray();
+            $onlineUserIds = Activity::users(5)->pluck('user_id')->toArray();
+
 
             if (!in_array($recipient->getId(), $onlineUserIds)) {
 
-                $messageReceivedEmail = (new MessageReceived($sender, $recipient, $body, true))->onQueue('emails');
+                $messageReceivedEmail = (new MessageReceived(
+                    $sender,
+                    $recipient,
+                    $body,
+                    true
+                ))->onQueue('emails');
 
                 Mail::to($recipient)
                     ->queue($messageReceivedEmail);
@@ -323,11 +329,16 @@ class ConversationController extends Controller
             );
 
             if ($recipientHasMessageNotificationsEnabled) {
-                $onlineUserIds = Activity::users(1)->pluck('user_id')->toArray();
+                $onlineUserIds = Activity::users(5)->pluck('user_id')->toArray();
 
                 if (!in_array($recipient->getId(), $onlineUserIds)) {
                     if (config('app.env') === 'production') {
-                        $messageReceivedEmail = (new MessageReceived($sender, $recipient, $messageData['message'], $messageData['attachment']))->onQueue('emails');
+                        $messageReceivedEmail = (new MessageReceived(
+                            $sender,
+                            $recipient,
+                            $messageData['message'],
+                            $messageData['attachment']
+                        ))->onQueue('emails');
 
                         Mail::to($recipient)
                             ->queue($messageReceivedEmail);

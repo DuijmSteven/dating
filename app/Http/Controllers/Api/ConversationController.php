@@ -154,6 +154,10 @@ class ConversationController
             /** @var User $user */
             $user = User::find($userId);
 
+            if (!($user instanceof User)) {
+                \Log::debug('User with ID: ' . $userId . ' does not exist.');
+            }
+
             return JsonResponse::create($user->getConversationManagerState(), 200);
         } catch (\Exception $exception) {
             return JsonResponse::create($exception->getMessage(), 500);

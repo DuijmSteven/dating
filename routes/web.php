@@ -55,8 +55,8 @@ Route::post('/', 'Auth\RegisterController@register')
     ->middleware('guest')
     ->name('register.post');
 
-//Route::get('deactivated', 'Frontend\UserController@showDeactivated')
-//    ->name('users.deactivated.get');
+Route::get('deactivated', 'Frontend\UserController@showDeactivated')
+    ->name('users.deactivated.get');
 
 Route::post('redirect-back', 'Frontend\UserController@redirectBack')
     ->name('users.redirect-back');

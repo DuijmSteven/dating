@@ -108,7 +108,12 @@ class ConversationController extends Controller
                         $message = $messageData['message'];
                         $hasAttachment = $messageData['attachment'];
 
-                        $messageReceivedEmail = (new MessageReceived($sender, $recipient, $message, $hasAttachment))
+                        $messageReceivedEmail = (new MessageReceived(
+                            $sender,
+                            $recipient,
+                            $message,
+                            $hasAttachment
+                        ))
                             ->onQueue('emails');
                         Mail::to($recipient)->queue($messageReceivedEmail);
                     }
