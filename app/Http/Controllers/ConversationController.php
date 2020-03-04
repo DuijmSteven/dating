@@ -100,11 +100,11 @@ class ConversationController extends Controller
                 $recipientEmailTypeIds
             );
 
-//            if ($recipientHasMessageNotificationsEnabled) {
+            if ($recipientHasMessageNotificationsEnabled) {
                 $onlineUserIds = Activity::users(5)->pluck('user_id')->toArray();
 
-//                if (!in_array($recipient->getId(), $onlineUserIds) && $recipient->isPeasant()) {
-//                    if (config('app.env') === 'production') {
+                if (!in_array($recipient->getId(), $onlineUserIds) && $recipient->isPeasant()) {
+                    if (config('app.env') === 'production') {
                         $hasAttachment = isset($messageData['attachment']) && $messageData['attachment'] ? true : false;
                         $message = isset($messageData['message']) && strlen($messageData['message']) > 0 ? $messageData['message'] : null;
 
@@ -115,18 +115,16 @@ class ConversationController extends Controller
                             $hasAttachment
                         ))
                             ->onQueue('emails');
-                        $recipient->setEmail('orestis.palampougioukis@gmail.com');
-
                         Mail::to($recipient)->queue($messageReceivedEmail);
-//                    }
+                    }
 
                     $recipient->emailTypeInstances()->attach(EmailType::MESSAGE_RECEIVED, [
-                        'email' => $recipient->getEmail() ?? 'orestis.palampougioukis@gmail.com',
+                        'email' => $recipient->getEmail(),
                         'email_type_id' => EmailType::MESSAGE_RECEIVED,
                         'actor_id' => $sender->getId()
                     ]);
-//                }
-//            }
+                }
+            }
 
             $alerts[] = [
                 'type' => 'success',
