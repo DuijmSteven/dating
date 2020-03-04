@@ -3,7 +3,7 @@
 @section('content')
 
     <h1 style="margin: 0 0 30px; font-size: 25px; line-height: 30px; color: #333333; font-weight: bold; text-align: center">
-        Verbeter jouw profiel en vergroot jouw kans op suces!
+        Verbeter jouw profiel en vergroot jouw kans op succes!
     </h1>
 
     <p style="font-family: sans-serif; font-weight: normal; margin: 0; Margin-bottom: 15px;">Beste {{ $user->username }},</p>
