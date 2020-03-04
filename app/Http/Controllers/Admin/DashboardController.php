@@ -8,6 +8,9 @@ use App\Managers\StatisticsManager;
 use App\User;
 use Carbon\Carbon;
 use Cornford\Googlmapper\Mapper;
+use DateInterval;
+use DatePeriod;
+use DateTime;
 use Kim\Activity\Activity;
 
 class DashboardController extends Controller
@@ -23,6 +26,7 @@ class DashboardController extends Controller
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Exception
      */
     public function dashboard()
     {
@@ -209,11 +213,33 @@ class DashboardController extends Controller
 
         $labels = [];
         $counts = [];
+
+        $datesWithRegistrations = [];
+        $registrationsPerDate = [];
         foreach ($results as $result) {
-            $labels[] = explode(' ', $result->registrationDate)[0];
-            $counts[] = $result->registrationCount;
+            $datesWithRegistrations[] = explode(' ', $result->registrationDate)[0];
+            $registrationsPerDate[explode(' ', $result->registrationDate)[0]] = $result->registrationCount;
         }
 
+        $period = new DatePeriod(
+            new DateTime($datesWithRegistrations[0]),
+            new DateInterval('P1D'),
+            new DateTime($datesWithRegistrations[count($datesWithRegistrations) - 1])
+        );
+
+        /**
+         * @var  $key
+         * @var DateTime $value
+         */
+        foreach ($period as $key => $value) {
+            $labels[] = $value->format('Y-m-d');
+
+            if (in_array($value->format('Y-m-d'), $datesWithRegistrations)) {
+                $counts[] = $registrationsPerDate[$value->format('Y-m-d')];
+            } else {
+                $counts[] = 0;
+            }
+        }
 
         $registrationsChart->labels($labels);
         $registrationsChart->dataset('Registrations over time', 'line', $counts);
