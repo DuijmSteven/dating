@@ -47,9 +47,12 @@ class MessageReceived extends Mailable implements ShouldQueue
         $this->hasBoth = false;
         $this->hasOnlyAttachment = false;
         $this->hasOnlyMessage = false;
+        $this->hasMessage = false;
         $this->carbonNow = Carbon::now('Europe/Amsterdam');
 
         if (strlen($message) > 0) {
+            $this->hasMessage = true;
+
             if ($hasAttachment) {
                 $this->hasBoth = true;
             } else {
