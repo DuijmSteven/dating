@@ -103,7 +103,7 @@ class ConversationController extends Controller
             if ($recipientHasMessageNotificationsEnabled) {
                 $onlineUserIds = Activity::users(5)->pluck('user_id')->toArray();
 
-                if (!in_array($recipient->getId(), $onlineUserIds) && $recipient->is) {
+                if (!in_array($recipient->getId(), $onlineUserIds) && $recipient->isPeasant()) {
                     if (config('app.env') === 'production') {
                         $hasAttachment = isset($messageData['attachment']) && $messageData['attachment'] ? true : false;
                         $message = isset($messageData['message']) && $messageData['message'] ? $messageData['message'] : null;
