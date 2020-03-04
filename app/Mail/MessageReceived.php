@@ -17,16 +17,12 @@ class MessageReceived extends Mailable implements ShouldQueue
     public $messageRecipient;
     public $carbonNow;
 
-    /** @var string */
     public $message;
 
-    /** @var bool */
     public $hasMessage;
 
-    /** @var bool */
     public $hasAttachment;
 
-    /** @var bool */
     public $hasBoth;
 
     /**
@@ -43,13 +39,13 @@ class MessageReceived extends Mailable implements ShouldQueue
     ) {
         $this->messageSender = $messageSender;
         $this->messageRecipient = $messageRecipient;
-        $this->message = $message;
         $this->hasBoth = false;
         $this->hasAttachment = false;
         $this->hasMessage = false;
         $this->carbonNow = Carbon::now('Europe/Amsterdam');
 
         if (strlen($message) > 0) {
+            $this->message = $message;
             $this->hasMessage = true;
 
             if ($hasAttachment) {
