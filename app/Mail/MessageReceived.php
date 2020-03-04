@@ -5,9 +5,9 @@ namespace App\Mail;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class MessageReceived extends Mailable implements ShouldQueue
 {
@@ -17,7 +17,7 @@ class MessageReceived extends Mailable implements ShouldQueue
     public $messageRecipient;
     public $carbonNow;
 
-    public $message;
+    public $messageBody;
 
     public $hasMessage;
 
@@ -28,13 +28,16 @@ class MessageReceived extends Mailable implements ShouldQueue
     /**
      * Create a new message instance.
      *
-     * @return void
+     * @param User $messageSender
+     * @param User $messageRecipient
+     * @param string $messageBody
+     * @param bool $hasAttachment
      * @throws \Exception
      */
     public function __construct(
         User $messageSender,
         User $messageRecipient,
-        string $message,
+        string $messageBody,
         bool $hasAttachment
     ) {
         $this->messageSender = $messageSender;
@@ -44,8 +47,8 @@ class MessageReceived extends Mailable implements ShouldQueue
         $this->hasMessage = false;
         $this->carbonNow = Carbon::now('Europe/Amsterdam');
 
-        if (strlen($message) > 0) {
-            $this->message = $message;
+        if (strlen($messageBody) > 0) {
+            $this->messageBody = $messageBody;
             $this->hasMessage = true;
 
             if ($hasAttachment) {

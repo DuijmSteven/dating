@@ -36,7 +36,7 @@
             box-shadow: 0 1px 2px rgba(0,0,0,0.2);
             margin-top: 3px;"
         >
-            {{ substr($message, 0, 50) }} {{ strlen($message) > 50 ? '...' : '' }}
+            {{ substr($messageBody, 0, 50) }} {{ strlen($messageBody) > 50 ? '...' : '' }}
         </p>
     @endif
 
