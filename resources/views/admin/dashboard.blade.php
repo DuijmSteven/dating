@@ -205,4 +205,23 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-xs-12">
+            <div style="width: 100%">
+                {!! $paymentsChart->container() !!}
+                {!! $paymentsChart->script() !!}
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div style="width: 100%">
+                {!! $revenueChart->container() !!}
+                {!! $revenueChart->script() !!}
+            </div>
+        </div>
+    </div>
+
 @endsection

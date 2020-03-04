@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Charts\PaymentsChart;
 use App\Charts\PeasantMessagesChart;
 use App\Charts\RegistrationsChart;
+use App\Charts\RevenueChart;
 use App\Http\Controllers\Controller;
 use App\Managers\StatisticsManager;
+use App\Payment;
 use App\User;
 use Carbon\Carbon;
 use Cornford\Googlmapper\Mapper;
@@ -206,9 +209,124 @@ class DashboardController extends Controller
                 'headingLarge' => 'Dashboard',
                 'headingSmall' => 'Site Statistics',
                 'registrationsChart' => $this->createRegistrationsChart(),
-                'peasantMessagesChart' => $this->createPeasantMessagesChart()
+                'peasantMessagesChart' => $this->createPeasantMessagesChart(),
+                'paymentsChart' => $this->createPaymentsChart(),
+                'revenueChart' => $this->createRevenueChart()
             ]
         ));
+    }
+
+    /**
+     * @return RevenueChart
+     * @throws \Exception
+     */
+    protected function createRevenueChart(): RevenueChart
+    {
+        $reveueChart = new RevenueChart();
+
+        $query = 'SELECT
+                     payments.created_at AS creationDate,
+                     SUM(payments.amount) AS revenueOnDay
+                    FROM payments
+                    LEFT JOIN users on users.id = payments.user_id
+                    LEFT JOIN role_user on role_user.user_id = users.id
+                    WHERE role_user.role_id = ' . User::TYPE_PEASANT . '
+                     AND payments.status = ' . Payment::STATUS_COMPLETED . '
+                    GROUP BY DAY(creationDate)
+                    ORDER BY creationDate ASC';
+
+        $results = \DB::select($query);
+
+        $labels = [];
+        $counts = [];
+
+        $datesWithRevenue = [];
+        $revenuePerDate = [];
+        foreach ($results as $result) {
+            $datesWithRevenue[] = explode(' ', $result->creationDate)[0];
+
+            $revenuePerDate[explode(' ', $result->creationDate)[0]] = (int) $result->revenueOnDay / 100;
+        }
+
+        $period = new DatePeriod(
+            new DateTime($datesWithRevenue[0]),
+            new DateInterval('P1D'),
+            (new DateTime($datesWithRevenue[count($datesWithRevenue) - 1]))->modify('+1 day')
+        );
+
+        /**
+         * @var  $key
+         * @var DateTime $value
+         */
+        foreach ($period as $key => $value) {
+            $labels[] = $value->format('Y-m-d');
+
+            if (in_array($value->format('Y-m-d'), $datesWithRevenue)) {
+                $counts[] = $revenuePerDate[$value->format('Y-m-d')];
+            } else {
+                $counts[] = 0;
+            }
+        }
+
+        $reveueChart->labels($labels);
+        $reveueChart->dataset('Revenue over time', 'line', $counts);
+        return $reveueChart;
+    }
+
+    /**
+     * @return PaymentsChart
+     * @throws \Exception
+     */
+    protected function createPaymentsChart(): PaymentsChart
+    {
+        $paymentsChart = new PaymentsChart();
+
+        $query = 'SELECT
+                     payments.created_at AS creationDate,
+                     COUNT(payments.id) AS paymentsCount
+                    FROM payments
+                    LEFT JOIN users on users.id = payments.user_id
+                    LEFT JOIN role_user on role_user.user_id = users.id
+                    WHERE role_user.role_id = ' . User::TYPE_PEASANT . '
+                     AND payments.status = ' . Payment::STATUS_COMPLETED . '
+                    GROUP BY DAY(creationDate)
+                    ORDER BY creationDate ASC';
+
+        $results = \DB::select($query);
+
+        $labels = [];
+        $counts = [];
+
+        $datesWithPayments = [];
+        $paymentsPerDate = [];
+        foreach ($results as $result) {
+            $datesWithPayments[] = explode(' ', $result->creationDate)[0];
+            $paymentsPerDate[explode(' ', $result->creationDate)[0]] = $result->paymentsCount;
+        }
+
+        $period = new DatePeriod(
+            new DateTime($datesWithPayments[0]),
+            new DateInterval('P1D'),
+            (new DateTime($datesWithPayments[count($datesWithPayments) - 1]))->modify('+1 day')
+        );
+
+        /**
+         * @var  $key
+         * @var DateTime $value
+         */
+        foreach ($period as $key => $value) {
+            $labels[] = $value->format('Y-m-d');
+
+            if (in_array($value->format('Y-m-d'), $datesWithPayments)) {
+                $counts[] = $paymentsPerDate[$value->format('Y-m-d')];
+            } else {
+                $counts[] = 0;
+            }
+        }
+
+        $paymentsChart->labels($labels);
+        $paymentsChart->dataset('Payments over time', 'line', $counts);
+        return $paymentsChart;
     }
 
     /**
