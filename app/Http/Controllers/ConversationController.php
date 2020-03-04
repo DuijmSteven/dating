@@ -106,7 +106,7 @@ class ConversationController extends Controller
                 if (!in_array($recipient->getId(), $onlineUserIds)) {
                     if (config('app.env') === 'production') {
                         $message = $messageData['message'];
-                        $hasAttachment = $messageData['attachment'];
+                        $hasAttachment = isset($messageData['attachment']) && $messageData['attachment'] ? true : false;
 
                         $messageReceivedEmail = (new MessageReceived(
                             $sender,

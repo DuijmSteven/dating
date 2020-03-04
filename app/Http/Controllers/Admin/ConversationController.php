@@ -333,11 +333,14 @@ class ConversationController extends Controller
 
                 if (!in_array($recipient->getId(), $onlineUserIds)) {
                     if (config('app.env') === 'production') {
+                        $hasAttachment = isset($messageData['attachment']) && $messageData['attachment'] ? true : false;
+                        $message = isset($messageData['message']) && $messageData['message'] ? $messageData['message'] : null;
+
                         $messageReceivedEmail = (new MessageReceived(
                             $sender,
                             $recipient,
-                            $messageData['message'],
-                            $messageData['attachment']
+                            $message,
+                            $hasAttachment
                         ))->onQueue('emails');
 
                         Mail::to($recipient)
