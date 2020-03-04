@@ -20,7 +20,11 @@
                     @if ($page == $paginator->currentPage())
                         <li class="page-item active"><span class="page-link">{{ $page }}</span></li>
                     @else
-                        @if ($page <= $paginator->currentPage() + 2)
+                        @if (
+                            $page === 1 ||
+                            ($page >= $paginator->currentPage() - 2 && $page < $paginator->currentPage()) ||
+                            $page <= $paginator->currentPage()  + 2 && $page > $paginator->currentPage()
+                        )
                             <li class="page-item"><a class="page-link" href="{{ $url }}">{{ $page }}</a></li>
                         @endif
                     @endif
