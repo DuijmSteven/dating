@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Charts\PeasantMessagesChart;
 use App\Charts\RegistrationsChart;
 use App\Http\Controllers\Controller;
 use App\Managers\StatisticsManager;
@@ -198,6 +199,79 @@ class DashboardController extends Controller
             ],
         ];
 
+        return view('admin.dashboard', array_merge(
+            $viewData,
+            [
+                'title' => 'Dashboard - ' . \config('app.name'),
+                'headingLarge' => 'Dashboard',
+                'headingSmall' => 'Site Statistics',
+                'registrationsChart' => $this->createRegistrationsChart(),
+                'peasantMessagesChart' => $this->createPeasantMessagesChart()
+            ]
+        ));
+    }
+
+    /**
+     * @return PeasantMessagesChart
+     * @throws \Exception
+     */
+    protected function createPeasantMessagesChart(): PeasantMessagesChart
+    {
+        $peasantMessagesChart = new PeasantMessagesChart();
+
+        $query = 'SELECT
+                     conversation_messages.created_at AS creationDate,
+                     COUNT(conversation_messages.id) AS messagesCount
+                    FROM conversation_messages
+                    LEFT JOIN users on users.id = conversation_messages.sender_id
+                    LEFT JOIN role_user on role_user.user_id = users.id
+                    WHERE role_user.role_id = ' . User::TYPE_PEASANT . '
+                    GROUP BY DAY(creationDate)
+                    ORDER BY creationDate ASC';
+
+        $results = \DB::select($query);
+
+        $labels = [];
+        $counts = [];
+
+        $datesWithMessages = [];
+        $messagesPerDate = [];
+        foreach ($results as $result) {
+            $datesWithMessages[] = explode(' ', $result->creationDate)[0];
+            $messagesPerDate[explode(' ', $result->creationDate)[0]] = $result->messagesCount;
+        }
+
+        $period = new DatePeriod(
+            new DateTime($datesWithMessages[0]),
+            new DateInterval('P1D'),
+            (new DateTime($datesWithMessages[count($datesWithMessages) - 1]))->modify('+1 day')
+        );
+
+        /**
+         * @var  $key
+         * @var DateTime $value
+         */
+        foreach ($period as $key => $value) {
+            $labels[] = $value->format('Y-m-d');
+
+            if (in_array($value->format('Y-m-d'), $datesWithMessages)) {
+                $counts[] = $messagesPerDate[$value->format('Y-m-d')];
+            } else {
+                $counts[] = 0;
+            }
+        }
+
+        $peasantMessagesChart->labels($labels);
+        $peasantMessagesChart->dataset('Peasant messages over time', 'line', $counts);
+        return $peasantMessagesChart;
+    }
+
+    /**
+     * @return RegistrationsChart
+     * @throws \Exception
+     */
+    protected function createRegistrationsChart(): RegistrationsChart
+    {
         $registrationsChart = new RegistrationsChart();
 
         $query = 'SELECT
@@ -220,7 +294,7 @@ class DashboardController extends Controller
             $datesWithRegistrations[] = explode(' ', $result->registrationDate)[0];
             $registrationsPerDate[explode(' ', $result->registrationDate)[0]] = $result->registrationCount;
         }
-        
+
         $period = new DatePeriod(
             new DateTime($datesWithRegistrations[0]),
             new DateInterval('P1D'),
@@ -243,15 +317,6 @@ class DashboardController extends Controller
 
         $registrationsChart->labels($labels);
         $registrationsChart->dataset('Registrations over time', 'line', $counts);
-
-        return view('admin.dashboard', array_merge(
-            $viewData,
-            [
-                'title' => 'Dashboard - ' . \config('app.name'),
-                'headingLarge' => 'Dashboard',
-                'headingSmall' => 'Site Statistics',
-                'registrationsChart' => $registrationsChart
-            ]
-        ));
+        return $registrationsChart;
     }
 }
