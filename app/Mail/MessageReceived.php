@@ -22,16 +22,13 @@ class MessageReceived extends Mailable implements ShouldQueue
 
 
     /** @var bool */
-    public $hasOnlyMessage;
+    public $hasMessage;
 
     /** @var bool */
-    public $hasOnlyAttachment;
+    public $hasAttachment;
 
     /** @var bool */
     public $hasBoth;
-
-    /** @var bool */
-    public $hasMessage;
 
     /**
      * Create a new message instance.
@@ -49,8 +46,7 @@ class MessageReceived extends Mailable implements ShouldQueue
         $this->messageRecipient = $messageRecipient;
         $this->message = $message;
         $this->hasBoth = false;
-        $this->hasOnlyAttachment = false;
-        $this->hasOnlyMessage = false;
+        $this->hasAttachment = false;
         $this->hasMessage = false;
         $this->carbonNow = Carbon::now('Europe/Amsterdam');
 
@@ -59,11 +55,10 @@ class MessageReceived extends Mailable implements ShouldQueue
 
             if ($hasAttachment) {
                 $this->hasBoth = true;
-            } else {
-                $this->hasOnlyMessage = true;
+                $this->hasAttachment = true;
             }
         } elseif ($hasAttachment) {
-            $this->hasOnlyAttachment = true;
+            $this->hasAttachment = true;
         } else {
             throw new \Exception('An email should have a message or an attachment');
         }
