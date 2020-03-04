@@ -220,11 +220,11 @@ class DashboardController extends Controller
             $datesWithRegistrations[] = explode(' ', $result->registrationDate)[0];
             $registrationsPerDate[explode(' ', $result->registrationDate)[0]] = $result->registrationCount;
         }
-
+        
         $period = new DatePeriod(
             new DateTime($datesWithRegistrations[0]),
             new DateInterval('P1D'),
-            new DateTime($datesWithRegistrations[count($datesWithRegistrations) - 1])
+            (new DateTime($datesWithRegistrations[count($datesWithRegistrations) - 1]))->modify('+1 day')
         );
 
         /**
