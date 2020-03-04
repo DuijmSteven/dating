@@ -2,7 +2,6 @@
 
 @section('content')
 
-
     <div class="row">
         <div class="col-xs-12">
             <div class="row" style="margin-bottom: 20px">
@@ -186,6 +185,15 @@
             </div>
         </div>
 
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div style="width: 100%">
+                {!! $registrationsChart->container() !!}
+                {!! $registrationsChart->script() !!}
+            </div>
+        </div>
     </div>
 
 @endsection

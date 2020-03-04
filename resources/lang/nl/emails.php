@@ -8,7 +8,7 @@ return [
         'deactivated' => 'Account gedeactiveerd',
         'reset_password' => 'Wachtwoord opnieuw instellen',
         'profile_viewed' => ':username heeft jouw profiel bekeken!',
-        'profile_completion' => 'Verbeter jouw profiel en vergroot jouw kans op suces!',
+        'profile_completion' => 'Verbeter jouw profiel en vergroot jouw kans op succes!',
     ],
     'reset_password' => [
         'reason' => 'Je ontvangt deze e-mail omdat we een verzoek hebben ontvangen om jouw wachtwoord opnieuw in te stellen.',

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Charts\RegistrationsChart;
 use App\Http\Controllers\Controller;
 use App\Managers\StatisticsManager;
 use App\User;
@@ -193,12 +194,37 @@ class DashboardController extends Controller
             ],
         ];
 
+        $registrationsChart = new RegistrationsChart();
+
+        $query = 'SELECT
+                     users.created_at AS registrationDate,
+                     COUNT(id) AS registrationCount 
+                    FROM users
+                    LEFT JOIN role_user on role_user.user_id = users.id
+                    WHERE role_user.role_id = ' . User::TYPE_PEASANT . '
+                    GROUP BY DAY(registrationDate)
+                    ORDER BY registrationDate ASC';
+
+        $results = \DB::select($query);
+
+        $labels = [];
+        $counts = [];
+        foreach ($results as $result) {
+            $labels[] = explode(' ', $result->registrationDate)[0];
+            $counts[] = $result->registrationCount;
+        }
+
+
+        $registrationsChart->labels($labels);
+        $registrationsChart->dataset('Registrations over time', 'line', $counts);
+
         return view('admin.dashboard', array_merge(
             $viewData,
             [
                 'title' => 'Dashboard - ' . \config('app.name'),
                 'headingLarge' => 'Dashboard',
                 'headingSmall' => 'Site Statistics',
+                'registrationsChart' => $registrationsChart
             ]
         ));
     }

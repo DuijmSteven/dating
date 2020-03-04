@@ -19,3 +19,4 @@
 
 <script src="http://maps.googleapis.com/maps/api/js?key={{ config('googlmapper.key') }}&libraries=places"></script>
 <script src="https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/src/markerclusterer.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
