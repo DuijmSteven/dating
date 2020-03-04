@@ -75,8 +75,6 @@ class Kernel extends ConsoleKernel
             $numberOfBotsToHaveOnline = rand(0, 6);
         }
 
-        \Log::debug('numberOfBotsToHaveOnline: ' . $numberOfBotsToHaveOnline);
-
         $schedule->command('bots:set-random-online ' . $numberOfBotsToHaveOnline)->everyTenMinutes();
     }
 }

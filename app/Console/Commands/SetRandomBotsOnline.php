@@ -12,7 +12,7 @@ class SetRandomBotsOnline extends Command
      *
      * @var string
      */
-    protected $signature = 'bots:set-random-online {notAmount=40}';
+    protected $signature = 'bots:set-random-online {botAmount=40}';
 
     /**
      * The console command description.
@@ -42,7 +42,10 @@ class SetRandomBotsOnline extends Command
      */
     public function handle()
     {
-        $botAmount = $this->argument('notAmount');
+        $botAmount = $this->argument('botAmount');
+
+        \Log::debug('Setting amount of bots online: ' . $botAmount);
+
         $this->userManager->setRandomBotsOnline($botAmount);
     }
 }
