@@ -106,6 +106,7 @@ class LandingPageController extends FrontendController
             ->whereHas('meta', function ($query) {
                 $query->where('gender', 2);
             })
+            ->whereHas('profileImage')
             ->inRandomOrder()->take(12)->get();
         return $users;
     }

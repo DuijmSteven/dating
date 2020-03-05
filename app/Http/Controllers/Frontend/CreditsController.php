@@ -23,6 +23,7 @@ class CreditsController extends FrontendController
                     $this->authenticatedUser->meta->getLookingForGender()
                 );;
             })
+            ->whereHas('profileImage')
             ->where('id', '!=', $this->authenticatedUser->getId())
             ->inRandomOrder()->take(6)->get();
 
