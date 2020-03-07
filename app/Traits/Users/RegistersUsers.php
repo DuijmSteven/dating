@@ -101,6 +101,7 @@ trait RegistersUsers
         try {
             $createdUser->emailTypes()->attach(EmailType::MESSAGE_RECEIVED);
             $createdUser->emailTypes()->attach(EmailType::PROFILE_VIEWED);
+            $createdUser->emailTypes()->attach(EmailType::GENERAL);
         } catch (\Exception $exception) {
             DB::rollBack();
             throw $exception;

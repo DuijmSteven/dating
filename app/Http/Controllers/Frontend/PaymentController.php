@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Creditpack;
 use App\Mail\CreditsBought;
+use App\Mail\UserBoughtCredits;
 use App\Mail\Welcome;
 use App\User;
 use Illuminate\Http\Request;
@@ -104,6 +105,13 @@ class PaymentController extends FrontendController
 
             Mail::to($user)
                 ->queue($creditsBoughtEmail);
+
+            // email to us about the sale
+            $userBoughtCreditsEmail = (new UserBoughtCredits($user, $creditPack))
+                ->onQueue('emails');
+
+            Mail::to('develyvof@gmail.com')
+            ->queue($userBoughtCreditsEmail);
         }
 
         return view('frontend.thank-you', [
