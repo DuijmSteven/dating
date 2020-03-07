@@ -80,7 +80,7 @@ class PeasantController extends Controller
     {
         $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
 
-        $peasants = User::with(['meta', 'account', 'roles', 'profileImage'])->whereHas('roles', function ($query) {
+        $peasants = User::with(['meta', 'account', 'roles', 'profileImage', 'completedPayments'])->whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_PEASANT);
         })
             ->whereIn('id', $onlineIds) 

@@ -523,6 +523,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Payment');
     }
 
+    public function completedPayments()
+    {
+        return $this->hasMany('App\Payment')->where('status', Payment::STATUS_COMPLETED)->orderBy('created_at', 'desc');
+    }
+
     /**
      * @param $email
      */

@@ -25,7 +25,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Profile image</th>
-                            <th>Credits</th>
+                            <th>Credits && Payments</th>
                             <th>User data</th>
                             <th>Meta data</th>
                             <th>Actions</th>
@@ -41,7 +41,23 @@
                                              alt="">
                                     </a>
                                 </td>
-                                <td>{{ $peasant->account->getCredits() }}</td>
+                                <td style="white-space: nowrap">
+                                    <strong>Credits</strong>: {{ $peasant->account->getCredits() }} <br>
+
+                                    @if(count($peasant->completedPayments) > 0)
+                                        <strong>Last Payment</strong>: &euro;{{ number_format($peasant->completedPayments[0]->amount/ 100, 2) }} <br>
+                                        <strong># of payments</strong>: {{ count($peasant->completedPayments) }} <br>
+
+                                        <?php
+                                        $moneySpent = 0;
+                                        foreach ($peasant->completedPayments as $payment) {
+                                            $moneySpent += $payment->amount;
+                                        }
+                                        ?>
+
+                                        <strong>Money spent</strong>: &euro;{{ number_format($moneySpent/ 100, 2) }} <br>
+                                    @endif
+                                </td>
                                 <td>
                                     <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $peasant->username !!} <br>
                                     <strong>{!! @trans('user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($peasant->meta->dob) !!} <br>
