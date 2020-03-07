@@ -691,11 +691,6 @@
         <div class="container" style="position:relative; height: 100%">
             <h1 style="text-transform: none">{{ @trans('lp1.heading') }}</h1>
 
-            <video class="img-fluid screenCapturePreview" playsinline="" autoplay="" muted="" loop="" no-controls=""
-                   style="max-width: 80%">--}}
-                <source type="video/mp4" src="{{ asset('img/lp/altijdSex-preview.mp4') }}">
-            </video>
-
             <div class="JS--form-wrapper form-wrapper">
                 <div class="form-box">
                     @if($formType === 'register')
