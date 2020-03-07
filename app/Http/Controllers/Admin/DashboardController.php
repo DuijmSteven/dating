@@ -50,147 +50,188 @@ class DashboardController extends Controller
             ->orderBy('id')
             ->get();
 
+
+        $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');
+        $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
+        $startOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->startOfDay()->setTimezone('UTC');
+        $endOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->endOfDay()->setTimezone('UTC');
+
+        $startOfWeek = Carbon::now('Europe/Amsterdam')->startOfWeek()->setTimezone('UTC');
+        $endOfWeek = Carbon::now('Europe/Amsterdam')->endOfWeek()->setTimezone('UTC');
+        $startOfMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->setTimezone('UTC');
+        $endOfMonth = Carbon::now('Europe/Amsterdam')->endOfMonth()->setTimezone('UTC');
+        $startOfPreviousMonth = Carbon::now('Europe/Amsterdam')->subMonth()->startOfMonth()->setTimezone('UTC');
+        $endOfPreviousMonth = Carbon::now('Europe/Amsterdam')->subMonth()->endOfMonth()->setTimezone('UTC');
+        $startOfYear = Carbon::now('Europe/Amsterdam')->startOfYear()->setTimezone('UTC');
         $viewData = [
             'numberOfOnlineBots' => count($onlineBots),
             'numberOfOnlinePeasants' => count($onlinePeasants),
             'revenueStatistics' => [
-                'revenueToday' => $this->statisticsManager->revenueOnDate(Carbon::today('Europe/Amsterdam')),
-                'revenueYesterday' => $this->statisticsManager->revenueOnDate(Carbon::yesterday('Europe/Amsterdam')),
+                'revenueToday' => $this->statisticsManager->revenueBetween(
+                    $startOfToday,
+                    $endOfToday
+                ),
+                'revenueYesterday' => $this->statisticsManager->revenueBetween(
+                    $startOfYesterday,
+                    $endOfYesterday
+                ),
                 'revenueCurrentWeek' => $this->statisticsManager->revenueBetween(
-                    Carbon::now('Europe/Amsterdam')->startOfWeek(),
-                    Carbon::now('Europe/Amsterdam')->endOfWeek()
+                    $startOfWeek,
+                    $endOfWeek
                 ),
                 'revenueCurrentMonth' => $this->statisticsManager->revenueBetween(
-                    Carbon::now('Europe/Amsterdam')->startOfMonth(),
-                    Carbon::now('Europe/Amsterdam')->endOfMonth()
+                    $startOfMonth,
+                    $endOfMonth
                 ),
                 'revenuePreviousMonth' => $this->statisticsManager->revenueBetween(
-                    Carbon::now('Europe/Amsterdam')->startOfMonth()->subMonth(),
-                    Carbon::now('Europe/Amsterdam')->subMonth()->endOfMonth()
+                    $startOfPreviousMonth,
+                    $endOfPreviousMonth
                 ),
                 'revenueCurrentYear' => $this->statisticsManager->revenueBetween(
-                    Carbon::now('Europe/Amsterdam')->startOfYear(),
-                    Carbon::now('Europe/Amsterdam')->endOfYear()
+                    $startOfYear,
+                    $endOfToday
                 )
             ],
             'registrationStatistics' => [
-                'registrationsToday' => $this->statisticsManager->registrationsCountOnDay(Carbon::today('Europe/Amsterdam')),
-                'registrationsYesterday' => $this->statisticsManager->registrationsCountOnDay(Carbon::yesterday('Europe/Amsterdam')),
+                'registrationsToday' => $this->statisticsManager->registrationsCountBetween(
+                    $startOfToday,
+                    $endOfToday
+                ),
+                'registrationsYesterday' => $this->statisticsManager->registrationsCountBetween(
+                    $startOfYesterday,
+                    $endOfYesterday
+                ),
                 'registrationsCurrentWeek' => $this->statisticsManager->registrationsCountBetween(
-                    Carbon::now('Europe/Amsterdam')->startOfWeek(),
-                    Carbon::now('Europe/Amsterdam')->endOfWeek()
+                    $startOfWeek,
+                    $endOfWeek
                 ),
                 'registrationsCurrentMonth' => $this->statisticsManager->registrationsCountBetween(
-                    Carbon::now('Europe/Amsterdam')->startOfMonth(),
-                    Carbon::now('Europe/Amsterdam')->endOfMonth()
+                    $startOfMonth,
+                    $endOfMonth
                 ),
                 'registrationsPreviousMonth' => $this->statisticsManager->registrationsCountBetween(
-                    Carbon::now('Europe/Amsterdam')->startOfMonth()->subMonth(),
-                    Carbon::now('Europe/Amsterdam')->subMonth()->endOfMonth()
+                    $startOfPreviousMonth,
+                    $endOfPreviousMonth
                 ),
                 'registrationsCurrentYear' => $this->statisticsManager->registrationsCountBetween(
-                    Carbon::now('Europe/Amsterdam')->startOfYear(),
-                    Carbon::now('Europe/Amsterdam')->endOfYear()
+                    $startOfYear,
+                    $endOfToday
                 )
             ],
             'messageStatistics' => [
-                'messagesSentToday' => $this->statisticsManager->messagesSentCountOnDay(Carbon::today('Europe/Amsterdam')),
-                'messagesSentYesterday' => $this->statisticsManager->messagesSentCountOnDay(Carbon::yesterday('Europe/Amsterdam')),
+                'messagesSentToday' => $this->statisticsManager->messagesSentCountBetween(
+                    $startOfToday,
+                    $endOfToday
+                ),
+                'messagesSentYesterday' => $this->statisticsManager->messagesSentCountBetween(
+                    $startOfYesterday,
+                    $endOfYesterday
+                ),
                 'messagesSentCurrentWeek' => $this->statisticsManager->messagesSentCountBetween(
-                    Carbon::now('Europe/Amsterdam')->startOfWeek(),
-                    Carbon::now('Europe/Amsterdam')->endOfWeek()
+                    $startOfWeek,
+                    $endOfWeek
                 ),
                 'messagesSentCurrentMonth' => $this->statisticsManager->messagesSentCountBetween(
-                    Carbon::now('Europe/Amsterdam')->startOfMonth(),
-                    Carbon::now('Europe/Amsterdam')->endOfMonth()
+                    $startOfMonth,
+                    $endOfMonth
                 ),
                 'messagesSentPreviousMonth' => $this->statisticsManager->messagesSentCountBetween(
-                    Carbon::now('Europe/Amsterdam')->startOfMonth()->subMonth(),
-                    Carbon::now('Europe/Amsterdam')->subMonth()->endOfMonth()
+                    $startOfPreviousMonth,
+                    $endOfPreviousMonth
                 ),
                 'messagesSentCurrentYear' => $this->statisticsManager->messagesSentCountBetween(
-                    Carbon::now('Europe/Amsterdam')->startOfYear(),
-                    Carbon::now('Europe/Amsterdam')->endOfYear()
+                    $startOfYear,
+                    $endOfToday
                 )
             ],
             'peasantMessageStatistics' => [
-                'messagesSentToday' => $this->statisticsManager->messagesSentByUserTypeCountOnDay(
+                'messagesSentToday' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
                     'peasant',
-                    Carbon::today('Europe/Amsterdam')
+                    $startOfToday,
+                    $endOfToday
                 ),
-                'messagesSentYesterday' => $this->statisticsManager->messagesSentByUserTypeCountOnDay(
+                'messagesSentYesterday' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
                     'peasant',
-                    Carbon::yesterday('Europe/Amsterdam')
+                    $startOfYesterday,
+                    $endOfYesterday
                 ),
                 'messagesSentCurrentWeek' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
                     'peasant',
-                    Carbon::now('Europe/Amsterdam')->startOfWeek(),
-                    Carbon::now('Europe/Amsterdam')->endOfWeek()
+                    $startOfWeek,
+                    $endOfWeek
                 ),
                 'messagesSentCurrentMonth' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
                     'peasant',
-                    Carbon::now('Europe/Amsterdam')->startOfMonth(),
-                    Carbon::now('Europe/Amsterdam')->endOfMonth()
+                    $startOfMonth,
+                    $endOfMonth
                 ),
                 'messagesSentPreviousMonth' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
                     'peasant',
-                    Carbon::now('Europe/Amsterdam')->startOfMonth()->subMonth(),
-                    Carbon::now('Europe/Amsterdam')->subMonth()->endOfMonth()
+                    $startOfPreviousMonth,
+                    $endOfPreviousMonth
                 ),
                 'messagesSentCurrentYear' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
                     'peasant',
-                    Carbon::now('Europe/Amsterdam')->startOfYear(),
-                    Carbon::now('Europe/Amsterdam')->endOfYear()
+                    $startOfYear,
+                    $endOfToday
                 )
             ],
             'botMessageStatistics' => [
-                'messagesSentToday' => $this->statisticsManager->messagesSentByUserTypeCountOnDay(
+                'messagesSentToday' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
                     'bot',
-                    Carbon::today('Europe/Amsterdam')
+                    $startOfToday,
+                    $endOfToday
                 ),
-                'messagesSentYesterday' => $this->statisticsManager->messagesSentByUserTypeCountOnDay(
+                'messagesSentYesterday' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
                     'bot',
-                    Carbon::yesterday('Europe/Amsterdam')
+                    $startOfYesterday,
+                    $endOfYesterday
                 ),
                 'messagesSentCurrentWeek' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
                     'bot',
-                    Carbon::now('Europe/Amsterdam')->startOfWeek(),
-                    Carbon::now('Europe/Amsterdam')->endOfWeek()
+                    $startOfWeek,
+                    $endOfWeek
                 ),
                 'messagesSentCurrentMonth' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
                     'bot',
-                    Carbon::now('Europe/Amsterdam')->startOfMonth(),
-                    Carbon::now('Europe/Amsterdam')->endOfMonth()
+                    $startOfMonth,
+                    $endOfMonth
                 ),
                 'messagesSentPreviousMonth' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
                     'bot',
-                    Carbon::now('Europe/Amsterdam')->startOfMonth()->subMonth(),
-                    Carbon::now('Europe/Amsterdam')->subMonth()->endOfMonth()
+                    $startOfPreviousMonth,
+                    $endOfPreviousMonth
                 ),
                 'messagesSentCurrentYear' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
                     'bot',
-                    Carbon::now('Europe/Amsterdam')->startOfYear(),
-                    Carbon::now('Europe/Amsterdam')->endOfYear()
+                    $startOfYear,
+                    $endOfToday
                 )
             ],
             'peasantDeactivationStatistics' => [
-                'deactivationsToday' => $this->statisticsManager->peasantDeactivationsCountOnDay(Carbon::today('Europe/Amsterdam')),
-                'deactivationsYesterday' => $this->statisticsManager->peasantDeactivationsCountOnDay(Carbon::yesterday('Europe/Amsterdam')),
+                'deactivationsToday' => $this->statisticsManager->peasantDeactivationsCountBetween(
+                    $startOfToday,
+                    $endOfToday
+                ),
+                'deactivationsYesterday' => $this->statisticsManager->peasantDeactivationsCountBetween(
+                    $startOfYesterday,
+                    $endOfYesterday
+                ),
                 'deactivationsCurrentWeek' => $this->statisticsManager->peasantDeactivationsCountBetween(
-                    Carbon::now('Europe/Amsterdam')->startOfWeek(),
-                    Carbon::now('Europe/Amsterdam')->endOfWeek()
+                    $startOfWeek,
+                    $endOfWeek
                 ),
                 'deactivationsCurrentMonth' => $this->statisticsManager->peasantDeactivationsCountBetween(
-                    Carbon::now('Europe/Amsterdam')->startOfMonth(),
-                    Carbon::now('Europe/Amsterdam')->endOfMonth()
+                    $startOfMonth,
+                    $endOfMonth
                 ),
                 'deactivationsPreviousMonth' => $this->statisticsManager->peasantDeactivationsCountBetween(
-                    Carbon::now('Europe/Amsterdam')->startOfMonth()->subMonth(),
-                    Carbon::now('Europe/Amsterdam')->subMonth()->endOfMonth()
+                    $startOfPreviousMonth,
+                    $endOfPreviousMonth
                 ),
                 'deactivationsCurrentYear' => $this->statisticsManager->peasantDeactivationsCountBetween(
-                    Carbon::now('Europe/Amsterdam')->startOfYear(),
-                    Carbon::now('Europe/Amsterdam')->endOfYear()
+                    $startOfYear,
+                    $endOfToday
                 )
             ],
             'userTypeStatistics' => [
