@@ -45,8 +45,9 @@
                                     <strong>Credits</strong>: {{ $peasant->account->getCredits() }} <br>
 
                                     @if(count($peasant->completedPayments) > 0)
-                                        <strong>Last Payment</strong>: &euro;{{ number_format($peasant->completedPayments[0]->amount/ 100, 2) }} <br>
                                         <strong># of payments</strong>: {{ count($peasant->completedPayments) }} <br>
+                                        <strong>Last Payment amount</strong>: &euro;{{ number_format($peasant->completedPayments[0]->amount/ 100, 2) }} <br>
+                                        <strong>Last Payment date</strong>: {{ $peasant->completedPayments[0]->created_at->format('d-m-Y H:i:s') }} <br>
 
                                         <?php
                                         $moneySpent = 0;
