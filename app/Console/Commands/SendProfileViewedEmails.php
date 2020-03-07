@@ -61,9 +61,11 @@ class SendProfileViewedEmails extends Command
             })
             ->whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_PEASANT);
-            })->whereHas('emailTypes', function ($query) {
+            })
+            ->whereHas('emailTypes', function ($query) {
                 $query->where('id', EmailType::PROFILE_VIEWED);
-            })->whereDoesntHave('emailTypeInstances', function ($query) use ($timeNow) {
+            })
+            ->whereDoesntHave('emailTypeInstances', function ($query) use ($timeNow) {
                 $query->where('email_type_id', EmailType::PROFILE_VIEWED);
                 $query->where('created_at', '>=', Carbon::now('Europe/Amsterdam')->subHours(3)->toDateTimeString());
             })
