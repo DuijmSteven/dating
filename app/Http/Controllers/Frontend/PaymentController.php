@@ -88,31 +88,40 @@ class PaymentController extends FrontendController
         return redirect()->away($transaction['redirectUrl']);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Exception
+     */
     public function checkPayment()
     {
-        $transactionId = session('transactionId');
-        $paymentMethod = session('paymentMethod');
-        $creditPackId = session('creditPackId');
-        $creditPack = Creditpack::find($creditPackId);
+//        $transactionId = session('transactionId');
+//        $paymentMethod = session('paymentMethod');
+//        $creditPackId = session('creditPackId');
+//        $creditPack = Creditpack::find($creditPackId);
+//
+//        $check = $this->paymentProvider->paymentCheck($paymentMethod, $transactionId);
+//
+//        if($check['status']) {
+//            //Get current user
+//            $user = \Auth::user();
+//            $creditsBoughtEmail = (new CreditsBought($user, $creditPack))
+//                ->onQueue('emails');
+//
+//            Mail::to($user)
+//                ->queue($creditsBoughtEmail);
+//
+//            // email to us about the sale
+//            $userBoughtCreditsEmail = (new UserBoughtCredits($user, $creditPack))
+//                ->onQueue('emails');
+//
+//            Mail::to('develyvof@gmail.com')
+//            ->queue($userBoughtCreditsEmail);
+//        }
+//
+        $check = [];
 
-        $check = $this->paymentProvider->paymentCheck($paymentMethod, $transactionId);
-
-        if($check['status']) {
-            //Get current user
-            $user = \Auth::user();
-            $creditsBoughtEmail = (new CreditsBought($user, $creditPack))
-                ->onQueue('emails');
-
-            Mail::to($user)
-                ->queue($creditsBoughtEmail);
-
-            // email to us about the sale
-            $userBoughtCreditsEmail = (new UserBoughtCredits($user, $creditPack))
-                ->onQueue('emails');
-
-            Mail::to('develyvof@gmail.com')
-            ->queue($userBoughtCreditsEmail);
-        }
+        $check['status'] = 1;
+        $check['info'] = 'asd asda sdas';
 
         return view('frontend.thank-you', [
             'title' => $this->buildTitleWith(trans('view_titles.payment')),

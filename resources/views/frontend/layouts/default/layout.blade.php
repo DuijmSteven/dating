@@ -43,7 +43,7 @@
             @include('frontend.layouts.default.partials.main')
         @endif
 
-        @if(isset($authenticatedUser) && $authenticatedUser != null)
+        @if(isset($authenticatedUser) && $authenticatedUser != null && \Request::route()->getName() !== 'payments.check')
             <private-chat
                 v-model="conversationPartners"
                 v-for="(partner, index) in conversationPartners"
