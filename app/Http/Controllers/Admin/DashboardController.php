@@ -263,36 +263,34 @@ class DashboardController extends Controller
      */
     protected function createRevenueChart(): RevenueChart
     {
-        $reveueChart = new RevenueChart();
+        $revenueChart = new RevenueChart();
 
-        $query = 'SELECT
-                     payments.created_at AS creationDate,
-                     SUM(payments.amount) AS revenueOnDay
-                    FROM payments
-                    LEFT JOIN users on users.id = payments.user_id
-                    LEFT JOIN role_user on role_user.user_id = users.id
-                    WHERE role_user.role_id = ' . User::TYPE_PEASANT . '
-                     AND payments.status = ' . Payment::STATUS_COMPLETED . '
-                    GROUP BY DAY(creationDate)
-                    ORDER BY creationDate ASC';
+        $query = \DB::table('payments as p')
+            ->select(\DB::raw('DATE(p.created_at) creationDate, SUM(p.amount) as revenueOnDay'))
+            ->leftJoin('users as u', 'u.id', 'p.user_id')
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('ru.role_id', User::TYPE_PEASANT)
+            ->where('p.status', Payment::STATUS_COMPLETED)
+            ->groupBy('creationDate')
+            ->orderBy('creationDate', 'ASC');
 
-        $results = \DB::select($query);
+        $results = $query->get();
 
         $labels = [];
         $counts = [];
 
         $datesWithRevenue = [];
         $revenuePerDate = [];
+
         foreach ($results as $result) {
             $datesWithRevenue[] = explode(' ', $result->creationDate)[0];
-
             $revenuePerDate[explode(' ', $result->creationDate)[0]] = (int) $result->revenueOnDay / 100;
         }
 
         $period = new DatePeriod(
             new DateTime($datesWithRevenue[0]),
             new DateInterval('P1D'),
-            (new DateTime($datesWithRevenue[count($datesWithRevenue) - 1]))->modify('+1 day')
+            new DateTime('now')
         );
 
         /**
@@ -309,9 +307,9 @@ class DashboardController extends Controller
             }
         }
 
-        $reveueChart->labels($labels);
-        $reveueChart->dataset('Revenue over time', 'line', $counts);
-        return $reveueChart;
+        $revenueChart->labels($labels);
+        $revenueChart->dataset('Revenue over time', 'line', $counts);
+        return $revenueChart;
     }
 
     /**
@@ -322,18 +320,16 @@ class DashboardController extends Controller
     {
         $paymentsChart = new PaymentsChart();
 
-        $query = 'SELECT
-                     payments.created_at AS creationDate,
-                     COUNT(payments.id) AS paymentsCount
-                    FROM payments
-                    LEFT JOIN users on users.id = payments.user_id
-                    LEFT JOIN role_user on role_user.user_id = users.id
-                    WHERE role_user.role_id = ' . User::TYPE_PEASANT . '
-                     AND payments.status = ' . Payment::STATUS_COMPLETED . '
-                    GROUP BY DAY(creationDate)
-                    ORDER BY creationDate ASC';
+        $query = \DB::table('payments as p')
+            ->select(\DB::raw('DATE(p.created_at) creationDate, COUNT(p.id) AS paymentsCount'))
+            ->leftJoin('users as u', 'u.id', 'p.user_id')
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('ru.role_id', User::TYPE_PEASANT)
+            ->where('p.status', Payment::STATUS_COMPLETED)
+            ->groupBy('creationDate')
+            ->orderBy('creationDate', 'ASC');
 
-        $results = \DB::select($query);
+        $results = $query->get();
 
         $labels = [];
         $counts = [];
@@ -348,7 +344,7 @@ class DashboardController extends Controller
         $period = new DatePeriod(
             new DateTime($datesWithPayments[0]),
             new DateInterval('P1D'),
-            (new DateTime($datesWithPayments[count($datesWithPayments) - 1]))->modify('+1 day')
+            new DateTime('now')
         );
 
         /**
@@ -378,17 +374,15 @@ class DashboardController extends Controller
     {
         $peasantMessagesChart = new PeasantMessagesChart();
 
-        $query = 'SELECT
-                     conversation_messages.created_at AS creationDate,
-                     COUNT(conversation_messages.id) AS messagesCount
-                    FROM conversation_messages
-                    LEFT JOIN users on users.id = conversation_messages.sender_id
-                    LEFT JOIN role_user on role_user.user_id = users.id
-                    WHERE role_user.role_id = ' . User::TYPE_PEASANT . '
-                    GROUP BY DAY(creationDate)
-                    ORDER BY creationDate ASC';
+        $query = \DB::table('conversation_messages as cm')
+            ->select(\DB::raw('DATE(cm.created_at) AS creationDate, COUNT(cm.id) AS messagesCount'))
+            ->leftJoin('users as u', 'u.id', 'cm.sender_id')
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('ru.role_id', User::TYPE_PEASANT)
+            ->groupBy('creationDate')
+            ->orderBy('creationDate', 'ASC');
 
-        $results = \DB::select($query);
+        $results = $query->get();
 
         $labels = [];
         $counts = [];
@@ -403,7 +397,7 @@ class DashboardController extends Controller
         $period = new DatePeriod(
             new DateTime($datesWithMessages[0]),
             new DateInterval('P1D'),
-            (new DateTime($datesWithMessages[count($datesWithMessages) - 1]))->modify('+1 day')
+            new DateTime('now')
         );
 
         /**
@@ -432,17 +426,15 @@ class DashboardController extends Controller
     protected function createRegistrationsChart(): RegistrationsChart
     {
         $registrationsChart = new RegistrationsChart();
+ 
+        $query = \DB::table('users as u')
+            ->select(\DB::raw('DATE(u.created_at) AS registrationDate, COUNT(u.id) AS registrationCount'))
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('ru.role_id', User::TYPE_PEASANT)
+            ->groupBy('registrationDate')
+            ->orderBy('registrationDate', 'ASC');
 
-        $query = 'SELECT
-                     users.created_at AS registrationDate,
-                     COUNT(id) AS registrationCount 
-                    FROM users
-                    LEFT JOIN role_user on role_user.user_id = users.id
-                    WHERE role_user.role_id = ' . User::TYPE_PEASANT . '
-                    GROUP BY DAY(registrationDate)
-                    ORDER BY registrationDate ASC';
-
-        $results = \DB::select($query);
+        $results = $query->get();
 
         $labels = [];
         $counts = [];
@@ -457,7 +449,7 @@ class DashboardController extends Controller
         $period = new DatePeriod(
             new DateTime($datesWithRegistrations[0]),
             new DateInterval('P1D'),
-            (new DateTime($datesWithRegistrations[count($datesWithRegistrations) - 1]))->modify('+1 day')
+            new DateTime('now')
         );
 
         /**

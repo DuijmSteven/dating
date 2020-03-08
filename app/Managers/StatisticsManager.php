@@ -80,7 +80,7 @@ class StatisticsManager
         ->orWhereHas('payments', function ($query) {
             $query->whereNull('creditpack_id');
         })
-            ->count();
+        ->count();
     }
 
     public function peasantsWithSmallCreditpack() : int {
