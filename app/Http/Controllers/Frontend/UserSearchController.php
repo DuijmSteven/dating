@@ -114,6 +114,7 @@ class UserSearchController extends FrontendController
         // get searchParameters from session
         $searchParameters = $request->session()->get('searchParameters');
         $searchParameters['active'] = true;
+        $searchParameters['radius'] = 80;
 
         $users = $this->userSearchManager->searchUsers(
             $searchParameters,
@@ -129,7 +130,7 @@ class UserSearchController extends FrontendController
             'carbonNow' => Carbon::now(),
             'title' => $this->buildTitleWith(trans('view_titles.search_results')),
             'city' => $searchParameters['city_name'],
-            'radius' => $searchParameters['radius']
+            'radius' => 80
         ];
 
         return view(
@@ -151,19 +152,15 @@ class UserSearchController extends FrontendController
             $user->save();
         }
 
-        $city = 'Amsterdam';
-        $lat = 52.379189;
-        $lng = 4.899431;
-
-//        if (!$this->authenticatedUser->meta->getCity()) {
-//            $city = 'Amsterdam';
-//            $lat = 52.379189;
-//            $lng = 4.899431;
-//        } else {
-//            $city = $this->authenticatedUser->meta->getCity();
-//            $lat = $this->authenticatedUser->meta->getLat();
-//            $lng = $this->authenticatedUser->meta->getLng();
-//        }
+        if (!$this->authenticatedUser->meta->getCity()) {
+            $city = 'Amsterdam';
+            $lat = 52.379189;
+            $lng = 4.899431;
+        } else {
+            $city = $this->authenticatedUser->meta->getCity();
+            $lat = $this->authenticatedUser->meta->getLat();
+            $lng = $this->authenticatedUser->meta->getLng();
+        }
 
         if (Cookie::get('searchWithProfileImageSet')) {
             $withProfileImage = Cookie::get('searchWithProfileImageSet');
@@ -175,11 +172,7 @@ class UserSearchController extends FrontendController
             }
         }
 
-        $radius = 50;
-
-        if ($this->authenticatedUser->meta->looking_for_gender === 1) {
-            $radius = 80;
-        }
+        $radius = 80;
 
         $searchParameters = [
             'city_name' => $city,

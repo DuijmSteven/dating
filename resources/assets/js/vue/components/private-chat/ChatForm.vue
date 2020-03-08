@@ -15,7 +15,7 @@
                 class="PrivateChatItem__textarea JS--PrivateChatItem__textarea"
                 maxlength="1000"
                 :placeholder="chatTranslations ? chatTranslations['your_message'] : ''"
-                v-on:keyup.enter="sendMessage"
+                v-on:keyup="textareaKeyUp"
                 @focus="chatFocused()"
                 v-model="text"
             ></textarea>
@@ -61,7 +61,7 @@
             'index',
             'conversation',
             'sendingMessage',
-            'chatTranslations'
+            'chatTranslations',
         ],
 
         data() {
@@ -73,6 +73,7 @@
                 textBeingSent: '',
                 fileBeingSent: null,
                 imagePreviewUrlBackup: null,
+                userCredits: undefined
             }
         },
 
@@ -92,6 +93,12 @@
                 this.fileBeingSent = null;
                 this.imagePreviewUrlBackup = null;
             });
+
+            this.$root.$on('userCreditsUpdated', (data) => {
+                this.userCredits = data.credits;
+            });
+
+            this.getUserCredits();
         },
 
         computed: {
@@ -101,9 +108,27 @@
         },
 
         methods: {
+            getUserCredits: function () {
+                axios.get('/api/users/' + parseInt(DP.authenticatedUser.id) + '/credits').then(
+                    response => {
+                        this.userCredits = response.data;
+                    }
+                );
+            },
             chatFocused() {
                 this.removeNotificationClass();
                 this.$parent.setConversationActivityForUserFalse();
+            },
+            textareaKeyUp(event) {
+                if (this.userCredits === 0) {
+                    this.text = '';
+                    this.file = null;
+                    this.imagePreviewUrl = null;
+
+                    this.$emit('show-no-credits');
+                } else if (event.key === "Enter") {
+                    this.sendMessage();
+                }
             },
             sendMessage() {
                 if (!this.sendingMessage) {

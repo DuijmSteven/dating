@@ -69,7 +69,7 @@ class StatisticsManager
         })->whereHas('account', function($query) {
             $query->where('credits', 0);
         })
-            ->count();
+        ->count();
     }
 
     public function peasantsThatNeverHadCreditpack() : int {

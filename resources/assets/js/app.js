@@ -191,23 +191,24 @@ $(window).on('load', function () {
             }).fail(function () {
         });
 
-        const $searchRadiusInput = $('.JS--radiusSearchInput');
-
-        if ($('.JS--autoCompleteCites.JS--bar').length > 0 && $('.JS--autoCompleteCites.JS--bar').val().length > 0) {
-            $searchRadiusInput.removeClass('hidden');
-        }
-
-        $('.JS--autoCompleteCites.JS--bar').keyup(function () {
-            if ($(this).val().length > 0) {
-                if ($searchRadiusInput.hasClass('hidden')) {
-                    $searchRadiusInput.removeClass('hidden');
-                }
-            } else {
-                if (!$searchRadiusInput.hasClass('hidden')) {
-                    $searchRadiusInput.addClass('hidden');
-                }
-            }
-        });
+        /* used when radius is available for the user to select */
+        // const $searchRadiusInput = $('.JS--radiusSearchInput');
+        //
+        // if ($('.JS--autoCompleteCites.JS--bar').length > 0 && $('.JS--autoCompleteCites.JS--bar').val().length > 0) {
+        //     $searchRadiusInput.removeClass('hidden');
+        // }
+        //
+        // $('.JS--autoCompleteCites.JS--bar').keyup(function () {
+        //     if ($(this).val().length > 0) {
+        //         if ($searchRadiusInput.hasClass('hidden')) {
+        //             $searchRadiusInput.removeClass('hidden');
+        //         }
+        //     } else {
+        //         if (!$searchRadiusInput.hasClass('hidden')) {
+        //             $searchRadiusInput.addClass('hidden');
+        //         }
+        //     }
+        // });
     }
 
     if ($('.SearchBar .city').hasClass('has-error')) {

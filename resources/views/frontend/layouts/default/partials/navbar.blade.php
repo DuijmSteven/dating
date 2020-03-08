@@ -10,7 +10,7 @@
 
     <div class="container">
         @if(isset($city) && isset($radius))
-            <h3 class="searchResultsHeader JS--searchResultsHeader">{!! trans('user_search.search_results_heading', ['city' => $city, 'radius' => $radius]) !!}</h3>
+            <h3 class="searchResultsHeader JS--searchResultsHeader">{!! trans('user_search.search_results_heading', ['city' => $city]) !!}</h3>
         @endif
 
         <!-- Brand and toggle get grouped for better mobile display -->

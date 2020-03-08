@@ -133,6 +133,7 @@
                 </div>
                 <chat-form
                     v-on:message-sent="addMessage"
+                    v-on:show-no-credits="promptToBuyCredits"
                     :user="user"
                     :index="index"
                     :conversation="conversation"
@@ -399,6 +400,12 @@
                 }
             },
 
+            promptToBuyCredits() {
+                this.showNoCredits = true;
+                setTimeout(() => {
+                    this.showNoCredits = false;
+                }, 4000)
+            },
             addMessage(message) {
                 this.sendingMessage = true;
                 this.setConversationActivityForUserFalse();

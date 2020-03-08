@@ -40,6 +40,13 @@ class ConversationController
         return JsonResponse::create($chatTranslations, 200);
     }
 
+    /**
+     * @param int $userAId
+     * @param int $userBId
+     * @param int $offset
+     * @param int $limit
+     * @return JsonResponse
+     */
     public function getConversationByParticipantIds(
         int $userAId,
         int $userBId,
@@ -65,6 +72,12 @@ class ConversationController
         }
     }
 
+    /**
+     * @param int $userAId
+     * @param int $userBId
+     * @param int $messageIdHigherThan
+     * @return JsonResponse
+     */
     public function getConversationMessagesWithIdHigherThanByParticipantIds(
         int $userAId,
         int $userBId,
@@ -84,6 +97,9 @@ class ConversationController
         }
     }
 
+    /**
+     * @return JsonResponse
+     */
     public function getHighestConversationId()
     {
         try {
@@ -95,6 +111,10 @@ class ConversationController
         }
     }
 
+    /**
+     * @param int $userId
+     * @return JsonResponse
+     */
     public function getConversationsByUserId(int $userId)
     {
         try {
@@ -108,6 +128,13 @@ class ConversationController
         }
     }
 
+    /**
+     * @param int $userAId
+     * @param int $userBId
+     * @param int $userId
+     * @param bool $value
+     * @return JsonResponse
+     */
     public function setConversationActivityForUserId(int $userAId, int $userBId, int $userId, bool $value)
     {
         try {
@@ -133,6 +160,11 @@ class ConversationController
         }
     }
 
+    /**
+     * @param int $userId
+     * @param string $state
+     * @return JsonResponse
+     */
     public function persistConversationManagerState(int $userId, string $state)
     {
         try {
@@ -148,6 +180,10 @@ class ConversationController
         }
     }
 
+    /**
+     * @param int $userId
+     * @return JsonResponse
+     */
     public function getConversationManagerState(int $userId)
     {
         try {
@@ -164,6 +200,12 @@ class ConversationController
         }
     }
 
+    /**
+     * @param int $userId
+     * @param int $partnerId
+     * @param bool $state
+     * @return JsonResponse
+     */
     public function persistConversationPartnerId(int $userId, int $partnerId, bool $state)
     {
         try {
@@ -187,6 +229,10 @@ class ConversationController
         }
     }
 
+    /**
+     * @param int $userId
+     * @return JsonResponse
+     */
     public function getOpenConversationPartners(int $userId)
     {
         try {
@@ -207,6 +253,11 @@ class ConversationController
         }
     }
 
+    /**
+     * @param int $userId
+     * @param int $partnerId
+     * @return JsonResponse
+     */
     public function removeConversationPartnerId(int $userId, int $partnerId)
     {
         try {
@@ -221,6 +272,10 @@ class ConversationController
         }
     }
 
+    /**
+     * @param int $conversationId
+     * @return JsonResponse
+     */
     public function deleteConversationById(int $conversationId) {
         try {
             /** @var Conversation $conversation */

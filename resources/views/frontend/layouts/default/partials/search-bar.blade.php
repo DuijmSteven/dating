@@ -30,31 +30,31 @@
                 </span>
             @endif
         </div>
-        <div class="form-group radius hidden JS--radiusSearchInput">
-            <label for="">{!! @trans('search.distance') !!}</label>
-            <select name="radius" class="form-control">
-                <?php
-                $selectedRadius = '';
+{{--        <div class="form-group radius hidden JS--radiusSearchInput">--}}
+{{--            <label for="">{!! @trans('search.distance') !!}</label>--}}
+{{--            <select name="radius" class="form-control">--}}
+{{--                <?php--}}
+{{--                $selectedRadius = '';--}}
 
-                if (old('city_name')) {
-                    $selectedRadius = old('city_name');
-                } else {
-                    if (Session::get('searchParameters') && isset(Session::get('searchParameters')['radius'])) {
-                        $selectedRadius = Session::get('searchParameters')['radius'];
-                    } else {
-                        $selectedRadius = '';
-                    }
-                }
-                ?>
+{{--                if (old('city_name')) {--}}
+{{--                    $selectedRadius = old('city_name');--}}
+{{--                } else {--}}
+{{--                    if (Session::get('searchParameters') && isset(Session::get('searchParameters')['radius'])) {--}}
+{{--                        $selectedRadius = Session::get('searchParameters')['radius'];--}}
+{{--                    } else {--}}
+{{--                        $selectedRadius = '';--}}
+{{--                    }--}}
+{{--                }--}}
+{{--                ?>--}}
 
-                @foreach(\UserConstants::getRadiuses() as $radius)
-                    <option
-                        {{ $selectedRadius == $radius ? 'selected' : ''}}
-                        value="{{ $radius }}">{{ $radius }}km
-                    </option>
-                @endforeach
-            </select>
-        </div>
+{{--                @foreach(\UserConstants::getRadiuses() as $radius)--}}
+{{--                    <option--}}
+{{--                        {{ $selectedRadius == $radius ? 'selected' : ''}}--}}
+{{--                        value="{{ $radius }}">{{ $radius }}km--}}
+{{--                    </option>--}}
+{{--                @endforeach--}}
+{{--            </select>--}}
+{{--        </div>--}}
         <div class="form-group age">
             <label for="">{!! @trans('user_constants.age') !!}</label>
             <select name="age" class="form-control">

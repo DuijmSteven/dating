@@ -31,6 +31,7 @@
                 axios.get('/api/users/' + parseInt(DP.authenticatedUser.id) + '/credits').then(
                     response => {
                         this.userCredits = response.data;
+                        this.$root.$emit('userCreditsUpdated', {credits: this.userCredits});
                     }
                 );
             },
