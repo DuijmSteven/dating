@@ -6,6 +6,7 @@ use App\Creditpack;
 use App\Mail\CreditsBought;
 use App\Mail\UserBoughtCredits;
 use App\Mail\Welcome;
+use App\Payment;
 use App\User;
 use Illuminate\Http\Request;
 use App\Interfaces\PaymentProvider;
@@ -99,29 +100,44 @@ class PaymentController extends FrontendController
         $creditPackId = session('creditPackId');
         $creditPack = Creditpack::find($creditPackId);
 
-        $check = $this->paymentProvider->paymentCheck($paymentMethod, $transactionId);
+        //get payment status from db
+        $paymentStatus = Payment::where('user_id', \Auth::user()->id)
+            ->where('transaction_id', $transactionId)
+            ->firstOrFail()
+            ->getStatus();
 
-        if($check['status']) {
-            //Get current user
-            $user = \Auth::user();
-            $creditsBoughtEmail = (new CreditsBought($user, $creditPack))
-                ->onQueue('emails');
+        //check if payment is already completed (user refreshed the thank-you page or visited it again in general)
+        if($paymentStatus == 3) {
+            $status = 'completed';
+            $info = '';
+        } else {
+            $check = $this->paymentProvider->paymentCheck($paymentMethod, $transactionId);
 
-            Mail::to($user)
-                ->queue($creditsBoughtEmail);
+            if($check['status']) {
+                //Get current user
+                $user = \Auth::user();
+                $creditsBoughtEmail = (new CreditsBought($user, $creditPack))
+                    ->onQueue('emails');
 
-            // email to us about the sale
-            $userBoughtCreditsEmail = (new UserBoughtCredits($user, $creditPack))
-                ->onQueue('emails');
+                Mail::to($user)
+                    ->queue($creditsBoughtEmail);
 
-            Mail::to('develyvof@gmail.com')
-            ->queue($userBoughtCreditsEmail);
+                // email to us about the sale
+                $userBoughtCreditsEmail = (new UserBoughtCredits($user, $creditPack))
+                    ->onQueue('emails');
+
+                Mail::to('develyvof@gmail.com')
+                    ->queue($userBoughtCreditsEmail);
+            }
+
+            $check['status'] ? $status = 'success' : $status = 'fail';
+            $info = $check['info'];
         }
 
         return view('frontend.thank-you', [
             'title' => $this->buildTitleWith(trans('view_titles.payment')),
-            'status' => $check['status'],
-            'info' => $check['info']
+            'status' => $status,
+            'info' => $info
         ]);
     }
 }
