@@ -124,6 +124,11 @@ return [
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
+
+    /* Google recaptcha */
+    'recaptcha_secret' => env('GOOGLE_RECAPTCHA_SECRET'),
+    'recaptcha_key' => env('GOOGLE_RECAPTCHA_KEY'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

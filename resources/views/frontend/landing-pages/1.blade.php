@@ -6,7 +6,28 @@
 <link href="https://fonts.googleapis.com/css?family=Comfortaa&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
 
+@if(config('app.env') === 'local')
+    <script src="https://www.google.com/recaptcha/api.js?render=6Lcb0N8UAAAAADUTgOIB9jcrz2xM60BPNjeK3qWL"></script>
 
+@elseif(config('app.env') === 'staging')
+    <script src="https://www.google.com/recaptcha/api.js?render=6Ldx0N8UAAAAABj1wlIcdnxtgCxrprg3DPMsDtkj"></script>
+
+    <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('6Ldx0N8UAAAAABj1wlIcdnxtgCxrprg3DPMsDtkj\n', {action: 'homepage'}).then(function(token) {
+            });
+        });
+    </script>
+@else
+    <script src="https://www.google.com/recaptcha/api.js?render=6LdHptgUAAAAACP5lA0778MuyBsjs6oEnQcWo0T1"></script>
+
+    <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('6LdHptgUAAAAACP5lA0778MuyBsjs6oEnQcWo0T1', {action: 'homepage'}).then(function(token) {
+            });
+        });
+    </script>
+@endif
 <style>
     body {
         font-size: 1.9rem;
@@ -664,6 +685,15 @@
         font-size: 13px;
     }
 
+    .captchaFailed {
+        color: #fff;
+        font-weight: 400;
+        text-align: center;
+        background-color: #7d2c23;
+        border-radius: 2px;
+        padding: 10px;
+    }
+
 </style>
 <body class="landingPage">
 <header>
@@ -698,6 +728,16 @@
                               id="JS--registrationForm"
                         >
                             {{ csrf_field() }}
+
+                            <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
+                            <input type="hidden" name="action" value="validate_captcha">
+
+                            @if(session()->has('recaptchaFailed') && session()->get('recaptchaFailed'))
+                                <div class="captchaFailed">
+                                    {{ @trans('lp1.captcha_failed_message') }}
+                                </div>
+                            @endif
+
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label for="lookingFor">{{ @trans('lp1.form.i_am') }}:</label>
@@ -759,8 +799,8 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-sm-12 submit">
-                                    <button type="submit"
-                                            class="btn btn-register-login btn-lg btn-block">{{ @trans('lp1.form.register_now') }}</button>
+                                    <button type="button"
+                                            class="JS--register-button btn btn-register-login btn-lg btn-block">{{ @trans('lp1.form.register_now') }}</button>
                                 </div>
 
                                 <div class="col-xs-12">
@@ -1088,7 +1128,9 @@
      */
     var DP = {
         baseUrl: '{!! url('/') !!}',
-        locale: '{{ app()->getLocale() }}'
+        locale: '{{ app()->getLocale() }}',
+        recaptchaKey: '{{ config('app.recaptcha_key') }}',
+        recaptchaSecret: '{{ config('app.recaptcha_secret') }}',
     };
 
 </script>

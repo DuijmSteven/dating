@@ -21,6 +21,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use ReCaptcha\ReCaptcha;
 
 trait RegistersUsers
 {
@@ -43,6 +44,30 @@ trait RegistersUsers
      */
     public function register(RegisterRequest $request)
     {
+        if (isset($_POST['g-recaptcha-response'])) {
+            $captcha = $_POST['g-recaptcha-response'];
+        } else {
+            $captcha = false;
+        }
+
+        if (!$captcha) {
+            throw new \Exception('no captcha');
+        }
+
+        $response = (new ReCaptcha(config('app.recaptcha_secret')))
+            ->setExpectedAction('register')
+            ->verify($captcha, $request->ip());
+
+        if (1) {
+            \Log::info('Failed recaptcha attempt from username: ' . $request->get('username'));
+            return redirect()->back()->with('recaptchaFailed', true);
+        }
+
+        if ($response->getScore() < 0.6) {
+            \Log::info('Recaptcha attempt with small score from username: ' . $request->get('username'));
+            return redirect()->back()->with('recaptchaFailed', true);
+        }
+
         $genderLookingForGender = explode("-", $request->all()['lookingFor']);
         $gender = $genderLookingForGender[0];
         $lookingFor = $genderLookingForGender[1];

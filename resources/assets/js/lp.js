@@ -40,13 +40,22 @@ window.addEventListener('load', function () {
 $(window).on('load', function () {
     require('./global_helpers');
 
+    $('.JS--register-button').click(function(event) {
+        grecaptcha.execute(DP.recaptchaKey, {action: 'register'}).then(function(token) {
+            console.log(token);
+            document.getElementById('g-recaptcha-response').value = token;
+
+            $('#JS--registrationForm').submit();
+        });
+    });
+
     $('.scrollToRegistration').click(() => {
         $('html, body').animate({scrollTop:0}, 500, 'swing');
 
         $('#JS--registrationForm #email').focus();
     });
 
-    $('#JS--registrationForm').disableAutoFill();
+    //$('#JS--registrationForm').disableAutoFill();
 
     // this will disable right-click on all images
     $("img").on("contextmenu",function(e){
