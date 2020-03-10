@@ -441,13 +441,14 @@
         width: 400px;
         position: absolute;
         right: 15px;
-        bottom: 20px;
+        bottom: -20px;
         z-index: 1000;
     }
 
     @media screen and (max-width: 1000px) {
         .form-wrapper {
             width: 300px;
+            height: fit-content;
         }
     }
 
@@ -455,8 +456,10 @@
         .form-wrapper {
             width: 84%;
             top: 210px;
+            bottom: initial;
             z-index: 1000;
             right: 0;
+            height: fit-content;
         }
     }
 
