@@ -58,7 +58,7 @@ trait RegistersUsers
             ->setExpectedAction('register')
             ->verify($captcha, $request->ip());
 
-        if (1) {
+        if (!$response->isSuccess()) {
             \Log::info('Failed recaptcha attempt from username: ' . $request->get('username'));
             return redirect()->back()->with('recaptchaFailed', true);
         }
