@@ -441,7 +441,7 @@
         width: 400px;
         position: absolute;
         right: 15px;
-        top: 200px;
+        bottom: 20px;
         z-index: 1000;
     }
 
@@ -702,13 +702,21 @@
             <img src="img/site_logos/Altijdsex_LogoBig_Neg.svg" title="Altijdsex.nl Logo" alt="Altijdsex.nl Logo"/>
         </div>
 
+        @php
+            if (\Request::route()->getName() === 'landing-page.show-register') {
+                $localeRouteName = 'landing-page.show-register';
+            } else {
+                $localeRouteName = 'landing-page.show-login';
+            }
+        @endphp
+
         <div class="language-selection header">
-            <a href="{{ route('landing-page.show-login', ['locale' => 'nl']) }}">
+            <a href="{{ route($localeRouteName, ['locale' => 'nl']) }}">
                 <div class="flagImageWrapper">
                     <img class="flagImage" src="{{ asset('img/flags/nl.png') }}" alt="">
                 </div>
             </a> |
-            <a href="{{ route('landing-page.show-login', ['locale' => 'en']) }}">
+            <a href="{{ route($localeRouteName, ['locale' => 'en']) }}">
                 <div class="flagImageWrapper">
                     <img class="flagImage" src="{{ asset('img/flags/uk.svg') }}" alt="">
                 </div>

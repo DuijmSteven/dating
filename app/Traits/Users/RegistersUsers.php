@@ -59,12 +59,12 @@ trait RegistersUsers
             ->verify($captcha, $request->ip());
 
         if (!$response->isSuccess()) {
-            \Log::info('Failed recaptcha attempt from username: ' . $request->get('username'));
+            \Log::info('Failed recaptcha attempt from username: ' . $request->get('username') . ' and email: ' . $request->get('email'));
             return redirect()->back()->with('recaptchaFailed', true);
         }
 
         if ($response->getScore() < 0.6) {
-            \Log::info('Recaptcha attempt with small score from username: ' . $request->get('username'));
+            \Log::info('Recaptcha attempt with small score from username: ' . $request->get('username') . ' and email: ' . $request->get('email'));
             return redirect()->back()->with('recaptchaFailed', true);
         }
 

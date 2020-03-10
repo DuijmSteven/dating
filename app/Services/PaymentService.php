@@ -217,7 +217,7 @@ class PaymentService implements PaymentProvider
         }
 
         //Update payment status
-        $status ? $statusUpdate = 3 : $statusUpdate = 5;
+        $status ? $statusUpdate = Payment::STATUS_COMPLETED : $statusUpdate = Payment::STATUS_ERROR;
 
         Payment::where('user_id', Auth::user()->id)
                ->where('transaction_id', $transactionId)

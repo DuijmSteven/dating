@@ -72,7 +72,7 @@ class PaymentController extends FrontendController
 
         $this->paymentProvider->storePayment(
             $paymentMethod,
-            1,
+            Payment::STATUS_STARTED,
             $transaction['transaction_id'],
             $amountWithDecimals,
             $description,
@@ -107,7 +107,7 @@ class PaymentController extends FrontendController
             ->getStatus();
 
         //check if payment is already completed (user refreshed the thank-you page or visited it again in general)
-        if($paymentStatus == 3) {
+        if($paymentStatus == Payment::STATUS_COMPLETED) {
             $status = 'completed';
             $info = '';
         } else {
