@@ -21,6 +21,7 @@ use Carbon\Carbon;
 use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -89,14 +90,27 @@ class ConversationController extends Controller
         );
     }
 
-    /**
-     * @param int $conversationId
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
     public function show(int $conversationId)
     {
         /** @var Conversation $conversation */
         $conversation = Conversation::with(['userA', 'userB', 'messages'])->withTrashed()->find($conversationId);
+
+        if ($conversation->getLockedByUserId() && !$this->authenticatedUser->isAdmin()) {
+            $alerts[] = [
+                'type' => 'warning',
+                'message' => 'The conversation is locked by someone else'
+            ];
+
+            return redirect()->back()->with('alerts', $alerts);
+        } else {
+            if () {
+
+            }
+
+            $conversation->setLockedByUserId(Auth::user()->getId());
+            $conversation->save();
+        }
+
         $conversation = $this->prepareConversationObject($conversation);
 
         [$userANotes, $userBNotes] = $this->getParticipantNotes($conversation);
@@ -376,10 +390,12 @@ class ConversationController extends Controller
             ];
         }
 
-        return redirect()->route(
-            'operator-platform.conversations.show',
-            [$conversationMessage->getConversationId()]
-        )->with('alerts', $alerts);
+        /** @var Conversation $conversation */
+        $conversation  = Conversation::find($conversationMessage->getConversationId());
+        $conversation->setLockedByUserId(null);
+        $conversation->save();
+
+        return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
     }
 
     /**
