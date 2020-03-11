@@ -74,49 +74,55 @@
                 <div class="box-body">
                     <!-- Conversations are loaded here -->
                     <div class="direct-chat-messages scroll-bottom">
-                    @foreach($conversation->messages as $message)
-                        <?php
-                        if ($message->sender_id === $conversation->userA->id) {
-                            $user = $conversation->userA;
-                            $alignment = '';
-                        } else {
-                            $user = $conversation->userB;
-                            $alignment = 'right';
-                        }
-                        ?>
-                        <!-- Message. Default to the left -->
-                            <div class="direct-chat-msg {!! $alignment !!}">
-                                <div class="direct-chat-info clearfix">
-                                    <span
-                                        class="direct-chat-name pull-{!! ($alignment === 'right') ? 'right' : 'left' !!}">{!! $user->username !!}</span>
-                                    <span
-                                        class="direct-chat-timestamp pull-{!! ($alignment === 'right') ? 'left' : 'right' !!}">{!! $message->created_at->diffForHumans() !!} ({!! $message->created_at->format('d-m-Y H:i:s') !!})</span>
-                                </div>
-                                <!-- /.direct-chat-info -->
-                                <img class="direct-chat-img" src="{!! \StorageHelper::profileImageUrl($user) !!}"
-                                     alt="message user image"><!-- /.direct-chat-img -->
-                                <div class="direct-chat-text {!! ($alignment === 'right') ? 'userB' : 'userA' !!}">
-                                    @if($message->type === 'flirt')
-                                        <i class="fa fa-heart" style="color:red"></i>
-                                    @else
-                                        @if($message->has_attachment)
-                                            <div>
-                                                <img height="100" src="{!! \StorageHelper::messageAttachmentUrl(
-                                                $conversation->id,
-                                                $message->attachment->filename
-                                            ) !!}"
-                                                     alt="">
-                                            </div>
-                                        @endif
+                        @php
+                            $userAProfileImageUrl = \StorageHelper::profileImageUrl($conversation->userA, true);
+                            $userBProfileImageUrl = \StorageHelper::profileImageUrl($conversation->userB, true);
+                        @endphp
 
-                                        @if($message->body)
-                                            {!! $message->body !!}
+                        @foreach($conversation->messages as $message)
+                            @php
+                                if ($message->sender_id === $conversation->userA->id) {
+                                    $user = $conversation->userA;
+                                    $alignment = '';
+                                    $profileImageUrl = $userAProfileImageUrl;
+                                } else {
+                                    $user = $conversation->userB;
+                                    $alignment = 'right';
+                                    $profileImageUrl = $userBProfileImageUrl;
+                                }
+                            @endphp
+                            <!-- Message. Default to the left -->
+                                <div class="direct-chat-msg {!! $alignment !!}">
+                                    <div class="direct-chat-info clearfix">
+                                        <span
+                                            class="direct-chat-name pull-{!! ($alignment === 'right') ? 'right' : 'left' !!}">{!! $user->username !!}</span>
+                                        <span
+                                            class="direct-chat-timestamp pull-{!! ($alignment === 'right') ? 'left' : 'right' !!}">{!! $message->created_at->diffForHumans() !!} ({!! $message->created_at->format('d-m-Y H:i:s') !!})</span>
+                                    </div>
+                                    <img class="direct-chat-img" src="{{ $profileImageUrl }}"
+                                         alt="message user image">
+                                    <div class="direct-chat-text {!! ($alignment === 'right') ? 'userB' : 'userA' !!}">
+                                        @if($message->type === 'flirt')
+                                            <i class="fa fa-heart" style="color:red"></i>
+                                        @else
+                                            @if($message->has_attachment)
+                                                <div>
+                                                    <img height="100" src="{!! \StorageHelper::messageAttachmentUrl(
+                                                    $conversation->id,
+                                                    $message->attachment->filename
+                                                ) !!}"
+                                                         alt="">
+                                                </div>
+                                            @endif
+
+                                            @if($message->body)
+                                                {!! $message->body !!}
+                                            @endif
                                         @endif
-                                    @endif
+                                    </div>
+                                    <!-- /.direct-chat-text -->
                                 </div>
-                                <!-- /.direct-chat-text -->
-                            </div>
-                        @endforeach
+                            @endforeach
                     </div>
                     <!--/.direct-chat-messages-->
                 </div>
