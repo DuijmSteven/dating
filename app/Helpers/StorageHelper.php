@@ -44,9 +44,10 @@ class StorageHelper
 
         $filePath = self::userImagesPath($user->id) . $user->profileImage->filename;
 
-        if (!Storage::disk('cloud')->exists($filePath)) {
-            return self::getGenderImageUrl($user);
-        }
+        // this is commented out because it was having a huge impart on performace
+//        if (!Storage::disk('cloud')->exists($filePath)) {
+//            return self::getGenderImageUrl($user);
+//        }
 
         if ($thumb) {
             $explodedFilename = explode('.', $filePath);
@@ -69,11 +70,13 @@ class StorageHelper
 
         $filePath = self::articleImagesPath($articleId) . $filename;
 
-        if (!Storage::disk('cloud')->exists($filePath)) {
-            \Log::error('Image does not exist on s3 bucket. Article Id: ' . $articleId. ', Filename: ' . $filename);
-            // TODO
-            throw new \Exception('Article image does not exist');
-        }
+        // this is commented out because it was having a huge impart on performace
+
+//        if (!Storage::disk('cloud')->exists($filePath)) {
+//            \Log::error('Image does not exist on s3 bucket. Article Id: ' . $articleId. ', Filename: ' . $filename);
+//            // TODO
+//            throw new \Exception('Article image does not exist');
+//        }
 
         if ($thumb) {
             $explodedFilename = explode('.', $filePath);
@@ -115,11 +118,13 @@ class StorageHelper
     {
         $filePath = self::userImagesPath($userId) . $filename;
 
-        if (!Storage::disk('cloud')->exists($filePath)) {
-            \Log::error('Image does not exist on s3 bucket. User Id: ' . $userId. ', Filename: ' . $filename);
+        // this is commented out because it was having a huge impart on performace
 
-            return '';
-        }
+//        if (!Storage::disk('cloud')->exists($filePath)) {
+//            \Log::error('Image does not exist on s3 bucket. User Id: ' . $userId. ', Filename: ' . $filename);
+//
+//            return '';
+//        }
 
         if ($thumb) {
             $explodedFilename = explode('.', $filePath);
