@@ -101,4 +101,17 @@ class Conversation extends TimeZonedModel
     {
         return $this->user_b_id;
     }
+
+    public function getLockedByUserId()
+    {
+        return $this->locked_by_user_id;
+    }
+
+    /**
+     * @param int|null $userId
+     */
+    public function setLockedByUserId(?int $userId)
+    {
+        $this->locked_by_user_id = $userId;
+    }
 }

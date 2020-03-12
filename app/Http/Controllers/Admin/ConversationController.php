@@ -21,6 +21,7 @@ use Carbon\Carbon;
 use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -91,30 +92,54 @@ class ConversationController extends Controller
 
     /**
      * @param int $conversationId
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function show(int $conversationId)
     {
         /** @var Conversation $conversation */
-        $conversation = Conversation::with(['userA', 'userB', 'messages', 'userA.meta', 'userB.meta'])->withTrashed()->find($conversationId);
+        $conversation = Conversation::with(['userA', 'userB', 'messages'])->withTrashed()->find($conversationId);
+
+        if ($conversation->getLockedByUserId()) {
+            if ($this->authenticatedUser->isAdmin()) {
+                $lockedByUserId = $conversation->getLockedByUserId();
+            } else {
+                $alerts[] = [
+                    'type' => 'warning',
+                    'message' => 'The conversation is locked by someone else'
+                ];
+
+                return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
+            }
+        } else {
+            $conversation->setLockedByUserId(Auth::user()->getId());
+            $conversation->save();
+        }
+
         $conversation = $this->prepareConversationObject($conversation);
 
         [$userANotes, $userBNotes] = $this->getParticipantNotes($conversation);
 
+        $viewData = [
+            'title' => 'Conversation (id: ' . $conversationId . ') - ' . \config('app.name'),
+            'headingLarge' => 'Conversation (ID: ' . $conversationId . ')',
+            'headingSmall' => $conversation->userA->username .
+                ' (id: ' . $conversation->userA->id . ') - ' .
+                $conversation->userB->username .
+                ' (id:' . $conversation->userB->id . ')',
+            'carbonNow' => Carbon::now(),
+            'conversation' => $conversation,
+            'userANotes' => $userANotes,
+            'userBNotes' => $userBNotes
+        ];
+
+        if (isset($lockedByUserId) && $this->authenticatedUser->getId() !== $lockedByUserId) {
+            $viewData['lockedByUserId'] = $lockedByUserId;
+            $viewData['lockedByUser'] = User::find($lockedByUserId);
+        }
+
         return view(
             'admin.conversations.show',
-            [
-                'title' => 'Conversation (id: ' . $conversationId . ') - ' . \config('app.name'),
-                'headingLarge' => 'Conversation (ID: ' . $conversationId . ')',
-                'headingSmall' => $conversation->userA->username .
-                    ' (id: ' . $conversation->userA->id . ') - ' .
-                    $conversation->userB->username .
-                    ' (id:' . $conversation->userB->id . ')',
-                'carbonNow' => Carbon::now(),
-                'conversation' => $conversation,
-                'userANotes' => $userANotes,
-                'userBNotes' => $userBNotes
-            ]
+            $viewData
         );
     }
 
@@ -189,6 +214,28 @@ class ConversationController extends Controller
     {
         /** @var integer $conversationId */
         $conversationId = $request->get('conversation_id');
+
+        /** @var Conversation $conversation */
+        $conversation  = Conversation::find($conversationId);
+
+        if (
+            $conversation->getLockedByUserId() !== $this->authenticatedUser->getId() &&
+            !$this->authenticatedUser->isAdmin()
+        ) {
+            \Log::error('User ID: ' . $this->authenticatedUser->getId() .
+                ' attempted to send invisible image in conversation ID: ' . $conversation->getId() .
+                ', but conversation is locked by user ID: ' . $conversation->getLockedByUserId()
+            );
+
+            $alerts[] = [
+                'type' => 'error',
+                'message' => 'The conversation is locked by someone else'
+            ];
+
+            return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
+        }
+
+
         $body = $request->get('body') ?? null;
 
         /** @var UserImage $image */
@@ -304,7 +351,30 @@ class ConversationController extends Controller
         $messageData['operator_id'] = $this->authenticatedUser->getId();
 
         try {
-            $conversationMessage = $this->conversationManager->createMessage($messageData);
+            /** @var Conversation $conversation */
+            $conversation  = $this->conversationManager->retrieveConversation(
+                $messageData['sender_id'],
+                $messageData['recipient_id']
+            );
+
+            if (
+                $conversation->getLockedByUserId() !== $this->authenticatedUser->getId() &&
+                !$this->authenticatedUser->isAdmin()
+            ) {
+                \Log::error('User ID: ' . $this->authenticatedUser->getId() .
+                    ' attempted to send message in conversation ID: ' . $conversation->getId() .
+                    ', but conversation is locked by user ID: ' . $conversation->getLockedByUserId()
+                );
+
+                $alerts[] = [
+                    'type' => 'error',
+                    'message' => 'The conversation is locked by someone else'
+                ];
+
+                return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
+            }
+
+            $this->conversationManager->createMessage($messageData);
 
             /** @var User $recipient */
             $recipient = User::find($messageData['recipient_id']);
@@ -376,10 +446,11 @@ class ConversationController extends Controller
             ];
         }
 
-        return redirect()->route(
-            'operator-platform.conversations.show',
-            [$conversationMessage->getConversationId()]
-        )->with('alerts', $alerts);
+        /** @var Conversation $conversation */
+        $conversation->setLockedByUserId(null);
+        $conversation->save();
+
+        return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
     }
 
     /**

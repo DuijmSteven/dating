@@ -62,7 +62,7 @@
         <div class="col-xs-12 col-sm-6 sm_min_pad0">
             <div class="box direct-chat direct-chat-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Conversation</h3>
+                    <h3 class="box-title">Conversation {!! isset($lockedByUserId) ? '<span class="lockedByUserIdWarning">LOCKED BY: ' . $lockedByUserId . ' - ' . $lockedByUser->getUsername() . '</span>' : '' !!}</h3>
 
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i

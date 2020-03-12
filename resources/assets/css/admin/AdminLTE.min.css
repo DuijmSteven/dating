@@ -6241,3 +6241,11 @@ table .action-buttons .btn {
 .fa.fa-circle {
     color: #00a65a;
 }
+
+.lockedByUserIdWarning {
+    background: red;
+    color: white;
+    font-weight: bold;
+    padding: 2px;
+    border-radius: 5px;
+}

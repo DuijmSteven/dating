@@ -1098,12 +1098,12 @@
             </div>
 
             <div class="language-selection">
-                <a href="{{ route('landing-page.show-login', ['locale' => 'nl']) }}">
+                <a href="{{ route($localeRouteName, ['locale' => 'nl']) }}">
                     <div class="flagImageWrapper">
                         <img class="flagImage" src="{{ asset('img/flags/nl.png') }}" alt="">
                     </div>
                 </a> |
-                <a href="{{ route('landing-page.show-login', ['locale' => 'en']) }}">
+                <a href="{{ route($localeRouteName, ['locale' => 'en']) }}">
                     <div class="flagImageWrapper">
                         <img class="flagImage" src="{{ asset('img/flags/uk.svg') }}" alt="">
                     </div>
