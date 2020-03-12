@@ -30,11 +30,11 @@
         <script>
             window.dataLayer = window.dataLayer || [];
             dataLayer.push({
-                'transactionId': <?php echo $transactionId ?>,
+                'transactionId': '<?php echo $transactionId ?>',
                 'transactionTotal': <?php echo $transactionTotal ?>,
                 'transactionProducts': [{
-                    'sku': <?php echo $sku ?>,
-                    'name': <?php echo $name ?>,
+                    'sku': '<?php echo $sku ?>',
+                    'name': '<?php echo $name ?>',
                     'price': <?php echo $transactionTotal ?>,
                     'quantity': 1
                 }]
