@@ -98,7 +98,7 @@
                                     </td>
                                     <td>{{ $conversation->created_at->format('d-m-Y H:i:s') }}</td>
                                     <td class="action-buttons">
-                                        @if($userA && $userB) {
+                                        @if($userA && $userB)
                                             <a href="{!! route('operator-platform.conversations.show', [$conversation->id]) !!}" class="btn btn-default">View</a>
                                         @endif
 
