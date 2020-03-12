@@ -26,4 +26,19 @@
             @endif
         </div>
     </div>
+    @if ($status == 'success')
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            dataLayer.push({
+                'transactionId': <?php echo $transactionId ?>,
+                'transactionTotal': <?php echo $transactionTotal ?>,
+                'transactionProducts': [{
+                    'sku': <?php echo $sku ?>,
+                    'name': <?php echo $name ?>,
+                    'price': <?php echo $transactionTotal ?>,
+                    'quantity': 1
+                }]
+            });
+        </script>
+    @endif
 @endsection

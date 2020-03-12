@@ -137,7 +137,11 @@ class PaymentController extends FrontendController
         return view('frontend.thank-you', [
             'title' => $this->buildTitleWith(trans('view_titles.payment')),
             'status' => $status,
-            'info' => $info
+            'info' => $info,
+            'transactionId' => $transactionId,
+            'transactionTotal' => $creditPack->price,
+            'sku' => $creditPack->name . $creditPack->credits,
+            'name' => $creditPack->name
         ]);
     }
 }
