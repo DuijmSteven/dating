@@ -259,6 +259,7 @@ class ConversationController extends Controller
         $conversation  = Conversation::find($conversationId);
 
         if (
+            $conversation instanceof Conversation && 
             $conversation->getLockedByUserId() !== $this->authenticatedUser->getId() &&
             !$this->authenticatedUser->isAdmin()
         ) {
@@ -398,6 +399,7 @@ class ConversationController extends Controller
             );
 
             if (
+                $conversation instanceof Conversation &&
                 $conversation->getLockedByUserId() !== $this->authenticatedUser->getId() &&
                 !$this->authenticatedUser->isAdmin()
             ) {
