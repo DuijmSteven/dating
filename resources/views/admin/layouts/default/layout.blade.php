@@ -63,7 +63,10 @@
      */
     var DP = {
         baseUrl: '{!! url('/') !!}',
-        currentRoute: '{!! request()->route()->getName() !!}'
+        currentRoute: '{!! request()->route()->getName() !!}',
+        authenticatedUserIsAdmin: '{{ $authenticatedUser->isAdmin() }}',
+        authenticatedUserRole: '{{ $authenticatedUser->roles[0]->name }}',
+        authenticatedUserID: '{{ $authenticatedUser->getId() }}',
     };
 </script>
 

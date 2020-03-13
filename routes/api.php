@@ -43,6 +43,9 @@ Route::group([
 Route::group([
     'prefix' => 'conversations'
 ], function () {
+    Route::get('{conversationId}/get-locked-info', 'Api\ConversationController@getLockedInformation')
+        ->name('conversations.get-locked-info');
+
     Route::get('conversation-partner-ids/{userId}', 'Api\ConversationController@getOpenConversationPartners')
         ->name('conversations.get-user-conversation-partner-ids');
 

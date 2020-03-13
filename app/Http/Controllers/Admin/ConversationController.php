@@ -19,6 +19,7 @@ use App\User;
 use App\UserImage;
 use Carbon\Carbon;
 use Illuminate\Http\File;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
@@ -91,6 +92,27 @@ class ConversationController extends Controller
     }
 
     /**
+     * @param $conversationId
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function unlock($conversationId)
+    {
+        /** @var Conversation $conversation */
+        $conversation = Conversation::findOrFail($conversationId);
+        $conversation->setLockedByUserId(null);
+        $conversation->setLockedAt(null);
+        $conversation->save();
+
+
+        $alerts[] = [
+            'type' => 'success',
+            'message' => 'The conversation was unlocked'
+        ];
+
+        return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
+    }
+
+    /**
      * @param int $conversationId
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
@@ -102,6 +124,23 @@ class ConversationController extends Controller
         if ($conversation->getLockedByUserId()) {
             if ($this->authenticatedUser->isAdmin()) {
                 $lockedByUserId = $conversation->getLockedByUserId();
+            }
+
+            if ($conversation->getLockedByUserId() === $this->authenticatedUser->getId()) {
+                $fourMinutesAgo = (new Carbon('now'))->subMinutes(4);
+
+                if ($conversation->getLockedAt() < $fourMinutesAgo) {
+                    $conversation->setLockedByUserId(null);
+                    $conversation->setLockedAt(null);
+                    $conversation->save();
+
+                    $alerts[] = [
+                        'type' => 'warning',
+                        'message' => 'You had locked the conversation for too long.'
+                    ];
+
+                    return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
+                }
             } else {
                 $alerts[] = [
                     'type' => 'warning',
@@ -111,7 +150,8 @@ class ConversationController extends Controller
                 return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
             }
         } else {
-            $conversation->setLockedByUserId(Auth::user()->getId());
+            $conversation->setLockedByUserId($this->authenticatedUser->getId());
+            $conversation->setLockedAt(new Carbon('now'));
             $conversation->save();
         }
 

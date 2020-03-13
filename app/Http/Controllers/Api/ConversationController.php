@@ -29,6 +29,19 @@ class ConversationController
         $this->conversationManager = $conversationManager;
     }
 
+    public function getLockedInformation($conversationId)
+    {
+        /** @var Conversation $conversation */
+        $conversation = Conversation::findOrFail($conversationId);
+
+        $response = [
+            'locked_by_user_id' => $conversation->getLockedByUserId(),
+            'locked_at' => $conversation->getLockedAt()
+        ];
+
+        return JsonResponse::create($response, 200);
+    }
+
     /**
      * @param int $userId
      * @return JsonResponse

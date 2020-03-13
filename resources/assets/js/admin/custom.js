@@ -49,6 +49,16 @@ $(window).load(function () {
         $('#note_user_id').val(userId);
     });
 
+    if ($('.JS--showConversation').length > 0) {
+        // set a timeout to redirect the operator if he takes more than 4 minutes to answer
+        // remove the lock on the conversation
+        timer = setTimeout(function(){
+                location.reload();
+            },
+            1000*60*5
+        );
+    }
+
     if ($('#js-BotSelection').length > 0) {
         $('.js-fillBotData').click(function () {
             $('#js-goToConversation').attr(

@@ -246,6 +246,9 @@ Route::group([
             ->name('admin.conversations.overview');
         Route::delete('{conversationId}', 'Admin\ConversationController@destroy')
             ->name('admin.conversations.destroy');
+
+        Route::get('/{conversationId}/unlock', 'Admin\ConversationController@unlock')
+            ->name('admin.conversations.unlock');
     });
 
     Route::group([

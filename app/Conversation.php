@@ -15,13 +15,17 @@ class Conversation extends TimeZonedModel
 
     public $table = 'conversations';
 
+    public $dates = [
+        'locked_at'
+    ];
+
     protected $appends = ['updatedAtHumanReadable'];
 
     protected $fillable = [
         'user_a_id',
         'user_b_id',
         'new_activity_for_user_a',
-        'new_activity_for_user_b'
+        'new_activity_for_user_b',
     ];
 
     public function getUpdatedAtHumanReadableAttribute()
@@ -113,5 +117,18 @@ class Conversation extends TimeZonedModel
     public function setLockedByUserId(?int $userId)
     {
         $this->locked_by_user_id = $userId;
+    }
+
+    public function getLockedAt()
+    {
+        return $this->locked_at;
+    }
+
+    /**
+     * @param Carbon|null $lockedAt
+     */
+    public function setLockedAt(?Carbon $lockedAt)
+    {
+        $this->locked_at = $lockedAt;
     }
 }

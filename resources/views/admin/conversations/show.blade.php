@@ -2,12 +2,12 @@
 
 @section('content')
 
-    <?php
-    $userARole = ($conversation->userA->roles[0]->id == 2) ? 'peasant' : 'bot';
-    $userBRole = ($conversation->userB->roles[0]->id == 2) ? 'peasant' : 'bot';
-    ?>
+    @php
+        $userARole = ($conversation->userA->roles[0]->id == 2) ? 'peasant' : 'bot';
+        $userBRole = ($conversation->userB->roles[0]->id == 2) ? 'peasant' : 'bot';
+    @endphp
 
-    <div class="row">
+    <div class="row JS--showConversation" data-conversation-id="{{ $conversation->getId() }}">
         <div class="col-xs-12 col-sm-3">
             <div class="box box-userA">
                 <div class="box-header with-border">
@@ -252,5 +252,13 @@
     @include('admin.conversations.partials.notes-modal', [
         'conversationId' => $conversation->id
     ])
+
+    @if($authenticatedUser->isAdmin() && $conversation->getLockedByUserId())
+        <a href="{{ route('admin.conversations.unlock', ['conversationId' => $conversation]) }}"
+           class="btn btn-success btn-flat"
+        >
+            Unlock conversation
+        </a>
+    @endif
 
 @endsection
