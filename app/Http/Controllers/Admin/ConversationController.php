@@ -379,7 +379,14 @@ class ConversationController extends Controller
             }
         }
 
-        return redirect()->back();
+        if ($conversation instanceof Conversation) {
+            /** @var Conversation $conversation */
+            $conversation->setLockedByUserId(null);
+            $conversation->setLockedAt(null);
+            $conversation->save();
+        }
+
+        return redirect()->route('operator-platform.dashboard');
     }
 
     /**
@@ -488,10 +495,12 @@ class ConversationController extends Controller
             ];
         }
 
-        /** @var Conversation $conversation */
-        $conversation->setLockedByUserId(null);
-        $conversation->setLockedAt(null);
-        $conversation->save();
+        if ($conversation instanceof Conversation) {
+            /** @var Conversation $conversation */
+            $conversation->setLockedByUserId(null);
+            $conversation->setLockedAt(null);
+            $conversation->save();
+        }
 
         return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
     }
