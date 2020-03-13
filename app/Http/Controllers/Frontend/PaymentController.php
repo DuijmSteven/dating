@@ -139,7 +139,7 @@ class PaymentController extends FrontendController
             'status' => $status,
             'info' => $info,
             'transactionId' => $transactionId,
-            'transactionTotal' => $creditPack->price,
+            'transactionTotal' => number_format((float) $creditPack->price/100, 2, '.', ''),
             'sku' => $creditPack->name . $creditPack->credits,
             'name' => $creditPack->name
         ]);
