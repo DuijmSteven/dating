@@ -139,6 +139,7 @@
                 </div>
             </div>
         </div>
+        <div class="col-xs-12"></div>
         <div class="col-xs-12 col-sm-6 col-md-4">
             <div class="box box-widget DashboardWidget">
                 <!-- Add the bg color to the header using any of the bg-* classes -->
