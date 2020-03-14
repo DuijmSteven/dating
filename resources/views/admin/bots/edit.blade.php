@@ -6,6 +6,11 @@
         <div class="box-header with-border">
             <h3 class="box-title">Edit Bot</h3>
         </div>
+
+        <div>
+            <a href="{!! route('admin.bots.message-with-bot.get', ['botId' =>  $bot->id, 'onlyOnlinePeasants' => '0']) !!}" class="btn btn-default">Message peasant with bot</a>
+            <a href="{!! route('admin.bots.message-with-bot.get', ['botId' => $bot->id, 'onlyOnlinePeasants' => '1']) !!}" class="btn btn-default">Message online peasant with bot</a>
+        </div>
         <!-- /.box-header -->
         <!-- form start -->
         <form role="form" method="POST" action="{!! route('admin.bots.update', ['id' => $bot->id]) !!}"
