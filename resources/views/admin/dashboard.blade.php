@@ -49,7 +49,7 @@
                                     if ($user->account->credits > 10) {
                                         $highlightTypeClass = 'success';
                                     } else if ($user->account->credits > 4) {
-                                        $highlightTypeClass = 'warnign';
+                                        $highlightTypeClass = 'warning';
                                     } else {
                                         $highlightTypeClass = 'error';
                                     }
@@ -123,7 +123,7 @@
                                     if ($user->account->credits > 10) {
                                         $highlightTypeClass = 'success';
                                     } else if ($user->account->credits > 4) {
-                                        $highlightTypeClass = 'warnign';
+                                        $highlightTypeClass = 'warning';
                                     } else {
                                         $highlightTypeClass = 'error';
                                     }
