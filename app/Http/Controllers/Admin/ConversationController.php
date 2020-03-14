@@ -177,6 +177,8 @@ class ConversationController extends Controller
             $viewData['lockedByUser'] = User::find($lockedByUserId);
         }
 
+       // dd($viewData['conversation']['userA']);
+
         return view(
             'admin.conversations.show',
             $viewData
@@ -253,10 +255,16 @@ class ConversationController extends Controller
     public function addInvisibleImageToConversation(AddInvisibleImageToConversationRequest $request)
     {
         /** @var integer $conversationId */
-        $conversationId = $request->get('conversation_id');
+        $conversationId = (int) $request->get('conversation_id');
+
+        /** @var User $sender */
+        $sender = User::find($request->get('sender_id'));
+
+        /** @var User $recipient */
+        $recipient = User::find($request->get('recipient_id'));
 
         /** @var Conversation $conversation */
-        $conversation  = Conversation::find($conversationId);
+        $conversation  = $this->conversationManager->createOrRetrieveConversation($sender->getId(), $recipient->getId());
 
         if (
             $conversation instanceof Conversation && 
@@ -282,17 +290,11 @@ class ConversationController extends Controller
         /** @var UserImage $image */
         $image = UserImage::find($request->get('image_id'));
 
-        /** @var User $sender */
-        $sender = User::find($request->get('sender_id'));
-
-        /** @var User $recipient */
-        $recipient = User::find($request->get('recipient_id'));
-
         $message = new ConversationMessage();
         $message->setSenderId($sender->getId());
         $message->setRecipientId($recipient->getId());
         $message->setHasAttachment(true);
-        $message->setConversationId($conversationId);
+        $message->setConversationId($conversation->id);
         $message->setType('generic');
         $message->setBody($body);
         $message->save();
@@ -316,7 +318,7 @@ class ConversationController extends Controller
 
         $existingThumbFilepath = StorageHelper::userImagesPath($sender->getId()) . $thumbFilename . '.' . $fileExtension;
 
-        $messageAttachmentsPath = StorageHelper::messageAttachmentsPath($conversationId);
+        $messageAttachmentsPath = StorageHelper::messageAttachmentsPath($conversation->id);
 
         $newFilenameWithoutExtension = md5(microtime() . $filenameWithoutExtension);
         $newFilename = $newFilenameWithoutExtension . '.' . $fileExtension;
@@ -324,7 +326,7 @@ class ConversationController extends Controller
         $newFilepath = $messageAttachmentsPath . $newFilename;
         $newThumbFilepath = $messageAttachmentsPath . $newThumbFilename;
 
-        Storage::disk('cloud')->copy(
+        $copy = Storage::disk('cloud')->copy(
             $existingFilepath,
             $newFilepath
         );
@@ -335,7 +337,7 @@ class ConversationController extends Controller
         );
 
         $messageAttachment = new MessageAttachment();
-        $messageAttachment->setConversationId($conversationId);
+        $messageAttachment->setConversationId($conversation->id);
         $messageAttachment->setFilename($newFilename);
         $message->attachment()->save($messageAttachment);
 
@@ -389,7 +391,12 @@ class ConversationController extends Controller
             $conversation->save();
         }
 
-        return redirect()->route('operator-platform.dashboard');
+        $alerts[] = [
+            'type' => 'success',
+            'message' => 'The message was sent successfully'
+        ];
+
+        return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
     }
 
     /**
