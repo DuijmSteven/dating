@@ -549,6 +549,14 @@ class User extends Authenticatable
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function messages()
+    {
+        return $this->hasMany(ConversationMessage::class, 'sender_id');
+    }
+
+    /**
      * @param $type
      * @return bool
      * @throws \Exception

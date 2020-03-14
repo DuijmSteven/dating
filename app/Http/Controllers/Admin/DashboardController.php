@@ -241,6 +241,10 @@ class DashboardController extends Controller
                 'medium' => $this->statisticsManager->peasantsWithMediumCreditpack(),
                 'large' => $this->statisticsManager->peasantsWithLargeCreditpack(),
             ],
+            'topMessagerStatistics' => [
+                'today' => $this->statisticsManager->topMessagersBetweenDates($startOfToday, $endOfToday),
+                'this_week' => $this->statisticsManager->topMessagersBetweenDates($startOfWeek, $endOfWeek)
+            ]
         ];
 
         return view('admin.dashboard', array_merge(

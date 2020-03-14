@@ -95,6 +95,25 @@ class StatisticsManager
         return $this->peasantsCreditpackId(3);
     }
 
+    public function topMessagersBetweenDates($startDate, $endDate)
+    {
+        return User::with(['profileImage', 'messages' => function ($query) use ($startDate, $endDate) {
+            $query->where('created_at', '>=', $startDate);
+            $query->where('created_at', '<=', $endDate);
+        }])->whereHas('roles', function($query) {
+            $query->where('name', 'peasant');
+        })->whereHas('account', function($query) {
+            $query->where('credits', '>', 0);
+        })->whereHas('payments', function($query) {
+            $query->where('status', Payment::STATUS_COMPLETED);
+        })->whereHas('messages', function ($query) use ($startDate, $endDate) {
+            $query->where('created_at', '>=', $startDate);
+            $query->where('created_at', '<=', $endDate);
+        })->get()->sortByDesc(function ($user) {
+            return $user->messages->count();
+        })->take(6);
+    }
+
     private function peasantsCreditpackId(int $creditpackId) : int {
         return User::whereHas('roles', function($query) {
             $query->where('name', 'peasant');
