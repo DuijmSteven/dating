@@ -243,7 +243,8 @@ class DashboardController extends Controller
             ],
             'topMessagerStatistics' => [
                 'today' => $this->statisticsManager->topMessagersBetweenDates($startOfToday, $endOfToday),
-                'this_week' => $this->statisticsManager->topMessagersBetweenDates($startOfWeek, $endOfWeek)
+                'this_week' => $this->statisticsManager->topMessagersBetweenDates($startOfWeek, $endOfWeek),
+                'this_month' => $this->statisticsManager->topMessagersBetweenDates($startOfMonth, $endOfMonth)
             ]
         ];
 

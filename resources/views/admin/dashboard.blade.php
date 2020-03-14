@@ -43,7 +43,7 @@
                     <ul class="nav nav-stacked">
                         @foreach($topMessagerStatistics['today'] as $user)
                             <li>
-                                <a href="{{ route('admin.peasants.edit.get', ['id' => $user->getId()]) }}">{{ $user->getUsername() }} ({{ $user->getId() }})
+                                <a href="{{ route('admin.peasants.edit.get', ['id' => $user->getId()]) }}">{{ $user->getUsername() }} (ID: {{ $user->getId() }}) - <strong>Credits: {{ $user->account->credits }}</strong>
                                     <span class="DashboardWidget_count">{{ $user->messages->count() }}</span>
                                 </a>
                             </li>
@@ -66,7 +66,30 @@
                     <ul class="nav nav-stacked">
                         @foreach($topMessagerStatistics['this_week'] as $user)
                             <li>
-                                <a href="{{ route('admin.peasants.edit.get', ['id' => $user->getId()]) }}">{{ $user->getUsername() }} ({{ $user->getId() }})
+                                <a href="{{ route('admin.peasants.edit.get', ['id' => $user->getId()]) }}">{{ $user->getUsername() }} (ID: {{ $user->getId() }}) - <strong>Credits: {{ $user->account->credits }}</strong>
+                                    <span class="DashboardWidget_count">{{ $user->messages->count() }}</span>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <div class="box box-widget DashboardWidget">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="bg-primary">
+                    <div class="widget-us DashboardWidget_header" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
+                        <i class="fa fa-users DashboardWidget_header-icon"></i>
+                        <span class="DashboardWidget_header-title">Top messagers this month</span>
+                    </div>
+                    <!-- /.widget-user-image -->
+                </div>
+                <div class="box-footer no-padding">
+                    <ul class="nav nav-stacked">
+                        @foreach($topMessagerStatistics['this_month'] as $user)
+                            <li>
+                                <a href="{{ route('admin.peasants.edit.get', ['id' => $user->getId()]) }}">{{ $user->getUsername() }} (ID: {{ $user->getId() }}) - <strong>Credits: {{ $user->account->credits }}</strong>
                                     <span class="DashboardWidget_count">{{ $user->messages->count() }}</span>
                                 </a>
                             </li>

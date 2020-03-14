@@ -97,7 +97,7 @@ class StatisticsManager
 
     public function topMessagersBetweenDates($startDate, $endDate)
     {
-        return User::with(['profileImage', 'messages' => function ($query) use ($startDate, $endDate) {
+        return User::with(['profileImage', 'account', 'messages' => function ($query) use ($startDate, $endDate) {
             $query->where('created_at', '>=', $startDate);
             $query->where('created_at', '<=', $endDate);
         }])->whereHas('roles', function($query) {
