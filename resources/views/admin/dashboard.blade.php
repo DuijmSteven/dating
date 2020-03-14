@@ -43,7 +43,20 @@
                     <ul class="nav nav-stacked">
                         @foreach($topMessagerStatistics['today'] as $user)
                             <li>
-                                <a href="{{ route('admin.peasants.edit.get', ['id' => $user->getId()]) }}">{{ $user->getUsername() }} (ID: {{ $user->getId() }}) - <strong>Credits: {{ $user->account->credits }}</strong>
+                                @php
+                                    $highlightTypeClass = '';
+
+                                    if ($user->account->credits > 10) {
+                                        $highlightTypeClass = 'success';
+                                    } else if ($user->account->credits > 4) {
+                                        $highlightTypeClass = 'warnign';
+                                    } else {
+                                        $highlightTypeClass = 'error';
+                                    }
+                                @endphp
+
+                                <a href="{{ route('admin.peasants.edit.get', ['id' => $user->getId()]) }}">
+                                    {{ $user->getUsername() }} (ID: {{ $user->getId() }}) - <strong>Credits: <span class=" highlightAsDisk {{ $highlightTypeClass }}">{{ $user->account->credits }}</span></strong>
                                     <span class="DashboardWidget_count">{{ $user->messages->count() }}</span>
                                 </a>
                             </li>
@@ -66,9 +79,24 @@
                     <ul class="nav nav-stacked">
                         @foreach($topMessagerStatistics['this_week'] as $user)
                             <li>
-                                <a href="{{ route('admin.peasants.edit.get', ['id' => $user->getId()]) }}">{{ $user->getUsername() }} (ID: {{ $user->getId() }}) - <strong>Credits: {{ $user->account->credits }}</strong>
+                            <li>
+                                @php
+                                    $highlightTypeClass = '';
+
+                                    if ($user->account->credits > 10) {
+                                        $highlightTypeClass = 'success';
+                                    } else if ($user->account->credits > 4) {
+                                        $highlightTypeClass = 'warning';
+                                    } else {
+                                        $highlightTypeClass = 'error';
+                                    }
+                                @endphp
+
+                                <a href="{{ route('admin.peasants.edit.get', ['id' => $user->getId()]) }}">
+                                    {{ $user->getUsername() }} (ID: {{ $user->getId() }}) - <strong>Credits: <span class=" highlightAsDisk {{ $highlightTypeClass }}">{{ $user->account->credits }}</span></strong>
                                     <span class="DashboardWidget_count">{{ $user->messages->count() }}</span>
                                 </a>
+                            </li>
                             </li>
                         @endforeach
                     </ul>
@@ -89,7 +117,20 @@
                     <ul class="nav nav-stacked">
                         @foreach($topMessagerStatistics['this_month'] as $user)
                             <li>
-                                <a href="{{ route('admin.peasants.edit.get', ['id' => $user->getId()]) }}">{{ $user->getUsername() }} (ID: {{ $user->getId() }}) - <strong>Credits: {{ $user->account->credits }}</strong>
+                                @php
+                                    $highlightTypeClass = '';
+
+                                    if ($user->account->credits > 10) {
+                                        $highlightTypeClass = 'success';
+                                    } else if ($user->account->credits > 4) {
+                                        $highlightTypeClass = 'warnign';
+                                    } else {
+                                        $highlightTypeClass = 'error';
+                                    }
+                                @endphp
+
+                                <a href="{{ route('admin.peasants.edit.get', ['id' => $user->getId()]) }}">
+                                    {{ $user->getUsername() }} (ID: {{ $user->getId() }}) - <strong>Credits: <span class=" highlightAsDisk {{ $highlightTypeClass }}">{{ $user->account->credits }}</span></strong>
                                     <span class="DashboardWidget_count">{{ $user->messages->count() }}</span>
                                 </a>
                             </li>

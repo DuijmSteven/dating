@@ -6249,3 +6249,27 @@ table .action-buttons .btn {
     padding: 2px;
     border-radius: 5px;
 }
+
+.highlightAsDisk {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 21px;
+    height: 21px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 13px;
+    border-radius: 50%;
+}
+
+.highlightAsDisk.warning {
+    background-color: #bf800c;
+}
+
+.highlightAsDisk.success {
+    background-color: #00a65a;
+}
+
+.highlightAsDisk.error {
+    background-color: #cb2027;
+}

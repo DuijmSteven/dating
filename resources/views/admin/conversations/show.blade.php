@@ -178,7 +178,7 @@
                                     <input type="hidden" value="{!! $conversation->id !!}" name="conversation_id">
                                     <input type="hidden" value="{!! $conversation->userA->id !!}" name="sender_id">
                                     <input type="hidden" value="{!! $conversation->userB->id !!}" name="recipient_id">
-                                    <input type="hidden" value="{!! $invisibleImage->id !!}" name="image_id_error_check">
+                                    <input type="hidden" value="{!! $invisibleImage->id !!}" name="image_id">
 
                                     <textarea name="body" cols="30" rows="10" style="width: 100%; height: 200px" class="hidden"></textarea>
                                     
