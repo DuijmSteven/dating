@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\CheckRecentStartedPayments;
 use App\Console\Commands\ExportDb;
 use App\Console\Commands\SendProfileCompletionEmails;
 use App\Console\Commands\SendProfileViewedEmails;
@@ -41,6 +42,7 @@ class Kernel extends ConsoleKernel
             $schedule->command(SendProfileViewedEmails::class)->everyMinute();
             $schedule->command(SendProfileCompletionEmails::class)->dailyAt("19:00");
             $schedule->command(ExportDb::class)->dailyAt("04:30");
+            $schedule->command(CheckRecentStartedPayments::class)->everyTenMinutes();
         }
         
         if (config('app.env') === 'staging') {
@@ -69,8 +71,12 @@ class Kernel extends ConsoleKernel
 
         if ($timeNow->hour > 6 && $timeNow->hour < 18) {
             $numberOfBotsToHaveOnline = rand(20, 35);
-        } elseif (($timeNow->hour >= 18 && $timeNow->hour <= 23) || ($timeNow->hour >= 0 && $timeNow->hour <= 1)) {
+        } elseif ($timeNow->hour >= 18 && $timeNow->hour <= 22) {
             $numberOfBotsToHaveOnline = rand(35, 45);
+        } elseif ($timeNow->hour > 22 && $timeNow->hour <= 23) {
+            $numberOfBotsToHaveOnline = rand(25, 35);
+        } elseif ($timeNow->hour >= 0 && $timeNow->hour <= 1) {
+            $numberOfBotsToHaveOnline = rand(15, 25);
         } elseif ($timeNow->hour > 2 && $timeNow->hour <= 6) {
             $numberOfBotsToHaveOnline = rand(0, 6);
         }

@@ -206,7 +206,7 @@ class PaymentService implements PaymentProvider
                           ->first();
 
         //Increase credits
-        if ($status && $payment->status == 1) {
+        if ($status && $payment->status === Payment::STATUS_STARTED) {
             if(Auth::user()->account()->exists()) {
                 $credits = Auth::user()->account->credits;
                 Auth::user()->account()->update(['credits' => $credits + (int) session('credits')]);
