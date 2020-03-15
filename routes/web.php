@@ -164,8 +164,7 @@ Route::group([
 ], function () {
     Route::post('/', 'Frontend\PaymentController@postPayment')
     ->name('payments.post');
-    Route::get('thank-you', 'Frontend\PaymentController@checkPayment')
-    ->name('payments.check');
+    Route::get('thank-you', 'Frontend\PaymentController@checkPayment')->name('payments.check');
 });
 
 Route::get('privacy', 'Frontend\MiscController@showPrivacy')
