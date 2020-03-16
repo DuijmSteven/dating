@@ -126,7 +126,8 @@
                 isMaximized: true,
                 fullyLoaded: false,
                 countConversationsWithNewMessages: 0,
-                newMessagesExist: false
+                newMessagesExist: false,
+                fetchingUserConversations: false
             };
         },
 
@@ -134,7 +135,9 @@
             this.fetchUserConversations(true);
 
             setInterval(() => {
-                this.fetchUserConversations();
+                if (!this.fetchingUserConversations) {
+                    this.fetchUserConversations();
+                }
             }, 10000);
         },
 
@@ -218,6 +221,8 @@
             },
 
             fetchUserConversations: function (fetchStatus) {
+                this.fetchingUserConversations = true;
+
                 axios.get('/api/conversations/' + this.user.id).then(response => {
                     this.conversations = response.data;
 
@@ -270,8 +275,11 @@
                     if (fetchStatus) {
                         this.fetchConversationManagerStatus();
                     }
+
+                    this.fetchingUserConversations = false;
                 }).catch(function (error) {
-                });
+                    this.fetchingUserConversations = false;
+                }.bind(this));
             },
             toggle: function () {
                 $('#PrivateChatManager__body').slideToggle('fast');
