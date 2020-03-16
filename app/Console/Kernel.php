@@ -25,7 +25,8 @@ class Kernel extends ConsoleKernel
         Commands\SendProfileViewedEmails::class,
         Commands\DuplicateProductionS3BucketToCurrentEnvironmentBucket::class,
         Commands\UpdateCurrentEnvDbAndAws::class,
-        Commands\SendProfileCompletionEmails::class
+        Commands\SendProfileCompletionEmails::class,
+        CheckRecentStartedPayments::class
     ];
 
     /**
