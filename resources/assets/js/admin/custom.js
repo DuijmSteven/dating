@@ -50,13 +50,44 @@ $(window).load(function () {
     });
 
     if ($('.JS--showConversation').length > 0) {
-        // set a timeout to redirect the operator if he takes more than 4 minutes to answer
+        var lockedDate = new Date($('.JS--showConversation').data('locked-at'));
+        var countdownTime = (new Date($('.JS--showConversation').data('locked-at'))).setMinutes(lockedDate.getMinutes() + 6);
+        var now = new Date().getTime();
+
+        var timeLeftInitial = countdownTime - now;
+
+        var minutesLeftInitial = Math.floor((timeLeftInitial % (1000 * 60 * 60)) / (1000 * 60));
+        var secondsLeftInitial = Math.floor((timeLeftInitial % (1000 * 60)) / 1000);
+
+        console.log(secondsLeftInitial + minutesLeftInitial*60);
+
+        // set a timeout to redirect the operator if he takes more than the remaining time to answer
         // remove the lock on the conversation
         timer = setTimeout(function(){
                 location.reload();
             },
-            1000*60*5
+            (secondsLeftInitial + minutesLeftInitial*60) * 1000
         );
+
+        // start the countdown timer
+        var x = setInterval(function() {
+            var now = new Date().getTime();
+            var timeLeft = countdownTime - now;
+
+            var minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            if (minutes < 1 && !$('.JS--operatorCountdown').hasClass('warning')) {
+                $('.JS--operatorCountdown').addClass('warning');
+            }
+
+            if (minutes < 0 || seconds < 0) {
+                $('.JS--operatorCountdown').html(0 + "m " + 0 + "s");
+            } else {
+                $('.JS--operatorCountdown').html(minutes + "m " + seconds + "s");
+            }
+
+        }, 1000);
     }
 
     if ($('#js-BotSelection').length > 0) {

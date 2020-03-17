@@ -6273,3 +6273,27 @@ table .action-buttons .btn {
 .highlightAsDisk.error {
     background-color: #cb2027;
 }
+
+.showConversation {
+    position: relative;
+}
+
+.showConversation .operatorCountdown {
+    position: absolute;
+    right: 16px;
+    top: -47px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: green;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 600;
+    width: 76px;
+}
+
+.showConversation .operatorCountdown.warning {
+    background-color: #ef4e27;
+}

@@ -126,9 +126,9 @@ class ConversationController extends Controller
                 $lockedByUserId = $conversation->getLockedByUserId();
             }
 
-            if ($conversation->getLockedByUserId() === $this->authenticatedUser->getId()) {
-                $fourMinutesAgo = (new Carbon('now'))->subMinutes(4);
+            $fourMinutesAgo = (new Carbon('now'))->subMinutes(6);
 
+            if ($conversation->getLockedByUserId() === $this->authenticatedUser->getId()) {
                 if ($conversation->getLockedAt() < $fourMinutesAgo) {
                     $conversation->setLockedByUserId(null);
                     $conversation->setLockedAt(null);
@@ -142,12 +142,18 @@ class ConversationController extends Controller
                     return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
                 }
             } else {
-                $alerts[] = [
-                    'type' => 'warning',
-                    'message' => 'The conversation is locked by someone else'
-                ];
+                if ($conversation->getLockedAt() < $fourMinutesAgo) {
+                    $conversation->setLockedByUserId($this->authenticatedUser->getId());
+                    $conversation->setLockedAt(new Carbon('now'));
+                    $conversation->save();
+                } else {
+                    $alerts[] = [
+                        'type' => 'warning',
+                        'message' => 'The conversation is locked by someone else'
+                    ];
 
-                return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
+                    return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
+                }
             }
         } else {
             $conversation->setLockedByUserId($this->authenticatedUser->getId());
@@ -169,7 +175,9 @@ class ConversationController extends Controller
             'carbonNow' => Carbon::now(),
             'conversation' => $conversation,
             'userANotes' => $userANotes,
-            'userBNotes' => $userBNotes
+            'userBNotes' => $userBNotes,
+            'lockedAt' => $conversation->getLockedAt()->tz('Europe/Amsterdam')
+
         ];
 
         if (isset($lockedByUserId) && $this->authenticatedUser->getId() !== $lockedByUserId) {
@@ -177,7 +185,7 @@ class ConversationController extends Controller
             $viewData['lockedByUser'] = User::find($lockedByUserId);
         }
 
-       // dd($viewData['conversation']['userA']);
+       // dd($viewData['lockedAt']);
 
         return view(
             'admin.conversations.show',

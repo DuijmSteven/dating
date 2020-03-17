@@ -7,7 +7,13 @@
         $userBRole = ($conversation->userB->roles[0]->id == 2) ? 'peasant' : 'bot';
     @endphp
 
-    <div class="row JS--showConversation" data-conversation-id="{{ $conversation->getId() }}">
+    <div
+        class="row JS--showConversation showConversation"
+        data-conversation-id="{{ $conversation->getId() }}"
+        data-locked-at="{{ $lockedAt }}"
+    >
+        <div class="operatorCountdown JS--operatorCountdown"></div>
+
         <div class="col-xs-12 col-sm-3">
             <div class="box box-userA">
                 <div class="box-header with-border">
