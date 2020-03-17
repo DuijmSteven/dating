@@ -15,15 +15,11 @@ use Illuminate\Support\Facades\Auth;
  */
 class PaymentService implements PaymentProvider
 {
-    private $returnUrl;
-
     /**
      * PaymentService constructor.
      */
     public function __construct()
-    {
-        $this->returnUrl = route('payments.check');
-    }
+    {}
 
     /**
      * @param  string  $bank
@@ -97,7 +93,7 @@ class PaymentService implements PaymentProvider
             ->outletId(config('targetpay.layoutcode'))
             ->amount($amount)
             ->description($description)
-            ->returnUrl($this->returnUrl)
+            ->returnUrl(route('payments.check'))
             ->bank($bank)
             ->test(config('targetpay.test'))
             ->start();
@@ -119,7 +115,7 @@ class PaymentService implements PaymentProvider
             ->outletId(config('targetpay.layoutcode'))
             ->amount($amount)
             ->description($description)
-            ->returnUrl($this->returnUrl)
+            ->returnUrl(route('payments.check'))
             ->test(config('targetpay.test'))
             ->start();
 
@@ -141,7 +137,7 @@ class PaymentService implements PaymentProvider
             ->outletId(config('targetpay.layoutcode'))
             ->amount($amount)
             ->description($description)
-            ->returnUrl($this->returnUrl)
+            ->returnUrl(route('payments.check'))
             ->test(config('targetpay.test'))
             ->start();
 
@@ -157,7 +153,7 @@ class PaymentService implements PaymentProvider
             ->outletId(config('targetpay.layoutcode'))
             ->amount($amount)
             ->description($description)
-            ->returnUrl($this->returnUrl)
+            ->returnUrl(route('payments.check'))
             ->test(config('targetpay.test'))
             ->start();
 
@@ -206,7 +202,7 @@ class PaymentService implements PaymentProvider
                           ->first();
 
         //Increase credits
-        if ($status && $payment->status == 1) {
+        if ($status && $payment->status === Payment::STATUS_STARTED) {
             if(Auth::user()->account()->exists()) {
                 $credits = Auth::user()->account->credits;
                 Auth::user()->account()->update(['credits' => $credits + (int) session('credits')]);

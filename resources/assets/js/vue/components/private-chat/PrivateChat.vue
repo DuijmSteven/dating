@@ -181,6 +181,7 @@
                 creditsUrl: DP.creditsUrl,
                 singleProfileUrl: DP.singleProfileUrl,
                 errorMessages: [],
+                checkingForNewAndShowing: false
             };
         },
 
@@ -277,13 +278,15 @@
                 this.fetchMessagesAndPopulate();
 
                 this.intervalToFetchMessages = setInterval(() => {
-                    if (this.currentHighestMessageId !== undefined) {
+                    if (this.currentHighestMessageId !== undefined && !this.checkingForNewAndShowing) {
                         this.checkForNewMessagesAndShowThem();
                     }
                 }, 10000);
             },
 
             checkForNewMessagesAndShowThem() {
+                this.checkingForNewAndShowing = true;
+
                 axios.get('/api/conversation-messages/' + this.user.id + '/' + this.partner.id + '/' + this.currentHighestMessageId).then(response => {
                     let messages = response.data;
 
@@ -301,6 +304,8 @@
                         if (newActivity) {
                             this.setNewActivity();
                         }
+                    } else {
+                        this.checkingForNewAndShowing = false;
                     }
                 });
             },
@@ -379,6 +384,8 @@
                         this.displayedMessages.unshift(this.buildMessageObject(message));
                     });
                 }
+
+                this.checkingForNewAndShowing = false;
             },
 
             buildMessageObject: function (message) {
