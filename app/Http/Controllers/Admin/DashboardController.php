@@ -268,10 +268,8 @@ class DashboardController extends Controller
      */
     protected function createRevenueChart(): RevenueChart
     {
-        $revenueChart = new RevenueChart();
-
         $query = \DB::table('payments as p')
-            ->select(\DB::raw('DATE(p.created_at) creationDate, SUM(p.amount) as revenueOnDay'))
+            ->select(\DB::raw('DATE(CONVERT_TZ(p.created_at, \'UTC\', \'Europe/Amsterdam\')) as creationDate, SUM(p.amount) as revenueOnDay'))
             ->leftJoin('users as u', 'u.id', 'p.user_id')
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
@@ -312,6 +310,7 @@ class DashboardController extends Controller
             }
         }
 
+        $revenueChart = new RevenueChart();
         $revenueChart->labels($labels);
         $revenueChart->dataset('Revenue over time', 'line', $counts);
         return $revenueChart;
@@ -323,10 +322,8 @@ class DashboardController extends Controller
      */
     protected function createPaymentsChart(): PaymentsChart
     {
-        $paymentsChart = new PaymentsChart();
-
         $query = \DB::table('payments as p')
-            ->select(\DB::raw('DATE(p.created_at) creationDate, COUNT(p.id) AS paymentsCount'))
+            ->select(\DB::raw('DATE(CONVERT_TZ(p.created_at, \'UTC\', \'Europe/Amsterdam\')) as creationDate, COUNT(p.id) AS paymentsCount'))
             ->leftJoin('users as u', 'u.id', 'p.user_id')
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
@@ -366,6 +363,7 @@ class DashboardController extends Controller
             }
         }
 
+        $paymentsChart = new PaymentsChart();
         $paymentsChart->labels($labels);
         $paymentsChart->dataset('Payments over time', 'line', $counts);
         return $paymentsChart;
@@ -377,10 +375,8 @@ class DashboardController extends Controller
      */
     protected function createPeasantMessagesChart(): PeasantMessagesChart
     {
-        $peasantMessagesChart = new PeasantMessagesChart();
-
         $query = \DB::table('conversation_messages as cm')
-            ->select(\DB::raw('DATE(cm.created_at) AS creationDate, COUNT(cm.id) AS messagesCount'))
+            ->select(\DB::raw('DATE(CONVERT_TZ(cm.created_at, \'UTC\', \'Europe/Amsterdam\')) as creationDate, COUNT(cm.id) AS messagesCount'))
             ->leftJoin('users as u', 'u.id', 'cm.sender_id')
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
@@ -419,6 +415,7 @@ class DashboardController extends Controller
             }
         }
 
+        $peasantMessagesChart = new PeasantMessagesChart();
         $peasantMessagesChart->labels($labels);
         $peasantMessagesChart->dataset('Peasant messages over time', 'line', $counts);
         return $peasantMessagesChart;
@@ -430,10 +427,8 @@ class DashboardController extends Controller
      */
     protected function createRegistrationsChart(): RegistrationsChart
     {
-        $registrationsChart = new RegistrationsChart();
- 
         $query = \DB::table('users as u')
-            ->select(\DB::raw('DATE(u.created_at) AS registrationDate, COUNT(u.id) AS registrationCount'))
+            ->select(\DB::raw('DATE(CONVERT_TZ(u.created_at, \'UTC\', \'Europe/Amsterdam\')) as registrationDate, COUNT(u.id) AS registrationCount'))
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->groupBy('registrationDate')
@@ -471,6 +466,7 @@ class DashboardController extends Controller
             }
         }
 
+        $registrationsChart = new RegistrationsChart();
         $registrationsChart->labels($labels);
         $registrationsChart->dataset('Registrations over time', 'line', $counts);
         return $registrationsChart;
