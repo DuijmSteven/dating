@@ -90,7 +90,6 @@ class PaymentController extends FrontendController
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Exception
      */
     public function checkPayment()
@@ -108,8 +107,7 @@ class PaymentController extends FrontendController
 
         //check if payment is already completed (user refreshed the thank-you page or visited it again in general)
         if($paymentStatus == Payment::STATUS_COMPLETED) {
-            $status = 'completed';
-            $info = '';
+            return redirect()->route('home');
         } else {
             $check = $this->paymentProvider->paymentCheck($paymentMethod, $transactionId);
 
