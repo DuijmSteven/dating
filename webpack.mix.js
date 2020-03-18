@@ -56,4 +56,10 @@ mix.scripts([
     .sourceMaps()
     .version();
 
+mix.scripts([
+    'resources/assets/js/admin/custom.js'
+], 'public/admin/js/custom.js')
+    .sourceMaps()
+    .version();
+
 //mix.copy('resources/assets/admin-lte/img', 'public/admin/img');
