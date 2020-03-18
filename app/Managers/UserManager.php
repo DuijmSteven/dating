@@ -327,6 +327,7 @@ class UserManager
             })
             ->orderByRaw('RAND()')->take($userAmount)
             ->where('active', true)
+            ->where('id', '!=', 168)
             ->get();
 
         // This method is nly used in dev env so it is ok to do this
