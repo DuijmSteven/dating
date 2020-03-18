@@ -49,8 +49,6 @@ $(window).load(function () {
         $('#note_user_id').val(userId);
     });
 
-    console.log('hello');
-
     if ($('.JS--showConversation').length > 0) {
         var lockedDate = new Date($('.JS--showConversation').data('locked-at'));
         var countdownTime = (new Date($('.JS--showConversation').data('locked-at'))).setMinutes(lockedDate.getMinutes() + 6);
@@ -60,8 +58,6 @@ $(window).load(function () {
 
         var minutesLeftInitial = Math.floor((timeLeftInitial % (1000 * 60 * 60)) / (1000 * 60));
         var secondsLeftInitial = Math.floor((timeLeftInitial % (1000 * 60)) / 1000);
-
-        console.log(secondsLeftInitial + minutesLeftInitial*60);
 
         // set a timeout to redirect the operator if he takes more than the remaining time to answer
         // remove the lock on the conversation
@@ -83,7 +79,6 @@ $(window).load(function () {
                 $('.JS--operatorCountdown').addClass('warning');
             }
 
-            console.log(minutes + "m " + seconds + "s");
             if (minutes < 0 || seconds < 0) {
                 $('.JS--operatorCountdown').html(0 + "m " + 0 + "s");
             } else {
