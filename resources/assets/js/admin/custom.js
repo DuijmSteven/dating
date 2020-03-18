@@ -49,6 +49,8 @@ $(window).load(function () {
         $('#note_user_id').val(userId);
     });
 
+    console.log('hello');
+
     if ($('.JS--showConversation').length > 0) {
         var lockedDate = new Date($('.JS--showConversation').data('locked-at'));
         var countdownTime = (new Date($('.JS--showConversation').data('locked-at'))).setMinutes(lockedDate.getMinutes() + 6);
@@ -81,6 +83,7 @@ $(window).load(function () {
                 $('.JS--operatorCountdown').addClass('warning');
             }
 
+            console.log(minutes + "m " + seconds + "s");
             if (minutes < 0 || seconds < 0) {
                 $('.JS--operatorCountdown').html(0 + "m " + 0 + "s");
             } else {
