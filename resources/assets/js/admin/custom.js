@@ -1,5 +1,7 @@
 $(window).load(function () {
 
+    console.log('hello');
+
     /*
      *   CREATE BOT =================================================
      */
