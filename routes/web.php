@@ -64,7 +64,7 @@ Route::post('redirect-back', 'Frontend\UserController@redirectBack')
 /* User routes */
 Route::group([
     'prefix' => 'users',
-    'middleware' => ['auth', 'not_editor']
+    'middleware' => ['auth', 'not_editor', 'not_operator']
 ], function () {
 
     Route::group([
@@ -128,7 +128,7 @@ Route::group([
 /* Conversations routes */
 Route::group([
     'prefix' => 'conversations',
-    'middleware' => ['auth', 'not_editor']
+    'middleware' => ['auth', 'not_editor', 'not_operator']
 ], function () {
     Route::get('/', 'ConversationController@index')
         ->name('conversations.overview');
@@ -140,7 +140,7 @@ Route::group([
 
 Route::group([
     'prefix' => 'images',
-    'middleware' => ['auth', 'not_editor']
+    'middleware' => ['auth', 'not_editor', 'not_operator']
 ], function () {
     Route::delete('{imageId}/delete', 'UserImageController@destroy')
         ->name('images.destroy');
@@ -150,7 +150,7 @@ Route::group([
 
 Route::group([
     'prefix' => 'flirts',
-    'middleware' => ['auth', 'not_editor']
+    'middleware' => ['auth', 'not_editor', 'not_operator']
 ], function () {
     Route::get('{senderId}/{recipientId}', 'Frontend\FlirtController@send');
 });
@@ -160,7 +160,7 @@ Route::get('cities/{countryCode}', 'Admin\UserController@getCities')
 
 Route::group([
     'prefix' => 'payments',
-    'middleware' => ['auth', 'not_editor']
+    'middleware' => ['auth', 'not_editor', 'not_operator']
 ], function () {
     Route::post('/', 'Frontend\PaymentController@postPayment')
     ->name('payments.post');
@@ -178,7 +178,7 @@ Route::get('faq', 'Frontend\MiscController@showFaq')
 
 Route::group([
     'prefix' => 'credits',
-    'middleware' => ['auth', 'not_editor']
+    'middleware' => ['auth', 'not_editor', 'not_operator']
 ], function () {
     Route::get('/', 'Frontend\CreditsController@show')
         ->name('credits.show');

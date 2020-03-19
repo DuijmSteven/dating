@@ -57,6 +57,7 @@ class Kernel extends HttpKernel
         'admin' => \App\Middleware\User\VerifyAdmin::class,
         'editor' => \App\Middleware\User\VerifyEditor::class,
         'not_editor' => \App\Middleware\User\VerifyNotEditor::class,
+        'not_operator' => \App\Middleware\User\VerifyNotOperator::class,
         'current_user' => \App\Middleware\User\VerifyIsCurrentUser::class,
         'operator' => \App\Middleware\User\VerifyOperator::class,
     ];
