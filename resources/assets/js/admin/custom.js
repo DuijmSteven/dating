@@ -54,6 +54,7 @@ $(window).load(function () {
 
         var countdownTime = (new Date($('.JS--showConversation').data('locked-at'))).setMinutes(lockedDate.getMinutes() + 4);
 
+        var redirect = false;
         // start the countdown timer
         var x = setInterval(function() {
             var now = new Date().getTime();
@@ -67,7 +68,10 @@ $(window).load(function () {
             }
 
             if (minutes === 0 && seconds === 0 || (minutes < 0 || seconds < 0)) {
-                window.location = DP.operatorDashboardRoute;
+                if (!redirect) {
+                    window.location = DP.operatorDashboardRoute;
+                    redirect = true;
+                }
             }
 
             $('.JS--operatorCountdown').html(minutes + "m " + seconds + "s");

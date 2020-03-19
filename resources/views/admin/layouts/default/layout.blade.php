@@ -73,7 +73,7 @@
 
 <!-- ./wrapper -->
 <script src="{{ elixir('admin/js/plugins.js') }}"></script>
-<script src="{{ elixir('admin/js/custom-force.js') }}"></script>
+<script src="{{ elixir('admin/js/custom.js') }}"></script>
 
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>

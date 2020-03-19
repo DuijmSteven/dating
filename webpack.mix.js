@@ -58,7 +58,7 @@ mix.scripts([
 
 mix.scripts([
     'resources/assets/js/admin/custom.js'
-], 'public/admin/js/custom-force.js')
+], 'public/admin/js/custom.js')
     .sourceMaps()
     .version();
 
