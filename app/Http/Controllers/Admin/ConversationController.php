@@ -244,9 +244,9 @@ class ConversationController extends Controller
      * @param int $userBId
      * @throws \Exception
      */
-    public function checkIfConversationExists(int $userAId, int $userBId) {
-        $conversation = Conversation::where('user_a_id', $userAId)
-            ->where('user_b_id', $userBId)
+    public function checkIfConversationExists($userAId, $userBId) {
+        $conversation = Conversation::where('user_a_id', (int) $userAId)
+            ->where('user_b_id', (int) $userBId)
             ->orWhere(function ($query) use ($userAId, $userBId) {
                 $query->where('user_a_id', $userBId);
                 $query->where('user_b_id', $userAId);
@@ -463,6 +463,7 @@ class ConversationController extends Controller
 
                 return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
             } elseif (
+                $conversation instanceof Conversation &&
                 $conversation->getLockedByUserId() === $this->authenticatedUser->getId() &&
                 $conversation->getLockedAt()->diffInMinutes(new Carbon()) > 4
             ) {
