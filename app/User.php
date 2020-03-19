@@ -557,6 +557,27 @@ class User extends Authenticatable
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function operatorMessages()
+    {
+        return $this->hasMany(ConversationMessage::class, 'operator_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function operatorMessagesThisMonth()
+    {
+        $startOfMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->setTimezone('UTC');
+        $endOfMonth = Carbon::now('Europe/Amsterdam')->endOfMonth()->setTimezone('UTC');
+
+        return $this->hasMany(ConversationMessage::class, 'operator_id')
+            ->where('created_at', '>=', $startOfMonth)
+            ->where('created_at', '<=', $endOfMonth);
+    }
+
+    /**
      * @param $type
      * @return bool
      * @throws \Exception

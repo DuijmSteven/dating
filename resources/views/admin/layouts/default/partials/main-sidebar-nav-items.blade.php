@@ -75,6 +75,29 @@
         </li>
     </ul>
 </li>
+ <li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.operators') ? 'active' : '' !!}">
+     <a href="#">
+         <i class="fa fa-android"></i>
+         <span>Operators</span>
+         <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+     </a>
+     <ul class="treeview-menu">
+         <li class="{!! \Request::route()->getName() == 'admin.operators.overview' ? 'active' : '' !!}">
+             <a href="{!! route('admin.operators.overview') !!}">
+                 <i class="fa fa-list"></i>
+                 Overview
+             </a>
+         </li>
+{{--         <li class="{!! \Request::route()->getName() == 'admin.bots.create.get' ? 'active' : '' !!}">--}}
+{{--             <a href="{!! route('admin.bots.create.get') !!}">--}}
+{{--                 <i class="fa fa-user-plus"></i>--}}
+{{--                 Create--}}
+{{--             </a>--}}
+{{--         </li>--}}
+     </ul>
+ </li>
 <li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.payments') ? 'active' : '' !!}">
     <a href="#">
         <i class="fa fa-money"></i>
@@ -112,7 +135,7 @@
 <li class="treeview {!! str_contains(\Request::route()->getName(), 'operator-platform') ? 'active' : '' !!}">
     <a href="#">
         <i class="fa fa-users"></i>
-        <span>Operators</span>
+        <span>Operator platform</span>
         <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>

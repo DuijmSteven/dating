@@ -206,6 +206,13 @@ Route::group([
     });
 
     Route::group([
+        'prefix' => 'operators'
+    ], function () {
+        Route::get('/', 'Admin\OperatorController@index')
+            ->name('admin.operators.overview');
+    });
+
+    Route::group([
         'prefix' => 'peasants'
     ], function () {
         Route::get('/', 'Admin\PeasantController@index')
