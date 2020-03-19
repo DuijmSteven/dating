@@ -68,19 +68,11 @@ $(window).load(function () {
                 $('.JS--operatorCountdown').addClass('warning');
             }
 
-            if (minutes === 0 && seconds === 0) {
+            if (minutes === 0 && seconds === 0 || (minutes < 0 || seconds < 0)) {
                 window.location = DP.operatorDashboardRoute;
             }
 
-            if (minutes < 0 || seconds < 0) {
-                if (minutes < 0) {
-                    $('.JS--operatorCountdown').html('-+');
-                } else {
-                    $('.JS--operatorCountdown').html('+-');
-                }
-            } else {
-                $('.JS--operatorCountdown').html(minutes + "m " + seconds + "s");
-            }
+            $('.JS--operatorCountdown').html(minutes + "m " + seconds + "s");
         }, 4000);
     }
 

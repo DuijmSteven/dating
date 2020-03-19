@@ -128,17 +128,23 @@ class ConversationController extends Controller
             $minutesAgo = (new Carbon('now'))->subMinutes(4);
 
             if ($conversation->getLockedByUserId() === $this->authenticatedUser->getId()) {
-                if ($conversation->getLockedAt() < $minutesAgo && !$this->authenticatedUser->isAdmin()) {
-                    $conversation->setLockedByUserId(null);
-                    $conversation->setLockedAt(null);
-                    $conversation->save();
+                if ($conversation->getLockedAt() < $minutesAgo) {
+                    if (!$this->authenticatedUser->isAdmin()) {
+                        $conversation->setLockedByUserId(null);
+                        $conversation->setLockedAt(null);
+                        $conversation->save();
 
-                    $alerts[] = [
-                        'type' => 'warning',
-                        'message' => 'You had locked the conversation for too long.'
-                    ];
+                        $alerts[] = [
+                            'type' => 'warning',
+                            'message' => 'You had locked the conversation for too long.'
+                        ];
 
-                    return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
+                        return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
+                    } else {
+                        $conversation->setLockedByUserId($this->authenticatedUser->getId());
+                        $conversation->setLockedAt(new Carbon('now'));
+                        $conversation->save();
+                    }
                 }
             } else {
                 if ($conversation->getLockedAt() < $minutesAgo) {
