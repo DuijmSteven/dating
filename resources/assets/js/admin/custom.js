@@ -51,6 +51,8 @@ $(window).load(function () {
         $('#note_user_id').val(userId);
     });
 
+    console.log(1);
+
     if ($('.JS--showConversation').length > 0 && $('.JS--operatorCountdown').length > 0) {
         var lockedDate = new Date($('.JS--showConversation').data('locked-at'));
 
