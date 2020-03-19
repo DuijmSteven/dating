@@ -69,5 +69,5 @@ interface PaymentProvider
      * @param  int  $transactionId
      * @return mixed
      */
-    public function paymentCheck(string $paymentMethod, int $transactionId);
+    public function paymentCheck(int $peasantId, string $paymentMethod, int $transactionId);
 }

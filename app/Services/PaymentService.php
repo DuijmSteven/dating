@@ -163,7 +163,7 @@ class PaymentService implements PaymentProvider
         ];
     }
 
-    public function paymentCheck(string $paymentMethod, int $transactionId)
+    public function paymentCheck(int $peasantId, string $paymentMethod, int $transactionId)
     {
         switch ($paymentMethod) {
             case 'ideal':
@@ -197,7 +197,7 @@ class PaymentService implements PaymentProvider
 
         $status = $checkPaymentResult->status;
 
-        $payment = Payment::where('user_id', Auth::user()->id)
+        $payment = Payment::where('user_id', $peasantId)
                           ->where('transaction_id', $transactionId)
                           ->first();
 

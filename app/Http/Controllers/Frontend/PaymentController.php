@@ -109,7 +109,11 @@ class PaymentController extends FrontendController
         if($paymentStatus == Payment::STATUS_COMPLETED) {
             return redirect()->route('home');
         } else {
-            $check = $this->paymentProvider->paymentCheck($paymentMethod, $transactionId);
+            $check = $this->paymentProvider->paymentCheck(
+                $this->authenticatedUser->getId(),
+                $paymentMethod,
+                $transactionId
+            );
 
             if($check['status']) {
                 //Get current user

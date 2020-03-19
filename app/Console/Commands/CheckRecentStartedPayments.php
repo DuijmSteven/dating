@@ -58,7 +58,11 @@ class CheckRecentStartedPayments extends Command
 
         /** @var Payment $payment */
         foreach ($recentStartedPayments as $payment) {
-            $check = $this->paymentProvider->paymentCheck($payment->getMethod(), $payment->getTransactionId());
+            $check = $this->paymentProvider->paymentCheck(
+                $payment->peasant->getId(),
+                $payment->getMethod(),
+                $payment->getTransactionId()
+            );
 
             if($check['status']) {
                 \Log::debug('Payment of user with ID: ' . $payment->peasant->getId() . ' was found to have remained on status started and was changed to status completed');
