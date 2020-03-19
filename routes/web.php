@@ -41,7 +41,7 @@ Route::post('contact', 'Frontend\ContactController@postContact')
 
 Route::get('/home', 'Frontend\UserSearchController@showInitialSearchResults')
     ->name('home')
-    ->middleware(['auth', 'not_editor']);
+    ->middleware(['auth', 'not_editor', 'not_operator']);
 
 Route::get('/', 'Frontend\LandingPageController@showRegister')
     ->middleware('guest')
