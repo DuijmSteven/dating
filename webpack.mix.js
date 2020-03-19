@@ -58,7 +58,7 @@ mix.scripts([
 
 mix.scripts([
     'resources/assets/js/admin/custom.js'
-], 'public/admin/js/custom.js')
+], 'public/admin/js/custom-3.js')
     .sourceMaps()
     .version();
 
