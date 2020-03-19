@@ -51,23 +51,10 @@ $(window).load(function () {
         $('#note_user_id').val(userId);
     });
 
-    if ($('.JS--showConversation').length > 0) {
+    if ($('.JS--showConversation').length > 0 && $('.JS--operatorCountdown').length > 0) {
         var lockedDate = new Date($('.JS--showConversation').data('locked-at'));
-        var countdownTime = (new Date($('.JS--showConversation').data('locked-at'))).setMinutes(lockedDate.getMinutes() + 6);
-        var now = new Date().getTime();
 
-        var timeLeftInitial = countdownTime - now;
-
-        var minutesLeftInitial = Math.floor((timeLeftInitial % (1000 * 60 * 60)) / (1000 * 60));
-        var secondsLeftInitial = Math.floor((timeLeftInitial % (1000 * 60)) / 1000);
-
-        // set a timeout to redirect the operator if he takes more than the remaining time to answer
-        // remove the lock on the conversation
-        timer = setTimeout(function(){
-                location.reload();
-            },
-            (secondsLeftInitial + minutesLeftInitial*60) * 1000
-        );
+        var countdownTime = (new Date($('.JS--showConversation').data('locked-at'))).setMinutes(lockedDate.getMinutes() + 4);
 
         // start the countdown timer
         var x = setInterval(function() {
@@ -81,13 +68,20 @@ $(window).load(function () {
                 $('.JS--operatorCountdown').addClass('warning');
             }
 
+            if (minutes === 0 && seconds === 0) {
+                window.location = DP.operatorDashboardRoute;
+            }
+
             if (minutes < 0 || seconds < 0) {
-                $('.JS--operatorCountdown').html(0 + "m " + 0 + "s");
+                if (minutes < 0) {
+                    $('.JS--operatorCountdown').html('-+');
+                } else {
+                    $('.JS--operatorCountdown').html('+-');
+                }
             } else {
                 $('.JS--operatorCountdown').html(minutes + "m " + seconds + "s");
             }
-
-        }, 1000);
+        }, 4000);
     }
 
     if ($('#js-BotSelection').length > 0) {

@@ -103,7 +103,6 @@ class ConversationController extends Controller
         $conversation->setLockedAt(null);
         $conversation->save();
 
-
         $alerts[] = [
             'type' => 'success',
             'message' => 'The conversation was unlocked'
@@ -126,10 +125,10 @@ class ConversationController extends Controller
                 $lockedByUserId = $conversation->getLockedByUserId();
             }
 
-            $minutesAgo = (new Carbon('now'))->subMinutes(6);
+            $minutesAgo = (new Carbon('now'))->subMinutes(4);
 
             if ($conversation->getLockedByUserId() === $this->authenticatedUser->getId()) {
-                if ($conversation->getLockedAt() < $minutesAgo) {
+                if ($conversation->getLockedAt() < $minutesAgo && !$this->authenticatedUser->isAdmin()) {
                     $conversation->setLockedByUserId(null);
                     $conversation->setLockedAt(null);
                     $conversation->save();
@@ -176,7 +175,8 @@ class ConversationController extends Controller
             'conversation' => $conversation,
             'userANotes' => $userANotes,
             'userBNotes' => $userBNotes,
-            'lockedAt' => $conversation->getLockedAt()->tz('Europe/Amsterdam')
+            'lockedAt' => $conversation->getLockedAt()->tz('Europe/Amsterdam'),
+            'hasCountdown' => true
         ];
 
         if (isset($lockedByUserId) && $this->authenticatedUser->getId() !== $lockedByUserId) {
@@ -193,10 +193,19 @@ class ConversationController extends Controller
     /**
      * @param int $userAId
      * @param int $userBId
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function showNew(int $userAId, int $userBId)
     {
+        if ($this->conversationManager->retrieveConversation($userAId, $userBId)) {
+            $alerts[] = [
+                'type' => 'error',
+                'message' => 'The conversation already exists'
+            ];
+
+            return redirect()->back('alerts', $alerts);
+        }
+
         $userA = User::find($userAId);
         $userB = User::find($userBId);
 
@@ -219,7 +228,7 @@ class ConversationController extends Controller
                 'carbonNow' => Carbon::now(),
                 'conversation' => $conversation,
                 'userANotes' => collect([]),
-                'userBNotes' => collect([])
+                'userBNotes' => collect([]),
             ]
         );
     }
@@ -287,6 +296,16 @@ class ConversationController extends Controller
             ];
 
             return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
+        } elseif (
+            $conversation->getLockedByUserId() === $this->authenticatedUser->getId() &&
+            $conversation->getLockedAt()->diffInMinutes(new Carbon()) > 4
+        ) {
+            $alerts[] = [
+                'type' => 'warning',
+                'message' => 'You had locked the conversation for too long'
+            ];
+
+            return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
         }
 
 
@@ -303,6 +322,7 @@ class ConversationController extends Controller
         $message->setType('generic');
         $message->setBody($body);
         $message->save();
+        $message->setOperatorId($this->authenticatedUser->getId());
 
         $fileExists = $this->storageManager->fileExists(
             $image->getFilename(),
@@ -433,6 +453,16 @@ class ConversationController extends Controller
                 $alerts[] = [
                     'type' => 'error',
                     'message' => 'The conversation is locked by someone else'
+                ];
+
+                return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
+            } elseif (
+                $conversation->getLockedByUserId() === $this->authenticatedUser->getId() &&
+                $conversation->getLockedAt()->diffInMinutes(new Carbon()) > 4
+            ) {
+                $alerts[] = [
+                    'type' => 'error',
+                    'message' => 'You had locked the conversation for too long'
                 ];
 
                 return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);

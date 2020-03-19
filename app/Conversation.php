@@ -119,6 +119,9 @@ class Conversation extends TimeZonedModel
         $this->locked_by_user_id = $userId;
     }
 
+    /**
+     * @return Carbon|null
+     */
     public function getLockedAt()
     {
         return $this->locked_at;

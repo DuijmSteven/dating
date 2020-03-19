@@ -10,9 +10,11 @@
     <div
         class="row JS--showConversation showConversation"
         data-conversation-id="{{ $conversation->getId() }}"
-        data-locked-at="{{ $lockedAt }}"
+        {!! isset($lockedAt) ? "data-locked-at='" . $lockedAt . "'" : "" !!}
     >
-        <div class="operatorCountdown JS--operatorCountdown"></div>
+        @if(isset($hasCountdown) && $hasCountdown)
+            <div class="operatorCountdown JS--operatorCountdown"></div>
+        @endif
 
         <div class="col-xs-12 col-sm-3">
             <div class="box box-userA">

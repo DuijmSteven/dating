@@ -66,6 +66,10 @@ class ImportLatestProductionDbExport extends Command
                 }
             }
 
+            if (!$fileToUse && count($allFiles) > 0) {
+                $fileToUse = $allFiles[count($allFiles) - 1];
+            }
+
             if (!$fileToUse) {
                 $this->warn('Could not find today\'s production DB export. Stopping execution...');
                 return false;

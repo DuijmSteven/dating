@@ -64,6 +64,7 @@
     var DP = {
         baseUrl: '{!! url('/') !!}',
         currentRoute: '{!! request()->route()->getName() !!}',
+        operatorDashboardRoute: '{!! route('operator-platform.dashboard') !!}',
         authenticatedUserIsAdmin: '{{ $authenticatedUser->isAdmin() }}',
         authenticatedUserRole: '{{ $authenticatedUser->roles[0]->name }}',
         authenticatedUserID: '{{ $authenticatedUser->getId() }}',
