@@ -73,7 +73,7 @@ $(window).load(function () {
             }
 
             $('.JS--operatorCountdown').html(minutes + "m " + seconds + "s");
-        }, 4000);
+        }, 1000);
     }
 
     if ($('#js-BotSelection').length > 0) {
