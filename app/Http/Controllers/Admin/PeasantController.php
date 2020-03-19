@@ -55,15 +55,18 @@ class PeasantController extends Controller
         \Mapper::renderJavascript();
         \Mapper::map(52.125927, 5.451147, ['zoom' => 8, 'markers' => ['animation' => 'DROP']]);
 
-        $peasants = User::with('meta')->whereHas('roles', function ($query) {
+        $peasants = User::with('meta')
+        ->whereHas('meta', function ($query) {
+            $query->where('lat', '!=', null);
+            $query->where('lng', '!=', null);
+        })
+        ->whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_PEASANT);
         })
             ->get();
 
         foreach ($peasants as $peasant) {
-            if ($peasant->meta->lat && $peasant->meta->lng) {
-                \Mapper::marker($peasant->meta->lat,  $peasant->meta->lng);
-            }
+            \Mapper::marker($peasant->meta->lat,  $peasant->meta->lng);
         }
 
         return view('admin.peasants.map',

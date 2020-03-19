@@ -75,7 +75,7 @@ class PaymentService implements PaymentProvider
         $payment->setMethod($paymentMethod);
         $payment->setDescription($description);
         $payment->setCreditpackId($creditpackId);
-        $payment->setStatus(1);
+        $payment->setStatus(Payment::STATUS_STARTED);
         $payment->setAmount($amount);
         $payment->setTransactionId($transactionId);
 
