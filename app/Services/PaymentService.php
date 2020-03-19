@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Interfaces\PaymentProvider;
 use App\Payment;
+use App\User;
 use App\UserAccount;
 use DigiWallet\Methods\Bancontact;
 use DigiWallet\Transaction;
@@ -201,14 +202,17 @@ class PaymentService implements PaymentProvider
                           ->where('transaction_id', $transactionId)
                           ->first();
 
+        /** @var User $peasant */
+        $peasant = User::with(['account'])->where('id', $peasantId)->get();
+
         //Increase credits
         if ($status && $payment->status === Payment::STATUS_STARTED) {
-            if(Auth::user()->account()->exists()) {
-                $credits = Auth::user()->account->credits;
-                Auth::user()->account()->update(['credits' => $credits + (int) session('credits')]);
+            if($peasant->account()->exists()) {
+                $credits = $peasant->account->credits;
+                $peasant->account()->update(['credits' => $credits + (int) session('credits')]);
             } else {
                 $account = new UserAccount(['credits' => (int) session('credits')]);
-                Auth::user()->account()->save($account);
+                $peasant->account()->save($account);
             }
         }
 
