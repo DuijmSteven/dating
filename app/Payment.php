@@ -28,7 +28,7 @@ class Payment extends TimeZonedModel
 
     public function creditpack()
     {
-        return $this->hasOne(Creditpack::class, 'creditpack_id', 'id');
+        return $this->hasOne(Creditpack::class);
     }
 
     public function getDescription()
