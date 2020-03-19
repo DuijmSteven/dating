@@ -2,6 +2,8 @@
 
 namespace App\Interfaces;
 
+use App\User;
+
 /**
  * Interface PaymentProvider
  * @package App\Interfaces
@@ -69,5 +71,5 @@ interface PaymentProvider
      * @param  int  $transactionId
      * @return mixed
      */
-    public function paymentCheck(int $peasantId, string $paymentMethod, int $transactionId);
+    public function paymentCheck(User $peasant, string $paymentMethod, int $transactionId);
 }

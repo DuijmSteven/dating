@@ -50,7 +50,7 @@ class CheckRecentStartedPayments extends Command
     {
         \Log::debug('Executing payments:check-recent-started');
 
-        $recentStartedPayments = Payment::with(['peasant', 'creditpack'])
+        $recentStartedPayments = Payment::with(['peasant', 'creditpack', 'peasant.account'])
             ->where('created_at', '>=', Carbon::now()->subMinutes(10))
             ->get();
 
@@ -59,7 +59,7 @@ class CheckRecentStartedPayments extends Command
         /** @var Payment $payment */
         foreach ($recentStartedPayments as $payment) {
             $check = $this->paymentProvider->paymentCheck(
-                $payment->peasant->getId(),
+                $payment->peasant,
                 $payment->getMethod(),
                 $payment->getTransactionId()
             );

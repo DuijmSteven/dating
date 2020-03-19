@@ -164,7 +164,7 @@ class PaymentService implements PaymentProvider
         ];
     }
 
-    public function paymentCheck(int $peasantId, string $paymentMethod, int $transactionId)
+    public function paymentCheck(User $peasant, string $paymentMethod, int $transactionId)
     {
         switch ($paymentMethod) {
             case 'ideal':
@@ -198,12 +198,9 @@ class PaymentService implements PaymentProvider
 
         $status = $checkPaymentResult->status;
 
-        $payment = Payment::where('user_id', $peasantId)
+        $payment = Payment::where('user_id', $peasant->getId())
                           ->where('transaction_id', $transactionId)
                           ->first();
-
-        /** @var User $peasant */
-        $peasant = User::with(['account'])->where('id', $peasantId)->get();
 
         //Increase credits
         if ($status && $payment->status === Payment::STATUS_STARTED) {
@@ -219,7 +216,7 @@ class PaymentService implements PaymentProvider
         //Update payment status
         $status ? $statusUpdate = Payment::STATUS_COMPLETED : $statusUpdate = Payment::STATUS_ERROR;
 
-        Payment::where('user_id', Auth::user()->id)
+        Payment::where('user_id', $peasant->getId())
                ->where('transaction_id', $transactionId)
                ->update(['status' => $statusUpdate]);
 

@@ -110,7 +110,7 @@ class PaymentController extends FrontendController
             return redirect()->route('home');
         } else {
             $check = $this->paymentProvider->paymentCheck(
-                $this->authenticatedUser->getId(),
+                $this->authenticatedUser,
                 $paymentMethod,
                 $transactionId
             );
