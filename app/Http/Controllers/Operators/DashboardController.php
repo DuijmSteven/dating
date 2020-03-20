@@ -27,7 +27,7 @@ class DashboardController extends \App\Http\Controllers\Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function showDashboard()
     {

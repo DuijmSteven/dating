@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\DB;
  */
 class ConversationManager
 {
+    const CONVERSATION_LOCKING_TIME = 4;
+
     /** @var Conversation */
     private $conversation;
 
@@ -145,6 +147,7 @@ class ConversationManager
      * @param int $limit
      * @param int $offset
      * @return array
+     * @throws \Exception
      */
     public function conversationIds(
         string $age = 'any',
@@ -157,7 +160,8 @@ class ConversationManager
         list($roleQuery, $ageQuery, $typesQuery) = $this->resolveConversationTypeOptions(
             $age,
             $lastMessageUserRoles,
-            $types
+            $types,
+            true
         );
 
         $query = 'SELECT DISTINCT (c.id) as conversation_id
@@ -176,6 +180,7 @@ class ConversationManager
                     JOIN users recipient ON recipient.id = lm.recipient_id
                     JOIN role_user sender_role ON sender_role.user_id = lm.sender_id
                     JOIN role_user recipient_role ON recipient_role.user_id = lm.recipient_id
+                    WHERE (c.locked_at IS NULL OR c.locked_at < NOW() - INTERVAL ' . self::CONVERSATION_LOCKING_TIME . ' MINUTE) 
                     ' . $roleQuery .
                     $typesQuery .
                     $ageQuery .
@@ -519,7 +524,7 @@ class ConversationManager
 
     /**
      * @param $results
-     * @return array
+     * @return \Illuminate\Support\Collection
      * @throws \Exception
      */
     private function formatConversations($results, array $options = [])
@@ -540,8 +545,12 @@ class ConversationManager
      * @return array
      * @throws \Exception
      */
-    private function resolveConversationTypeOptions(string $age, string $lastMessageUserRoles, array $types)
-    {
+    private function resolveConversationTypeOptions(
+        string $age,
+        string $lastMessageUserRoles,
+        array $types,
+        bool $startWithAnd = false
+    ) {
         $senderRole = null;
         $recipientRole = null;
 
@@ -584,7 +593,13 @@ class ConversationManager
             )[$senderRole];
             $recipientRoleId = UserConstants::selectableField('role', 'common', 'array_flip')[$recipientRole];
 
-            $roleQuery = ' WHERE sender_role.role_id = ' .
+            if ($startWithAnd) {
+                $roleQuery = ' AND ';
+            } else {
+                $roleQuery = ' WHERE ';
+            }
+
+            $roleQuery = $roleQuery . ' sender_role.role_id = ' .
             $senderRoleId  .
             ' AND recipient_role.role_id = ' .
             $recipientRoleId . ' ';

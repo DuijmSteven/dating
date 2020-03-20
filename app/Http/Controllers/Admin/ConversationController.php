@@ -37,7 +37,7 @@ class ConversationController extends Controller
     /** @var ConversationManager */
     private $conversationManager;
 
-    /**••••••••
+    /**
      * @var StorageManager
      */
     private StorageManager $storageManager;
@@ -125,7 +125,7 @@ class ConversationController extends Controller
                 $lockedByUserId = $conversation->getLockedByUserId();
             }
 
-            $minutesAgo = (new Carbon('now'))->subMinutes(4);
+            $minutesAgo = (new Carbon('now'))->subMinutes(ConversationManager::CONVERSATION_LOCKING_TIME);
 
             if ($conversation->getLockedByUserId() === $this->authenticatedUser->getId()) {
                 if ($conversation->getLockedAt() < $minutesAgo) {
@@ -304,7 +304,7 @@ class ConversationController extends Controller
             return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
         } elseif (
             $conversation->getLockedByUserId() === $this->authenticatedUser->getId() &&
-            $conversation->getLockedAt()->diffInMinutes(new Carbon()) > 4
+            $conversation->getLockedAt()->diffInMinutes(new Carbon()) > ConversationManager::CONVERSATION_LOCKING_TIME
         ) {
             $alerts[] = [
                 'type' => 'warning',
@@ -465,7 +465,7 @@ class ConversationController extends Controller
             } elseif (
                 $conversation instanceof Conversation &&
                 $conversation->getLockedByUserId() === $this->authenticatedUser->getId() &&
-                $conversation->getLockedAt()->diffInMinutes(new Carbon()) > 4
+                $conversation->getLockedAt()->diffInMinutes(new Carbon()) > ConversationManager::CONVERSATION_LOCKING_TIME
             ) {
                 $alerts[] = [
                     'type' => 'error',
