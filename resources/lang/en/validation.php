@@ -124,6 +124,9 @@ return [
             'before' => 'You must be older that 18 years old in order to use this site',
             'after' => 'You must be younger that 120 years old in order to use this site!',
             'date_format' => 'The date of birth does not match the format dd-mm-yyyy',
+        ],
+        'profile_image' => [
+            'required_without' => 'You must choose at least one photo to upload'
         ]
     ],
 

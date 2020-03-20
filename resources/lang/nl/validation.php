@@ -124,6 +124,9 @@ return [
             'before' => 'Je moet 18+ zijn om deze website te gebruiken',
             'after' => 'Je moet 120- zijn om deze website te gebruiken!',
             'date_format' => 'De geboortedatum moet overeenkomen met het formaat dd-mm-yyyy',
+        ],
+        'profile_image' => [
+            'required_without' => 'Je moet ten minste één foto kiezen om te uploaden'
         ]
     ],
 
