@@ -39,7 +39,6 @@ class DashboardController extends \App\Http\Controllers\Controller
                 'headingSmall' => Auth::user()->username,
                 'newConversations' => $this->conversationManager->newPeasantBotConversations(),
                 'unrepliedConversations' => $this->conversationManager->unrepliedPeasantBotConversations(),
-                'newFlirtConversations' => $this->conversationManager->conversationsWithNewFlirt(),
             ]
         );
     }

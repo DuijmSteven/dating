@@ -11,7 +11,7 @@
 
         @foreach([
             'new' => 'newConversations',
-            'unreplied' => 'unrepliedConversations'
+            'unreplied' => 'unrepliedConversations',
         ] as $typeName => $conversationType)
 
             <div class="panel panel-default">
@@ -33,38 +33,34 @@
                     <div class="row">
                         @foreach(${$conversationType} as $conversation)
                             <?php
-                                if ($conversation['user_a']['role'] === 3) {
-                                    $userA = $conversation['user_a'];
+                                if ($conversation->userA->isBot()) {
+                                    $userA = $conversation->userA;
 
-                                    $conversation['user_a'] = $conversation['user_b'];
-                                    $conversation['user_b'] = $userA;
+                                    $conversation->userA = $conversation->userB;
+                                    $conversation->userB = $userA;
                                 }
                             ?>
                             <div class="col-xs-12 col-sm-4 col-md-3">
                                 <!-- Widget: user widget style 1 -->
                                 <div class="box box-widget widget-user-2 default-border">
                                     <!-- Add the bg color to the header using any of the bg-* classes -->
-                                    <div class="convo-tile {!! \UserConstants::selectableField('role')[$conversation['user_a']['role']] !!}">
+                                    <div class="convo-tile {!! \UserConstants::selectableField('role')[$conversation->userA->roles[0]->id] !!}">
                                         <div class="convo-tile_text">
                                             <div class="username">
-                                                @if(isset($conversation['user_a']['profile_image_url']))
-                                                    <img class="profileImage" src="{!! $conversation['user_a']['profile_image_url'] !!}" />
-                                                @endif
-                                                <a href="{!! route('admin.' . \UserConstants::selectableField('role')[$conversation['user_a']['role']] . 's.edit.get', ['id' => $conversation['user_a']['id']]) !!}">
-                                                    {!! $conversation['user_a']['username'] !!} (ID: {!! $conversation['user_a']['id'] !!})
+                                                <img class="profileImage" src="{!! \StorageHelper::profileImageUrl($conversation->userA, true) !!}" />
+                                                <a href="{!! route('admin.' . \UserConstants::selectableField('role')[$conversation->userA->roles[0]->id] . 's.edit.get', ['id' => $conversation->userA->getId()]) !!}">
+                                                    {!! $conversation->userA->username !!} (ID: {!! $conversation->userA->getId() !!})
                                                 </a>
                                             </div>
                                         </div>
                                         <!-- /.widget-user-image -->
                                     </div>
-                                    <div class="convo-tile {!! \UserConstants::selectableField('role')[$conversation['user_b']['role']] !!}">
+                                    <div class="convo-tile {!! \UserConstants::selectableField('role')[$conversation->userB->roles[0]->id] !!}">
                                         <div class="convo-tile_text">
                                             <div class="username">
-                                                @if(isset($conversation['user_b']['profile_image_url']))
-                                                    <img class="profileImage" src="{!! $conversation['user_b']['profile_image_url'] !!}" />
-                                                @endif
-                                                <a href="{!! route('admin.' . \UserConstants::selectableField('role')[$conversation['user_b']['role']] . 's.edit.get', ['id' => $conversation['user_b']['id']]) !!}">
-                                                    {!! $conversation['user_b']['username'] !!} (ID: {!! $conversation['user_b']['id'] !!})
+                                                <img class="profileImage" src="{!! \StorageHelper::profileImageUrl($conversation->userB, true) !!}" />
+                                                <a href="{!! route('admin.' . \UserConstants::selectableField('role')[$conversation->userB->roles[0]->id] . 's.edit.get', ['id' => $conversation->userB->getId()]) !!}">
+                                                    {!! $conversation->userB->username !!} (ID: {!! $conversation->userB->getId() !!})
                                                 </a>
                                             </div>
                                         </div>
@@ -72,20 +68,16 @@
                                     </div>
                                     <div class="box-footer no-padding">
                                         <div class="text-summary text-center">
-                                            @if($conversation['last_message']['type'] === 'flirt')
-                                                <i class="fa fa-heart" style="color:red"></i>
-                                            @else
-                                                @if($conversation['last_message']['has_attachment'])
-                                                    <i class="fa fa-fw fa-paperclip"></i>
-                                                @endif
-                                                @if($conversation['last_message']['body'])
-                                                    <em>"{!! $conversation['last_message']['body'] !!}"</em>
-                                                @endif
+                                            @if($conversation->messages[0]->attachment)
+                                                <i class="fa fa-fw fa-paperclip"></i>
+                                            @endif
+                                            @if($conversation->messages[0]->body)
+                                                <em>"{!! $conversation->messages[0]->body !!}"</em>
                                             @endif
                                         </div>
                                     </div>
                                     <div>
-                                        <a href="conversations/{!! $conversation['id'] !!}" class="btn btn-default btn-flat btn-block">View Conversation</a>
+                                        <a href="conversations/{!! $conversation->id !!}" class="btn btn-default btn-flat btn-block">View Conversation</a>
                                     </div>
                                 </div>
                             </div>

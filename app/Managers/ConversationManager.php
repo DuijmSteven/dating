@@ -6,7 +6,9 @@ use App\Conversation;
 use App\ConversationMessage;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\MessageAttachment;
+use App\User;
 use Carbon\Carbon;
+use Cassandra\Type\UserType;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -123,10 +125,23 @@ class ConversationManager
      */
     public function newPeasantBotConversations()
     {
-        return self::conversationsByIds(
-            $this->conversationIds('only_new', 'peasant_bot'),
-            ['user_meta']
-        );
+        $conversations = Conversation::with(['userA', 'userB', 'messages'])
+            ->whereDoesntHave('messages.sender.roles', function ($query) {
+                $query->where('id', User::TYPE_BOT);
+            })
+            ->whereHas('userA.roles', function ($query) {
+                $query->where('id', User::TYPE_PEASANT);
+            })
+            ->whereHas('userB.roles', function ($query) {
+                $query->where('id', User::TYPE_BOT);
+            })
+            ->where(function ($query) {
+                $query->where('locked_at', null)
+                    ->orWhere('locked_at', '<', Carbon::now()->subMinutes(4));
+            })
+            ->get();
+
+        return $conversations;
     }
 
     /**
@@ -134,10 +149,27 @@ class ConversationManager
      */
     public function unrepliedPeasantBotConversations()
     {
-        return self::conversationsByIds(
-            $this->conversationIds('only_old', 'peasant_bot'),
-            ['user_meta']
-        );
+        $conversations = Conversation::with(['userA', 'userB', 'messages'])
+            ->with(['messages' => function ($query) {
+                $query->orderBy('id', 'desc');
+            }])
+            ->has('messages', '>', '1')
+            ->where(function ($query) {
+                $query->where('locked_at', null)
+                    ->orWhere('locked_at', '<', Carbon::now()->subMinutes(4));
+            })
+            ->get()->filter(function ($value, $key) {
+
+                if ($value->messages[0]->sender && $value->messages[0]->recipient) {
+                //dd($value);
+                return $value->messages[0]->sender->roles[0]->id === User::TYPE_PEASANT &&
+                    $value->messages[0]->recipient->roles[0]->id === User::TYPE_BOT;
+                } else {
+                    return false;
+                }
+            });
+
+        return $conversations;
     }
 
     /**
@@ -182,9 +214,9 @@ class ConversationManager
                     JOIN role_user recipient_role ON recipient_role.user_id = lm.recipient_id
                     WHERE (c.locked_at IS NULL OR c.locked_at < NOW() - INTERVAL ' . self::CONVERSATION_LOCKING_TIME . ' MINUTE) 
                     ' . $roleQuery .
-                    $typesQuery .
-                    $ageQuery .
-                    ' ORDER BY c.id DESC ';
+            $typesQuery .
+            $ageQuery .
+            ' ORDER BY c.id DESC ';
 
         if ($limit) {
             $query .= ' LIMIT ' . $limit . ' ';
@@ -199,7 +231,7 @@ class ConversationManager
         foreach ($results as $result) {
             $conversationIds[] = $result->conversation_id;
         }
-        
+
         return $conversationIds;
     }
 
@@ -276,13 +308,13 @@ class ConversationManager
             'conversation_messages.type as last_message_type',
             'conversation_messages.recipient_id as last_message_recipient_id'
         )
-        ->join('conversation_messages', function ($join) {
-            $join->on('conversation_messages.id', '=', DB::raw('(SELECT  mi.id
+            ->join('conversation_messages', function ($join) {
+                $join->on('conversation_messages.id', '=', DB::raw('(SELECT  mi.id
                 FROM    conversation_messages mi
                 WHERE   mi.conversation_id = conversations.id
                 ORDER BY mi.created_at DESC
                 LIMIT 1)'));
-        })->get();
+            })->get();
 
         $conversations = $this->formatConversations($results, $options);
 
@@ -600,9 +632,9 @@ class ConversationManager
             }
 
             $roleQuery = $roleQuery . ' sender_role.role_id = ' .
-            $senderRoleId  .
-            ' AND recipient_role.role_id = ' .
-            $recipientRoleId . ' ';
+                $senderRoleId  .
+                ' AND recipient_role.role_id = ' .
+                $recipientRoleId . ' ';
             $andRequired = true;
         }
 
