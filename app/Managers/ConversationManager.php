@@ -529,6 +529,7 @@ class ConversationManager
                 $query->where('user_a_id', $userBId);
                 $query->where('user_b_id', $userAId);
             })
+            ->withTrashed()
             ->first();
 
         if (!($conversation instanceof Conversation)) {
@@ -539,6 +540,10 @@ class ConversationManager
 
             $conversation->setNewActivityForUserB(true);
         } else {
+            if ($conversation->getDeletedAt()) {
+                $conversation->setDeletedAt(null);
+            }
+
             if ($conversation->getUserBId() === $userBId) {
                 $conversation->setNewActivityForUserB(true);
                 $conversation->setNewActivityForUserA(false);

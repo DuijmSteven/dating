@@ -143,4 +143,12 @@ class Conversation extends TimeZonedModel
     {
         return $this->deleted_at;
     }
+
+    /**
+     * @param Carbon|null $deletedAt
+     */
+    public function setDeletedAt(?Carbon $deletedAt)
+    {
+        $this->deleted_at = $deletedAt;
+    }
 }
