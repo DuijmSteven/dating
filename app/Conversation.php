@@ -16,7 +16,8 @@ class Conversation extends TimeZonedModel
     public $table = 'conversations';
 
     public $dates = [
-        'locked_at'
+        'locked_at',
+        'deleted_at'
     ];
 
     protected $appends = ['updatedAtHumanReadable'];
@@ -133,5 +134,13 @@ class Conversation extends TimeZonedModel
     public function setLockedAt(?Carbon $lockedAt)
     {
         $this->locked_at = $lockedAt;
+    }
+
+    /**
+     * @return Carbon|null
+     */
+    public function getDeletedAt()
+    {
+        return $this->deleted_at;
     }
 }

@@ -61,21 +61,17 @@ class ConversationController extends Controller
      */
     public function index(Request $request)
     {
-//        $page = $this->resolveCurrentPage($request);
-//
-//        $conversationsTotalCount = $this->conversationManager->countConversations();
-//
-//        $conversations = $this->conversationManager->getPaginated(
-//            'any',
-//            'any',
-//            20,
-//            ($page - 1) * 20
-//        );
-//
-//        $paginator = new LengthAwarePaginator($conversations, $conversationsTotalCount, 20, $page);
-//        $paginator->setPath('/admin/conversations');
-
-        $conversations = Conversation::with('userA', 'userA.roles', 'userA.meta', 'userA.profileImage', 'userB', 'userB.roles', 'userB.meta', 'userB.profileImage')
+        $conversations = Conversation::with([
+            'userA',
+            'userA.roles',
+            'userA.meta',
+            'userA.profileImage',
+            'userB',
+            'userB.roles',
+            'userB.meta',
+            'userB.profileImage'
+        ])
+            ->withTrashed()
             ->orderBy('created_at', 'desc')
             ->paginate(20);
 
@@ -85,7 +81,7 @@ class ConversationController extends Controller
                 'title' => 'Conversations Overview - ' . \config('app.name'),
                 'headingLarge' => 'Conversations',
                 'headingSmall' => 'Overview',
-                'carbonNow' => Carbon::now(),
+                'carbonNow' => Carbon::now('Europe/Amsterdam'),
                 'conversations' => $conversations
             ]
         );
@@ -177,7 +173,7 @@ class ConversationController extends Controller
                 ' (id: ' . $conversation->userA->id . ') - ' .
                 $conversation->userB->username .
                 ' (id:' . $conversation->userB->id . ')',
-            'carbonNow' => Carbon::now(),
+            'carbonNow' => Carbon::now('Europe/Amsterdam'),
             'conversation' => $conversation,
             'userANotes' => $userANotes,
             'userBNotes' => $userBNotes,
@@ -231,7 +227,7 @@ class ConversationController extends Controller
                     ' (id: ' . $conversation->userA->id . ') - ' .
                     $conversation->userB->username .
                     ' (id:' . $conversation->userB->id . ')',
-                'carbonNow' => Carbon::now(),
+                'carbonNow' => Carbon::now('Europe/Amsterdam'),
                 'conversation' => $conversation,
                 'userANotes' => collect([]),
                 'userBNotes' => collect([]),
