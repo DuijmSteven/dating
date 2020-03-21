@@ -102,8 +102,6 @@ class StatisticsManager
             $query->where('created_at', '<=', $endDate);
         }])->whereHas('roles', function($query) {
             $query->where('name', 'peasant');
-        })->whereHas('account', function($query) {
-            $query->where('credits', '>', 0);
         })->whereHas('payments', function($query) {
             $query->where('status', Payment::STATUS_COMPLETED);
         })->whereHas('messages', function ($query) use ($startDate, $endDate) {
