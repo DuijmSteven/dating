@@ -27,6 +27,7 @@
                             <th>Profile image</th>
                             <th>Credits && Payments</th>
                             <th>User data</th>
+                            <th>Message data</th>
                             <th>Meta data</th>
                             <th>Actions</th>
                         </tr>
@@ -41,7 +42,7 @@
                                              alt="">
                                     </a>
                                 </td>
-                                <td style="white-space: nowrap">
+                                <td class="no-wrap">
                                     <strong>Credits</strong>: {{ $peasant->account->getCredits() }} <br>
 
                                     @if(count($peasant->completedPayments) > 0)
@@ -59,11 +60,26 @@
                                         <strong>Money spent</strong>: &euro;{{ number_format($moneySpent/ 100, 2) }} <br>
                                     @endif
                                 </td>
-                                <td>
+                                <td class="no-wrap">
+                                    <strong>{!! @trans('user_constants.email') !!}:</strong> {!! $peasant->email !!} <br>
                                     <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $peasant->username !!} <br>
                                     <strong>{!! @trans('user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($peasant->meta->dob) !!} <br>
+                                    <strong>Created at</strong> {!! $peasant->getCreatedAt() !!} <br>
+                                    @if($peasant->getLastOnlineAt())
+                                        <strong>Last online at</strong> {!! $peasant->getLastOnlineAt()->tz('Europe/Amsterdam') !!} <br>
+                                        <strong>Last online in days</strong> {!! $peasant->getLastOnlineAt()->tz('Europe/Amsterdam')->diffInDays($carbonNow->tz('Europe/Amsterdam')) !!} <br>
+                                    @endif
                                 </td>
-                                <td>
+                                <td class="no-wrap">
+                                    <strong>All time:</strong> {{ $peasant->messages_count }} <br>
+                                    <strong>Last month:</strong> {{ $peasant->messages_last_month_count }} <br>
+                                    <strong>This month:</strong> {{ $peasant->messages_this_month_count }} <br>
+                                    <strong>Last Week:</strong> {{ $peasant->messages_last_week_count }} <br>
+                                    <strong>This week:</strong> {{ $peasant->messages_this_week_count }} <br>
+                                    <strong>Yesterday:</strong> {{ $peasant->messages_yesterday_count }} <br>
+                                    <strong>Today:</strong> {{ $peasant->messages_today_count }} <br>
+                                </td>
+                                <td class="no-wrap">
                                     @foreach(\UserConstants::selectableFields('peasant') as $fieldName => $a)
                                         @if(isset($peasant->meta->{$fieldName}))
                                             <strong>{!! ucfirst(str_replace('_', ' ', $fieldName)) !!}:

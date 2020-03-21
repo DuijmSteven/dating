@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Middleware\User\SetLastOnlineAt;
 use App\Middleware\User\SetLocale;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -31,12 +32,14 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            SetLocale::class
+            SetLocale::class,
+            SetLastOnlineAt::class
         ],
 
         'api' => [
 /*            'throttle:60,1',*/
             'bindings',
+            SetLastOnlineAt::class
         ],
     ];
 

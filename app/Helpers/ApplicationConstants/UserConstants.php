@@ -436,7 +436,7 @@ class UserConstants
             "De Meern",
             "De Moer",
             "Den Bommel",
-            "Den Bosh",
+            "Den Bosch",
             "Den Burg",
             "Den Deijl",
             "Den Dolder",

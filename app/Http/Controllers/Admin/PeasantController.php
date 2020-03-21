@@ -32,9 +32,20 @@ class PeasantController extends Controller
      */
     public function index()
     {
-        $peasants = User::with(['meta', 'account', 'roles', 'profileImage'])->whereHas('roles', function ($query) {
-            $query->where('name', 'peasant');
-        })
+        $peasants = User::with(['meta', 'account', 'roles', 'profileImage', 'completedPayments'])
+            ->withCount([
+                'messages',
+                'messagesToday',
+                'messagesYesterday',
+                'messagesThisWeek',
+                'messagesLastWeek',
+                'messagesYesterday',
+                'messagesThisMonth',
+                'messagesLastMonth'
+            ])
+            ->whereHas('roles', function ($query) {
+                $query->where('name', 'peasant');
+            })
             ->orderBy('id', 'desc')
             ->paginate(20);
 
@@ -83,9 +94,10 @@ class PeasantController extends Controller
     {
         $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
 
-        $peasants = User::with(['meta', 'account', 'roles', 'profileImage', 'completedPayments'])->whereHas('roles', function ($query) {
-            $query->where('id', User::TYPE_PEASANT);
-        })
+        $peasants = User::with(['meta', 'account', 'roles', 'profileImage', 'completedPayments', 'messages'])
+            ->whereHas('roles', function ($query) {
+                $query->where('id', User::TYPE_PEASANT);
+            })
             ->whereIn('id', $onlineIds) 
             ->orderBy('id')
             ->get();
