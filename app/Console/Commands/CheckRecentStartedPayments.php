@@ -61,7 +61,8 @@ class CheckRecentStartedPayments extends Command
             $check = $this->paymentProvider->paymentCheck(
                 $payment->peasant,
                 $payment->getMethod(),
-                $payment->getTransactionId()
+                $payment->getTransactionId(),
+                $payment->creditpack
             );
 
             if($check['status']) {

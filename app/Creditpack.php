@@ -9,6 +9,11 @@ class Creditpack extends Model
     public $table = 'creditpacks';
 
 
+    public function getCredits()
+    {
+        return $this->credits;
+    }
+
     public function getDescription()
     {
         return $this->description;

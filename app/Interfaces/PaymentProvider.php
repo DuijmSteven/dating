@@ -2,6 +2,7 @@
 
 namespace App\Interfaces;
 
+use App\Creditpack;
 use App\User;
 
 /**
@@ -71,5 +72,5 @@ interface PaymentProvider
      * @param  int  $transactionId
      * @return mixed
      */
-    public function paymentCheck(User $peasant, string $paymentMethod, int $transactionId);
+    public function paymentCheck(User $peasant, string $paymentMethod, int $transactionId, Creditpack $creditpack);
 }

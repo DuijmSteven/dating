@@ -112,7 +112,8 @@ class PaymentController extends FrontendController
             $check = $this->paymentProvider->paymentCheck(
                 $this->authenticatedUser,
                 $paymentMethod,
-                $transactionId
+                $transactionId,
+                $creditPack
             );
 
             if($check['status']) {

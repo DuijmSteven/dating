@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Creditpack;
 use App\Interfaces\PaymentProvider;
 use App\Payment;
 use App\User;
@@ -164,8 +165,12 @@ class PaymentService implements PaymentProvider
         ];
     }
 
-    public function paymentCheck(User $peasant, string $paymentMethod, int $transactionId)
-    {
+    public function paymentCheck(
+        User $peasant,
+        string $paymentMethod,
+        int $transactionId,
+        Creditpack $creditpack
+    ) {
         switch ($paymentMethod) {
             case 'ideal':
                 $targetPay = Transaction::model("Ideal");
@@ -205,10 +210,10 @@ class PaymentService implements PaymentProvider
         //Increase credits
         if ($status && $payment->status === Payment::STATUS_STARTED) {
             if($peasant->account()->exists()) {
-                $credits = $peasant->account->credits;
-                $peasant->account()->update(['credits' => $credits + (int) session('credits')]);
+                $existingCredits = $peasant->account->credits;
+                $peasant->account()->update(['credits' => $existingCredits + (int) $creditpack->getCredits()]);
             } else {
-                $account = new UserAccount(['credits' => (int) session('credits')]);
+                $account = new UserAccount(['credits' => (int) $creditpack->getCredits()]);
                 $peasant->account()->save($account);
             }
         }
