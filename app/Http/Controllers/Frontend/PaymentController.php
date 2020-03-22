@@ -117,16 +117,14 @@ class PaymentController extends FrontendController
             );
 
             if($check['status']) {
-                //Get current user
-                $user = \Auth::user();
-                $creditsBoughtEmail = (new CreditsBought($user, $creditPack))
+                $creditsBoughtEmail = (new CreditsBought($this->authenticatedUser, $creditPack))
                     ->onQueue('emails');
 
-                Mail::to($user)
+                Mail::to($this->authenticatedUser)
                     ->queue($creditsBoughtEmail);
 
                 // email to us about the sale
-                $userBoughtCreditsEmail = (new UserBoughtCredits($user, $creditPack))
+                $userBoughtCreditsEmail = (new UserBoughtCredits($this->authenticatedUser, $creditPack))
                     ->onQueue('emails');
 
                 Mail::to('develyvof@gmail.com')
