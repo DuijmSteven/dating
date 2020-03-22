@@ -100,7 +100,7 @@ class PaymentController extends FrontendController
         $creditPack = Creditpack::find($creditPackId);
 
         //get payment status from db
-        $paymentStatus = Payment::where('user_id', \Auth::user()->id)
+        $paymentStatus = Payment::where('user_id', $this->authenticatedUser->getId())
             ->where('transaction_id', $transactionId)
             ->firstOrFail()
             ->getStatus();
