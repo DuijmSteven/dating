@@ -130,7 +130,8 @@ class ConversationManager
                 $query->where('id', User::TYPE_BOT);
             })
             ->whereHas('userA.roles', function ($query) {
-                $query->where('id', User::TYPE_PEASANT);
+                $query->where('id', User::TYPE_PEASANT)
+                    ->where('active', 1);
             })
             ->whereHas('userB.roles', function ($query) {
                 $query->where('id', User::TYPE_BOT);
@@ -163,10 +164,13 @@ class ConversationManager
             ->get()
             ->filter(function ($value, $key) {
 
-                if ($value->messages[0]->sender && $value->messages[0]->recipient) {
-
-                return $value->messages[0]->sender->roles[0]->id === User::TYPE_PEASANT &&
-                    $value->messages[0]->recipient->roles[0]->id === User::TYPE_BOT;
+                if (
+                    $value->messages[0]->sender &&
+                    $value->messages[0]->sender->active &&
+                    $value->messages[0]->recipient
+                ) {
+                    return $value->messages[0]->sender->roles[0]->id === User::TYPE_PEASANT &&
+                        $value->messages[0]->recipient->roles[0]->id === User::TYPE_BOT;
                 } else {
                     return false;
                 }

@@ -117,6 +117,7 @@ return [
         ],
         'date' => 'Dit is geen geldige datum.',
         'message' => [
+            'min' => 'Het bericht mag niet korter zijn dan :min characters.',
             'max' => 'Het bericht mag niet groter zijn dan :max characters.',
             'required_without' => 'Een bericht of afbeelding is vereist',
         ],
