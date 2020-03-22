@@ -71,13 +71,14 @@
                                         @endforeach
                                     </td>
                                     <td class="action-buttons">
-                                        @if($authenticatedUser->isAdmin() || $authenticatedUser->isEditor() && in_array($bot->getId(), $authenticatedUser->createdBotIds))
+                                        @if($authenticatedUser->isAdmin() || $authenticatedUser->isEditor() && in_array($bot->getId(), $authenticatedUser->createdBotIds) && !$bot->active)
+                                            <a href="{!! route('admin.bots.edit.get', [$bot->getId()]) !!}" class="btn btn-default">Edit</a>
                                         @endif
-                                        <a href="{!! route('admin.bots.edit.get', [$bot->id]) !!}" class="btn btn-default">Edit</a>
 
                                         @if($authenticatedUser->isAdmin())
-                                            <a href="{!! route('admin.bots.message-with-bot.get', ['botId' =>  $bot->id, 'onlyOnlinePeasants' => '0']) !!}" class="btn btn-default">Message peasant with bot</a>
-                                            <a href="{!! route('admin.bots.message-with-bot.get', ['botId' => $bot->id, 'onlyOnlinePeasants' => '1']) !!}" class="btn btn-default">Message online peasant with bot</a>
+                                            <a href="{!! route('admin.conversations.bot.get', ['botId' => $bot->getId()]) !!}" class="btn btn-default">Conversations</a>
+                                            <a href="{!! route('admin.bots.message-with-bot.get', ['botId' =>  $bot->getId(), 'onlyOnlinePeasants' => '0']) !!}" class="btn btn-default">Message peasant with bot</a>
+                                            <a href="{!! route('admin.bots.message-with-bot.get', ['botId' => $bot->getId(), 'onlyOnlinePeasants' => '1']) !!}" class="btn btn-default">Message online peasant with bot</a>
 
                                             <form method="POST" action="{!! route('admin.users.destroy', ['userId' => $bot->id]) !!}">
                                                 {!! csrf_field() !!}

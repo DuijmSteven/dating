@@ -88,6 +88,76 @@ class ConversationController extends Controller
     }
 
     /**
+     * @param $peasantId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function ofPeasantId($peasantId)
+    {
+        $conversations = Conversation::with([
+            'userA',
+            'userA.roles',
+            'userA.meta',
+            'userA.profileImage',
+            'userB',
+            'userB.roles',
+            'userB.meta',
+            'userB.profileImage'
+        ])
+            ->where('user_a_id', $peasantId)
+            ->orWhere('user_b_id', $peasantId)
+            ->withTrashed()
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
+
+        /** @var User $peasant */
+        $peasant = User::find($peasantId);
+
+        return view(
+            'admin.conversations.overview',
+            [
+                'title' => 'Conversations of peasant ID: ' . $peasant->getId() . ' - ' . \config('app.name'),
+                'headingLarge' => 'Conversations of peasant',
+                'headingSmall' => $peasant->getUsername() . ' - (ID: ' . $peasant->getId() . ')',
+                'carbonNow' => Carbon::now('Europe/Amsterdam'),
+                'conversations' => $conversations
+            ]
+        );
+    }
+
+    public function ofBotId($botId)
+    {
+        $conversations = Conversation::with([
+            'userA',
+            'userA.roles',
+            'userA.meta',
+            'userA.profileImage',
+            'userB',
+            'userB.roles',
+            'userB.meta',
+            'userB.profileImage'
+        ])
+            ->where('user_a_id', $botId)
+            ->orWhere('user_b_id', $botId)
+            ->withTrashed()
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
+
+        /** @var User $bot */
+        $bot = User::find($botId);
+
+        return view(
+            'admin.conversations.overview',
+            [
+                'title' => 'Conversations of bot ID: ' . $bot->getId() . ' - ' . \config('app.name'),
+                'headingLarge' => 'Conversations of bot',
+                'headingSmall' => $bot->getUsername() . ' - (ID: ' . $bot->getId() . ')',
+                'carbonNow' => Carbon::now('Europe/Amsterdam'),
+                'conversations' => $conversations
+            ]
+        );
+    }
+
+    /**
      * @param $conversationId
      * @return \Illuminate\Http\RedirectResponse
      */

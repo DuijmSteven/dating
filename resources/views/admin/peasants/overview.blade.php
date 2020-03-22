@@ -103,7 +103,7 @@
                                 </td>
                                 <td class="action-buttons">
                                     <a href="{!! route('admin.peasants.edit.get', [$peasant->id]) !!}" class="btn btn-default">Edit</a>
-
+                                    <a href="{!! route('admin.conversations.peasant.get', ['peasantId' => $peasant->id]) !!}" class="btn btn-default">Conversations</a>
                                     <a href="{!! route('admin.peasants.message-as-bot.get', ['peasantId' => $peasant->id, 'onlyOnlineBots' => '0']) !!}" class="btn btn-default">Message user as bot</a>
                                     <a href="{!! route('admin.peasants.message-as-bot.get', [ 'peasantId' => $peasant->id, 'onlyOnlineBots' => '1']) !!}" class="btn btn-default">Message user as online bot</a>
 

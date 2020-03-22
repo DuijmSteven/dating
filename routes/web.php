@@ -250,6 +250,10 @@ Route::group([
     ], function () {
         Route::get('/', 'Admin\ConversationController@index')
             ->name('admin.conversations.overview');
+        Route::get('users/{peasantId}', 'Admin\ConversationController@ofPeasantId')
+            ->name('admin.conversations.peasant.get');
+        Route::get('users/{botId}', 'Admin\ConversationController@ofBotId')
+            ->name('admin.conversations.bot.get');
         Route::delete('{conversationId}', 'Admin\ConversationController@destroy')
             ->name('admin.conversations.destroy');
 

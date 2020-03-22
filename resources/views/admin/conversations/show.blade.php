@@ -136,80 +136,76 @@
                 </div>
                 <!-- /.box-body -->
 
-                @if(!$conversation->getDeletedAt())
-                    <div class="box-footer">
-                        <form role="form" method="POST" action="{!! route('admin.conversations.store') !!}"
-                              enctype="multipart/form-data">
-                            {!! csrf_field() !!}
-                            <input type="hidden" value="{!! $conversation->id !!}" name="conversation_id">
-                            <input type="hidden" value="{!! $conversation->userA->id !!}" name="sender_id">
-                            <input type="hidden" value="{!! $conversation->userB->id !!}" name="recipient_id">
-                            <div style="float: left; padding: 0 10px 0 10px;">
-                                <label style="margin-bottom: 0; cursor: pointer">
-                                    <i class="fa fa-paperclip" style="font-size: 20px; line-height: 34px;"></i>
-                                    <input type="file" accept=".png,.jpg,.jpeg" id="attachment" name="attachment"
-                                           style="display: none;">
-                                </label>
+                <div class="box-footer">
+                    <form role="form" method="POST" action="{!! route('admin.conversations.store') !!}"
+                          enctype="multipart/form-data">
+                        {!! csrf_field() !!}
+                        <input type="hidden" value="{!! $conversation->id !!}" name="conversation_id">
+                        <input type="hidden" value="{!! $conversation->userA->id !!}" name="sender_id">
+                        <input type="hidden" value="{!! $conversation->userB->id !!}" name="recipient_id">
+                        <div style="float: left; padding: 0 10px 0 10px;">
+                            <label style="margin-bottom: 0; cursor: pointer">
+                                <i class="fa fa-paperclip" style="font-size: 20px; line-height: 34px;"></i>
+                                <input type="file" accept=".png,.jpg,.jpeg" id="attachment" name="attachment"
+                                       style="display: none;">
+                            </label>
+                        </div>
+                        <div>
+                            <div class="input-group">
+                                <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                                <span class="input-group-btn">
+                            <button type="submit" class="btn btn-success btn-flat">Send</button>
+                          </span>
                             </div>
-                            <div>
-                                <div class="input-group">
-                                    <input type="text" name="message" placeholder="Type Message ..." class="form-control">
-                                    <span class="input-group-btn">
-                                <button type="submit" class="btn btn-success btn-flat">Send</button>
-                              </span>
-                                </div>
-                            </div>
-                            <div class="attachment-path-container">
-                                Selected image name: <span class="attachment-path"></span>
-                            </div>
-                        </form>
-                    </div>
-                @endif
+                        </div>
+                        <div class="attachment-path-container">
+                            Selected image name: <span class="attachment-path"></span>
+                        </div>
+                    </form>
+                </div>
                 <!-- /.box-footer-->
             </div>
-            @if(!$conversation->getDeletedAt())
-                <div class="box">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Invisible images</h3>
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Invisible images</h3>
 
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                    class="fa fa-minus"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        <div class="conversation__invisibleImages">
-                            <?php $bot = $conversation->userA ?>
-                            @foreach($bot->invisibleImages as $invisibleImage)
-                                <div class="col-xs-12 col-sm-4">
-                                    <form role="form" method="POST" action="{!! route('admin.conversations.add-invisible-image') !!}"
-                                          enctype="multipart/form-data">
-                                        {!! csrf_field() !!}
-                                        <input type="hidden" value="{!! $conversation->id !!}" name="conversation_id">
-                                        <input type="hidden" value="{!! $conversation->userA->id !!}" name="sender_id">
-                                        <input type="hidden" value="{!! $conversation->userB->id !!}" name="recipient_id">
-                                        <input type="hidden" value="{!! $invisibleImage->id !!}" name="image_id">
-
-                                        <textarea name="body" cols="30" rows="10" style="width: 100%; height: 200px" class="hidden"></textarea>
-
-                                        <img style=""
-                                             src="{{ \App\Helpers\StorageHelper::userImageUrl($bot->getId(), $invisibleImage->filename) }}"
-                                             alt="">
-                                        <input class="selectInvisibleImage" type="radio" value="{!! $invisibleImage->id!!}" name="image_id">
-                                        @if ($errors->has('image_id') && old('image_id_error_check') == $invisibleImage->getId())
-                                            {!! $errors->first('image_id', '<small class="form-error">:message</small>') !!}
-                                        @endif
-                                        <button style="width: 100%" type="submit" class="btn btn-success btn-flat">Send</button>
-
-                                    </form>
-                                </div>
-                            @endforeach
-                        </div>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-minus"></i>
+                        </button>
                     </div>
                 </div>
-            @endif
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="conversation__invisibleImages">
+                        <?php $bot = $conversation->userA ?>
+                        @foreach($bot->invisibleImages as $invisibleImage)
+                            <div class="col-xs-12 col-sm-4">
+                                <form role="form" method="POST" action="{!! route('admin.conversations.add-invisible-image') !!}"
+                                      enctype="multipart/form-data">
+                                    {!! csrf_field() !!}
+                                    <input type="hidden" value="{!! $conversation->id !!}" name="conversation_id">
+                                    <input type="hidden" value="{!! $conversation->userA->id !!}" name="sender_id">
+                                    <input type="hidden" value="{!! $conversation->userB->id !!}" name="recipient_id">
+                                    <input type="hidden" value="{!! $invisibleImage->id !!}" name="image_id">
+
+                                    <textarea name="body" cols="30" rows="10" style="width: 100%; height: 200px" class="hidden"></textarea>
+
+                                    <img style=""
+                                         src="{{ \App\Helpers\StorageHelper::userImageUrl($bot->getId(), $invisibleImage->filename) }}"
+                                         alt="">
+                                    <input class="selectInvisibleImage" type="radio" value="{!! $invisibleImage->id!!}" name="image_id">
+                                    @if ($errors->has('image_id') && old('image_id_error_check') == $invisibleImage->getId())
+                                        {!! $errors->first('image_id', '<small class="form-error">:message</small>') !!}
+                                    @endif
+                                    <button style="width: 100%" type="submit" class="btn btn-success btn-flat">Send</button>
+
+                                </form>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-xs-12 col-sm-3">
             <div class="box box-userB">

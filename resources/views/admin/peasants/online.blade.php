@@ -102,12 +102,12 @@
                                         @endforeach
                                 </td>
                                 <td class="action-buttons">
-                                    <a href="{!! route('admin.peasants.edit.get', [$peasant->id]) !!}" class="btn btn-default">Edit</a>
+                                    <a href="{!! route('admin.peasants.edit.get', [$peasant->getId()]) !!}" class="btn btn-default">Edit</a>
+                                    <a href="{!! route('admin.conversations.peasant.get', ['peasantId' => $peasant->getId()]) !!}" class="btn btn-default">Conversations</a>
+                                    <a href="{!! route('admin.peasants.message-as-bot.get', ['peasantId' => $peasant->getId(), 'onlyOnlineBots' => '0']) !!}" class="btn btn-default">Message as a bot</a>
+                                    <a href="{!! route('admin.peasants.message-as-bot.get', ['peasantId' => $peasant->getId(), 'onlyOnlineBots' => '1']) !!}" class="btn btn-default">Message user as online bot</a>
 
-                                    <a href="{!! route('admin.peasants.message-as-bot.get', ['peasantId' => $peasant->id, 'onlyOnlineBots' => '0']) !!}" class="btn btn-default">Message as a bot</a>
-                                    <a href="{!! route('admin.peasants.message-as-bot.get', ['peasantId' => $peasant->id, 'onlyOnlineBots' => '1']) !!}" class="btn btn-default">Message user as online bot</a>
-
-                                    <form method="POST" action="{!! route('admin.users.destroy', ['userId' => $peasant->id]) !!}">
+                                    <form method="POST" action="{!! route('admin.users.destroy', ['userId' => $peasant->getId()]) !!}">
                                         {!! csrf_field() !!}
                                         {!! method_field('DELETE') !!}
                                         <button type="submit"
