@@ -379,7 +379,7 @@ class ConversationManager
     {
         $conversation = $this->conversation
             ->with(['messages' => function($query) use ($offset, $limit) {
-                $query->orderBy('id', 'desc');
+                $query->orderBy('created_at', 'desc');
 
                 if ($offset) {
                     $query->skip($offset);
