@@ -139,6 +139,7 @@ class ConversationManager
                 $query->where('locked_at', null)
                     ->orWhere('locked_at', '<', Carbon::now()->subMinutes(4));
             })
+            ->withTrashed()
             ->get();
 
         return $conversations;
@@ -158,7 +159,9 @@ class ConversationManager
                 $query->where('locked_at', null)
                     ->orWhere('locked_at', '<', Carbon::now()->subMinutes(4));
             })
-            ->get()->filter(function ($value, $key) {
+            ->withTrashed()
+            ->get()
+            ->filter(function ($value, $key) {
 
                 if ($value->messages[0]->sender && $value->messages[0]->recipient) {
 
