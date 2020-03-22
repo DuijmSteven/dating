@@ -203,12 +203,15 @@ class PaymentService implements PaymentProvider
 
         $status = $checkPaymentResult->status;
 
+        /** @var Payment $payment */
         $payment = Payment::where('user_id', $peasant->getId())
                           ->where('transaction_id', $transactionId)
                           ->first();
 
         //Increase credits
         if ($status && $payment->status === Payment::STATUS_STARTED) {
+            \Log::debug('Payment (ID: ' . $payment->getId() . ') - Credits before increasing them: ' . $peasant->account->credits);
+
             if($peasant->account()->exists()) {
                 $existingCredits = $peasant->account->credits;
                 $peasant->account()->update(['credits' => $existingCredits + (int) $creditpack->getCredits()]);
@@ -216,6 +219,8 @@ class PaymentService implements PaymentProvider
                 $account = new UserAccount(['credits' => (int) $creditpack->getCredits()]);
                 $peasant->account()->save($account);
             }
+
+            \Log::debug('Payment (ID: ' . $payment->getId() . ') - Credits after increasing them: ' . $peasant->account->credits);
         }
 
         //Update payment status
