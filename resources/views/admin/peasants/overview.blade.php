@@ -89,8 +89,15 @@
 
                                     @foreach(array_merge(\UserConstants::textFields('peasant'), \UserConstants::textInputs('peasant')) as $fieldName)
                                         @if(isset($peasant->meta->{$fieldName}) && $peasant->meta->{$fieldName} != '')
-                                            <strong>{!! @trans('user_constants.' . $fieldName) !!}:
-                                            </strong> {!! $peasant->meta->{$fieldName} !!}<br>
+                                            <div style="max-width: 250px; {!! $fieldName === 'about_me' ? 'white-space: normal' : '' !!}">
+                                                <strong>{!! @trans('user_constants.' . $fieldName) !!}:</strong>
+
+                                                @if($fieldName === 'about_me')
+                                                    {{ substr($peasant->meta->{$fieldName}, 0, 40) }}{{ strlen($peasant->meta->{$fieldName}) > 41 ? '...' : '' }}
+                                                @else
+                                                    {{ $peasant->meta->{$fieldName} }}
+                                                @endif
+                                            </div>
                                         @endif
                                     @endforeach
                                 </td>
