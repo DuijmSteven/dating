@@ -543,14 +543,11 @@ class ConversationController extends Controller
             ];
         }
 
-        try {
-            if ($conversation instanceof Conversation) {
-                /** @var Conversation $conversation */
-                $conversation->setLockedByUserId(null);
-                $conversation->setLockedAt(null);
-                $conversation->save();
-            }
-        } catch (\Exception $exception) {
+        if ($conversation instanceof Conversation) {
+            /** @var Conversation $conversation */
+            $conversation->setLockedByUserId(null);
+            $conversation->setLockedAt(null);
+            $conversation->save();
         }
 
         return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
