@@ -56,8 +56,6 @@ class CheckRecentStartedPayments extends Command
             ->where('created_at', '<=', Carbon::now()->subMinutes(3))
             ->get();
 
-        \Log::debug('# of started payments in the last 10 minutes: ' . count($recentStartedPayments));
-
         /** @var Payment $payment */
         foreach ($recentStartedPayments as $payment) {
             $check = $this->paymentProvider->paymentCheck(
@@ -67,7 +65,7 @@ class CheckRecentStartedPayments extends Command
             );
 
             if($check['status']) {
-                \Log::debug('Payment of user with ID: ' . $payment->peasant->getId() . ' was found to have remained on status started and was changed to status completed');
+                \Log::debug('Payment (ID: ' . $payment->getId() . ') of user ' . $payment->peasant->getUsername() . ' (ID: ' . $payment->peasant->getId() . ') was found to have remained on status started and was changed to status completed');
 
                 $creditsBoughtEmail = (new CreditsBought($payment->peasant, $payment->creditpack))
                     ->onQueue('emails');

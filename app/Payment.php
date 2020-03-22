@@ -31,6 +31,11 @@ class Payment extends TimeZonedModel
         return $this->belongsTo(Creditpack::class, 'creditpack_id', 'id');
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
     public function getDescription()
     {
         return $this->description;

@@ -161,7 +161,7 @@ class ConversationManager
             ->get()->filter(function ($value, $key) {
 
                 if ($value->messages[0]->sender && $value->messages[0]->recipient) {
-                //dd($value);
+
                 return $value->messages[0]->sender->roles[0]->id === User::TYPE_PEASANT &&
                     $value->messages[0]->recipient->roles[0]->id === User::TYPE_BOT;
                 } else {
