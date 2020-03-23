@@ -47,26 +47,33 @@ class DuplicateProductionS3BucketToCurrentEnvironmentBucket extends Command
 
         try {
             $this->info('Starting to empty s3://' . $bucketName . '...');
+            \Log::debug('Starting to empty s3://' . $bucketName . '...');
 
             // run the cli job
             $emptyCurrentEnvBucket = new Process('aws s3 rm s3://' . $bucketName . ' --recursive');
             $emptyCurrentEnvBucket->run();
 
             if ($emptyCurrentEnvBucket->isSuccessful()) {
-                $this->info('Finished emptying s3://' . $bucketName . '');
+                $this->info('Finished emptying s3://' . $bucketName . '.');
+                \Log::debug('Finished emptying s3://' . $bucketName . '.');
 
                 $this->info('Starting to copy files from s3://altijdsex to s3://' . $bucketName . '...');
+                \Log::debug('Starting to copy files from s3://altijdsex to s3://' . $bucketName . '...');
+
                 $copyProductionBucketToCurrentEnvBucket = new Process('aws s3 sync s3://altijdsex s3://' . $bucketName . '');
                 $copyProductionBucketToCurrentEnvBucket->run();
 
                 if ($copyProductionBucketToCurrentEnvBucket->isSuccessful()) {
-                    $this->info('Finished copying files from s3://altijdsex to s3://' . $bucketName . '');
+                    $this->info('Finished copying files from s3://altijdsex to s3://' . $bucketName . '.');
+                    \Log::debug('Finished copying files from s3://altijdsex to s3://' . $bucketName . '.');
                 } else {
-                    $this->info('There was an error copying files from s3://altijdsex to s3://' . $bucketName . '');
+                    $this->info('There was an error copying files from s3://altijdsex to s3://' . $bucketName . '.');
+                    \Log::debug('There was an error copying files from s3://altijdsex to s3://' . $bucketName . '.');
                 }
             }
             else {
-                $this->info('There was an error copying files from s3://altijdsex to s3://' . $bucketName . '');
+                $this->info('There was an error copying files from s3://altijdsex to s3://' . $bucketName . '.');
+                \Log::debug('There was an error copying files from s3://altijdsex to s3://' . $bucketName . '.');
 
                 throw new ProcessFailedException($emptyCurrentEnvBucket);
             }

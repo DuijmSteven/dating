@@ -37,14 +37,14 @@ class UserController extends Controller
 
             $alerts[] = [
                 'type' => 'success',
-                'message' => 'The operator was deleted successfully'
+                'message' => 'The user was deleted successfully'
             ];
 
             return redirect()->back()->with('alerts', $alerts);
         } catch (\Exception $exception) {
             $alerts[] = [
                 'type' => 'error',
-                'message' => 'The operator was not deleted due to an exception.'
+                'message' => 'The user was not deleted due to an exception.'
             ];
 
             return redirect()->back()->with('alerts', $alerts);
