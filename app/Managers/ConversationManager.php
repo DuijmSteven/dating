@@ -75,7 +75,7 @@ class ConversationManager
         if (in_array($messageData['recipient_id'], $onlineBotIds)) {
             $replyableAt = Carbon::now();
         } else {
-            $replyableAt = Carbon::now()->subMinutes(rand(1, 10));
+            $replyableAt = Carbon::now()->addMinutes(rand(1, 10));
         }
 
         $conversation->setReplyableAt($replyableAt);
