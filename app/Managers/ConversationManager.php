@@ -10,6 +10,7 @@ use App\User;
 use Carbon\Carbon;
 use Cassandra\Type\UserType;
 use Illuminate\Support\Facades\DB;
+use Kim\Activity\Activity;
 
 /**
  * Class ConversationManager
@@ -60,6 +61,25 @@ class ConversationManager
         } catch (\Exception $exception) {
             throw $exception;
         }
+
+        $onlineIds = Activity::users(5)->pluck('user_id')->toArray();
+
+        $onlineBotIds = User::whereHas('roles', function ($query) {
+            $query->where('id', User::TYPE_BOT);
+        })
+        ->whereIn('id', $onlineIds)
+        ->get()
+        ->pluck('id')
+        ->toArray();
+
+        if (in_array($messageData['recipient_id'], $onlineBotIds)) {
+            $replyableAt = Carbon::now();
+        } else {
+            $replyableAt = Carbon::now()->subMinutes(rand(1, 10));
+        }
+
+        $conversation->setReplyableAt($replyableAt);
+        $conversation->save();
 
         try {
             $messageInstance = new ConversationMessage([
@@ -140,6 +160,7 @@ class ConversationManager
                 $query->where('locked_at', null)
                     ->orWhere('locked_at', '<', Carbon::now()->subMinutes(4));
             })
+            ->where('replyable_at', '<=', Carbon::now())
             ->withTrashed()
             ->get();
 
@@ -161,6 +182,7 @@ class ConversationManager
                     ->orWhere('locked_at', '<', Carbon::now()->subMinutes(4));
             })
             ->withTrashed()
+            ->where('replyable_at', '<=', Carbon::now())
             ->get()
             ->filter(function ($value, $key) {
 

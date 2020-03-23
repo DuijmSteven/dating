@@ -27,6 +27,7 @@ class Conversation extends TimeZonedModel
         'user_b_id',
         'new_activity_for_user_a',
         'new_activity_for_user_b',
+        'replyable'
     ];
 
     public function getUpdatedAtHumanReadableAttribute()
@@ -134,6 +135,16 @@ class Conversation extends TimeZonedModel
     public function setLockedAt(?Carbon $lockedAt)
     {
         $this->locked_at = $lockedAt;
+    }
+
+    public function getReplyableAt()
+    {
+        return $this->replyable_at;
+    }
+
+    public function setReplyableAt($replyableAt)
+    {
+        $this->replyable_at = $replyableAt;
     }
 
     /**
