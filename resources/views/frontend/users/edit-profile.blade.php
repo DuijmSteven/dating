@@ -205,7 +205,7 @@
                                            class="form-control"
                                            name="dob"
                                            required
-                                           value="{{ $user->meta->dob ? $user->meta->dob->format('m-d-Y') : '' }}"
+                                           value="{{ $user->meta->dob ? $user->meta->dob->format('d-m-Y') : '' }}"
                                     >
                                     <div class="input-group-addon" style="padding: 3px 12px">
                                         <i class="material-icons calendar">

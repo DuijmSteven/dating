@@ -38,10 +38,7 @@ mix.styles([
     .version();
 
 mix.scripts([
-    'resources/assets/js/admin/jquery-3.1.1.min.js',
-    'resources/assets/js/admin/jquery-ui.min.js',
     'resources/assets/js/admin/adminlte.min.js',
-    'resources/assets/js/admin/bootstrap.min.js',
     'resources/assets/js/admin/bootstrap-markdown.js',
     'resources/assets/js/admin/bootstrap3-wysihtml5.all.min.js',
     'resources/assets/js/admin/bootstrap3-wysihtml5.all.min.js',
@@ -50,15 +47,16 @@ mix.scripts([
     'resources/assets/js/admin/jquery.slimscroll.min.js',
     'resources/assets/js/admin/jquery.sparkline.min.js',
     'resources/assets/js/admin/moment.min.js',
-    'resources/assets/js/admin/raphael.min.js',
-    'resources/assets/js/admin/custom.js'
+    'resources/assets/js/admin/raphael.min.js'
 ], 'public/admin/js/plugins.js')
     .sourceMaps()
     .version();
 
-mix.scripts([
-    'resources/assets/js/admin/custom.js'
-], 'public/admin/js/custom-3.js')
+mix.js(
+    'resources/assets/js/admin/custom.js',
+    'public/admin/js'
+)
+    .sass('resources/assets/sass/admin/custom.scss', 'public/admin/css')
     .sourceMaps()
     .version();
 

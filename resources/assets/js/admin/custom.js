@@ -1,11 +1,24 @@
-$(window).load(function () {
+import $ from 'jquery';
+window.$ = window.jQuery = $;
+
+require("jquery-ui/ui/widgets/autocomplete");
+
+require('bootstrap-datepicker');
+
+$(window).on('load', function () {
 
     /*
      *   CREATE BOT =================================================
      */
     // Instantiate date picker in  bot creation view
     $('.datepicker__date').datepicker({
-        'dateFormat': 'yy-mm-dd'
+        weekStart: 1,
+        autoclose: 1,
+        startView: 2,
+        minView: 2,
+        useCurrent: false,
+        defaultViewDate: new Date(1990, 11, 24),
+        format: "dd-mm-yyyy"
     });
 
     if ($('.JS--autoCompleteCites').length > 0) {

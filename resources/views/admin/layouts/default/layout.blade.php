@@ -72,13 +72,13 @@
 </script>
 
 <!-- ./wrapper -->
+<script src="{{ elixir('admin/js/custom.js') }}"></script>
 <script src="{{ elixir('admin/js/plugins.js') }}"></script>
-<script src="{{ elixir('admin/js/custom-3.js') }}"></script>
 
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-  $.widget.bridge('uibutton', $.ui.button);
-</script>
+{{--<script>--}}
+{{--  $.widget.bridge('uibutton', $.ui.button);--}}
+{{--</script>--}}
 
 <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>

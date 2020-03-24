@@ -87,7 +87,7 @@ class PeasantManager extends UserManager
         $userDataToPersist['user_meta'] = $userMetaTableData;
 
         if (isset($userDataToPersist['user_meta']['dob'])) {
-            $userDataToPersist['user_meta']['dob'] = Carbon::createFromFormat('m-d-Y', $userDataToPersist['user_meta']['dob'], 'Europe/Amsterdam')->format('Y-m-d');
+            $userDataToPersist['user_meta']['dob'] = Carbon::parse($userDataToPersist['user_meta']['dob'])->format('Y-m-d');
         }
 
         $userDataToPersist['user']['active'] = 1;
