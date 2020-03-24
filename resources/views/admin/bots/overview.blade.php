@@ -55,7 +55,7 @@
                                         <h5 class="statsHeading"><strong>Views</strong></h5>
                                         <div class="statsBody">
                                             <strong>All time:</strong> {{ $bot->views->count()  }} <br>
-                                            <strong>Unique:</strong> {{ $bot->uniqueViewed->count() }}
+                                            <strong>Unique:</strong> {{ $bot->uniqueViews()->get()->count() }}
                                         </div>
                                     </td>
 

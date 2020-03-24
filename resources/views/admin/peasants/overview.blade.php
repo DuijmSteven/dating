@@ -73,8 +73,8 @@
 
                                     <h5 class="statsHeading"><strong>Bot views</strong></h5>
                                     <div class="statsBody">
-                                        <strong>All time:</strong> {{ $peasant->viewed->count() }} <br>
-                                        <strong>Unique:</strong> {{ $peasant->uniqueViewed->count() }}
+                                        <strong>All time:</strong> {{ $peasant->hasViewed->count() }} <br>
+                                        <strong>Unique:</strong> {{ $peasant->hasViewedUnique()->get()->count() }}
                                     </div>
                                 </td>
                                 <td class="no-wrap">

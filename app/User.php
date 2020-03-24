@@ -509,15 +509,14 @@ class User extends Authenticatable
         return $this->hasMany('App\UserImage')->where('profile', 0);
     }
 
-    public function viewed()
+    public function hasViewed()
     {
         return $this->hasMany(UserView::class, 'viewer_id', 'id');
     }
 
-    public function uniqueViewed()
+    public function hasViewedUnique()
     {
-        return $this->hasMany(UserView::class, 'viewer_id', 'id')
-        ->groupBy('viewed_id');
+        return $this->hasMany(UserView::class, 'viewer_id', 'id')->groupBy('viewed_id');
     }
 
     public function views()
@@ -525,10 +524,9 @@ class User extends Authenticatable
         return $this->hasMany(UserView::class, 'viewed_id', 'id');
     }
 
-    public function uniqueviews()
+    public function uniqueViews()
     {
-        return $this->hasMany(UserView::class, 'viewed_id', 'id')
-            ->groupBy('viewer_id');
+        return $this->hasMany(UserView::class, 'viewed_id', 'id')->groupBy('viewer_id');
     }
 
     /**
