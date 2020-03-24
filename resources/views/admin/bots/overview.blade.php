@@ -26,9 +26,8 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Profile image</th>
-                                <th>Views</th>
-                                <th>User data</th>
-                                <th>Meta data</th>
+                                <th>Stats</th>
+                                <th>Bot data</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -41,14 +40,29 @@
                                             <img width="120" src="{!! \StorageHelper::profileImageUrl($bot, true) !!}" alt="">
                                         </a>
                                     </td>
-                                    <td>
-                                        {{ $bot->views->count() }}
+                                    <td class="no-wrap">
+                                        <h5 class="statsHeading"><strong>Messages</strong></h5>
+                                        <div class="statsBody">
+                                            <strong>All time:</strong> {{ $bot->messaged_count }} <br>
+                                            <strong>Last month:</strong> {{ $bot->messaged_last_month_count }} <br>
+                                            <strong>This month:</strong> {{ $bot->messaged_this_month_count }} <br>
+                                            <strong>Last Week:</strong> {{ $bot->messaged_last_week_count }} <br>
+                                            <strong>This week:</strong> {{ $bot->messaged_this_week_count }} <br>
+                                            <strong>Yesterday:</strong> {{ $bot->messaged_yesterday_count }} <br>
+                                            <strong>Today:</strong> {{ $bot->messaged_today_count }} <br>
+                                        </div>
+
+                                        <h5 class="statsHeading"><strong>Views</strong></h5>
+                                        <div class="statsBody">
+                                            <strong>All time:</strong> {{ $bot->views->count()  }} <br>
+                                            <strong>Unique:</strong> {{ $bot->uniqueViewed->count() }}
+                                        </div>
                                     </td>
+
                                     <td>
                                         <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $bot->username !!} <br>
                                         <strong>{!! @trans('user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($bot->meta->dob) !!} <br>
-                                    </td>
-                                    <td>
+
                                         @foreach(\UserConstants::selectableFields('bot') as $fieldName => $a)
                                             @if(isset($bot->meta->{$fieldName}))
                                                 <strong>{!! ucfirst(str_replace('_', ' ', $fieldName)) !!}:

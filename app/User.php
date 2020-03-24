@@ -509,10 +509,26 @@ class User extends Authenticatable
         return $this->hasMany('App\UserImage')->where('profile', 0);
     }
 
+    public function viewed()
+    {
+        return $this->hasMany(UserView::class, 'viewer_id', 'id');
+    }
+
+    public function uniqueViewed()
+    {
+        return $this->hasMany(UserView::class, 'viewer_id', 'id')
+        ->groupBy('viewed_id');
+    }
 
     public function views()
     {
         return $this->hasMany(UserView::class, 'viewed_id', 'id');
+    }
+
+    public function uniqueviews()
+    {
+        return $this->hasMany(UserView::class, 'viewed_id', 'id')
+            ->groupBy('viewer_id');
     }
 
     /**
@@ -564,9 +580,80 @@ class User extends Authenticatable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
+    public function messaged()
+    {
+        return $this->hasMany(ConversationMessage::class, 'recipient_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function messages()
     {
         return $this->hasMany(ConversationMessage::class, 'sender_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function messagedToday()
+    {
+        $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');
+        $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
+
+        return $this->hasMany(ConversationMessage::class, 'recipient_id')
+            ->where('created_at', '>=', $startOfToday)
+            ->where('created_at', '<=', $endOfToday);
+    }
+
+    public function messagedYesterday()
+    {
+        $startOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->startOfDay()->setTimezone('UTC');
+        $endOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->endOfDay()->setTimezone('UTC');
+
+        return $this->hasMany(ConversationMessage::class, 'recipient_id')
+            ->where('created_at', '>=', $startOfYesterday)
+            ->where('created_at', '<=', $endOfYesterday);
+    }
+
+    public function messagedThisWeek()
+    {
+        $startOfThisWeek = Carbon::now('Europe/Amsterdam')->startOfWeek()->setTimezone('UTC');
+        $endOfThisWeek = Carbon::now('Europe/Amsterdam')->endOfWeek()->setTimezone('UTC');
+
+        return $this->hasMany(ConversationMessage::class, 'recipient_id')
+            ->where('created_at', '>=', $startOfThisWeek)
+            ->where('created_at', '<=', $endOfThisWeek);
+    }
+
+    public function messagedLastWeek()
+    {
+        $startOfLastWeek = Carbon::now('Europe/Amsterdam')->subWeeks(1)->startOfWeek()->setTimezone('UTC');
+        $endOfLastWeek = Carbon::now('Europe/Amsterdam')->subWeeks(1)->endOfWeek()->setTimezone('UTC');
+
+        return $this->hasMany(ConversationMessage::class, 'recipient_id')
+            ->where('created_at', '>=', $startOfLastWeek)
+            ->where('created_at', '<=', $endOfLastWeek);
+    }
+
+    public function messagedThisMonth()
+    {
+        $startOfThisMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->setTimezone('UTC');
+        $endOfThisMonth = Carbon::now('Europe/Amsterdam')->endOfMonth()->setTimezone('UTC');
+
+        return $this->hasMany(ConversationMessage::class, 'recipient_id')
+            ->where('created_at', '>=', $startOfThisMonth)
+            ->where('created_at', '<=', $endOfThisMonth);
+    }
+
+    public function messagedLastMonth()
+    {
+        $startOfLastMonth = Carbon::now('Europe/Amsterdam')->subMonths(1)->startOfMonth()->setTimezone('UTC');
+        $endOfLastMonth = Carbon::now('Europe/Amsterdam')->subMonths(1)->endOfMonth()->setTimezone('UTC');
+
+        return $this->hasMany(ConversationMessage::class, 'recipient_id')
+            ->where('created_at', '>=', $startOfLastMonth)
+            ->where('created_at', '<=', $endOfLastMonth);
     }
 
     /**

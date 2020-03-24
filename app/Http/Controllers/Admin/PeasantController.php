@@ -110,10 +110,10 @@ class PeasantController extends Controller
             })
             ->whereIn('id', $onlineIds) 
             ->orderBy('id')
-            ->get();
+            ->paginate(20);
 
         return view(
-            'admin.peasants.online',
+            'admin.peasants.overview',
             [
                 'title' => 'Online peasants - ' . \config('app.name'),
                 'headingLarge' => 'Peasants',

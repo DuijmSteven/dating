@@ -38,7 +38,17 @@ class BotController extends Controller
     public function index()
     {
         /** @var Collection $bots */
-        $queryBuilder = User::with(['meta', 'roles', 'profileImage', 'images', 'views'])
+        $queryBuilder = User::with(['meta', 'roles', 'profileImage', 'images', 'views', 'uniqueViews'])
+            ->withCount([
+                'messaged',
+                'messagedToday',
+                'messagedYesterday',
+                'messagedThisWeek',
+                'messagedLastWeek',
+                'messagedYesterday',
+                'messagedThisMonth',
+                'messagedLastMonth'
+            ])
             ->whereHas('roles', function ($query) {
                 $query->where('name', 'bot');
             });
@@ -129,15 +139,26 @@ class BotController extends Controller
     {
         $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
 
-        $bots = User::with(['meta', 'roles', 'profileImage', 'views'])->whereHas('roles', function ($query) {
+        $bots = User::with(['meta', 'roles', 'profileImage', 'views'])
+            ->withCount([
+                'messaged',
+                'messagedToday',
+                'messagedYesterday',
+                'messagedThisWeek',
+                'messagedLastWeek',
+                'messagedYesterday',
+                'messagedThisMonth',
+                'messagedLastMonth'
+            ])
+            ->whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_BOT);
         })
             ->whereIn('id', $onlineIds)
             ->orderBy('id')
-            ->get();
+            ->paginate(20);
 
         return view(
-            'admin.bots.online',
+            'admin.bots.overview',
             [
                 'title' => 'Online bots - ' . \config('app.name'),
                 'headingLarge' => 'Bots',
