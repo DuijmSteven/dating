@@ -19,6 +19,44 @@
                     <a href="{!! route('admin.bots.message-with-bot.get', ['botId' => $bot->id, 'onlyOnlinePeasants' => '1']) !!}" class="btn btn-default">Message online peasant with bot</a>
                 </div>
 
+                <div class="userStats botStats">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-4">
+                            <h5 class="statsHeading"><strong>Messages received</strong></h5>
+                            <div class="statsBody">
+                                <strong>All time:</strong> {{ $bot->messaged_count }} <br>
+                                <strong>Last month:</strong> {{ $bot->messaged_last_month_count }} <br>
+                                <strong>This month:</strong> {{ $bot->messaged_this_month_count }} <br>
+                                <strong>Last Week:</strong> {{ $bot->messaged_last_week_count }} <br>
+                                <strong>This week:</strong> {{ $bot->messaged_this_week_count }} <br>
+                                <strong>Yesterday:</strong> {{ $bot->messaged_yesterday_count }} <br>
+                                <strong>Today:</strong> {{ $bot->messaged_today_count }} <br>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-4">
+                            <h5 class="statsHeading"><strong>Messages sent</strong></h5>
+                            <div class="statsBody">
+                                <strong>All time:</strong> {{ $bot->messages_count }} <br>
+                                <strong>Last month:</strong> {{ $bot->messages_last_month_count }} <br>
+                                <strong>This month:</strong> {{ $bot->messages_this_month_count }} <br>
+                                <strong>Last Week:</strong> {{ $bot->messages_last_week_count }} <br>
+                                <strong>This week:</strong> {{ $bot->messages_this_week_count }} <br>
+                                <strong>Yesterday:</strong> {{ $bot->messages_yesterday_count }} <br>
+                                <strong>Today:</strong> {{ $bot->messages_today_count }} <br>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-4">
+                            <h5 class="statsHeading"><strong>Views</strong></h5>
+                            <div class="statsBody">
+                                <strong>All time:</strong> {{ $bot->views->count()  }} <br>
+                                <strong>Unique:</strong> {{ $bot->uniqueViews()->get()->count() }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">

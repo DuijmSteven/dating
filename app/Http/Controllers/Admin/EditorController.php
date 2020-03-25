@@ -11,6 +11,7 @@ use App\User;
 use Carbon\Carbon;
 use DB;
 use GrahamCampbell\Markdown\Facades\Markdown;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
 /**
@@ -33,9 +34,19 @@ class EditorController extends Controller
     public function index()
     {
         /** @var Collection $bots */
-        $queryBuilder = User::with(['meta', 'roles', 'profileImage', 'createdBots'])
+        $queryBuilder = User::with([
+            'meta',
+            'roles',
+            'profileImage'
+        ])
             ->withCount([
-                'createdBots'
+                'createdBots',
+                'createdBotsLastMonth',
+                'createdBotsThisMonth',
+                'createdBotsLastWeek',
+                'createdBotsThisWeek',
+                'createdBotsYesterday',
+                'createdBotsToday',
             ])
             ->whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_EDITOR)
@@ -49,7 +60,7 @@ class EditorController extends Controller
         return view(
             'admin.editors.overview',
             [
-                'title' => 'Editor Overview - ' . \MetaConstants::getSiteName(),
+                'title' => 'Editors Overview - ' . \MetaConstants::getSiteName(),
                 'headingLarge' => 'Editor',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
@@ -62,14 +73,25 @@ class EditorController extends Controller
      * @param int $editorId
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function createdBots(int $editorId)
+    public function createdBots(int $editorId = null)
     {
+        if (!$editorId) {
+            $editorId = $this->authenticatedUser->getId();
+        }
+
         /** @var Collection $bots */
         $editor = User::with(['meta', 'roles', 'profileImage', 'createdBots'])
             ->find($editorId);
 
         /** @var Collection $bots */
-        $queryBuilder = User::with(['meta', 'roles', 'profileImage', 'images', 'views', 'uniqueViews'])
+        $queryBuilder = User::with([
+            'meta',
+            'roles',
+            'profileImage',
+            'images',
+            'views',
+            'uniqueViews'
+        ])
             ->withCount([
                 'messaged',
                 'messagedToday',
@@ -92,7 +114,7 @@ class EditorController extends Controller
                 $query->where('name', 'bot');
             });
 
-        $queryBuilder->where('created_by_id', $this->authenticatedUser->getId());
+        $queryBuilder->where('created_by_id', $editorId);
 
         $bots = $queryBuilder
             ->orderBy('created_at', 'desc')
@@ -106,7 +128,42 @@ class EditorController extends Controller
                 'headingSmall' => $editor->getUsername() . ' - (ID: ' . $editor->getId() . ')',
                 'carbonNow' => Carbon::now(),
                 'editor' => $editor,
-                'bots' => $bots
+                'bots' => $bots,
+                'editBotRoute' => 'editors.bots.edit.get'
+            ]
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit(int $editorId)
+    {
+        $editor = User::with([
+            'meta',
+            'roles',
+            'profileImage'
+        ])
+            ->withCount([
+                'createdBots',
+                'createdBotsLastMonth',
+                'createdBotsThisMonth',
+                'createdBotsLastWeek',
+                'createdBotsThisWeek',
+                'createdBotsYesterday',
+                'createdBotsToday',
+            ])
+            ->findOrFail($editorId);
+
+        return view(
+            'admin.editors.edit',
+            [
+                'title' => 'Edit Editor - '. $editor['username'] . '(ID: '. $editor['id'] .') - ' . \config('app.name'),
+                'headingLarge' => 'Editor ' . $editor['username'] . '(ID: '. $editor['id'] .')',
+                'headingSmall' => 'Edit',
+                'carbonNow' => Carbon::now(),
+                'editor' => $editor
             ]
         );
     }

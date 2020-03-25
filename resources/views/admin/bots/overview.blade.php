@@ -96,9 +96,8 @@
                                         @endforeach
                                     </td>
                                     <td class="action-buttons">
-                                        @if($authenticatedUser->isAdmin() || $authenticatedUser->isEditor() && in_array($bot->getId(), $authenticatedUser->createdBotIds) && !$bot->active)
-                                            <a href="{!! route('admin.bots.edit.get', [$bot->getId()]) !!}" class="btn btn-default">Edit</a>
-
+                                        @if($authenticatedUser->isAdmin() || ($authenticatedUser->isEditor() && !$bot->active))
+                                            <a href="{!! route($editBotRoute, ['botId' => $bot->getId()]) !!}" class="btn btn-default">Edit</a>
                                         @endif
 
                                         @if($authenticatedUser->isAdmin())

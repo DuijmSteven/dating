@@ -198,7 +198,19 @@ Route::group([
     Route::group([
         'prefix' => 'bots'
     ], function () {
-        Route::get('/online', 'Admin\BotController@showOnline')
+        Route::get('/', 'Admin\BotController@index')
+            ->name('admin.bots.retrieve');
+
+        Route::get('on-map', 'Admin\BotController@showOnMap')
+            ->name('admin.bots.map.show');
+
+        Route::get('create', 'Admin\BotController@create')
+            ->name('admin.bots.create.get');
+
+        Route::get('edit/{botId}', 'Admin\BotController@edit')
+            ->name('admin.bots.edit.get');
+
+        Route::get('online', 'Admin\BotController@showOnline')
             ->name('admin.bots.online.show');
 
         Route::get('{botId}/message-with-bot/{onlyOnlinePeasants}', 'Admin\BotController@messagePeasantWithBot')
@@ -210,11 +222,17 @@ Route::group([
     ], function () {
         Route::get('/', 'Admin\OperatorController@index')
             ->name('admin.operators.overview');
-        Route::get('/{operatorId}/messages', 'Admin\OperatorController@messages')
+        Route::get('{operatorId}/messages', 'Admin\OperatorController@messages')
             ->name('admin.operators.messages.overview');
 
         Route::get('{operatorId}/messages', 'Admin\MessageController@ofOperatorId')
             ->name('admin.operators.messages.overview');
+
+        Route::get('edit/{operatorId}', 'Admin\OperatorController@edit')
+            ->name('admin.operators.edit.get');
+
+        Route::put('edit/{id}', 'Admin\PeasantController@update')
+            ->name('admin.operators.update');
     });
 
     Route::group([
@@ -224,6 +242,12 @@ Route::group([
             ->name('admin.editors.overview');
         Route::get('/{editorId}/created-bots', 'Admin\EditorController@createdBots')
             ->name('admin.editors.created-bots.overview');
+
+        Route::get('edit/{editorId}', 'Admin\EditorController@edit')
+            ->name('admin.editors.edit.get');
+
+        Route::put('edit/{id}', 'Admin\PeasantController@update')
+            ->name('admin.editors.update');
     });
 
     Route::group([
@@ -243,7 +267,7 @@ Route::group([
         Route::post('create', 'Admin\PeasantController@store')
             ->name('admin.peasants.store');
 
-        Route::get('edit/{id}', 'Admin\PeasantController@edit')
+        Route::get('edit/{peasantId}', 'Admin\PeasantController@edit')
             ->name('admin.peasants.edit.get');
         Route::put('edit/{id}', 'Admin\PeasantController@update')
             ->name('admin.peasants.update');
@@ -458,26 +482,34 @@ Route::group([
 });
 
 Route::group([
+    'prefix' => 'editor',
+    'middleware' => ['editor']
+], function () {
+    Route::group([
+        'prefix' => 'bots'
+    ], function () {
+        Route::get('created', 'Admin\EditorController@createdBots')
+            ->name('editors.bots.created.overview');
+        Route::get('create', 'Admin\BotController@create')
+            ->name('editors.bots.create.get');
+        Route::get('on-map', 'Admin\BotController@showOnMap')
+            ->name('editors.bots.map.show');
+        Route::get('{botId}', 'Admin\BotController@edit')
+            ->name('editors.bots.edit.get');
+
+    });
+});
+
+Route::group([
     'prefix' => 'admin',
     'middleware' => ['editor']
 ], function () {
     Route::group([
         'prefix' => 'bots'
     ], function () {
-        Route::get('/', 'Admin\BotController@index')
-            ->name('admin.bots.retrieve');
-
-        Route::get('/on-map', 'Admin\BotController@showOnMap')
-            ->name('admin.bots.map.show');
-
-        Route::get('/create', 'Admin\BotController@create')
-            ->name('admin.bots.create.get');
-        Route::post('/create', 'Admin\BotController@store')
+        Route::post('create', 'Admin\BotController@store')
             ->name('admin.bots.store');
-
-        Route::get('/edit/{id}', 'Admin\BotController@edit')
-            ->name('admin.bots.edit.get');
-        Route::put('/edit/{id}', 'Admin\BotController@update')
+        Route::put('edit/{id}', 'Admin\BotController@update')
             ->name('admin.bots.update');
     });
 });

@@ -15,7 +15,7 @@
 
     @if(\Auth::user()->isEditor())
         <ul class="sidebar-menu">
-            <li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.bots') ? 'active' : '' !!}">
+            <li class="treeview {!! str_contains(\Request::route()->getName(), 'editors.bots') ? 'active' : '' !!}">
                 <a href="#">
                     <i class="fa fa-android"></i>
                     <span>Bots</span>
@@ -24,20 +24,20 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="{!! \Request::route()->getName() == 'admin.bots.retrieve' ? 'active' : '' !!}">
-                        <a href="{!! route('admin.bots.retrieve') !!}">
+                    <li class="{!! \Request::route()->getName() == 'editors.bots.created.overview' ? 'active' : '' !!}">
+                        <a href="{!! route('editors.bots.created.overview') !!}">
                             <i class="fa fa-list"></i>
                             Overview
                         </a>
                     </li>
-                    <li class="{!! \Request::route()->getName() == 'admin.bots.create.get' ? 'active' : '' !!}">
-                        <a href="{!! route('admin.bots.create.get') !!}">
+                    <li class="{!! \Request::route()->getName() == 'editors.bots.create.get' ? 'active' : '' !!}">
+                        <a href="{!! route('editors.bots.create.get') !!}">
                             <i class="fa fa-user-plus"></i>
                             Create
                         </a>
                     </li>
-                    <li class="{!! \Request::route()->getName() == 'admin.bots.map.show' ? 'active' : '' !!}">
-                        <a href="{!! route('admin.bots.map.show') !!}">
+                    <li class="{!! \Request::route()->getName() == 'editors.bots.map.show' ? 'active' : '' !!}">
+                        <a href="{!! route('editors.bots.map.show') !!}">
                             <i class="fa fa-map"></i>
                             On Map
                         </a>

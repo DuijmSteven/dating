@@ -33,7 +33,7 @@
                         <img style="width: 50px"
                              src="{!! \StorageHelper::profileImageUrl($bot, true) !!}"
                              alt="bot image">
-                        (ID :<a href="{{ route('admin.bots.edit.get', $bot->getId()) }}">{!! $bot->getId() !!}</a>)
+                        (ID :<a href="{{ route('admin.bots.edit.get', ['botId' => $bot->getId()]) }}">{!! $bot->getId() !!}</a>)
                         <span class="js-fillBotData botUsername" style="cursor:pointer;">
                             {!! $bot->username !!}
 

@@ -43,13 +43,13 @@
                                 <td>
                                     <h5 class="statsHeading"><strong>Created bots</strong></h5>
                                     <div class="statsBody">
-                                        <strong>All time:</strong> {!! $editor->createdBots->count() !!} <br>
-                                        <strong>Last month:</strong> {!! $editor->createdBotsLastMonth->count() !!} <br>
-                                        <strong>This month:</strong> {!! $editor->createdBotsThisMonth->count() !!} <br>
-                                        <strong>Last week:</strong> {!! $editor->createdBotsLastWeek->count() !!} <br>
-                                        <strong>This week:</strong> {!! $editor->createdBotsThisWeek->count() !!} <br>
-                                        <strong>Yesterday:</strong> {!! $editor->createdBotsYesterday->count() !!} <br>
-                                        <strong>Today:</strong> {!! $editor->createdBotsToday->count() !!} <br>
+                                        <strong>All time:</strong> {!! $editor->created_bots_count !!} <br>
+                                        <strong>Last month:</strong> {!! $editor->created_bots_last_month_count !!} <br>
+                                        <strong>This month:</strong> {!! $editor->created_bots_this_month_count !!} <br>
+                                        <strong>Last week:</strong> {!! $editor->created_bots_last_week_count !!} <br>
+                                        <strong>This week:</strong> {!! $editor->created_bots_this_week_count !!} <br>
+                                        <strong>Yesterday:</strong> {!! $editor->created_bots_yesterday_count !!} <br>
+                                        <strong>Today:</strong> {!! $editor->created_bots_today_count !!} <br>
 
                                     </div>
                                 </td>
@@ -59,6 +59,7 @@
                                     <strong>{!! @trans('user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($editor->meta->dob) !!} <br>
                                 </td>
                                 <td class="action-buttons">
+                                    <a href="{!! route('admin.editors.edit.get', ['editorId' => $editor->id]) !!}" class="btn btn-default">Edit</a>
                                     <a href="{!! route('admin.editors.created-bots.overview', [$editor->getId()]) !!}" class="btn btn-default">Created bots <b>({{ $editor->created_bots_count }})</b></a>
 
                                     <form method="POST" action="{!! route('admin.users.destroy', ['userId' => $editor->getId()]) !!}">

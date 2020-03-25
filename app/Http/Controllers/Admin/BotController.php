@@ -61,13 +61,11 @@ class BotController extends Controller
                 $query->where('name', 'bot');
             });
 
-        if ($this->authenticatedUser->isEditor()) {
-            $queryBuilder->where('created_by_id', $this->authenticatedUser->getId());
-        }
-
         $bots = $queryBuilder
             ->orderBy('created_at', 'desc')
             ->paginate(20);
+
+        $editBotRoute = '';
 
         return view(
             'admin.bots.overview',
@@ -76,7 +74,8 @@ class BotController extends Controller
                 'headingLarge' => 'Bot',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
-                'bots' => $bots
+                'bots' => $bots,
+                'editBotRoute' =>'admin.bots.edit.get'
             ]
         );
     }
@@ -220,8 +219,6 @@ class BotController extends Controller
         } catch (\Exception $exception) {
             \Log::error($exception->getMessage());
 
-            throw $exception;
-
             $alerts[] = [
                 'type' => 'error',
                 'message' => 'The bot was not created due to an exception.'
@@ -246,9 +243,28 @@ class BotController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function edit(Request $request)
+    public function edit(int $botId, Request $request)
     {
-        $bot = User::with(['meta', 'profileImage', 'nonProfileImages'])->findOrFail($request->route('id'));
+        $bot = User::with(['meta', 'roles', 'profileImage', 'nonProfileImages', 'views', 'uniqueViews'])
+            ->withCount([
+                'messaged',
+                'messagedToday',
+                'messagedYesterday',
+                'messagedThisWeek',
+                'messagedLastWeek',
+                'messagedYesterday',
+                'messagedThisMonth',
+                'messagedLastMonth',
+                'messages',
+                'messagesToday',
+                'messagesYesterday',
+                'messagesThisWeek',
+                'messagesLastWeek',
+                'messagesYesterday',
+                'messagesThisMonth',
+                'messagesLastMonth'
+            ])
+            ->findOrFail($botId);
 
         if ($this->authenticatedUser->isEditor()) {
             $authorizationProblems = 0;
@@ -273,7 +289,7 @@ class BotController extends Controller
             }
 
             if ($authorizationProblems) {
-                return redirect()->route('admin.bots.retrieve')->with('alerts', $alerts);
+                return redirect()->route('editors.bots.created.overview')->with('alerts', $alerts);
             }
         }
 

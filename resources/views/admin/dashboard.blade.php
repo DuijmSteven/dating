@@ -55,7 +55,7 @@
                                     }
                                 @endphp
 
-                                <a href="{{ route('admin.peasants.edit.get', ['id' => $user->getId()]) }}">
+                                <a href="{{ route('admin.peasants.edit.get', ['peasantId' => $user->getId()]) }}">
                                     {{ $user->getUsername() }} (ID: {{ $user->getId() }}) - <strong>Credits: <span class=" highlightAsDisk {{ $highlightTypeClass }}">{{ $user->account->credits }}</span></strong>
                                     <span class="DashboardWidget_count">{{ $user->messages->count() }}</span>
                                 </a>
@@ -92,7 +92,7 @@
                                     }
                                 @endphp
 
-                                <a href="{{ route('admin.peasants.edit.get', ['id' => $user->getId()]) }}">
+                                <a href="{{ route('admin.peasants.edit.get', ['peasantId' => $user->getId()]) }}">
                                     {{ $user->getUsername() }} (ID: {{ $user->getId() }}) - <strong>Credits: <span class=" highlightAsDisk {{ $highlightTypeClass }}">{{ $user->account->credits }}</span></strong>
                                     <span class="DashboardWidget_count">{{ $user->messages->count() }}</span>
                                 </a>
@@ -129,7 +129,7 @@
                                     }
                                 @endphp
 
-                                <a href="{{ route('admin.peasants.edit.get', ['id' => $user->getId()]) }}">
+                                <a href="{{ route('admin.peasants.edit.get', ['peasantId' => $user->getId()]) }}">
                                     {{ $user->getUsername() }} (ID: {{ $user->getId() }}) - <strong>Credits: <span class=" highlightAsDisk {{ $highlightTypeClass }}">{{ $user->account->credits }}</span></strong>
                                     <span class="DashboardWidget_count">{{ $user->messages->count() }}</span>
                                 </a>

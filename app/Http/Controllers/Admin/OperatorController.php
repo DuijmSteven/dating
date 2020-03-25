@@ -11,6 +11,7 @@ use App\User;
 use Carbon\Carbon;
 use DB;
 use GrahamCampbell\Markdown\Facades\Markdown;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
 /**
@@ -80,6 +81,35 @@ class OperatorController extends Controller
                 'title' => 'Messages sent by ' . $operator->getUsername() . ' - (' . $operator->getId() . ')' . \MetaConstants::getSiteName(),
                 'headingLarge' => 'Messages set by',
                 'headingSmall' => $operator->getUsername() . ' - (ID: ' . $operator->getId() . ')',
+                'carbonNow' => Carbon::now(),
+                'operator' => $operator
+            ]
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit(int $operatorId)
+    {
+        $operator = User::with([
+            'meta',
+            'roles',
+            'profileImage'
+        ])
+            ->withCount([
+                'operatorMessages',
+                'operatorMessagesThisMonth',
+            ])
+            ->findOrFail($operatorId);
+
+        return view(
+            'admin.operators.edit',
+            [
+                'title' => 'Edit Peasant - '. $operator['username'] . '(ID: '. $operator['id'] .') - ' . \config('app.name'),
+                'headingLarge' => 'Operator ' . $operator['username'] . '(ID: '. $operator['id'] .')',
+                'headingSmall' => 'Edit',
                 'carbonNow' => Carbon::now(),
                 'operator' => $operator
             ]

@@ -46,7 +46,7 @@ class LoginController extends Controller
         }
 
         if ($user->isEditor()) {
-            return redirect()->route('admin.bots.retrieve');
+            return redirect()->route('editors.bots.created.overview');
         }
 
         if ($user->isOperator()) {

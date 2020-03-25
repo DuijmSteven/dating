@@ -4,57 +4,30 @@
 @section('content')
     <div class="box box-primary">
         <div class="box-header with-border">
-            <h3 class="box-title">Edit Peasant</h3>
+            <h3 class="box-title">Edit Operator</h3>
         </div>
 
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" method="POST" action="{!! route('admin.peasants.update', ['id' => $peasant->id]) !!}"
+        <form role="form" method="POST" action="{!! route('admin.operators.update', ['id' => $operator->id]) !!}"
               enctype="multipart/form-data">
             {!! csrf_field() !!}
             {!! method_field('PUT') !!}
             <div class="box-body">
-                <div style="margin-bottom: 20px">
-                    <a href="{!! route('admin.peasants.message-as-bot.get', ['peasantId' => $peasant->id, 'onlyOnlineBots' => '0']) !!}" class="btn btn-default">Message user as bot</a>
-                    <a href="{!! route('admin.peasants.message-as-bot.get', [ 'peasantId' => $peasant->id, 'onlyOnlineBots' => '1']) !!}" class="btn btn-default">Message user as online bot</a>
-                </div>
-
                 <div class="userStats">
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 col-md-4">
-                            <h5 class="statsHeading"><strong>Messages received</strong></h5>
-                            <div class="statsBody">
-                                <strong>All time:</strong> {{ $peasant->messaged_count }} <br>
-                                <strong>Last month:</strong> {{ $peasant->messaged_last_month_count }} <br>
-                                <strong>This month:</strong> {{ $peasant->messaged_this_month_count }} <br>
-                                <strong>Last Week:</strong> {{ $peasant->messaged_last_week_count }} <br>
-                                <strong>This week:</strong> {{ $peasant->messaged_this_week_count }} <br>
-                                <strong>Yesterday:</strong> {{ $peasant->messaged_yesterday_count }} <br>
-                                <strong>Today:</strong> {{ $peasant->messaged_today_count }} <br>
-                            </div>
-                        </div>
-
-                        <div class="col-xs-12 col-sm-6 col-md-4">
                             <h5 class="statsHeading"><strong>Messages sent</strong></h5>
                             <div class="statsBody">
-                                <strong>All time:</strong> {{ $peasant->messages_count }} <br>
-                                <strong>Last month:</strong> {{ $peasant->messages_last_month_count }} <br>
-                                <strong>This month:</strong> {{ $peasant->messages_this_month_count }} <br>
-                                <strong>Last Week:</strong> {{ $peasant->messages_last_week_count }} <br>
-                                <strong>This week:</strong> {{ $peasant->messages_this_week_count }} <br>
-                                <strong>Yesterday:</strong> {{ $peasant->messages_yesterday_count }} <br>
-                                <strong>Today:</strong> {{ $peasant->messages_today_count }} <br>
-                            </div>
-                        </div>
-
-                        <div class="col-xs-12 col-sm-6 col-md-4">
-                            <h5 class="statsHeading"><strong>Viewed</strong></h5>
-                            <div class="statsBody">
-                                <strong>All time:</strong> {{ $peasant->hasViewed->count()  }} <br>
-                                <strong>Unique:</strong> {{ $peasant->hasViewedUnique()->get()->count() }}
+                                <strong>All time:</strong> {!! $operator->operator_messages_count !!} <br>
+                                <strong>This month:</strong> {!! $operator->operator_messages_this_month_count !!} <br>
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div class="col-xs-12">
+                    <hr/>
                 </div>
 
                 <div class="row">
@@ -66,7 +39,7 @@
                                    id="username"
                                    name="username"
                                    required
-                                   value="{!! $peasant->username !!}"
+                                   value="{!! $operator->username !!}"
                             >
                             @if ($errors->has('username'))
                                 {!! $errors->first('username', '<small class="form-error">:message</small>') !!}
@@ -81,8 +54,8 @@
                                     class="form-control"
                                     required
                             >
-                                <option value="1" {!! ($peasant->active == 1) ? 'selected' : '' !!}>Active</option>
-                                <option value="0" {!! ($peasant->active == 0) ? 'selected' : '' !!}>Inactive</option>
+                                <option value="1" {!! ($operator->active == 1) ? 'selected' : '' !!}>Active</option>
+                                <option value="0" {!! ($operator->active == 0) ? 'selected' : '' !!}>Inactive</option>
                             </select>
                             @if ($errors->has('active'))
                                 {!! $errors->first('active', '<small class="form-error">:message</small>') !!}
@@ -104,7 +77,7 @@
                                 <input type="text"
                                        class="form-control pull-right datepicker__date"
                                        name="dob"
-                                       value="{{ $peasant->meta->dob ? $peasant->meta->dob->format('d-m-Y') : '' }}"
+                                       value="{{ $operator->meta->dob ? $operator->meta->dob->format('d-m-Y') : '' }}"
                                 >
                                 @if ($errors->has('dob'))
                                     {!! $errors->first('dob', '<small class="form-error">:message</small>') !!}
@@ -120,66 +93,13 @@
                             <input type="text"
                                    class="JS--autoCompleteCites form-control"
                                    name="city"
-                                   value="{!! ucfirst($peasant->meta->city) !!}"
+                                   value="{!! ucfirst($operator->meta->city) !!}"
                             >
                             @if ($errors->has('city'))
                                 {!! $errors->first('city', '<small class="form-error">:message</small>') !!}
                             @endif
                         </div>
                     </div>
-                    <?php $counter = 0; ?>
-                    @foreach(\UserConstants::selectableFields('peasant') as $field => $possibleOptions)
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="{!! $field !!}">{!! ucfirst(str_replace('_', ' ', $field)) !!}</label>
-                                <select name="{!! $field !!}"
-                                        id="{!! $field !!}"
-                                        class="form-control"
-                                >
-                                    <option value=""
-                                            {!! old($field) == '' ? 'selected' : '' !!}
-                                    ></option>
-                                    @foreach($possibleOptions as $key => $value)
-                                        <option value="{!! $key == '' ? null : $key !!}"
-                                                {!! ($peasant->meta[$field] === $key) ? 'selected' : '' !!}
-                                        >
-                                            {!! $value !!}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @include('helpers.forms.error_message', ['field' => $field])
-                            </div>
-                        </div>
-                        {{--Prevents breaking when error on > xs viewports--}}
-                        @if($counter % 2)
-                            <div class="col-xs-12"></div>
-                        @endif
-                        <?php $counter++; ?>
-                    @endforeach
-
-                    <div class="col-xs-12">
-                        <hr/>
-                    </div>
-
-                    <?php $counter = 0; ?>
-                    @foreach(\UserConstants::textFields('peasant') as $field)
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="{!! $field !!}">{!! ucfirst(str_replace('_', ' ', $field)) !!}</label>
-                                <textarea name="{!! $field !!}"
-                                          id="{!! $field !!}"
-                                          class="form-control"
-                                          cols="30"
-                                          rows="10"
-                                >{!! $peasant->meta[$field] !!}</textarea>
-                                @include('helpers.forms.error_message', ['field' => $field])
-                            </div>
-                        </div>
-                        @if($counter % 2)
-                            <div class="col-xs-12"></div>
-                        @endif
-                        <?php $counter++; ?>
-                    @endforeach
 
                     <div class="col-xs-12">
                         <hr/>
@@ -215,16 +135,16 @@
                         Profile Image
                     </td>
                 </tr>
-                @if($peasant->hasProfileImage())
+                @if($operator->hasProfileImage())
                     <tr>
                         <td>
-                            <img width="200" src="{!! \StorageHelper::profileImageUrl($peasant) !!}"/>
+                            <img width="200" src="{!! \StorageHelper::profileImageUrl($operator) !!}"/>
                         </td>
                         <td>
-                            <?= ($peasant->profileImage->visible) ? 'Yes' : 'No' ; ?>
+                            <?= ($operator->profileImage->visible) ? 'Yes' : 'No' ; ?>
                         </td>
                         <td class="action-buttons">
-                            <form method="POST" action="{!! route('images.destroy', ['imageId' => $peasant->profileImage->id]) !!}">
+                            <form method="POST" action="{!! route('images.destroy', ['imageId' => $operator->profileImage->id]) !!}">
                                 {!! csrf_field() !!}
                                 {!! method_field('DELETE') !!}
                                 <button type="submit" class="btn btn-danger">Delete</button>
@@ -244,12 +164,12 @@
                     </td>
                 </tr>
 
-                <?php $peasantImagesNotProfile = $peasant->imagesNotProfile; ?>
-                @if(!is_null($peasantImagesNotProfile))
-                    @foreach($peasantImagesNotProfile as $image)
+                <?php $operatorImagesNotProfile = $operator->imagesNotProfile; ?>
+                @if(!is_null($operatorImagesNotProfile))
+                    @foreach($operatorImagesNotProfile as $image)
                         <tr>
                             <td>
-                                <img width="200" src="{!! \StorageHelper::userImageUrl($peasant->id, $image->filename) !!}"/>
+                                <img width="200" src="{!! \StorageHelper::userImageUrl($operator->id, $image->filename) !!}"/>
                             </td>
                             <td>
                                 <?= ($image->visible) ? 'Yes' : 'No' ; ?>
@@ -260,7 +180,7 @@
                                     {!! method_field('DELETE') !!}
                                     <button type="submit" class="btn btn-danger">Delete</button>
                                 </form>
-                                <a href="{!! route('users.set-profile-image', ['userId' => $peasant->id, 'imageId' => $image->id]) !!}" class="btn btn-success">Set profile</a>
+                                <a href="{!! route('users.set-profile-image', ['userId' => $operator->id, 'imageId' => $image->id]) !!}" class="btn btn-success">Set profile</a>
                                 <a href="{!! route('images.toggle_visibility', ['imageId' => $image->id]) !!}" class="btn btn-default">Toggle visibility</a>
                             </td>
                         </tr>

@@ -183,23 +183,38 @@ class PeasantController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(Request $request)
+    public function edit(int $peasantId, Request $request)
     {
-        $peasant = User::with('meta', 'profileImage', 'nonProfileImages')->where('id', $request->route('id'))->get()[0];
+        $peasant = User::with([
+            'meta',
+            'roles',
+            'profileImage',
+            'nonProfileImages',
+            'hasViewed',
+            'hasViewedUnique',
+        ])
+            ->withCount([
+                'messaged',
+                'messagedToday',
+                'messagedYesterday',
+                'messagedThisWeek',
+                'messagedLastWeek',
+                'messagedYesterday',
+                'messagedThisMonth',
+                'messagedLastMonth',
+                'messages',
+                'messagesToday',
+                'messagesYesterday',
+                'messagesThisWeek',
+                'messagesLastWeek',
+                'messagesYesterday',
+                'messagesThisMonth',
+                'messagesLastMonth'
+            ])
+            ->findOrFail($peasantId);
 
         return view(
             'admin.peasants.edit',
@@ -227,12 +242,12 @@ class PeasantController extends Controller
 
             $alerts[] = [
                 'type' => 'success',
-                'message' => 'The peasant was updated successfully'
+                'message' => 'The user was updated successfully'
             ];
         } catch (\Exception $exception) {
             $alerts[] = [
                 'type' => 'error',
-                'message' => 'The peasant was not updated due to an exception.'
+                'message' => 'The user was not updated due to an exception.'
             ];
         }
 
