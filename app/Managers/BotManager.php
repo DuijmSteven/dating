@@ -5,7 +5,9 @@ namespace App\Managers;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Services\GeocoderService;
 use App\User;
+use Carbon\Carbon;
 use GuzzleHttp\Client;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 
 /**
@@ -43,6 +45,7 @@ class BotManager extends UserManager
     public function createBot(array $botData)
     {
         $botData = $this->buildBotArrayToPersist($botData, 'create');
+        $botData['user']['created_by_id'] = \Auth::user()->getId();
 
         $this->persistUser($botData);
     }
@@ -55,7 +58,6 @@ class BotManager extends UserManager
     public function updateBot(array $botData, int $botId)
     {
         $botData = $this->buildBotArrayToPersist($botData, 'update');
-
         $this->updateUser($botData, $botId);
     }
 
@@ -67,7 +69,7 @@ class BotManager extends UserManager
      */
     private function buildBotArrayToPersist(array $botData, string $action)
     {
-        $usersTableData = array_where($botData, function ($value, $key) {
+        $usersTableData = Arr::where($botData, function ($value, $key) {
             return in_array(
                 $key,
                 array_merge(
@@ -77,7 +79,7 @@ class BotManager extends UserManager
             );
         });
 
-        $userMetaTableData = array_where($botData, function ($value, $key) {
+        $userMetaTableData = Arr::where($botData, function ($value, $key) {
             return in_array(
                 $key,
                 array_merge(
@@ -89,16 +91,21 @@ class BotManager extends UserManager
         });
 
         $userDataToPersist['user'] = $usersTableData;
-        $userDataToPersist['user']['created_by_id'] = \Auth::user()->getId();
         $userDataToPersist['user_meta'] = $userMetaTableData;
 
-        $client = new Client();
-        $geocoder = new GeocoderService($client);
+        if (isset($userDataToPersist['user_meta']['dob'])) {
+            $userDataToPersist['user_meta']['dob'] = Carbon::parse($userDataToPersist['user_meta']['dob'])->format('Y-m-d');
+        }
 
-        $coordinates = $geocoder->getCoordinatesForAddress($userDataToPersist['user_meta']['city']);
+        if (isset($userDataToPersist['user_meta']['city'])) {
+            $client = new Client();
+            $geocoder = new GeocoderService($client);
 
-        $userDataToPersist['user_meta']['lat'] = $coordinates['lat'];
-        $userDataToPersist['user_meta']['lng'] = $coordinates['lng'];
+            $coordinates = $geocoder->getCoordinatesForAddress($userDataToPersist['user_meta']['city']);
+
+            $userDataToPersist['user_meta']['lat'] = $coordinates['lat'];
+            $userDataToPersist['user_meta']['lng'] = $coordinates['lng'];
+        }
 
         if (isset($userDataToPersist['user_meta']['city'])) {
             $userDataToPersist['user_meta']['city'] = ucfirst($userDataToPersist['user_meta']['city']);

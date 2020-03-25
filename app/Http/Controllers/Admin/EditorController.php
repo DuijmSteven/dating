@@ -78,7 +78,15 @@ class EditorController extends Controller
                 'messagedLastWeek',
                 'messagedYesterday',
                 'messagedThisMonth',
-                'messagedLastMonth'
+                'messagedLastMonth',
+                'messages',
+                'messagesToday',
+                'messagesYesterday',
+                'messagesThisWeek',
+                'messagesLastWeek',
+                'messagesYesterday',
+                'messagesThisMonth',
+                'messagesLastMonth'
             ])
             ->whereHas('roles', function ($query) {
                 $query->where('name', 'bot');

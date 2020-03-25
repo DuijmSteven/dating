@@ -36,10 +36,14 @@ class PeasantManager extends UserManager
      * user table, role_user table and user_meta table
      *
      * @param array $peasantData
+     * @throws \Spatie\Geocoder\Exceptions\CouldNotGeocode
+     * @throws \Exception
      */
     public function createPeasant(array $peasantData)
     {
         $peasantData = $this->buildPeasantArrayToPersist($peasantData, 'create');
+        $peasantData['user']['created_by_id'] = \Auth::user()->getId();
+
         $this->persistUser($peasantData);
     }
 
@@ -89,8 +93,6 @@ class PeasantManager extends UserManager
         if (isset($userDataToPersist['user_meta']['dob'])) {
             $userDataToPersist['user_meta']['dob'] = Carbon::parse($userDataToPersist['user_meta']['dob'])->format('Y-m-d');
         }
-
-        $userDataToPersist['user']['active'] = 1;
 
         if (isset($userDataToPersist['user_meta']['city'])) {
             $client = new Client();

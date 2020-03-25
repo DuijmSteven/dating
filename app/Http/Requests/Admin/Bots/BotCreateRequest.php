@@ -4,6 +4,7 @@ namespace App\Http\Requests\Admin\Bots;
 
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Http\Requests\Request;
+use Carbon\Carbon;
 
 /**
  * Class BotCreateRequest
@@ -34,7 +35,7 @@ class BotCreateRequest extends Request
             'username' => 'min:5|max:50|string|required|unique:users',
             'password' => 'required|min:8',
             'active' => 'required|boolean',
-            'dob' => 'required|date_format:Y-m-d',
+            'dob' => 'required|date_format:d-m-Y|before:' . Carbon::now('Europe/Amsterdam')->subYears(18)->format('d-m-Y') . '|after:' . Carbon::now('Europe/Amsterdam')->subYears(100)->format('d-m-Y'),
             'gender' => 'required|in:'. implode(',', array_keys($userProfileFields['gender'])),
             'looking_for_gender' => 'required|in:'. implode(',', array_keys($userProfileFields['looking_for_gender'])),
             'relationship_status' => 'in:'. implode(',', array_keys($userProfileFields['relationship_status'])),

@@ -62,7 +62,6 @@ class BotController extends Controller
             });
 
         if ($this->authenticatedUser->isEditor()) {
-            $queryBuilder->where('active', '=', '0');
             $queryBuilder->where('created_by_id', $this->authenticatedUser->getId());
         }
 
@@ -185,9 +184,7 @@ class BotController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
@@ -205,6 +202,7 @@ class BotController extends Controller
     /**
      * @param BotCreateRequest $botCreateRequest
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function store(BotCreateRequest $botCreateRequest)
     {
@@ -221,6 +219,8 @@ class BotController extends Controller
             ];
         } catch (\Exception $exception) {
             \Log::error($exception->getMessage());
+
+            throw $exception;
 
             $alerts[] = [
                 'type' => 'error',

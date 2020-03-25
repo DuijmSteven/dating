@@ -31,7 +31,7 @@
                             @endif
                         </div>
                     </div>
-                    @if(\Auth::user()->isAdmin())
+                    @if($authenticatedUser->isAdmin())
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="password">Password</label>
@@ -50,7 +50,7 @@
                                     class="form-control"
                                     required
                             >
-                                @if(\Auth::user()->isAdmin())
+                                @if($authenticatedUser->isAdmin())
                                     <option value="1" {!! (old('active') === 1) ? 'selected' : '' !!}>Active</option>
                                 @endif
                                 <option value="0" {!! (old('active') === 0) ? 'selected' : '' !!}>Inactive</option>
@@ -73,7 +73,6 @@
                                 <input type="text"
                                        class="form-control pull-right datepicker__date"
                                        name="dob"
-                                       required
                                        value="{!! old('dob', \Carbon\Carbon::now()->subYears(25)->format('d-m-Y')) !!}"
                                 >
                                 @if ($errors->has('dob'))

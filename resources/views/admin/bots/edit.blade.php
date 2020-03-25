@@ -7,10 +7,6 @@
             <h3 class="box-title">Edit Bot</h3>
         </div>
 
-        <div>
-            <a href="{!! route('admin.bots.message-with-bot.get', ['botId' =>  $bot->id, 'onlyOnlinePeasants' => '0']) !!}" class="btn btn-default">Message peasant with bot</a>
-            <a href="{!! route('admin.bots.message-with-bot.get', ['botId' => $bot->id, 'onlyOnlinePeasants' => '1']) !!}" class="btn btn-default">Message online peasant with bot</a>
-        </div>
         <!-- /.box-header -->
         <!-- form start -->
         <form role="form" method="POST" action="{!! route('admin.bots.update', ['id' => $bot->id]) !!}"
@@ -18,6 +14,11 @@
             {!! csrf_field() !!}
             {!! method_field('PUT') !!}
             <div class="box-body">
+                <div style="margin-bottom: 20px">
+                    <a href="{!! route('admin.bots.message-with-bot.get', ['botId' =>  $bot->id, 'onlyOnlinePeasants' => '0']) !!}" class="btn btn-default">Message peasant with bot</a>
+                    <a href="{!! route('admin.bots.message-with-bot.get', ['botId' => $bot->id, 'onlyOnlinePeasants' => '1']) !!}" class="btn btn-default">Message online peasant with bot</a>
+                </div>
+
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
@@ -86,7 +87,7 @@
                                 <input type="text"
                                        class="form-control pull-right datepicker__date"
                                        name="dob"
-                                       value="{!! $bot->meta->dob->format('Y-m-d') !!}"
+                                       value="{{ $bot->meta->dob ? $bot->meta->dob->format('d-m-Y') : '' }}"
                                 >
                                 @if ($errors->has('dob'))
                                     {!! $errors->first('dob', '<small class="form-error">:message</small>') !!}
