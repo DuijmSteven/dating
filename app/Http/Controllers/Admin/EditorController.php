@@ -34,6 +34,9 @@ class EditorController extends Controller
     {
         /** @var Collection $bots */
         $queryBuilder = User::with(['meta', 'roles', 'profileImage', 'createdBots'])
+            ->withCount([
+                'createdBots'
+            ])
             ->whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_EDITOR)
                     ->orWhere('id', User::TYPE_ADMIN);

@@ -16,7 +16,7 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Operators (Total: <strong>{!! $editors->total() !!}</strong>)</h3>
+                    <h3 class="box-title">Editors (Total: <strong>{!! $editors->total() !!}</strong>)</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body table-responsive no-padding">
@@ -59,7 +59,7 @@
                                     <strong>{!! @trans('user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($editor->meta->dob) !!} <br>
                                 </td>
                                 <td class="action-buttons">
-                                    <a href="{!! route('admin.editors.created-bots.overview', [$editor->getId()]) !!}" class="btn btn-default">Created bots</a>
+                                    <a href="{!! route('admin.editors.created-bots.overview', [$editor->getId()]) !!}" class="btn btn-default">Created bots <b>({{ $editor->created_bots_count }})</b></a>
 
                                     <form method="POST" action="{!! route('admin.users.destroy', ['userId' => $editor->getId()]) !!}">
                                         {!! csrf_field() !!}
