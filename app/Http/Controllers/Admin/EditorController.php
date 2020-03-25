@@ -137,7 +137,7 @@ class EditorController extends Controller
 
     public function showOnline()
     {
-        $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
+        $onlineIds = Activity::users(1)->pluck('user_id')->toArray();
 
         $editors = User::with([
             'meta',
