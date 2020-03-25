@@ -268,6 +268,10 @@ Route::group([
             ->name('admin.conversations.peasant.get');
         Route::get('users/{botId}', 'Admin\ConversationController@ofBotId')
             ->name('admin.conversations.bot.get');
+
+        Route::get('operators/{operatorId}', 'Admin\ConversationController@withOperatorId')
+            ->name('admin.conversations.with-operator');
+
         Route::delete('{conversationId}', 'Admin\ConversationController@destroy')
             ->name('admin.conversations.destroy');
 

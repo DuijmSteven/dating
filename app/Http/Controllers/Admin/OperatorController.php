@@ -33,7 +33,12 @@ class OperatorController extends Controller
     public function index()
     {
         /** @var Collection $bots */
-        $queryBuilder = User::with(['meta', 'roles', 'profileImage', 'operatorMessages'])
+        $queryBuilder = User::with([
+            'meta',
+            'roles',
+            'profileImage',
+            'operatorMessages'
+        ])
             ->withCount([
                 'operatorMessages',
                 'operatorMessagesThisMonth'

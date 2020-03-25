@@ -102,7 +102,7 @@
                                         @endif
 
                                         @if($authenticatedUser->isAdmin())
-                                            <a href="{!! route('admin.conversations.bot.get', ['botId' => $bot->getId()]) !!}" class="btn btn-default">Conversations <b>({{ $bot->conversations()->count() }})</a>
+                                                <a href="{!! route('admin.conversations.bot.get', ['botId' => $bot->getId()]) !!}" class="btn btn-default">Conversations <b>({{ $bot->conversations()->withTrashed()->count() }})</b></a>
                                             <a href="{!! route('admin.messages.bot', ['botId' => $bot->getId()]) !!}" class="btn btn-default">Messages <b>({{ $bot->messaged_count + $bot->messages_count }})</b></a>
                                             <a href="{!! route('admin.bots.message-with-bot.get', ['botId' =>  $bot->getId(), 'onlyOnlinePeasants' => '0']) !!}" class="btn btn-default">Message peasant with bot</a>
                                             <a href="{!! route('admin.bots.message-with-bot.get', ['botId' => $bot->getId(), 'onlyOnlinePeasants' => '1']) !!}" class="btn btn-default">Message online peasant with bot</a>

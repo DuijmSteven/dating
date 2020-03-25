@@ -463,6 +463,19 @@ class User extends Authenticatable
     }
 
     /**
+     * @return mixed
+     */
+    public function conversationsAsOperator()
+    {
+//        return Conversation::with(['messages'])->where('user_a_id', $this->id)->orWhere('user_b_id', $this->id);
+//
+
+        return Conversation::whereHas('messages', function ($query) {
+                $query->where('operator_id', $this->getId());
+            });
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function createdBotsToday()
@@ -631,12 +644,9 @@ class User extends Authenticatable
         }
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
-     */
     public function conversations()
     {
-        return Conversation::with(['messages'])->where('user_a_id', $this->id)->orWhere('user_b_id', $this->id)->get();
+        return Conversation::with(['messages'])->where('user_a_id', $this->id)->orWhere('user_b_id', $this->id);
     }
 
     /**

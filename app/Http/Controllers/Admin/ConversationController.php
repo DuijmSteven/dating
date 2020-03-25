@@ -158,6 +158,47 @@ class ConversationController extends Controller
     }
 
     /**
+     * @param $peasantId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function withOperatorId($operatorId)
+    {
+        $conversations = Conversation::with([
+            'userA',
+            'userA.roles',
+            'userA.meta',
+            'userA.profileImage',
+            'userB',
+            'userB.roles',
+            'userB.meta',
+            'userB.profileImage'
+        ])
+            ->with(['messages' => function ($query) {
+                $query->withTrashed();
+            }])
+            ->whereHas('messages', function ($query) use ($operatorId) {
+                $query->where('operator_id', $operatorId);
+            })
+            ->withTrashed()
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
+
+        /** @var User $peasant */
+        $operator = User::find($operatorId);
+
+        return view(
+            'admin.conversations.overview',
+            [
+                'title' => 'Conversations with operator ID: ' . $operator->getId() . ' - ' . \config('app.name'),
+                'headingLarge' => 'Conversations with operator',
+                'headingSmall' => $operator->getUsername() . ' - (ID: ' . $operator->getId() . ')',
+                'carbonNow' => Carbon::now('Europe/Amsterdam'),
+                'conversations' => $conversations
+            ]
+        );
+    }
+
+    /**
      * @param $conversationId
      * @return \Illuminate\Http\RedirectResponse
      */
