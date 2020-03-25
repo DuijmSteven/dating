@@ -74,7 +74,7 @@
                                        class="form-control pull-right datepicker__date"
                                        name="dob"
                                        required
-                                       value="{!! old('dob', '1998-01-01') !!}"
+                                       value="{!! old('dob', \Carbon\Carbon::now()->subYears(25)->format('d-m-Y')) !!}"
                                 >
                                 @if ($errors->has('dob'))
                                     {!! $errors->first('dob', '<small class="form-error">:message</small>') !!}
