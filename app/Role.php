@@ -23,4 +23,9 @@ class Role extends Model
     {
         return $this->belongsToMany('App\User')->withTimestamps();
     }
+
+    public function getId()
+    {
+        return $this->id;
+    }
 }

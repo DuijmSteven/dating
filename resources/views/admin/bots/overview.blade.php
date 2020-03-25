@@ -41,7 +41,7 @@
                                         </a>
                                     </td>
                                     <td class="no-wrap">
-                                        <h5 class="statsHeading"><strong>Messages</strong></h5>
+                                        <h5 class="statsHeading"><strong>Messages received</strong></h5>
                                         <div class="statsBody">
                                             <strong>All time:</strong> {{ $bot->messaged_count }} <br>
                                             <strong>Last month:</strong> {{ $bot->messaged_last_month_count }} <br>
@@ -50,6 +50,17 @@
                                             <strong>This week:</strong> {{ $bot->messaged_this_week_count }} <br>
                                             <strong>Yesterday:</strong> {{ $bot->messaged_yesterday_count }} <br>
                                             <strong>Today:</strong> {{ $bot->messaged_today_count }} <br>
+                                        </div>
+
+                                        <h5 class="statsHeading"><strong>Messages sent</strong></h5>
+                                        <div class="statsBody">
+                                            <strong>All time:</strong> {{ $bot->messages_count }} <br>
+                                            <strong>Last month:</strong> {{ $bot->messages_last_month_count }} <br>
+                                            <strong>This month:</strong> {{ $bot->messages_this_month_count }} <br>
+                                            <strong>Last Week:</strong> {{ $bot->messages_last_week_count }} <br>
+                                            <strong>This week:</strong> {{ $bot->messages_this_week_count }} <br>
+                                            <strong>Yesterday:</strong> {{ $bot->messages_yesterday_count }} <br>
+                                            <strong>Today:</strong> {{ $bot->messages_today_count }} <br>
                                         </div>
 
                                         <h5 class="statsHeading"><strong>Views</strong></h5>
@@ -87,10 +98,12 @@
                                     <td class="action-buttons">
                                         @if($authenticatedUser->isAdmin() || $authenticatedUser->isEditor() && in_array($bot->getId(), $authenticatedUser->createdBotIds) && !$bot->active)
                                             <a href="{!! route('admin.bots.edit.get', [$bot->getId()]) !!}" class="btn btn-default">Edit</a>
+
                                         @endif
 
                                         @if($authenticatedUser->isAdmin())
-                                            <a href="{!! route('admin.conversations.bot.get', ['botId' => $bot->getId()]) !!}" class="btn btn-default">Conversations</a>
+                                            <a href="{!! route('admin.conversations.bot.get', ['botId' => $bot->getId()]) !!}" class="btn btn-default">Conversations <b>({{ $bot->conversations()->count() }})</a>
+                                            <a href="{!! route('admin.messages.bot', ['botId' => $bot->getId()]) !!}" class="btn btn-default">Messages <b>({{ $bot->messaged_count + $bot->messages_count }})</b></a>
                                             <a href="{!! route('admin.bots.message-with-bot.get', ['botId' =>  $bot->getId(), 'onlyOnlinePeasants' => '0']) !!}" class="btn btn-default">Message peasant with bot</a>
                                             <a href="{!! route('admin.bots.message-with-bot.get', ['botId' => $bot->getId(), 'onlyOnlinePeasants' => '1']) !!}" class="btn btn-default">Message online peasant with bot</a>
 

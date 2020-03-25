@@ -25,15 +25,22 @@ class PeasantController extends Controller
         $this->peasantManager = $peasantManager;
         parent::__construct();
     }
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
         $peasants = User::with(['meta', 'account', 'roles', 'profileImage', 'completedPayments'])
             ->withCount([
+                'messaged',
+                'messagedToday',
+                'messagedYesterday',
+                'messagedThisWeek',
+                'messagedLastWeek',
+                'messagedYesterday',
+                'messagedThisMonth',
+                'messagedLastMonth',
                 'messages',
                 'messagesToday',
                 'messagesYesterday',
@@ -96,6 +103,14 @@ class PeasantController extends Controller
 
         $peasants = User::with(['meta', 'account', 'roles', 'profileImage', 'completedPayments'])
             ->withCount([
+                'messaged',
+                'messagedToday',
+                'messagedYesterday',
+                'messagedThisWeek',
+                'messagedLastWeek',
+                'messagedYesterday',
+                'messagedThisMonth',
+                'messagedLastMonth',
                 'messages',
                 'messagesToday',
                 'messagesYesterday',
@@ -125,9 +140,7 @@ class PeasantController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {

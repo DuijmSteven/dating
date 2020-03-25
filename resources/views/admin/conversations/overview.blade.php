@@ -107,7 +107,7 @@
                                             {!! method_field('DELETE') !!}
                                             <button type="submit"
                                                     class="btn btn-danger"
-                                                    onclick="return confirm('Are you sure you want to delete this bot?')">
+                                                    onclick="return confirm('Are you sure you want to delete this conversation?')">
                                                 Delete
                                             </button>
                                         </form>

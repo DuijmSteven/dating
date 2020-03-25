@@ -60,7 +60,18 @@
                                     @endif
                                 </td>
                                 <td class="no-wrap">
-                                    <h5 class="statsHeading"><strong>Messages</strong></h5>
+                                    <h5 class="statsHeading"><strong>Messages received</strong></h5>
+                                    <div class="statsBody">
+                                        <strong>All time:</strong> {{ $peasant->messaged_count }} <br>
+                                        <strong>Last month:</strong> {{ $peasant->messaged_last_month_count }} <br>
+                                        <strong>This month:</strong> {{ $peasant->messaged_this_month_count }} <br>
+                                        <strong>Last Week:</strong> {{ $peasant->messaged_last_week_count }} <br>
+                                        <strong>This week:</strong> {{ $peasant->messaged_this_week_count }} <br>
+                                        <strong>Yesterday:</strong> {{ $peasant->messaged_yesterday_count }} <br>
+                                        <strong>Today:</strong> {{ $peasant->messaged_today_count }} <br>
+                                    </div>
+
+                                    <h5 class="statsHeading"><strong>Messages sent</strong></h5>
                                     <div class="statsBody">
                                         <strong>All time:</strong> {{ $peasant->messages_count }} <br>
                                         <strong>Last month:</strong> {{ $peasant->messages_last_month_count }} <br>
@@ -110,6 +121,7 @@
                                 <td class="action-buttons">
                                     <a href="{!! route('admin.peasants.edit.get', [$peasant->id]) !!}" class="btn btn-default">Edit</a>
                                     <a href="{!! route('admin.conversations.peasant.get', ['peasantId' => $peasant->id]) !!}" class="btn btn-default">Conversations <b>({{ $peasant->conversations()->count() }})</b></a>
+                                    <a href="{!! route('admin.messages.peasant', ['peasantId' => $peasant->getId()]) !!}" class="btn btn-default">Messages <b>({{ $peasant->messages_count +  $peasant->messaged_count}})</b></a>
                                     <a href="{!! route('admin.peasants.message-as-bot.get', ['peasantId' => $peasant->id, 'onlyOnlineBots' => '0']) !!}" class="btn btn-default">Message user as bot</a>
                                     <a href="{!! route('admin.peasants.message-as-bot.get', [ 'peasantId' => $peasant->id, 'onlyOnlineBots' => '1']) !!}" class="btn btn-default">Message user as online bot</a>
 

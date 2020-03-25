@@ -27,7 +27,7 @@ class Conversation extends TimeZonedModel
         'user_b_id',
         'new_activity_for_user_a',
         'new_activity_for_user_b',
-        'replyable'
+        'replyable_at'
     ];
 
     public function getUpdatedAtHumanReadableAttribute()

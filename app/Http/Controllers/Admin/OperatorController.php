@@ -34,6 +34,10 @@ class OperatorController extends Controller
     {
         /** @var Collection $bots */
         $queryBuilder = User::with(['meta', 'roles', 'profileImage', 'operatorMessages'])
+            ->withCount([
+                'operatorMessages',
+                'operatorMessagesThisMonth'
+            ])
             ->whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_OPERATOR)
                     ->orWhere('id', User::TYPE_ADMIN);
@@ -51,6 +55,28 @@ class OperatorController extends Controller
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
                 'operators' => $operators
+            ]
+        );
+    }
+
+    /**
+     * @param int $operatorId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function messages(int $operatorId)
+    {
+        /** @var Collection $bots */
+        $operator = User::with(['meta', 'roles', 'profileImage', 'operatorMessages'])
+            ->find($operatorId);
+
+        return view(
+            'admin.messages.overview',
+            [
+                'title' => 'Messages sent by ' . $operator->getUsername() . ' - (' . $operator->getId() . ')' . \MetaConstants::getSiteName(),
+                'headingLarge' => 'Messages set by',
+                'headingSmall' => $operator->getUsername() . ' - (ID: ' . $operator->getId() . ')',
+                'carbonNow' => Carbon::now(),
+                'operator' => $operator
             ]
         );
     }

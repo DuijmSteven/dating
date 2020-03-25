@@ -210,6 +210,20 @@ Route::group([
     ], function () {
         Route::get('/', 'Admin\OperatorController@index')
             ->name('admin.operators.overview');
+        Route::get('/{operatorId}/messages', 'Admin\OperatorController@messages')
+            ->name('admin.operators.messages.overview');
+
+        Route::get('{operatorId}/messages', 'Admin\MessageController@ofOperatorId')
+            ->name('admin.operators.messages.overview');
+    });
+
+    Route::group([
+        'prefix' => 'editors'
+    ], function () {
+        Route::get('/', 'Admin\EditorController@index')
+            ->name('admin.editors.overview');
+        Route::get('/{editorId}/created-bots', 'Admin\EditorController@createdBots')
+            ->name('admin.editors.created-bots.overview');
     });
 
     Route::group([
@@ -259,6 +273,21 @@ Route::group([
 
         Route::get('/{conversationId}/unlock', 'Admin\ConversationController@unlock')
             ->name('admin.conversations.unlock');
+    });
+
+    Route::group([
+        'prefix' => 'messages'
+    ], function () {
+        Route::get('/', 'Admin\MessageController@index')
+            ->name('admin.messages.overview');
+        Route::get('peasants/{peasantId}', 'Admin\MessageController@ofPeasantId')
+            ->name('admin.messages.peasant');
+        Route::get('bots/{botId}', 'Admin\MessageController@ofBotId')
+            ->name('admin.messages.bot');
+        Route::get('operators/{operatorId}', 'Admin\MessageController@ofOperatorId')
+            ->name('admin.messages.operator');
+        Route::delete('{messageId}', 'Admin\MessageController@destroy')
+            ->name('admin.messages.destroy');
     });
 
     Route::group([

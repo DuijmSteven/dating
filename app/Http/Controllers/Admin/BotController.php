@@ -30,10 +30,10 @@ class BotController extends Controller
         $this->botManager = $botManager;
         parent::__construct();
     }
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param int $editorId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -47,12 +47,19 @@ class BotController extends Controller
                 'messagedLastWeek',
                 'messagedYesterday',
                 'messagedThisMonth',
-                'messagedLastMonth'
+                'messagedLastMonth',
+                'messages',
+                'messagesToday',
+                'messagesYesterday',
+                'messagesThisWeek',
+                'messagesLastWeek',
+                'messagesYesterday',
+                'messagesThisMonth',
+                'messagesLastMonth'
             ])
             ->whereHas('roles', function ($query) {
                 $query->where('name', 'bot');
             });
-
 
         if ($this->authenticatedUser->isEditor()) {
             $queryBuilder->where('active', '=', '0');
@@ -148,7 +155,15 @@ class BotController extends Controller
                 'messagedLastWeek',
                 'messagedYesterday',
                 'messagedThisMonth',
-                'messagedLastMonth'
+                'messagedLastMonth',
+                'messages',
+                'messagesToday',
+                'messagesYesterday',
+                'messagesThisWeek',
+                'messagesLastWeek',
+                'messagesYesterday',
+                'messagesThisMonth',
+                'messagesLastMonth'
             ])
             ->whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_BOT);

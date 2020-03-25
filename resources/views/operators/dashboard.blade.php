@@ -28,7 +28,7 @@
                     </a>
                 </h4>
             </div>
-            <div id="{!! $conversationType !!}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+            <div id="{{ $conversationType }}" class="panel-collapse {{ $conversationType !== 'unrepliedConversations' ? 'collapse' : '' }}" role="tabpanel" aria-labelledby="headingOne">
                 <div class="panel-body">
                     <div class="row">
                         @foreach(${$conversationType} as $conversation)

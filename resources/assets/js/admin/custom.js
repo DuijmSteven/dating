@@ -3,6 +3,7 @@ window.$ = window.jQuery = $;
 
 require("jquery-ui/ui/widgets/autocomplete");
 
+require('bootstrap');
 require('bootstrap-datepicker');
 
 $(window).on('load', function () {

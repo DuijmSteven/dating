@@ -19,6 +19,7 @@ class User extends Authenticatable
     const TYPE_PEASANT = 2;
     const TYPE_BOT = 3;
     const TYPE_OPERATOR = 4;
+    const TYPE_EDITOR = 5;
 
     protected $primaryKey = 'id';
 
@@ -462,6 +463,69 @@ class User extends Authenticatable
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function createdBotsToday()
+    {
+        $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');
+        $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
+
+        return $this->hasMany(User::class, 'created_by_id')
+            ->where('created_at', '>=', $startOfToday)
+            ->where('created_at', '<=', $endOfToday);
+    }
+
+    public function createdBotsYesterday()
+    {
+        $startOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->startOfDay()->setTimezone('UTC');
+        $endOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->endOfDay()->setTimezone('UTC');
+
+        return $this->hasMany(User::class, 'created_by_id')
+            ->where('created_at', '>=', $startOfYesterday)
+            ->where('created_at', '<=', $endOfYesterday);
+    }
+
+    public function createdBotsThisWeek()
+    {
+        $startOfThisWeek = Carbon::now('Europe/Amsterdam')->startOfWeek()->setTimezone('UTC');
+        $endOfThisWeek = Carbon::now('Europe/Amsterdam')->endOfWeek()->setTimezone('UTC');
+
+        return $this->hasMany(User::class, 'created_by_id')
+            ->where('created_at', '>=', $startOfThisWeek)
+            ->where('created_at', '<=', $endOfThisWeek);
+    }
+
+    public function createdBotsLastWeek()
+    {
+        $startOfLastWeek = Carbon::now('Europe/Amsterdam')->subWeeks(1)->startOfWeek()->setTimezone('UTC');
+        $endOfLastWeek = Carbon::now('Europe/Amsterdam')->subWeeks(1)->endOfWeek()->setTimezone('UTC');
+
+        return $this->hasMany(User::class, 'created_by_id')
+            ->where('created_at', '>=', $startOfLastWeek)
+            ->where('created_at', '<=', $endOfLastWeek);
+    }
+
+    public function createdBotsThisMonth()
+    {
+        $startOfThisMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->setTimezone('UTC');
+        $endOfThisMonth = Carbon::now('Europe/Amsterdam')->endOfMonth()->setTimezone('UTC');
+
+        return $this->hasMany(User::class, 'created_by_id')
+            ->where('created_at', '>=', $startOfThisMonth)
+            ->where('created_at', '<=', $endOfThisMonth);
+    }
+
+    public function createdBotsLastMonth()
+    {
+        $startOfLastMonth = Carbon::now('Europe/Amsterdam')->subMonths(1)->startOfMonth()->setTimezone('UTC');
+        $endOfLastMonth = Carbon::now('Europe/Amsterdam')->subMonths(1)->endOfMonth()->setTimezone('UTC');
+
+        return $this->hasMany(User::class, 'created_by_id')
+            ->where('created_at', '>=', $startOfLastMonth)
+            ->where('created_at', '<=', $endOfLastMonth);
+    }
+
+    /**
      * @return mixed
      */
     public function visibleImages()
@@ -589,6 +653,14 @@ class User extends Authenticatable
     public function messages()
     {
         return $this->hasMany(ConversationMessage::class, 'sender_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function messagesAsOperator()
+    {
+        return $this->hasMany(ConversationMessage::class, 'operator_id');
     }
 
     /**

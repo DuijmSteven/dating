@@ -28,6 +28,10 @@ class ConversationMessage extends TimeZonedModel
         'flirt'
     ];
 
+    public $dates = [
+        'deleted_at'
+    ];
+
     protected $appends = ['createdAtHumanReadable'];
 
     public function getCreatedAtHumanReadableAttribute()
@@ -58,16 +62,21 @@ class ConversationMessage extends TimeZonedModel
 
     public function attachment()
     {
-        return $this->hasOne('App\MessageAttachment', 'message_id', 'id');
+        return $this->hasOne(MessageAttachment::class, 'message_id', 'id');
     }
 
     public function notes()
     {
-        return $this->hasMany('App\ConversationNote', 'conversation_id', 'id');
+        return $this->hasMany(ConversationNote::class, 'conversation_id', 'id');
     }
 
     public function getConversationId() {
         return $this->conversation_id;
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 
     public function getSenderId()
@@ -95,6 +104,12 @@ class ConversationMessage extends TimeZonedModel
     {
         $this->recipient_id = $recipientId;
     }
+
+    public function getBody()
+    {
+        return $this->body;
+    }
+
 
     public function setBody(string $body)
     {
