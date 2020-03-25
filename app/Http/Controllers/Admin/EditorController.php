@@ -13,6 +13,7 @@ use DB;
 use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Kim\Activity\Activity;
 
 /**
  * Class EditorController
@@ -130,6 +131,55 @@ class EditorController extends Controller
                 'editor' => $editor,
                 'bots' => $bots,
                 'editBotRoute' => 'editors.bots.edit.get'
+            ]
+        );
+    }
+
+    public function showOnline()
+    {
+        $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
+
+        $editors = User::with([
+            'meta',
+            'roles',
+            'profileImage',
+            'images',
+            'views',
+            'uniqueViews'
+        ])
+            ->withCount([
+                'messaged',
+                'messagedToday',
+                'messagedYesterday',
+                'messagedThisWeek',
+                'messagedLastWeek',
+                'messagedYesterday',
+                'messagedThisMonth',
+                'messagedLastMonth',
+                'messages',
+                'messagesToday',
+                'messagesYesterday',
+                'messagesThisWeek',
+                'messagesLastWeek',
+                'messagesYesterday',
+                'messagesThisMonth',
+                'messagesLastMonth'
+            ])
+            ->whereHas('roles', function ($query) {
+                $query->where('id', User::TYPE_EDITOR);
+            })
+            ->whereIn('id', $onlineIds)
+            ->orderBy('id')
+            ->paginate(20);
+
+        return view(
+            'admin.editors.overview',
+            [
+                'title' => 'Online editors - ' . \config('app.name'),
+                'headingLarge' => 'Editors',
+                'headingSmall' => 'Online',
+                'carbonNow' => Carbon::now(),
+                'editors' => $editors
             ]
         );
     }

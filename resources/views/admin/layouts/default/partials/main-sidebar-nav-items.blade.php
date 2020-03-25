@@ -20,16 +20,16 @@
                 Overview
             </a>
         </li>
-        <li class="{!! \Request::route()->getName() == 'admin.bots.create.get' ? 'active' : '' !!}">
-            <a href="{!! route('admin.bots.create.get') !!}">
-                <i class="fa fa-user-plus"></i>
-                Create
-            </a>
-        </li>
         <li class="{!! \Request::route()->getName() == 'admin.bots.online.show' ? 'active' : '' !!}">
             <a href="{!! route('admin.bots.online.show') !!}">
                 <i class="fa fa-circle"></i>
                 Online
+            </a>
+        </li>
+        <li class="{!! \Request::route()->getName() == 'admin.bots.create.get' ? 'active' : '' !!}">
+            <a href="{!! route('admin.bots.create.get') !!}">
+                <i class="fa fa-user-plus"></i>
+                Create
             </a>
         </li>
         <li class="{!! \Request::route()->getName() == 'admin.bots.map.show' ? 'active' : '' !!}">
@@ -55,16 +55,16 @@
                 Overview
             </a>
         </li>
-        <li class="{!! \Request::route()->getName() == 'admin.peasants.create.get' ? 'active' : '' !!}">
-            <a href="{!! route('admin.peasants.create.get') !!}">
-                <i class="fa fa-user-plus"></i>
-                Create
-            </a>
-        </li>
         <li class="{!! \Request::route()->getName() == 'admin.peasants.online.show' ? 'active' : '' !!}">
             <a href="{!! route('admin.peasants.online.show') !!}">
                 <i class="fa fa-circle"></i>
                 Online
+            </a>
+        </li>
+        <li class="{!! \Request::route()->getName() == 'admin.peasants.create.get' ? 'active' : '' !!}">
+            <a href="{!! route('admin.peasants.create.get') !!}">
+                <i class="fa fa-user-plus"></i>
+                Create
             </a>
         </li>
         <li class="{!! \Request::route()->getName() == 'admin.peasants.map.show' ? 'active' : '' !!}">
@@ -90,12 +90,12 @@
                 Overview
             </a>
         </li>
-        {{--         <li class="{!! \Request::route()->getName() == 'admin.bots.create.get' ? 'active' : '' !!}">--}}
-        {{--             <a href="{!! route('admin.bots.create.get') !!}">--}}
-        {{--                 <i class="fa fa-user-plus"></i>--}}
-        {{--                 Create--}}
-        {{--             </a>--}}
-        {{--         </li>--}}
+        <li class="{!! \Request::route()->getName() == 'admin.operators.online.show' ? 'active' : '' !!}">
+            <a href="{!! route('admin.operators.online.show') !!}">
+                <i class="fa fa-circle"></i>
+                Online
+            </a>
+        </li>
     </ul>
 </li>
 <li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.editors') ? 'active' : '' !!}">
@@ -111,6 +111,12 @@
             <a href="{!! route('admin.editors.overview') !!}">
                 <i class="fa fa-list"></i>
                 Overview
+            </a>
+        </li>
+        <li class="{!! \Request::route()->getName() == 'admin.editors.online.show' ? 'active' : '' !!}">
+            <a href="{!! route('admin.editors.online.show') !!}">
+                <i class="fa fa-circle"></i>
+                Online
             </a>
         </li>
         {{--         <li class="{!! \Request::route()->getName() == 'admin.bots.create.get' ? 'active' : '' !!}">--}}

@@ -6314,3 +6314,8 @@ table .action-buttons .btn {
     border: 1px solid #888;
     border-radius: 0 0 3px 3px;
 }
+
+.skin-blue .sidebar-menu .treeview-menu>li.active>a, .skin-blue .sidebar-menu .treeview-menu>li>a:hover
+{
+    background-color: #af6666;
+}

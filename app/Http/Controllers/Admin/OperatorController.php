@@ -2,17 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Article;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Articles\ArticleCreateRequest;
-use App\Http\Requests\Admin\Articles\ArticleUpdateRequest;
-use App\Managers\ArticleManager;
 use App\User;
 use Carbon\Carbon;
-use DB;
-use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Kim\Activity\Activity;
 
 /**
  * Class OperatorController
@@ -59,6 +54,39 @@ class OperatorController extends Controller
                 'title' => 'Operator Overview - ' . \MetaConstants::getSiteName(),
                 'headingLarge' => 'Operator',
                 'headingSmall' => 'Overview',
+                'carbonNow' => Carbon::now(),
+                'operators' => $operators
+            ]
+        );
+    }
+
+    public function showOnline()
+    {
+        $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
+
+        $operators = User::with([
+            'meta',
+            'roles',
+            'profileImage',
+            'operatorMessages'
+        ])
+            ->withCount([
+                'operatorMessages',
+                'operatorMessagesThisMonth'
+            ])
+            ->whereHas('roles', function ($query) {
+                $query->where('id', User::TYPE_OPERATOR);
+            })
+            ->whereIn('id', $onlineIds)
+            ->orderBy('id')
+            ->paginate(20);
+
+        return view(
+            'admin.operators.overview',
+            [
+                'title' => 'Online operators - ' . \config('app.name'),
+                'headingLarge' => 'Operators',
+                'headingSmall' => 'Online',
                 'carbonNow' => Carbon::now(),
                 'operators' => $operators
             ]

@@ -233,6 +233,9 @@ Route::group([
 
         Route::put('edit/{id}', 'Admin\PeasantController@update')
             ->name('admin.operators.update');
+
+        Route::get('/online', 'Admin\OperatorController@showOnline')
+            ->name('admin.operators.online.show');
     });
 
     Route::group([
@@ -248,6 +251,9 @@ Route::group([
 
         Route::put('edit/{id}', 'Admin\PeasantController@update')
             ->name('admin.editors.update');
+
+        Route::get('/online', 'Admin\EditorController@showOnline')
+            ->name('admin.editors.online.show');
     });
 
     Route::group([
