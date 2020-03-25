@@ -177,7 +177,8 @@ class BotController extends Controller
                 'headingLarge' => 'Bots',
                 'headingSmall' => 'Online',
                 'carbonNow' => Carbon::now(),
-                'bots' => $bots
+                'bots' => $bots,
+                'editBotRoute' =>'admin.bots.edit.get'
             ]
         );
     }
