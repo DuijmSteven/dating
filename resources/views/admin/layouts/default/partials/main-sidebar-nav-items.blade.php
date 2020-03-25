@@ -5,7 +5,7 @@
     </a>
 </li>
 
-<li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.bots') ? 'active' : '' !!}">
+<li class="treeview {!! \Str::contains(\Request::route()->getName(), 'admin.bots') ? 'active' : '' !!}">
     <a href="#">
         <i class="fa fa-android"></i>
         <span>Bots</span>
@@ -40,7 +40,7 @@
         </li>
     </ul>
 </li>
-<li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.peasants') ? 'active' : '' !!}">
+<li class="treeview {!! \Str::contains(\Request::route()->getName(), 'admin.peasants') ? 'active' : '' !!}">
     <a href="#">
         <i class="fa fa-users"></i>
         <span>Peasants</span>
@@ -75,9 +75,9 @@
         </li>
     </ul>
 </li>
-<li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.operators') ? 'active' : '' !!}">
+<li class="treeview {!! \Str::contains(\Request::route()->getName(), 'admin.operators') ? 'active' : '' !!}">
     <a href="#">
-        <i class="fa fa-android"></i>
+        <i class="fa fa-users"></i>
         <span>Operators</span>
         <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
@@ -98,9 +98,9 @@
         </li>
     </ul>
 </li>
-<li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.editors') ? 'active' : '' !!}">
+<li class="treeview {!! \Str::contains(\Request::route()->getName(), 'admin.editors') ? 'active' : '' !!}">
     <a href="#">
-        <i class="fa fa-android"></i>
+        <i class="fa fa-edit"></i>
         <span>Editors</span>
         <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
@@ -127,7 +127,7 @@
         {{--         </li>--}}
     </ul>
 </li>
-<li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.payments') ? 'active' : '' !!}">
+<li class="treeview {!! \Str::contains(\Request::route()->getName(), 'admin.payments') ? 'active' : '' !!}">
     <a href="#">
         <i class="fa fa-money"></i>
         <span>Payments</span>
@@ -144,7 +144,7 @@
         </li>
     </ul>
 </li>
-<li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.conversations') ? 'active' : '' !!}">
+<li class="treeview {!! \Str::contains(\Request::route()->getName(), 'admin.conversations') ? 'active' : '' !!}">
     <a href="#">
         <i class="fa fa-comments"></i>
         <span>Conversations</span>
@@ -161,7 +161,7 @@
         </li>
     </ul>
 </li>
-<li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.messages') ? 'active' : '' !!}">
+<li class="treeview {!! \Str::contains(\Request::route()->getName(), 'admin.messages') ? 'active' : '' !!}">
     <a href="#">
         <i class="fa fa-comments"></i>
         <span>Messages</span>
@@ -178,7 +178,7 @@
         </li>
     </ul>
 </li>
-<li class="treeview {!! str_contains(\Request::route()->getName(), 'operator-platform') ? 'active' : '' !!}">
+<li class="treeview {!! \Str::contains(\Request::route()->getName(), 'operator-platform') ? 'active' : '' !!}">
     <a href="#">
         <i class="fa fa-users"></i>
         <span>Operator platform</span>
@@ -198,7 +198,7 @@
 @php
     $routeName = \Request::route()->getName();
     $lmsRoutesTruthArray = array_map(function ($value) use ($routeName) {
-        return str_contains($routeName, $value);
+        return \Str::contains($routeName, $value);
     }, [
         'admin.modules',
         'admin.layout',
@@ -208,7 +208,7 @@
 @endphp
 <li class="treeview {!! in_array(true, $lmsRoutesTruthArray) ? 'active' : '' !!}">
     <a href="#">
-        <i class="fa fa-wordpress"></i>
+        <i class="fa fa-table"></i>
         <span>Layout Management</span>
         <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
@@ -221,7 +221,7 @@
                 Overview
             </a>
         </li>
-        <li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.modules') ? 'active' : '' !!}">
+        <li class="treeview {!! \Str::contains(\Request::route()->getName(), 'admin.modules') ? 'active' : '' !!}">
             <a href="#">
                 <i class="fa fa-cubes"></i>
                 <span>Modules</span>
@@ -238,7 +238,7 @@
                 </li>
             </ul>
         </li>
-        <li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.views') ? 'active' : '' !!}">
+        <li class="treeview {!! \Str::contains(\Request::route()->getName(), 'admin.views') ? 'active' : '' !!}">
             <a href="#">
                 <i class="fa fa-eye"></i>
                 <span>Views</span>
@@ -261,7 +261,7 @@
                 </li>
             </ul>
         </li>
-        <li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.layout-parts') ? 'active' : '' !!}">
+        <li class="treeview {!! \Str::contains(\Request::route()->getName(), 'admin.layout-parts') ? 'active' : '' !!}">
             <a href="#">
                 <i class="fa fa-object-group"></i>
                 <span>Layout Parts</span>
@@ -289,7 +289,7 @@
 
 @php
     $cmsRoutesTruthArray = array_map(function ($value) use ($routeName) {
-        return str_contains($routeName, $value);
+        return \Str::contains($routeName, $value);
     }, [
         'admin.faqs',
         'admin.tacs',
@@ -307,7 +307,7 @@
                     </span>
     </a>
     <ul class="treeview-menu">
-        <li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.articles') ? 'active' : '' !!}">
+        <li class="treeview {!! \Str::contains(\Request::route()->getName(), 'admin.articles') ? 'active' : '' !!}">
             <a href="#">
                 <i class="fa fa-newspaper-o"></i>
                 <span>Articles</span>
@@ -330,7 +330,7 @@
                 </li>
             </ul>
         </li>
-        <li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.faqs') ? 'active' : '' !!}">
+        <li class="treeview {!! \Str::contains(\Request::route()->getName(), 'admin.faqs') ? 'active' : '' !!}">
             <a href="#">
                 <i class="fa fa-newspaper-o"></i>
                 <span>Faqs</span>
@@ -353,7 +353,7 @@
                 </li>
             </ul>
         </li>
-        <li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.testimonials') ? 'active' : '' !!}">
+        <li class="treeview {!! \Str::contains(\Request::route()->getName(), 'admin.testimonials') ? 'active' : '' !!}">
             <a href="#">
                 <i class="fa fa-quote-left"></i>
                 <span>Testimonials</span>
@@ -376,7 +376,7 @@
                 </li>
             </ul>
         </li>
-        <li class="treeview {!! str_contains(\Request::route()->getName(), 'admin.tacs') ? 'active' : '' !!}">
+        <li class="treeview {!! \Str::contains(\Request::route()->getName(), 'admin.tacs') ? 'active' : '' !!}">
             <a href="#">
                 <i class="fa fa-newspaper-o"></i>
                 <span>Tacs</span>
