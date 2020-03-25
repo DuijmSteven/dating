@@ -142,28 +142,16 @@ class EditorController extends Controller
         $editors = User::with([
             'meta',
             'roles',
-            'profileImage',
-            'images',
-            'views',
-            'uniqueViews'
+            'profileImage'
         ])
             ->withCount([
-                'messaged',
-                'messagedToday',
-                'messagedYesterday',
-                'messagedThisWeek',
-                'messagedLastWeek',
-                'messagedYesterday',
-                'messagedThisMonth',
-                'messagedLastMonth',
-                'messages',
-                'messagesToday',
-                'messagesYesterday',
-                'messagesThisWeek',
-                'messagesLastWeek',
-                'messagesYesterday',
-                'messagesThisMonth',
-                'messagesLastMonth'
+                'createdBots',
+                'createdBotsLastMonth',
+                'createdBotsThisMonth',
+                'createdBotsLastWeek',
+                'createdBotsThisWeek',
+                'createdBotsYesterday',
+                'createdBotsToday',
             ])
             ->whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_EDITOR);
