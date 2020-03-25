@@ -113,6 +113,36 @@ class MessageController extends Controller
         );
     }
 
+    public function ofOperatorId($operator)
+    {
+        $messages = ConversationMessage::with([
+            'sender',
+            'recipient'
+        ])
+            ->with(['conversation' => function ($query) {
+                $query->withTrashed();
+            }])
+            ->where('operator_id', $operator)
+            ->withTrashed()
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
+
+        /** @var User $bot */
+        $bot = User::find($operator);
+
+        return view(
+            'admin.messages.overview',
+            [
+                'title' => 'Messages of operator ID: ' . $bot->getId() . ' - ' . \config('app.name'),
+                'headingLarge' => 'Messages of operator',
+                'headingSmall' => $bot->getUsername() . ' - (ID: ' . $bot->getId() . ')',
+                'carbonNow' => Carbon::now('Europe/Amsterdam'),
+                'messages' => $messages
+            ]
+        );
+    }
+
+
     /**
      * @param int $messageId
      * @return \Illuminate\Http\RedirectResponse
