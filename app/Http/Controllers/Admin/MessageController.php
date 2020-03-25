@@ -59,6 +59,9 @@ class MessageController extends Controller
             'sender',
             'recipient'
         ])
+            ->with(['conversation' => function ($query) {
+                $query->withTrashed();
+            }])
             ->where('sender_id', $peasantId)
             ->orWhere('recipient_id', $peasantId)
             ->withTrashed()
@@ -86,6 +89,9 @@ class MessageController extends Controller
             'sender',
             'recipient'
         ])
+            ->with(['conversation' => function ($query) {
+                $query->withTrashed();
+            }])
             ->where('sender_id', $botId)
             ->orWhere('recipient_id', $botId)
             ->withTrashed()

@@ -25,8 +25,8 @@
                         <tr>
                             <th>ID</th>
                             <th>Profile image</th>
-                            <th>Operator data</th>
                             <th>Stats</th>
+                            <th>Operator data</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
@@ -41,16 +41,16 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <strong>{!! @trans('user_constants.email') !!}:</strong> {!! $operator->email !!} <br>
-                                    <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $operator->username !!} <br>
-                                    <strong>{!! @trans('user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($operator->meta->dob) !!} <br>
-                                </td>
-                                <td>
                                     <h5 class="statsHeading"><strong>Messages sent</strong></h5>
                                     <div class="statsBody">
                                         <strong>All time:</strong> {!! $operator->operator_messages_count !!} <br>
                                         <strong>This month:</strong> {!! $operator->operator_messages_this_month_count !!} <br>
                                     </div>
+                                </td>
+                                <td>
+                                    <strong>{!! @trans('user_constants.email') !!}:</strong> {!! $operator->email !!} <br>
+                                    <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $operator->username !!} <br>
+                                    <strong>{!! @trans('user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($operator->meta->dob) !!} <br>
                                 </td>
                                 <td class="action-buttons">
                                     <a href="{!! route('admin.peasants.edit.get', [$operator->id]) !!}" class="btn btn-default">Edit</a>

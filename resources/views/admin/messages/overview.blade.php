@@ -36,6 +36,10 @@
                             <tr>
                                 <td>
                                     {{ $message->getId() }}
+
+                                    @if($message->deleted_at)
+                                        <br><span style="color: red; font-weight: bold">DELETED</span>
+                                    @endif
                                 </td>
                                 <td>
                                     <a href="{{ route('operator-platform.conversations.show', ['conversationId' => $message->conversation->getId()]) }}">{{ $message->conversation->getId() }}</a>
