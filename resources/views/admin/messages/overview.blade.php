@@ -126,7 +126,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <div style="max-width: 240px">
+                                    <div style="max-width: 240px; white-space: normal">
                                         {{ $message->getBody() }}
                                     </div>
                                 </td>
