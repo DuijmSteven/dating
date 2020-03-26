@@ -1,12 +1,31 @@
-@extends('frontend.layouts.default.layout')
+<div class="col-xs-12">
+    <div class="box box-success collapsed-box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Search</h3>
 
-@section('content')
-    <div class="Tile">
-        <div class="Tile__heading">Search</div>
-        <div class="Tile__body">
-            <form method="get" action="{{ route('users.search.form.get') }}">
-                {{ csrf_field() }}
-                <div class="row">
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                        class="fa fa-minus"></i></button>
+            </div>
+        </div>
+        <div class="box-body" style="">
+            <div class="row">
+                <form method="POST" action="{{ route('admin.users.search.post') }}">
+                    {{ csrf_field() }}
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="role_id">Role</label>
+                            <select name="role_id" id="role_id" class="form-control">
+                                <option value="2" {{ old('role_id') == 2 ? 'selected' : '' }}>Peasant</option>
+                                <option value="3" {{ old('role_id') == 3 ? 'selected' : '' }}>Bot</option>
+                                <option value="4" {{ old('role_id') == 4 ? 'selected' : '' }}>Operator</option>
+                                <option value="5" {{ old('role_id') == 5 ? 'selected' : '' }}>Editor</option>
+                            </select>
+                            @include('helpers.forms.error_message', ['field' => 'age'])
+                        </div>
+                    </div>
+
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="query">Query</label>
@@ -34,20 +53,16 @@
                         </div>
                     </div>
 
-                     Prevents breaking when error on > xs viewports
-                    <div class="col-xs-12"></div>
-
-
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="age">Age</label>
-                            <select name="age"id="age" class="form-control">
+                            <select name="age" id="age" class="form-control">
                                 <option value=""
-                                        {!! old('age') == '' ? 'selected' : '' !!}
+                                    {!! old('age') == '' ? 'selected' : '' !!}
                                 ></option>
                                 @foreach(\UserConstants::getAgeGroups() as $key => $value)
                                     <option value="{{ $key }}"
-                                            {{ (old('age') === $key) ? 'selected' : '' }}
+                                        {{ (old('age') === $key) ? 'selected' : '' }}
                                     >
                                         {{ $value }}
                                     </option>
@@ -74,17 +89,18 @@
                     @foreach(\UserConstants::selectableFields('peasant') as $field => $possibleFieldOptions)
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="{!! $field !!}">{!! ucfirst(str_replace('_', ' ', $field)) !!}</label>
+                                <label
+                                    for="{!! $field !!}">{!! ucfirst(str_replace('_', ' ', $field)) !!}</label>
                                 <select name="{!! $field !!}"
                                         id="{!! $field !!}"
                                         class="form-control"
                                 >
                                     <option value=""
-                                            {!! old($field) == '' ? 'selected' : '' !!}
+                                        {!! old($field) == '' ? 'selected' : '' !!}
                                     ></option>
                                     @foreach($possibleFieldOptions as $key => $value)
                                         <option value="{{ $key }}"
-                                                {{ (old($field) === $key) ? 'selected' : '' }}
+                                            {{ (old($field) === $key) ? 'selected' : '' }}
                                         >
                                             {{ ucfirst(str_replace('_', ' ', $value)) }}
                                         </option>
@@ -101,18 +117,17 @@
                         <?php $counter++; ?>
                     @endforeach
                     <div class="col-xs-12">
-                       <div class="text-right">
-                           @include('frontend.components.button', [
-                                'buttonContext' => 'form',
-                                'buttonType' => 'submit',
-                                'buttonState' => 'primary',
-                                'buttonText' => 'SEARCH'
-                            ])
-                       </div>
+                        <div class="text-right">
+                            @include('frontend.components.button', [
+                                 'buttonContext' => 'form',
+                                 'buttonType' => 'submit',
+                                 'buttonState' => 'primary',
+                                 'buttonText' => 'SEARCH'
+                             ])
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-
-@endsection
+</div>

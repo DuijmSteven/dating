@@ -195,6 +195,11 @@ Route::group([
     Route::get('dashboard', 'Admin\DashboardController@dashboard')
         ->name('admin.dashboard');
 
+    Route::post('users/search', 'Admin\UserSearchController@search')
+        ->name('admin.users.search.post');
+    Route::get('users/search-results', 'Admin\UserSearchController@getSearchResults')
+        ->name('admin.users.search.results.get');
+
     Route::group([
         'prefix' => 'bots'
     ], function () {

@@ -7,6 +7,8 @@
 
     <div class="row">
 
+        @include('admin.users-search')
+
         <div class="col-xs-12">
             <div class="pagination__container text-right">
                 {!! $peasants->render() !!}

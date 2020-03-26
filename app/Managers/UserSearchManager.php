@@ -100,12 +100,12 @@ class UserSearchManager
                 $latInRadians = deg2rad($lat);
                 $lngInRadians = deg2rad($lng);
 
-                $angularRadius = $parameters['radius']/6371;
+                $angularRadius = $parameters['radius'] / 6371;
 
                 $latMin = rad2deg($latInRadians - $angularRadius);
                 $latMax = rad2deg($latInRadians + $angularRadius);
 
-                $deltaLng = asin(sin($angularRadius)/cos($latInRadians));
+                $deltaLng = asin(sin($angularRadius) / cos($latInRadians));
 
                 $lngMin = rad2deg($lngInRadians - $deltaLng);
                 $lngMax = rad2deg($lngInRadians + $deltaLng);
@@ -132,8 +132,16 @@ class UserSearchManager
             $query = $query->whereHas('profileImage');
         }
 
-        $query = $query->whereHas('roles', function ($query) {
-            $query->whereIn('id', [Role::ROLE_PEASANT, Role::ROLE_BOT]);
+        $roleIdsArray = [];
+
+        if (isset($parameters['role_id'])) {
+            $roleIdsArray[] = (int) $parameters['role_id'];
+        } else {
+            $roleIdsArray = [Role::ROLE_PEASANT, Role::ROLE_BOT];
+        }
+
+        $query = $query->whereHas('roles', function ($query) use ($roleIdsArray) {
+            $query->whereIn('id', $roleIdsArray);
         });
 
         $query->where('users.id', '!=', \Auth::user()->getId());
@@ -154,9 +162,9 @@ class UserSearchManager
                 $query->inRandomOrder($ordering['randomization_key']);
 
                 return $query->paginate($perPage, ['*'], 'page', $page);
-            } else if ($ordering['type'] === self::ORDERING_TYPE_RADIUS) {
+            } else if ($ordering['type'] === self::ORDERING_TYPE_RADIUS && isset($parameters['city_name'])) {
                 return $query->orderByRaw('
-                    ( 3959 * acos( cos( radians('. $lat .') ) * cos( radians( um.lat ) ) * cos( radians( um.lng ) - radians('. $lng .') ) + sin( radians('. $lat .') ) * sin( radians( um.lat ) ) ) )
+                    ( 3959 * acos( cos( radians(' . $lat . ') ) * cos( radians( um.lat ) ) * cos( radians( um.lng ) - radians(' . $lng . ') ) + sin( radians(' . $lat . ') ) * sin( radians( um.lat ) ) ) )
                 ', 'ASC')->paginate(PaginationConstants::$perPage['user_profiles'], ['*'], 'page', $page);
 
             }

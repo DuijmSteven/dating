@@ -45,9 +45,7 @@ class UserController extends FrontendController
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -85,7 +83,7 @@ class UserController extends FrontendController
         $user = User::with('emailTypeInstances', 'emailTypes', 'roles')->where('username', $username)->first();
 
         if (!($user instanceof User)) {
-            redirect(route('welcome'));
+            redirect(route('home'));
         }
 
         if ($this->authenticatedUser->isPeasant()) {
