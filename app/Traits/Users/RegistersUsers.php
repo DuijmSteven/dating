@@ -109,7 +109,7 @@ trait RegistersUsers
         }
 
         try {
-            $amountOfFreeCredits = 2;
+            $amountOfFreeCredits = 1;
 
             /** @var UserAccount $userAccountInstance */
             $userAccountInstance = new UserAccount([
