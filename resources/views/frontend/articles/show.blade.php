@@ -54,7 +54,7 @@
                 "name": "Altijdsex",
                 "logo": {
                     "@type": "ImageObject",
-                    "url": "https://altijdsex.nl/img/site_logos/Altijdsex_LogoSmall_Pos@1x.png"
+                    "url": "https://altijdsex.nl/img/site_logos/Altijdsex_LogoBig_Pos@1x.png"
                 },
                 "url": "https://altijdsex.nl/"
             },
