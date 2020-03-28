@@ -30,4 +30,36 @@
     </div>
 </div>
 
+<script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@type": "BlogPosting",
+            "mainEntityOfPage": {
+                "@type": "WebPage"
+            },
+            "headline": "<?php echo $article->getTitle(); ?>",
+            "image": "<?php echo \StorageHelper::articleImageUrl($article->id, $article->image_filename, false); ?>",
+            "datePublished": "<?php echo $article->created_at->toFormattedDateString(); ?>",
+            "dateModified": "<?php echo $article->created_at->toFormattedDateString(); ?>",
+            "author": {
+                "@type": "Person",
+                "name": "Altijdsex Author",
+                "worksFor": {
+                    "@type": "Organization",
+                    "name": "Altijdsex"
+                }
+            },
+            "publisher": {
+                "@type": "Organization",
+                "name": "Altijdsex",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "https://altijdsex.nl/img/site_logos/Altijdsex_LogoSmall_Pos@1x.png"
+                },
+                "url": "https://altijdsex.nl/"
+            },
+            "description": "<?php echo \GrahamCampbell\Markdown\Facades\Markdown::convertToHtml(Str::limit($article->getBody(), 400)); ?>"
+        }
+</script>
+
 @endsection
