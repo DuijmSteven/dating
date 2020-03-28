@@ -28,6 +28,19 @@
         });
     </script>
 @endif
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "url": "https://altijdsex.nl/",
+      "contactPoint": [
+        { "@type": "ContactPoint",
+          "email": "info@altijdsex.nl",
+          "contactType": "customer service"
+        }
+      ]
+    }
+</script>
 <style>
     body {
         font-size: 1.9rem;
