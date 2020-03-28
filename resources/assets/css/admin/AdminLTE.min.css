@@ -6298,6 +6298,11 @@ table .action-buttons .btn {
     background-color: #ef4e27;
 }
 
+.navbarUserStats {
+    margin: 30px auto 0;
+    width: 200px;
+}
+
 .statsHeading {
     padding: 2px 4px;
     margin: 0;
@@ -6313,9 +6318,9 @@ table .action-buttons .btn {
     margin: 0 0 10px 0;
     border: 1px solid #888;
     border-radius: 0 0 3px 3px;
+    background-color: #fdeded;
 }
 
-.skin-blue .sidebar-menu .treeview-menu>li.active>a, .skin-blue .sidebar-menu .treeview-menu>li>a:hover
-{
+.skin-blue .sidebar-menu .treeview-menu > li.active > a, .skin-blue .sidebar-menu .treeview-menu > li > a:hover {
     background-color: #af6666;
 }

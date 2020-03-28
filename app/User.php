@@ -21,6 +21,98 @@ class User extends Authenticatable
     const TYPE_OPERATOR = 4;
     const TYPE_EDITOR = 5;
 
+    const COMMON_RELATIONS = [
+        'meta',
+        'roles',
+        'profileImage'
+    ];
+
+    const OPERATOR_RELATIONS = [
+        'operatorMessages'
+    ];
+
+    const OPERATOR_RELATION_COUNTS = [
+        'operatorMessages',
+        'operatorMessagesLastMonth',
+        'operatorMessagesThisMonth',
+        'operatorMessagesLastWeek',
+        'operatorMessagesThisWeek',
+        'operatorMessagesYesterday',
+        'operatorMessagesToday'
+    ];
+
+    const EDITOR_RELATIONS = [
+    ];
+
+    const EDITOR_RELATION_COUNTS = [
+        'createdBots',
+        'createdBotsLastMonth',
+        'createdBotsThisMonth',
+        'createdBotsLastWeek',
+        'createdBotsThisWeek',
+        'createdBotsYesterday',
+        'createdBotsToday'
+    ];
+
+    const ADMIN_RELATIONS = [
+
+    ];
+
+    const ADMIN_RELATION_COUNTS = [
+
+    ];
+
+    const PEASANT_RELATIONS = [
+        'images',
+        'completedPayments',
+        'hasViewed',
+        'hasViewedUnique'
+    ];
+
+    const PEASANT_RELATION_COUNTS = [
+        'messaged',
+        'messagedToday',
+        'messagedYesterday',
+        'messagedThisWeek',
+        'messagedLastWeek',
+        'messagedYesterday',
+        'messagedThisMonth',
+        'messagedLastMonth',
+        'messages',
+        'messagesToday',
+        'messagesYesterday',
+        'messagesThisWeek',
+        'messagesLastWeek',
+        'messagesYesterday',
+        'messagesThisMonth',
+        'messagesLastMonth'
+    ];
+
+    const BOT_RELATIONS = [
+        'views',
+        'uniqueViews',
+        'images'
+    ];
+
+    const BOT_RELATION_COUNTS = [
+        'messaged',
+        'messagedToday',
+        'messagedYesterday',
+        'messagedThisWeek',
+        'messagedLastWeek',
+        'messagedYesterday',
+        'messagedThisMonth',
+        'messagedLastMonth',
+        'messages',
+        'messagesToday',
+        'messagesYesterday',
+        'messagesThisWeek',
+        'messagesLastWeek',
+        'messagesYesterday',
+        'messagesThisMonth',
+        'messagesLastMonth'
+    ];
+
     protected $primaryKey = 'id';
 
     public function __construct(array $attributes = [])
@@ -807,6 +899,50 @@ class User extends Authenticatable
         return $this->hasMany(ConversationMessage::class, 'operator_id');
     }
 
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function operatorMessagesToday()
+    {
+        $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');
+        $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
+
+        return $this->hasMany(ConversationMessage::class, 'operator_id')
+            ->where('created_at', '>=', $startOfToday)
+            ->where('created_at', '<=', $endOfToday);
+    }
+
+    public function operatorMessagesYesterday()
+    {
+        $startOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->startOfDay()->setTimezone('UTC');
+        $endOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->endOfDay()->setTimezone('UTC');
+
+        return $this->hasMany(ConversationMessage::class, 'operator_id')
+            ->where('created_at', '>=', $startOfYesterday)
+            ->where('created_at', '<=', $endOfYesterday);
+    }
+
+    public function operatorMessagesThisWeek()
+    {
+        $startOfThisWeek = Carbon::now('Europe/Amsterdam')->startOfWeek()->setTimezone('UTC');
+        $endOfThisWeek = Carbon::now('Europe/Amsterdam')->endOfWeek()->setTimezone('UTC');
+
+        return $this->hasMany(ConversationMessage::class, 'operator_id')
+            ->where('created_at', '>=', $startOfThisWeek)
+            ->where('created_at', '<=', $endOfThisWeek);
+    }
+
+    public function operatorMessagesLastWeek()
+    {
+        $startOfLastWeek = Carbon::now('Europe/Amsterdam')->subWeeks(1)->startOfWeek()->setTimezone('UTC');
+        $endOfLastWeek = Carbon::now('Europe/Amsterdam')->subWeeks(1)->endOfWeek()->setTimezone('UTC');
+
+        return $this->hasMany(ConversationMessage::class, 'operator_id')
+            ->where('created_at', '>=', $startOfLastWeek)
+            ->where('created_at', '<=', $endOfLastWeek);
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -818,6 +954,16 @@ class User extends Authenticatable
         return $this->hasMany(ConversationMessage::class, 'operator_id')
             ->where('created_at', '>=', $startOfMonth)
             ->where('created_at', '<=', $endOfMonth);
+    }
+
+    public function operatorMessagesLastMonth()
+    {
+        $startOfLastMonth = Carbon::now('Europe/Amsterdam')->subMonths(1)->startOfMonth()->setTimezone('UTC');
+        $endOfLastMonth = Carbon::now('Europe/Amsterdam')->subMonths(1)->endOfMonth()->setTimezone('UTC');
+
+        return $this->hasMany(ConversationMessage::class, 'operator_id')
+            ->where('created_at', '>=', $startOfLastMonth)
+            ->where('created_at', '<=', $endOfLastMonth);
     }
 
     /**

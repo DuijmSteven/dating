@@ -46,7 +46,12 @@
                                     <h5 class="statsHeading"><strong>Messages sent</strong></h5>
                                     <div class="statsBody">
                                         <strong>All time:</strong> {!! $operator->operator_messages_count !!} <br>
+                                        <strong>Last month:</strong> {!! $operator->operator_messages_last_month_count !!} <br>
                                         <strong>This month:</strong> {!! $operator->operator_messages_this_month_count !!} <br>
+                                        <strong>Last week:</strong> {!! $operator->operator_messages_last_week_count !!} <br>
+                                        <strong>This week:</strong> {!! $operator->operator_messages_this_week_count !!} <br>
+                                        <strong>Yesterday:</strong> {!! $operator->operator_messages_yesterday_count !!} <br>
+                                        <strong>Today:</strong> {!! $operator->operator_messages_today_count !!} <br>
                                     </div>
                                 </td>
                                 <td>

@@ -14,82 +14,12 @@
     </div>
 
     @if(\Auth::user()->isEditor())
-        <ul class="sidebar-menu">
-            <li class="treeview {!! str_contains(\Request::route()->getName(), 'editors.bots') ? 'active' : '' !!}">
-                <a href="#">
-                    <i class="fa fa-android"></i>
-                    <span>Bots</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li class="{!! \Request::route()->getName() == 'editors.bots.created.overview' ? 'active' : '' !!}">
-                        <a href="{!! route('editors.bots.created.overview') !!}">
-                            <i class="fa fa-list"></i>
-                            Overview
-                        </a>
-                    </li>
-                    <li class="{!! \Request::route()->getName() == 'editors.bots.create.get' ? 'active' : '' !!}">
-                        <a href="{!! route('editors.bots.create.get') !!}">
-                            <i class="fa fa-user-plus"></i>
-                            Create
-                        </a>
-                    </li>
-                    <li class="{!! \Request::route()->getName() == 'editors.bots.map.show' ? 'active' : '' !!}">
-                        <a href="{!! route('editors.bots.map.show') !!}">
-                            <i class="fa fa-map"></i>
-                            On Map
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="{!!  route('logout.post') !!}"
-                   onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">
-                    <i class="fa fa-sign-out"></i>
-                    <span>Log out</span>
-                </a>
-
-                <form id="logout-form" action="{!!  route('logout.post') !!}" method="POST"
-                      style="display: none;">
-                    {{ csrf_field() }}
-                </form>
-            </li>
-        </ul>
+        @include('admin.layouts.default.partials.editor-nav-items');
     @elseif(\Auth::user()->isOperator())
-        <ul class="sidebar-menu">
-{{--            <li class="header">MAIN NAVIGATION</li>--}}
-            <li class="treeview
-                       {!! Request::route()->getName() == 'operator-platform.dashboard' ?
-                    'active' :
-                    '' !!}">
-                <a href="{!! route('operator-platform.dashboard') !!}">
-                    <i class="fa fa-dashboard"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
-            <li>
-                <a href="{!!  route('logout.post') !!}"
-                   onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">
-                    <i class="fa fa-sign-out"></i>
-                    <span>Log out</span>
-                </a>
-
-                <form id="logout-form" action="{!!  route('logout.post') !!}" method="POST"
-                      style="display: none;">
-                    {{ csrf_field() }}
-                </form>
-            </li>
-        </ul>
+        @include('admin.layouts.default.partials.operator-nav-items');
     @elseif(\Auth::user()->isAdmin())
         <ul class="sidebar-menu" data-widget="tree">
-{{--
-            <li class="header">MAIN NAVIGATION</li>
---}}
-            @include('admin.layouts.default.partials.main-sidebar-nav-items');
+            @include('admin.layouts.default.partials.admin-nav-items');
         </ul>
     @else
         Something is wrong with your role situation dude...

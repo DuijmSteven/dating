@@ -74,6 +74,9 @@ class DuplicateProductionS3BucketToCurrentEnvironmentBucket extends Command
             else {
                 $this->info('There was an error copying files from s3://altijdsex to s3://' . $bucketName . '.');
                 \Log::debug('There was an error copying files from s3://altijdsex to s3://' . $bucketName . '.');
+                \Log::debug($emptyCurrentEnvBucket->getErrorOutput());
+                \Log::debug($emptyCurrentEnvBucket->getExitCodeText());
+                \Log::debug($emptyCurrentEnvBucket->getOutput());
 
                 throw new ProcessFailedException($emptyCurrentEnvBucket);
             }

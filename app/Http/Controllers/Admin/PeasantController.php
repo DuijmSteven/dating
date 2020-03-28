@@ -31,25 +31,15 @@ class PeasantController extends Controller
      */
     public function index()
     {
-        $peasants = User::with(['meta', 'account', 'roles', 'profileImage', 'completedPayments'])
-            ->withCount([
-                'messaged',
-                'messagedToday',
-                'messagedYesterday',
-                'messagedThisWeek',
-                'messagedLastWeek',
-                'messagedYesterday',
-                'messagedThisMonth',
-                'messagedLastMonth',
-                'messages',
-                'messagesToday',
-                'messagesYesterday',
-                'messagesThisWeek',
-                'messagesLastWeek',
-                'messagesYesterday',
-                'messagesThisMonth',
-                'messagesLastMonth'
-            ])
+        $peasants = User::with(
+            array_unique(array_merge(
+                User::COMMON_RELATIONS,
+                User::PEASANT_RELATIONS
+            ))
+        )
+            ->withCount(
+                User::PEASANT_RELATION_COUNTS
+            )
             ->whereHas('roles', function ($query) {
                 $query->where('name', 'peasant');
             })
@@ -101,25 +91,15 @@ class PeasantController extends Controller
     {
         $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
 
-        $peasants = User::with(['meta', 'account', 'roles', 'profileImage', 'completedPayments'])
-            ->withCount([
-                'messaged',
-                'messagedToday',
-                'messagedYesterday',
-                'messagedThisWeek',
-                'messagedLastWeek',
-                'messagedYesterday',
-                'messagedThisMonth',
-                'messagedLastMonth',
-                'messages',
-                'messagesToday',
-                'messagesYesterday',
-                'messagesThisWeek',
-                'messagesLastWeek',
-                'messagesYesterday',
-                'messagesThisMonth',
-                'messagesLastMonth'
-            ])
+        $peasants = User::with(
+            array_unique(array_merge(
+                User::COMMON_RELATIONS,
+                User::PEASANT_RELATIONS
+            ))
+        )
+            ->withCount(
+                User::PEASANT_RELATION_COUNTS
+            )
             ->whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_PEASANT);
             })
@@ -188,32 +168,15 @@ class PeasantController extends Controller
      */
     public function edit(int $peasantId, Request $request)
     {
-        $peasant = User::with([
-            'meta',
-            'roles',
-            'profileImage',
-            'nonProfileImages',
-            'hasViewed',
-            'hasViewedUnique',
-        ])
-            ->withCount([
-                'messaged',
-                'messagedToday',
-                'messagedYesterday',
-                'messagedThisWeek',
-                'messagedLastWeek',
-                'messagedYesterday',
-                'messagedThisMonth',
-                'messagedLastMonth',
-                'messages',
-                'messagesToday',
-                'messagesYesterday',
-                'messagesThisWeek',
-                'messagesLastWeek',
-                'messagesYesterday',
-                'messagesThisMonth',
-                'messagesLastMonth'
-            ])
+        $peasant = User::with(
+            array_unique(array_merge(
+                User::COMMON_RELATIONS,
+                User::PEASANT_RELATIONS
+            ))
+        )
+            ->withCount(
+                User::PEASANT_RELATION_COUNTS
+            )
             ->findOrFail($peasantId);
 
         return view(

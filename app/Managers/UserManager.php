@@ -409,19 +409,62 @@ class UserManager
      */
     public static function getAndFormatAuthenticatedUser()
     {
+        /** @var User $user */
         $user = Auth::user();
 
         if (!($user instanceof User)) {
             return null;
         }
 
-        $relations = ['profileImage', 'images', 'meta', 'emailTypes', 'account', 'milestones', 'payments'];
+        if ($user->isAdmin()) {
+            $relations = array_unique(array_merge(
+                    User::COMMON_RELATIONS,
+                    User::ADMIN_RELATIONS,
+                    User::OPERATOR_RELATIONS,
+                    User::EDITOR_RELATIONS
+                )
+            );
 
-//        if ($user->isAdmin() || $user->isEditor()) {
-//            $relations[] = 'createdBots';
-//        }
+            $relationCounts = array_merge(
+                User::ADMIN_RELATION_COUNTS,
+                User::OPERATOR_RELATION_COUNTS,
+                User::EDITOR_RELATION_COUNTS
+            );
+        } elseif ($user->isEditor()) {
+            $relations = array_unique(array_merge(
+                    User::COMMON_RELATIONS,
+                    User::EDITOR_RELATIONS
+                )
+            );
 
-        $user = User::with($relations)->where('id', $user->getId())->get()[0];
+            $relationCounts = array_merge(
+                User::EDITOR_RELATION_COUNTS
+            );
+        } elseif ($user->isOperator()) {
+            $relations = array_unique(array_merge(
+                    User::COMMON_RELATIONS,
+                    User::OPERATOR_RELATIONS
+                )
+            );
+
+            $relationCounts = array_merge(
+                User::OPERATOR_RELATION_COUNTS
+            );
+        } elseif ($user->isPeasant()) {
+            $relations = array_unique(array_merge(
+                    User::COMMON_RELATIONS,
+                    User::PEASANT_RELATIONS
+                )
+            );
+
+            $relationCounts = array_merge(
+                User::PEASANT_RELATION_COUNTS
+            );
+        }
+
+        $user = User::with($relations)
+            ->withCount($relationCounts)
+            ->where('id', $user->getId())->get()[0];
 
         return $user;
     }

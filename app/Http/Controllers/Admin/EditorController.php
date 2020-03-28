@@ -35,20 +35,12 @@ class EditorController extends Controller
     public function index()
     {
         /** @var Collection $bots */
-        $queryBuilder = User::with([
-            'meta',
-            'roles',
-            'profileImage'
-        ])
-            ->withCount([
-                'createdBots',
-                'createdBotsLastMonth',
-                'createdBotsThisMonth',
-                'createdBotsLastWeek',
-                'createdBotsThisWeek',
-                'createdBotsYesterday',
-                'createdBotsToday',
-            ])
+        $queryBuilder = User::with(
+            User::COMMON_RELATIONS
+        )
+            ->withCount(
+                User::EDITOR_RELATIONS
+            )
             ->whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_EDITOR)
                     ->orWhere('id', User::TYPE_ADMIN);
@@ -81,36 +73,24 @@ class EditorController extends Controller
         }
 
         /** @var Collection $bots */
-        $editor = User::with(['meta', 'roles', 'profileImage', 'createdBots'])
+        $editor = User::with(
+            User::COMMON_RELATIONS
+        )
+            ->withCount(
+                User::EDITOR_RELATIONS
+            )
             ->find($editorId);
 
         /** @var Collection $bots */
-        $queryBuilder = User::with([
-            'meta',
-            'roles',
-            'profileImage',
-            'images',
-            'views',
-            'uniqueViews'
-        ])
-            ->withCount([
-                'messaged',
-                'messagedToday',
-                'messagedYesterday',
-                'messagedThisWeek',
-                'messagedLastWeek',
-                'messagedYesterday',
-                'messagedThisMonth',
-                'messagedLastMonth',
-                'messages',
-                'messagesToday',
-                'messagesYesterday',
-                'messagesThisWeek',
-                'messagesLastWeek',
-                'messagesYesterday',
-                'messagesThisMonth',
-                'messagesLastMonth'
-            ])
+        $queryBuilder = User::with(
+            array_unique(array_merge(
+                User::COMMON_RELATIONS,
+                User::BOT_RELATIONS
+            ))
+        )
+            ->withCount(
+                USER::BOT_RELATION_COUNTS
+            )
             ->whereHas('roles', function ($query) {
                 $query->where('name', 'bot');
             });
@@ -139,20 +119,12 @@ class EditorController extends Controller
     {
         $onlineIds = Activity::users(1)->pluck('user_id')->toArray();
 
-        $editors = User::with([
-            'meta',
-            'roles',
-            'profileImage'
-        ])
-            ->withCount([
-                'createdBots',
-                'createdBotsLastMonth',
-                'createdBotsThisMonth',
-                'createdBotsLastWeek',
-                'createdBotsThisWeek',
-                'createdBotsYesterday',
-                'createdBotsToday',
-            ])
+        $editors = User::with(
+            User::COMMON_RELATIONS
+        )
+            ->withCount(
+                User::EDITOR_RELATIONS
+            )
             ->whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_EDITOR);
             })
@@ -178,20 +150,12 @@ class EditorController extends Controller
      */
     public function edit(int $editorId)
     {
-        $editor = User::with([
-            'meta',
-            'roles',
-            'profileImage'
-        ])
-            ->withCount([
-                'createdBots',
-                'createdBotsLastMonth',
-                'createdBotsThisMonth',
-                'createdBotsLastWeek',
-                'createdBotsThisWeek',
-                'createdBotsYesterday',
-                'createdBotsToday',
-            ])
+        $editor = User::with(
+            User::COMMON_RELATIONS
+        )
+            ->withCount(
+                User::EDITOR_RELATIONS
+            )
             ->findOrFail($editorId);
 
         return view(

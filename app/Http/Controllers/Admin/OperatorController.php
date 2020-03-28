@@ -29,16 +29,16 @@ class OperatorController extends Controller
     public function index()
     {
         /** @var Collection $bots */
-        $queryBuilder = User::with([
-            'meta',
-            'roles',
-            'profileImage',
-            'operatorMessages'
-        ])
-            ->withCount([
-                'operatorMessages',
-                'operatorMessagesThisMonth'
-            ])
+        $queryBuilder = User::with(
+            array_unique(array_merge(
+                    User::COMMON_RELATIONS,
+                    User::OPERATOR_RELATIONS
+                )
+            )
+        )
+            ->withCount(
+                User::OPERATOR_RELATION_COUNTS
+            )
             ->whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_OPERATOR)
                     ->orWhere('id', User::TYPE_ADMIN);
@@ -64,16 +64,16 @@ class OperatorController extends Controller
     {
         $onlineIds = Activity::users(1)->pluck('user_id')->toArray();
 
-        $operators = User::with([
-            'meta',
-            'roles',
-            'profileImage',
-            'operatorMessages'
-        ])
-            ->withCount([
-                'operatorMessages',
-                'operatorMessagesThisMonth'
-            ])
+        $operators = User::with(
+            array_unique(array_merge(
+                    User::COMMON_RELATIONS,
+                    User::OPERATOR_RELATIONS
+                )
+            )
+        )
+            ->withCount(
+                User::OPERATOR_RELATION_COUNTS
+            )
             ->whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_OPERATOR);
             })
@@ -121,15 +121,16 @@ class OperatorController extends Controller
      */
     public function edit(int $operatorId)
     {
-        $operator = User::with([
-            'meta',
-            'roles',
-            'profileImage'
-        ])
-            ->withCount([
-                'operatorMessages',
-                'operatorMessagesThisMonth',
-            ])
+        $operator = User::with(
+            array_unique(array_merge(
+                User::COMMON_RELATIONS,
+                User::OPERATOR_RELATIONS
+                )
+            )
+        )
+            ->withCount(
+                User::OPERATOR_RELATION_COUNTS
+            )
             ->findOrFail($operatorId);
 
         return view(
