@@ -111,7 +111,7 @@
                                     @if($authenticatedUser->isAdmin())
                                         <a href="{!! route('admin.conversations.bot.get', ['botId' => $bot->getId()]) !!}"
                                            class="btn btn-default">Conversations
-                                            <b>({{ $bot->conversations()->withTrashed()->count() }})</b></a>
+                                            <b>({{ $bot->conversations_as_user_a_count + $bot->conversations_as_user_b_count }})</b></a>
                                         <a href="{!! route('admin.messages.bot', ['botId' => $bot->getId()]) !!}"
                                            class="btn btn-default">Messages
                                             <b>({{ $bot->messaged_count + $bot->messages_count }})</b></a>

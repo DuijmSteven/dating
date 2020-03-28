@@ -24,7 +24,8 @@ class User extends Authenticatable
     const COMMON_RELATIONS = [
         'meta',
         'roles',
-        'profileImage'
+        'profileImage',
+        'account'
     ];
 
     const OPERATOR_RELATIONS = [
@@ -85,7 +86,9 @@ class User extends Authenticatable
         'messagesLastWeek',
         'messagesYesterday',
         'messagesThisMonth',
-        'messagesLastMonth'
+        'messagesLastMonth',
+        'conversationsAsUserA',
+        'conversationsAsUserB'
     ];
 
     const BOT_RELATIONS = [
@@ -110,7 +113,9 @@ class User extends Authenticatable
         'messagesLastWeek',
         'messagesYesterday',
         'messagesThisMonth',
-        'messagesLastMonth'
+        'messagesLastMonth',
+        'conversationsAsUserA',
+        'conversationsAsUserB'
     ];
 
     protected $primaryKey = 'id';
@@ -559,9 +564,6 @@ class User extends Authenticatable
      */
     public function conversationsAsOperator()
     {
-//        return Conversation::with(['messages'])->where('user_a_id', $this->id)->orWhere('user_b_id', $this->id);
-//
-
         return Conversation::whereHas('messages', function ($query) {
                 $query->where('operator_id', $this->getId());
             });
@@ -736,9 +738,19 @@ class User extends Authenticatable
         }
     }
 
-    public function conversations()
+//    public function conversations()
+//    {
+//        return $this->where('user_a_id', $this->id)->orWhere('user_b_id', $this->id)->with(['messages']);
+//    }
+
+    public function conversationsAsUserA()
     {
-        return Conversation::with(['messages'])->where('user_a_id', $this->id)->orWhere('user_b_id', $this->id);
+        return $this->hasMany(Conversation::class, 'user_a_id');
+    }
+
+    public function conversationsAsUserB()
+    {
+        return $this->hasMany(Conversation::class, 'user_b_id');
     }
 
     /**

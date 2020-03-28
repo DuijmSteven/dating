@@ -87,7 +87,7 @@
                                     <h5 class="statsHeading"><strong>Bot views</strong></h5>
                                     <div class="statsBody">
                                         <strong>All time:</strong> {{ $peasant->hasViewed->count() }} <br>
-                                        <strong>Unique:</strong> {{ $peasant->hasViewedUnique()->get()->count() }}
+                                        <strong>Unique:</strong> {{ $peasant->hasViewedUnique->count() }}
                                     </div>
                                 </td>
                                 <td class="no-wrap">
@@ -122,7 +122,7 @@
                                 </td>
                                 <td class="action-buttons">
                                     <a href="{!! route('admin.peasants.edit.get', ['peasantId' => $peasant->id]) !!}" class="btn btn-default">Edit</a>
-                                    <a href="{!! route('admin.conversations.peasant.get', ['peasantId' => $peasant->id]) !!}" class="btn btn-default">Conversations <b>({{ $peasant->conversations()->withTrashed()->count() }})</b></a>
+                                    <a href="{!! route('admin.conversations.peasant.get', ['peasantId' => $peasant->id]) !!}" class="btn btn-default">Conversations <b>({{ $peasant->conversations_as_user_a_count + $peasant->conversations_as_user_b_count }})</b></a>
                                     <a href="{!! route('admin.messages.peasant', ['peasantId' => $peasant->getId()]) !!}" class="btn btn-default">Messages <b>({{ $peasant->messages_count +  $peasant->messaged_count}})</b></a>
                                     <a href="{!! route('admin.peasants.message-as-bot.get', ['peasantId' => $peasant->id, 'onlyOnlineBots' => '0']) !!}" class="btn btn-default">Message user as bot</a>
                                     <a href="{!! route('admin.peasants.message-as-bot.get', [ 'peasantId' => $peasant->id, 'onlyOnlineBots' => '1']) !!}" class="btn btn-default">Message user as online bot</a>
