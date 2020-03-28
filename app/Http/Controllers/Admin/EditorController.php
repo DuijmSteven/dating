@@ -39,7 +39,7 @@ class EditorController extends Controller
             User::COMMON_RELATIONS
         )
             ->withCount(
-                User::EDITOR_RELATIONS
+                User::EDITOR_RELATION_COUNTS
             )
             ->whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_EDITOR)
@@ -72,12 +72,12 @@ class EditorController extends Controller
             $editorId = $this->authenticatedUser->getId();
         }
 
-        /** @var Collection $bots */
+        /** @var User $editor */
         $editor = User::with(
             User::COMMON_RELATIONS
         )
             ->withCount(
-                User::EDITOR_RELATIONS
+                User::EDITOR_RELATION_COUNTS
             )
             ->find($editorId);
 
@@ -123,7 +123,7 @@ class EditorController extends Controller
             User::COMMON_RELATIONS
         )
             ->withCount(
-                User::EDITOR_RELATIONS
+                User::EDITOR_RELATION_COUNTS
             )
             ->whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_EDITOR);
@@ -154,7 +154,7 @@ class EditorController extends Controller
             User::COMMON_RELATIONS
         )
             ->withCount(
-                User::EDITOR_RELATIONS
+                User::EDITOR_RELATION_COUNTS
             )
             ->findOrFail($editorId);
 
