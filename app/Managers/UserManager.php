@@ -43,6 +43,60 @@ class UserManager
         $this->storageManager = $storageManager;
     }
 
+    /**
+     * @param User $user
+     * @return array
+     */
+    public static function getRequiredRelationsAndCountsForRole(int $roleId): array
+    {
+        if ($roleId === User::TYPE_ADMIN) {
+            $relations = array_unique(array_merge(
+                    User::COMMON_RELATIONS,
+                    User::ADMIN_RELATIONS,
+                    User::OPERATOR_RELATIONS,
+                    User::EDITOR_RELATIONS
+                )
+            );
+
+            $relationCounts = array_merge(
+                User::ADMIN_RELATION_COUNTS,
+                User::OPERATOR_RELATION_COUNTS,
+                User::EDITOR_RELATION_COUNTS
+            );
+        } elseif ($roleId === User::TYPE_EDITOR) {
+            $relations = array_unique(array_merge(
+                    User::COMMON_RELATIONS,
+                    User::EDITOR_RELATIONS
+                )
+            );
+
+            $relationCounts = array_merge(
+                User::EDITOR_RELATION_COUNTS
+            );
+        } elseif ($roleId === User::TYPE_OPERATOR) {
+            $relations = array_unique(array_merge(
+                    User::COMMON_RELATIONS,
+                    User::OPERATOR_RELATIONS
+                )
+            );
+
+            $relationCounts = array_merge(
+                User::OPERATOR_RELATION_COUNTS
+            );
+        } elseif ($roleId === User::TYPE_PEASANT) {
+            $relations = array_unique(array_merge(
+                    User::COMMON_RELATIONS,
+                    User::PEASANT_RELATIONS
+                )
+            );
+
+            $relationCounts = array_merge(
+                User::PEASANT_RELATION_COUNTS
+            );
+        }
+        return array($relations, $relationCounts);
+    }
+
     public function getUserCredits(int $userId)
     {
         return $this->user->find($userId)->account->credits;
@@ -416,51 +470,7 @@ class UserManager
             return null;
         }
 
-        if ($user->isAdmin()) {
-            $relations = array_unique(array_merge(
-                    User::COMMON_RELATIONS,
-                    User::ADMIN_RELATIONS,
-                    User::OPERATOR_RELATIONS,
-                    User::EDITOR_RELATIONS
-                )
-            );
-
-            $relationCounts = array_merge(
-                User::ADMIN_RELATION_COUNTS,
-                User::OPERATOR_RELATION_COUNTS,
-                User::EDITOR_RELATION_COUNTS
-            );
-        } elseif ($user->isEditor()) {
-            $relations = array_unique(array_merge(
-                    User::COMMON_RELATIONS,
-                    User::EDITOR_RELATIONS
-                )
-            );
-
-            $relationCounts = array_merge(
-                User::EDITOR_RELATION_COUNTS
-            );
-        } elseif ($user->isOperator()) {
-            $relations = array_unique(array_merge(
-                    User::COMMON_RELATIONS,
-                    User::OPERATOR_RELATIONS
-                )
-            );
-
-            $relationCounts = array_merge(
-                User::OPERATOR_RELATION_COUNTS
-            );
-        } elseif ($user->isPeasant()) {
-            $relations = array_unique(array_merge(
-                    User::COMMON_RELATIONS,
-                    User::PEASANT_RELATIONS
-                )
-            );
-
-            $relationCounts = array_merge(
-                User::PEASANT_RELATION_COUNTS
-            );
-        }
+        [$relations, $relationCounts] = self::getRequiredRelationsAndCountsForRole($user->roles[0]->getId());
 
         $user = User::with($relations)
             ->withCount($relationCounts)

@@ -27,12 +27,20 @@ class UserSearchManager
     private $user;
 
     /**
+     * @var UserManager
+     */
+    private UserManager $userManager;
+
+    /**
      * UserSearchManager constructor.
      * @param User $user
      */
-    public function __construct(User $user)
-    {
+    public function __construct(
+        User $user,
+        UserManager $userManager
+    ) {
         $this->user = $user;
+        $this->userManager = $userManager;
     }
 
     /**
@@ -55,10 +63,20 @@ class UserSearchManager
             }
         }
 
+        $relations = User::COMMON_RELATIONS;
+        $relationCounts = [];
+
+        if (isset($parameters['role_id'])) {
+            $roleId = (int) $parameters['role_id'];
+
+            [$relations, $relationCounts] = $this->userManager->getRequiredRelationsAndCountsForRole($roleId);
+        }
+
         // initial part of query
         $query = $this->user->join('user_meta as um', 'users.id', '=', 'um.user_id')
             ->select('users.*')
-            ->with(['meta', 'roles']);
+            ->with($relations)
+            ->withCount($relationCounts);
 
         // append to query
         if (isset($parameters['query'])) {
@@ -134,8 +152,8 @@ class UserSearchManager
 
         $roleIdsArray = [];
 
-        if (isset($parameters['role_id'])) {
-            $roleIdsArray[] = (int) $parameters['role_id'];
+        if (isset($roleId)) {
+            $roleIdsArray[] = (int) $roleId;
         } else {
             $roleIdsArray = [Role::ROLE_PEASANT, Role::ROLE_BOT];
         }
