@@ -87,9 +87,8 @@ class ConversationManager
                 $replyable = true;
             } elseif (3 === rand(1, 3)) {
                 $replyable = false;
-
+            }
         }
-
 
         if ($replyable) {
             if (in_array($messageData['recipient_id'], $onlineBotIds)) {
