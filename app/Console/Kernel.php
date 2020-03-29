@@ -42,12 +42,12 @@ class Kernel extends ConsoleKernel
         if (config('app.env') === 'production') {
             $schedule->command(SendProfileViewedEmails::class)->everyMinute();
             $schedule->command(SendProfileCompletionEmails::class)->dailyAt("19:00");
-            $schedule->command(ExportDb::class)->dailyAt("04:30");
+            $schedule->command(ExportDb::class)->dailyAt("05:30");
             $schedule->command(CheckRecentStartedPayments::class)->everyMinute();
         }
         
         if (config('app.env') === 'staging') {
-            $schedule->command(UpdateCurrentEnvDbAndAws::class)->dailyAt("16:22");
+            $schedule->command(UpdateCurrentEnvDbAndAws::class)->dailyAt("05:50");
         }
     }
 
