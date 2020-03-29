@@ -66,7 +66,7 @@ $(window).on('load', function () {
     if ($('.JS--showConversation').length > 0 && $('.JS--operatorCountdown').length > 0) {
         var lockedDate = new Date($('.JS--showConversation').data('locked-at'));
 
-        var countdownTime = (new Date($('.JS--showConversation').data('locked-at'))).setMinutes(lockedDate.getMinutes() + 4);
+        var countdownTime = (new Date($('.JS--showConversation').data('locked-at'))).setMinutes(lockedDate.getMinutes() + 6);
 
         var redirect = false;
         // start the countdown timer

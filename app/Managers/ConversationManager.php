@@ -18,7 +18,7 @@ use Kim\Activity\Activity;
  */
 class ConversationManager
 {
-    const CONVERSATION_LOCKING_TIME = 4;
+    const CONVERSATION_LOCKING_TIME = 6;
 
     /** @var Conversation */
     private $conversation;
@@ -53,6 +53,9 @@ class ConversationManager
     {
         $hasAttachment = isset($messageData['attachment']);
 
+        $sender = User::with(['conversationsWithRepliesToday'])
+            ->find($messageData['sender_id']);
+
         try {
             $conversation = $this->createOrRetrieveConversation(
                 $messageData['sender_id'],
@@ -61,6 +64,7 @@ class ConversationManager
         } catch (\Exception $exception) {
             throw $exception;
         }
+
 
         $onlineIds = Activity::users(5)->pluck('user_id')->toArray();
 
@@ -72,10 +76,33 @@ class ConversationManager
         ->pluck('id')
         ->toArray();
 
-        if (in_array($messageData['recipient_id'], $onlineBotIds)) {
-            $replyableAt = Carbon::now();
+        $isNewConversation = $conversation->messages()->count() > 1 ? false : true;
+        $senderConversationsWithRepliesTodayCount  = $sender->conversationsWithRepliesToday()->get()->count();
+
+        $replyable = true;
+
+        // some new convos need to be set to not be replied ever
+        if ($isNewConversation) {
+            if ($senderConversationsWithRepliesTodayCount === 0) {
+                $replyable = true;
+            } elseif (3 === rand(1, 3)) {
+                $replyable = false;
+
+        }
+
+
+        if ($replyable) {
+            if (in_array($messageData['recipient_id'], $onlineBotIds)) {
+                $replyableAt = Carbon::now();
+            } else {
+                if ($conversation->getReplyableAt() && $conversation->getReplyableAt()->gt(Carbon::now())) {
+                    $replyableAt = $conversation->getReplyableAt();
+                } else {
+                    $replyableAt = Carbon::now()->addMinutes(rand(1, 10));
+                }
+            }
         } else {
-            $replyableAt = Carbon::now()->addMinutes(rand(1, 10));
+            $replyableAt = null;
         }
 
         $conversation->setReplyableAt($replyableAt);
@@ -158,7 +185,7 @@ class ConversationManager
             })
             ->where(function ($query) {
                 $query->where('locked_at', null)
-                    ->orWhere('locked_at', '<', Carbon::now()->subMinutes(4));
+                    ->orWhere('locked_at', '<', Carbon::now()->subMinutes(self::CONVERSATION_LOCKING_TIME));
             })
             ->where('replyable_at', '<=', Carbon::now())
             ->withTrashed()
@@ -179,7 +206,7 @@ class ConversationManager
             ->has('messages', '>', '1')
             ->where(function ($query) {
                 $query->where('locked_at', null)
-                    ->orWhere('locked_at', '<', Carbon::now()->subMinutes(4));
+                    ->orWhere('locked_at', '<', Carbon::now()->subMinutes(self::CONVERSATION_LOCKING_TIME));
             })
             ->withTrashed()
             ->where('replyable_at', '<=', Carbon::now())

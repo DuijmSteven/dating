@@ -845,6 +845,62 @@ class User extends Authenticatable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
+    public function messagesTodayInUniqueConversations()
+    {
+        $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');
+        $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
+
+        return $this->hasMany(ConversationMessage::class, 'sender_id')
+            ->where('created_at', '>=', $startOfToday)
+            ->where('created_at', '<=', $endOfToday)
+            ->groupBy('conversation_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function messagesRecentlyInUniqueConversations()
+    {
+        $tenMinutesAgo = Carbon::now('Europe/Amsterdam')->subMinutes(10)->setTimezone('UTC');
+        $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
+
+        return $this->hasMany(ConversationMessage::class, 'sender_id')
+            ->where('created_at', '>=', $tenMinutesAgo)
+            ->where('created_at', '<=', $endOfToday)
+            ->groupBy('conversation_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function conversationsWithRepliesToday()
+    {
+        $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');
+        $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
+
+        return $this->hasMany(ConversationMessage::class, 'recipient_id')
+            ->where('created_at', '>=', $startOfToday)
+            ->where('created_at', '<=', $endOfToday)
+            ->groupBy('conversation_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function messagedRecentlyInUniqueConversations()
+    {
+        $tenMinutesAgo = Carbon::now('Europe/Amsterdam')->subMinutes(10)->setTimezone('UTC');
+        $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
+
+        return $this->hasMany(ConversationMessage::class, 'recipient_id')
+            ->where('created_at', '>=', $tenMinutesAgo)
+            ->where('created_at', '<=', $endOfToday)
+            ->groupBy('conversation_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function messagedToday()
     {
         $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');

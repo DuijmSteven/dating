@@ -17,7 +17,8 @@ class Conversation extends TimeZonedModel
 
     public $dates = [
         'locked_at',
-        'deleted_at'
+        'deleted_at',
+        'replyable_at'
     ];
 
     protected $appends = ['updatedAtHumanReadable'];
