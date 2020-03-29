@@ -729,7 +729,7 @@
         <div class="language-selection header">
             <a href="{{ route($localeRouteName, ['locale' => 'nl']) }}">
                 <div class="flagImageWrapper">
-                    <img class="flagImage" src="{{ asset('img/flags/nl.png') }}" alt="">
+                    <img class="flagImage" src="{{ asset('img/flags/nl.svg') }}" alt="">
                 </div>
             </a> |
             <a href="{{ route($localeRouteName, ['locale' => 'en']) }}">
@@ -1113,7 +1113,7 @@
             <div class="language-selection">
                 <a href="{{ route($localeRouteName, ['locale' => 'nl']) }}">
                     <div class="flagImageWrapper">
-                        <img class="flagImage" src="{{ asset('img/flags/nl.png') }}" alt="">
+                        <img class="flagImage" src="{{ asset('img/flags/nl.svg') }}" alt="">
                     </div>
                 </a> |
                 <a href="{{ route($localeRouteName, ['locale' => 'en']) }}">

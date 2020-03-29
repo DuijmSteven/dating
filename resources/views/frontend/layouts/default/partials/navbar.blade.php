@@ -93,7 +93,7 @@
                                     <li>
                                         <a class="languagesSubmenu__item" href="{{ route('users.set-locale', ['locale' => 'nl']) }}">
                                             <div class="flagImageWrapper">
-                                                <img class="flagImage" src="{{ asset('img/flags/nl.png') }}" alt="">
+                                                <img class="flagImage" src="{{ asset('img/flags/nl.svg') }}" alt="">
                                             </div>
                                             <span>{{ @trans('navbar.dutch') }}</span>
                                         </a>
@@ -104,7 +104,7 @@
                                         @if($authenticatedUser->getLocale() === 'en')
                                             <img class="flagImage" src="{{ asset('img/flags/uk.svg') }}" alt="">
                                         @elseif($authenticatedUser->getLocale() === 'nl')
-                                            <img class="flagImage" src="{{ asset('img/flags/nl.png') }}" alt="">
+                                            <img class="flagImage" src="{{ asset('img/flags/nl.svg') }}" alt="">
                                         @endif
                                     </div>
                                 </div>
