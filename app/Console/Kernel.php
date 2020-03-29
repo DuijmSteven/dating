@@ -47,7 +47,7 @@ class Kernel extends ConsoleKernel
         }
         
         if (config('app.env') === 'staging') {
-            $schedule->command(UpdateCurrentEnvDbAndAws::class)->dailyAt("16:10");
+            $schedule->command(UpdateCurrentEnvDbAndAws::class)->dailyAt("16:22");
         }
     }
 
