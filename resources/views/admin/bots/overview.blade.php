@@ -66,10 +66,21 @@
                                         <strong>Today:</strong> {{ $bot->messages_today_count }} <br>
                                     </div>
 
+                                    <h5 class="statsHeading"><strong>Messages received/sent ratio (larger is better)</strong></h5>
+                                    <div class="statsBody">
+                                        <strong>All time:</strong> {{ $bot->messagedVsMessagesPercentage() }} ({{ $bot->messaged_count }} / {{ $bot->messages_count }}) <br>
+                                        <strong>Last month:</strong> {{ $bot->messagedVsMessagesPercentageLastMonth() }} ({{ $bot->messaged_last_month_count }} / {{ $bot->messages_last_month_count }}) <br>
+                                        <strong>This month:</strong> {{ $bot->messagedVsMessagesPercentageThisMonth() }} ({{ $bot->messaged_this_month_count }} / {{ $bot->messages_this_month_count }}) <br>
+                                        <strong>Last Week:</strong> {{ $bot->messagedVsMessagesPercentageLastWeek() }} ({{ $bot->messaged_last_week_count }} / {{ $bot->messages_last_week_count }}) <br>
+                                        <strong>This week:</strong> {{ $bot->messagedVsMessagesPercentageThisWeek() }} ({{ $bot->messaged_this_week_count }} / {{ $bot->messages_this_week_count }}) <br>
+                                        <strong>Yesterday:</strong> {{ $bot->messagedVsMessagesPercentageYesterday() }} ({{ $bot->messaged_yesterday_count }} / {{ $bot->messages_yesterday_count }}) <br>
+                                        <strong>Today:</strong> {{ $bot->messagedVsMessagesPercentageToday() }} ({{ $bot->messaged_today_count }} / {{ $bot->messages_today_count }}) <br>
+                                    </div>
+
                                     <h5 class="statsHeading"><strong>Views</strong></h5>
                                     <div class="statsBody">
                                         <strong>All time:</strong> {{ $bot->views->count()  }} <br>
-                                        <strong>Unique:</strong> {{ $bot->uniqueViews()->get()->count() }}
+                                        <strong>Unique:</strong> {{ $bot->views->unique('viewer_id')->count() }}
                                     </div>
                                 </td>
 

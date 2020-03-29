@@ -84,10 +84,21 @@
                                         <strong>Today:</strong> {{ $peasant->messages_today_count }} <br>
                                     </div>
 
+                                    <h5 class="statsHeading"><strong>Messages received/sent ratio (smaller is better)</strong></h5>
+                                    <div class="statsBody">
+                                        <strong>All time:</strong> {{ $peasant->messagedVsMessagesPercentage() }} ({{ $peasant->messaged_count }} / {{ $peasant->messages_count }}) <br>
+                                        <strong>Last month:</strong> {{ $peasant->messagedVsMessagesPercentageLastMonth() }} ({{ $peasant->messaged_last_month_count }} / {{ $peasant->messages_last_month_count }}) <br>
+                                        <strong>This month:</strong> {{ $peasant->messagedVsMessagesPercentageThisMonth() }} ({{ $peasant->messaged_this_month_count }} / {{ $peasant->messages_this_month_count }}) <br>
+                                        <strong>Last Week:</strong> {{ $peasant->messagedVsMessagesPercentageLastWeek() }} ({{ $peasant->messaged_last_week_count }} / {{ $peasant->messages_last_week_count }}) <br>
+                                        <strong>This week:</strong> {{ $peasant->messagedVsMessagesPercentageThisWeek() }} ({{ $peasant->messaged_this_week_count }} / {{ $peasant->messages_this_week_count }}) <br>
+                                        <strong>Yesterday:</strong> {{ $peasant->messagedVsMessagesPercentageYesterday() }} ({{ $peasant->messaged_yesterday_count }} / {{ $peasant->messages_yesterday_count }}) <br>
+                                        <strong>Today:</strong> {{ $peasant->messagedVsMessagesPercentageToday() }} ({{ $peasant->messaged_today_count }} / {{ $peasant->messages_today_count }}) <br>
+                                    </div>
+
                                     <h5 class="statsHeading"><strong>Bot views</strong></h5>
                                     <div class="statsBody">
                                         <strong>All time:</strong> {{ $peasant->hasViewed->count() }} <br>
-                                        <strong>Unique:</strong> {{ $peasant->hasViewedUnique->count() }}
+                                        <strong>Unique:</strong> {{ $peasant->hasViewed->unique('viewed_id')->count() }}
                                     </div>
                                 </td>
                                 <td class="no-wrap">

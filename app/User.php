@@ -115,7 +115,8 @@ class User extends Authenticatable
         'messagesThisMonth',
         'messagesLastMonth',
         'conversationsAsUserA',
-        'conversationsAsUserB'
+        'conversationsAsUserB',
+        'views'
     ];
 
     protected $primaryKey = 'id';
@@ -141,6 +142,70 @@ class User extends Authenticatable
         'profileImageUrl',
         'profileImageUrlThumb'
     ];
+
+    public function messagedVsMessagesPercentage()
+    {
+        if ($this->messages_count > 0) {
+            return number_format($this->messaged_count / $this->messages_count * 100, 0) . '%';
+        } else {
+            return 'No messages sent';
+        }
+    }
+
+    public function messagedVsMessagesPercentageToday()
+    {
+        if ($this->messages_today_count > 0) {
+            return number_format($this->messaged_today_count / $this->messages_today_count * 100, 0) . '%';
+        } else {
+            return 'No messages sent';
+        }
+    }
+
+    public function messagedVsMessagesPercentageYesterday()
+    {
+        if ($this->messages_yesterday_count > 0) {
+            return number_format($this->messaged_yesterday_count / $this->messages_yesterday_count * 100, 0) . '%';
+        } else {
+            return 'No messages sent';
+        }
+    }
+
+
+    public function messagedVsMessagesPercentageThisWeek()
+    {
+        if ($this->messages_this_week_count > 0) {
+            return number_format($this->messaged_this_week_count / $this->messages_this_week_count * 100, 0) . '%';
+        } else {
+            return 'No messages sent';
+        }
+    }
+
+    public function messagedVsMessagesPercentageLastWeek()
+    {
+        if ($this->messages_last_week_count > 0) {
+            return number_format($this->messaged_last_week_count / $this->messages_last_week_count * 100, 0) . '%';
+        } else {
+            return 'No messages sent';
+        }
+    }
+
+    public function messagedVsMessagesPercentageThisMonth()
+    {
+        if ($this->messages_this_month_count > 0) {
+            return number_format($this->messaged_this_month_count / $this->messages_this_month_count * 100, 0) . '%';
+        } else {
+            return 'No messages sent';
+        }
+    }
+
+    public function messagedVsMessagesPercentageLastMonth()
+    {
+        if ($this->messages_last_month_count > 0) {
+            return number_format($this->messaged_last_month_count / $this->messages_last_month_count * 100, 0) . '%';
+        } else {
+            return 'No messages sent';
+        }
+    }
 
     /**
      * Send the password reset notification.
