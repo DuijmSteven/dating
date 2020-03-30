@@ -60,8 +60,14 @@ class DashboardController extends Controller
         $endOfWeek = Carbon::now('Europe/Amsterdam')->endOfWeek()->setTimezone('UTC');
         $startOfMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->setTimezone('UTC');
         $endOfMonth = Carbon::now('Europe/Amsterdam')->endOfMonth()->setTimezone('UTC');
-        $startOfPreviousMonth = Carbon::now('Europe/Amsterdam')->subMonth()->startOfMonth()->setTimezone('UTC');
-        $endOfPreviousMonth = Carbon::now('Europe/Amsterdam')->subMonth()->endOfMonth()->setTimezone('UTC');
+
+
+        $startOfPreviousMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->subMonth();
+        $endOfPreviousMonth = $startOfPreviousMonth->copy()->endOfMonth();
+
+        $startOfPreviousMonthUtc = $startOfPreviousMonth->setTimezone('UTC');
+        $endOfPreviousMonthUtc = $endOfPreviousMonth->setTimezone('UTC');
+
         $startOfYear = Carbon::now('Europe/Amsterdam')->startOfYear()->setTimezone('UTC');
         $viewData = [
             'numberOfOnlineBots' => count($onlineBots),
@@ -84,8 +90,8 @@ class DashboardController extends Controller
                     $endOfMonth
                 ),
                 'revenuePreviousMonth' => $this->statisticsManager->revenueBetween(
-                    $startOfPreviousMonth,
-                    $endOfPreviousMonth
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc
                 ),
                 'revenueCurrentYear' => $this->statisticsManager->revenueBetween(
                     $startOfYear,
@@ -110,8 +116,8 @@ class DashboardController extends Controller
                     $endOfMonth
                 ),
                 'registrationsPreviousMonth' => $this->statisticsManager->registrationsCountBetween(
-                    $startOfPreviousMonth,
-                    $endOfPreviousMonth
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc
                 ),
                 'registrationsCurrentYear' => $this->statisticsManager->registrationsCountBetween(
                     $startOfYear,
@@ -136,8 +142,8 @@ class DashboardController extends Controller
                     $endOfMonth
                 ),
                 'messagesSentPreviousMonth' => $this->statisticsManager->messagesSentCountBetween(
-                    $startOfPreviousMonth,
-                    $endOfPreviousMonth
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc
                 ),
                 'messagesSentCurrentYear' => $this->statisticsManager->messagesSentCountBetween(
                     $startOfYear,
@@ -167,8 +173,8 @@ class DashboardController extends Controller
                 ),
                 'messagesSentPreviousMonth' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
                     'peasant',
-                    $startOfPreviousMonth,
-                    $endOfPreviousMonth
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc
                 ),
                 'messagesSentCurrentYear' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
                     'peasant',
@@ -199,8 +205,8 @@ class DashboardController extends Controller
                 ),
                 'messagesSentPreviousMonth' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
                     'bot',
-                    $startOfPreviousMonth,
-                    $endOfPreviousMonth
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc
                 ),
                 'messagesSentCurrentYear' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
                     'bot',
@@ -226,8 +232,8 @@ class DashboardController extends Controller
                     $endOfMonth
                 ),
                 'deactivationsPreviousMonth' => $this->statisticsManager->peasantDeactivationsCountBetween(
-                    $startOfPreviousMonth,
-                    $endOfPreviousMonth
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc
                 ),
                 'deactivationsCurrentYear' => $this->statisticsManager->peasantDeactivationsCountBetween(
                     $startOfYear,
