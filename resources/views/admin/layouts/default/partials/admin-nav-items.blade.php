@@ -296,6 +296,7 @@
         'admin.articles',
         'admin.testimonials',
         'admin.testimonial-users',
+        'admin.bot-messages'
     ]);
 @endphp
 <li class="treeview {!! in_array(true, $cmsRoutesTruthArray) ? 'active' : '' !!}">
@@ -307,6 +308,30 @@
                     </span>
     </a>
     <ul class="treeview-menu">
+        <li class="treeview {!! \Str::contains(\Request::route()->getName(), 'admin.bot-messages') ? 'active' : '' !!}">
+            <a href="#">
+                <i class="fa fa-comments-o"></i>
+                <span>Bot Messages</span>
+                <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+            </a>
+            <ul class="treeview-menu">
+                <li class="{!! \Request::route()->getName() == 'admin.bot-messages.overview' ? 'active' : '' !!}">
+                    <a href="{!! route('admin.bot-messages.overview', ['page' => 1]) !!}">
+                        <i class="fa fa-list"></i>
+                        Overview
+                    </a>
+                </li>
+                <li class="{!! \Request::route()->getName() == 'admin.bot-messages.create' ? 'active' : '' !!}">
+                    <a href="{!! route('admin.bot-messages.create') !!}">
+                        <i class="fa fa-plus"></i>
+                        Create
+                    </a>
+                </li>
+            </ul>
+        </li>
+
         <li class="treeview {!! \Str::contains(\Request::route()->getName(), 'admin.articles') ? 'active' : '' !!}">
             <a href="#">
                 <i class="fa fa-newspaper-o"></i>
@@ -332,7 +357,7 @@
         </li>
         <li class="treeview {!! \Str::contains(\Request::route()->getName(), 'admin.faqs') ? 'active' : '' !!}">
             <a href="#">
-                <i class="fa fa-newspaper-o"></i>
+                <i class="fa fa-question-circle"></i>
                 <span>Faqs</span>
                 <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>

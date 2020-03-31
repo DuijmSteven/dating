@@ -357,6 +357,26 @@ Route::group([
     });
 
     Route::group([
+        'prefix' => 'bot-messages'
+    ], function () {
+        Route::get('/', 'Admin\BotMessageController@index')
+            ->name('admin.bot-messages.overview');
+
+        Route::delete('{botMessageId}', 'Admin\BotMessageController@destroy')
+            ->name('admin.bot-messages.destroy');
+
+        Route::get('create', 'Admin\BotMessageController@getCreate')
+            ->name('admin.bot-messages.create');
+        Route::post('/', 'Admin\BotMessageController@post')
+            ->name('admin.bot-messages.post');
+
+        Route::get('{botMessageId}', 'Admin\BotMessageController@getUpdate')
+            ->name('admin.bot-messages.edit');
+        Route::put('{botMessageId}', 'Admin\BotMessageController@update')
+            ->name('admin.bot-messages.update');
+    });
+
+    Route::group([
         'prefix' => 'faqs'
     ], function () {
         Route::get('/', 'Admin\FaqController@index')

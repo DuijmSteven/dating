@@ -90,7 +90,7 @@
                                       required
                                       rows="20"
                                       data-provide="markdown"
-                            >{!! $article->getBody() !!}</textarea>
+                            >{!! $article->getMetaDescription() !!}</textarea>
                             @if ($errors->has('meta_description'))
                                 {!! $errors->first('meta_description', '<small class="form-error">:message</small>') !!}
                             @endif
