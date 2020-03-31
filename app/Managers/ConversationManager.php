@@ -76,12 +76,13 @@ class ConversationManager
         ->pluck('id')
         ->toArray();
 
-        $isNewConversation = $conversation->messages()->count() > 1 ? false : true;
+        $messagesCount = $conversation->messages()->count();
+        $isNewConversation = $messagesCount > 0 ? false : true;
         $senderConversationsWithRepliesTodayCount  = $sender->conversationsWithRepliesToday()->get()->count();
 
         $replyable = true;
 
-        // some new convos need to be set to not be replied ever
+        // some new convos need to be set to never be replied
         if ($isNewConversation) {
             if ($senderConversationsWithRepliesTodayCount === 0) {
                 $replyable = true;
@@ -91,7 +92,41 @@ class ConversationManager
         }
 
         if ($replyable) {
-            if (in_array($messageData['recipient_id'], $onlineBotIds)) {
+            $exemptFromDelay = false;
+
+            if (!$isNewConversation) {
+                $recentBotMessage = null;
+                $maxIterations = min($messagesCount, 3);
+
+                for ($i = 0; $i < $maxIterations; $i++) {
+                    /** @var ConversationMessage $message */
+                    $message = $conversation->messages[$i];
+
+                    if ((int) $message->getSenderId() === (int) $messageData['recipient_id']) {
+                        /** @var ConversationMessage $recentBotMessage */
+                        $recentBotMessage = $conversation->messages[0];
+                        $recentBotMessageSenderId = $recentBotMessage->getSenderId();
+                        $recentBotMessageCreatedAt = $recentBotMessage->getCreatedAt();
+
+
+                        \Log::debug($recentBotMessageSenderId);
+                        \Log::debug($messageData['recipient_id']);
+                        \Log::debug($recentBotMessage ? 'true' : 'false');
+                        break;
+                    }
+                }
+
+                if (
+                    $recentBotMessage &&
+                    $recentBotMessageCreatedAt->gt(Carbon::now()->subHours(1)))
+                {
+                    $exemptFromDelay = true;
+                }
+            }
+
+            \Log::debug($exemptFromDelay ? 'true' : 'false');
+
+            if (in_array($messageData['recipient_id'], $onlineBotIds) || $exemptFromDelay) {
                 $replyableAt = Carbon::now();
             } else {
                 if ($conversation->getReplyableAt() && $conversation->getReplyableAt()->gt(Carbon::now())) {
@@ -188,7 +223,10 @@ class ConversationManager
             })
             ->where('replyable_at', '<=', Carbon::now())
             ->withTrashed()
-            ->get();
+            ->get()
+            ->sortByDesc(function ($conversation) {
+                return $conversation->messages[0]->getCreatedAt();
+            })->take(10);
 
         return $conversations;
     }
@@ -198,9 +236,9 @@ class ConversationManager
      */
     public function unrepliedPeasantBotConversations()
     {
-        $conversations = Conversation::with(['userA', 'userB', 'messages'])
+        $conversations = Conversation::with(['userA', 'userB'])
             ->with(['messages' => function ($query) {
-                $query->orderBy('id', 'desc');
+                $query->orderBy('created_at', 'desc');
             }])
             ->has('messages', '>', '1')
             ->where(function ($query) {
@@ -211,7 +249,6 @@ class ConversationManager
             ->where('replyable_at', '<=', Carbon::now())
             ->get()
             ->filter(function ($value, $key) {
-
                 if (
                     $value->messages[0]->sender &&
                     $value->messages[0]->sender->active &&
@@ -222,7 +259,11 @@ class ConversationManager
                 } else {
                     return false;
                 }
-            });
+            })
+            ->sortByDesc(function ($conversation) {
+                return $conversation->messages[0]->getCreatedAt();
+            })
+            ->take(10);
 
         return $conversations;
     }
@@ -578,6 +619,9 @@ class ConversationManager
     public function createOrRetrieveConversation(int $userAId, int $userBId)
     {
         $conversation = $this->conversation
+            ->with(['messages' => function ($query) {
+                $query->orderBy('created_at', 'desc');
+            }])
             ->where('user_a_id', $userAId)
             ->where('user_b_id', $userBId)
             ->orWhere(function ($query) use ($userAId, $userBId) {
