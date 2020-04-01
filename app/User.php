@@ -1224,7 +1224,7 @@ class User extends Authenticatable
      */
     public function account()
     {
-        return $this->hasOne('App\UserAccount');
+        return $this->hasOne(UserAccount::class);
     }
 
     /**
@@ -1232,6 +1232,14 @@ class User extends Authenticatable
      */
     public function activity()
     {
-        return $this->hasMany('App\Activity');
+        return $this->hasMany(Activity::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function affiliateTracking()
+    {
+        return $this->hasOne(UserAffiliateTracking::class, 'user_id');
     }
 }
