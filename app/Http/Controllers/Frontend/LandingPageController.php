@@ -26,7 +26,9 @@ class LandingPageController extends FrontendController
                 'users' => $users,
                 'carbonNow' => Carbon::now(),
                 'testimonials' => $testimonials,
-                'formType' => 'register'
+                'formType' => 'register',
+                'mediaId' => $request->input('utm_campaign'),
+                'clickId' => $request->input('clid')
             ]
         );
     }

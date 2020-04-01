@@ -11,6 +11,7 @@ use App\Milestone;
 use App\Services\GeocoderService;
 use App\User;
 use App\UserAccount;
+use App\UserAffiliateTracking;
 use App\UserEmailTypeInstance;
 use App\UserMeta;
 use App\RoleUser;
@@ -106,6 +107,23 @@ trait RegistersUsers
         } catch (\Exception $exception) {
             DB::rollBack();
             throw $exception;
+        }
+
+        //Set the affiliate tracking data
+        if ($request->input('mediaId') && $request->input('clickId')) {
+            try {
+                /** @var UserAffiliateTracking $userAffiliateTrackingInstance */
+                $userAffiliateTrackingInstance = new UserAffiliateTracking([
+                    'user_id' => $createdUser->id,
+                    'media_id' => $request->input('mediaId'),
+                    'click_id' => $request->input('clickId'),
+                ]);
+
+                $userAffiliateTrackingInstance->save();
+            } catch (\Exception $exception) {
+                DB::rollBack();
+                throw $exception;
+            }
         }
 
         try {

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserAffiliateTracking extends TimeZonedModel
 {
-    public $table = 'user_affiate_tracking';
+    public $table = 'user_affiliate_tracking';
 
     /**
      * The attributes that are mass assignable.
