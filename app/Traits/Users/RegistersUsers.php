@@ -209,13 +209,14 @@ trait RegistersUsers
      */
     protected function registered(Request $request, $user)
     {
+        $clientIP = \Request::ip();
+        $countryCode = $this->getLocationFromIp($clientIP);
+        dd($countryCode);
         //In case the registration came from an affiliate, hit publisher callback
         if ($user->affiliateTracking()->exists()) {
             $genderLookingForGender = explode("-", $request->all()['lookingFor']);
             $gender = $genderLookingForGender[0];
-            $clientIP = \Request::ip();
-            $countryCode = $this->getLocationFromIp($clientIP);
-            dd($countryCode);
+
             $client = new Client();
             try {
                 $response = $client->request(
