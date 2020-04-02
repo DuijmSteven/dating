@@ -209,7 +209,6 @@ trait RegistersUsers
      */
     protected function registered(Request $request, $user)
     {
-        dd(\Request::ip());
         //In case the registration came from an affiliate, hit publisher callback
         if ($user->affiliateTracking()->exists()) {
             $genderLookingForGender = explode("-", $request->all()['lookingFor']);
