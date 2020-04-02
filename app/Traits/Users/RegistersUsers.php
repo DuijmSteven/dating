@@ -18,6 +18,8 @@ use App\RoleUser;
 use Carbon\Carbon;
 use Cornford\Googlmapper\Mapper;
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -207,6 +209,23 @@ trait RegistersUsers
      */
     protected function registered(Request $request, $user)
     {
-        //
+        //In case the registration came from an affiliate, hit publisher callback
+        if ($user->affiliateTracking()->exists()) {
+            $client = new Client();
+            try {
+                $response = $client->request(
+                    'GET',
+                    'https://mt67.net/d/?bdci='. $user->affiliateTracking->getClickId() .'&ti=' . $user->id . '&pn=daisycon&iv=media-' . $user->affiliateTracking->getMediaId(),
+                    [
+                        'timeout' => 4
+                    ]
+                );
+            } catch (RequestException $e) {
+                \Log::error('Affiliate postback error - ' . Psr7\str($e->getRequest()));
+                if ($e->hasResponse()) {
+                    \Log::error('Affiliate postback error - ' . Psr7\str($e->getResponse()));
+                }
+            }
+        }
     }
 }
