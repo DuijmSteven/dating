@@ -8,6 +8,9 @@ use App\Mail\UserBoughtCredits;
 use App\Mail\Welcome;
 use App\Payment;
 use App\User;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\Request;
 use App\Interfaces\PaymentProvider;
 use App\Managers\PaymentManager;
@@ -98,6 +101,7 @@ class PaymentController extends FrontendController
         $paymentMethod = session('paymentMethod');
         $creditPackId = session('creditPackId');
         $creditPack = Creditpack::find($creditPackId);
+        $transactionTotal = number_format((float) $creditPack->price/100, 2, '.', '');
 
         //get payment status from db
         $paymentStatus = Payment::where('user_id', $this->authenticatedUser->getId())
@@ -129,6 +133,25 @@ class PaymentController extends FrontendController
 
                 Mail::to('develyvof@gmail.com')
                     ->queue($userBoughtCreditsEmail);
+
+                //In case the buyer came from an affiliate, hit publisher callback
+                if ($this->authenticatedUser->affiliateTracking()->exists()) {
+                    $client = new Client();
+                    try {
+                        $response = $client->request(
+                            'GET',
+                            'https://mt67.net/d/?bdci='. $this->authenticatedUser->affiliateTracking->getClickId() .'&ti=' . $transactionId . '&r=' . $transactionTotal . '&pn=daisycon&iv=media-' . $this->authenticatedUser->affiliateTracking->getMediaId(),
+                            [
+                                'timeout' => 4
+                            ]
+                        );
+                    } catch (RequestException $e) {
+                        \Log::error('Affiliate postback error - ' . Psr7\str($e->getRequest()));
+                        if ($e->hasResponse()) {
+                            \Log::error('Affiliate postback error - ' . Psr7\str($e->getResponse()));
+                        }
+                    }
+                }
             }
 
             $check['status'] ? $status = 'success' : $status = 'fail';
@@ -140,7 +163,7 @@ class PaymentController extends FrontendController
             'status' => $status,
             'info' => $info,
             'transactionId' => $transactionId,
-            'transactionTotal' => number_format((float) $creditPack->price/100, 2, '.', ''),
+            'transactionTotal' => $transactionTotal,
             'sku' => $creditPack->name . $creditPack->credits,
             'name' => $creditPack->name
         ]);
