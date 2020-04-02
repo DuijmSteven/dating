@@ -216,6 +216,7 @@ trait RegistersUsers
             $clientIP = \Request::ip();
             $countryCode = $this->getLocationFromIp($clientIP);
             \Log::debug('Country code: ' . $countryCode);
+            \Log::debug('IP: ' . $clientIP);
             $client = new Client();
             try {
                 $response = $client->request(
