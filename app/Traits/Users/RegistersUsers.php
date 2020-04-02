@@ -211,11 +211,13 @@ trait RegistersUsers
     {
         //In case the registration came from an affiliate, hit publisher callback
         if ($user->affiliateTracking()->exists()) {
+            $clientIP = \Request::ip();
+            $countryCode = $this->getLocationFromIp($clientIP);
             $client = new Client();
             try {
                 $response = $client->request(
                     'GET',
-                    'https://mt67.net/d/?bdci='. $user->affiliateTracking->getClickId() .'&ti=' . $user->id . '&pn=daisycon&iv=media-' . $user->affiliateTracking->getMediaId(),
+                    'https://mt67.net/d/?bdci='. $user->affiliateTracking->getClickId() .'&ti=' . $user->id . '&pn=daisycon&iv=media-' . $user->affiliateTracking->getMediaId() . '&c=' . $countryCode,
                     [
                         'timeout' => 4
                     ]
@@ -225,6 +227,27 @@ trait RegistersUsers
                 if ($e->hasResponse()) {
                     \Log::error('Affiliate postback error - ' . Psr7\str($e->getResponse()));
                 }
+            }
+        }
+    }
+
+    protected function getLocationFromIp($ip)
+    {
+        $client = new Client();
+        try {
+            $response = $client->request(
+                'GET',
+                'http://api.ipstack.com/' . $ip . '?access_key=b56f13e4f12b980317694de933fd340d',
+                [
+                    'timeout' => 4
+                ]
+            );
+            $response = json_decode($response->getBody(), true);
+            return $response['country_code'];
+        } catch (RequestException $e) {
+            \Log::error('Cannot get IP - ' . Psr7\str($e->getRequest()));
+            if ($e->hasResponse()) {
+                \Log::error('Cannot get IP - ' . Psr7\str($e->getResponse()));
             }
         }
     }
