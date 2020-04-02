@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Creditpack;
+use App\Helpers\ApplicationConstants\UserConstants;
 use App\Mail\CreditsBought;
 use App\Mail\UserBoughtCredits;
 use App\Mail\Welcome;
@@ -140,7 +141,7 @@ class PaymentController extends FrontendController
                     try {
                         $response = $client->request(
                             'GET',
-                            'https://mt67.net/d/?bdci='. $this->authenticatedUser->affiliateTracking->getClickId() .'&ti=' . $transactionId . '&r=' . $transactionTotal . '&pn=daisycon&iv=media-' . $this->authenticatedUser->affiliateTracking->getMediaId(),
+                            'https://mt67.net/d/?bdci='. $this->authenticatedUser->affiliateTracking->getClickId() .'&ti=' . $transactionId . '&r=' . $transactionTotal . '&pn=sale-XP-Altijdsex.nl&iv=media-' . $this->authenticatedUser->affiliateTracking->getMediaId() . '&cc=sale&g=' . UserConstants::selectableField('gender')[$this->authenticatedUser->meta->gender],
                             [
                                 'timeout' => 4
                             ]

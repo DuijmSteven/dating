@@ -211,13 +211,15 @@ trait RegistersUsers
     {
         //In case the registration came from an affiliate, hit publisher callback
         if ($user->affiliateTracking()->exists()) {
+            $genderLookingForGender = explode("-", $request->all()['lookingFor']);
+            $gender = $genderLookingForGender[0];
             $clientIP = \Request::ip();
             $countryCode = $this->getLocationFromIp($clientIP);
             $client = new Client();
             try {
                 $response = $client->request(
                     'GET',
-                    'https://mt67.net/d/?bdci='. $user->affiliateTracking->getClickId() .'&ti=' . $user->id . '&pn=daisycon&iv=media-' . $user->affiliateTracking->getMediaId() . '&c=' . $countryCode,
+                    'https://mt67.net/d/?bdci='. $user->affiliateTracking->getClickId() .'&ti=' . $user->id . '&pn=lead-XP-Altijdsex.nl&iv=media-' . $user->affiliateTracking->getMediaId() . '&c=' . $countryCode .'&g=' . $gender . '&cc=lead',
                     [
                         'timeout' => 4
                     ]
