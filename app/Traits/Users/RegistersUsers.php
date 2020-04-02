@@ -215,8 +215,6 @@ trait RegistersUsers
             $gender = $genderLookingForGender[0];
             $clientIP = $this->getUserIp();
             $countryCode = $this->getLocationFromIp($clientIP);
-            \Log::debug('Country code: ' . $countryCode);
-            \Log::debug('IP: ' . $clientIP);
             $client = new Client();
             try {
                 $response = $client->request(
