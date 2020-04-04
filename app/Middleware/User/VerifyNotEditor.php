@@ -20,7 +20,7 @@ class VerifyNotEditor
             is_null(\Auth::user()) ||
             (\Auth::user()->roles()->get()[0]->name === 'editor')
         ) {
-            return redirect()->route('admin.bots.retrieve');
+            return redirect()->route('admin.editors.created-bots.overview');
         }
 
         return $next($request);
