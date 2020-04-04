@@ -23,12 +23,7 @@ class VerifyNotEditor
         if (
             (\Auth::user()->roles()->get()[0]->name === 'editor')
         ) {
-            return redirect()->route(
-                'admin.editors.created-bots.overview',
-                [
-                    'editorId' => \Auth::user()->getId()
-                ]
-            );
+            return redirect()->route('editors.bots.created.overview');
         }
 
         return $next($request);
