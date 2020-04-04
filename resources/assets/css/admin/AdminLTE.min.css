@@ -6324,3 +6324,7 @@ table .action-buttons .btn {
 .skin-blue .sidebar-menu .treeview-menu > li.active > a, .skin-blue .sidebar-menu .treeview-menu > li > a:hover {
     background-color: #af6666;
 }
+
+.main-sidebar {
+    overflow: hidden;
+}
