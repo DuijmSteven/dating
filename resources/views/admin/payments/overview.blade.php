@@ -36,10 +36,11 @@
                                 <tr>
                                     <td>{!! $payment->id !!}</td>
                                     <td>
-                                        <strong>ID:</strong> {{ $payment->peasant ? $payment->peasant->username : 'The user does not exist' }}<br>
-
                                         @if($payment->peasant)
+                                            <strong>Username:</strong> {{ $payment->peasant->username }}<br>
                                             <strong>ID:</strong> <a href="{{ route('admin.peasants.edit.get', ['peasantId' => $payment->peasant->id]) }}">{{ $payment->peasant->id }}</a><br>
+                                        @else
+                                            The user does not exist
                                         @endif
                                     </td>
                                     <td>{{ ucfirst($payment->method) }}</td>
