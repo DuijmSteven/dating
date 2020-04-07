@@ -6,6 +6,7 @@ use App\BotMessage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BotMessages\BotMessageCreateRequest;
 use App\Http\Requests\Admin\BotMessages\BotMessageUpdateRequest;
+use App\User;
 use Carbon\Carbon;
 
 class BotMessageController extends Controller
@@ -20,13 +21,37 @@ class BotMessageController extends Controller
      */
     public function index()
     {
-        $botMessages = BotMessage::orderBy('created_at', 'desc')->paginate(40);
+        $botMessages = BotMessage::with(['bot'])->orderBy('created_at', 'desc')->paginate(40);
 
         return view(
             'admin.bot-messages.overview',
             [
                 'title' => 'Bot Messages Overview - ' . \config('app.name'),
                 'headingLarge' => 'Bot Messages',
+                'headingSmall' => 'Overview',
+                'carbonNow' => Carbon::now(),
+                'botMessages' => $botMessages
+            ]
+        );
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function ofBotId(int $botId)
+    {
+        $botMessages = BotMessage::orderBy('created_at', 'desc')
+            ->where('bot_id', $botId)
+            ->paginate(40);
+
+        /** @var User $bot */
+        $bot = User::find($botId);
+
+        return view(
+            'admin.bot-messages.overview',
+            [
+                'title' => 'Bot Messages of bot ID: ' . $botId . ' - ' . \config('app.name'),
+                'headingLarge' => 'Bot Messages of ' . $bot->getUsername() . '(ID: ' . $bot->getId() . ')',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
                 'botMessages' => $botMessages
@@ -62,12 +87,23 @@ class BotMessageController extends Controller
      */
     public function getCreate()
     {
+        $bots = User::withCount([
+                'botMessages'
+            ])->whereHas('roles', function ($query) {
+                $query->where('id', User::TYPE_BOT);
+            })
+            ->get()
+            ->sortByDesc(function ($user) {
+                return $user->botMessages->count();
+            });
+
         return view(
             'admin.bot-messages.create',
             [
                 'title' => 'Create bot message - ' . \config('app.name'),
                 'headingLarge' => 'Bot Messages',
-                'headingSmall' => 'Create'
+                'headingSmall' => 'Create',
+                'bots' => $bots
             ]
         );
     }
@@ -78,13 +114,24 @@ class BotMessageController extends Controller
      */
     public function getUpdate(int $botMessageId)
     {
+        $bots = User::withCount([
+            'botMessages'
+        ])->whereHas('roles', function ($query) {
+            $query->where('id', User::TYPE_BOT);
+        })
+            ->get()
+            ->sortByDesc(function ($user) {
+                return $user->botMessages->count();
+            });
+
         return view(
             'admin.bot-messages.edit',
             [
                 'title' => 'Edit bot message - ' . \config('app.name'),
                 'headingLarge' => 'Bot Messages',
                 'headingSmall' => 'Edit',
-                'botMessage' => BotMessage::find($botMessageId)
+                'botMessage' => BotMessage::find($botMessageId),
+                'bots' => $bots
             ]
         );
     }
@@ -97,6 +144,7 @@ class BotMessageController extends Controller
         try {
             BotMessage::create([
                 'body' => $request->get('body'),
+                'bot_id' => $request->get('bot_id'),
                 'status' => $request->get('status')
             ]);
 
@@ -127,6 +175,7 @@ class BotMessageController extends Controller
             $botMessage = BotMessage::findOrFail($botMessageId);
             $botMessage->setBody($request->get('body'));
             $botMessage->setStatus($request->get('status'));
+            $botMessage->setBotId($request->get('bot_id'));
             $botMessage->save();
 
             $alerts[] = [

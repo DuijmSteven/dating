@@ -98,18 +98,24 @@ class StatisticsManager
     public function topMessagersBetweenDates($startDate, $endDate)
     {
         return User::with(['profileImage', 'account', 'messages' => function ($query) use ($startDate, $endDate) {
-            $query->where('created_at', '>=', $startDate);
-            $query->where('created_at', '<=', $endDate);
-        }])->whereHas('roles', function($query) {
-            $query->where('name', 'peasant');
-        })->whereHas('payments', function($query) {
-            $query->where('status', Payment::STATUS_COMPLETED);
-        })->whereHas('messages', function ($query) use ($startDate, $endDate) {
-            $query->where('created_at', '>=', $startDate);
-            $query->where('created_at', '<=', $endDate);
-        })->get()->sortByDesc(function ($user) {
-            return $user->messages->count();
-        })->take(6);
+                $query->where('created_at', '>=', $startDate);
+                $query->where('created_at', '<=', $endDate);
+            }])
+            ->whereHas('roles', function($query) {
+                $query->where('name', 'peasant');
+            })
+            ->whereHas('payments', function($query) {
+                $query->where('status', Payment::STATUS_COMPLETED);
+            })
+            ->whereHas('messages', function ($query) use ($startDate, $endDate) {
+                $query->where('created_at', '>=', $startDate);
+                $query->where('created_at', '<=', $endDate);
+            })
+            ->get()
+            ->sortByDesc(function ($user) {
+                return $user->messages->count();
+            })
+            ->take(6);
     }
 
     private function peasantsCreditpackId(int $creditpackId) : int {

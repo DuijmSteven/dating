@@ -116,7 +116,8 @@ class User extends Authenticatable
         'messagesLastMonth',
         'conversationsAsUserA',
         'conversationsAsUserB',
-        'views'
+        'views',
+        'botMessages'
     ];
 
     protected $primaryKey = 'id';
@@ -1241,5 +1242,13 @@ class User extends Authenticatable
     public function affiliateTracking()
     {
         return $this->hasOne(UserAffiliateTracking::class, 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function botMessages()
+    {
+        return $this->hasMany(BotMessage::class, 'bot_id');
     }
 }
