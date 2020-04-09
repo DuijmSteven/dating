@@ -22,6 +22,7 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>Transaction ID</th>
                                 <th>User</th>
                                 <th>Method</th>
                                 <th>Item</th>
@@ -34,7 +35,8 @@
                         <tbody>
                             @foreach($payments as $payment)
                                 <tr>
-                                    <td>{!! $payment->id !!}</td>
+                                    <td>{!! $payment->getId() !!}</td>
+                                    <td>{!! $payment->getTransactionId() !!}</td>
                                     <td>
                                         @if($payment->peasant)
                                             <strong>Username:</strong> {{ $payment->peasant->username }}<br>

@@ -67,7 +67,7 @@ class User extends Authenticatable
         'images',
         'completedPayments',
         'hasViewed',
-        'hasViewedUnique'
+        'hasViewedUnique',
     ];
 
     const PEASANT_RELATION_COUNTS = [
@@ -88,7 +88,8 @@ class User extends Authenticatable
         'messagesThisMonth',
         'messagesLastMonth',
         'conversationsAsUserA',
-        'conversationsAsUserB'
+        'conversationsAsUserB',
+        'payments'
     ];
 
     const BOT_RELATIONS = [

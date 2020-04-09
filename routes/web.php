@@ -444,6 +444,8 @@ Route::group([
     ], function () {
         Route::get('/', 'Admin\PaymentController@index')
             ->name('admin.payments.overview');
+        Route::get('{peasantId}', 'Admin\PaymentController@ofPeasantId')
+            ->name('admin.payments.peasant.overview');
     });
 
     Route::get('layout', 'Admin\ModuleController@showLayout')

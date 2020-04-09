@@ -54,6 +54,28 @@
                                 <strong>Unique:</strong> {{ $peasant->hasViewedUnique()->get()->count() }}
                             </div>
                         </div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-4">
+                            <strong>Credits</strong>: {{ $peasant->account->getCredits() }} <br>
+
+                            @if(count($peasant->completedPayments) > 0)
+                                <div class="innerTableWidgetHeading"><strong>Payments</strong></div>
+                                <div class="innerTableWidgetBody">
+                                    <strong># of payments</strong>: {{ count($peasant->completedPayments) }} <br>
+                                    <strong>Last Payment amount</strong>: &euro;{{ number_format($peasant->completedPayments[0]->amount/ 100, 2) }} <br>
+                                    <strong>Last Payment date</strong>: {{ $peasant->completedPayments[0]->created_at->format('d-m-Y H:i:s') }} <br>
+
+                                    <?php
+                                    $moneySpent = 0;
+                                    foreach ($peasant->completedPayments as $payment) {
+                                        $moneySpent += $payment->amount;
+                                    }
+                                    ?>
+
+                                    <strong>Money spent</strong>: &euro;{{ number_format($moneySpent/ 100, 2) }} <br>
+                                </div>
+                            @endif
+                        </div>
                     </div>
                 </div>
 

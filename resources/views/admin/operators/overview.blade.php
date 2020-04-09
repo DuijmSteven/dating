@@ -26,21 +26,36 @@
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Profile image</th>
-                            <th>Stats</th>
                             <th>Operator data</th>
+                            <th>Stats</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($operators as $operator)
                             <tr>
-                                <td>{!! $operator->getId() !!}</td>
                                 <td>
-                                    <a href="">
-                                        <img width="120" src="{!! \StorageHelper::profileImageUrl($operator, true) !!}"
-                                             alt="">
+                                    <a href="{!! route('admin.operators.edit.get', ['operatorId' => $operator->id]) !!}">
+                                        {!! $operator->getId() !!}
                                     </a>
+                                </td>
+                                <td>
+                                    <a href="{!! route('admin.operators.edit.get', ['operatorId' => $operator->id]) !!}">
+                                        <img
+                                            style="object-fit: cover; width: 70px; height: 70px"
+                                            src="{!! \StorageHelper::profileImageUrl($operator, true) !!}"
+                                            alt=""
+                                        >
+                                    </a>
+
+                                    <br><br>
+
+                                    <div class="innerTableWidgetHeading"><strong>Payments</strong></div>
+                                    <div class="innerTableWidgetBody">
+                                        <strong>{!! @trans('user_constants.email') !!}:</strong> {!! $operator->email !!} <br>
+                                        <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $operator->username !!} <br>
+                                        <strong>{!! @trans('user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($operator->meta->dob) !!} <br>
+                                    </div>
                                 </td>
                                 <td>
                                     <h5 class="statsHeading"><strong>Messages sent</strong></h5>
@@ -53,11 +68,6 @@
                                         <strong>Yesterday:</strong> {!! $operator->operator_messages_yesterday_count !!} <br>
                                         <strong>Today:</strong> {!! $operator->operator_messages_today_count !!} <br>
                                     </div>
-                                </td>
-                                <td>
-                                    <strong>{!! @trans('user_constants.email') !!}:</strong> {!! $operator->email !!} <br>
-                                    <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $operator->username !!} <br>
-                                    <strong>{!! @trans('user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($operator->meta->dob) !!} <br>
                                 </td>
                                 <td class="action-buttons">
                                     <a href="{!! route('admin.operators.edit.get', ['operatorId' => $operator->id]) !!}" class="btn btn-default">Edit</a>
