@@ -11,11 +11,14 @@ class ConversationMessage extends TimeZonedModel
 {
     use SoftDeletes;
 
+    const OPERATOR_MESSAGE_TYPE_STOPPED = 1;
+
     public $table = 'conversation_messages';
 
     protected $fillable = [
         'conversation_id',
         'operator_id',
+        'operator_message_type',
         'sender_id',
         'recipient_id',
         'body',

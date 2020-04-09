@@ -29,7 +29,6 @@
                             <th>Profile image</th>
                             <th>User Credits, Payments & Data</th>
                             <th>Stats</th>
-                            <th>User data</th>
                             <th>Actions</th>
                         </tr>
                         </thead>

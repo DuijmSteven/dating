@@ -84,9 +84,6 @@ class ConversationManager
         $senderConversationsWithRepliesTodayCount  = $sender->conversationsWithRepliesToday()->get()->count();
 
         if ($sender->isPeasant() && $recipient->isBot()) {
-            \Log::debug('peasant');
-
-
             $replyable = true;
 
             // some new convos need to be set to never be replied
@@ -147,15 +144,18 @@ class ConversationManager
             }
 
             $conversation->setReplyableAt($replyableAt);
-
-            \Log::debug($replyableAt);
-
         } elseif ($sender->isBot() && !$isNewConversation && $conversation->messages->count() > 2) {
             if (
                 $conversation->messages[0]->sender->roles[0]->id === User::TYPE_PEASANT &&
                 2 === rand(1, 2)
             ) {
                 $conversation->setReplyableAt(null);
+            }
+
+            if (
+                $conversation->messages[0]->sender->roles[0]->id === User::TYPE_BOT
+            ) {
+                $operatorMessageType = ConversationMessage::OPERATOR_MESSAGE_TYPE_STOPPED;
             }
         }
 
@@ -169,7 +169,8 @@ class ConversationManager
                 'recipient_id' => $messageData['recipient_id'],
                 'body' => $messageData['message'],
                 'has_attachment' => $hasAttachment,
-                'operator_id' => isset($messageData['operator_id']) ? $messageData['operator_id'] : null
+                'operator_id' => isset($messageData['operator_id']) ? $messageData['operator_id'] : null,
+                'operator_message_type' => isset($operatorMessageType) ? $operatorMessageType : null
             ]);
 
             $messageInstance->save();
