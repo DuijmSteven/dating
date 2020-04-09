@@ -254,8 +254,48 @@ class ConversationManager
                     $value->messages[0]->sender->active &&
                     $value->messages[0]->recipient
                 ) {
-                    return $value->messages[0]->sender->roles[0]->id === User::TYPE_PEASANT &&
+                    return
+                        $value->messages[0]->sender->roles[0]->id === User::TYPE_PEASANT &&
                         $value->messages[0]->recipient->roles[0]->id === User::TYPE_BOT;
+                } else {
+                    return false;
+                }
+            })
+            ->sortByDesc(function ($conversation) {
+                return $conversation->messages[0]->getCreatedAt();
+            })
+            ->take(10);
+
+        return $conversations;
+    }
+
+    /**
+     * @return array
+     */
+    public function stoppedPeasantBotConversations()
+    {
+        $conversations = Conversation::with(['userA', 'userB'])
+            ->with(['messages' => function ($query) {
+                $query->orderBy('created_at', 'desc');
+            }])
+            ->has('messages', '>', '2')
+            ->where(function ($query) {
+                $query->where('locked_at', null)
+                    ->orWhere('locked_at', '<', Carbon::now()->subMinutes(self::CONVERSATION_LOCKING_TIME));
+            })
+            ->withTrashed()
+            ->where('replyable_at', '<=', Carbon::now())
+            ->get()
+            ->filter(function ($value, $key) {
+                if (
+                    $value->messages[0]->sender &&
+                    $value->messages[0]->sender->active &&
+                    $value->messages[0]->recipient
+                ) {
+                    return
+                        $value->messages[0]->getCreatedAt()->lt(Carbon::now('Europe/Amsterdam')->subDays(2)) &&
+                        $value->messages[0]->sender->roles[0]->id === User::TYPE_BOT &&
+                        $value->messages[0]->recipient->roles[0]->id === User::TYPE_PEASANT;
                 } else {
                     return false;
                 }

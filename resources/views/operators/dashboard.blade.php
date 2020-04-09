@@ -12,6 +12,7 @@
         @foreach([
             'new' => 'newConversations',
             'unreplied' => 'unrepliedConversations',
+            'stopped' => 'stoppedConversations'
         ] as $typeName => $conversationType)
 
             <div class="panel panel-default">
