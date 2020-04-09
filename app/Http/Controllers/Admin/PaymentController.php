@@ -7,6 +7,7 @@ use App\Helpers\ApplicationConstants\MetaConstants;
 use App\Helpers\ApplicationConstants\PaginationConstants;
 use App\Http\Controllers\Controller;
 use App\Payment;
+use App\User;
 use Carbon\Carbon;
 
 /**
@@ -54,6 +55,9 @@ class PaymentController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(PaginationConstants::$perPage['backend']['default']);
 
+
+        $peasant = User::find($peasantId);
+
         $creditpacks = Creditpack::all();
         $creditpackNamePerId = [];
 
@@ -65,7 +69,7 @@ class PaymentController extends Controller
             'admin.payments.overview',
             [
                 'title' => 'Payments Overview - ' . config('app.name'),
-                'headingLarge' => 'Payments',
+                'headingLarge' => 'Payments of ' . $peasant->getUsername() . ' (ID: ' . $peasant->getId() . ')',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
                 'payments' => $payments,
