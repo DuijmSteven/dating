@@ -50,7 +50,7 @@
 
                                     <br><br>
 
-                                    <div class="innerTableWidgetHeading"><strong>Payments</strong></div>
+                                    <div class="innerTableWidgetHeading"><strong>Operator data</strong></div>
                                     <div class="innerTableWidgetBody">
                                         <strong>{!! @trans('user_constants.email') !!}:</strong> {!! $operator->email !!} <br>
                                         <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $operator->username !!} <br>

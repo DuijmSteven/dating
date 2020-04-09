@@ -50,7 +50,7 @@
 
                                     <br><br>
 
-                                    <div class="innerTableWidgetHeading"><strong>User Data</strong></div>
+                                    <div class="innerTableWidgetHeading"><strong>Editor Data</strong></div>
                                     <div class="innerTableWidgetBody">
                                         <strong>{!! @trans('user_constants.email') !!}:</strong> {!! $editor->email !!} <br>
                                         <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $editor->username !!} <br>
