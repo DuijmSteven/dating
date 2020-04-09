@@ -65,7 +65,6 @@ class ConversationManager
             throw $exception;
         }
 
-
         $onlineIds = Activity::users(5)->pluck('user_id')->toArray();
 
         $onlineBotIds = User::whereHas('roles', function ($query) {
@@ -215,7 +214,8 @@ class ConversationManager
                     ->where('active', 1);
             })
             ->whereHas('userB.roles', function ($query) {
-                $query->where('id', User::TYPE_BOT);
+                $query->where('id', User::TYPE_BOT)
+                    ->where('active', 1);
             })
             ->where(function ($query) {
                 $query->where('locked_at', null)
@@ -252,7 +252,8 @@ class ConversationManager
                 if (
                     $value->messages[0]->sender &&
                     $value->messages[0]->sender->active &&
-                    $value->messages[0]->recipient
+                    $value->messages[0]->recipient &&
+                    $value->messages[0]->recipient->active
                 ) {
                     return
                         $value->messages[0]->sender->roles[0]->id === User::TYPE_PEASANT &&
@@ -290,12 +291,15 @@ class ConversationManager
                 if (
                     $value->messages[0]->sender &&
                     $value->messages[0]->sender->active &&
-                    $value->messages[0]->recipient
+                    $value->messages[0]->recipient &&
+                    $value->messages[0]->recipient->active
                 ) {
                     return
                         $value->messages[0]->getCreatedAt()->lt(Carbon::now('Europe/Amsterdam')->subDays(2)) &&
+                        $value->messages[0]->getCreatedAt()->gt(Carbon::now('Europe/Amsterdam')->subDays(100)) &&
                         $value->messages[0]->sender->roles[0]->id === User::TYPE_BOT &&
-                        $value->messages[0]->recipient->roles[0]->id === User::TYPE_PEASANT;
+                        $value->messages[0]->recipient->roles[0]->id === User::TYPE_PEASANT &&
+                        $value->messages[1]->sender->roles[0]->id !== User::TYPE_BOT;
                 } else {
                     return false;
                 }
@@ -303,7 +307,7 @@ class ConversationManager
             ->sortByDesc(function ($conversation) {
                 return $conversation->messages[0]->getCreatedAt();
             })
-            ->take(10);
+            ->take(200);
 
         return $conversations;
     }
