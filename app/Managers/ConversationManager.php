@@ -296,7 +296,7 @@ class ConversationManager
                 ) {
                     return
                         $value->messages[0]->getCreatedAt()->lt(Carbon::now('Europe/Amsterdam')->subDays(2)) &&
-                        $value->messages[0]->getCreatedAt()->gt(Carbon::now('Europe/Amsterdam')->subDays(100)) &&
+                        $value->messages[0]->getCreatedAt()->gt(Carbon::now('Europe/Amsterdam')->subDays(7)) &&
                         $value->messages[0]->sender->roles[0]->id === User::TYPE_BOT &&
                         $value->messages[0]->recipient->roles[0]->id === User::TYPE_PEASANT &&
                         $value->messages[1]->sender->roles[0]->id !== User::TYPE_BOT;
