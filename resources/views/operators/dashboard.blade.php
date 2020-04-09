@@ -44,6 +44,9 @@
                             <div class="col-xs-12 col-sm-4 col-md-3">
                                 <!-- Widget: user widget style 1 -->
                                 <div class="box box-widget widget-user-2 default-border">
+                                    <div class="convo-tile conversationId">
+                                        ID: {{ $conversation->getId() }}
+                                    </div>
                                     <!-- Add the bg color to the header using any of the bg-* classes -->
                                     <div class="convo-tile {!! \UserConstants::selectableField('role')[$conversation->userA->roles[0]->id] !!}">
                                         <div class="convo-tile_text">

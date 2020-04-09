@@ -5933,6 +5933,16 @@ table .action-buttons .btn {
     line-height: 17px;
 }
 
+.convo-tile.conversationId {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #2b2b2b;
+    color: #fff;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
 .convo-tile.bot {
     background-color: #635d5c;
 }
