@@ -95,7 +95,7 @@ class StatisticsManager
         return $this->peasantsCreditpackId(3);
     }
 
-    public function topMessagersBetweenDates($startDate, $endDate)
+    public function topMessagersBetweenDates($startDate, $endDate, int $amount)
     {
         return User::with(['profileImage', 'account', 'messages' => function ($query) use ($startDate, $endDate) {
                 $query->where('created_at', '>=', $startDate);
@@ -115,7 +115,7 @@ class StatisticsManager
             ->sortByDesc(function ($user) {
                 return $user->messages->count();
             })
-            ->take(6);
+            ->take($amount);
     }
 
     private function peasantsCreditpackId(int $creditpackId) : int {

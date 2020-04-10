@@ -29,8 +29,13 @@
                 </div>
             </div>
         </div>
+
+        @php
+            $amountOfListItemsVisible = 7;
+        @endphp
+
         <div class="col-xs-12 col-sm-6 col-md-4">
-            <div class="box box-widget DashboardWidget">
+            <div class="box box-widget DashboardWidget expandable">
                 <!-- Add the bg color to the header using any of the bg-* classes -->
                 <div class="bg-primary">
                     <div class="widget-us DashboardWidget_header" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
@@ -41,8 +46,12 @@
                 </div>
                 <div class="box-footer no-padding">
                     <ul class="nav nav-stacked">
+                        @php
+                            $count = 0;
+                        @endphp
+
                         @foreach($topMessagerStatistics['today'] as $user)
-                            <li>
+                            <li class="{{ $count >= $amountOfListItemsVisible ? 'hidden defaultHidden' : '' }}">
                                 @php
                                     $highlightTypeClass = '';
 
@@ -60,13 +69,29 @@
                                     <span class="DashboardWidget_count">{{ $user->messages->count() }}</span>
                                 </a>
                             </li>
+
+                            @php
+                                $count++;
+                            @endphp
                         @endforeach
+
+                        @if(count($topMessagerStatistics['today']) >= $amountOfListItemsVisible)
+                            <li>
+                                <a class="showMore" href="#">
+                                    Show more <i class="fa fa-chevron-down"></i>
+                                </a>
+
+                                <a class="showLess hidden" href="#">
+                                    Show less <i class="fa fa-chevron-up"></i>
+                                </a>
+                            </li>
+                        @endif
                     </ul>
                 </div>
             </div>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-4">
-            <div class="box box-widget DashboardWidget">
+            <div class="box box-widget DashboardWidget expandable">
                 <!-- Add the bg color to the header using any of the bg-* classes -->
                 <div class="bg-primary">
                     <div class="widget-us DashboardWidget_header" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
@@ -77,9 +102,12 @@
                 </div>
                 <div class="box-footer no-padding">
                     <ul class="nav nav-stacked">
+                        @php
+                            $count = 0;
+                        @endphp
+
                         @foreach($topMessagerStatistics['this_week'] as $user)
-                            <li>
-                            <li>
+                            <li class="{{ $count >= $amountOfListItemsVisible ? 'hidden defaultHidden' : '' }}">
                                 @php
                                     $highlightTypeClass = '';
 
@@ -97,14 +125,29 @@
                                     <span class="DashboardWidget_count">{{ $user->messages->count() }}</span>
                                 </a>
                             </li>
-                            </li>
+
+                            @php
+                                $count++;
+                            @endphp
                         @endforeach
+
+                        @if(count($topMessagerStatistics['this_week']) >= $amountOfListItemsVisible)
+                            <li>
+                                <a class="showMore" href="#">
+                                    Show more <i class="fa fa-chevron-down"></i>
+                                </a>
+
+                                <a class="showLess hidden" href="#">
+                                    Show less <i class="fa fa-chevron-up"></i>
+                                </a>
+                            </li>
+                        @endif
                     </ul>
                 </div>
             </div>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-4">
-            <div class="box box-widget DashboardWidget">
+            <div class="box box-widget DashboardWidget expandable">
                 <!-- Add the bg color to the header using any of the bg-* classes -->
                 <div class="bg-primary">
                     <div class="widget-us DashboardWidget_header" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
@@ -115,8 +158,12 @@
                 </div>
                 <div class="box-footer no-padding">
                     <ul class="nav nav-stacked">
+                        @php
+                            $count = 0;
+                        @endphp
+
                         @foreach($topMessagerStatistics['this_month'] as $user)
-                            <li>
+                            <li class="{{ $count >= $amountOfListItemsVisible ? 'hidden defaultHidden' : '' }}">
                                 @php
                                     $highlightTypeClass = '';
 
@@ -134,7 +181,23 @@
                                     <span class="DashboardWidget_count">{{ $user->messages->count() }}</span>
                                 </a>
                             </li>
+
+                            @php
+                                $count++;
+                            @endphp
                         @endforeach
+
+                        @if(count($topMessagerStatistics['this_month']) >= $amountOfListItemsVisible)
+                            <li>
+                                <a class="showMore" href="#">
+                                    Show more <i class="fa fa-chevron-down"></i>
+                                </a>
+
+                                <a class="showLess hidden" href="#">
+                                    Show less <i class="fa fa-chevron-up"></i>
+                                </a>
+                            </li>
+                        @endif
                     </ul>
                 </div>
             </div>
