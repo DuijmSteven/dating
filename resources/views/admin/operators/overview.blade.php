@@ -82,7 +82,9 @@
                                 </td>
                                 <td class="action-buttons">
                                     <a href="{!! route('admin.operators.edit.get', ['operatorId' => $operator->id]) !!}" class="btn btn-default">Edit</a>
-                                    <a href="{!! route('admin.conversations.with-operator', ['operatorId' => $operator->getId()]) !!}" class="btn btn-default">Conversations <b>({{ $operator->conversationsAsOperator()->withTrashed()->count() }})</b></a>
+                                    <a href="{!! route('admin.conversations.with-operator', ['operatorId' => $operator->getId()]) !!}" class="btn btn-default">Conversations
+{{--                                        <b>({{ $operator->conversationsAsOperator()->withTrashed()->count() }})</b>--}}
+                                    </a>
                                     <a href="{!! route('admin.operators.messages.overview', ['operatorId' => $operator->getId()]) !!}" class="btn btn-default">Sent messages <b>({{ $operator->operator_messages_count }})</b></a>
                                     <form method="POST" action="{!! route('admin.users.destroy', ['userId' => $operator->getId()]) !!}">
                                         {!! csrf_field() !!}
