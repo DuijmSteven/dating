@@ -165,5 +165,36 @@ $(window).on('load', function () {
         });
     }
 
+    if ($('.DashboardWidget .showMore').length > 0) {
+        $('.DashboardWidget .showMore').click(function ($event) {
+            $event.preventDefault();
+
+            $(this).addClass('hidden');
+
+            $(this).closest('.DashboardWidget.expandable')
+                .find('.showLess')
+                .removeClass('hidden');
+
+            $(this).closest('.DashboardWidget.expandable')
+                .find('.defaultHidden')
+                .removeClass('hidden');
+
+        });
+
+        $('.DashboardWidget .showLess').click(function ($event) {
+            $event.preventDefault();
+
+            $(this).addClass('hidden');
+
+            $(this).closest('.DashboardWidget.expandable')
+                .find('.showMore')
+                .removeClass('hidden');
+
+            $(this).closest('.DashboardWidget.expandable')
+                .find('.defaultHidden')
+                .addClass('hidden');
+        });
+    }
+
 });
 
