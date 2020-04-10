@@ -71,13 +71,13 @@
 
                                     <h5 class="statsHeading"><strong>Stopped conversation messages</strong></h5>
                                     <div class="statsBody">
-                                        <strong>All time:</strong> {!! $operator->operator_messages_to_stopped_conversations            _count !!} <br>
-                                        <strong>Last month:</strong> {!! $operator->operator_messages_to_stopped_conversations          _last_month_count !!} <br>
-                                        <strong>This month:</strong> {!! $operator->operator_messages_to_stopped_conversations          _this_month_count !!} <br>
-                                        <strong>Last week:</strong> {!! $operator->operator_messages_to_stopped_conversations           _last_week_count !!} <br>
-                                        <strong>This week:</strong> {!! $operator->operator_messages_to_stopped_conversations           _this_week_count !!} <br>
-                                        <strong>Yesterday:</strong> {!! $operator->operator_messages_to_stopped_conversations           _yesterday_count !!} <br>
-                                        <strong>Today:</strong> {!! $operator->operator_messages_to_stopped_conversations           _today_count !!} <br>
+                                        <strong>All time:</strong> {!! $operator->operator_messages_to_stopped_conversations_count !!} <br>
+                                        <strong>Last month:</strong> {!! $operator->operator_messages_to_stopped_conversations_last_month_count !!} <br>
+                                        <strong>This month:</strong> {!! $operator->operator_messages_to_stopped_conversations_this_month_count !!} <br>
+                                        <strong>Last week:</strong> {!! $operator->operator_messages_to_stopped_conversations_last_week_count !!} <br>
+                                        <strong>This week:</strong> {!! $operator->operator_messages_to_stopped_conversations_this_week_count !!} <br>
+                                        <strong>Yesterday:</strong> {!! $operator->operator_messages_to_stopped_conversations_yesterday_count !!} <br>
+                                        <strong>Today:</strong> {!! $operator->operator_messages_to_stopped_conversations_today_count !!} <br>
                                     </div>
                                 </td>
                                 <td class="action-buttons">
