@@ -102,7 +102,8 @@ class User extends Authenticatable
     const BOT_RELATIONS = [
         'views',
         'uniqueViews',
-        'images'
+        'images',
+        'createdByOperator'
     ];
 
     const BOT_RELATION_COUNTS = [
@@ -631,6 +632,14 @@ class User extends Authenticatable
     public function createdBots()
     {
         return $this->hasMany(User::class, 'created_by_id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function createdByOperator()
+    {
+        return $this->belongsTo(User::class, 'created_by_id');
     }
 
     /**

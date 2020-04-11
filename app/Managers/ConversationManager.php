@@ -111,11 +111,7 @@ class ConversationManager
                             $recentBotMessage = $conversation->messages[0];
                             $recentBotMessageSenderId = $recentBotMessage->getSenderId();
                             $recentBotMessageCreatedAt = $recentBotMessage->getCreatedAt();
-
-
-                            \Log::debug($recentBotMessageSenderId);
-                            \Log::debug($messageData['recipient_id']);
-                            \Log::debug($recentBotMessage ? 'true' : 'false');
+                            
                             break;
                         }
                     }

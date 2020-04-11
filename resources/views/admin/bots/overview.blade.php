@@ -26,7 +26,6 @@
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Bot data</th>
                             <th>Stats</th>
                             <th>Actions</th>
@@ -36,21 +35,22 @@
                         @foreach($bots as $bot)
                             <tr>
                                 <td>
-                                    <a href="{!! route('admin.conversations.bot.get', ['botId' => $bot->getId()]) !!}">
-                                        {!! $bot->id !!}
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="{!! route('admin.conversations.bot.get', ['botId' => $bot->getId()]) !!}">
+                                    <a href="{!! route($editBotRoute, ['botId' => $bot->getId()]) !!}">
                                         <img
                                             style="object-fit: cover; width: 70px; height: 70px"
                                             src="{!! \StorageHelper::profileImageUrl($bot, true) !!}"
                                             alt=""
                                         >
-                                    </a><br><br>
+                                    </a>
 
                                     <div class="innerTableWidgetHeading"><strong>Profile data</strong></div>
                                     <div class="innerTableWidgetBody">
+                                        <strong>ID</strong>:
+                                            <a href="{!! route($editBotRoute, ['botId' => $bot->getId()]) !!}">
+                                                {!! $bot->id !!}
+                                            </a>
+                                        <br>
+
                                         <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $bot->username !!}
                                         <br>
                                         <strong>{!! @trans('user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($bot->meta->dob) !!}
@@ -78,6 +78,21 @@
                                                 </div>
                                             @endif
                                         @endforeach
+                                    </div>
+
+                                    <div class="innerTableWidgetHeading"><strong>Created by operator</strong></div>
+                                    <div class="innerTableWidgetBody">
+                                        <strong>ID:</strong>
+                                            <a href="{!! route('admin.operators.edit.get', ['operatorId' => $bot->createdByOperator->getId()]) !!}">
+                                                {{ $bot->createdByOperator->getId() }}
+                                            </a>
+                                        <br>
+
+                                        <strong>Username:</strong>
+                                            <a href="{!! route('admin.operators.edit.get', ['operatorId' => $bot->createdByOperator->getId()]) !!}">
+                                                {{ $bot->createdByOperator->getUsername() }}
+                                            </a>
+                                        <br>
                                     </div>
                                 </td>
                                 <td class="no-wrap">

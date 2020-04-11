@@ -25,7 +25,6 @@
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Editor Data</th>
                             <th>Stats</th>
                             <th>Actions</th>
@@ -36,11 +35,6 @@
                             <tr>
                                 <td>
                                     <a href="{!! route('admin.editors.edit.get', ['editorId' => $editor->id]) !!}">
-                                        {!! $editor->getId() !!}
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="{!! route('admin.editors.edit.get', ['editorId' => $editor->id]) !!}">
                                         <img
                                             style="object-fit: cover; width: 70px; height: 70px"
                                             src="{!! \StorageHelper::profileImageUrl($editor, true) !!}"
@@ -48,10 +42,14 @@
                                         >
                                     </a>
 
-                                    <br><br>
-
                                     <div class="innerTableWidgetHeading"><strong>Editor Data</strong></div>
                                     <div class="innerTableWidgetBody">
+                                        <strong>ID</strong>:
+                                            <a href="{!! route('admin.editors.edit.get', ['editorId' => $editor->id]) !!}">
+                                                {!! $editor->getId() !!}
+                                            </a>
+                                        <br>
+
                                         <strong>{!! @trans('user_constants.email') !!}:</strong> {!! $editor->email !!} <br>
                                         <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $editor->username !!} <br>
                                         <strong>{!! @trans('user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($editor->meta->dob) !!} <br>

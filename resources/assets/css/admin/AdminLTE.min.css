@@ -6375,3 +6375,7 @@ table .action-buttons .btn {
     border-radius: 0 0 3px 3px;
     background-color: #f3ede2;
 }
+
+.table img {
+    margin-bottom: 10px;
+}

@@ -31,7 +31,7 @@
         </div>
 
         @php
-            $amountOfListItemsVisible = 7;
+            $amountOfListItemsVisible = 5;
         @endphp
 
         <div class="col-xs-12 col-sm-6 col-md-4">
@@ -75,7 +75,7 @@
                             @endphp
                         @endforeach
 
-                        @if(count($topMessagerStatistics['today']) >= $amountOfListItemsVisible)
+                        @if(count($topMessagerStatistics['today']) > $amountOfListItemsVisible)
                             <li>
                                 <a class="showMore" href="#">
                                     Show more <i class="fa fa-chevron-down"></i>
@@ -131,7 +131,7 @@
                             @endphp
                         @endforeach
 
-                        @if(count($topMessagerStatistics['this_week']) >= $amountOfListItemsVisible)
+                        @if(count($topMessagerStatistics['this_week']) > $amountOfListItemsVisible)
                             <li>
                                 <a class="showMore" href="#">
                                     Show more <i class="fa fa-chevron-down"></i>
@@ -187,7 +187,7 @@
                             @endphp
                         @endforeach
 
-                        @if(count($topMessagerStatistics['this_month']) >= $amountOfListItemsVisible)
+                        @if(count($topMessagerStatistics['this_month']) > $amountOfListItemsVisible)
                             <li>
                                 <a class="showMore" href="#">
                                     Show more <i class="fa fa-chevron-down"></i>
