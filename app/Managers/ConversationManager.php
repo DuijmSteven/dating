@@ -124,8 +124,6 @@ class ConversationManager
                     }
                 }
 
-                \Log::debug($exemptFromDelay ? 'true' : 'false');
-
                 if (in_array($messageData['recipient_id'], $onlineBotIds) || $exemptFromDelay) {
                     $replyableAt = Carbon::now();
                 } else {
