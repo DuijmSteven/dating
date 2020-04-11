@@ -25,7 +25,6 @@
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Operator data</th>
                             <th>Stats</th>
                             <th>Actions</th>
@@ -36,11 +35,6 @@
                             <tr>
                                 <td>
                                     <a href="{!! route('admin.operators.edit.get', ['operatorId' => $operator->id]) !!}">
-                                        {!! $operator->getId() !!}
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href="{!! route('admin.operators.edit.get', ['operatorId' => $operator->id]) !!}">
                                         <img
                                             style="object-fit: cover; width: 70px; height: 70px"
                                             src="{!! \StorageHelper::profileImageUrl($operator, true) !!}"
@@ -48,10 +42,14 @@
                                         >
                                     </a>
 
-                                    <br><br>
-
                                     <div class="innerTableWidgetHeading"><strong>Operator data</strong></div>
                                     <div class="innerTableWidgetBody">
+                                        <strong>ID</strong>:
+                                            <a href="{!! route('admin.operators.edit.get', ['operatorId' => $operator->id]) !!}">
+                                                {!! $operator->getId() !!}
+                                            </a>
+                                        <br>
+
                                         <strong>{!! @trans('user_constants.email') !!}:</strong> {!! $operator->email !!} <br>
                                         <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $operator->username !!} <br>
                                         <strong>{!! @trans('user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($operator->meta->dob) !!} <br>
@@ -85,6 +83,8 @@
                                     <a href="{!! route('admin.conversations.with-operator', ['operatorId' => $operator->getId()]) !!}" class="btn btn-default">Conversations
 {{--                                        <b>({{ $operator->conversationsAsOperator()->withTrashed()->count() }})</b>--}}
                                     </a>
+
+
                                     <a href="{!! route('admin.operators.messages.overview', ['operatorId' => $operator->getId()]) !!}" class="btn btn-default">Sent messages <b>({{ $operator->operator_messages_count }})</b></a>
                                     <form method="POST" action="{!! route('admin.users.destroy', ['userId' => $operator->getId()]) !!}">
                                         {!! csrf_field() !!}

@@ -25,9 +25,7 @@
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Profile image</th>
-                            <th>User Credits, Payments & Data</th>
+                            <th>User Data & Payments</th>
                             <th>Stats</th>
                             <th>Actions</th>
                         </tr>
@@ -35,41 +33,25 @@
                         <tbody>
                         @foreach($peasants as $peasant)
                             <tr>
-                                <td>{!! $peasant->id !!}</td>
-                                <td>
-                                    <a href="">
+                                <td class="no-wrap">
+                                    <a href="{!! route('admin.peasants.edit.get', ['peasantId' => $peasant->getId()]) !!}">
                                         <img
                                             style="object-fit: cover; width: 70px; height: 70px"
                                             src="{!! \StorageHelper::profileImageUrl($peasant, true) !!}"
                                             alt=""
                                         >
                                     </a>
-                                </td>
-                                <td class="no-wrap">
-                                    <strong>Credits</strong>: {{ $peasant->account->getCredits() }} <br>
-
-                                    @if(count($peasant->completedPayments) > 0)
-                                        <div class="innerTableWidgetHeading"><strong>Payments</strong></div>
-                                        <div class="innerTableWidgetBody">
-                                            <strong># of payments</strong>: {{ count($peasant->completedPayments) }} <br>
-                                            <strong>Last Payment amount</strong>: &euro;{{ number_format($peasant->completedPayments[0]->amount/ 100, 2) }} <br>
-                                            <strong>Last Payment date</strong>: {{ $peasant->completedPayments[0]->created_at->format('d-m-Y H:i:s') }} <br>
-
-                                            <?php
-                                                $moneySpent = 0;
-                                                foreach ($peasant->completedPayments as $payment) {
-                                                    $moneySpent += $payment->amount;
-                                                }
-                                            ?>
-
-                                            <strong>Money spent</strong>: &euro;{{ number_format($moneySpent/ 100, 2) }} <br>
-                                        </div>
-                                    @endif
 
                                     <div class="innerTableWidgetHeading"><strong>User Data</strong></div>
                                     <div class="innerTableWidgetBody">
-                                        <strong>{!! @trans('user_constants.email') !!}:</strong> {!! $peasant->email !!} <br>
+                                        <strong>ID</strong>:
+                                            <a href="{!! route('admin.peasants.edit.get', ['peasantId' => $peasant->getId()]) !!}">
+                                                {!! $peasant->getId() !!}
+                                            </a>
+                                        <br>
                                         <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $peasant->username !!} <br>
+                                        <strong>{!! @trans('user_constants.email') !!}:</strong> {!! $peasant->email !!} <br>
+                                        <strong>Credits</strong>: {{ $peasant->account->getCredits() }} <br>
                                         <strong>{!! @trans('user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($peasant->meta->dob) !!} <br>
                                         @foreach(\UserConstants::selectableFields('peasant') as $fieldName => $a)
                                             @if(isset($peasant->meta->{$fieldName}))
@@ -92,11 +74,34 @@
                                             @endif
                                         @endforeach
                                         <strong>Created at</strong> {!! $peasant->getCreatedAt()->tz('Europe/Amsterdam') !!} <br>
+                                    </div>
+
+                                    <div class="innerTableWidgetHeading"><strong>Activity</strong></div>
+                                    <div class="innerTableWidgetBody">
                                         @if($peasant->getLastOnlineAt())
                                             <strong>Last online at</strong> {!! $peasant->getLastOnlineAt()->tz('Europe/Amsterdam') !!} <br>
                                             <strong>Last online in days</strong> {!! $peasant->getLastOnlineAt()->tz('Europe/Amsterdam')->diffInDays($carbonNow->tz('Europe/Amsterdam')) !!} <br>
                                         @endif
                                     </div>
+
+
+                                    @if(count($peasant->completedPayments) > 0)
+                                        <div class="innerTableWidgetHeading"><strong>Payments</strong></div>
+                                        <div class="innerTableWidgetBody">
+                                            <strong># of payments</strong>: {{ count($peasant->completedPayments) }} <br>
+                                            <strong>Last Payment amount</strong>: &euro;{{ number_format($peasant->completedPayments[0]->amount/ 100, 2) }} <br>
+                                            <strong>Last Payment date</strong>: {{ $peasant->completedPayments[0]->created_at->format('d-m-Y H:i:s') }} <br>
+
+                                            <?php
+                                            $moneySpent = 0;
+                                            foreach ($peasant->completedPayments as $payment) {
+                                                $moneySpent += $payment->amount;
+                                            }
+                                            ?>
+
+                                            <strong>Money spent</strong>: &euro;{{ number_format($moneySpent/ 100, 2) }} <br>
+                                        </div>
+                                    @endif
                                 </td>
                                 <td class="no-wrap">
                                     <h5 class="statsHeading"><strong>Messages received</strong></h5>
@@ -139,14 +144,14 @@
                                     </div>
                                 </td>
                                 <td class="action-buttons">
-                                    <a href="{!! route('admin.peasants.edit.get', ['peasantId' => $peasant->id]) !!}" class="btn btn-default">Edit</a>
-                                    <a href="{!! route('admin.conversations.peasant.get', ['peasantId' => $peasant->id]) !!}" class="btn btn-default">Conversations <b>({{ $peasant->conversations_as_user_a_count + $peasant->conversations_as_user_b_count }})</b></a>
+                                    <a href="{!! route('admin.peasants.edit.get', ['peasantId' => $peasant->getId()]) !!}" class="btn btn-default">Edit</a>
+                                    <a href="{!! route('admin.conversations.peasant.get', ['peasantId' => $peasant->getId()]) !!}" class="btn btn-default">Conversations <b>({{ $peasant->conversations_as_user_a_count + $peasant->conversations_as_user_b_count }})</b></a>
                                     <a href="{!! route('admin.messages.peasant', ['peasantId' => $peasant->getId()]) !!}" class="btn btn-default">Messages <b>({{ $peasant->messages_count +  $peasant->messaged_count}})</b></a>
                                     <a href="{!! route('admin.payments.peasant.overview', ['peasantId' => $peasant->getId()]) !!}" class="btn btn-default">Payments <b>({{ $peasant->payments_count}})</b></a>
-                                    <a href="{!! route('admin.peasants.message-as-bot.get', ['peasantId' => $peasant->id, 'onlyOnlineBots' => '0']) !!}" class="btn btn-default">Message user as bot</a>
-                                    <a href="{!! route('admin.peasants.message-as-bot.get', [ 'peasantId' => $peasant->id, 'onlyOnlineBots' => '1']) !!}" class="btn btn-default">Message user as online bot</a>
+                                    <a href="{!! route('admin.peasants.message-as-bot.get', ['peasantId' => $peasant->getId(), 'onlyOnlineBots' => '0']) !!}" class="btn btn-default">Message user as bot</a>
+                                    <a href="{!! route('admin.peasants.message-as-bot.get', [ 'peasantId' => $peasant->getId(), 'onlyOnlineBots' => '1']) !!}" class="btn btn-default">Message user as online bot</a>
 
-                                    <form method="POST" action="{!! route('admin.users.destroy', ['userId' => $peasant->id]) !!}">
+                                    <form method="POST" action="{!! route('admin.users.destroy', ['userId' => $peasant->getId()]) !!}">
                                         {!! csrf_field() !!}
                                         {!! method_field('DELETE') !!}
                                         <button type="submit"
