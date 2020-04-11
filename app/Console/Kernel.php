@@ -69,17 +69,18 @@ class Kernel extends ConsoleKernel
         $timeNow = Carbon::now('Europe/Amsterdam'); // Current time
 
         $numberOfBotsToHaveOnline = rand(10, 20);
-
-        if ($timeNow->hour > 6 && $timeNow->hour < 18) {
-            $numberOfBotsToHaveOnline = rand(20, 35);
+        if ($timeNow->hour > 6 && $timeNow->hour < 8) {
+            $numberOfBotsToHaveOnline = rand(20, 40);
+        } elseif ($timeNow->hour > 7 && $timeNow->hour < 18) {
+            $numberOfBotsToHaveOnline = rand(40, 70);
         } elseif ($timeNow->hour >= 18 && $timeNow->hour <= 22) {
-            $numberOfBotsToHaveOnline = rand(35, 45);
+            $numberOfBotsToHaveOnline = rand(60, 80);
         } elseif ($timeNow->hour > 22 && $timeNow->hour <= 23) {
-            $numberOfBotsToHaveOnline = rand(25, 35);
+            $numberOfBotsToHaveOnline = rand(50, 70);
         } elseif ($timeNow->hour >= 0 && $timeNow->hour <= 1) {
-            $numberOfBotsToHaveOnline = rand(15, 25);
+            $numberOfBotsToHaveOnline = rand(30, 50);
         } elseif ($timeNow->hour > 2 && $timeNow->hour <= 6) {
-            $numberOfBotsToHaveOnline = rand(0, 6);
+            $numberOfBotsToHaveOnline = rand(0, 10);
         }
 
         $schedule->command('bots:set-random-online ' . $numberOfBotsToHaveOnline)->everyTenMinutes();
