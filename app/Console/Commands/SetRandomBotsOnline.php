@@ -60,7 +60,7 @@ class SetRandomBotsOnline extends Command
             ->where('active', true)
             ->count();
 
-        \Log::debug($femaleBotCount, ['$femaleBotCount']);
+        \Log::debug($femaleBotCount, 'femaleBotCount');
 
         $numberOfBotsToHaveOnline = rand(
             round(3/100 * $femaleBotCount),
