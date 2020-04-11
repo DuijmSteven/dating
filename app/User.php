@@ -21,6 +21,9 @@ class User extends Authenticatable
     const TYPE_OPERATOR = 4;
     const TYPE_EDITOR = 5;
 
+    const GENDER_MALE = 1;
+    const GENDER_FEMALE = 2;
+
     const COMMON_RELATIONS = [
         'meta',
         'roles',

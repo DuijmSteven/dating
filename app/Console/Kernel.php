@@ -7,6 +7,7 @@ use App\Console\Commands\ExportDb;
 use App\Console\Commands\SendProfileCompletionEmails;
 use App\Console\Commands\SendProfileViewedEmails;
 use App\Console\Commands\UpdateCurrentEnvDbAndAws;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -66,23 +67,63 @@ class Kernel extends ConsoleKernel
      */
     protected function scheduleRandomOnlineBots(Schedule $schedule): void
     {
+        \Log::debug('Starting set online bots command...');
+
         $timeNow = Carbon::now('Europe/Amsterdam'); // Current time
 
-        $numberOfBotsToHaveOnline = rand(10, 20);
-        if ($timeNow->hour > 6 && $timeNow->hour < 8) {
-            $numberOfBotsToHaveOnline = rand(20, 40);
-        } elseif ($timeNow->hour > 7 && $timeNow->hour < 18) {
-            $numberOfBotsToHaveOnline = rand(40, 70);
+        $femaleBotCount = User::with(['roles', 'meta'])
+            ->whereHas('roles', function ($query) {
+                $query->where('id', User::TYPE_BOT);
+            })
+            ->whereHas('meta', function ($query) {
+                $query->where('gender', User::GENDER_FEMALE);
+            })
+            ->where('active', true)
+            ->count();
+
+        \Log::debug($femaleBotCount, ['$femaleBotCount']);
+
+        $numberOfBotsToHaveOnline = rand(
+            round(3/100 * $femaleBotCount),
+            round(6/100 * $femaleBotCount)
+        );
+
+        if ($timeNow->hour > 6 && $timeNow->hour <= 8) {
+            $numberOfBotsToHaveOnline = rand(
+                round(5/100 * $femaleBotCount),
+                round(11/100 * $femaleBotCount)
+            );
+        } elseif ($timeNow->hour > 8 && $timeNow->hour < 18) {
+            $numberOfBotsToHaveOnline = rand(
+                round(6/100 * $femaleBotCount),
+                round(12/100 * $femaleBotCount),
+            );
         } elseif ($timeNow->hour >= 18 && $timeNow->hour <= 22) {
-            $numberOfBotsToHaveOnline = rand(60, 80);
+            $numberOfBotsToHaveOnline = rand(
+                round(15/100 * $femaleBotCount),
+                round(20/100 * $femaleBotCount)
+            );
         } elseif ($timeNow->hour > 22 && $timeNow->hour <= 23) {
-            $numberOfBotsToHaveOnline = rand(50, 70);
+            $numberOfBotsToHaveOnline = rand(
+                round(13/100 * $femaleBotCount),
+                round(17/100 * $femaleBotCount)
+            );
         } elseif ($timeNow->hour >= 0 && $timeNow->hour <= 1) {
-            $numberOfBotsToHaveOnline = rand(30, 50);
+            $numberOfBotsToHaveOnline = rand(
+                round(9/100 * $femaleBotCount),
+                round(17/100 * $femaleBotCount)
+            );
         } elseif ($timeNow->hour > 2 && $timeNow->hour <= 6) {
-            $numberOfBotsToHaveOnline = rand(0, 10);
+            $numberOfBotsToHaveOnline = rand(
+                0,
+                10
+            );
         }
 
+        \Log::debug('Setting ' . $numberOfBotsToHaveOnline . ' female bots online');
+
         $schedule->command('bots:set-random-online ' . $numberOfBotsToHaveOnline)->everyTenMinutes();
+
+        \Log::debug('Finished running set online bots command');
     }
 }
