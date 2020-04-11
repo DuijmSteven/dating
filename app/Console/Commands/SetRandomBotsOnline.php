@@ -44,8 +44,6 @@ class SetRandomBotsOnline extends Command
      */
     public function handle(): void
     {
-        $botAmount = $this->argument('botAmount');
-
         \Log::debug('Starting set online bots command...');
 
         $timeNow = Carbon::now('Europe/Amsterdam'); // Current time
