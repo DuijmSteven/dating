@@ -21,6 +21,9 @@ class User extends Authenticatable
     const TYPE_OPERATOR = 4;
     const TYPE_EDITOR = 5;
 
+    const GENDER_MALE = 1;
+    const GENDER_FEMALE = 2;
+
     const COMMON_RELATIONS = [
         'meta',
         'roles',
@@ -39,7 +42,14 @@ class User extends Authenticatable
         'operatorMessagesLastWeek',
         'operatorMessagesThisWeek',
         'operatorMessagesYesterday',
-        'operatorMessagesToday'
+        'operatorMessagesToday',
+        'operatorMessagesToStoppedConversations',
+        'operatorMessagesToStoppedConversationsLastMonth',
+        'operatorMessagesToStoppedConversationsThisMonth',
+        'operatorMessagesToStoppedConversationsLastWeek',
+        'operatorMessagesToStoppedConversationsThisWeek',
+        'operatorMessagesToStoppedConversationsYesterday',
+        'operatorMessagesToStoppedConversationsToday'
     ];
 
     const EDITOR_RELATIONS = [
@@ -67,7 +77,7 @@ class User extends Authenticatable
         'images',
         'completedPayments',
         'hasViewed',
-        'hasViewedUnique'
+        'hasViewedUnique',
     ];
 
     const PEASANT_RELATION_COUNTS = [
@@ -88,13 +98,15 @@ class User extends Authenticatable
         'messagesThisMonth',
         'messagesLastMonth',
         'conversationsAsUserA',
-        'conversationsAsUserB'
+        'conversationsAsUserB',
+        'payments'
     ];
 
     const BOT_RELATIONS = [
         'views',
         'uniqueViews',
-        'images'
+        'images',
+        'createdByOperator'
     ];
 
     const BOT_RELATION_COUNTS = [
@@ -116,7 +128,8 @@ class User extends Authenticatable
         'messagesLastMonth',
         'conversationsAsUserA',
         'conversationsAsUserB',
-        'views'
+        'views',
+        'botMessages'
     ];
 
     protected $primaryKey = 'id';
@@ -627,6 +640,14 @@ class User extends Authenticatable
     /**
      * @return mixed
      */
+    public function createdByOperator()
+    {
+        return $this->belongsTo(User::class, 'created_by_id');
+    }
+
+    /**
+     * @return mixed
+     */
     public function conversationsAsOperator()
     {
         return Conversation::whereHas('messages', function ($query) {
@@ -1051,14 +1072,113 @@ class User extends Authenticatable
             ->where('created_at', '<=', $endOfLastMonthUtc);
     }
 
+
+
+
+
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function operatorMessagesToStoppedConversations()
+    {
+        return $this->hasMany(ConversationMessage::class, 'operator_id')
+            ->where('operator_message_type', ConversationMessage::OPERATOR_MESSAGE_TYPE_STOPPED);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function operatorMessagesToStoppedConversationsToday()
+    {
+        $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');
+        $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
+
+        return $this->hasMany(ConversationMessage::class, 'operator_id')
+            ->where('created_at', '>=', $startOfToday)
+            ->where('created_at', '<=', $endOfToday)
+            ->where('operator_message_type', ConversationMessage::OPERATOR_MESSAGE_TYPE_STOPPED);
+    }
+
+    public function operatorMessagesToStoppedConversationsYesterday()
+    {
+        $startOfYesterday = Carbon::now('Europe/Amsterdam')->startOfDay()->subDay();
+        $endOfYesterday = $startOfYesterday->copy()->endOfDay();
+
+        $startOfYesterdayUtc = $startOfYesterday->setTimezone('UTC');
+        $endOfYesterdayUtc = $endOfYesterday->setTimezone('UTC');
+
+        return $this->hasMany(ConversationMessage::class, 'operator_id')
+            ->where('created_at', '>=', $startOfYesterdayUtc)
+            ->where('created_at', '<=', $endOfYesterdayUtc)
+            ->where('operator_message_type', ConversationMessage::OPERATOR_MESSAGE_TYPE_STOPPED);
+    }
+
+    public function operatorMessagesToStoppedConversationsThisWeek()
+    {
+        $startOfThisWeek = Carbon::now('Europe/Amsterdam')->startOfWeek()->setTimezone('UTC');
+        $endOfThisWeek = Carbon::now('Europe/Amsterdam')->endOfWeek()->setTimezone('UTC');
+
+        return $this->hasMany(ConversationMessage::class, 'operator_id')
+            ->where('created_at', '>=', $startOfThisWeek)
+            ->where('created_at', '<=', $endOfThisWeek)
+            ->where('operator_message_type', ConversationMessage::OPERATOR_MESSAGE_TYPE_STOPPED);
+    }
+
+    public function operatorMessagesToStoppedConversationsLastWeek()
+    {
+        $startOfLastWeek = Carbon::now('Europe/Amsterdam')->startOfWeek()->subWeek();
+        $endOfLastWeek = $startOfLastWeek->copy()->endOfWeek();
+
+        $startOfLastWeekUtc = $startOfLastWeek->setTimezone('UTC');
+        $endOfLastWeekUtc = $endOfLastWeek->setTimezone('UTC');
+
+        return $this->hasMany(ConversationMessage::class, 'operator_id')
+            ->where('created_at', '>=', $startOfLastWeekUtc)
+            ->where('created_at', '<=', $endOfLastWeekUtc)
+            ->where('operator_message_type', ConversationMessage::OPERATOR_MESSAGE_TYPE_STOPPED);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function operatorMessagesToStoppedConversationsThisMonth()
+    {
+        $startOfMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->setTimezone('UTC');
+        $endOfMonth = Carbon::now('Europe/Amsterdam')->endOfMonth()->setTimezone('UTC');
+
+        return $this->hasMany(ConversationMessage::class, 'operator_id')
+            ->where('created_at', '>=', $startOfMonth)
+            ->where('created_at', '<=', $endOfMonth)
+            ->where('operator_message_type', ConversationMessage::OPERATOR_MESSAGE_TYPE_STOPPED);
+    }
+
+    public function operatorMessagesToStoppedConversationsLastMonth()
+    {
+        $startOfLastMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->subMonth();
+        $endOfLastMonth = $startOfLastMonth->copy()->endOfMonth();
+
+        $startOfLastMonthUtc = $startOfLastMonth->setTimezone('UTC');
+        $endOfLastMonthUtc = $endOfLastMonth->setTimezone('UTC');
+
+        return $this->hasMany(ConversationMessage::class, 'operator_id')
+            ->where('created_at', '>=', $startOfLastMonthUtc)
+            ->where('created_at', '<=', $endOfLastMonthUtc)
+            ->where('operator_message_type', ConversationMessage::OPERATOR_MESSAGE_TYPE_STOPPED);
+    }
+
+
+
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function operatorMessages()
     {
-        return $this->hasMany(ConversationMessage::class, 'operator_id');
+        return $this->hasMany(ConversationMessage::class, 'operator_id')
+            ->where('operator_message_type', null);
     }
-
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -1070,7 +1190,8 @@ class User extends Authenticatable
 
         return $this->hasMany(ConversationMessage::class, 'operator_id')
             ->where('created_at', '>=', $startOfToday)
-            ->where('created_at', '<=', $endOfToday);
+            ->where('created_at', '<=', $endOfToday)
+            ->where('operator_message_type', null);
     }
 
     public function operatorMessagesYesterday()
@@ -1083,7 +1204,8 @@ class User extends Authenticatable
 
         return $this->hasMany(ConversationMessage::class, 'operator_id')
             ->where('created_at', '>=', $startOfYesterdayUtc)
-            ->where('created_at', '<=', $endOfYesterdayUtc);
+            ->where('created_at', '<=', $endOfYesterdayUtc)
+            ->where('operator_message_type', null);
     }
 
     public function operatorMessagesThisWeek()
@@ -1093,7 +1215,8 @@ class User extends Authenticatable
 
         return $this->hasMany(ConversationMessage::class, 'operator_id')
             ->where('created_at', '>=', $startOfThisWeek)
-            ->where('created_at', '<=', $endOfThisWeek);
+            ->where('created_at', '<=', $endOfThisWeek)
+            ->where('operator_message_type', null);
     }
 
     public function operatorMessagesLastWeek()
@@ -1106,7 +1229,8 @@ class User extends Authenticatable
 
         return $this->hasMany(ConversationMessage::class, 'operator_id')
             ->where('created_at', '>=', $startOfLastWeekUtc)
-            ->where('created_at', '<=', $endOfLastWeekUtc);
+            ->where('created_at', '<=', $endOfLastWeekUtc)
+            ->where('operator_message_type', null);
     }
 
     /**
@@ -1119,7 +1243,8 @@ class User extends Authenticatable
 
         return $this->hasMany(ConversationMessage::class, 'operator_id')
             ->where('created_at', '>=', $startOfMonth)
-            ->where('created_at', '<=', $endOfMonth);
+            ->where('created_at', '<=', $endOfMonth)
+            ->where('operator_message_type', null);
     }
 
     public function operatorMessagesLastMonth()
@@ -1132,7 +1257,8 @@ class User extends Authenticatable
 
         return $this->hasMany(ConversationMessage::class, 'operator_id')
             ->where('created_at', '>=', $startOfLastMonthUtc)
-            ->where('created_at', '<=', $endOfLastMonthUtc);
+            ->where('created_at', '<=', $endOfLastMonthUtc)
+            ->where('operator_message_type', null);
     }
 
     /**
@@ -1241,5 +1367,13 @@ class User extends Authenticatable
     public function affiliateTracking()
     {
         return $this->hasOne(UserAffiliateTracking::class, 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function botMessages()
+    {
+        return $this->hasMany(BotMessage::class, 'bot_id');
     }
 }

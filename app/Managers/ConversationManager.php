@@ -53,8 +53,12 @@ class ConversationManager
     {
         $hasAttachment = isset($messageData['attachment']);
 
+        /** @var User $sender */
         $sender = User::with(['conversationsWithRepliesToday'])
             ->find($messageData['sender_id']);
+
+        /** @var User $recipient */
+        $recipient = User::find($messageData['recipient_id']);
 
         try {
             $conversation = $this->createOrRetrieveConversation(
@@ -64,7 +68,6 @@ class ConversationManager
         } catch (\Exception $exception) {
             throw $exception;
         }
-
 
         $onlineIds = Activity::users(5)->pluck('user_id')->toArray();
 
@@ -80,66 +83,76 @@ class ConversationManager
         $isNewConversation = $messagesCount > 0 ? false : true;
         $senderConversationsWithRepliesTodayCount  = $sender->conversationsWithRepliesToday()->get()->count();
 
-        $replyable = true;
+        if ($sender->isPeasant() && $recipient->isBot()) {
+            $replyable = true;
 
-        // some new convos need to be set to never be replied
-        if ($isNewConversation) {
-            if ($senderConversationsWithRepliesTodayCount === 0) {
-                $replyable = true;
-            } elseif (3 === rand(1, 3)) {
-                $replyable = false;
+            // some new convos need to be set to never be replied
+            if ($isNewConversation) {
+                if ($senderConversationsWithRepliesTodayCount === 0) {
+                    $replyable = true;
+                } elseif (3 === rand(1, 3)) {
+                    $replyable = false;
+                }
             }
-        }
 
-        if ($replyable) {
-            $exemptFromDelay = false;
+            if ($replyable) {
+                $exemptFromDelay = false;
 
-            if (!$isNewConversation) {
-                $recentBotMessage = null;
-                $maxIterations = min($messagesCount, 3);
+                if (!$isNewConversation) {
+                    $recentBotMessage = null;
+                    $maxIterations = min($messagesCount, 3);
 
-                for ($i = 0; $i < $maxIterations; $i++) {
-                    /** @var ConversationMessage $message */
-                    $message = $conversation->messages[$i];
+                    for ($i = 0; $i < $maxIterations; $i++) {
+                        /** @var ConversationMessage $message */
+                        $message = $conversation->messages[$i];
 
-                    if ((int) $message->getSenderId() === (int) $messageData['recipient_id']) {
-                        /** @var ConversationMessage $recentBotMessage */
-                        $recentBotMessage = $conversation->messages[0];
-                        $recentBotMessageSenderId = $recentBotMessage->getSenderId();
-                        $recentBotMessageCreatedAt = $recentBotMessage->getCreatedAt();
+                        if ((int) $message->getSenderId() === (int) $messageData['recipient_id']) {
+                            /** @var ConversationMessage $recentBotMessage */
+                            $recentBotMessage = $conversation->messages[0];
+                            $recentBotMessageSenderId = $recentBotMessage->getSenderId();
+                            $recentBotMessageCreatedAt = $recentBotMessage->getCreatedAt();
+                            
+                            break;
+                        }
+                    }
 
-
-                        \Log::debug($recentBotMessageSenderId);
-                        \Log::debug($messageData['recipient_id']);
-                        \Log::debug($recentBotMessage ? 'true' : 'false');
-                        break;
+                    if (
+                        $recentBotMessage &&
+                        $recentBotMessageCreatedAt->gt(Carbon::now()->subHours(1)))
+                    {
+                        $exemptFromDelay = true;
                     }
                 }
 
-                if (
-                    $recentBotMessage &&
-                    $recentBotMessageCreatedAt->gt(Carbon::now()->subHours(1)))
-                {
-                    $exemptFromDelay = true;
-                }
-            }
-
-            \Log::debug($exemptFromDelay ? 'true' : 'false');
-
-            if (in_array($messageData['recipient_id'], $onlineBotIds) || $exemptFromDelay) {
-                $replyableAt = Carbon::now();
-            } else {
-                if ($conversation->getReplyableAt() && $conversation->getReplyableAt()->gt(Carbon::now())) {
-                    $replyableAt = $conversation->getReplyableAt();
+                if (in_array($messageData['recipient_id'], $onlineBotIds) || $exemptFromDelay) {
+                    $replyableAt = Carbon::now();
                 } else {
-                    $replyableAt = Carbon::now()->addMinutes(rand(1, 10));
+                    if ($conversation->getReplyableAt() && $conversation->getReplyableAt()->gt(Carbon::now())) {
+                        $replyableAt = $conversation->getReplyableAt();
+                    } else {
+                        $replyableAt = Carbon::now()->addMinutes(rand(1, 10));
+                    }
                 }
+            } elseif ($sender->isBot()) {
+                $replyableAt = null;
             }
-        } else {
-            $replyableAt = null;
+
+            $conversation->setReplyableAt($replyableAt);
+        } elseif ($sender->isBot() && !$isNewConversation && $conversation->messages->count() > 2) {
+            if (
+                $conversation->messages[0]->sender->roles[0]->id === User::TYPE_PEASANT &&
+                2 === rand(1, 2)
+            ) {
+                $conversation->setReplyableAt(null);
+            }
+
+            if (
+                $conversation->messages[0]->sender->roles[0]->id === User::TYPE_BOT
+            ) {
+                $operatorMessageType = ConversationMessage::OPERATOR_MESSAGE_TYPE_STOPPED;
+            }
         }
 
-        $conversation->setReplyableAt($replyableAt);
         $conversation->save();
 
         try {
@@ -150,7 +163,8 @@ class ConversationManager
                 'recipient_id' => $messageData['recipient_id'],
                 'body' => $messageData['message'],
                 'has_attachment' => $hasAttachment,
-                'operator_id' => isset($messageData['operator_id']) ? $messageData['operator_id'] : null
+                'operator_id' => isset($messageData['operator_id']) ? $messageData['operator_id'] : null,
+                'operator_message_type' => isset($operatorMessageType) ? $operatorMessageType : null
             ]);
 
             $messageInstance->save();
@@ -215,7 +229,8 @@ class ConversationManager
                     ->where('active', 1);
             })
             ->whereHas('userB.roles', function ($query) {
-                $query->where('id', User::TYPE_BOT);
+                $query->where('id', User::TYPE_BOT)
+                    ->where('active', 1);
             })
             ->where(function ($query) {
                 $query->where('locked_at', null)
@@ -252,10 +267,55 @@ class ConversationManager
                 if (
                     $value->messages[0]->sender &&
                     $value->messages[0]->sender->active &&
-                    $value->messages[0]->recipient
+                    $value->messages[0]->recipient &&
+                    $value->messages[0]->recipient->active
                 ) {
-                    return $value->messages[0]->sender->roles[0]->id === User::TYPE_PEASANT &&
+                    return
+                        $value->messages[0]->sender->roles[0]->id === User::TYPE_PEASANT &&
                         $value->messages[0]->recipient->roles[0]->id === User::TYPE_BOT;
+                } else {
+                    return false;
+                }
+            })
+            ->sortByDesc(function ($conversation) {
+                return $conversation->messages[0]->getCreatedAt();
+            })
+            ->take(10);
+
+        return $conversations;
+    }
+
+    /**
+     * @return array
+     */
+    public function stoppedPeasantBotConversations()
+    {
+        $conversations = Conversation::with(['userA', 'userB'])
+            ->with(['messages' => function ($query) {
+                $query->orderBy('created_at', 'desc');
+            }])
+            ->has('messages', '>', '2')
+            ->where(function ($query) {
+                $query->where('locked_at', null)
+                    ->orWhere('locked_at', '<', Carbon::now()->subMinutes(self::CONVERSATION_LOCKING_TIME));
+            })
+            ->withTrashed()
+            ->where('replyable_at', '<=', Carbon::now())
+            ->where('replyable_at', '!=', null)
+            ->get()
+            ->filter(function ($value, $key) {
+                if (
+                    $value->messages[0]->sender &&
+                    $value->messages[0]->sender->active &&
+                    $value->messages[0]->recipient &&
+                    $value->messages[0]->recipient->active
+                ) {
+                    return
+                        $value->messages[0]->getCreatedAt()->lt(Carbon::now('Europe/Amsterdam')->subDays(2)) &&
+                        $value->messages[0]->getCreatedAt()->gt(Carbon::now('Europe/Amsterdam')->subDays(100)) &&
+                        $value->messages[0]->sender->roles[0]->id === User::TYPE_BOT &&
+                        $value->messages[0]->recipient->roles[0]->id === User::TYPE_PEASANT &&
+                        $value->messages[1]->sender->roles[0]->id !== User::TYPE_BOT;
                 } else {
                     return false;
                 }

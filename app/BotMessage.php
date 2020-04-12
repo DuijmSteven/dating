@@ -2,8 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
-
 class BotMessage extends TimeZonedModel
 {
     const STATUS_INACTIVE = 0;
@@ -12,9 +10,20 @@ class BotMessage extends TimeZonedModel
     public $table = 'bot_messages';
 
     protected $fillable = [
+        'bot_id',
         'body',
         'status'
     ];
+
+    public function getBotId()
+    {
+        return $this->bot_id;
+    }
+
+    public function setBotId(string $botId)
+    {
+        $this->bot_id = $botId;
+    }
 
     public function getBody()
     {
@@ -34,5 +43,13 @@ class BotMessage extends TimeZonedModel
     public function setStatus(string $status)
     {
         $this->status = $status;
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function bot()
+    {
+        return $this->belongsTo(User::class, 'bot_id');
     }
 }

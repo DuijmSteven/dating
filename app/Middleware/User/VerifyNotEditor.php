@@ -16,11 +16,14 @@ class VerifyNotEditor
      */
     public function handle($request, Closure $next)
     {
+        if (is_null(\Auth::user())) {
+            return redirect()->route('landing-page.show-login');
+        }
+
         if (
-            is_null(\Auth::user()) ||
             (\Auth::user()->roles()->get()[0]->name === 'editor')
         ) {
-            return redirect()->route('admin.bots.retrieve');
+            return redirect()->route('editors.bots.created.overview');
         }
 
         return $next($request);

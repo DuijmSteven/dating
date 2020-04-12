@@ -26,22 +26,74 @@
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Profile image</th>
-                            <th>Stats</th>
                             <th>Bot data</th>
+                            <th>Stats</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($bots as $bot)
                             <tr>
-                                <td>{!! $bot->id !!}</td>
                                 <td>
-                                    <a href="{!! \StorageHelper::profileImageUrl($bot) !!}">
-                                        <img width="120" src="{!! \StorageHelper::profileImageUrl($bot, true) !!}"
-                                             alt="">
+                                    <a href="{!! route($editBotRoute, ['botId' => $bot->getId()]) !!}">
+                                        <img
+                                            style="object-fit: cover; width: 70px; height: 70px"
+                                            src="{!! \StorageHelper::profileImageUrl($bot, true) !!}"
+                                            alt=""
+                                        >
                                     </a>
+
+                                    <div class="innerTableWidgetHeading"><strong>Profile data</strong></div>
+                                    <div class="innerTableWidgetBody">
+                                        <strong>ID</strong>:
+                                            <a href="{!! route($editBotRoute, ['botId' => $bot->getId()]) !!}">
+                                                {!! $bot->id !!}
+                                            </a>
+                                        <br>
+
+                                        <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $bot->username !!}
+                                        <br>
+                                        <strong>{!! @trans('user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($bot->meta->dob) !!}
+                                        <br>
+
+                                        @foreach(\UserConstants::selectableFields('bot') as $fieldName => $a)
+                                            @if(isset($bot->meta->{$fieldName}))
+                                                <strong>{!! ucfirst(str_replace('_', ' ', $fieldName)) !!}:
+                                                </strong> {!! @trans('user_constants.' . $fieldName . '.' . $bot->meta->{$fieldName}) !!}
+                                                <br>
+                                            @endif
+                                        @endforeach
+
+                                        @foreach(array_merge(\UserConstants::textFields('bot'), \UserConstants::textInputs('bot')) as $fieldName)
+                                            @if(isset($bot->meta->{$fieldName}) && $bot->meta->{$fieldName} != '')
+                                                <div
+                                                    style="max-width: 250px; {!! $fieldName === 'about_me' ? 'white-space: normal' : '' !!}">
+                                                    <strong>{!! @trans('user_constants.' . $fieldName) !!}:</strong>
+
+                                                    @if($fieldName === 'about_me')
+                                                        {{ substr($bot->meta->{$fieldName}, 0, 40) }}{{ strlen($bot->meta->{$fieldName}) > 41 ? '...' : '' }}
+                                                    @else
+                                                        {{ $bot->meta->{$fieldName} }}
+                                                    @endif
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    </div>
+
+                                    <div class="innerTableWidgetHeading"><strong>Created by operator</strong></div>
+                                    <div class="innerTableWidgetBody">
+                                        <strong>ID:</strong>
+                                            <a href="{!! route('admin.operators.edit.get', ['operatorId' => $bot->createdByOperator->getId()]) !!}">
+                                                {{ $bot->createdByOperator->getId() }}
+                                            </a>
+                                        <br>
+
+                                        <strong>Username:</strong>
+                                            <a href="{!! route('admin.operators.edit.get', ['operatorId' => $bot->createdByOperator->getId()]) !!}">
+                                                {{ $bot->createdByOperator->getUsername() }}
+                                            </a>
+                                        <br>
+                                    </div>
                                 </td>
                                 <td class="no-wrap">
                                     <h5 class="statsHeading"><strong>Messages received</strong></h5>
@@ -84,35 +136,6 @@
                                     </div>
                                 </td>
 
-                                <td>
-                                    <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $bot->username !!}
-                                    <br>
-                                    <strong>{!! @trans('user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($bot->meta->dob) !!}
-                                    <br>
-
-                                    @foreach(\UserConstants::selectableFields('bot') as $fieldName => $a)
-                                        @if(isset($bot->meta->{$fieldName}))
-                                            <strong>{!! ucfirst(str_replace('_', ' ', $fieldName)) !!}:
-                                            </strong> {!! @trans('user_constants.' . $fieldName . '.' . $bot->meta->{$fieldName}) !!}
-                                            <br>
-                                        @endif
-                                    @endforeach
-
-                                    @foreach(array_merge(\UserConstants::textFields('bot'), \UserConstants::textInputs('bot')) as $fieldName)
-                                        @if(isset($bot->meta->{$fieldName}) && $bot->meta->{$fieldName} != '')
-                                            <div
-                                                style="max-width: 250px; {!! $fieldName === 'about_me' ? 'white-space: normal' : '' !!}">
-                                                <strong>{!! @trans('user_constants.' . $fieldName) !!}:</strong>
-
-                                                @if($fieldName === 'about_me')
-                                                    {{ substr($bot->meta->{$fieldName}, 0, 40) }}{{ strlen($bot->meta->{$fieldName}) > 41 ? '...' : '' }}
-                                                @else
-                                                    {{ $bot->meta->{$fieldName} }}
-                                                @endif
-                                            </div>
-                                        @endif
-                                    @endforeach
-                                </td>
                                 <td class="action-buttons">
                                     @if($authenticatedUser->isAdmin() || ($authenticatedUser->isEditor() && !$bot->active))
                                         <a href="{!! route($editBotRoute, ['botId' => $bot->getId()]) !!}"
@@ -123,11 +146,18 @@
                                         <a href="{!! route('admin.conversations.bot.get', ['botId' => $bot->getId()]) !!}"
                                            class="btn btn-default">Conversations
                                             <b>({{ $bot->conversations_as_user_a_count + $bot->conversations_as_user_b_count }})</b></a>
+
                                         <a href="{!! route('admin.messages.bot', ['botId' => $bot->getId()]) !!}"
-                                           class="btn btn-default">Messages
+                                           class="btn btn-default">Messages sent/received
                                             <b>({{ $bot->messaged_count + $bot->messages_count }})</b></a>
+
+                                        <a href="{!! route('admin.bot-messages.bot.get', ['botId' => $bot->getId()]) !!}"
+                                           class="btn btn-default">Bot messages assigned
+                                            <b>({{ $bot->bot_messages_count }})</b></a>
+
                                         <a href="{!! route('admin.bots.message-with-bot.get', ['botId' =>  $bot->getId(), 'onlyOnlinePeasants' => '0']) !!}"
                                            class="btn btn-default">Message peasant with bot</a>
+
                                         <a href="{!! route('admin.bots.message-with-bot.get', ['botId' => $bot->getId(), 'onlyOnlinePeasants' => '1']) !!}"
                                            class="btn btn-default">Message online peasant with bot</a>
 

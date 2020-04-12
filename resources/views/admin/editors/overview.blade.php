@@ -25,22 +25,35 @@
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Profile image</th>
+                            <th>Editor Data</th>
                             <th>Stats</th>
-                            <th>Operator data</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($editors as $editor)
                             <tr>
-                                <td>{!! $editor->getId() !!}</td>
                                 <td>
-                                    <a href="">
-                                        <img width="120" src="{!! \StorageHelper::profileImageUrl($editor, true) !!}"
-                                             alt="">
+                                    <a href="{!! route('admin.editors.edit.get', ['editorId' => $editor->id]) !!}">
+                                        <img
+                                            style="object-fit: cover; width: 70px; height: 70px"
+                                            src="{!! \StorageHelper::profileImageUrl($editor, true) !!}"
+                                            alt=""
+                                        >
                                     </a>
+
+                                    <div class="innerTableWidgetHeading"><strong>Editor Data</strong></div>
+                                    <div class="innerTableWidgetBody">
+                                        <strong>ID</strong>:
+                                            <a href="{!! route('admin.editors.edit.get', ['editorId' => $editor->id]) !!}">
+                                                {!! $editor->getId() !!}
+                                            </a>
+                                        <br>
+
+                                        <strong>{!! @trans('user_constants.email') !!}:</strong> {!! $editor->email !!} <br>
+                                        <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $editor->username !!} <br>
+                                        <strong>{!! @trans('user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($editor->meta->dob) !!} <br>
+                                    </div>
                                 </td>
                                 <td>
                                     <h5 class="statsHeading"><strong>Created bots</strong></h5>
@@ -54,11 +67,6 @@
                                         <strong>Today:</strong> {!! $editor->created_bots_today_count !!} <br>
 
                                     </div>
-                                </td>
-                                <td>
-                                    <strong>{!! @trans('user_constants.email') !!}:</strong> {!! $editor->email !!} <br>
-                                    <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $editor->username !!} <br>
-                                    <strong>{!! @trans('user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($editor->meta->dob) !!} <br>
                                 </td>
                                 <td class="action-buttons">
                                     <a href="{!! route('admin.editors.edit.get', ['editorId' => $editor->id]) !!}" class="btn btn-default">Edit</a>

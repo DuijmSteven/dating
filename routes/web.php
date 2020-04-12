@@ -362,6 +362,9 @@ Route::group([
         Route::get('/', 'Admin\BotMessageController@index')
             ->name('admin.bot-messages.overview');
 
+        Route::get('bots/{botId}', 'Admin\BotMessageController@ofBotId')
+            ->name('admin.bot-messages.bot.get');
+
         Route::delete('{botMessageId}', 'Admin\BotMessageController@destroy')
             ->name('admin.bot-messages.destroy');
 
@@ -441,6 +444,8 @@ Route::group([
     ], function () {
         Route::get('/', 'Admin\PaymentController@index')
             ->name('admin.payments.overview');
+        Route::get('{peasantId}', 'Admin\PaymentController@ofPeasantId')
+            ->name('admin.payments.peasant.overview');
     });
 
     Route::get('layout', 'Admin\ModuleController@showLayout')

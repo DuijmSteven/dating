@@ -25,6 +25,7 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>Bot</th>
                                 <th>Body</th>
                                 <th>Status</th>
                                 <th class="no-wrap">Created at</th>
@@ -35,6 +36,21 @@
                             @foreach($botMessages as $botMessage)
                                 <tr>
                                     <td>{{ $botMessage->id }}</td>
+                                    <td>
+                                        @if($botMessage->bot)
+                                            <a href="{!! \StorageHelper::profileImageUrl($botMessage->bot) !!}">
+                                                <img
+                                                    style="object-fit: cover; width: 70px; height: 70px"
+                                                    src="{!! \StorageHelper::profileImageUrl($botMessage->bot, true) !!}"
+                                                    alt=""
+                                                >
+                                            </a> <br>
+                                            <strong>ID</strong>: <a href="{{ route('admin.bots.edit.get',  ['botId' => $botMessage->bot->getId()]) }}">{{ $botMessage->bot->getId() }}</a> <br>
+                                            <strong>Username</strong>: <a href="{{ route('admin.bots.edit.get',  ['botId' => $botMessage->bot->getId()]) }}">{{ $botMessage->bot->getUsername() }}</a> <br>
+                                        @else
+                                            No bot is assigned
+                                        @endif
+                                    </td>
                                     <td>{{ $botMessage->body }}</td>
                                     <td>{{ $botMessage->status ? 'Active' : 'Inactive' }}</td>
                                     <td class="no-wrap">{{ $botMessage->created_at->format('d-m-Y H:i:s') }}</td>

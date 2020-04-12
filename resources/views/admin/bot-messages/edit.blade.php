@@ -22,8 +22,8 @@
                                     class="form-control"
                                     required
                             >
-                                <option value="1" {!! ($botMessage->getStatus() === 1) ? 'selected' : '' !!}>Public</option>
-                                <option value="0" {!! ($botMessage->getStatus() === 0) ? 'selected' : '' !!}>Private</option>
+                                <option value="1" {!! ($botMessage->getStatus() === 1) ? 'selected' : '' !!}>Active</option>
+                                <option value="0" {!! ($botMessage->getStatus() === 0) ? 'selected' : '' !!}>Inactive</option>
                             </select>
                             @if ($errors->has('status'))
                                 {!! $errors->first('status', '<small class="form-error">:message</small>') !!}
@@ -41,6 +41,46 @@
                             >{!! $botMessage->getBody() !!}</textarea>
                             @if ($errors->has('body'))
                                 {!! $errors->first('body', '<small class="form-error">:message</small>') !!}
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label for="body">Bot</label>
+
+                            <div class="botMessageBots">
+                                @foreach($bots as $bot)
+                                    <div class="botMessageBot">
+                                        <img class="botMessageBotImage"
+                                             src="{!! \StorageHelper::profileImageUrl($bot, true) !!}"
+                                             alt="bot image"
+                                        >
+                                        (ID :<a href="{{ route('admin.bots.edit.get', ['botId' => $bot->getId()]) }}">{!! $bot->getId() !!}</a>)
+                                        <span class="js-fillBotData botUsername" style="margin-left: 10px; margin-right: 10px">
+                                            {!! $bot->username !!}
+                                        </span>
+
+                                        <a
+                                            href="{{ route('admin.bot-messages.bot.get', ['botId' => $bot->getId()]) }}"
+                                            style="margin-left: 15px; margin-right: 15px"
+                                        >
+                                            <strong>assigned messages</strong>: {{ $bot->bot_messages_count }}
+                                        </a>
+
+                                        <label style="cursor: pointer;">
+                                            <input
+                                                type="radio"
+                                                name="bot_id"
+                                                value="{{ $bot->getId() }}"
+                                                {{ ($botMessage->getBotId() === $bot->getId()) ? 'checked' : '' }}
+                                            >
+                                        </label>
+                                    </div>
+                                @endforeach
+                            </div>
+
+                            @if ($errors->has('bot_id'))
+                                {!! $errors->first('bot_id', '<small class="form-error">:message</small>') !!}
                             @endif
                         </div>
                     </div>
