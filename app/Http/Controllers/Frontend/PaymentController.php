@@ -122,37 +122,7 @@ class PaymentController extends FrontendController
             );
 
             if($check['status']) {
-                $creditsBoughtEmail = (new CreditsBought($this->authenticatedUser, $creditPack))
-                    ->onQueue('emails');
-
-                Mail::to($this->authenticatedUser)
-                    ->queue($creditsBoughtEmail);
-
-                // email to us about the sale
-                $userBoughtCreditsEmail = (new UserBoughtCredits($this->authenticatedUser, $creditPack))
-                    ->onQueue('emails');
-
-                Mail::to('develyvof@gmail.com')
-                    ->queue($userBoughtCreditsEmail);
-
-                //In case the buyer came from an affiliate, hit publisher callback
-                if ($this->authenticatedUser->affiliateTracking()->exists()) {
-                    $client = new Client();
-                    try {
-                        $response = $client->request(
-                            'GET',
-                            'https://mt67.net/d/?bdci='. $this->authenticatedUser->affiliateTracking->getClickId() .'&ti=' . $transactionId . '&r=' . $transactionTotal . '&pn=sale-XP-Altijdsex.nl&iv=media-' . $this->authenticatedUser->affiliateTracking->getMediaId() . '&cc=sale&g=' . UserConstants::selectableField('gender')[$this->authenticatedUser->meta->gender],
-                            [
-                                'timeout' => 4
-                            ]
-                        );
-                    } catch (RequestException $e) {
-                        \Log::error('Affiliate postback error - ' . Psr7\str($e->getRequest()));
-                        if ($e->hasResponse()) {
-                            \Log::error('Affiliate postback error - ' . Psr7\str($e->getResponse()));
-                        }
-                    }
-                }
+                $this->successfulPayment($creditPack, $transactionId, $transactionTotal);
             }
 
             $check['status'] ? $status = 'success' : $status = 'fail';
@@ -168,5 +138,76 @@ class PaymentController extends FrontendController
             'sku' => $creditPack->name . $creditPack->credits,
             'name' => $creditPack->name
         ]);
+    }
+
+    public function reportPayment(Request $request)
+    {
+        $transactionId = $request->get('trxid');
+
+        //get payment status from db
+        $paymentStatus = Payment::where('transaction_id', $transactionId)
+            ->firstOrFail()
+            ->getStatus();
+
+        //if payment status is started check the status from the provider
+        if($paymentStatus == Payment::STATUS_STARTED) {
+            $payment = Payment::find($transactionId);
+            $peasant = $payment->peasant;
+            $paymentMethod = $payment->method;
+            $creditPackId = $payment->creditpack_id;
+            $creditPack = Creditpack::find($creditPackId);
+            $transactionTotal = number_format((float) $creditPack->price/100, 2, '.', '');
+
+            $check = $this->paymentProvider->paymentCheck(
+                $peasant,
+                $paymentMethod,
+                $transactionId,
+                $creditPack
+            );
+
+            if($check['status']) {
+                $this->successfulPayment($creditPack, $transactionId, $transactionTotal);
+            }
+        }
+    }
+
+    /**
+     * @param $creditPack
+     * @param $transactionId
+     * @param  string  $transactionTotal
+     */
+    public function successfulPayment($creditPack, $transactionId, string $transactionTotal): void
+    {
+        $creditsBoughtEmail = (new CreditsBought($this->authenticatedUser, $creditPack))
+            ->onQueue('emails');
+
+        Mail::to($this->authenticatedUser)
+            ->queue($creditsBoughtEmail);
+
+        // email to us about the sale
+        $userBoughtCreditsEmail = (new UserBoughtCredits($this->authenticatedUser, $creditPack))
+            ->onQueue('emails');
+
+        Mail::to('develyvof@gmail.com')
+            ->queue($userBoughtCreditsEmail);
+
+        //In case the buyer came from an affiliate, hit publisher callback
+        if ($this->authenticatedUser->affiliateTracking()->exists()) {
+            $client = new Client();
+            try {
+                $response = $client->request(
+                    'GET',
+                    'https://mt67.net/d/?bdci='.$this->authenticatedUser->affiliateTracking->getClickId().'&ti='.$transactionId.'&r='.$transactionTotal.'&pn=sale-XP-Altijdsex.nl&iv=media-'.$this->authenticatedUser->affiliateTracking->getMediaId().'&cc=sale&g='.UserConstants::selectableField('gender')[$this->authenticatedUser->meta->gender],
+                    [
+                        'timeout' => 4
+                    ]
+                );
+            } catch (RequestException $e) {
+                \Log::error('Affiliate postback error - '.Psr7\str($e->getRequest()));
+                if ($e->hasResponse()) {
+                    \Log::error('Affiliate postback error - '.Psr7\str($e->getResponse()));
+                }
+            }
+        }
     }
 }
