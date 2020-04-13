@@ -7,39 +7,41 @@
             <div>
                 <div class="row">
                     @foreach($creditpacks as $creditpack)
-                        <div class="col-xs-12 col-md-4">
-                            <div data-creditpack-id="{{ $creditpack->id }}"
-                                 class="block block-pricing {{ $loop->iteration == 2 ? 'block-raised' : '' }} JS--creditpack"
-                            >
-                                <div class="table {{ $loop->iteration == 2 ? 'table-rose' : '' }}">
-                                    <h6 class="category">{{ $creditpack->name }}</h6>
-                                    <h1 class="block-caption"><b class="package-credits">{{ $creditpack->credits }}</b> {{ trans('credits.credits') }}
-                                    </h1>
-                                    <ul>
-                                        <li><small>€</small><span class="JS--price">{{ number_format($creditpack->price / 100, 2, ',', '.') }}</span></li>
-                                        <li><b>&euro;{{ number_format($creditpack->price/$creditpack->credits / 100, 2, ',', '.') }}</b> {{ trans('credits.per_message') }}
-                                        </li>
-                                    </ul>
+                        @if($creditpack->id !== 4 || $authenticatedUser->isAdmin())
+                            <div class="col-xs-12 col-md-4">
+                                <div data-creditpack-id="{{ $creditpack->id }}"
+                                     class="block block-pricing {{ $loop->iteration == 2 ? 'block-raised' : '' }} JS--creditpack"
+                                >
+                                    <div class="table {{ $loop->iteration == 2 ? 'table-rose' : '' }}">
+                                        <h6 class="category">{{ $creditpack->name }}</h6>
+                                        <h1 class="block-caption"><b class="package-credits">{{ $creditpack->credits }}</b> {{ trans('credits.credits') }}
+                                        </h1>
+                                        <ul>
+                                            <li><small>€</small><span class="JS--price">{{ number_format($creditpack->price / 100, 2, ',', '.') }}</span></li>
+                                            <li><b>&euro;{{ number_format($creditpack->price/$creditpack->credits / 100, 2, ',', '.') }}</b> {{ trans('credits.per_message') }}
+                                            </li>
+                                        </ul>
 
-                                    <a
-                                        href="#"
-                                        class="btn {{ $loop->iteration == 2 ? 'btn-white' : 'btn-rose' }} btn-round JS--prevent-default__click"
-                                    >
-                                        {{ trans('credits.select_package') }}
-                                    </a>
+                                        <a
+                                            href="#"
+                                            class="btn {{ $loop->iteration == 2 ? 'btn-white' : 'btn-rose' }} btn-round JS--prevent-default__click"
+                                        >
+                                            {{ trans('credits.select_package') }}
+                                        </a>
 
-                                    @if($creditpack->id === 2)
-                                        <div class="usp-label most-popular">
-                                            {{ trans('credits.most_popular') }}
-                                        </div>
-                                    @elseif($creditpack->id === 3)
-                                        <div class="usp-label best-value">
-                                            {{ trans('credits.best_value') }}
-                                        </div>
-                                    @endif
+                                        @if($creditpack->id === 2)
+                                            <div class="usp-label most-popular">
+                                                {{ trans('credits.most_popular') }}
+                                            </div>
+                                        @elseif($creditpack->id === 3)
+                                            <div class="usp-label best-value">
+                                                {{ trans('credits.best_value') }}
+                                            </div>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                     @endforeach
                 </div>
             </div>

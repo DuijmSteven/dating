@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddCreatedByIdColumnToUsersTable extends Migration
+class AddTrackedColumnToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,12 +14,12 @@ class AddCreatedByIdColumnToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('created_by_id')->unsigned()->nullable();
+            $table->boolean('tracked')->default(false);
         });
 
         \App\User::whereHas('roles', function ($query) {
-            $query->where('id', \App\Role::ROLE_BOT);
-        })->update(['created_by_id' => 1]);
+            $query->where('id', \App\Role::ROLE_PEASANT);
+        })->update(['tracked' => true]);
     }
 
     /**
@@ -30,7 +30,7 @@ class AddCreatedByIdColumnToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('created_by_id');
+            $table->dropColumn('tracked');
         });
     }
 }
