@@ -339,7 +339,8 @@ class User extends Authenticatable
         'password',
         'active',
         'conversation_manager_state',
-        'created_by_id'
+        'created_by_id',
+        'tracked'
     ];
 
     /**
@@ -379,6 +380,22 @@ class User extends Authenticatable
     public function setUsername($username = '')
     {
         $this->username = $username;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTracked(): bool
+    {
+        return $this->tracked;
+    }
+
+    /**
+     * @param bool $tracked
+     */
+    public function setTracked(bool $tracked)
+    {
+        $this->tracked = $tracked;
     }
 
     /**
@@ -1072,12 +1089,6 @@ class User extends Authenticatable
             ->where('created_at', '<=', $endOfLastMonthUtc);
     }
 
-
-
-
-
-
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -1167,9 +1178,6 @@ class User extends Authenticatable
             ->where('created_at', '<=', $endOfLastMonthUtc)
             ->where('operator_message_type', ConversationMessage::OPERATOR_MESSAGE_TYPE_STOPPED);
     }
-
-
-
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
