@@ -38,6 +38,8 @@ return [
             'driver' => 'stack',
             'channels' => ['daily'],
             'level' => 'debug',
+            'permission' => 0664,
+            'ignore_exceptions' => false,
         ],
 
         'single' => [
