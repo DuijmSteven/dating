@@ -236,6 +236,7 @@ class ConversationManager
                 $query->where('locked_at', null)
                     ->orWhere('locked_at', '<', Carbon::now()->subMinutes(self::CONVERSATION_LOCKING_TIME));
             })
+            ->has('messages', '>', '0')
             ->where('replyable_at', '<=', Carbon::now())
             ->withTrashed()
             ->get()
