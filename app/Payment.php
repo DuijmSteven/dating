@@ -36,6 +36,22 @@ class Payment extends TimeZonedModel
         return $this->id;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getTracked(): bool
+    {
+        return $this->tracked;
+    }
+
+    /**
+     * @param bool $tracked
+     */
+    public function setTracked(bool $tracked)
+    {
+        $this->tracked = $tracked;
+    }
+
     public function getDescription()
     {
         return $this->description;

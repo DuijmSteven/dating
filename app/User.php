@@ -383,22 +383,6 @@ class User extends Authenticatable
     }
 
     /**
-     * @return mixed
-     */
-    public function getTracked(): bool
-    {
-        return $this->tracked;
-    }
-
-    /**
-     * @param bool $tracked
-     */
-    public function setTracked(bool $tracked)
-    {
-        $this->tracked = $tracked;
-    }
-
-    /**
      * @return string
      */
     public function getLocale(): string
