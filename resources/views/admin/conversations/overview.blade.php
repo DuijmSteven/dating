@@ -24,6 +24,7 @@
                                 <th>ID</th>
                                 <th>User A</th>
                                 <th>User B</th>
+                                <th>Conversation data</th>
                                 <th>Created at</th>
                                 <th>Actions</th>
                             </tr>
@@ -95,6 +96,9 @@
                                         @else
                                             <span style="font-weight: bold; color: red">User does not exist</span>
                                         @endif
+                                    </td>
+                                    <td>
+                                        <b>Replyable</b>: {{ $conversation->getReplyableAt() ? $conversation->getReplyableAt()->tz('Europe/Amsterdam') . ' (' . $conversation->getReplyableAt()->tz('Europe/Amsterdam')->diffForHumans() . ')' : 'No' }} <br>
                                     </td>
                                     <td>{{ $conversation->created_at->format('d-m-Y H:i:s') }}</td>
                                     <td class="action-buttons">
