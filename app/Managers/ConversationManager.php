@@ -258,7 +258,7 @@ class ConversationManager
             ->with(['messages' => function ($query) {
                 $query->orderBy('created_at', 'desc');
             }])
-            ->has('messages', '>', '0')
+            ->has('messages', '>', '1')
             ->where(function ($query) {
                 $query->where('locked_at', null)
                     ->orWhere('locked_at', '<', Carbon::now()->subMinutes(self::CONVERSATION_LOCKING_TIME));
