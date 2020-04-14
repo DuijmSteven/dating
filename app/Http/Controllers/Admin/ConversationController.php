@@ -673,7 +673,7 @@ class ConversationController extends Controller
         try {
             DB::beginTransaction();
 
-            Conversation::where('id', $conversationId)->delete();
+            Conversation::where('id', $conversationId)->forceDelete();
 
             DB::commit();
 
