@@ -238,6 +238,7 @@ class ConversationManager
             })
             ->has('messages', '>', '0')
             ->where('replyable_at', '<=', Carbon::now())
+            ->where('replyable_at', '!=', null)
             ->withTrashed()
             ->get()
 
@@ -264,6 +265,7 @@ class ConversationManager
             })
             ->withTrashed()
             ->where('replyable_at', '<=', Carbon::now())
+            ->where('replyable_at', '!=', null)
             ->get()
             ->filter(function ($value, $key) {
                 if (
