@@ -65,6 +65,7 @@
                                                 </a> <br>
                                             <b>Username</b>: {{ $userA->username }} <br>
                                             <b>Gender</b>: {{ @trans('user_constants')['gender'][$userA->meta->gender] }} <br>
+                                            <b>Looking for gender</b>: {{ @trans('user_constants')['looking_for_gender'][$userA->meta->looking_for_gender] }} <br>
                                             <b>Role</b>: {{ @trans('user_constants')['role'][$userA->roles[0]->id] }} <br>
                                         @else
                                             <span style="font-weight: bold; color: red">User does not exist</span>
@@ -92,6 +93,7 @@
                                                 </a> <br>
                                             <b>Username</b>: {{ $userB->username }} <br>
                                             <b>Gender</b>: {{ @trans('user_constants')['gender'][$userB->meta->gender] }}<br>
+                                            <b>Looking for gender</b>: {{ @trans('user_constants')['looking_for_gender'][$userB->meta->looking_for_gender] }} <br>
                                             <b>Role</b>: {{ @trans('user_constants')['role'][$userB->roles[0]->id] }}<br>
                                         @else
                                             <span style="font-weight: bold; color: red">User does not exist</span>
