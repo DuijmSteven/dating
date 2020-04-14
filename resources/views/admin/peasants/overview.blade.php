@@ -76,13 +76,13 @@
                                         <strong>Created at</strong> {!! $peasant->getCreatedAt()->tz('Europe/Amsterdam') !!} <br>
                                     </div>
 
-                                    <div class="innerTableWidgetHeading"><strong>Activity</strong></div>
-                                    <div class="innerTableWidgetBody">
-                                        @if($peasant->getLastOnlineAt())
-                                            <strong>Last online at</strong> {!! $peasant->getLastOnlineAt()->tz('Europe/Amsterdam') !!} <br>
-                                            <strong>Last online in days</strong> {!! $peasant->getLastOnlineAt()->tz('Europe/Amsterdam')->diffInDays($carbonNow->tz('Europe/Amsterdam')) !!} <br>
-                                        @endif
-                                    </div>
+                                    @if($peasant->getLastOnlineAt())
+                                        <div class="innerTableWidgetHeading"><strong>Activity</strong></div>
+                                        <div class="innerTableWidgetBody">
+                                                <strong>Last online at</strong> {!! $peasant->getLastOnlineAt()->tz('Europe/Amsterdam') !!} <br>
+                                                <strong>Last online in days</strong> {!! $peasant->getLastOnlineAt()->tz('Europe/Amsterdam')->diffInDays($carbonNow->tz('Europe/Amsterdam')) !!} <br>
+                                        </div>
+                                    @endif
 
 
                                     @if(count($peasant->completedPayments) > 0)

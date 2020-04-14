@@ -240,6 +240,7 @@ class ConversationManager
             ->where('replyable_at', '<=', Carbon::now())
             ->withTrashed()
             ->get()
+
             ->sortByDesc(function ($conversation) {
                 return $conversation->messages[0]->getCreatedAt();
             })->take(10);
