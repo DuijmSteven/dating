@@ -55,7 +55,7 @@
                                 @php
                                     $highlightTypeClass = '';
 
-                                    if ($user->account->credits > 10) {
+                                    if ($user->account->getCredits() > 10) {
                                         $highlightTypeClass = 'success';
                                     } else if ($user->account->credits > 4) {
                                         $highlightTypeClass = 'warning';
@@ -65,7 +65,7 @@
                                 @endphp
 
                                 <a href="{{ route('admin.peasants.edit.get', ['peasantId' => $user->getId()]) }}">
-                                    {{ $user->getUsername() }} (ID: {{ $user->getId() }}) - <strong>Credits: <span class=" highlightAsDisk {{ $highlightTypeClass }}">{{ $user->account->credits }}</span></strong>
+                                    {{ $user->getUsername() }} (ID: {{ $user->getId() }}) - <strong>Credits: <span class="highlightAsDisk {{ $highlightTypeClass }}">{{ $user->account->getCredits() }}</span></strong>
                                     <span class="DashboardWidget_count">{{ $user->messages->count() }}</span>
                                 </a>
                             </li>

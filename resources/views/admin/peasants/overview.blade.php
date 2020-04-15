@@ -51,7 +51,21 @@
                                         <br>
                                         <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $peasant->username !!} <br>
                                         <strong>{!! @trans('user_constants.email') !!}:</strong> {!! $peasant->email !!} <br>
-                                        <strong>Credits</strong>: {{ $peasant->account->getCredits() }} <br>
+
+                                        @php
+                                            $highlightTypeClass = '';
+
+                                            if ($peasant->account->getCredits() > 10) {
+                                                $highlightTypeClass = 'success';
+                                            } else if ($peasant->account->getCredits() > 4) {
+                                                $highlightTypeClass = 'warning';
+                                            } else {
+                                                $highlightTypeClass = 'error';
+                                            }
+                                        @endphp
+
+
+                                        <strong>Credits</strong>: <span class="highlightAsDisk {{ $highlightTypeClass }}">{{ $peasant->account->getCredits() }}</span> <br>
                                         <strong>{!! @trans('user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($peasant->meta->dob) !!} <br>
                                         @foreach(\UserConstants::selectableFields('peasant') as $fieldName => $a)
                                             @if(isset($peasant->meta->{$fieldName}))

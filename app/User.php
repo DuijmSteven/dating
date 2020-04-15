@@ -414,7 +414,7 @@ class User extends Authenticatable
         $this->active = $active;
     }
 
-    public function setDeactivatedAt(Carbon $deactivatedAt)
+    public function setDeactivatedAt(?Carbon $deactivatedAt)
     {
         $this->deactivated_at = $deactivatedAt;
     }
