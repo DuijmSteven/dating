@@ -105,7 +105,7 @@ class StatisticsManager
                 $query->where('created_at', '<=', $endDate);
             }])
             ->whereHas('roles', function($query) {
-                $query->where('name', 'peasant');
+                $query->where('id', User::TYPE_PEASANT);
             })
             ->whereHas('payments', function($query) {
                 $query->where('status', Payment::STATUS_COMPLETED);
@@ -117,6 +117,26 @@ class StatisticsManager
             ->get()
             ->sortByDesc(function ($user) {
                 return $user->messages->count();
+            })
+            ->take($amount);
+    }
+
+    public function topOperatorMessagersBetweenDates($startDate, $endDate, int $amount)
+    {
+        return User::with(['messagesAsOperator' => function ($query) use ($startDate, $endDate) {
+            $query->where('created_at', '>=', $startDate);
+            $query->where('created_at', '<=', $endDate);
+        }])
+            ->whereHas('roles', function($query) {
+                $query->whereIn('id', [User::TYPE_OPERATOR, User::TYPE_ADMIN]);
+            })
+            ->whereHas('messagesAsOperator', function ($query) use ($startDate, $endDate) {
+                $query->where('created_at', '>=', $startDate);
+                $query->where('created_at', '<=', $endDate);
+            })
+            ->get()
+            ->sortByDesc(function ($user) {
+                return $user->messagesAsOperator->count();
             })
             ->take($amount);
     }

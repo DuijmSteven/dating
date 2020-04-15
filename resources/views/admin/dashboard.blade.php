@@ -34,174 +34,126 @@
             $amountOfListItemsVisible = 5;
         @endphp
 
-        <div class="col-xs-12 col-sm-6 col-md-4">
-            <div class="box box-widget DashboardWidget expandable">
-                <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="bg-primary">
-                    <div class="widget-us DashboardWidget_header" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
-                        <i class="fa fa-users DashboardWidget_header-icon"></i>
-                        <span class="DashboardWidget_header-title">Top messagers today</span>
+        @foreach([
+                'today',
+                'this_week',
+                'this_month',
+            ]
+            as $topMessagersWidget
+        )
+
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <div class="box box-widget DashboardWidget expandable">
+                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                    <div class="bg-primary">
+                        <div class="widget-us DashboardWidget_header" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
+                            <i class="fa fa-users DashboardWidget_header-icon"></i>
+                            <span class="DashboardWidget_header-title">Top messagers {{ str_replace('_', ' ', $topMessagersWidget) }}</span>
+                        </div>
+                        <!-- /.widget-user-image -->
                     </div>
-                    <!-- /.widget-user-image -->
-                </div>
-                <div class="box-footer no-padding">
-                    <ul class="nav nav-stacked">
-                        @php
-                            $count = 0;
-                        @endphp
-
-                        @foreach($topMessagerStatistics['today'] as $user)
-                            <li class="{{ $count >= $amountOfListItemsVisible ? 'hidden defaultHidden' : '' }}">
-                                @php
-                                    $highlightTypeClass = '';
-
-                                    if ($user->account->getCredits() > 10) {
-                                        $highlightTypeClass = 'success';
-                                    } else if ($user->account->credits > 4) {
-                                        $highlightTypeClass = 'warning';
-                                    } else {
-                                        $highlightTypeClass = 'error';
-                                    }
-                                @endphp
-
-                                <a href="{{ route('admin.peasants.edit.get', ['peasantId' => $user->getId()]) }}">
-                                    {{ $user->getUsername() }} (ID: {{ $user->getId() }}) - <strong>Credits: <span class="highlightAsDisk {{ $highlightTypeClass }}">{{ $user->account->getCredits() }}</span></strong>
-                                    <span class="DashboardWidget_count">{{ $user->messages->count() }}</span>
-                                </a>
-                            </li>
-
+                    <div class="box-footer no-padding">
+                        <ul class="nav nav-stacked">
                             @php
-                                $count++;
+                                $count = 0;
                             @endphp
-                        @endforeach
 
-                        @if(count($topMessagerStatistics['today']) > $amountOfListItemsVisible)
-                            <li>
-                                <a class="showMore" href="#">
-                                    Show more <i class="fa fa-chevron-down"></i>
-                                </a>
+                            @foreach($topMessagerStatistics[$topMessagersWidget] as $user)
+                                <li class="{{ $count >= $amountOfListItemsVisible ? 'hidden defaultHidden' : '' }}">
+                                    @php
+                                        $highlightTypeClass = '';
 
-                                <a class="showLess hidden" href="#">
-                                    Show less <i class="fa fa-chevron-up"></i>
-                                </a>
-                            </li>
-                        @endif
-                    </ul>
+                                        if ($user->account->getCredits() > 10) {
+                                            $highlightTypeClass = 'success';
+                                        } else if ($user->account->credits > 4) {
+                                            $highlightTypeClass = 'warning';
+                                        } else {
+                                            $highlightTypeClass = 'error';
+                                        }
+                                    @endphp
+
+                                    <a href="{{ route('admin.peasants.edit.get', ['peasantId' => $user->getId()]) }}">
+                                        {{ $user->getUsername() }} (ID: {{ $user->getId() }}) - <strong>Credits: <span class="highlightAsDisk {{ $highlightTypeClass }}">{{ $user->account->getCredits() }}</span></strong>
+                                        <span class="DashboardWidget_count">{{ $user->messages->count() }}</span>
+                                    </a>
+                                </li>
+
+                                @php
+                                    $count++;
+                                @endphp
+                            @endforeach
+
+                            @if(count($topMessagerStatistics[$topMessagersWidget]) > $amountOfListItemsVisible)
+                                <li>
+                                    <a class="showMore" href="#">
+                                        Show more <i class="fa fa-chevron-down"></i>
+                                    </a>
+
+                                    <a class="showLess hidden" href="#">
+                                        Show less <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                </li>
+                            @endif
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-4">
-            <div class="box box-widget DashboardWidget expandable">
-                <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="bg-primary">
-                    <div class="widget-us DashboardWidget_header" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
-                        <i class="fa fa-users DashboardWidget_header-icon"></i>
-                        <span class="DashboardWidget_header-title">Top messagers this week</span>
+        @endforeach
+
+        @foreach([
+        'today',
+        'this_week',
+        'this_month',
+    ]
+    as $topOperatorMessagersWidget
+)
+
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <div class="box box-widget DashboardWidget expandable">
+                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                    <div class="bg-primary">
+                        <div class="widget-us DashboardWidget_header" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
+                            <i class="fa fa-users DashboardWidget_header-icon"></i>
+                            <span class="DashboardWidget_header-title">Top operator messagers {{ str_replace('_', ' ', $topOperatorMessagersWidget) }}</span>
+                        </div>
+                        <!-- /.widget-user-image -->
                     </div>
-                    <!-- /.widget-user-image -->
-                </div>
-                <div class="box-footer no-padding">
-                    <ul class="nav nav-stacked">
-                        @php
-                            $count = 0;
-                        @endphp
-
-                        @foreach($topMessagerStatistics['this_week'] as $user)
-                            <li class="{{ $count >= $amountOfListItemsVisible ? 'hidden defaultHidden' : '' }}">
-                                @php
-                                    $highlightTypeClass = '';
-
-                                    if ($user->account->credits > 10) {
-                                        $highlightTypeClass = 'success';
-                                    } else if ($user->account->credits > 4) {
-                                        $highlightTypeClass = 'warning';
-                                    } else {
-                                        $highlightTypeClass = 'error';
-                                    }
-                                @endphp
-
-                                <a href="{{ route('admin.peasants.edit.get', ['peasantId' => $user->getId()]) }}">
-                                    {{ $user->getUsername() }} (ID: {{ $user->getId() }}) - <strong>Credits: <span class=" highlightAsDisk {{ $highlightTypeClass }}">{{ $user->account->credits }}</span></strong>
-                                    <span class="DashboardWidget_count">{{ $user->messages->count() }}</span>
-                                </a>
-                            </li>
-
+                    <div class="box-footer no-padding">
+                        <ul class="nav nav-stacked">
                             @php
-                                $count++;
+                                $count = 0;
                             @endphp
-                        @endforeach
 
-                        @if(count($topMessagerStatistics['this_week']) > $amountOfListItemsVisible)
-                            <li>
-                                <a class="showMore" href="#">
-                                    Show more <i class="fa fa-chevron-down"></i>
-                                </a>
+                            @foreach($topOperatorMessagerStatistics[$topOperatorMessagersWidget] as $operator)
+                                <li class="{{ $count >= $amountOfListItemsVisible ? 'hidden defaultHidden' : '' }}">
+                                    <a href="{{ route('admin.peasants.edit.get', ['peasantId' => $operator->getId()]) }}">
+                                        {{ $operator->getUsername() }} (ID: {{ $operator->getId() }})
+                                        <span class="DashboardWidget_count">{{ $operator->messagesAsOperator->count() }}</span>
+                                    </a>
+                                </li>
 
-                                <a class="showLess hidden" href="#">
-                                    Show less <i class="fa fa-chevron-up"></i>
-                                </a>
-                            </li>
-                        @endif
-                    </ul>
+                                @php
+                                    $count++;
+                                @endphp
+                            @endforeach
+
+                            @if(count($topOperatorMessagerStatistics[$topOperatorMessagersWidget]) > $amountOfListItemsVisible)
+                                <li>
+                                    <a class="showMore" href="#">
+                                        Show more <i class="fa fa-chevron-down"></i>
+                                    </a>
+
+                                    <a class="showLess hidden" href="#">
+                                        Show less <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                </li>
+                            @endif
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-4">
-            <div class="box box-widget DashboardWidget expandable">
-                <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="bg-primary">
-                    <div class="widget-us DashboardWidget_header" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
-                        <i class="fa fa-users DashboardWidget_header-icon"></i>
-                        <span class="DashboardWidget_header-title">Top messagers this month</span>
-                    </div>
-                    <!-- /.widget-user-image -->
-                </div>
-                <div class="box-footer no-padding">
-                    <ul class="nav nav-stacked">
-                        @php
-                            $count = 0;
-                        @endphp
+        @endforeach
 
-                        @foreach($topMessagerStatistics['this_month'] as $user)
-                            <li class="{{ $count >= $amountOfListItemsVisible ? 'hidden defaultHidden' : '' }}">
-                                @php
-                                    $highlightTypeClass = '';
-
-                                    if ($user->account->credits > 10) {
-                                        $highlightTypeClass = 'success';
-                                    } else if ($user->account->credits > 4) {
-                                        $highlightTypeClass = 'warning';
-                                    } else {
-                                        $highlightTypeClass = 'error';
-                                    }
-                                @endphp
-
-                                <a href="{{ route('admin.peasants.edit.get', ['peasantId' => $user->getId()]) }}">
-                                    {{ $user->getUsername() }} (ID: {{ $user->getId() }}) - <strong>Credits: <span class=" highlightAsDisk {{ $highlightTypeClass }}">{{ $user->account->credits }}</span></strong>
-                                    <span class="DashboardWidget_count">{{ $user->messages->count() }}</span>
-                                </a>
-                            </li>
-
-                            @php
-                                $count++;
-                            @endphp
-                        @endforeach
-
-                        @if(count($topMessagerStatistics['this_month']) > $amountOfListItemsVisible)
-                            <li>
-                                <a class="showMore" href="#">
-                                    Show more <i class="fa fa-chevron-down"></i>
-                                </a>
-
-                                <a class="showLess hidden" href="#">
-                                    Show less <i class="fa fa-chevron-up"></i>
-                                </a>
-                            </li>
-                        @endif
-                    </ul>
-                </div>
-            </div>
-        </div>
         <div class="col-xs-12"></div>
         <div class="col-xs-12 col-sm-6 col-md-4">
             <div class="box box-widget DashboardWidget">
