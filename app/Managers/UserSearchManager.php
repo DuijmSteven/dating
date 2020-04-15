@@ -156,6 +156,14 @@ class UserSearchManager
             $query->whereIn('id', $roleIdsArray);
         });
 
+        foreach (UserConstants::selectableFields('common') as $field => $values) {
+            if (isset($parameters[$field])) {
+                $query = $query->whereHas('meta', function ($query) use ($parameters, $field) {
+                    $query->where($field, $parameters[$field]);
+                });
+            }
+        }
+
         $query->where('users.id', '!=', \Auth::user()->getId());
 
         if (!$paginated) {

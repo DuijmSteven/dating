@@ -244,7 +244,8 @@ class ConversationManager
 
             ->sortByDesc(function ($conversation) {
                 return $conversation->messages[0]->getCreatedAt();
-            })->take(10);
+            })
+            ->take(10);
 
         return $conversations;
     }
