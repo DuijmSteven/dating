@@ -146,6 +146,8 @@ class PaymentController extends FrontendController
 
         $transactionId = $request->get('trxid');
 
+        \Log::debug($transactionId);
+
         //get payment status from db
         $paymentStatus = Payment::where('transaction_id', $transactionId)
             ->firstOrFail()
