@@ -94,6 +94,14 @@ class UserSearchController extends Controller
             $request->input('page')
         );
 
+        foreach ($users as $user) {
+            if (!$user->account) {
+                dd($user);
+            }
+        }
+
+     //   dd($users);
+
         $viewData = [
             'carbonNow' => Carbon::now(),
             'title' => 'Search results',

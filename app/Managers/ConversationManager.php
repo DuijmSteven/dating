@@ -124,8 +124,6 @@ class ConversationManager
                     }
                 }
 
-                \Log::debug($exemptFromDelay ? 'true' : 'false');
-
                 if (in_array($messageData['recipient_id'], $onlineBotIds) || $exemptFromDelay) {
                     $replyableAt = Carbon::now();
                 } else {
@@ -238,12 +236,16 @@ class ConversationManager
                 $query->where('locked_at', null)
                     ->orWhere('locked_at', '<', Carbon::now()->subMinutes(self::CONVERSATION_LOCKING_TIME));
             })
+            ->has('messages', '>', '0')
             ->where('replyable_at', '<=', Carbon::now())
+            ->where('replyable_at', '!=', null)
             ->withTrashed()
             ->get()
+
             ->sortByDesc(function ($conversation) {
                 return $conversation->messages[0]->getCreatedAt();
-            })->take(10);
+            })
+            ->take(10);
 
         return $conversations;
     }
@@ -264,6 +266,7 @@ class ConversationManager
             })
             ->withTrashed()
             ->where('replyable_at', '<=', Carbon::now())
+            ->where('replyable_at', '!=', null)
             ->get()
             ->filter(function ($value, $key) {
                 if (

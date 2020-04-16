@@ -219,6 +219,25 @@ class ConversationController extends Controller
     }
 
     /**
+     * @param $conversationId
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function setUnreplyable($conversationId)
+    {
+        /** @var Conversation $conversation */
+        $conversation = Conversation::findOrFail($conversationId);
+        $conversation->setReplyableAt(null);
+        $conversation->save();
+
+        $alerts[] = [
+            'type' => 'success',
+            'message' => 'The conversation\'s (ID: ' . $conversationId .  ') replyable_at field was set to null'
+        ];
+
+        return redirect()->back()->with('alerts', $alerts);
+    }
+
+    /**
      * @param int $conversationId
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
@@ -673,8 +692,7 @@ class ConversationController extends Controller
         try {
             DB::beginTransaction();
 
-            Conversation::destroy($conversationId);
-            ConversationMessage::where('conversation_id', $conversationId)->delete();
+            Conversation::where('id', $conversationId)->forceDelete();
 
             DB::commit();
 

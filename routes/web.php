@@ -163,8 +163,11 @@ Route::group([
     'middleware' => ['auth', 'not_editor', 'not_operator']
 ], function () {
     Route::post('/', 'Frontend\PaymentController@postPayment')
-    ->name('payments.post');
-    Route::get('thank-you', 'Frontend\PaymentController@checkPayment')->name('payments.check');
+        ->name('payments.post');
+    Route::get('thank-you', 'Frontend\PaymentController@checkPayment')
+        ->name('payments.check');
+    Route::post('report', 'Frontend\PaymentController@reportPayment')
+        ->name('payments.report');
 });
 
 Route::get('privacy', 'Frontend\MiscController@showPrivacy')
@@ -312,6 +315,9 @@ Route::group([
 
         Route::get('/{conversationId}/unlock', 'Admin\ConversationController@unlock')
             ->name('admin.conversations.unlock');
+
+        Route::get('/{conversationId}/set-unreplyable', 'Admin\ConversationController@setUnreplyable')
+            ->name('admin.conversations.set-unreplyable');
     });
 
     Route::group([

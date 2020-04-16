@@ -39,6 +39,11 @@
                     'quantity': 1
                 }]
             });
+
+            //Redirect user to home page after 8 sec
+            setTimeout(function(){
+                window.location.href = '<?php route('home') ?>';
+            }, 8000);
         </script>
     @endif
 @endsection
