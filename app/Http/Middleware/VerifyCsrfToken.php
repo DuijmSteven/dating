@@ -12,6 +12,6 @@ class VerifyCsrfToken extends BaseVerifier
      * @var array
      */
     protected $except = [
-        'https://pay.digiwallet.nl/*'
+        'payments/report/*'
     ];
 }
