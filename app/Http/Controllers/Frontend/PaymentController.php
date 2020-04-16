@@ -155,7 +155,7 @@ class PaymentController extends FrontendController
 
         //if payment status is started check the status from the provider
         if($paymentStatus == Payment::STATUS_STARTED) {
-            $payment = Payment::find($transactionId);
+            $payment = Payment::where('transaction_id', $transactionId)->firstOrFail();
             $peasant = $payment->peasant;
             $paymentMethod = $payment->method;
             $creditPackId = $payment->creditpack_id;
