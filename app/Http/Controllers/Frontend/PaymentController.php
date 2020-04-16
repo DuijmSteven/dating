@@ -142,11 +142,7 @@ class PaymentController extends FrontendController
 
     public function reportPayment(Request $request)
     {
-        \Log::debug($request);
-
         $transactionId = $request->get('trxid');
-
-        \Log::debug($transactionId);
 
         //get payment status from db
         $paymentStatus = Payment::where('transaction_id', $transactionId)
