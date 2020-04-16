@@ -102,10 +102,14 @@
                                     <td>
                                         <b>Replyable</b>: {{ $conversation->getReplyableAt() ? $conversation->getReplyableAt()->tz('Europe/Amsterdam') . ' (' . $conversation->getReplyableAt()->tz('Europe/Amsterdam')->diffForHumans() . ')' : 'No' }} <br>
                                     </td>
-                                    <td>{{ $conversation->created_at->format('d-m-Y H:i:s') }}</td>
+                                    <td>{{ $conversation->getCreatedAt()->format('d-m-Y H:i:s') }}</td>
                                     <td class="action-buttons">
                                         @if($userA && $userB)
                                             <a href="{!! route('operator-platform.conversations.show', [$conversation->id]) !!}" class="btn btn-default">View</a>
+                                        @endif
+
+                                        @if($conversation->getReplyableAt())
+                                            <a href="{!! route('admin.conversations.set-unreplyable', [$conversation->id]) !!}" class="btn btn-default">Make unreplyable</a>
                                         @endif
 
                                         <form method="POST" action="{{ route('admin.conversations.destroy', ['conversationId' => $conversation->id]) }}">
