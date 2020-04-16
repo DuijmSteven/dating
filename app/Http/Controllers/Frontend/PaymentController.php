@@ -122,7 +122,7 @@ class PaymentController extends FrontendController
             );
 
             if($check['status']) {
-                $this->successfulPayment($creditPack, $transactionId, $transactionTotal);
+                $this->successfulPayment($this->authenticatedUser, $creditPack, $transactionId, $transactionTotal);
             }
 
             $check['status'] ? $status = 'success' : $status = 'fail';
@@ -170,38 +170,39 @@ class PaymentController extends FrontendController
             );
 
             if($check['status']) {
-                $this->successfulPayment($creditPack, $transactionId, $transactionTotal);
+                $this->successfulPayment($peasant, $creditPack, $transactionId, $transactionTotal);
             }
         }
     }
 
     /**
+     * @param $user
      * @param $creditPack
      * @param $transactionId
      * @param  string  $transactionTotal
      */
-    public function successfulPayment($creditPack, $transactionId, string $transactionTotal): void
+    public function successfulPayment($user, $creditPack, $transactionId, string $transactionTotal): void
     {
-        $creditsBoughtEmail = (new CreditsBought($this->authenticatedUser, $creditPack))
+        $creditsBoughtEmail = (new CreditsBought($user, $creditPack))
             ->onQueue('emails');
 
-        Mail::to($this->authenticatedUser)
+        Mail::to($user)
             ->queue($creditsBoughtEmail);
 
         // email to us about the sale
-        $userBoughtCreditsEmail = (new UserBoughtCredits($this->authenticatedUser, $creditPack))
+        $userBoughtCreditsEmail = (new UserBoughtCredits($user, $creditPack))
             ->onQueue('emails');
 
         Mail::to('develyvof@gmail.com')
             ->queue($userBoughtCreditsEmail);
 
         //In case the buyer came from an affiliate, hit publisher callback
-        if ($this->authenticatedUser->affiliateTracking()->exists()) {
+        if ($user->affiliateTracking()->exists()) {
             $client = new Client();
             try {
                 $response = $client->request(
                     'GET',
-                    'https://mt67.net/d/?bdci='.$this->authenticatedUser->affiliateTracking->getClickId().'&ti='.$transactionId.'&r='.$transactionTotal.'&pn=sale-XP-Altijdsex.nl&iv=media-'.$this->authenticatedUser->affiliateTracking->getMediaId().'&cc=sale&g='.UserConstants::selectableField('gender')[$this->authenticatedUser->meta->gender],
+                    'https://mt67.net/d/?bdci='.$user->affiliateTracking->getClickId().'&ti='.$transactionId.'&r='.$transactionTotal.'&pn=sale-XP-Altijdsex.nl&iv=media-'.$user->affiliateTracking->getMediaId().'&cc=sale&g='.UserConstants::selectableField('gender')[$user->meta->gender],
                     [
                         'timeout' => 4
                     ]
