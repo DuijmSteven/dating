@@ -3,6 +3,7 @@
 namespace App\Managers;
 
 use App\ConversationMessage;
+use App\Creditpack;
 use App\Facades\Helpers\PaymentsHelper;
 use App\Payment;
 use App\User;
@@ -60,11 +61,12 @@ class StatisticsManager
                 $startDate,
                 $endDate
             ])
-            ->count();
+        ->count();
     }
 
     public function peasantsWithNoCreditpack() : int {
-        return User::whereHas('roles', function($query) {
+        return User::where('active', true)
+        ->whereHas('roles', function($query) {
             $query->where('name', 'peasant');
         })->whereHas('account', function($query) {
             $query->where('credits', 0);
@@ -73,7 +75,8 @@ class StatisticsManager
     }
 
     public function peasantsThatNeverHadCreditpack() : int {
-        return User::has('payments', '=', 0)
+        return User::where('active', true)
+        ->has('payments', '=', 0)
         ->whereHas('roles', function($query) {
             $query->where('name', 'peasant');
         })
@@ -84,15 +87,15 @@ class StatisticsManager
     }
 
     public function peasantsWithSmallCreditpack() : int {
-        return $this->peasantsCreditpackId(1);
+        return $this->peasantsCreditpackId(Creditpack::SMALL);
     }
 
     public function peasantsWithMediumCreditpack() : int {
-        return $this->peasantsCreditpackId(2);
+        return $this->peasantsCreditpackId(Creditpack::MEDIUM);
     }
 
     public function peasantsWithLargeCreditpack() : int {
-        return $this->peasantsCreditpackId(3);
+        return $this->peasantsCreditpackId(Creditpack::LARGE);
     }
 
     public function topMessagersBetweenDates($startDate, $endDate, int $amount)
@@ -102,7 +105,7 @@ class StatisticsManager
                 $query->where('created_at', '<=', $endDate);
             }])
             ->whereHas('roles', function($query) {
-                $query->where('name', 'peasant');
+                $query->where('id', User::TYPE_PEASANT);
             })
             ->whereHas('payments', function($query) {
                 $query->where('status', Payment::STATUS_COMPLETED);
@@ -118,8 +121,29 @@ class StatisticsManager
             ->take($amount);
     }
 
+    public function topOperatorMessagersBetweenDates($startDate, $endDate, int $amount)
+    {
+        return User::with(['messagesAsOperator' => function ($query) use ($startDate, $endDate) {
+            $query->where('created_at', '>=', $startDate);
+            $query->where('created_at', '<=', $endDate);
+        }])
+            ->whereHas('roles', function($query) {
+                $query->whereIn('id', [User::TYPE_OPERATOR, User::TYPE_ADMIN]);
+            })
+            ->whereHas('messagesAsOperator', function ($query) use ($startDate, $endDate) {
+                $query->where('created_at', '>=', $startDate);
+                $query->where('created_at', '<=', $endDate);
+            })
+            ->get()
+            ->sortByDesc(function ($user) {
+                return $user->messagesAsOperator->count();
+            })
+            ->take($amount);
+    }
+
     private function peasantsCreditpackId(int $creditpackId) : int {
-        return User::whereHas('roles', function($query) {
+        return User::where('active', true)
+        ->whereHas('roles', function($query) {
             $query->where('name', 'peasant');
         })->whereHas('account', function($query) {
             $query->where('credits', '>', 0);

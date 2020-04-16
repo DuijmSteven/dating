@@ -24,6 +24,7 @@
                                 <th>ID</th>
                                 <th>User A</th>
                                 <th>User B</th>
+                                <th>Conversation data</th>
                                 <th>Created at</th>
                                 <th>Actions</th>
                             </tr>
@@ -64,6 +65,7 @@
                                                 </a> <br>
                                             <b>Username</b>: {{ $userA->username }} <br>
                                             <b>Gender</b>: {{ @trans('user_constants')['gender'][$userA->meta->gender] }} <br>
+                                            <b>Looking for gender</b>: {{ @trans('user_constants')['looking_for_gender'][$userA->meta->looking_for_gender] }} <br>
                                             <b>Role</b>: {{ @trans('user_constants')['role'][$userA->roles[0]->id] }} <br>
                                         @else
                                             <span style="font-weight: bold; color: red">User does not exist</span>
@@ -91,18 +93,26 @@
                                                 </a> <br>
                                             <b>Username</b>: {{ $userB->username }} <br>
                                             <b>Gender</b>: {{ @trans('user_constants')['gender'][$userB->meta->gender] }}<br>
+                                            <b>Looking for gender</b>: {{ @trans('user_constants')['looking_for_gender'][$userB->meta->looking_for_gender] }} <br>
                                             <b>Role</b>: {{ @trans('user_constants')['role'][$userB->roles[0]->id] }}<br>
                                         @else
                                             <span style="font-weight: bold; color: red">User does not exist</span>
                                         @endif
                                     </td>
-                                    <td>{{ $conversation->created_at->format('d-m-Y H:i:s') }}</td>
+                                    <td>
+                                        <b>Replyable</b>: {{ $conversation->getReplyableAt() ? $conversation->getReplyableAt()->tz('Europe/Amsterdam') . ' (' . $conversation->getReplyableAt()->tz('Europe/Amsterdam')->diffForHumans() . ')' : 'No' }} <br>
+                                    </td>
+                                    <td>{{ $conversation->getCreatedAt()->format('d-m-Y H:i:s') }}</td>
                                     <td class="action-buttons">
                                         @if($userA && $userB)
-                                            <a href="{!! route('operator-platform.conversations.show', [$conversation->id]) !!}" class="btn btn-default">View</a>
+                                            <a href="{!! route('operator-platform.conversations.show', [$conversation->getId()]) !!}" class="btn btn-default">View</a>
                                         @endif
 
-                                        <form method="POST" action="{{ route('admin.conversations.destroy', ['conversationId' => $conversation->id]) }}">
+                                        @if($conversation->getReplyableAt())
+                                            <a href="{!! route('admin.conversations.set-unreplyable', [$conversation->getId()]) !!}" class="btn btn-default">Make unreplyable</a>
+                                        @endif
+
+                                        <form method="POST" action="{{ route('admin.conversations.destroy', ['conversationId' => $conversation->getId()]) }}">
                                             {!! csrf_field() !!}
                                             {!! method_field('DELETE') !!}
                                             <button type="submit"

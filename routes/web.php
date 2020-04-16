@@ -315,6 +315,9 @@ Route::group([
 
         Route::get('/{conversationId}/unlock', 'Admin\ConversationController@unlock')
             ->name('admin.conversations.unlock');
+
+        Route::get('/{conversationId}/set-unreplyable', 'Admin\ConversationController@setUnreplyable')
+            ->name('admin.conversations.set-unreplyable');
     });
 
     Route::group([

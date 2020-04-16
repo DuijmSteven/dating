@@ -51,9 +51,22 @@
                                     <div class="convo-tile {!! \UserConstants::selectableField('role')[$conversation->userA->roles[0]->id] !!}">
                                         <div class="convo-tile_text">
                                             <div class="username">
+
+                                                @php
+                                                    $highlightTypeClass = '';
+
+                                                    if ($conversation->userA->account->getCredits() > 10) {
+                                                        $highlightTypeClass = 'success';
+                                                    } else if ($conversation->userA->account->getCredits() > 4) {
+                                                        $highlightTypeClass = 'warning';
+                                                    } else {
+                                                        $highlightTypeClass = 'error';
+                                                    }
+                                                @endphp
+
                                                 <img class="profileImage" src="{!! \StorageHelper::profileImageUrl($conversation->userA, true) !!}" />
                                                 <a href="{!! route('admin.' . \UserConstants::selectableField('role')[$conversation->userA->roles[0]->id] . 's.edit.get', ['id' => $conversation->userA->getId()]) !!}">
-                                                    {!! $conversation->userA->username !!} (ID: {!! $conversation->userA->getId() !!})
+                                                    {!! $conversation->userA->username !!} (ID: {!! $conversation->userA->getId() !!}) - <strong>Credits</strong>: <span class="highlightAsDisk {{ $highlightTypeClass }}">{{ $conversation->userA->account->getCredits() }}</span>
                                                 </a>
                                             </div>
                                         </div>

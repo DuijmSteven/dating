@@ -463,11 +463,17 @@ class UserManager
             DB::rollBack();
             throw $exception;
         }
-        DB::commit();
 
-        foreach ($user->images as $image) {
-            $this->storageManager->deleteUserImage($image->user_id, $image->filename);
+        try {
+            foreach ($user->images as $image) {
+                $this->storageManager->deleteUserImage($image->user_id, $image->filename);
+            }
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw $exception;
         }
+
+        DB::commit();
     }
 
     /**

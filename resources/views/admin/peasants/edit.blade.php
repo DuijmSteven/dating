@@ -56,8 +56,38 @@
                         </div>
 
                         <div class="col-xs-12 col-sm-6 col-md-4">
-                            <strong>Credits</strong>: {{ $peasant->account->getCredits() }} <br>
+                            <h5 class="statsHeading"><strong>Messages received/sent ratio (smaller is better)</strong></h5>
+                            <div class="statsBody">
+                                <strong>All time:</strong> {{ $peasant->messagedVsMessagesPercentage() }} ({{ $peasant->messaged_count }} / {{ $peasant->messages_count }}) <br>
+                                <strong>Last month:</strong> {{ $peasant->messagedVsMessagesPercentageLastMonth() }} ({{ $peasant->messaged_last_month_count }} / {{ $peasant->messages_last_month_count }}) <br>
+                                <strong>This month:</strong> {{ $peasant->messagedVsMessagesPercentageThisMonth() }} ({{ $peasant->messaged_this_month_count }} / {{ $peasant->messages_this_month_count }}) <br>
+                                <strong>Last Week:</strong> {{ $peasant->messagedVsMessagesPercentageLastWeek() }} ({{ $peasant->messaged_last_week_count }} / {{ $peasant->messages_last_week_count }}) <br>
+                                <strong>This week:</strong> {{ $peasant->messagedVsMessagesPercentageThisWeek() }} ({{ $peasant->messaged_this_week_count }} / {{ $peasant->messages_this_week_count }}) <br>
+                                <strong>Yesterday:</strong> {{ $peasant->messagedVsMessagesPercentageYesterday() }} ({{ $peasant->messaged_yesterday_count }} / {{ $peasant->messages_yesterday_count }}) <br>
+                                <strong>Today:</strong> {{ $peasant->messagedVsMessagesPercentageToday() }} ({{ $peasant->messaged_today_count }} / {{ $peasant->messages_today_count }}) <br>
+                            </div>
+                        </div>
 
+                        <div class="col-xs-12 col-sm-6 col-md-4">
+                            @php
+                                $highlightTypeClass = '';
+
+                                if ($peasant->account->getCredits() > 10) {
+                                    $highlightTypeClass = 'success';
+                                } else if ($peasant->account->getCredits() > 4) {
+                                    $highlightTypeClass = 'warning';
+                                } else {
+                                    $highlightTypeClass = 'error';
+                                }
+                            @endphp
+
+                            <h5 class="innerTableWidgetHeading"><strong>Peasant data</strong></h5>
+                            <div class="innerTableWidgetBody">
+                                <strong>Credits</strong>: <span class="highlightAsDisk {{ $highlightTypeClass }}">{{ $peasant->account->getCredits() }}</span> <br>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-4">
                             @if(count($peasant->completedPayments) > 0)
                                 <div class="innerTableWidgetHeading"><strong>Payments</strong></div>
                                 <div class="innerTableWidgetBody">

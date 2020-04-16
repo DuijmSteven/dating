@@ -61,7 +61,7 @@ class Conversation extends TimeZonedModel
      */
     public function userA()
     {
-        return $this->belongsTo('App\User', 'user_a_id', 'id')->with(['meta', 'roles', 'images', 'profileImage']);
+        return $this->belongsTo('App\User', 'user_a_id', 'id')->with(['meta', 'roles', 'images', 'profileImage', 'account']);
     }
 
     /**
@@ -69,7 +69,7 @@ class Conversation extends TimeZonedModel
      */
     public function userB()
     {
-        return $this->belongsTo('App\User', 'user_b_id', 'id')->with(['meta', 'roles', 'images', 'profileImage']);
+        return $this->belongsTo('App\User', 'user_b_id', 'id')->with(['meta', 'roles', 'images', 'profileImage', 'account']);
     }
 
     public function newActivityParticipant()

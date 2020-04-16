@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddTrackedColumnToUsersTable extends Migration
+class AddTrackedColumnToPaymentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class AddTrackedColumnToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('payments', function (Blueprint $table) {
             $table->boolean('tracked')->default(false);
         });
 
-        \App\User::whereHas('roles', function ($query) {
-            $query->where('id', \App\Role::ROLE_PEASANT);
-        })->update(['tracked' => true]);
+        DB::table('payments')->update(['tracked' => true]);
     }
 
     /**
@@ -29,7 +27,7 @@ class AddTrackedColumnToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('payments', function (Blueprint $table) {
             $table->dropColumn('tracked');
         });
     }

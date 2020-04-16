@@ -41,6 +41,12 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
+        if (!$user->getActive()) {
+            $user->setActive(true);
+            $user->setDeactivatedAt(null);
+            $user->save();
+        }
+
         if ($user->isAdmin()) {
             return redirect()->route('admin.dashboard');
         }
