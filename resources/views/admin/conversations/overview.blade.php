@@ -105,14 +105,14 @@
                                     <td>{{ $conversation->getCreatedAt()->format('d-m-Y H:i:s') }}</td>
                                     <td class="action-buttons">
                                         @if($userA && $userB)
-                                            <a href="{!! route('operator-platform.conversations.show', [$conversation->id]) !!}" class="btn btn-default">View</a>
+                                            <a href="{!! route('operator-platform.conversations.show', [$conversation->getId()]) !!}" class="btn btn-default">View</a>
                                         @endif
 
                                         @if($conversation->getReplyableAt())
-                                            <a href="{!! route('admin.conversations.set-unreplyable', [$conversation->id]) !!}" class="btn btn-default">Make unreplyable</a>
+                                            <a href="{!! route('admin.conversations.set-unreplyable', [$conversation->getId()]) !!}" class="btn btn-default">Make unreplyable</a>
                                         @endif
 
-                                        <form method="POST" action="{{ route('admin.conversations.destroy', ['conversationId' => $conversation->id]) }}">
+                                        <form method="POST" action="{{ route('admin.conversations.destroy', ['conversationId' => $conversation->getId()]) }}">
                                             {!! csrf_field() !!}
                                             {!! method_field('DELETE') !!}
                                             <button type="submit"
