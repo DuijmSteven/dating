@@ -93,6 +93,16 @@ class UserManager
             $relationCounts = array_merge(
                 User::PEASANT_RELATION_COUNTS
             );
+        } elseif ($roleId === User::TYPE_BOT) {
+            $relations = array_unique(array_merge(
+                    User::COMMON_RELATIONS,
+                    User::BOT_RELATIONS
+                )
+            );
+
+            $relationCounts = array_merge(
+                User::BOT_RELATION_COUNTS
+            );
         }
         return array($relations, $relationCounts);
     }
@@ -371,17 +381,19 @@ class UserManager
     }
 
     /**
-     * @param $userAmount
+     * @param $botAmount
      */
-    public function setRandomBotsOnline($userAmount) : void
+    public function setRandomBotsOnline(int $botAmount, $gender = User::GENDER_FEMALE) : void
     {
         $randomUsers = $this->user->with(['roles', 'meta'])
             ->whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_BOT);
             })
-            ->orderByRaw('RAND()')->take($userAmount)
+            ->whereHas('meta', function ($query) use ($gender) {
+                $query->where('gender', $gender);
+            })
+            ->orderByRaw('RAND()')->take($botAmount)
             ->where('active', true)
-            ->where('id', '!=', 168)
             ->get();
 
         // This method is nly used in dev env so it is ok to do this
@@ -451,11 +463,17 @@ class UserManager
             DB::rollBack();
             throw $exception;
         }
-        DB::commit();
 
-        foreach ($user->images as $image) {
-            $this->storageManager->deleteUserImage($image->user_id, $image->filename);
+        try {
+            foreach ($user->images as $image) {
+                $this->storageManager->deleteUserImage($image->user_id, $image->filename);
+            }
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            throw $exception;
         }
+
+        DB::commit();
     }
 
     /**

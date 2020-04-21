@@ -39,6 +39,22 @@
                     'quantity': 1
                 }]
             });
+
+            //Redirect user to home page after 8 sec
+            setTimeout(function(){
+                window.location.href = '<?php route('home') ?>';
+            }, 8000);
         </script>
+
+        <!-- Eroadvertising -->
+        <script type="text/javascript" src="https://go.ero-advertising.com/tracking/track.js"></script>
+        <script type="text/javascript">
+            try {
+                var EA = new EroTracking();
+                var conversion_type = 'B';
+                EA.registerConversion(conversion_type);
+            } catch(err) { }
+        </script>
+        <!-- End Eroadvertising -->
     @endif
 @endsection

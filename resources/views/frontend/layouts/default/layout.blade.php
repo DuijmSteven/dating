@@ -8,6 +8,17 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MJG2S4N"
                       height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
+
+    <!-- Eroadvertising -->
+    <script type="text/javascript" src="https://go.ero-advertising.com/tracking/track.js"></script>
+    <script type="text/javascript">
+        try {
+            var EA = new EroTracking();
+            var qparam = "cid";
+            EA.setTracking(qparam);
+        } catch(err) { }
+    </script>
+    <!-- End Eroadvertising -->
 @endif
 <div id="app">
     @include('frontend.layouts.default.partials.header')
@@ -126,6 +137,18 @@
         </div>
     </div>
 </div>
+
+<!-- Eroadvertising -->
+<script type="text/javascript" src="https://go.ero-advertising.com/tracking/track.js"></script>
+<script type="text/javascript">
+    try {
+        var EA = new EroTracking();
+        var conversion_type = 'A';
+        EA.registerConversion(conversion_type);
+    } catch(err) { }
+</script>
+<!-- End Eroadvertising -->
+
 @endif
 
 <div class="ScrollTopButton JS--ScrollTopButton hidden">

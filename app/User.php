@@ -21,6 +21,9 @@ class User extends Authenticatable
     const TYPE_OPERATOR = 4;
     const TYPE_EDITOR = 5;
 
+    const GENDER_MALE = 1;
+    const GENDER_FEMALE = 2;
+
     const COMMON_RELATIONS = [
         'meta',
         'roles',
@@ -336,7 +339,8 @@ class User extends Authenticatable
         'password',
         'active',
         'conversation_manager_state',
-        'created_by_id'
+        'created_by_id',
+        'tracked'
     ];
 
     /**
@@ -410,7 +414,7 @@ class User extends Authenticatable
         $this->active = $active;
     }
 
-    public function setDeactivatedAt(Carbon $deactivatedAt)
+    public function setDeactivatedAt(?Carbon $deactivatedAt)
     {
         $this->deactivated_at = $deactivatedAt;
     }
@@ -1069,12 +1073,6 @@ class User extends Authenticatable
             ->where('created_at', '<=', $endOfLastMonthUtc);
     }
 
-
-
-
-
-
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -1164,9 +1162,6 @@ class User extends Authenticatable
             ->where('created_at', '<=', $endOfLastMonthUtc)
             ->where('operator_message_type', ConversationMessage::OPERATOR_MESSAGE_TYPE_STOPPED);
     }
-
-
-
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

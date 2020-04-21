@@ -263,11 +263,15 @@
     ])
 
     @if($authenticatedUser->isAdmin() && $conversation->getLockedByUserId())
-        <a href="{{ route('admin.conversations.unlock', ['conversationId' => $conversation]) }}"
+        <a href="{{ route('admin.conversations.unlock', ['conversationId' => $conversation->getId()]) }}"
            class="btn btn-success btn-flat"
         >
             Unlock conversation
         </a>
+
+        @if($conversation->getReplyableAt())
+            <a href="{!! route('admin.conversations.set-unreplyable', [$conversation->getId()]) !!}" class="btn btn-default">Make unreplyable</a>
+        @endif
     @endif
 
 @endsection

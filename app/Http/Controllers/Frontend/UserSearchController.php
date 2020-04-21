@@ -145,13 +145,6 @@ class UserSearchController extends FrontendController
      */
     public function showInitialSearchResults(Request $request)
     {
-        $user = $this->authenticatedUser;
-
-        if (!$user->getActive()) {
-            $user->setActive(true);
-            $user->save();
-        }
-
         if (!$this->authenticatedUser->meta->getCity()) {
             $city = 'Amsterdam';
             $lat = 52.379189;

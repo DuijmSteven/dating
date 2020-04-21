@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddLastOnlineAtColumnToUsersTable extends Migration
+class AddTrackedColumnToPaymentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class AddLastOnlineAtColumnToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->timestamp('last_online_at')
-                ->nullable()
-                ->default(null);
+        Schema::table('payments', function (Blueprint $table) {
+            $table->boolean('tracked')->default(false);
         });
+
+        DB::table('payments')->update(['tracked' => true]);
     }
 
     /**
@@ -27,8 +27,8 @@ class AddLastOnlineAtColumnToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('last_online_at');
+        Schema::table('payments', function (Blueprint $table) {
+            $table->dropColumn('tracked');
         });
     }
 }

@@ -51,7 +51,21 @@
                                         <br>
                                         <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $peasant->username !!} <br>
                                         <strong>{!! @trans('user_constants.email') !!}:</strong> {!! $peasant->email !!} <br>
-                                        <strong>Credits</strong>: {{ $peasant->account->getCredits() }} <br>
+
+                                        @php
+                                            $highlightTypeClass = '';
+
+                                            if ($peasant->account->getCredits() > 10) {
+                                                $highlightTypeClass = 'success';
+                                            } else if ($peasant->account->getCredits() > 4) {
+                                                $highlightTypeClass = 'warning';
+                                            } else {
+                                                $highlightTypeClass = 'error';
+                                            }
+                                        @endphp
+
+
+                                        <strong>Credits</strong>: <span class="highlightAsDisk {{ $highlightTypeClass }}">{{ $peasant->account->getCredits() }}</span> <br>
                                         <strong>{!! @trans('user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($peasant->meta->dob) !!} <br>
                                         @foreach(\UserConstants::selectableFields('peasant') as $fieldName => $a)
                                             @if(isset($peasant->meta->{$fieldName}))
@@ -76,13 +90,13 @@
                                         <strong>Created at</strong> {!! $peasant->getCreatedAt()->tz('Europe/Amsterdam') !!} <br>
                                     </div>
 
-                                    <div class="innerTableWidgetHeading"><strong>Activity</strong></div>
-                                    <div class="innerTableWidgetBody">
-                                        @if($peasant->getLastOnlineAt())
-                                            <strong>Last online at</strong> {!! $peasant->getLastOnlineAt()->tz('Europe/Amsterdam') !!} <br>
-                                            <strong>Last online in days</strong> {!! $peasant->getLastOnlineAt()->tz('Europe/Amsterdam')->diffInDays($carbonNow->tz('Europe/Amsterdam')) !!} <br>
-                                        @endif
-                                    </div>
+                                    @if($peasant->getLastOnlineAt())
+                                        <div class="innerTableWidgetHeading"><strong>Activity</strong></div>
+                                        <div class="innerTableWidgetBody">
+                                                <strong>Last online at</strong> {!! $peasant->getLastOnlineAt()->tz('Europe/Amsterdam') !!} <br>
+                                                <strong>Last online in days</strong> {!! $peasant->getLastOnlineAt()->tz('Europe/Amsterdam')->diffInDays($carbonNow->tz('Europe/Amsterdam')) !!} <br>
+                                        </div>
+                                    @endif
 
 
                                     @if(count($peasant->completedPayments) > 0)

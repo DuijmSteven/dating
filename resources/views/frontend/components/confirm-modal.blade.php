@@ -9,7 +9,7 @@
 
                 <p>{{ $body ?? '' }}</p>
 
-                <div class="text-left">
+                <div class="ConfirmModal__actionButtons">
                     @include('frontend.components.button', [
                           'url' => $url,
                           'buttonContext' => 'general',

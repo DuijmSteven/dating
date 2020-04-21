@@ -38,14 +38,18 @@
                                     {{ $message->getId() }}
 
                                     @if($message->deleted_at)
-                                        <br><span style="color: red; font-weight: bold">DELETED</span>
+                                        <br><span style="color: red; font-weight: bold">SOFT DELETED</span>
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('operator-platform.conversations.show', ['conversationId' => $message->conversation->getId()]) }}">{{ $message->conversation->getId() }}</a>
+                                    @if($message->conversation)
+                                        <a href="{{ route('operator-platform.conversations.show', ['conversationId' => $message->conversation->getId()]) }}">{{ $message->conversation->getId() }}</a>
 
-                                    @if($message->conversation->deleted_at)
-                                        <br><span style="color: red; font-weight: bold">DELETED</span>
+                                        @if($message->conversation->deleted_at)
+                                            <br><span style="color: red; font-weight: bold">SOFT DELETED</span>
+                                        @endif
+                                    @else
+                                        <br><span style="color: red; font-weight: bold">HARD DELETED</span>
                                     @endif
                                 </td>
                                 <td>

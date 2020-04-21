@@ -17,7 +17,7 @@ class AddCreatedByIdColumnToUsersTable extends Migration
             $table->integer('created_by_id')->unsigned()->nullable();
         });
 
-        $existingBots = \App\User::whereHas('roles', function ($query) {
+        \App\User::whereHas('roles', function ($query) {
             $query->where('id', \App\Role::ROLE_BOT);
         })->update(['created_by_id' => 1]);
     }
