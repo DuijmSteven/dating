@@ -7,7 +7,7 @@
         {{ trans('viewed_users.viewed_users') }}
     </div>
     <div class="Tile__body LatestViewed__body">
-        @foreach($latestViewed as $view)
+        @forelse($latestViewed as $view)
             <a href="{!! route('users.show', ['username' => $view->viewed->getUsername()]) !!}" class="LatestViewed__item">
                 <span class="LatestViewed__profile-image">
                     <img src="{!! \StorageHelper::profileImageUrl($view->viewed, true) !!}" alt="">
@@ -21,6 +21,10 @@
                     {{ $view->viewed->meta->dob ? $view->viewed->meta->dob->diffInYears(\Carbon\Carbon::now('Europe/Amsterdam')) : '' }}
                 </span>
             </a>
-        @endforeach
+        @empty
+            <p>
+                {{ trans('viewed_users.no_views') }}
+            </p>
+        @endforelse
     </div>
 </div>
