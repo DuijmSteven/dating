@@ -96,7 +96,6 @@ class PaymentService implements PaymentProvider
             ->amount($amount)
             ->description($description)
             ->returnUrl(route('payments.check'))
-            ->reportUrl(route('payments.report'))
             ->bank($bank)
             ->test(config('targetpay.test'))
             ->start();
@@ -119,7 +118,6 @@ class PaymentService implements PaymentProvider
             ->amount($amount)
             ->description($description)
             ->returnUrl(route('payments.check'))
-            ->reportUrl(route('payments.report'))
             ->test(config('targetpay.test'))
             ->start();
 
@@ -142,7 +140,6 @@ class PaymentService implements PaymentProvider
             ->amount($amount)
             ->description($description)
             ->returnUrl(route('payments.check'))
-            ->reportUrl(route('payments.report'))
             ->test(config('targetpay.test'))
             ->start();
 
@@ -159,7 +156,6 @@ class PaymentService implements PaymentProvider
             ->amount($amount)
             ->description($description)
             ->returnUrl(route('payments.check'))
-            ->reportUrl(route('payments.report'))
             ->test(config('targetpay.test'))
             ->start();
 
