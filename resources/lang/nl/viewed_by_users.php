@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'viewed_by_users' => 'Hebben je bekeken',
-    'no_views' => 'Wanneer leden jouw profiel kijken, ziet je ze hier.',
+    'viewed_by_users' => 'Recent bekeken door',
+    'no_views' => 'Wanneer andere leden jouw profiel bezoeken, dan zie je hier welke leden jouw profiel hebben bezocht.',
 ];
