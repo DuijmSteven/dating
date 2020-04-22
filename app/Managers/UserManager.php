@@ -426,7 +426,7 @@ class UserManager
     {
         $latestIds = Activity::users($minutes)->pluck('user_id')->toArray();
 
-        $query = User::with('meta')
+        $query = User::with('meta', 'profileImage')
             ->whereIn('id', $latestIds)
             ->whereNotIn('id', [Auth::user()->getId()]);
 

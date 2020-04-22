@@ -25,6 +25,11 @@
         font-weight: 500;
         color: map_get($tileHeading, fontColor);
         text-align: map_get($tileHeading, textAlign);
+        white-space: nowrap;
+
+        .material-icons {
+            margin-right: 10px;
+        }
     }
 
     &__body {

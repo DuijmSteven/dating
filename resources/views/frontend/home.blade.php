@@ -2,6 +2,16 @@
 
 @section('content')
 
+    <div class="Tile Activity">
+        <div class="Tile__heading" style="padding: 5px">
+            <span class="material-icons">
+                account_box
+            </span>
+            {{ trans('home.new_members') }}
+        </div>
+    </div>
+
+
     @foreach($users as $user)
 
         @include('frontend.components.activity', [

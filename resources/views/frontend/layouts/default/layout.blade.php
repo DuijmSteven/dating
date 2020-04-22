@@ -24,20 +24,20 @@
         @if(isset($sidebarCount) && $sidebarCount > 0)
             <div class="row">
                 @if($leftSidebar)
-                    <div class="col-md-3 hidden-xs hidden-sm">
+                    <div class="col-xs-12 col-sm-12 col-md-3">
                         @include('frontend.layouts.default.partials.left-sidebar')
                     </div>
                 @endif
 
-                <div class="col-md-{!! $sidebarCount == 1 ? '9' : '6' !!}">
-                    @include('frontend.layouts.default.partials.main')
-                </div>
-
                 @if($rightSidebar)
-                    <div class="col-md-3 hidden-xs hidden-sm">
+                    <div class="col-xs-12 col-sm-12 col-md-3 col-md-push-6">
                         @include('frontend.layouts.default.partials.right-sidebar')
                     </div>
                 @endif
+
+                <div class="col-xs-12 col-sm-12 col-md-{!! $sidebarCount == 1 ? '9' : '6' !!} col-md-pull-3">
+                    @include('frontend.layouts.default.partials.main')
+                </div>
             </div>
         @else
             @include('frontend.layouts.default.partials.main')
