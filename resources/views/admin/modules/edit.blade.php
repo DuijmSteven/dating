@@ -16,7 +16,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="title">Name</label>
+                            <label for="name">Name</label>
                             <input type="text"
                                    class="form-control"
                                    id="name"
@@ -32,7 +32,7 @@
                     </div>
                     <div class="col-xs-12">
                         <div class="form-group">
-                            <label for="body">Description</label>
+                            <label for="description">Description</label>
                             <textarea class="form-control"
                                       id="description"
                                       name="description"

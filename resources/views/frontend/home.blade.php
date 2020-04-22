@@ -2,14 +2,14 @@
 
 @section('content')
 
-    @foreach($activity as $activityItem)
+    @foreach($users as $user)
 
         @include('frontend.components.activity', [
-            'activityThumbnailUrl' => $activityItem->getThumbnailUrl(),
-            'activityTitle' => $activityItem->getTitle(),
-            'activityDate' => $activityItem->getDateFormatted(),
-            'activityImageUrl' => $activityItem->getImageUrl(),
-            'activityText' => $activityItem->getText(),
+            'user' => $user,
+            'activityThumbnailUrl' => \StorageHelper::profileImageUrl($user, true),
+            'activityTitle' => $user->getUsername(),
+            'activityImageUrl' => \StorageHelper::profileImageUrl($user),
+            'activityText' => $user->meta->getAboutMe(),
         ])
     @endforeach
 

@@ -5,58 +5,40 @@
 
     <div class="box box-primary">
         <div class="box-header with-border">
-            <h3 class="box-title">Create Article</h3>
+            <h3 class="box-title">Edit Module</h3>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" method="POST" action="{!! route('admin.articles.post') !!}">
+        <form role="form" method="POST" action="{!! route('admin.modules.post') !!}">
             {!! csrf_field() !!}
+            {!! method_field('POST') !!}
             <div class="box-body">
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="title">Title</label>
+                            <label for="name">Name</label>
                             <input type="text"
                                    class="form-control"
-                                   id="title"
-                                   name="title"
+                                   id="name"
+                                   name="name"
                                    required
-                                   value="{{ old('title', '') }}"
                             >
-                            </input>
-                            @if ($errors->has('title'))
-                                {!! $errors->first('title', '<small class="form-error">:message</small>') !!}
-                            @endif
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label for="status">Status</label>
-                            <select name="status"
-                                    id="status"
-                                    class="form-control"
-                                    required
-                            >
-                                <option value="1" {!! (old('status') === 1) ? 'selected' : '' !!}>Public</option>
-                                <option value="0" {!! (old('status') === 0) ? 'selected' : '' !!}>Private</option>
-                            </select>
-                            @if ($errors->has('status'))
-                                {!! $errors->first('status', '<small class="form-error">:message</small>') !!}
+                            @if ($errors->has('name'))
+                                {!! $errors->first('name', '<small class="form-error">:message</small>') !!}
                             @endif
                         </div>
                     </div>
                     <div class="col-xs-12">
                         <div class="form-group">
-                            <label for="body">Body</label>
+                            <label for="description">Description</label>
                             <textarea class="form-control"
-                                      id="body"
-                                      name="body"
+                                      id="description"
+                                      name="description"
                                       required
-                                      rows="20"
-                                      data-provide="markdown"
+                                      rows="4"
                             ></textarea>
-                            @if ($errors->has('body'))
-                                {!! $errors->first('body', '<small class="form-error">:message</small>') !!}
+                            @if ($errors->has('description'))
+                                {!! $errors->first('description', '<small class="form-error">:message</small>') !!}
                             @endif
                         </div>
                     </div>

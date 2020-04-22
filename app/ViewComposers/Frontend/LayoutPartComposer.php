@@ -6,6 +6,7 @@ use App\Managers\StorageManager;
 use App\Managers\UserManager;
 use App\Module;
 use App\ModuleInstance;
+use App\Services\LatestViewedModuleService;
 use App\User;
 use App\View;
 use Faker\Generator;
@@ -19,13 +20,18 @@ class LayoutPartComposer
 {
     /** @var UserManager */
     private $userManager;
+    /**
+     * @var LatestViewedModuleService
+     */
+    private LatestViewedModuleService $latestViewedModuleService;
 
     /**
      * LayoutPartComposer constructor.
      * @param UserManager $userManager
      */
-    public function __construct(UserManager $userManager)
-    {
+    public function __construct(
+        UserManager $userManager
+    ) {
         $this->userManager = $userManager;
     }
 
@@ -46,40 +52,20 @@ class LayoutPartComposer
         foreach ($modules as $name) {
             switch ($name) {
                 case 'online-users':
-                    $onlineUsers = (new UserManager(new User(), new StorageManager()))->latestOnline(20);
+                    $onlineUsers = (new UserManager(new User(), new StorageManager()))->latestOnline(10, 12);
 
                     $viewData = [
-                        'onlineUsers' => $onlineUsers->slice(0, 5)
+                        'onlineUsers' => $onlineUsers
                     ];
                     break;
-                case 'shoutbox':
-                    $users = User::whereIn('id', [2, 3, 4, 5, 6])->get();
-
-                    $latestMessages = [
-                        [
-                            'user' => $users[0],
-                            'text' => $faker->realText(100)
-                        ],
-                        [
-                            'user' => $users[1],
-                            'text' => $faker->realText(100)
-                        ],
-                        [
-                            'user' => $users[2],
-                            'text' => $faker->realText(100)
-                        ],
-                        [
-                            'user' => $users[3],
-                            'text' => $faker->realText(100)
-                        ],
-                        [
-                            'user' => $users[4],
-                            'text' => $faker->realText(100)
-                        ],
-                    ];
-
+                case 'latest-viewed-profiles':
                     $viewData = [
-                        'messages' => $latestMessages
+                        'latestViewed' => LatestViewedModuleService::latestUsersViewed(\Auth::user()->getId(), 6)
+                    ];
+                    break;
+                case 'latest-viewed-by-profiles':
+                    $viewData = [
+                        'latestViewedBy' => LatestViewedModuleService::latestUsersThatHaveViewed(\Auth::user()->getId(), 6)
                     ];
                     break;
                 default:

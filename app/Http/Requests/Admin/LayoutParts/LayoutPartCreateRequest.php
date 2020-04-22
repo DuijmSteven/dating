@@ -4,10 +4,6 @@ namespace App\Http\Requests\Admin\LayoutParts;
 
 use App\Http\Requests\Request;
 
-/**
- * Class LayoutPartCreateRequest
- * @package App\Http\Requests\Admin\Modules
- */
 class LayoutPartCreateRequest extends Request
 {
     /**

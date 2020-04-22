@@ -391,9 +391,11 @@ class UserManager
             })
             ->whereHas('meta', function ($query) use ($gender) {
                 $query->where('gender', $gender);
+                $query->where('looking_for_gender', User::GENDER_MALE);
             })
-            ->orderByRaw('RAND()')->take($botAmount)
             ->where('active', true)
+            ->orderByRaw('RAND()')
+            ->take($botAmount)
             ->get();
 
         // This method is nly used in dev env so it is ok to do this
@@ -420,18 +422,20 @@ class UserManager
      * @internal param $
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function latestOnline(int $minutes, string $gender = 'any')
+    public function latestOnline(int $minutes, $limit = 20)
     {
         $latestIds = Activity::users($minutes)->pluck('user_id')->toArray();
 
-        $query = User::with('meta')->whereIn('id', $latestIds);
+        $query = User::with('meta')
+            ->whereIn('id', $latestIds)
+            ->whereNotIn('id', [Auth::user()->getId()]);
 
-        if ($gender !== 'any') {
-            $query = $query->whereHas('meta', function ($query) {
-                $query->where('gender', \UserConstants::selectableField('gender', 'common', 'array_flip')[$gender]);
-            });
-        }
-        return User::with('meta')->whereIn('id', $latestIds)->limit(\UserConstants::getMaxAmountOnline())->get();
+        $query = $query->whereHas('meta', function ($query) {
+            $query->where('gender', Auth::user()->meta->getLookingForGender());
+            $query->where('looking_for_gender', Auth::user()->meta->getGender());
+        });
+
+        return $query->limit($limit)->get();
     }
 
     /**

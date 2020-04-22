@@ -16,7 +16,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="title">Name</label>
+                            <label for="name">Name</label>
                             <input type="text"
                                    class="form-control"
                                    id="name"
@@ -24,7 +24,6 @@
                                    required
                                    value="{{ $layoutPart->getName() }}"
                             >
-                            </input>
                             @if ($errors->has('name'))
                                 {!! $errors->first('name', '<small class="form-error">:message</small>') !!}
                             @endif

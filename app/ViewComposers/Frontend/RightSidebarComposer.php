@@ -2,6 +2,9 @@
 
 namespace App\ViewComposers\Frontend;
 
+use App\LayoutPart;
+use App\Managers\UserManager;
+use App\Services\LatestViewedModuleService;
 use Illuminate\View\View;
 
 /**
@@ -16,9 +19,12 @@ class RightSidebarComposer extends LayoutPartComposer
     /**
      * RightSidebarComposer constructor.
      */
-    public function __construct()
-    {
+    public function __construct(
+        UserManager $userManager
+    ) {
         $this->rightSidebarHtml = $this->layoutPartHtml(2);
+
+        parent::__construct($userManager);
     }
 
     /**

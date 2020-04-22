@@ -2,13 +2,8 @@
 
 namespace App\Http\Requests\Admin\LayoutParts;
 
-use App\Helpers\ApplicationConstants\UserConstants;
 use App\Http\Requests\Request;
 
-/**
- * Class LayoutPartUpdateRequest
- * @package App\Http\Requests\Admin\Modules
- */
 class LayoutPartUpdateRequest extends Request
 {
     /**

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ModuleInstances\ModuleInstancesUpdateRequest;
+use App\Http\Requests\Admin\Modules\ModuleCreateRequest;
+use App\Http\Requests\Admin\Modules\ModuleUpdateRequest;
 use App\LayoutPart;
 use App\LayoutPartView;
 use App\Module;
@@ -198,10 +200,10 @@ class ModuleController extends Controller
     }
 
     /**
-     * @param LayoutPartCreateRequest $request
+     * @param ModuleCreateRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function post(LayoutPartCreateRequest $request)
+    public function post(ModuleCreateRequest $request)
     {
         try {
             Module::create($request->all());
@@ -221,11 +223,11 @@ class ModuleController extends Controller
     }
 
     /**
-     * @param LayoutPartCreateRequest $request
+     * @param ModuleUpdateRequest $request
      * @param int $moduleId
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(LayoutPartUpdateRequest $request, int $moduleId)
+    public function update(ModuleUpdateRequest $request, int $moduleId)
     {
         try {
             $module = Module::find($moduleId);

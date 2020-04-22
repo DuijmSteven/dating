@@ -25,20 +25,42 @@
         img {
             width: map_get($userActivityProfileImage, width) + px;
             height: map_get($userActivityProfileImage, height) + px;
-            border-radius: 50%;
+            border-radius: 2px;
+            object-fit: cover;
+            display: block;
         }
     }
 
     &__user-details {
+        display: flex;
         -webkit-flex: 9 0 0;
         flex: 9 0 0;
     }
 
     &__title {
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 1.21;
-        color: $mainColor;
+        display: flex;
+        align-items: center;
+
+        a {
+            line-height: 1.21;
+            color: #555;
+            font-size: 16px;
+            font-weight: 500;
+
+            &:hover {
+                text-decoration: none;
+                //color:
+            }
+        }
+
+        .onlineCircle {
+            display: inline-block;
+            background-color: #33e23c;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            margin-left: 8px;
+        }
     }
 
     &__date {
@@ -49,6 +71,8 @@
     }
 
     &__body {
+        padding: 0 15px 15px;
+
         img {
             width: 100%;
         }
@@ -56,5 +80,6 @@
 
     &__text {
         padding-top: 10px;
+        font-style: italic;
     }
 }

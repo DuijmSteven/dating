@@ -35,13 +35,13 @@ Route::get('contact', 'Frontend\ContactController@showContact')
 Route::post('contact', 'Frontend\ContactController@postContact')
     ->name('contact.post');
 
-//Route::get('/dashboard', 'Frontend\DashboardController@index')
-//    ->name('dashboard')
-//    ->middleware(['auth', 'not_editor']);
-
-Route::get('/home', 'Frontend\UserSearchController@showInitialSearchResults')
+Route::get('/home', 'Frontend\DashboardController@index')
     ->name('home')
     ->middleware(['auth', 'not_editor', 'not_operator']);
+
+//Route::get('/home', 'Frontend\UserSearchController@showInitialSearchResults')
+//    ->name('home')
+//    ->middleware(['auth', 'not_editor', 'not_operator']);
 
 Route::get('/', 'Frontend\LandingPageController@showRegister')
     ->middleware('guest')
