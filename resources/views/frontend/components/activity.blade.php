@@ -12,7 +12,7 @@
                     {{ $user->meta->dob ? $user->meta->dob->diffInYears(\Carbon\Carbon::now('Europe/Amsterdam')) : '' }}
                 </a>
 
-                @if(!in_array($user->getId(), $onlineUserIds))
+                @if(in_array($user->getId(), $onlineUserIds))
                     <span class="onlineCircle"></span>
                 @endif
             </div>
