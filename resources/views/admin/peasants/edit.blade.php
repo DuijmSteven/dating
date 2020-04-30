@@ -84,6 +84,7 @@
                             <h5 class="innerTableWidgetHeading"><strong>Peasant data</strong></h5>
                             <div class="innerTableWidgetBody">
                                 <strong>Credits</strong>: <span class="highlightAsDisk {{ $highlightTypeClass }}">{{ $peasant->account->getCredits() }}</span> <br>
+                                <strong>Created at</strong>: {{ $peasant->getCreatedAt()->tz('Europe/Amsterdam') }} <br>
                             </div>
                         </div>
 
