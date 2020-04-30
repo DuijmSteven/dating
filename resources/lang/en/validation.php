@@ -128,6 +128,9 @@ return [
         ],
         'profile_image' => [
             'required_without' => 'You must choose at least one photo to upload'
+        ],
+        'username' => [
+            'alpha_num' => 'The username should consist of letters and numbers'
         ]
     ],
 

@@ -128,6 +128,9 @@ return [
         ],
         'profile_image' => [
             'required_without' => 'Je moet ten minste één foto kiezen om te uploaden'
+        ],
+        'username' => [
+            'alpha_num' => 'De gebruikersnaam mag alleen uit letters en cijfers bestaan'
         ]
     ],
 
