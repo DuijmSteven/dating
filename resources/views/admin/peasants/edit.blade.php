@@ -88,6 +88,16 @@
                         </div>
 
                         <div class="col-xs-12 col-sm-6 col-md-4">
+                            @if($peasant->getLastOnlineAt())
+                                <div class="innerTableWidgetHeading"><strong>Activity</strong></div>
+                                <div class="innerTableWidgetBody">
+                                    <strong>Last online at</strong> {!! $peasant->getLastOnlineAt()->tz('Europe/Amsterdam') !!} <br>
+                                    <strong>Last online in days</strong> {!! $peasant->getLastOnlineAt()->tz('Europe/Amsterdam')->diffInDays($carbonNow->tz('Europe/Amsterdam')) !!} <br>
+                                </div>
+                            @endif
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-4">
                             @if(count($peasant->completedPayments) > 0)
                                 <div class="innerTableWidgetHeading"><strong>Payments</strong></div>
                                 <div class="innerTableWidgetBody">
