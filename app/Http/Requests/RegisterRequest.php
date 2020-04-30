@@ -30,7 +30,7 @@ class RegisterRequest extends Request
     public function rules()
     {
         return [
-            'username' => 'required|max:50|string|unique:users',
+            'username' => 'required|max:50|string|unique:users|alpha_num',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
             //'city' => 'required|in:' . implode(',', UserConstants::$cities['nl']),
