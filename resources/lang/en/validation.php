@@ -117,7 +117,7 @@ return [
         ],
         'date' => 'This is not a valid date',
         'message' => [
-            'max' => 'The message cannot be shorter than :min characters',
+            'min' => 'The message cannot be shorter than :min characters',
             'max' => 'The message cannot be larger than :max characters',
             'required_without' => 'A message or an image is required',
         ],
