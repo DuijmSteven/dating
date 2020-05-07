@@ -33,6 +33,11 @@ class UserView extends TimeZonedModel
         return $this->belongsTo(User::class, 'viewer_id', 'id');
     }
 
+    public function setAutomated(bool $automated)
+    {
+        $this->automated = $automated;
+    }
+
     public function setViewerId(int $viewerId)
     {
         $this->viewer_id = $viewerId;

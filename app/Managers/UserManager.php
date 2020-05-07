@@ -170,10 +170,11 @@ class UserManager
         DB::commit();
     }
 
-    public function storeProfileView(User $viewer, User $viewed) {
+    public function storeProfileView(User $viewer, User $viewed, bool $automated = false) {
         $userViewInstance = new UserView();
         $userViewInstance->setViewerId($viewer->getId());
         $userViewInstance->setViewedId($viewed->getId());
+        $userViewInstance->setAutomated($automated);
         $userViewInstance->save();
     }
 
@@ -227,7 +228,7 @@ class UserManager
                 $userEmailTypeInstance->setEmailTypeId(EmailType::PROFILE_VIEWED);
                 $userEmailTypeInstance->save();
 
-                $this->storeProfileView($viewerUser, $viewed);
+                $this->storeProfileView($viewerUser, $viewed, true);
             }
         }
     }
