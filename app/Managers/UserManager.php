@@ -12,6 +12,7 @@ use App\User;
 use App\UserEmailTypeInstance;
 use App\UserImage;
 use App\UserMeta;
+use App\UserView;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -169,7 +170,14 @@ class UserManager
         DB::commit();
     }
 
-    public function setProfileViewedEmail(User $viewed, User $viewer = null) {
+    public function storeProfileView(User $viewer, User $viewed) {
+        $userViewInstance = new UserView();
+        $userViewInstance->setViewerId($viewer->getId());
+        $userViewInstance->setViewedId($viewed->getId());
+        $userViewInstance->save();
+    }
+
+    public function setProfileViewedEmailAndStoreView(User $viewed, User $viewer = null) {
         $userEmailTypeIds = $viewed->emailTypes()->get()->pluck('id')->toArray();
 
         $profileViewedEmailEnabled = in_array(
@@ -217,8 +225,9 @@ class UserManager
                 $userEmailTypeInstance->setActorId($viewerUser->getId());
                 $userEmailTypeInstance->setReceiverId($viewed->getId());
                 $userEmailTypeInstance->setEmailTypeId(EmailType::PROFILE_VIEWED);
-
                 $userEmailTypeInstance->save();
+
+                $this->storeProfileView($viewerUser, $viewed);
             }
         }
     }

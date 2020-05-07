@@ -78,7 +78,7 @@ class SendProfileViewedEmails extends Command
                     $number = rand(1, 1000);
 
                     if ($number === 1) {
-                        $this->userManager->setProfileViewedEmail($user);
+                        $this->userManager->setProfileViewedEmailAndStoreView($user);
                     }
                 } catch (\Exception $exception) {
                     \Log::error(__CLASS__ . ' - ' . $exception->getMessage());

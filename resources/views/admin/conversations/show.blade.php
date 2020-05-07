@@ -115,7 +115,13 @@
                                         @else
                                             @if($message->has_attachment)
                                                 <div>
-                                                    <img height="100" src="{!! \StorageHelper::messageAttachmentUrl(
+
+
+
+
+
+
+                                  <img height="100" src="{!! \StorageHelper::messageAttachmentUrl(
                                                     $conversation->id,
                                                     $message->attachment->filename
                                                 ) !!}"
