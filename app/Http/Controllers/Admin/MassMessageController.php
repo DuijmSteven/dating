@@ -113,6 +113,8 @@ class MassMessageController extends Controller
 
                 $messageInstance->save();
 
+                $user->addOpenConversationPartner($bot, 1);
+
                 $recipientEmailTypeIds = $user->emailTypes->pluck('id')->toArray();
 
                 $recipientHasMessageNotificationsEnabled = in_array(

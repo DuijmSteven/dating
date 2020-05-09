@@ -769,12 +769,12 @@ class User extends Authenticatable
 
     public function conversationsAsUserA()
     {
-        return $this->hasMany(Conversation::class, 'user_a_id');
+        return $this->hasMany(Conversation::class, 'user_a_id')->withTrashed();
     }
 
     public function conversationsAsUserB()
     {
-        return $this->hasMany(Conversation::class, 'user_b_id');
+        return $this->hasMany(Conversation::class, 'user_b_id')->withTrashed();
     }
 
     /**
