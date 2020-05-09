@@ -11,7 +11,10 @@ class LatestViewedModuleService
     public static function latestUsersViewed(int $userId, int $limit = 20)
     {
         return UserView::with(['viewed', 'viewed.profileImage', 'viewed.meta'])
-            ->whereHas('viewed')
+            ->whereHas('viewed.roles', function ($query) {
+                $query->where('id', User::TYPE_PEASANT);
+                $query->orWhere('id', User::TYPE_BOT);
+            })
             ->select(DB::raw('*, max(created_at) as created_at'))
             ->where('viewer_id', $userId)
             ->orderBy('created_at', 'desc')
