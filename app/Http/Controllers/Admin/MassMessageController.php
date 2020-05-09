@@ -4,17 +4,20 @@ namespace App\Http\Controllers\Admin;
 
 use App\Conversation;
 use App\ConversationMessage;
+use App\EmailType;
 use App\Http\Controllers\Controller;
+use App\Mail\MessageReceived;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Mail;
 use Kim\Activity\Activity;
 
 class MassMessageController extends Controller
 {
-    public function __construct(
-    ) {
+    public function __construct()
+    {
         parent::__construct();
     }
 
@@ -49,22 +52,25 @@ class MassMessageController extends Controller
 
     public function send(Request $request)
     {
+        $onlineUserIds = Activity::users(5)->pluck('user_id')->toArray();
+
         $users = User::whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_PEASANT);
         })
-        ->whereHas('meta', function ($query) {
-            $query->where('gender', User::GENDER_MALE);
-            $query->where('looking_for_gender', User::GENDER_FEMALE);
-        })
-        ->where('active', true)
-        ->get();
+            ->whereHas('meta', function ($query) {
+                $query->where('gender', User::GENDER_MALE);
+                $query->where('looking_for_gender', User::GENDER_FEMALE);
+            })
+            ->where('active', true)
+            ->get();
 
         /** @var User $user */
         foreach ($users as $user) {
             try {
                 \DB::beginTransaction();
 
-                $bot = User::where('active', true)
+                $bot = User::with(['emailTypes'])
+                    ->where('active', true)
                     ->whereHas('meta', function ($query) use ($user) {
                         $query->where('looking_for_gender', $user->meta->gender);
                         $query->where('gender', $user->meta->looking_for_gender);
@@ -106,6 +112,38 @@ class MassMessageController extends Controller
                 ]);
 
                 $messageInstance->save();
+
+                $recipientEmailTypeIds = $user->emailTypes->pluck('id')->toArray();
+
+                $recipientHasMessageNotificationsEnabled = in_array(
+                    EmailType::MESSAGE_RECEIVED,
+                    $recipientEmailTypeIds
+                );
+
+                if (
+                    $recipientHasMessageNotificationsEnabled &&
+                    !in_array($user->getId(), $onlineUserIds)
+                ) {
+                    if (config('app.env') === 'production') {
+                        $message = isset($messageData['message']) && $messageData['message'] ? $messageData['message'] : null;
+
+                        $messageReceivedEmail = (new MessageReceived(
+                            $bot,
+                            $user,
+                            $message,
+                            false
+                        ))->onQueue('emails');
+
+                        Mail::to($user)
+                            ->queue($messageReceivedEmail);
+                    }
+
+                    $user->emailTypeInstances()->attach(EmailType::MESSAGE_RECEIVED, [
+                        'email' => $user->getEmail(),
+                        'email_type_id' => EmailType::MESSAGE_RECEIVED,
+                        'actor_id' => $bot->getId()
+                    ]);
+                }
 
                 $alerts[] = [
                     'type' => 'success',
