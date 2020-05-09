@@ -17,12 +17,9 @@ use App\MessageAttachment;
 use App\OpenConversationPartner;
 use App\User;
 use App\UserImage;
+use App\UserView;
 use Carbon\Carbon;
-use Illuminate\Http\File;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -660,6 +657,15 @@ class ConversationController extends Controller
                 $activity->last_activity = time();
                 $activity->user_id = $sender->getId();
                 $activity->save();
+
+                // Sometimes pretend that the bot viewed the user's profile. Always when it is the first time they chat
+                if ($conversation->messages->count() == 1 || rand(0, 1)) {
+                    $userViewInstance = new UserView();
+                    $userViewInstance->setViewerId($messageData['sender_id']);
+                    $userViewInstance->setViewedId($messageData['recipient_id']);
+                    $userViewInstance->setAutomated(true);
+                    $userViewInstance->save();
+                }
             }
 
             $alerts[] = [
