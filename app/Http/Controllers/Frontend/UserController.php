@@ -99,12 +99,14 @@ class UserController extends FrontendController
                     ->get();
 
                 if (!count($hasRecentProfileViewedEmails)) {
-                    $this->userManager->setProfileViewedEmailAndStoreView(
+                    $this->userManager->setProfileViewedEmail(
                         $user,
                         $this->authenticatedUser
                     );
                 }
             }
+
+            $this->userManager->storeProfileView($this->authenticatedUser, $user, false);
         }
 
         $viewData = [

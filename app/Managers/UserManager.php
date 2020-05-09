@@ -178,7 +178,7 @@ class UserManager
         $userViewInstance->save();
     }
 
-    public function setProfileViewedEmailAndStoreView(User $viewed, User $viewer = null) {
+    public function setProfileViewedEmail(User $viewed, User $viewer = null) {
         $userEmailTypeIds = $viewed->emailTypes()->get()->pluck('id')->toArray();
 
         $profileViewedEmailEnabled = in_array(
@@ -227,8 +227,6 @@ class UserManager
                 $userEmailTypeInstance->setReceiverId($viewed->getId());
                 $userEmailTypeInstance->setEmailTypeId(EmailType::PROFILE_VIEWED);
                 $userEmailTypeInstance->save();
-
-                $this->storeProfileView($viewerUser, $viewed, true);
             }
         }
     }

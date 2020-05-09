@@ -299,6 +299,16 @@ Route::group([
     });
 
     Route::group([
+        'prefix' => 'mass-messages'
+    ], function () {
+        Route::get('new', 'Admin\MassMessageController@new')
+            ->name('admin.mass-messages.new');
+
+        Route::post('send', 'Admin\MassMessageController@send')
+            ->name('admin.mass-messages.send');
+    });
+
+    Route::group([
         'prefix' => 'conversations'
     ], function () {
         Route::get('/', 'Admin\ConversationController@index')
