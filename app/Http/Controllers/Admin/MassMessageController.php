@@ -107,14 +107,26 @@ class MassMessageController extends Controller
 
                 $messageInstance->save();
 
+                $alerts[] = [
+                    'type' => 'success',
+                    'message' => 'The mass message was sent successfully'
+                ];
+
                 \DB::commit();
 
             } catch (\Exception $exception) {
+                $alerts[] = [
+                    'type' => 'error',
+                    'message' => 'The mass message was not sent due to an exception.'
+                ];
+
                 \DB::rollBack();
 
                 \Log::info(__CLASS__ . ' - ' . $exception->getMessage());
                 throw $exception;
             }
         }
+
+        return redirect()->back()->with('alerts', $alerts);
     }
 }
