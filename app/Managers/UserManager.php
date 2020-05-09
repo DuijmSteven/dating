@@ -190,7 +190,7 @@ class UserManager
             $viewerUser = null;
 
             if (!($viewer instanceof User)) {
-                $bot = User::where('active', 1)
+                $bot = User::where('active', true)
                     ->whereHas('meta', function ($query) use ($viewed) {
                         $query->where('looking_for_gender', $viewed->meta->gender);
                         $query->where('gender', $viewed->meta->looking_for_gender);
@@ -229,6 +229,8 @@ class UserManager
                 $userEmailTypeInstance->save();
             }
         }
+
+        return $viewerUser;
     }
 
     public function setProfileCompletionEmail(User $user)

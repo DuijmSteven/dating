@@ -54,8 +54,8 @@ class SendProfileViewedEmails extends Command
         if ($timeNow->hour >= 8 || $timeNow->hour <= 2) {
             $users = User::whereHas('meta', function ($query) {
                 $query->where('email', '!=', null);
-                $query->where('gender', 1);
-                $query->where('looking_for_gender', 2);
+                $query->where('gender', User::GENDER_MALE);
+                $query->where('looking_for_gender', User::GENDER_FEMALE);
                 $query->where('city', '!=', null);
                 $query->where('about_me', '!=', null);
             })
@@ -78,7 +78,8 @@ class SendProfileViewedEmails extends Command
                     $number = rand(1, 1000);
 
                     if ($number === 1) {
-                        $this->userManager->setProfileViewedEmailAndStoreView($user);
+                        $viewerBot = $this->userManager->setProfileViewedEmail($user);
+                        $this->userManager->storeProfileView($viewerBot, $user);
                     }
                 } catch (\Exception $exception) {
                     \Log::error(__CLASS__ . ' - ' . $exception->getMessage());
