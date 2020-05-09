@@ -186,8 +186,8 @@ class UserManager
             $userEmailTypeIds
         );
 
+        $viewerUser = null;
         if ($profileViewedEmailEnabled && $viewed->isPeasant()) {
-            $viewerUser = null;
 
             if (!($viewer instanceof User)) {
                 $bot = User::where('active', true)
@@ -438,6 +438,10 @@ class UserManager
 
         $query = User::with('meta', 'profileImage')
             ->whereIn('id', $latestIds)
+            ->whereHas('roles', function ($query) {
+                $query->where('id', User::TYPE_PEASANT);
+                $query->orWhere('id', User::TYPE_BOT);
+            })
             ->whereNotIn('id', [Auth::user()->getId()]);
 
         $query = $query->whereHas('meta', function ($query) {
