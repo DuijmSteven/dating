@@ -93,7 +93,7 @@ class SetRandomBotsOnline extends Command
         } elseif ($timeNow->hour > 2 && $timeNow->hour <= 6) {
             $numberOfBotsToHaveOnline = rand(
                 0,
-                10
+                2
             );
         }
 
