@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Peasants\PeasantCreateRequest;
 use App\Http\Requests\Admin\Peasants\PeasantUpdateRequest;
 use App\Managers\PeasantManager;
+use App\Managers\UserManager;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -17,13 +18,21 @@ class PeasantController extends Controller
     private $peasantManager;
 
     /**
+     * @var UserManager
+     */
+    private UserManager $userManager;
+
+    /**
      * PeasantController constructor.
      * @param PeasantManager $peasantManager
      */
-    public function __construct(PeasantManager $peasantManager)
-    {
+    public function __construct(
+        PeasantManager $peasantManager,
+        UserManager $userManager
+    ) {
         $this->peasantManager = $peasantManager;
         parent::__construct();
+        $this->userManager = $userManager;
     }
 
     /**
@@ -252,12 +261,27 @@ class PeasantController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
+        try {
+            $this->userManager->deleteUser($id);
+
+            $alerts[] = [
+                'type' => 'success',
+                'message' => 'The peasant was deleted successfully'
+            ];
+
+            return redirect()->route('admin.peasants.retrieve')->with('alerts', $alerts);
+        } catch (\Exception $exception) {
+            $alerts[] = [
+                'type' => 'error',
+                'message' => 'The peasant was not deleted due to an exception.'
+            ];
+
+            return redirect()->route('admin.peasants.retrieve')->with('alerts', $alerts);
+        }
     }
 }

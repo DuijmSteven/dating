@@ -210,6 +210,9 @@ Route::group([
         Route::get('/', 'Admin\BotController@index')
             ->name('admin.bots.retrieve');
 
+        Route::delete('{id}', 'Admin\BotController@destroy')
+            ->name('admin.bots.destroy');
+
         Route::get('on-map', 'Admin\BotController@showOnMap')
             ->name('admin.bots.map.show');
 
@@ -231,6 +234,10 @@ Route::group([
     ], function () {
         Route::get('/', 'Admin\OperatorController@index')
             ->name('admin.operators.overview');
+
+        Route::delete('{id}', 'Admin\OperatorController@destroy')
+            ->name('admin.operators.destroy');
+
         Route::get('{operatorId}/messages', 'Admin\OperatorController@messages')
             ->name('admin.operators.messages.overview');
 
@@ -252,6 +259,10 @@ Route::group([
     ], function () {
         Route::get('/', 'Admin\EditorController@index')
             ->name('admin.editors.overview');
+
+        Route::delete('{id}', 'Admin\EditorController@destroy')
+            ->name('admin.editors.destroy');
+
         Route::get('/{editorId}/created-bots', 'Admin\EditorController@createdBots')
             ->name('admin.editors.created-bots.overview');
 
@@ -270,6 +281,9 @@ Route::group([
     ], function () {
         Route::get('/', 'Admin\PeasantController@index')
             ->name('admin.peasants.retrieve');
+
+        Route::delete('{id}', 'Admin\PeasantController@destroy')
+            ->name('admin.peasants.destroy');
 
         Route::get('/on-map', 'Admin\PeasantController@showOnMap')
             ->name('admin.peasants.map.show');

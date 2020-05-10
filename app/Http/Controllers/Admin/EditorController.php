@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Articles\ArticleCreateRequest;
 use App\Http\Requests\Admin\Articles\ArticleUpdateRequest;
 use App\Managers\ArticleManager;
+use App\Managers\UserManager;
 use App\User;
 use Carbon\Carbon;
 use DB;
@@ -22,11 +23,18 @@ use Kim\Activity\Activity;
 class EditorController extends Controller
 {
     /**
+     * @var UserManager
+     */
+    private UserManager $userManager;
+
+    /**
      * OperatorController constructor.
      */
     public function __construct(
+        UserManager $userManager
     ) {
         parent::__construct();
+        $this->userManager = $userManager;
     }
 
     /**
@@ -168,5 +176,30 @@ class EditorController extends Controller
                 'editor' => $editor
             ]
         );
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($id)
+    {
+        try {
+            $this->userManager->deleteUser($id);
+
+            $alerts[] = [
+                'type' => 'success',
+                'message' => 'The editor was deleted successfully'
+            ];
+
+            return redirect()->route('admin.editors.overview')->with('alerts', $alerts);
+        } catch (\Exception $exception) {
+            $alerts[] = [
+                'type' => 'error',
+                'message' => 'The editor was not deleted due to an exception.'
+            ];
+
+            return redirect()->route('admin.editors.overview')->with('alerts', $alerts);
+        }
     }
 }

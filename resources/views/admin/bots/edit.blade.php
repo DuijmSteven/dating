@@ -7,6 +7,36 @@
             <h3 class="box-title">Edit Bot</h3>
         </div>
 
+        <div style="margin-bottom: 20px; padding: 10px 10px 0">
+            <a href="{!! route('admin.conversations.bot.get', ['botId' => $bot->getId()]) !!}"
+               class="btn btn-default">Conversations
+                <b>({{ $bot->conversations_as_user_a_count + $bot->conversations_as_user_b_count }})</b></a>
+
+            <a href="{!! route('admin.messages.bot', ['botId' => $bot->getId()]) !!}"
+               class="btn btn-default">Messages sent/received
+                <b>({{ $bot->messaged_count + $bot->messages_count }})</b></a>
+
+            <a href="{!! route('admin.bot-messages.bot.get', ['botId' => $bot->getId()]) !!}"
+               class="btn btn-default">Bot messages assigned
+                <b>({{ $bot->bot_messages_count }})</b></a>
+            <a href="{!! route('admin.bots.message-with-bot.get', ['botId' =>  $bot->id, 'onlyOnlinePeasants' => '0']) !!}" class="btn btn-default">Message peasant with bot</a>
+            <a href="{!! route('admin.bots.message-with-bot.get', ['botId' => $bot->id, 'onlyOnlinePeasants' => '1']) !!}" class="btn btn-default">Message online peasant with bot</a>
+
+            <form
+                method="POST"
+                action="{!! route('admin.bots.destroy', ['id' => $bot->id]) !!}"
+                style="display: inline-block"
+            >
+                {!! csrf_field() !!}
+                {!! method_field('DELETE') !!}
+                <button type="submit"
+                        class="btn btn-danger"
+                        onclick="return confirm('Are you sure you want to delete this bot?')">
+                    Delete
+                </button>
+            </form>
+        </div>
+
         <!-- /.box-header -->
         <!-- form start -->
         <form role="form" method="POST" action="{!! route('admin.bots.update', ['id' => $bot->id]) !!}"
@@ -14,11 +44,6 @@
             {!! csrf_field() !!}
             {!! method_field('PUT') !!}
             <div class="box-body">
-                <div style="margin-bottom: 20px">
-                    <a href="{!! route('admin.bots.message-with-bot.get', ['botId' =>  $bot->id, 'onlyOnlinePeasants' => '0']) !!}" class="btn btn-default">Message peasant with bot</a>
-                    <a href="{!! route('admin.bots.message-with-bot.get', ['botId' => $bot->id, 'onlyOnlinePeasants' => '1']) !!}" class="btn btn-default">Message online peasant with bot</a>
-                </div>
-
                 <div class="userStats botStats">
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 col-md-4">

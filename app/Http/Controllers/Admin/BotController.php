@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\Admin\Bots\BotCreateRequest;
 use App\Http\Requests\Admin\Bots\BotUpdateRequest;
 use App\Managers\BotManager;
+use App\Managers\UserManager;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -22,13 +23,21 @@ class BotController extends Controller
     private $botManager;
 
     /**
+     * @var UserManager
+     */
+    private UserManager $userManager;
+
+    /**
      * BotController constructor.
      * @param BotManager $botManager
      */
-    public function __construct(BotManager $botManager)
-    {
+    public function __construct(
+        BotManager $botManager,
+        UserManager $userManager
+    ) {
         $this->botManager = $botManager;
         parent::__construct();
+        $this->userManager = $userManager;
     }
 
     /**
@@ -302,12 +311,27 @@ class BotController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
+        try {
+            $this->userManager->deleteUser($id);
+
+            $alerts[] = [
+                'type' => 'success',
+                'message' => 'The bot was deleted successfully'
+            ];
+
+            return redirect()->route('admin.bots.retrieve')->with('alerts', $alerts);
+        } catch (\Exception $exception) {
+            $alerts[] = [
+                'type' => 'error',
+                'message' => 'The bot was not deleted due to an exception.'
+            ];
+
+            return redirect()->route('admin.bots.retrieve')->with('alerts', $alerts);
+        }
     }
 }

@@ -7,6 +7,24 @@
             <h3 class="box-title">Edit Editor</h3>
         </div>
 
+        <div style="margin-bottom: 20px; padding: 10px 10px 0">
+            <a href="{!! route('admin.editors.created-bots.overview', [$editor->getId()]) !!}" class="btn btn-default">Created bots <b>({{ $editor->created_bots_count }})</b></a>
+
+            <form
+                method="POST"
+                action="{!! route('admin.editors.destroy', ['id' => $editor->getId()]) !!}"
+                style="display: inline-block"
+            >
+                {!! csrf_field() !!}
+                {!! method_field('DELETE') !!}
+                <button type="submit"
+                        class="btn btn-danger"
+                        onclick="return confirm('Are you sure you want to delete this editor?')">
+                    Delete
+                </button>
+            </form>
+        </div>
+
         <!-- /.box-header -->
         <!-- form start -->
         <form role="form" method="POST" action="{!! route('admin.editors.update', ['id' => $editor->id]) !!}"

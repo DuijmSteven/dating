@@ -7,6 +7,28 @@
             <h3 class="box-title">Edit Operator</h3>
         </div>
 
+        <div style="margin-bottom: 20px; padding: 10px 10px 0">
+            <a href="{!! route('admin.conversations.with-operator', ['operatorId' => $operator->getId()]) !!}" class="btn btn-default">Conversations
+                {{--                                        <b>({{ $operator->conversationsAsOperator()->withTrashed()->count() }})</b>--}}
+            </a>
+            <a href="{!! route('admin.operators.messages.overview', ['operatorId' => $operator->getId()]) !!}" class="btn btn-default">Sent messages <b>({{ $operator->operator_messages_count }})</b></a>
+
+            <form
+                method="POST"
+                action="{!! route('admin.operators.destroy', ['id' => $operator->getId()]) !!}"
+                style="display: inline-block"
+            >
+                {!! csrf_field() !!}
+                {!! method_field('DELETE') !!}
+                <button type="submit"
+                        class="btn btn-danger"
+                        onclick="return confirm('Are you sure you want to delete this operator?')">
+                    Delete
+                </button>
+            </form>
+        </div>
+
+
         <!-- /.box-header -->
         <!-- form start -->
         <form role="form" method="POST" action="{!! route('admin.operators.update', ['id' => $operator->id]) !!}"

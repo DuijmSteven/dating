@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Managers\UserManager;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -16,11 +17,18 @@ use Kim\Activity\Activity;
 class OperatorController extends Controller
 {
     /**
+     * @var UserManager
+     */
+    private UserManager $userManager;
+
+    /**
      * OperatorController constructor.
      */
     public function __construct(
+        UserManager $userManager
     ) {
         parent::__construct();
+        $this->userManager = $userManager;
     }
 
     /**
@@ -143,5 +151,30 @@ class OperatorController extends Controller
                 'operator' => $operator
             ]
         );
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($id)
+    {
+        try {
+            $this->userManager->deleteUser($id);
+
+            $alerts[] = [
+                'type' => 'success',
+                'message' => 'The operator was deleted successfully'
+            ];
+
+            return redirect()->route('admin.operators.overview')->with('alerts', $alerts);
+        } catch (\Exception $exception) {
+            $alerts[] = [
+                'type' => 'error',
+                'message' => 'The operator was not deleted due to an exception.'
+            ];
+
+            return redirect()->route('admin.operators.overview')->with('alerts', $alerts);
+        }
     }
 }
