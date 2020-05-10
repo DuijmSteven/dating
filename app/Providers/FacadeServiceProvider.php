@@ -47,5 +47,9 @@ class FacadeServiceProvider extends ServiceProvider
         $this->app->bind('storage_helper', function () {
             return new \App\Helpers\StorageHelper;
         });
+
+        $this->app->bind('formatting_helper', function () {
+            return new \App\Helpers\FormattingHelper;
+        });
     }
 }

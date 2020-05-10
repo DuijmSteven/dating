@@ -70,7 +70,8 @@
         <div class="col-xs-12 col-sm-6 sm_min_pad0">
             <div class="box direct-chat direct-chat-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Conversation {!! isset($lockedByUserId) ? '<span class="lockedByUserIdWarning">LOCKED BY: ' . $lockedByUserId . ' - ' . $lockedByUser->getUsername() . '</span>' : '' !!}</h3>
+                    <h3 class="box-title">
+                        Conversation {!! isset($lockedByUserId) ? '<span class="lockedByUserIdWarning">LOCKED BY: ' . $lockedByUserId . ' - ' . $lockedByUser->getUsername() . '</span>' : '' !!}</h3>
 
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
@@ -82,61 +83,55 @@
                 <div class="box-body">
                     <!-- Conversations are loaded here -->
                     <div class="direct-chat-messages scroll-bottom">
-                        @php
-                            $userAProfileImageUrl = \StorageHelper::profileImageUrl($conversation->userA, true);
-                            $userBProfileImageUrl = \StorageHelper::profileImageUrl($conversation->userB, true);
-                        @endphp
+                    @php
+                        $userAProfileImageUrl = \StorageHelper::profileImageUrl($conversation->userA, true);
+                        $userBProfileImageUrl = \StorageHelper::profileImageUrl($conversation->userB, true);
+                    @endphp
 
-                        @foreach($conversation->messages as $message)
-                            @php
-                                if ($message->sender_id === $conversation->userA->id) {
-                                    $user = $conversation->userA;
-                                    $alignment = '';
-                                    $profileImageUrl = $userAProfileImageUrl;
-                                } else {
-                                    $user = $conversation->userB;
-                                    $alignment = 'right';
-                                    $profileImageUrl = $userBProfileImageUrl;
-                                }
-                            @endphp
-                            <!-- Message. Default to the left -->
-                                <div class="direct-chat-msg {!! $alignment !!}">
-                                    <div class="direct-chat-info clearfix">
+                    @foreach($conversation->messages as $message)
+                        @php
+                            if ($message->sender_id === $conversation->userA->id) {
+                                $user = $conversation->userA;
+                                $alignment = '';
+                                $profileImageUrl = $userAProfileImageUrl;
+                            } else {
+                                $user = $conversation->userB;
+                                $alignment = 'right';
+                                $profileImageUrl = $userBProfileImageUrl;
+                            }
+                        @endphp
+                        <!-- Message. Default to the left -->
+                            <div class="direct-chat-msg {!! $alignment !!}">
+                                <div class="direct-chat-info clearfix">
                                         <span
                                             class="direct-chat-name pull-{!! ($alignment === 'right') ? 'right' : 'left' !!}">{!! $user->username !!}</span>
-                                        <span
-                                            class="direct-chat-timestamp pull-{!! ($alignment === 'right') ? 'left' : 'right' !!}">{!! $message->created_at->diffForHumans() !!} ({!! $message->created_at->format('d-m-Y H:i:s') !!})</span>
-                                    </div>
-                                    <img class="direct-chat-img" src="{{ $profileImageUrl }}"
-                                         alt="message user image">
-                                    <div class="direct-chat-text {!! ($alignment === 'right') ? 'userB' : 'userA' !!}">
-                                        @if($message->type === 'flirt')
-                                            <i class="fa fa-heart" style="color:red"></i>
-                                        @else
-                                            @if($message->has_attachment)
-                                                <div>
-
-
-
-
-
-
-                                  <img height="100" src="{!! \StorageHelper::messageAttachmentUrl(
+                                    <span
+                                        class="direct-chat-timestamp pull-{!! ($alignment === 'right') ? 'left' : 'right' !!}">{!! $message->created_at->diffForHumans() !!} ({!! $message->created_at->format('d-m-Y H:i:s') !!})</span>
+                                </div>
+                                <img class="direct-chat-img" src="{{ $profileImageUrl }}"
+                                     alt="message user image">
+                                <div class="direct-chat-text {!! ($alignment === 'right') ? 'userB' : 'userA' !!}">
+                                    @if($message->type === 'flirt')
+                                        <i class="fa fa-heart" style="color:red"></i>
+                                    @else
+                                        @if($message->has_attachment)
+                                            <div>
+                                                <img height="100" src="{!! \StorageHelper::messageAttachmentUrl(
                                                     $conversation->id,
                                                     $message->attachment->filename
                                                 ) !!}"
-                                                         alt="">
-                                                </div>
-                                            @endif
-
-                                            @if($message->body)
-                                                {!! $message->body !!}
-                                            @endif
+                                                     alt="">
+                                            </div>
                                         @endif
-                                    </div>
-                                    <!-- /.direct-chat-text -->
+
+                                        @if($message->body)
+                                            {!! \App\Helpers\FormattingHelper::stripPhonesAndEmails($message->body) !!}
+                                        @endif
+                                    @endif
                                 </div>
-                            @endforeach
+                                <!-- /.direct-chat-text -->
+                            </div>
+                        @endforeach
                     </div>
                     <!--/.direct-chat-messages-->
                 </div>
@@ -187,7 +182,8 @@
                         <?php $bot = $conversation->userA ?>
                         @foreach($bot->invisibleImages as $invisibleImage)
                             <div class="col-xs-12 col-sm-4">
-                                <form role="form" method="POST" action="{!! route('admin.conversations.add-invisible-image') !!}"
+                                <form role="form" method="POST"
+                                      action="{!! route('admin.conversations.add-invisible-image') !!}"
                                       enctype="multipart/form-data">
                                     {!! csrf_field() !!}
                                     <input type="hidden" value="{!! $conversation->id !!}" name="conversation_id">
@@ -195,16 +191,19 @@
                                     <input type="hidden" value="{!! $conversation->userB->id !!}" name="recipient_id">
                                     <input type="hidden" value="{!! $invisibleImage->id !!}" name="image_id">
 
-                                    <textarea name="body" cols="30" rows="10" style="width: 100%; height: 200px" class="hidden"></textarea>
+                                    <textarea name="body" cols="30" rows="10" style="width: 100%; height: 200px"
+                                              class="hidden"></textarea>
 
                                     <img style=""
                                          src="{{ \App\Helpers\StorageHelper::userImageUrl($bot->getId(), $invisibleImage->filename) }}"
                                          alt="">
-                                    <input class="selectInvisibleImage" type="radio" value="{!! $invisibleImage->id!!}" name="image_id">
+                                    <input class="selectInvisibleImage" type="radio" value="{!! $invisibleImage->id!!}"
+                                           name="image_id">
                                     @if ($errors->has('image_id') && old('image_id_error_check') == $invisibleImage->getId())
                                         {!! $errors->first('image_id', '<small class="form-error">:message</small>') !!}
                                     @endif
-                                    <button style="width: 100%" type="submit" class="btn btn-success btn-flat">Send</button>
+                                    <button style="width: 100%" type="submit" class="btn btn-success btn-flat">Send
+                                    </button>
 
                                 </form>
                             </div>
@@ -276,7 +275,8 @@
         </a>
 
         @if($conversation->getReplyableAt())
-            <a href="{!! route('admin.conversations.set-unreplyable', [$conversation->getId()]) !!}" class="btn btn-default">Make unreplyable</a>
+            <a href="{!! route('admin.conversations.set-unreplyable', [$conversation->getId()]) !!}"
+               class="btn btn-default">Make unreplyable</a>
         @endif
     @endif
 

@@ -5,10 +5,10 @@ namespace App\Facades\Helpers;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * Class PaymentsHelper
+ * Class FormattingHelper
  * @package App\Facades\Helpers
  */
-class PaymentsHelper extends Facade
+class FormattingHelper extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -19,6 +19,6 @@ class PaymentsHelper extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'payments_helper';
+        return 'formatting_helper';
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * Class StorageHelper
- * @package App\Facades\Helpers\ApplicationConstants
+ * @package App\Facades\Helpers
  */
 class StorageHelper extends Facade
 {
