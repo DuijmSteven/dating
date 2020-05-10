@@ -37,7 +37,7 @@ class MessageReceived extends Mailable implements ShouldQueue
     public function __construct(
         User $messageSender,
         User $messageRecipient,
-        string $messageBody,
+        ?string $messageBody,
         bool $hasAttachment
     ) {
         $this->messageSender = $messageSender;
