@@ -100,12 +100,13 @@ class MassMessageController extends Controller
                 $conversation->setUpdatedAt(Carbon::now());
                 $conversation->save();
 
+                $messageBody = $request->get('body');
                 $messageInstance = new ConversationMessage([
                     'conversation_id' => $conversation->getId(),
                     'type' => 'generic',
                     'sender_id' => $bot->getId(),
                     'recipient_id' => $user->getId(),
-                    'body' => $request->get('body'),
+                    'body' => $messageBody,
                     'has_attachment' => false,
                     'operator_id' => null,
                     'operator_message_type' => null
@@ -127,12 +128,10 @@ class MassMessageController extends Controller
                     !in_array($user->getId(), $onlineUserIds)
                 ) {
                     if (config('app.env') === 'production') {
-                        $message = isset($messageData['message']) && $messageData['message'] ? $messageData['message'] : null;
-
                         $messageReceivedEmail = (new MessageReceived(
                             $bot,
                             $user,
-                            $message,
+                            $messageBody,
                             false
                         ))->onQueue('emails');
 
