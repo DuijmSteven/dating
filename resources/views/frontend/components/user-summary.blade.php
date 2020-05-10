@@ -66,6 +66,10 @@
                 <span class="UserSummary__sendMessage__text">Chat</span>
                 <i class="material-icons material-icon UserSummary__sendMessage__icon">textsms</i>
             </div >
+
+            @if(!isset($showOtherImages))
+                <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}" class="UserSummary__seeProfile">{{ trans('user_profile.see_profile') }}</a>
+            @endif
         </div>
 
         @if(isset($showOtherImages) && $showOtherImages)

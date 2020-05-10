@@ -6,6 +6,33 @@
 //
 // Style guide: Modules.Online Users
 .Online-users {
+    &__bodyWrapper {
+        position: relative;
+        margin-bottom: map_get($onlineUsersItem, marginBottom) + px;
+        &:last-of-type {
+            margin-bottom: 0
+        }
+    }
+
+    &__sendMessage {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+        cursor: pointer;
+
+        .material-icons {
+            color: $secondaryColor;
+            font-size: 21px;
+        }
+
+        &:hover {
+            .material-icons {
+                color: darken($secondaryColor, 8%);
+                font-size: 23px;
+            }
+        }
+    }
+
     &__heading {
         .onlineCircle {
             background-color: #33e23c;
@@ -17,6 +44,7 @@
     }
 
     &__item {
+        position: relative;
         display: -webkit-flex;
         display: flex;
         -webkit-flex-direction: row;
@@ -74,6 +102,10 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+
+        @media screen and (min-width: $screen-sm-min) {
+            width: 127px;
+        }
 
         &:hover,
         &:focus,
