@@ -62,7 +62,7 @@
 
     &__profile-image {
         text-align: center;
-        margin-right: 10px;
+        margin-right: 5px;
         position: relative;
 
         img {
@@ -71,6 +71,11 @@
             border-radius: 2px;
             object-fit: cover;
             display: block;
+
+            @media screen and (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+                width: 53px;
+                height: 53px;
+            }
         }
 
         .onlineCircle {
@@ -95,7 +100,12 @@
         overflow: hidden;
         text-overflow: ellipsis;
 
-        @media screen and (min-width: $screen-sm-min) {
+        @media screen and (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+            font-size: 15px;
+            width: 93px;
+        }
+
+        @media screen and (min-width: $screen-lg-min) {
             width: 127px;
         }
 
