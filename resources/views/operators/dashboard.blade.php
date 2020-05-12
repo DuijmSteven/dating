@@ -88,10 +88,16 @@
                                             @if($conversation->messages[0]->attachment)
                                                 <i class="fa fa-fw fa-paperclip"></i>
                                             @endif
+
+
+
+
                                             @if($conversation->messages[0]->body)
-
-
-                                                <em>"{!! \App\Helpers\FormattingHelper::stripPhonesAndEmails($conversation->messages[0]->body) !!}"</em>
+                                                @if($authenticatedUser->isAdmin())
+                                                    {!! $conversation->messages[0]->body !!}
+                                                @else
+                                                    <em>"{!! \App\Helpers\FormattingHelper::stripPhonesAndEmails($conversation->messages[0]->body) !!}"</em>
+                                                @endif
                                             @endif
                                         </div>
                                     </div>

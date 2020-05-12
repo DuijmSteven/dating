@@ -125,7 +125,11 @@
                                         @endif
 
                                         @if($message->body)
-                                            {!! \App\Helpers\FormattingHelper::stripPhonesAndEmails($message->body) !!}
+                                            @if($authenticatedUser->isAdmin())
+                                                {!! $message->body !!}
+                                            @else
+                                                {!! \App\Helpers\FormattingHelper::stripPhonesAndEmails($message->body) !!}
+                                            @endif
                                         @endif
                                     @endif
                                 </div>
