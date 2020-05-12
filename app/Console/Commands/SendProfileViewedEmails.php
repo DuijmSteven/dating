@@ -6,6 +6,7 @@ use App\EmailType;
 use App\Mail\ProfileViewed;
 use App\Managers\UserManager;
 use App\User;
+use App\UserView;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
@@ -79,7 +80,11 @@ class SendProfileViewedEmails extends Command
 
                     if ($number === 1) {
                         $viewerBot = $this->userManager->setProfileViewedEmail($user);
-                        $this->userManager->storeProfileView($viewerBot, $user);
+                        $this->userManager->storeProfileView(
+                            $viewerBot,
+                            $user,
+                            UserView::TYPE_SCHEDULED
+                        );
                     }
                 } catch (\Exception $exception) {
                     \Log::error(__CLASS__ . ' - ' . $exception->getMessage());

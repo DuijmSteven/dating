@@ -7,7 +7,9 @@ use App\ConversationMessage;
 use App\EmailType;
 use App\Http\Controllers\Controller;
 use App\Mail\MessageReceived;
+use App\Managers\UserManager;
 use App\User;
+use App\UserView;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -16,9 +18,15 @@ use Kim\Activity\Activity;
 
 class MassMessageController extends Controller
 {
-    public function __construct()
+    /**
+     * @var UserManager
+     */
+    private UserManager $userManager;
+
+    public function __construct(UserManager $userManager)
     {
         parent::__construct();
+        $this->userManager = $userManager;
     }
 
     public function new()
@@ -145,6 +153,12 @@ class MassMessageController extends Controller
                         'actor_id' => $bot->getId()
                     ]);
                 }
+
+                $this->userManager->storeProfileView(
+                    $bot,
+                    $user,
+                    UserView::TYPE_BOT_MESSAGE
+                );
 
                 $alerts[] = [
                     'type' => 'success',

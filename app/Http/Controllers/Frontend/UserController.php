@@ -106,7 +106,11 @@ class UserController extends FrontendController
                 }
             }
 
-            $this->userManager->storeProfileView($this->authenticatedUser, $user, false);
+            $this->userManager->storeProfileView(
+                $this->authenticatedUser,
+                $user,
+                UserView::TYPE_PEASANT
+            );
         }
 
         $viewData = [

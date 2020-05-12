@@ -170,11 +170,11 @@ class UserManager
         DB::commit();
     }
 
-    public function storeProfileView(User $viewer, User $viewed, bool $automated = false) {
+    public function storeProfileView(User $viewer, User $viewed, int $type = null) {
         $userViewInstance = new UserView();
         $userViewInstance->setViewerId($viewer->getId());
         $userViewInstance->setViewedId($viewed->getId());
-        $userViewInstance->setAutomated($automated);
+        $userViewInstance->setType($type);
         $userViewInstance->save();
     }
 

@@ -4,6 +4,10 @@ namespace App;
 
 class UserView extends TimeZonedModel
 {
+    const TYPE_SCHEDULED = 1;
+    const TYPE_BOT_MESSAGE = 2;
+    const TYPE_PEASANT = 3;
+
     public $table = 'user_views';
 
     public $timestamps = true;
@@ -16,6 +20,7 @@ class UserView extends TimeZonedModel
     protected $fillable = [
         'viewer_id',
         'viewed_id',
+        'type',
         'created_at',
         'updated_at'
     ];
@@ -33,9 +38,9 @@ class UserView extends TimeZonedModel
         return $this->belongsTo(User::class, 'viewer_id', 'id');
     }
 
-    public function setAutomated(bool $automated)
+    public function setType(?int $type)
     {
-        $this->automated = $automated;
+        $this->type = $type;
     }
 
     public function setViewerId(int $viewerId)
