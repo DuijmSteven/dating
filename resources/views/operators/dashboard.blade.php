@@ -89,7 +89,9 @@
                                                 <i class="fa fa-fw fa-paperclip"></i>
                                             @endif
                                             @if($conversation->messages[0]->body)
-                                                <em>"{!! $conversation->messages[0]->body !!}"</em>
+
+
+                                                <em>"{!! \App\Helpers\FormattingHelper::stripPhonesAndEmails($conversation->messages[0]->body) !!}"</em>
                                             @endif
                                         </div>
                                     </div>
