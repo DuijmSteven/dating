@@ -7,6 +7,7 @@ class UserView extends TimeZonedModel
     const TYPE_SCHEDULED = 1;
     const TYPE_BOT_MESSAGE = 2;
     const TYPE_PEASANT = 3;
+    const TYPE_OPERATOR_MESSAGE = 4;
 
     public $table = 'user_views';
 

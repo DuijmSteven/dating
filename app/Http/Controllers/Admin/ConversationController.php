@@ -663,7 +663,7 @@ class ConversationController extends Controller
                     $userViewInstance = new UserView();
                     $userViewInstance->setViewerId($messageData['sender_id']);
                     $userViewInstance->setViewedId($messageData['recipient_id']);
-                    $userViewInstance->setAutomated(false);
+                    $userViewInstance->setType(UserView::TYPE_OPERATOR_MESSAGE);
                     $userViewInstance->save();
                 }
             }
