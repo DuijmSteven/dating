@@ -81,20 +81,24 @@
 
                                                     @if($fieldName === 'about_me')
                                                         {{ substr($peasant->meta->{$fieldName}, 0, 40) }}{{ strlen($peasant->meta->{$fieldName}) > 41 ? '...' : '' }}
+                                                    @elseif($fieldName === 'dob')
+                                                        {{ $peasant->meta->{$fieldName}->format('d-m-Y') }}
                                                     @else
                                                         {{ $peasant->meta->{$fieldName} }}
                                                     @endif
                                                 </div>
                                             @endif
                                         @endforeach
-                                        <strong>Created at</strong> {!! $peasant->getCreatedAt()->tz('Europe/Amsterdam') !!} <br>
+                                        <strong>Created at</strong> {!! $peasant->getCreatedAt()->tz('Europe/Amsterdam')->format('d-m-Y H:i:s') !!}
+                                                                    ({!! $peasant->getCreatedAt()->tz('Europe/Amsterdam')->diffForHumans() !!})
+                                        <br>
                                     </div>
 
                                     @if($peasant->getLastOnlineAt())
                                         <div class="innerTableWidgetHeading"><strong>Activity</strong></div>
                                         <div class="innerTableWidgetBody">
-                                                <strong>Last online at</strong> {!! $peasant->getLastOnlineAt()->tz('Europe/Amsterdam') !!} <br>
-                                                <strong>Last online in days</strong> {!! $peasant->getLastOnlineAt()->tz('Europe/Amsterdam')->diffInDays($carbonNow->tz('Europe/Amsterdam')) !!} <br>
+                                                <strong>Last active at</strong> {!! $peasant->getLastOnlineAt()->tz('Europe/Amsterdam')->format('d-m-Y H:i:s') !!}
+                                                                                ({!! $peasant->getLastOnlineAt()->tz('Europe/Amsterdam')->diffForHumans() !!})<br>
                                         </div>
                                     @endif
 
@@ -104,7 +108,8 @@
                                         <div class="innerTableWidgetBody">
                                             <strong># of payments</strong>: {{ count($peasant->completedPayments) }} <br>
                                             <strong>Last Payment amount</strong>: &euro;{{ number_format($peasant->completedPayments[0]->amount/ 100, 2) }} <br>
-                                            <strong>Last Payment date</strong>: {{ $peasant->completedPayments[0]->created_at->format('d-m-Y H:i:s') }} <br>
+                                            <strong>Last Payment date</strong>: {{ $peasant->completedPayments[0]->created_at->tz('Europe/Amsterdam')->format('d-m-Y H:i:s') }}
+                                                                                ({!! $peasant->completedPayments[0]->created_at->tz('Europe/Amsterdam')->diffForHumans() !!})<br>
 
                                             <?php
                                             $moneySpent = 0;
