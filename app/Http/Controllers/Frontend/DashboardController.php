@@ -42,7 +42,8 @@ class DashboardController extends FrontendController
             ->where('created_at', '>=', $lastThirtyDays)
             ->orderByRaw('RAND()')
             ->take(10)
-            ->get()
+            ->get(),
+            'carbonNow' => Carbon::now(),
         ]);
     }
 }

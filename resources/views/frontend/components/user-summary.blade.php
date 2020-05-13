@@ -59,6 +59,13 @@
                     {!! !isset($user->meta->city) && !$user->meta->dob ? '&nbsp' : '' !!}
 
                 </div>
+
+                @if(isset($showAboutMe) && $showAboutMe && $user->meta->getAboutMe())
+                    <div class="UserSummary__aboutMe">
+                        "{!! $user->meta->getAboutMe() !!}"
+                    </div>
+                @endif
+
             </div>
             <div class="UserSummary__sendMessage"
                  v-on:click="addChat({!! $authenticatedUser->getId() !!}, {!! $user->getId() !!}, '1', true)"

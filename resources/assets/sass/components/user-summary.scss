@@ -24,6 +24,14 @@
         }
     }
 
+    &__aboutMe {
+        padding: 20px 10px;
+        font-size: 1.6rem;
+        font-style: italic;
+        margin-top: 20px;
+        border-top: 1px solid #eee;
+    }
+
     &__footer {
        padding: 0;
     }
