@@ -8,6 +8,7 @@ use App\EmailType;
 use App\Http\Controllers\Controller;
 use App\Mail\MessageReceived;
 use App\Managers\UserManager;
+use App\PastMassMessage;
 use App\User;
 use App\UserView;
 use Carbon\Carbon;
@@ -53,6 +54,7 @@ class MassMessageController extends Controller
                 'title' => 'New Mass Message - ' . \MetaConstants::getSiteName(),
                 'headingLarge' => 'Mass Messages',
                 'headingSmall' => 'New Mass Message',
+                'pastMassMessages' => PastMassMessage::orderBy('created_at', 'desc')->get(),
                 'carbonNow' => Carbon::now()
             ]
         );
@@ -62,15 +64,27 @@ class MassMessageController extends Controller
     {
         $onlineUserIds = Activity::users(5)->pluck('user_id')->toArray();
 
-        $users = User::whereHas('roles', function ($query) {
+        $usersQuery = User::whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_PEASANT);
         })
+            ->where('active', true)
             ->whereHas('meta', function ($query) {
                 $query->where('gender', User::GENDER_MALE);
                 $query->where('looking_for_gender', User::GENDER_FEMALE);
-            })
-            ->where('active', true)
-            ->get();
+            });
+
+        if ($request->get('limited_to_filled_profiles') && $request->get('limited_to_filled_profiles') === '1') {
+            $usersQuery->where(function ($query) {
+                $query->whereHas('meta', function ($query) {
+                    $query->where('dob', '!=', null);
+                    $query->orWhere('city', '!=',  null);
+                })
+                ->orWhereHas('images');
+            });
+
+        }
+
+        $users = $usersQuery->get();
 
         /** @var User $user */
         foreach ($users as $user) {
