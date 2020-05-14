@@ -87,7 +87,7 @@
                                     <div class="row">
                                         <div class="col-sm-12" style="margin-top: 40px">
                                             <div class="col-sm-6">
-                                                <h4 class="info-text">Man op zoek naar een vrouw</h4>
+                                                <h4 class="info-text">{{ @trans('lp1.form.man_looking_for_woman') }}</h4>
                                                 <div class="choice active" data-toggle="wizard-radio" rel="tooltip" title="Man op zoek naar een vrouw">
                                                     <input type="radio" name="lookingFor" value="male-female" checked="checked">
                                                     <div class="icon">
@@ -96,7 +96,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
-                                                <h4 class="info-text">Vrouw op zoek naar een man</h4>
+                                                <h4 class="info-text">{{ @trans('lp1.form.woman_looking_for_man') }}</h4>
                                                 <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Vrouw op zoek naar een man">
                                                     <input type="radio" name="lookingFor" value="female-male">
                                                     <div class="icon">
@@ -117,27 +117,35 @@
 													<span class="input-group-addon">
 														<i class="material-icons">email</i>
 													</span>
-                                                <div class="form-group label-floating">
-                                                    <label class="control-label">E-mailadres (niet zichtbaar voor anderen)</label>
-                                                    <input name="email" type="text" class="form-control">
+                                                <div class="form-group label-floating {{ $errors->has('email') ? ' has-error' : '' }}">
+                                                    <label class="control-label">{!! @trans('lp1.form.email') !!}</label>
+                                                    <input name="email"
+                                                           type="text"
+                                                           class="form-control"
+                                                           value="{{ old('email') }}">
                                                 </div>
                                             </div>
                                             <div class="input-group">
 													<span class="input-group-addon">
 														<i class="material-icons">label</i>
 													</span>
-                                                <div class="form-group label-floating">
-                                                    <label class="control-label">Gebruikersnaam</label>
-                                                    <input name="username" type="text" class="form-control">
+                                                <div class="form-group label-floating {{ $errors->has('username') ? ' has-error' : '' }}">
+                                                    <label class="control-label">{{ @trans('lp1.form.username') }}</label>
+                                                    <input name="username"
+                                                           type="text"
+                                                           class="form-control"
+                                                           value="{{ old('username') }}">
                                                 </div>
                                             </div>
                                             <div class="input-group">
 													<span class="input-group-addon">
 														<i class="material-icons">lock_outline</i>
 													</span>
-                                                <div class="form-group label-floating">
-                                                    <label class="control-label">Wachtwoord</label>
-                                                    <input name="password" type="text" class="form-control">
+                                                <div class="form-group label-floating {{ $errors->has('password') ? ' has-error' : '' }}">
+                                                    <label class="control-label">{{ @trans('lp1.form.password') }}</label>
+                                                    <input name="password"
+                                                           type="text"
+                                                           class="form-control">
                                                 </div>
                                             </div>
 
