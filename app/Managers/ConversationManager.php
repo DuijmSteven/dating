@@ -95,7 +95,7 @@ class ConversationManager
                 }
             }
 
-            $replyableAt = null;
+            $replyableAt = Carbon::now();
 
             if ($replyable) {
                 $exemptFromDelay = false;
@@ -139,14 +139,14 @@ class ConversationManager
             }
 
             $conversation->setReplyableAt($replyableAt);
-        } elseif ($sender->isBot() && !$isNewConversation && $conversation->messages->count() > 2) {
+        } elseif ($sender->isBot() && $conversation->messages->count() > 2) {
             if (
                 $conversation->messages[0]->sender->roles[0]->id === User::TYPE_PEASANT &&
                 2 === rand(1, 2)
             ) {
                 $conversation->setReplyableAt(null);
             }
-
+            
             if (
                 $conversation->messages[0]->sender->roles[0]->id === User::TYPE_BOT
             ) {
