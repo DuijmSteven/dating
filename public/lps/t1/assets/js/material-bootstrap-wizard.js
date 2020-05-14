@@ -152,7 +152,7 @@ $(document).ready(function(){
     $('.set-full-height').css('height', 'auto');
 
     $('.icon').click(function() {
-        setTimeout("$('a[href=\"#details\"]').click()", 500);
+        setTimeout("$('a[href=\"#details\"]').click()", 150);
     });
 
 });

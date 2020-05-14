@@ -376,8 +376,8 @@ h2.title {
       color: #999999;
       margin: 0 auto 20px;
       border: 4px solid #CCCCCC;
-      transition: all 0.2s;
-      -webkit-transition: all 0.2s; }
+      /*transition: all 0.2s;
+      -webkit-transition: all 0.2s;*/ }
     .wizard-card .choice i {
       font-size: 40px;
       line-height: 111px; }
