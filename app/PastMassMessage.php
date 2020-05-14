@@ -8,6 +8,7 @@ class PastMassMessage extends TimeZonedModel
 
     protected $fillable = [
         'body',
+        'userCount'
     ];
 
     public function getId()
@@ -23,5 +24,15 @@ class PastMassMessage extends TimeZonedModel
     public function setBody(string $body)
     {
         $this->body = $body;
+    }
+
+    public function getUserCount()
+    {
+        return $this->userCount;
+    }
+
+    public function setUserCount(int $userCount)
+    {
+        $this->userCount = $userCount;
     }
 }

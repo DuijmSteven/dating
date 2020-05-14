@@ -62,6 +62,8 @@ class MassMessageController extends Controller
 
     public function send(Request $request)
     {
+        $messageBody = $request->get('body');
+
         $onlineUserIds = Activity::users(5)->pluck('user_id')->toArray();
 
         $usersQuery = User::whereHas('roles', function ($query) {
@@ -124,7 +126,6 @@ class MassMessageController extends Controller
                 $conversation->setUpdatedAt(Carbon::now());
                 $conversation->save();
 
-                $messageBody = $request->get('body');
                 $messageInstance = new ConversationMessage([
                     'conversation_id' => $conversation->getId(),
                     'type' => 'generic',
@@ -189,7 +190,7 @@ class MassMessageController extends Controller
         if ($errorsCount) {
             $alerts[] = [
                 'type' => 'warning',
-                'message' => $users->count() . ' messages were sent and ' . $errorsCount . ' messages were not sent'
+                'message' => ($users->count() - $errorsCount) . ' messages were sent and ' . $errorsCount . ' messages were not sent'
             ];
         } else {
             $alerts[] = [
@@ -197,6 +198,11 @@ class MassMessageController extends Controller
                 'message' => $users->count() . ' messages were sent successfully'
             ];
         }
+
+        $pastMassMessageInstance = new PastMassMessage();
+        $pastMassMessageInstance->setBody($messageBody);
+        $pastMassMessageInstance->setUserCount($users->count() - $errorsCount);
+        $pastMassMessageInstance->save();
 
         return redirect()->back()->with('alerts', $alerts);
     }

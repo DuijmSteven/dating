@@ -64,6 +64,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Body</th>
+                        <th>Sent to # of peasants</th>
                         <th class="no-wrap">Created at</th>
                     </tr>
                 </thead>
@@ -72,6 +73,7 @@
                         <tr>
                             <td>{{ $message->getId() }}</td>
                             <td>{{ $message->getBody() }}</td>
+                            <td>{{ $message->getUserCount() }}</td>
                             <td>
                                 {{ $message->getCreatedAt()->format('d-m-Y H:i:s') }}
                                 ({{ $message->getCreatedAt()->diffForHumans() }})
