@@ -28,7 +28,7 @@ class PastMassMessage extends TimeZonedModel
 
     public function getUserCount()
     {
-        return $this->userCount;
+        return $this->user_count;
     }
 
     public function setUserCount(int $userCount)
