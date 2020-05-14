@@ -42,7 +42,7 @@
 
 <body>
 <div class="image-container set-full-height" style="background-image: url('/lps/t1/assets/img/hot-woman.jpg')">
-    <a href="http://creative-tim.com">
+    <a href="#">
         <div class="logo-container text-center">
             <div class="logo">
                 <img src="https://altijdsex.nl/img/site_logos/Altijdsex_LogoBig_Pos.svg" height="100px">
