@@ -67,7 +67,7 @@
                                 <h3 class="wizard-title">
                                     Op zoek naar Sekscontacten?
                                 </h3>
-                                <h4>Registreer nu Gratis! 1 Gratis credit!</h4>
+                                <h5>Tijdelijk aanbod, nog geldig voor: <span id="time" style="color: #f44336; font-weight: bold">05:00</span></h5>
 
                                 @if(session()->has('recaptchaFailed') && session()->get('recaptchaFailed'))
                                     <div class="captchaFailed">
@@ -216,5 +216,28 @@
             $('#JS--registrationForm').submit();
         });
     });
+
+    function startTimer(duration, display) {
+        var timer = duration, minutes, seconds;
+        setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.textContent = minutes + ":" + seconds;
+
+            if (--timer < 0) {
+                timer = duration;
+            }
+        }, 1000);
+    }
+
+    window.onload = function () {
+        var fiveMinutes = 60 * 5,
+            display = document.querySelector('#time');
+        startTimer(fiveMinutes, display);
+    };
 </script>
 </html>
