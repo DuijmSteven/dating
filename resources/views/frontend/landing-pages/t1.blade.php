@@ -14,7 +14,7 @@
 
     <!-- CSS Files -->
     <link href="/lps/t1/assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="/lps/t1/assets/css/material-bootstrap-wizard.css?v=5" rel="stylesheet" />
+    <link href="/lps/t1/assets/css/material-bootstrap-wizard.css?v=6" rel="stylesheet" />
 
     @if(config('app.env') === 'local')
         <script src="https://www.google.com/recaptcha/api.js?render=6Lcb0N8UAAAAADUTgOIB9jcrz2xM60BPNjeK3qWL"></script>
@@ -45,7 +45,7 @@
     <a href="#">
         <div class="logo-container text-center">
             <div class="logo">
-                <img src="https://altijdsex.nl/img/site_logos/Altijdsex_LogoBig_Pos.svg" height="100px">
+                <img src="/img/site_logos/Altijdsex_Logo_Small_Pos.svg" width="200px">
             </div>
         </div>
     </a>
@@ -85,7 +85,7 @@
                             <div class="tab-content">
                                 <div class="tab-pane" id="captain">
                                     <div class="row">
-                                        <div class="col-sm-12">
+                                        <div class="col-sm-12 sexSelectionContainer">
                                             <div class="col-sm-6">
                                                 <h4 class="info-text">{{ @trans('lp1.form.man_looking_for_woman') }}</h4>
                                                 <div class="choice active" data-toggle="wizard-radio">
@@ -187,7 +187,7 @@
 <script src="/lps/t1/assets/js/jquery.bootstrap.js" type="text/javascript"></script>
 
 <!--  Plugin for the Wizard -->
-<script src="/lps/t1/assets/js/material-bootstrap-wizard.js?v=5"></script>
+<script src="/lps/t1/assets/js/material-bootstrap-wizard.js?v=6"></script>
 
 <script src="/lps/t1/assets/js/jquery.validate.min.js"></script>
 <script>
