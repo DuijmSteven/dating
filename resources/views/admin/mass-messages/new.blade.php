@@ -33,7 +33,8 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="limited_to_filled_profiles">
-                                Limit message to users that have filled at least one major profile field (any uploaded pic,
+                                Limit message to users that have filled at least one major profile field (any uploaded
+                                <picture></picture> ,
                                 city, dob, about me)
                                 <input
                                     type="checkbox"

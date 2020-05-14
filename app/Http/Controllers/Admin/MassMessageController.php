@@ -86,6 +86,8 @@ class MassMessageController extends Controller
 
         $users = $usersQuery->get();
 
+        $errorsCount = 0;
+
         /** @var User $user */
         foreach ($users as $user) {
             try {
@@ -174,24 +176,26 @@ class MassMessageController extends Controller
                     UserView::TYPE_BOT_MESSAGE
                 );
 
-                $alerts[] = [
-                    'type' => 'success',
-                    'message' => 'The mass message was sent successfully'
-                ];
-
                 \DB::commit();
-
             } catch (\Exception $exception) {
-                $alerts[] = [
-                    'type' => 'error',
-                    'message' => 'The mass message was not sent due to an exception.'
-                ];
+                $errorsCount++;
 
                 \DB::rollBack();
 
                 \Log::info(__CLASS__ . ' - ' . $exception->getMessage());
-                throw $exception;
             }
+        }
+
+        if ($errorsCount) {
+            $alerts[] = [
+                'type' => 'warning',
+                'message' => $users->count() . ' messages were sent and ' . $errorsCount . ' messages were not sent'
+            ];
+        } else {
+            $alerts[] = [
+                'type' => 'success',
+                'message' => $users->count() . ' messages were sent successfully'
+            ];
         }
 
         return redirect()->back()->with('alerts', $alerts);
