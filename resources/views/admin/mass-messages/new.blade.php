@@ -33,7 +33,8 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="limited_to_filled_profiles">
-                                Limit message to users that have filled at least one major profile field (any uploaded pic,
+                                Limit message to users that have filled at least one major profile field (any uploaded
+                                <picture></picture> ,
                                 city, dob, about me)
                                 <input
                                     type="checkbox"
@@ -63,6 +64,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Body</th>
+                        <th>Sent to # of peasants</th>
                         <th class="no-wrap">Created at</th>
                     </tr>
                 </thead>
@@ -71,6 +73,7 @@
                         <tr>
                             <td>{{ $message->getId() }}</td>
                             <td>{{ $message->getBody() }}</td>
+                            <td>{{ $message->getUserCount() }}</td>
                             <td>
                                 {{ $message->getCreatedAt()->format('d-m-Y H:i:s') }}
                                 ({{ $message->getCreatedAt()->diffForHumans() }})
