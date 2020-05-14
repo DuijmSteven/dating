@@ -14,7 +14,7 @@
 
     <!-- CSS Files -->
     <link href="/lps/t1/assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="/lps/t1/assets/css/material-bootstrap-wizard.css" rel="stylesheet" />
+    <link href="/lps/t1/assets/css/material-bootstrap-wizard.css?v=3" rel="stylesheet" />
 
     @if(config('app.env') === 'local')
         <script src="https://www.google.com/recaptcha/api.js?render=6Lcb0N8UAAAAADUTgOIB9jcrz2xM60BPNjeK3qWL"></script>
@@ -77,7 +77,7 @@
                             </div>
                             <div class="wizard-navigation">
                                 <ul>
-                                    <li><a href="#captain" data-toggle="tab">Waar ben je naar op zoek?</a></li>
+                                    <li><a href="#captain" data-toggle="tab">Ik ben Op zoek</a></li>
                                     <li><a href="#details" data-toggle="tab">Account</a></li>
                                 </ul>
                             </div>
@@ -85,10 +85,10 @@
                             <div class="tab-content">
                                 <div class="tab-pane" id="captain">
                                     <div class="row">
-                                        <div class="col-sm-12" style="margin-top: 40px">
+                                        <div class="col-sm-12">
                                             <div class="col-sm-6">
                                                 <h4 class="info-text">{{ @trans('lp1.form.man_looking_for_woman') }}</h4>
-                                                <div class="choice active" data-toggle="wizard-radio" rel="tooltip" title="Man op zoek naar een vrouw">
+                                                <div class="choice active" data-toggle="wizard-radio">
                                                     <input type="radio" name="lookingFor" value="male-female" checked="checked">
                                                     <div class="icon">
                                                         <img src="/lps/t1/assets/img/woman-2.jpg" height="122px" width="122px" style="border-radius: 50%" />
@@ -97,7 +97,7 @@
                                             </div>
                                             <div class="col-sm-6">
                                                 <h4 class="info-text">{{ @trans('lp1.form.woman_looking_for_man') }}</h4>
-                                                <div class="choice" data-toggle="wizard-radio" rel="tooltip" title="Vrouw op zoek naar een man">
+                                                <div class="choice" data-toggle="wizard-radio">
                                                     <input type="radio" name="lookingFor" value="female-male">
                                                     <div class="icon">
                                                         <img src="/lps/t1/assets/img/man-2.jpg" height="122px" width="122px" style="border-radius: 50%" />
@@ -187,7 +187,7 @@
 <script src="/lps/t1/assets/js/jquery.bootstrap.js" type="text/javascript"></script>
 
 <!--  Plugin for the Wizard -->
-<script src="/lps/t1/assets/js/material-bootstrap-wizard.js"></script>
+<script src="/lps/t1/assets/js/material-bootstrap-wizard.js?v=3"></script>
 
 <script src="/lps/t1/assets/js/jquery.validate.min.js"></script>
 <script>

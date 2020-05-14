@@ -3,13 +3,13 @@
  =========================================================
  * Material Bootstrap Wizard - v1.0.2
  =========================================================
- 
+
  * Product Page: https://www.creative-tim.com/product/material-bootstrap-wizard
  * Copyright 2017 Creative Tim (http://www.creative-tim.com)
  * Licensed under MIT (https://github.com/creativetimofficial/material-bootstrap-wizard/blob/master/LICENSE.md)
- 
+
  =========================================================
- 
+
  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
  */
 
@@ -150,6 +150,10 @@ $(document).ready(function(){
     });
 
     $('.set-full-height').css('height', 'auto');
+
+    $('.icon').click(function() {
+        setTimeout("$('a[href=\"#details\"]').click()", 500);
+    });
 
 });
 
