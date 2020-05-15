@@ -591,7 +591,7 @@ output {
     display: none; }
   .form-group .help-block {
     position: absolute;
-    display: none; }
+    right: 0 }
   .form-group.is-focused .form-control {
     outline: none;
     background-image: linear-gradient(#9c27b0, #9c27b0), linear-gradient(#D2D2D2, #D2D2D2);
