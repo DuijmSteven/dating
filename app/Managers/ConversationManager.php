@@ -95,6 +95,8 @@ class ConversationManager
                 }
             }
 
+            $replyableAt = Carbon::now();
+
             if ($replyable) {
                 $exemptFromDelay = false;
 
@@ -116,15 +118,16 @@ class ConversationManager
                         }
                     }
 
-                    if (
-                        $recentBotMessage &&
-                        $recentBotMessageCreatedAt->gt(Carbon::now()->subHours(1)))
-                    {
+                    $botHasRecentlySentMessageToPeasant = $recentBotMessage && $recentBotMessageCreatedAt->gt(Carbon::now()->subHours(1));
+
+                    if ($botHasRecentlySentMessageToPeasant) {
                         $exemptFromDelay = true;
                     }
                 }
 
-                if (in_array($messageData['recipient_id'], $onlineBotIds) || $exemptFromDelay) {
+                $recipientBotIsOnline = in_array($messageData['recipient_id'], $onlineBotIds);
+
+                if ($recipientBotIsOnline || $exemptFromDelay) {
                     $replyableAt = Carbon::now();
                 } else {
                     if ($conversation->getReplyableAt() && $conversation->getReplyableAt()->gt(Carbon::now())) {
@@ -133,19 +136,17 @@ class ConversationManager
                         $replyableAt = Carbon::now()->addMinutes(rand(1, 10));
                     }
                 }
-            } elseif ($sender->isBot()) {
-                $replyableAt = null;
             }
 
             $conversation->setReplyableAt($replyableAt);
-        } elseif ($sender->isBot() && !$isNewConversation && $conversation->messages->count() > 2) {
+        } elseif ($sender->isBot() && $conversation->messages->count() > 2) {
             if (
                 $conversation->messages[0]->sender->roles[0]->id === User::TYPE_PEASANT &&
                 2 === rand(1, 2)
             ) {
                 $conversation->setReplyableAt(null);
             }
-
+            
             if (
                 $conversation->messages[0]->sender->roles[0]->id === User::TYPE_BOT
             ) {
