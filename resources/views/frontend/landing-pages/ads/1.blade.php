@@ -14,7 +14,7 @@
 
     <!-- CSS Files -->
     <link href="/lps/t1/assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="/lps/t1/assets/css/material-bootstrap-wizard.css?v=7" rel="stylesheet" />
+    <link href="/lps/t1/assets/css/material-bootstrap-wizard.css?v=11" rel="stylesheet" />
 
     @if(config('app.env') === 'local')
         <script src="https://www.google.com/recaptcha/api.js?render=6Lcb0N8UAAAAADUTgOIB9jcrz2xM60BPNjeK3qWL"></script>
@@ -57,7 +57,7 @@
                 <!--      Wizard container        -->
                 <div class="wizard-container">
                     <div class="card wizard-card" data-color="red" id="wizard">
-                        <form id="JS--registrationForm" action="{{ route('register.post') }}" method="POST">
+                        <form id="JS--registrationForm" action="{{ route('register.post') }}" method="POST" autocomplete="off">
                             {{ csrf_field() }}
 
                             <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
@@ -204,7 +204,7 @@
 <script src="/lps/t1/assets/js/jquery.bootstrap.js" type="text/javascript"></script>
 
 <!--  Plugin for the Wizard -->
-<script src="/lps/t1/assets/js/material-bootstrap-wizard.js?v=7"></script>
+<script src="/lps/t1/assets/js/material-bootstrap-wizard.js?v=11"></script>
 
 <script src="/lps/t1/assets/js/jquery.validate.min.js"></script>
 <script>
