@@ -43,7 +43,8 @@ Route::get('/home', 'Frontend\DashboardController@index')
 //    ->name('home')
 //    ->middleware(['auth', 'not_editor', 'not_operator']);
 
-Route::view('/lps/1', 'frontend.landing-pages.t1');
+Route::get('/lps/{id}', 'Frontend\AdsLandingPagesController@showLP')
+    ->middleware('guest');
 
 Route::get('/', 'Frontend\LandingPageController@showRegister')
     ->middleware('guest')
