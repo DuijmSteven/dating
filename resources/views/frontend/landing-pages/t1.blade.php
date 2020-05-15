@@ -65,9 +65,9 @@
 
                             <div class="wizard-header">
                                 <h3 class="wizard-title">
-                                    Op zoek naar Sekscontacten?
+                                    LET OP: Je kunt hier bekenden tegenkomen!
                                 </h3>
-                                <h5>Tijdelijk aanbod, nog geldig voor: <span id="time" style="color: #f44336; font-weight: bold">05:00</span></h5>
+                                <h5>Tijdelijk gratis inschrijving, verloopt over: <span id="time" style="color: #f44336; font-weight: bold">05:00</span></h5>
 
                                 @if(session()->has('recaptchaFailed') && session()->get('recaptchaFailed'))
                                     <div class="captchaFailed">
@@ -78,7 +78,7 @@
                             <div class="wizard-navigation">
                                 <ul>
                                     <li><a href="#captain" data-toggle="tab">Ik ben Op zoek</a></li>
-                                    <li><a href="#details" data-toggle="tab">Account</a></li>
+                                    <li><a href="#details" data-toggle="tab">Registreren</a></li>
                                 </ul>
                             </div>
 
@@ -110,7 +110,7 @@
                                 <div class="tab-pane" id="details">
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <h4 class="info-text">Een stap verder.</h4>
+                                            <h4 class="info-text">Maak GRATIS een account.</h4>
                                         </div>
                                         <div class="col-sm-12">
                                             <div class="input-group">
@@ -170,11 +170,11 @@
                             </div>
                             <div class="wizard-footer">
                                 <div class="pull-right">
-                                    <input type='button' class='btn btn-next btn-fill btn-danger btn-wd' name='next' value='Next' />
-                                    <input type='button' class='btn btn-finish btn-fill btn-danger btn-wd JS--register-button' name='finish' value='Finish' />
+                                    <input type='button' class='btn btn-next btn-fill btn-danger btn-wd' name='next' value='Volgende' />
+                                    <input type='button' class='btn btn-finish btn-fill btn-danger btn-wd JS--register-button' name='finish' value='Gratis Inschrijven' />
                                 </div>
                                 <div class="pull-left">
-                                    <input type='button' class='btn btn-previous btn-fill btn-default btn-wd' name='previous' value='Previous' />
+                                    <input type='button' class='btn btn-previous btn-fill btn-default btn-wd' name='previous' value='Vorige' />
 
                                     <div class="footer-checkbox">
                                         <div class="col-sm-12">
