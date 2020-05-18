@@ -179,8 +179,9 @@
                                     <input type='button' class='btn btn-previous btn-fill btn-default btn-wd' name='previous' value='Vorige' />
 
                                     <div class="footer-checkbox">
-                                        <div class="col-sm-12">
-
+                                        <div class="col-sm-12 text-center">
+                                            <div>Heb je al een account?</div>
+                                            <a href="https://altijdsex.nl/login" class="btn btn-sm">Login</a>
                                         </div>
                                     </div>
                                 </div>
