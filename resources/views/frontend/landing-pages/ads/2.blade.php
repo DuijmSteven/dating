@@ -40,7 +40,7 @@
     @endif
 </head>
 
-<body>
+<body class="adsLp2">
 <div class="image-container set-full-height" style="background-image: url('/lps/t1/assets/img/hot-woman.jpg')">
     <a href="#">
         <div class="logo-container text-center">
@@ -67,9 +67,9 @@
 
                             <div class="wizard-header">
                                 <h3 class="wizard-title">
-                                    LET OP: Je kunt hier bekenden tegenkomen!
+                                    Beperkte gratis inschrijving
                                 </h3>
-                                <h5>Tijdelijk gratis inschrijving, verloopt over: <span id="time" style="color: #f44336; font-weight: bold">05:00</span></h5>
+                                <h5>Er zijn nog <span id="countdown" style="color: #f44336; font-weight: bold">200</span> gratis plekken beschikbaar</h5>
 
                                 @if(session()->has('recaptchaFailed') && session()->get('recaptchaFailed'))
                                     <div class="captchaFailed">
@@ -79,18 +79,20 @@
                             </div>
                             <div class="wizard-navigation">
                                 <ul>
-                                    <li><a href="#captain" data-toggle="tab">Ik ben Op zoek</a></li>
-                                    <li><a href="#details" data-toggle="tab">Registreren</a></li>
+                                    <li><a href="#step1" data-toggle="tab">Stap 1</a></li>
+                                    <li><a href="#step2" data-toggle="tab">Stap 2</a></li>
+                                    <li><a href="#step3" data-toggle="tab">Stap 3</a></li>
+                                    <li><a href="#step4" data-toggle="tab">Stap 4</a></li>
                                 </ul>
                             </div>
 
                             <div class="tab-content">
-                                <div class="tab-pane" id="captain">
+                                <div class="tab-pane" id="step1">
                                     <div class="row">
                                         <div class="col-sm-12 sexSelectionContainer">
                                             <div class="col-sm-6">
                                                 <h4 class="info-text">{{ @trans('lp1.form.man_looking_for_woman') }}</h4>
-                                                <div class="choice active" data-toggle="wizard-radio">
+                                                <div class="choice active" data-toggle="wizard-radio-lp2">
                                                     <input type="radio" name="lookingFor" value="male-female" checked="checked">
                                                     <div class="icon">
                                                         <img src="/lps/t1/assets/img/woman-2.jpg" height="122px" width="122px" style="border-radius: 50%" />
@@ -99,7 +101,7 @@
                                             </div>
                                             <div class="col-sm-6">
                                                 <h4 class="info-text">{{ @trans('lp1.form.woman_looking_for_man') }}</h4>
-                                                <div class="choice" data-toggle="wizard-radio">
+                                                <div class="choice" data-toggle="wizard-radio-lp2">
                                                     <input type="radio" name="lookingFor" value="female-male">
                                                     <div class="icon">
                                                         <img src="/lps/t1/assets/img/man-2.jpg" height="122px" width="122px" style="border-radius: 50%" />
@@ -109,12 +111,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane" id="details">
+                                <div class="tab-pane" id="step2">
                                     <div class="row">
-                                        <div class="col-sm-12">
-                                            <h4 class="info-text">Maak GRATIS een account.</h4>
-                                        </div>
-                                        <div class="col-sm-12">
+                                        <div class="col-sm-12" style="margin-top: 40px">
                                             <div class="input-group">
 													<span class="input-group-addon">
 														<i class="material-icons">email</i>
@@ -132,40 +131,55 @@
                                                     @endif
                                                 </div>
                                             </div>
-                                            <div class="input-group">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="step3">
+                                    <div class="row">
+                                        <div class="col-sm-12 sexSelectionContainer">
+                                            <div class="col-sm-12">
+                                                <div class="input-group">
 													<span class="input-group-addon">
 														<i class="material-icons">label</i>
 													</span>
-                                                <div class="form-group label-floating {{ $errors->has('username') ? ' has-error' : '' }}">
-                                                    <label class="control-label">{{ @trans('lp1.form.username') }}</label>
-                                                    <input name="username"
-                                                           type="text"
-                                                           class="form-control"
-                                                           value="{{ old('username') }}">
-                                                    @if ($errors->has('username'))
-                                                        <span class="help-block">
+                                                    <div class="form-group label-floating {{ $errors->has('username') ? ' has-error' : '' }}">
+                                                        <label class="control-label">{{ @trans('lp1.form.username') }}</label>
+                                                        <input name="username"
+                                                               type="text"
+                                                               class="form-control"
+                                                               value="{{ old('username') }}">
+                                                        @if ($errors->has('username'))
+                                                            <span class="help-block">
                                                             <strong>{{ $errors->first('username') }}</strong>
                                                         </span>
-                                                    @endif
+                                                        @endif
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="input-group">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="step4">
+                                    <div class="row">
+                                        <div class="col-sm-12 sexSelectionContainer">
+                                            <div class="col-sm-12">
+                                                <div class="input-group">
 													<span class="input-group-addon">
 														<i class="material-icons">lock_outline</i>
 													</span>
-                                                <div class="form-group label-floating {{ $errors->has('password') ? ' has-error' : '' }}">
-                                                    <label class="control-label">{{ @trans('lp1.form.password') }}</label>
-                                                    <input name="password"
-                                                           type="text"
-                                                           class="form-control">
-                                                    @if ($errors->has('password'))
-                                                        <span class="help-block">
+                                                    <div class="form-group label-floating {{ $errors->has('password') ? ' has-error' : '' }}">
+                                                        <label class="control-label">{{ @trans('lp1.form.password') }}</label>
+                                                        <input name="password"
+                                                               type="text"
+                                                               class="form-control">
+                                                        @if ($errors->has('password'))
+                                                            <span class="help-block">
                                                             <strong>{{ $errors->first('password') }}</strong>
                                                         </span>
-                                                    @endif
+                                                        @endif
+                                                    </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -234,27 +248,69 @@
         });
     });
 
-    function startTimer(duration, display) {
-        var timer = duration, minutes, seconds;
-        setInterval(function () {
-            minutes = parseInt(timer / 60, 10);
-            seconds = parseInt(timer % 60, 10);
 
-            minutes = minutes < 10 ? "0" + minutes : minutes;
-            seconds = seconds < 10 ? "0" + seconds : seconds;
 
-            display.textContent = minutes + ":" + seconds;
 
-            if (--timer < 0) {
-                timer = 0;
-            }
-        }, 1000);
+
+
+    var count=200;
+    var ms = 200;
+    var step = 300;
+    var counter=setTimeout(timer, ms); //1000 will  run it every 1 second
+
+    function timer()
+    {
+        count = count - 1;
+        document.getElementById("countdown").innerHTML=count ; // watch for spelling
+
+        if (count % 10 === 0) {
+            ms = ms + step;
+        }
+
+        counter = setTimeout(timer, ms);
+
+        console.log(ms);
+
+        if (count === 0) {
+            count = 200;
+        }
     }
 
-    window.onload = function () {
-        var fiveMinutes = 60 * 5,
-            display = document.querySelector('#time');
-        startTimer(fiveMinutes, display);
-    };
+    // window.onload = function () {
+    //     timer();
+    // };
+
+    // function startTimer(duration, display) {
+    //     var timer = duration, minutes, seconds;
+    //     setInterval(function () {
+    //         minutes = parseInt(timer / 60, 10);
+    //         seconds = parseInt(timer % 60, 10);
+    //
+    //         minutes = minutes < 10 ? "0" + minutes : minutes;
+    //         seconds = seconds < 10 ? "0" + seconds : seconds;
+    //
+    //         display.textContent = minutes + ":" + seconds;
+    //
+    //         if (--timer < 0) {
+    //             timer = 0;
+    //         }
+    //     }, 1000);
+    // }
+    //
+    // window.onload = function () {
+    //     var fiveMinutes = 60 * 5,
+    //         display = document.querySelector('#countdown');
+    //     startTimer(fiveMinutes, display);
+    // };
+
+    $(window).load(function(){
+        if($('#step2').find('.help-block').length !== 0) {
+            setTimeout("$('a[href=\"#step2\"]').click()", 10);
+        } else if ($('#step3').find('.help-block').length !== 0) {
+            setTimeout("$('a[href=\"#step3\"]').click()", 10);
+        } else if ($('#step4').find('.help-block').length !== 0) {
+            setTimeout("$('a[href=\"#step4\"]').click()", 10);
+        }
+    });
 </script>
 </html>
