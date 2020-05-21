@@ -82,7 +82,7 @@
                                     <li><a href="#step1" data-toggle="tab">Stap 1</a></li>
                                     <li><a href="#step2" data-toggle="tab">Stap 2</a></li>
                                     <li><a href="#step3" data-toggle="tab">Stap 3</a></li>
-                                    <li><a href="#step4" data-toggle="tab">Stap 4</a></li>
+                                    <li><a href="#step4" data-toggle="tab">Chat!</a></li>
                                 </ul>
                             </div>
 
@@ -309,6 +309,17 @@
         } else if ($('#step4').find('.help-block').length !== 0) {
             setTimeout("$('a[href=\"#step4\"]').click()", 10);
         }
+
+
+        //lp2
+        $('[data-toggle="wizard-radio-lp2"]').click(function(){
+            wizard = $(this).closest('.wizard-card');
+            wizard.find('[data-toggle="wizard-radio-lp2"]').removeClass('active');
+            $(this).addClass('active');
+            $(wizard).find('[type="radio"]').prop('checked', false).removeAttr('checked');
+            $(this).find('[type="radio"]').prop('checked', true).attr('checked', 'checked');
+            setTimeout("$('a[href=\"#step2\"]').click()", 150);
+        });
     });
 </script>
 </html>

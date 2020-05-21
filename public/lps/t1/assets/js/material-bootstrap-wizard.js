@@ -141,16 +141,6 @@ $(document).ready(function(){
         setTimeout("$('a[href=\"#details\"]').click()", 150);
     });
 
-    //lp2
-    $('[data-toggle="wizard-radio-lp2"]').click(function(){
-        wizard = $(this).closest('.wizard-card');
-        wizard.find('[data-toggle="wizard-radio-lp2"]').removeClass('active');
-        $(this).addClass('active');
-        $(wizard).find('[type="radio"]').prop('checked', false).removeAttr('checked');
-        $(this).find('[type="radio"]').prop('checked', true).attr('checked', 'checked');
-        setTimeout("$('a[href=\"#step2\"]').click()", 150);
-    });
-
     $('[data-toggle="wizard-checkbox"]').click(function(){
         if( $(this).hasClass('active')){
             $(this).removeClass('active');
