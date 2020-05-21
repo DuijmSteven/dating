@@ -67,7 +67,7 @@
 
                             <div class="wizard-header">
                                 <h3 class="wizard-title">
-                                    Beperkte gratis inschrijving
+                                    Beperkte gratis inschrijving!
                                 </h3>
                                 <h5>Er zijn nog <span id="countdown" style="color: #f44336; font-weight: bold">200</span> gratis plekken beschikbaar</h5>
 
@@ -78,11 +78,14 @@
                                 @endif
                             </div>
                             <div class="wizard-navigation">
-                                <ul>
-                                    <li><a href="#step1" data-toggle="tab">25%</a></li>
-                                    <li><a href="#step2" data-toggle="tab">50%</a></li>
-                                    <li><a href="#step3" data-toggle="tab">75%</a></li>
-                                    <li><a href="#step4" data-toggle="tab">100%</a></li>
+                                <div class="progress" style="width: 95%; margin: 0 auto">
+                                    <div class="progress-bar" role="progressbar" style="width: 25%; background-color: #f44336;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                                </div>
+                                <ul style="display: none">
+                                    <li><a href="#step1" data-step="1" data-toggle="tab">25%</a></li>
+                                    <li><a href="#step2" data-step="2" data-toggle="tab">50%</a></li>
+                                    <li><a href="#step3" data-step="3" data-toggle="tab">75%</a></li>
+                                    <li><a href="#step4" data-step="4" data-toggle="tab">100%</a></li>
                                 </ul>
                             </div>
 
@@ -91,20 +94,24 @@
                                     <div class="row">
                                         <div class="col-sm-12 sexSelectionContainer">
                                             <div class="col-xs-6">
-                                                <h4 class="info-text">{{ @trans('lp1.form.man_looking_for_woman') }}</h4>
-                                                <div class="choice active" data-toggle="wizard-radio-lp2">
-                                                    <input type="radio" name="lookingFor" value="male-female" checked="checked">
-                                                    <div class="icon">
-                                                        <img src="/lps/t1/assets/img/woman-2.jpg" style="border-radius: 50%" />
+                                                <div class="sexChoiceWrapper choice" data-toggle="wizard-radio-lp2">
+                                                    <h4 class="info-text">{{ @trans('lp1.form.man_looking_for_woman') }}</h4>
+                                                    <div class="choice active" data-toggle="wizard-radio-lp2">
+                                                        <input type="radio" name="lookingFor" value="male-female" checked="checked">
+                                                        <div class="icon">
+                                                            <img src="/lps/t1/assets/img/woman-2.jpg" style="border-radius: 50%" />
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-xs-6">
-                                                <h4 class="info-text">{{ @trans('lp1.form.woman_looking_for_man') }}</h4>
-                                                <div class="choice" data-toggle="wizard-radio-lp2">
-                                                    <input type="radio" name="lookingFor" value="female-male">
-                                                    <div class="icon">
-                                                        <img src="/lps/t1/assets/img/man-2.jpg" style="border-radius: 50%" />
+                                                <div class="sexChoiceWrapper choice" data-toggle="wizard-radio-lp2">
+                                                    <h4 class="info-text">{{ @trans('lp1.form.woman_looking_for_man') }}</h4>
+                                                    <div class="choice" data-toggle="wizard-radio-lp2">
+                                                        <input type="radio" name="lookingFor" value="female-male">
+                                                        <div class="icon">
+                                                            <img src="/lps/t1/assets/img/man-2.jpg" style="border-radius: 50%" />
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -274,33 +281,6 @@
         }
     }
 
-    // window.onload = function () {
-    //     timer();
-    // };
-
-    // function startTimer(duration, display) {
-    //     var timer = duration, minutes, seconds;
-    //     setInterval(function () {
-    //         minutes = parseInt(timer / 60, 10);
-    //         seconds = parseInt(timer % 60, 10);
-    //
-    //         minutes = minutes < 10 ? "0" + minutes : minutes;
-    //         seconds = seconds < 10 ? "0" + seconds : seconds;
-    //
-    //         display.textContent = minutes + ":" + seconds;
-    //
-    //         if (--timer < 0) {
-    //             timer = 0;
-    //         }
-    //     }, 1000);
-    // }
-    //
-    // window.onload = function () {
-    //     var fiveMinutes = 60 * 5,
-    //         display = document.querySelector('#countdown');
-    //     startTimer(fiveMinutes, display);
-    // };
-
     $(window).load(function(){
         if($('#step2').find('.help-block').length !== 0) {
             setTimeout("$('a[href=\"#step2\"]').click()", 10);
@@ -320,6 +300,26 @@
             $(this).find('[type="radio"]').prop('checked', true).attr('checked', 'checked');
             setTimeout("$('a[href=\"#step2\"]').click()", 150);
         });
+
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+
+            const step = $(e.target).data('step');
+
+            if (step === 1) {
+                $('.progress-bar').css({width: 25 + '%'});
+                $('.progress-bar').text("25%");
+            } else if (step === 2) {
+                $('.progress-bar').css({width: 50 + '%'});
+                $('.progress-bar').text("50%");
+            } else if (step === 3) {
+                $('.progress-bar').css({width: 75 + '%'});
+                $('.progress-bar').text("75%");
+            } else if (step === 4) {
+                $('.progress-bar').css({width: 100 + '%'});
+                $('.progress-bar').text("100%");
+            }
+
+        })
     });
 </script>
 </html>

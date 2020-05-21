@@ -382,15 +382,19 @@ h2.title {
       height: 122px;
       width: 122px;
     }
+
+    .moving-tab {
+      display: none;
+    }
     @media screen and (max-width: 767px) {
       .tab-content .sexSelectionContainer .icon {
-        height: 98px;
-        width: 98px;
+        height: 72px;
+        width: 72px;
       }
 
       .sexSelectionContainer .icon img {
-        height: 90px;
-        width: 90px;
+        height: 65px;
+        width: 65px;
       }
 
       .footer-checkbox {
@@ -578,7 +582,6 @@ output {
     background-color: #f44336; }
   .label.label-rose {
     background-color: #e91e63; }
-
 .form-control,
 .form-group .form-control {
   border: 0;
@@ -1432,6 +1435,14 @@ fieldset[disabled] .checkbox, fieldset[disabled] .checkbox input[type=checkbox],
   .wizard-container {
     padding-top: 10px;
   }
+
+  .sexChoiceWrapper {
+    border: 1px solid #a99c9c;
+    border-radius: 8px;
+    padding: 0px 5px 5px 5px;
+    box-shadow: 0 0 3px rgba(0,0,0,0.15);
+  }
+
 }
 @media (min-width: 768px) {
   .navbar-form {
