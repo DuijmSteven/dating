@@ -11,6 +11,7 @@ return [
         'username' => 'Username',
         'identity' => 'Email or Username',
         'email' => 'Email <span>(not visible by others)</span>',
+        'email_short' => 'E-mailadres <span>(not visible)</span>',
         'email_placeholder' => 'E-mail adres',
         'city' => 'City',
         'dob' => 'Date of birth',

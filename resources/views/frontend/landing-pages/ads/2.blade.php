@@ -79,10 +79,10 @@
                             </div>
                             <div class="wizard-navigation">
                                 <ul>
-                                    <li><a href="#step1" data-toggle="tab">Stap 1</a></li>
-                                    <li><a href="#step2" data-toggle="tab">Stap 2</a></li>
-                                    <li><a href="#step3" data-toggle="tab">Stap 3</a></li>
-                                    <li><a href="#step4" data-toggle="tab">Chat!</a></li>
+                                    <li><a href="#step1" data-toggle="tab">25%</a></li>
+                                    <li><a href="#step2" data-toggle="tab">50%</a></li>
+                                    <li><a href="#step3" data-toggle="tab">75%</a></li>
+                                    <li><a href="#step4" data-toggle="tab">100%</a></li>
                                 </ul>
                             </div>
 
@@ -90,21 +90,21 @@
                                 <div class="tab-pane" id="step1">
                                     <div class="row">
                                         <div class="col-sm-12 sexSelectionContainer">
-                                            <div class="col-sm-6">
+                                            <div class="col-xs-6">
                                                 <h4 class="info-text">{{ @trans('lp1.form.man_looking_for_woman') }}</h4>
                                                 <div class="choice active" data-toggle="wizard-radio-lp2">
                                                     <input type="radio" name="lookingFor" value="male-female" checked="checked">
                                                     <div class="icon">
-                                                        <img src="/lps/t1/assets/img/woman-2.jpg" height="122px" width="122px" style="border-radius: 50%" />
+                                                        <img src="/lps/t1/assets/img/woman-2.jpg" style="border-radius: 50%" />
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6">
+                                            <div class="col-xs-6">
                                                 <h4 class="info-text">{{ @trans('lp1.form.woman_looking_for_man') }}</h4>
                                                 <div class="choice" data-toggle="wizard-radio-lp2">
                                                     <input type="radio" name="lookingFor" value="female-male">
                                                     <div class="icon">
-                                                        <img src="/lps/t1/assets/img/man-2.jpg" height="122px" width="122px" style="border-radius: 50%" />
+                                                        <img src="/lps/t1/assets/img/man-2.jpg" style="border-radius: 50%" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -113,13 +113,13 @@
                                 </div>
                                 <div class="tab-pane" id="step2">
                                     <div class="row">
-                                        <div class="col-sm-12" style="margin-top: 40px">
+                                        <div class="col-sm-12">
                                             <div class="input-group">
 													<span class="input-group-addon">
 														<i class="material-icons">email</i>
 													</span>
                                                 <div class="form-group label-floating {{ $errors->has('email') ? ' has-error' : '' }}">
-                                                    <label class="control-label">{!! @trans('lp1.form.email') !!}</label>
+                                                    <label class="control-label">{!! @trans('lp1.form.email_short') !!}</label>
                                                     <input name="email"
                                                            type="text"
                                                            class="form-control"
@@ -190,7 +190,7 @@
                                     <input type='button' class='btn btn-finish btn-fill btn-danger btn-wd JS--register-button' name='finish' value='Gratis Inschrijven' />
                                 </div>
                                 <div class="pull-left">
-                                    <input type='button' class='btn btn-previous btn-fill btn-default btn-wd' name='previous' value='Vorige' />
+                                    <input type='button' class='btn btn-previous btn-fill btn-default btn-wd' name='previous' value='<' />
 
                                     <div class="footer-checkbox">
                                         <div class="col-sm-12 text-center">

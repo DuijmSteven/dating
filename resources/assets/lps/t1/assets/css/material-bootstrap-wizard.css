@@ -378,6 +378,42 @@ h2.title {
       border: 4px solid #CCCCCC;
       /*transition: all 0.2s;
       -webkit-transition: all 0.2s;*/ }
+    .wizard-card .choice .icon img {
+      height: 122px;
+      width: 122px;
+    }
+    @media screen and (max-width: 767px) {
+      .wizard-card .choice .icon {
+        height: 98px;
+        width: 98px;
+      }
+
+      .wizard-card .choice .icon img {
+        height: 90px;
+        width: 90px;
+      }
+
+      .footer-checkbox {
+        position: absolute;
+        bottom: 25px;
+        left: 10px;
+      }
+
+      .wizard-card .tab-content {
+        min-height: 160px;
+      }
+
+      .tab-pane.active {
+        margin-bottom: 30px;
+      }
+    }
+
+  @media screen and (min-width: 768px) {
+    .tab-pane#step2 {
+      margin-top: 40px;
+    }
+  }
+
     .wizard-card .choice i {
       font-size: 40px;
       line-height: 111px; }
