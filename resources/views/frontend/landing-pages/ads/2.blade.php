@@ -269,8 +269,6 @@
 
         counter = setTimeout(timer, ms);
 
-        console.log(ms);
-
         if (count === 0) {
             count = 200;
         }
