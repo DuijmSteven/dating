@@ -378,17 +378,17 @@ h2.title {
       border: 4px solid #CCCCCC;
       /*transition: all 0.2s;
       -webkit-transition: all 0.2s;*/ }
-    .wizard-card .choice .icon img {
+    .sexSelectionContainer .icon img {
       height: 122px;
       width: 122px;
     }
     @media screen and (max-width: 767px) {
-      .wizard-card .choice .icon {
+      .tab-content .sexSelectionContainer .icon {
         height: 98px;
         width: 98px;
       }
 
-      .wizard-card .choice .icon img {
+      .sexSelectionContainer .icon img {
         height: 90px;
         width: 90px;
       }
