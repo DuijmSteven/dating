@@ -27,6 +27,8 @@ use Kim\Activity\Activity;
 
 class DashboardController extends Controller
 {
+    const BAR_WIDTH = 0.1;
+
     /** @var StatisticsManager */
     private $statisticsManager;
 
@@ -457,7 +459,7 @@ class DashboardController extends Controller
             ->backGroundColor('#3eb3de');
 
         $paymentsMonthlyChart
-            ->barWidth(0.1)
+            ->barWidth(self::BAR_WIDTH)
             ->title('Payments per month');
 
         return $paymentsMonthlyChart;
@@ -579,7 +581,7 @@ class DashboardController extends Controller
             ->backGroundColor('#de3e7b');
 
         $peasantMessagesMonthlyChart
-            ->barWidth(0.1)
+            ->barWidth(self::BAR_WIDTH)
             ->title('Peasant messages per month');
 
         return $peasantMessagesMonthlyChart;
@@ -699,7 +701,7 @@ class DashboardController extends Controller
             ->backGroundColor('#deb33e');
 
         $registrationsMonthlyChart
-            ->barWidth(0.1)
+            ->barWidth(self::BAR_WIDTH)
             ->title('Registrations per month');
 
         return $registrationsMonthlyChart;
@@ -730,7 +732,7 @@ class DashboardController extends Controller
 
         foreach ($results as $result) {
             $datesWithRevenue[] = explode(' ', $result->creationDate)[0];
-            $revenuePerDate[explode(' ', $result->creationDate)[0]] = (int) $result->revenueOnDay / 100;
+            $revenuePerDate[explode(' ', $result->creationDate)[0]] = (int)$result->revenueOnDay / 100;
         }
 
         $period = new DatePeriod(
@@ -796,7 +798,7 @@ class DashboardController extends Controller
 
         foreach ($results as $result) {
             $monthsWithRevenue[] = explode(' ', $result->months)[0];
-            $revenuePerMonth[explode(' ', $result->months)[0]] = (int) $result->revenueInMonth / 100;
+            $revenuePerMonth[explode(' ', $result->months)[0]] = (int)$result->revenueInMonth / 100;
         }
 
         $period = new DatePeriod(
@@ -826,7 +828,7 @@ class DashboardController extends Controller
             ->backGroundColor('#339929');
 
         $revenueMonthlyChart
-            ->barWidth(0.1)
+            ->barWidth(self::BAR_WIDTH)
             ->title('Revenue per month');
 
         return $revenueMonthlyChart;
@@ -894,7 +896,7 @@ class DashboardController extends Controller
                     $counts[] = $registrationsPerDate[$value->format('Y-m-d')];
                 }
             } else if (in_array($value->format('Y-m-d'), $datesWithDeactivations)) {
-                $counts[] = - $deactivationsPerDate[$value->format('Y-m-d')];
+                $counts[] = -$deactivationsPerDate[$value->format('Y-m-d')];
             } else {
                 $counts[] = 0;
             }
@@ -984,7 +986,7 @@ class DashboardController extends Controller
                     $counts[] = $registrationsPerMonth[$value->format('Y-m')];
                 }
             } else if (in_array($value->format('Y-m'), $monthsWithDeactivations)) {
-                $counts[] = - $deactivationsPerMonth[$value->format('Y-m')];
+                $counts[] = -$deactivationsPerMonth[$value->format('Y-m')];
             } else {
                 $counts[] = 0;
             }
@@ -997,7 +999,7 @@ class DashboardController extends Controller
             ->backGroundColor('#58a37f');
 
         $netPeasantsAcquiredMonthlyChart
-            ->barWidth(0.1)
+            ->barWidth(self::BAR_WIDTH)
             ->title('Net peasants acquired per month');
 
         return $netPeasantsAcquiredMonthlyChart;
@@ -1119,7 +1121,7 @@ class DashboardController extends Controller
             ->backGroundColor('#a37158');
 
         $deactivationsMonthlyChart
-            ->barWidth(0.1)
+            ->barWidth(self::BAR_WIDTH)
             ->title('Deactivations per month');
 
         return $deactivationsMonthlyChart;
