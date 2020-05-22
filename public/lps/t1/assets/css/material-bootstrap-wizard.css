@@ -238,7 +238,6 @@ h2.title {
     .wizard-card .picture:hover {
       border-color: #2ca8ff; }
   .wizard-card .moving-tab {
-    display: none;
     position: absolute;
     text-align: center;
     padding: 12px;
@@ -251,6 +250,11 @@ h2.title {
     color: #FFFFFF;
     cursor: pointer;
     font-weight: 500; }
+
+  .adsLp2 .wizard-card .moving-tab {
+    display: none;
+  }
+
   .wizard-card[data-color="purple"] .moving-tab {
     background-color: #9c27b0;
     box-shadow: 0 16px 26px -10px rgba(156, 39, 176, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(156, 39, 176, 0.2); }
@@ -383,10 +387,7 @@ h2.title {
       height: 122px;
       width: 122px;
     }
-
-    .moving-tab {
-      display: none;
-    }
+    
     @media screen and (max-width: 767px) {
       .tab-content .sexSelectionContainer .icon {
         height: 72px;

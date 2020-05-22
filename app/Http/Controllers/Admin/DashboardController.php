@@ -331,11 +331,10 @@ class DashboardController extends Controller
         $paymentsChart = new PaymentsChart();
         $paymentsChart->labels($labels);
         $paymentsChart
-            ->dataset('Payments on date', 'bar', $counts)
+            ->dataset('Payments on date', 'line', $counts)
             ->backGroundColor('#3eb3de');
 
         $paymentsChart
-            ->barWidth(0.6)
             ->title('Payments per day');
 
         return $paymentsChart;
@@ -400,7 +399,7 @@ class DashboardController extends Controller
             ->backGroundColor('#3eb3de');
 
         $paymentsMonthlyChart
-            ->barWidth(0.6)
+            ->barWidth(0.1)
             ->title('Payments per month');
 
         return $paymentsMonthlyChart;
@@ -455,11 +454,10 @@ class DashboardController extends Controller
         $peasantMessagesChart = new PeasantMessagesChart();
         $peasantMessagesChart->labels($labels);
         $peasantMessagesChart
-            ->dataset('Peasant messages on date', 'bar', $counts)
+            ->dataset('Peasant messages on date', 'line', $counts)
             ->backGroundColor('#de3e7b');
 
         $peasantMessagesChart
-            ->barWidth(0.6)
             ->title('Peasant messages per day');
 
         return $peasantMessagesChart;
@@ -523,7 +521,7 @@ class DashboardController extends Controller
             ->backGroundColor('#de3e7b');
 
         $peasantMessagesMonthlyChart
-            ->barWidth(0.6)
+            ->barWidth(0.1)
             ->title('Peasant messages per month');
 
         return $peasantMessagesMonthlyChart;
@@ -577,11 +575,10 @@ class DashboardController extends Controller
         $registrationsChart = new RegistrationsChart();
         $registrationsChart->labels($labels);
         $registrationsChart
-            ->dataset('Registrations on date', 'bar', $counts)
+            ->dataset('Registrations on date', 'line', $counts)
             ->backGroundColor('#deb33e');
 
         $registrationsChart
-            ->barWidth(0.6)
             ->title('Registrations per day');
 
         return $registrationsChart;
@@ -644,7 +641,7 @@ class DashboardController extends Controller
             ->backGroundColor('#deb33e');
 
         $registrationsMonthlyChart
-            ->barWidth(0.6)
+            ->barWidth(0.1)
             ->title('Registrations per month');
 
         return $registrationsMonthlyChart;
@@ -702,11 +699,10 @@ class DashboardController extends Controller
         $revenueChart->labels($labels);
 
         $revenueChart
-            ->dataset('Revenue on date', 'bar', $counts)
+            ->dataset('Revenue on date', 'line', $counts)
             ->backGroundColor('#339929');
 
         $revenueChart
-            ->barWidth(0.6)
             ->title('Revenue per day');
 
         return $revenueChart;
