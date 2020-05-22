@@ -8,6 +8,7 @@ use App\Facades\Helpers\PaymentsHelper;
 use App\Payment;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 
 class StatisticsManager
 {
@@ -141,15 +142,19 @@ class StatisticsManager
             ->take($amount);
     }
 
-    private function peasantsCreditpackId(int $creditpackId) : int {
+    public function peasantsWithCreditpack(): Collection {
         return User::where('active', true)
-        ->whereHas('roles', function($query) {
-            $query->where('name', 'peasant');
-        })->whereHas('account', function($query) {
-            $query->where('credits', '>', 0);
-        })->whereHas('payments', function($query) {
-            $query->where('status', Payment::STATUS_COMPLETED)->orderBy('created_at', 'desc')->take(1);
-        })->get()->filter(function ($user) use ($creditpackId) {
+            ->whereHas('roles', function($query) {
+                $query->where('name', 'peasant');
+            })->whereHas('account', function($query) {
+                $query->where('credits', '>', 0);
+            })->whereHas('payments', function($query) {
+                $query->where('status', Payment::STATUS_COMPLETED)->orderBy('created_at', 'desc')->take(1);
+            })->get();
+    }
+
+    public function filterPeasantsWithCreditpackId(Collection $peasants, int $creditpackId) : int {
+        return $peasants->filter(function ($user) use ($creditpackId) {
             return $user->payments[count($user->payments) - 1]->getCreditpackId() == $creditpackId;
         })->count();
     }

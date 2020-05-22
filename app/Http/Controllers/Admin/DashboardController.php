@@ -10,12 +10,12 @@ use App\Charts\RegistrationsChart;
 use App\Charts\RegistrationsMonthlyChart;
 use App\Charts\RevenueChart;
 use App\Charts\RevenueMonthlyChart;
+use App\Creditpack;
 use App\Http\Controllers\Controller;
 use App\Managers\StatisticsManager;
 use App\Payment;
 use App\User;
 use Carbon\Carbon;
-use Cornford\Googlmapper\Mapper;
 use DateInterval;
 use DatePeriod;
 use DateTime;
@@ -108,6 +108,9 @@ class DashboardController extends Controller
         $endOfPreviousMonthUtc = $endOfPreviousMonth->setTimezone('UTC');
 
         $startOfYear = Carbon::now('Europe/Amsterdam')->startOfYear()->setTimezone('UTC');
+
+        $peasantsWithCreditpack = $this->statisticsManager->peasantsWithCreditpack();
+
         $viewData = [
             'onlineFemaleStraightBotsCount' => $onlineFemaleStraightBotsCount,
             'onlineMaleStraightBotsCount' => $onlineMaleStraightBotsCount,
@@ -285,9 +288,18 @@ class DashboardController extends Controller
             'userTypeStatistics' => [
                 'no_credits' => $this->statisticsManager->peasantsWithNoCreditpack(),
                 'never_bought' => $this->statisticsManager->peasantsThatNeverHadCreditpack(),
-                'small' => $this->statisticsManager->peasantsWithSmallCreditpack(),
-                'medium' => $this->statisticsManager->peasantsWithMediumCreditpack(),
-                'large' => $this->statisticsManager->peasantsWithLargeCreditpack(),
+                'small' => $this->statisticsManager->filterPeasantsWithCreditpackId(
+                    $peasantsWithCreditpack,
+                    Creditpack::SMALL
+                ),
+                'medium' => $this->statisticsManager->filterPeasantsWithCreditpackId(
+                    $peasantsWithCreditpack,
+                    Creditpack::MEDIUM
+                ),
+                'large' => $this->statisticsManager->filterPeasantsWithCreditpackId(
+                    $peasantsWithCreditpack,
+                    Creditpack::LARGE
+                ),
             ],
             'topMessagerStatistics' => [
                 'today' => $this->statisticsManager->topMessagersBetweenDates($startOfToday, $endOfToday, 25),
