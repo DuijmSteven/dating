@@ -5,14 +5,45 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="row" style="margin-bottom: 20px">
-                <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3">
+                <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3" style="padding-right: 0">
                     <a href="{{ route('admin.bots.online.show') }}" class="box box-widget DashboardWidget">
                         <!-- Add the bg color to the header using any of the bg-* classes -->
                         <div class="bg-info">
                             <div class="widget-us DashboardWidget_header"
                                  style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
                                 <i class="fa fa-users DashboardWidget_header-icon"></i>
-                                <span class="DashboardWidget_header-title"><b>{{ $numberOfOnlineBots }} bots online</b></span>
+                                <span class="DashboardWidget_header-title"><b>{{ $onlineFemaleStraightBotsCount }} female straight bots online</b></span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="{{ route('admin.bots.online.show') }}" class="box box-widget DashboardWidget">
+                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                        <div class="bg-info">
+                            <div class="widget-us DashboardWidget_header"
+                                 style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
+                                <i class="fa fa-users DashboardWidget_header-icon"></i>
+                                <span class="DashboardWidget_header-title"><b>{{ $onlineMaleStraightBotsCount }} male straight bots online</b></span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="{{ route('admin.bots.retrieve') }}" class="box box-widget DashboardWidget">
+                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                        <div class="bg-info">
+                            <div class="widget-us DashboardWidget_header"
+                                 style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
+                                <i class="fa fa-users DashboardWidget_header-icon"></i>
+                                <span class="DashboardWidget_header-title"><b>{{ $activeFemaleStraightBotsCount }} active female straight bots</b></span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="{{ route('admin.bots.retrieve') }}" class="box box-widget DashboardWidget">
+                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                        <div class="bg-info">
+                            <div class="widget-us DashboardWidget_header"
+                                 style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
+                                <i class="fa fa-users DashboardWidget_header-icon"></i>
+                                <span class="DashboardWidget_header-title"><b>{{ $activeMaleStraightBotsCount }} active male straight bots</b></span>
                             </div>
                         </div>
                     </a>
@@ -24,7 +55,7 @@
                             <div class="widget-us DashboardWidget_header"
                                  style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
                                 <i class="fa fa-users DashboardWidget_header-icon"></i>
-                                <span class="DashboardWidget_header-title"><b>{{ $numberOfOnlinePeasants }} peasants online</b></span>
+                                <span class="DashboardWidget_header-title"><b>{{ $onlinePeasantsCount }} peasants online</b></span>
                             </div>
                         </div>
                     </a>

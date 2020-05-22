@@ -40,20 +40,56 @@ class DashboardController extends Controller
     {
         $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
 
-        $onlineBots = User::with('roles')->whereHas('roles', function ($query) {
-            $query->where('id', User::TYPE_BOT);
-        })
+        $onlineFemaleStraightBotsCount = User::with('roles')
+            ->whereHas('roles', function ($query) {
+                $query->where('id', User::TYPE_BOT);
+            })
+            ->whereHas('meta', function ($query) {
+                $query->where('gender', User::GENDER_FEMALE);
+                $query->where('looking_for_gender', User::GENDER_MALE);
+            })
             ->whereIn('id', $onlineIds)
-            ->orderBy('id')
-            ->get();
+            ->count();
 
-        $onlinePeasants = User::with('roles')->whereHas('roles', function ($query) {
-            $query->where('id', User::TYPE_PEASANT);
-        })
+        $onlineMaleStraightBotsCount = User::with('roles')
+            ->whereHas('roles', function ($query) {
+                $query->where('id', User::TYPE_BOT);
+            })
+            ->whereHas('meta', function ($query) {
+                $query->where('gender', User::GENDER_MALE);
+                $query->where('looking_for_gender', User::GENDER_FEMALE);
+            })
             ->whereIn('id', $onlineIds)
-            ->orderBy('id')
-            ->get();
+            ->count();
 
+        $onlinePeasantsCount = User::with('roles')
+            ->whereHas('roles', function ($query) {
+                $query->where('id', User::TYPE_PEASANT);
+            })
+            ->whereIn('id', $onlineIds)
+            ->count();
+
+        $activeFemaleStraightBotsCount = User::with('roles')
+            ->whereHas('roles', function ($query) {
+                $query->where('id', User::TYPE_BOT);
+            })
+            ->whereHas('meta', function ($query) {
+                $query->where('gender', User::GENDER_FEMALE);
+                $query->where('looking_for_gender', User::GENDER_MALE);
+            })
+            ->where('active', true)
+            ->count();
+
+        $activeMaleStraightBotsCount = User::with('roles')
+            ->whereHas('roles', function ($query) {
+                $query->where('id', User::TYPE_BOT);
+            })
+            ->whereHas('meta', function ($query) {
+                $query->where('gender', User::GENDER_MALE);
+                $query->where('looking_for_gender', User::GENDER_FEMALE);
+            })
+            ->where('active', true)
+            ->count();
 
         $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');
         $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
@@ -65,7 +101,6 @@ class DashboardController extends Controller
         $startOfMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->setTimezone('UTC');
         $endOfMonth = Carbon::now('Europe/Amsterdam')->endOfMonth()->setTimezone('UTC');
 
-
         $startOfPreviousMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->subMonth();
         $endOfPreviousMonth = $startOfPreviousMonth->copy()->endOfMonth();
 
@@ -74,8 +109,11 @@ class DashboardController extends Controller
 
         $startOfYear = Carbon::now('Europe/Amsterdam')->startOfYear()->setTimezone('UTC');
         $viewData = [
-            'numberOfOnlineBots' => count($onlineBots),
-            'numberOfOnlinePeasants' => count($onlinePeasants),
+            'onlineFemaleStraightBotsCount' => $onlineFemaleStraightBotsCount,
+            'onlineMaleStraightBotsCount' => $onlineMaleStraightBotsCount,
+            'onlinePeasantsCount' => $onlinePeasantsCount,
+            'activeFemaleStraightBotsCount' => $activeFemaleStraightBotsCount,
+            'activeMaleStraightBotsCount' => $activeMaleStraightBotsCount,
             'revenueStatistics' => [
                 'revenueToday' => $this->statisticsManager->revenueBetween(
                     $startOfToday,
