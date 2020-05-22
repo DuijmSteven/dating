@@ -238,6 +238,7 @@ h2.title {
     .wizard-card .picture:hover {
       border-color: #2ca8ff; }
   .wizard-card .moving-tab {
+    display: none;
     position: absolute;
     text-align: center;
     padding: 12px;

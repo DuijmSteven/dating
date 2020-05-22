@@ -14,7 +14,7 @@
 
     <!-- CSS Files -->
     <link href="/lps/t1/assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="/lps/t1/assets/css/material-bootstrap-wizard.css?v=12" rel="stylesheet" />
+    <link href="/lps/t1/assets/css/material-bootstrap-wizard.css?v=13" rel="stylesheet" />
 
     @if(config('app.env') === 'local')
         <script src="https://www.google.com/recaptcha/api.js?render=6Lcb0N8UAAAAADUTgOIB9jcrz2xM60BPNjeK3qWL"></script>
