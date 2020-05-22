@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Charts\DeactivationsChart;
+use App\Charts\DeactivationsMonthlyChart;
+use App\Charts\NetPeasantsAcquiredChart;
+use App\Charts\NetPeasantsAcquiredMonthlyChart;
 use App\Charts\PaymentsChart;
 use App\Charts\PaymentsMonthlyChart;
 use App\Charts\PeasantMessagesChart;
@@ -327,6 +331,10 @@ class DashboardController extends Controller
                 'paymentsMonthlyChart' => $this->createPaymentsMonthlyChart(),
                 'revenueChart' => $this->createRevenueChart(),
                 'revenueMonthlyChart' => $this->createRevenueMonthlyChart(),
+                'netPeasantsAcquiredChart' => $this->createNetPeasantsAcquiredChart(),
+                'deactivationsChart' => $this->createDeactivationsChart(),
+                'deactivationsMonthlyChart' => $this->createDeactivationsMonthlyChart(),
+                'netPeasantsAcquiredMonthlyChart' => $this->createNetPeasantsAcquiredMonthlyChart(),
             ]
         ));
     }
@@ -584,7 +592,7 @@ class DashboardController extends Controller
     protected function createRegistrationsChart(): RegistrationsChart
     {
         $query = \DB::table('users as u')
-            ->select(\DB::raw('DATE(CONVERT_TZ(u.created_at, \'UTC\', \'Europe/Amsterdam\')) as registrationDate, COUNT(u.id) AS registrationCount'))
+            ->select(\DB::raw('DATE(CONVERT_TZ(u.created_at, \'UTC\', \'Europe/Amsterdam\')) as registrationDate, COUNT(u.id) AS registrationsCount'))
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->groupBy('registrationDate')
@@ -599,7 +607,7 @@ class DashboardController extends Controller
         $registrationsPerDate = [];
         foreach ($results as $result) {
             $datesWithRegistrations[] = explode(' ', $result->registrationDate)[0];
-            $registrationsPerDate[explode(' ', $result->registrationDate)[0]] = $result->registrationCount;
+            $registrationsPerDate[explode(' ', $result->registrationDate)[0]] = $result->registrationsCount;
         }
 
         $period = new DatePeriod(
@@ -783,7 +791,7 @@ class DashboardController extends Controller
         $labels = [];
         $counts = [];
 
-        $datesWithRevenue = [];
+        $monthsWithRevenue = [];
         $revenuePerMonth = [];
 
         foreach ($results as $result) {
@@ -822,5 +830,298 @@ class DashboardController extends Controller
             ->title('Revenue per month');
 
         return $revenueMonthlyChart;
+    }
+
+    /**
+     * @return NetPeasantsAcquiredChart
+     * @throws \Exception
+     */
+    protected function createNetPeasantsAcquiredChart(): NetPeasantsAcquiredChart
+    {
+        $query = \DB::table('users as u')
+            ->select(\DB::raw('DATE(CONVERT_TZ(u.created_at, \'UTC\', \'Europe/Amsterdam\')) as registrationDate, COUNT(u.id) AS registrationsCount'))
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('ru.role_id', User::TYPE_PEASANT)
+            ->groupBy('registrationDate')
+            ->orderBy('registrationDate', 'ASC');
+
+        $datesAndRegistrationCounts = $query->get();
+
+        $datesWithRegistrations = [];
+        $registrationsPerDate = [];
+        foreach ($datesAndRegistrationCounts as $dateAndRegistrationsCount) {
+            $datesWithRegistrations[] = explode(' ', $dateAndRegistrationsCount->registrationDate)[0];
+            $registrationsPerDate[explode(' ', $dateAndRegistrationsCount->registrationDate)[0]] = $dateAndRegistrationsCount->registrationsCount;
+        }
+
+        $query = \DB::table('users as u')
+            ->select(\DB::raw('DATE(CONVERT_TZ(u.deactivated_at, \'UTC\', \'Europe/Amsterdam\')) as deactivationDate, COUNT(u.id) AS deactivationsCount'))
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('ru.role_id', User::TYPE_PEASANT)
+            ->where('u.deactivated_at', '!=', null)
+            ->groupBy('deactivationDate')
+            ->orderBy('deactivationDate', 'ASC');
+
+        $datesAndDeactivationCounts = $query->get();
+
+        $labels = [];
+        $counts = [];
+
+        $datesWithDeactivations = [];
+        $deactivationsPerDate = [];
+        foreach ($datesAndDeactivationCounts as $dateAndDeactivationsCount) {
+            $datesWithDeactivations[] = explode(' ', $dateAndDeactivationsCount->deactivationDate)[0];
+            $deactivationsPerDate[explode(' ', $dateAndDeactivationsCount->deactivationDate)[0]] = $dateAndDeactivationsCount->deactivationsCount;
+        }
+
+        $period = new DatePeriod(
+            new DateTime($datesWithRegistrations[0]),
+            new DateInterval('P1D'),
+            new DateTime('now')
+        );
+
+        /**
+         * @var  $key
+         * @var DateTime $value
+         */
+        foreach ($period as $key => $value) {
+            $labels[] = $value->format('Y-m-d');
+
+            if (in_array($value->format('Y-m-d'), $datesWithRegistrations)) {
+                if (in_array($value->format('Y-m-d'), $datesWithDeactivations)) {
+                    $counts[] = $registrationsPerDate[$value->format('Y-m-d')] - $deactivationsPerDate[$value->format('Y-m-d')];
+                } else {
+                    $counts[] = $registrationsPerDate[$value->format('Y-m-d')];
+                }
+            } else if (in_array($value->format('Y-m-d'), $datesWithDeactivations)) {
+                $counts[] = - $deactivationsPerDate[$value->format('Y-m-d')];
+            } else {
+                $counts[] = 0;
+            }
+        }
+
+        $netPeasantsAcquiredChart = new NetPeasantsAcquiredChart();
+        $netPeasantsAcquiredChart->labels($labels);
+        $netPeasantsAcquiredChart
+            ->dataset('Net peasants acquired on date', 'line', $counts)
+            ->backGroundColor('#58a37f');
+
+        $netPeasantsAcquiredChart
+            ->title('Net peasants acquired per day');
+
+        return $netPeasantsAcquiredChart;
+    }
+
+    /**
+     * @return NetPeasantsAcquiredMonthlyChart
+     * @throws \Exception
+     */
+    protected function createNetPeasantsAcquiredMonthlyChart(): NetPeasantsAcquiredMonthlyChart
+    {
+        $query = \DB::table('users as u')
+            ->select(
+                \DB::raw(
+                    'DATE_FORMAT(CONVERT_TZ(u.created_at, \'UTC\', \'Europe/Amsterdam\'), \'%Y-%m\') as months, 
+                    COUNT(u.id) as registrationsCountInMonth'
+                )
+            )
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('ru.role_id', User::TYPE_PEASANT)
+            ->groupBy('months')
+            ->orderBy('months', 'ASC');
+
+        $monthsAndRegistrationCounts = $query->get();
+
+        $monthsWithRegistrations = [];
+        $registrationsPerMonth = [];
+        foreach ($monthsAndRegistrationCounts as $dateAndRegistrationsCount) {
+            $monthsWithRegistrations[] = explode(' ', $dateAndRegistrationsCount->months)[0];
+            $registrationsPerMonth[explode(' ', $dateAndRegistrationsCount->months)[0]] = $dateAndRegistrationsCount->registrationsCountInMonth;
+        }
+
+        $query = \DB::table('users as u')
+            ->select(
+                \DB::raw(
+                    'DATE_FORMAT(CONVERT_TZ(u.deactivated_at, \'UTC\', \'Europe/Amsterdam\'), \'%Y-%m\') as months, 
+                    COUNT(u.id) as deactivationsCountInMonth'
+                )
+            )
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('ru.role_id', User::TYPE_PEASANT)
+            ->where('u.deactivated_at', '!=', null)
+            ->groupBy('months')
+            ->orderBy('months', 'ASC');
+
+        $monthsAndDeactivationCounts = $query->get();
+
+        $labels = [];
+        $counts = [];
+
+        $monthsWithDeactivations = [];
+        $deactivationsPerMonth = [];
+        foreach ($monthsAndDeactivationCounts as $dateAndDeactivationsCount) {
+            $monthsWithDeactivations[] = explode(' ', $dateAndDeactivationsCount->months)[0];
+            $deactivationsPerMonth[explode(' ', $dateAndDeactivationsCount->months)[0]] = $dateAndDeactivationsCount->deactivationsCountInMonth;
+        }
+
+        $period = new DatePeriod(
+            new DateTime($monthsWithRegistrations[0]),
+            new DateInterval('P1M'),
+            new DateTime('now')
+        );
+
+        /**
+         * @var  $key
+         * @var DateTime $value
+         */
+        foreach ($period as $key => $value) {
+            $labels[] = $value->format('Y-m');
+
+            if (in_array($value->format('Y-m'), $monthsWithRegistrations)) {
+                if (in_array($value->format('Y-m'), $monthsWithDeactivations)) {
+                    $counts[] = $registrationsPerMonth[$value->format('Y-m')] - $deactivationsPerMonth[$value->format('Y-m')];
+                } else {
+                    $counts[] = $registrationsPerMonth[$value->format('Y-m')];
+                }
+            } else if (in_array($value->format('Y-m'), $monthsWithDeactivations)) {
+                $counts[] = - $deactivationsPerMonth[$value->format('Y-m')];
+            } else {
+                $counts[] = 0;
+            }
+        }
+
+        $netPeasantsAcquiredMonthlyChart = new NetPeasantsAcquiredMonthlyChart();
+        $netPeasantsAcquiredMonthlyChart->labels($labels);
+        $netPeasantsAcquiredMonthlyChart
+            ->dataset('Net peasants acquired in month', 'bar', $counts)
+            ->backGroundColor('#58a37f');
+
+        $netPeasantsAcquiredMonthlyChart
+            ->barWidth(0.1)
+            ->title('Net peasants acquired per month');
+
+        return $netPeasantsAcquiredMonthlyChart;
+    }
+
+    /**
+     * @return DeactivationsChart
+     * @throws \Exception
+     */
+    protected function createDeactivationsChart(): DeactivationsChart
+    {
+        $query = \DB::table('users as u')
+            ->select(\DB::raw('DATE(CONVERT_TZ(u.deactivated_at, \'UTC\', \'Europe/Amsterdam\')) as deactivationDate, COUNT(u.id) AS deactivationsCount'))
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('ru.role_id', User::TYPE_PEASANT)
+            ->where('u.deactivated_at', '!=', null)
+            ->groupBy('deactivationDate')
+            ->orderBy('deactivationDate', 'ASC');
+
+        $results = $query->get();
+
+        $labels = [];
+        $counts = [];
+
+        $datesWithDeactivations = [];
+        $deactivationsPerDate = [];
+        foreach ($results as $result) {
+            $datesWithDeactivations[] = explode(' ', $result->deactivationDate)[0];
+            $deactivationsPerDate[explode(' ', $result->deactivationDate)[0]] = $result->deactivationsCount;
+        }
+
+        $period = new DatePeriod(
+            new DateTime($datesWithDeactivations[0]),
+            new DateInterval('P1D'),
+            new DateTime('now')
+        );
+
+        /**
+         * @var  $key
+         * @var DateTime $value
+         */
+        foreach ($period as $key => $value) {
+            $labels[] = $value->format('Y-m-d');
+
+            if (in_array($value->format('Y-m-d'), $datesWithDeactivations)) {
+                $counts[] = $deactivationsPerDate[$value->format('Y-m-d')];
+            } else {
+                $counts[] = 0;
+            }
+        }
+
+        $deactivationsChart = new DeactivationsChart();
+        $deactivationsChart->labels($labels);
+        $deactivationsChart
+            ->dataset('Deactivations on date', 'line', $counts)
+            ->backGroundColor('#a37158');
+
+        $deactivationsChart
+            ->title('Deactivations per day');
+
+        return $deactivationsChart;
+    }
+
+    /**
+     * @return DeactivationsChart
+     * @throws \Exception
+     */
+    protected function createDeactivationsMonthlyChart(): DeactivationsMonthlyChart
+    {
+        $query = \DB::table('users as u')
+            ->select(
+                \DB::raw(
+                    'DATE_FORMAT(CONVERT_TZ(u.deactivated_at, \'UTC\', \'Europe/Amsterdam\'), \'%Y-%m\') as months, 
+                    COUNT(u.id) as deactivationsCountInMonth'
+                )
+            )
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('ru.role_id', User::TYPE_PEASANT)
+            ->where('u.deactivated_at', '!=', null)
+            ->groupBy('months')
+            ->orderBy('months', 'ASC');
+
+        $results = $query->get();
+
+        $labels = [];
+        $counts = [];
+
+        $monthsWithDeactivations = [];
+        $deactivationsPerMonth = [];
+        foreach ($results as $result) {
+            $monthsWithDeactivations[] = explode(' ', $result->months)[0];
+            $deactivationsPerMonth[explode(' ', $result->months)[0]] = $result->deactivationsCountInMonth;
+        }
+
+        $period = new DatePeriod(
+            new DateTime($monthsWithDeactivations[0]),
+            new DateInterval('P1M'),
+            new DateTime('now')
+        );
+
+        /**
+         * @var  $key
+         * @var DateTime $value
+         */
+        foreach ($period as $key => $value) {
+            $labels[] = $value->format('Y-m');
+
+            if (in_array($value->format('Y-m'), $monthsWithDeactivations)) {
+                $counts[] = $deactivationsPerMonth[$value->format('Y-m')];
+            } else {
+                $counts[] = 0;
+            }
+        }
+
+        $deactivationsMonthlyChart = new DeactivationsMonthlyChart();
+        $deactivationsMonthlyChart->labels($labels);
+        $deactivationsMonthlyChart
+            ->dataset('Deactivations in month', 'bar', $counts)
+            ->backGroundColor('#a37158');
+
+        $deactivationsMonthlyChart
+            ->barWidth(0.1)
+            ->title('Deactivations per month');
+
+        return $deactivationsMonthlyChart;
     }
 }
