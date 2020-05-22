@@ -194,6 +194,7 @@ return [
         Cornford\Googlmapper\MapperServiceProvider::class,
         Spatie\Geocoder\GeocoderServiceProvider::class,
         Yoeunes\Toastr\ToastrServiceProvider::class,
+        ConsoleTVs\Charts\ChartsServiceProvider::class,
 
         /*
          * Ours

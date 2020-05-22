@@ -419,8 +419,26 @@
     <div class="row">
         <div class="col-xs-12">
             <div style="width: 100%">
+                {!! $registrationsMonthlyChart->container() !!}
+                {!! $registrationsMonthlyChart->script() !!}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div style="width: 100%">
                 {!! $peasantMessagesChart->container() !!}
                 {!! $peasantMessagesChart->script() !!}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div style="width: 100%">
+                {!! $peasantMessagesMonthlyChart->container() !!}
+                {!! $peasantMessagesMonthlyChart->script() !!}
             </div>
         </div>
     </div>
@@ -434,12 +452,29 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-xs-12">
+            <div style="width: 100%">
+                {!! $paymentsMonthlyChart->container() !!}
+                {!! $paymentsMonthlyChart->script() !!}
+            </div>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-xs-12">
             <div style="width: 100%">
                 {!! $revenueChart->container() !!}
                 {!! $revenueChart->script() !!}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div style="width: 100%">
+                {!! $revenueMonthlyChart->container() !!}
+                {!! $revenueMonthlyChart->script() !!}
             </div>
         </div>
     </div>

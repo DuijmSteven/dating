@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Charts\PaymentsChart;
+use App\Charts\PaymentsMonthlyChart;
 use App\Charts\PeasantMessagesChart;
+use App\Charts\PeasantMessagesMonthlyChart;
 use App\Charts\RegistrationsChart;
+use App\Charts\RegistrationsMonthlyChart;
 use App\Charts\RevenueChart;
+use App\Charts\RevenueMonthlyChart;
 use App\Http\Controllers\Controller;
 use App\Managers\StatisticsManager;
 use App\Payment;
@@ -266,11 +270,384 @@ class DashboardController extends Controller
                 'headingLarge' => 'Dashboard',
                 'headingSmall' => 'Site Statistics',
                 'registrationsChart' => $this->createRegistrationsChart(),
+                'registrationsMonthlyChart' => $this->createRegistrationsMonthlyChart(),
                 'peasantMessagesChart' => $this->createPeasantMessagesChart(),
+                'peasantMessagesMonthlyChart' => $this->createPeasantMessagesMonthlyChart(),
                 'paymentsChart' => $this->createPaymentsChart(),
-                'revenueChart' => $this->createRevenueChart()
+                'paymentsMonthlyChart' => $this->createPaymentsMonthlyChart(),
+                'revenueChart' => $this->createRevenueChart(),
+                'revenueMonthlyChart' => $this->createRevenueMonthlyChart(),
             ]
         ));
+    }
+
+    /**
+     * @return PaymentsChart
+     * @throws \Exception
+     */
+    protected function createPaymentsChart(): PaymentsChart
+    {
+        $query = \DB::table('payments as p')
+            ->select(\DB::raw('DATE(CONVERT_TZ(p.created_at, \'UTC\', \'Europe/Amsterdam\')) as creationDate, COUNT(p.id) AS paymentsCount'))
+            ->leftJoin('users as u', 'u.id', 'p.user_id')
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('ru.role_id', User::TYPE_PEASANT)
+            ->where('p.status', Payment::STATUS_COMPLETED)
+            ->groupBy('creationDate')
+            ->orderBy('creationDate', 'ASC');
+
+        $results = $query->get();
+
+        $labels = [];
+        $counts = [];
+
+        $datesWithPayments = [];
+        $paymentsPerDate = [];
+        foreach ($results as $result) {
+            $datesWithPayments[] = explode(' ', $result->creationDate)[0];
+            $paymentsPerDate[explode(' ', $result->creationDate)[0]] = $result->paymentsCount;
+        }
+
+        $period = new DatePeriod(
+            new DateTime($datesWithPayments[0]),
+            new DateInterval('P1D'),
+            new DateTime('now')
+        );
+
+        /**
+         * @var  $key
+         * @var DateTime $value
+         */
+        foreach ($period as $key => $value) {
+            $labels[] = $value->format('Y-m-d');
+
+            if (in_array($value->format('Y-m-d'), $datesWithPayments)) {
+                $counts[] = $paymentsPerDate[$value->format('Y-m-d')];
+            } else {
+                $counts[] = 0;
+            }
+        }
+
+        $paymentsChart = new PaymentsChart();
+        $paymentsChart->labels($labels);
+        $paymentsChart
+            ->dataset('Payments on date', 'bar', $counts)
+            ->backGroundColor('#3eb3de');
+
+        $paymentsChart
+            ->barWidth(0.6)
+            ->title('Payments per day');
+
+        return $paymentsChart;
+    }
+
+    /**
+     * @return PaymentsMonthlyChart
+     * @throws \Exception
+     */
+    protected function createPaymentsMonthlyChart(): PaymentsMonthlyChart
+    {
+        $query = \DB::table('payments as p')
+            ->select(
+                \DB::raw(
+                    'DATE_FORMAT(CONVERT_TZ(p.created_at, \'UTC\', \'Europe/Amsterdam\'), \'%Y-%m\') as months, 
+                    COUNT(p.id) as paymentsInMonthsCount'
+                )
+            )
+            ->leftJoin('users as u', 'u.id', 'p.user_id')
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('ru.role_id', User::TYPE_PEASANT)
+            ->where('p.status', Payment::STATUS_COMPLETED)
+            ->groupBy('months')
+            ->orderBy('months', 'ASC');
+
+        $results = $query->get();
+
+        $labels = [];
+        $counts = [];
+
+        $monthsWithPayments = [];
+        $paymentsPerMonth = [];
+        foreach ($results as $result) {
+            $monthsWithPayments[] = explode(' ', $result->months)[0];
+            $paymentsPerMonth[explode(' ', $result->months)[0]] = $result->paymentsInMonthsCount;
+        }
+
+        $period = new DatePeriod(
+            new DateTime($monthsWithPayments[0]),
+            new DateInterval('P1M'),
+            new DateTime('now')
+        );
+
+        /**
+         * @var  $key
+         * @var DateTime $value
+         */
+        foreach ($period as $key => $value) {
+            $labels[] = $value->format('Y-m');
+
+            if (in_array($value->format('Y-m'), $monthsWithPayments)) {
+                $counts[] = $paymentsPerMonth[$value->format('Y-m')];
+            } else {
+                $counts[] = 0;
+            }
+        }
+
+        $paymentsMonthlyChart = new PaymentsMonthlyChart();
+        $paymentsMonthlyChart->labels($labels);
+        $paymentsMonthlyChart
+            ->dataset('Payments in month', 'bar', $counts)
+            ->backGroundColor('#3eb3de');
+
+        $paymentsMonthlyChart
+            ->barWidth(0.6)
+            ->title('Payments per month');
+
+        return $paymentsMonthlyChart;
+    }
+
+    /**
+     * @return PeasantMessagesChart
+     * @throws \Exception
+     */
+    protected function createPeasantMessagesChart(): PeasantMessagesChart
+    {
+        $query = \DB::table('conversation_messages as cm')
+            ->select(\DB::raw('DATE(CONVERT_TZ(cm.created_at, \'UTC\', \'Europe/Amsterdam\')) as creationDate, COUNT(cm.id) AS messagesCount'))
+            ->leftJoin('users as u', 'u.id', 'cm.sender_id')
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('ru.role_id', User::TYPE_PEASANT)
+            ->groupBy('creationDate')
+            ->orderBy('creationDate', 'ASC');
+
+        $results = $query->get();
+
+        $labels = [];
+        $counts = [];
+
+        $datesWithMessages = [];
+        $messagesPerDate = [];
+        foreach ($results as $result) {
+            $datesWithMessages[] = explode(' ', $result->creationDate)[0];
+            $messagesPerDate[explode(' ', $result->creationDate)[0]] = $result->messagesCount;
+        }
+
+        $period = new DatePeriod(
+            new DateTime($datesWithMessages[0]),
+            new DateInterval('P1D'),
+            new DateTime('now')
+        );
+
+        /**
+         * @var  $key
+         * @var DateTime $value
+         */
+        foreach ($period as $key => $value) {
+            $labels[] = $value->format('Y-m-d');
+
+            if (in_array($value->format('Y-m-d'), $datesWithMessages)) {
+                $counts[] = $messagesPerDate[$value->format('Y-m-d')];
+            } else {
+                $counts[] = 0;
+            }
+        }
+
+        $peasantMessagesChart = new PeasantMessagesChart();
+        $peasantMessagesChart->labels($labels);
+        $peasantMessagesChart
+            ->dataset('Peasant messages on date', 'bar', $counts)
+            ->backGroundColor('#de3e7b');
+
+        $peasantMessagesChart
+            ->barWidth(0.6)
+            ->title('Peasant messages per day');
+
+        return $peasantMessagesChart;
+    }
+
+    /**
+     * @return PeasantMessagesMonthlyChart
+     * @throws \Exception
+     */
+    protected function createPeasantMessagesMonthlyChart(): PeasantMessagesMonthlyChart
+    {
+        $query = \DB::table('conversation_messages as cm')
+            ->select(
+                \DB::raw(
+                    'DATE_FORMAT(CONVERT_TZ(cm.created_at, \'UTC\', \'Europe/Amsterdam\'), \'%Y-%m\') as months, 
+                    COUNT(cm.id) as peasantMessagesInMonthsCount'
+                )
+            )
+            ->leftJoin('users as u', 'u.id', 'cm.sender_id')
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('ru.role_id', User::TYPE_PEASANT)
+            ->groupBy('months')
+            ->orderBy('months', 'ASC');
+
+        $results = $query->get();
+
+        $labels = [];
+        $counts = [];
+
+        $monthsWithMessages = [];
+        $messagesPerMonth = [];
+        foreach ($results as $result) {
+            $monthsWithMessages[] = explode(' ', $result->months)[0];
+            $messagesPerMonth[explode(' ', $result->months)[0]] = $result->peasantMessagesInMonthsCount;
+        }
+
+        $period = new DatePeriod(
+            new DateTime($monthsWithMessages[0]),
+            new DateInterval('P1M'),
+            new DateTime('now')
+        );
+
+        /**
+         * @var  $key
+         * @var DateTime $value
+         */
+        foreach ($period as $key => $value) {
+            $labels[] = $value->format('Y-m');
+
+            if (in_array($value->format('Y-m'), $monthsWithMessages)) {
+                $counts[] = $messagesPerMonth[$value->format('Y-m')];
+            } else {
+                $counts[] = 0;
+            }
+        }
+
+        $peasantMessagesMonthlyChart = new PeasantMessagesMonthlyChart();
+        $peasantMessagesMonthlyChart->labels($labels);
+        $peasantMessagesMonthlyChart
+            ->dataset('Peasant messages in month', 'bar', $counts)
+            ->backGroundColor('#de3e7b');
+
+        $peasantMessagesMonthlyChart
+            ->barWidth(0.6)
+            ->title('Peasant messages per month');
+
+        return $peasantMessagesMonthlyChart;
+    }
+
+    /**
+     * @return RegistrationsChart
+     * @throws \Exception
+     */
+    protected function createRegistrationsChart(): RegistrationsChart
+    {
+        $query = \DB::table('users as u')
+            ->select(\DB::raw('DATE(CONVERT_TZ(u.created_at, \'UTC\', \'Europe/Amsterdam\')) as registrationDate, COUNT(u.id) AS registrationCount'))
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('ru.role_id', User::TYPE_PEASANT)
+            ->groupBy('registrationDate')
+            ->orderBy('registrationDate', 'ASC');
+
+        $results = $query->get();
+
+        $labels = [];
+        $counts = [];
+
+        $datesWithRegistrations = [];
+        $registrationsPerDate = [];
+        foreach ($results as $result) {
+            $datesWithRegistrations[] = explode(' ', $result->registrationDate)[0];
+            $registrationsPerDate[explode(' ', $result->registrationDate)[0]] = $result->registrationCount;
+        }
+
+        $period = new DatePeriod(
+            new DateTime($datesWithRegistrations[0]),
+            new DateInterval('P1D'),
+            new DateTime('now')
+        );
+
+        /**
+         * @var  $key
+         * @var DateTime $value
+         */
+        foreach ($period as $key => $value) {
+            $labels[] = $value->format('Y-m-d');
+
+            if (in_array($value->format('Y-m-d'), $datesWithRegistrations)) {
+                $counts[] = $registrationsPerDate[$value->format('Y-m-d')];
+            } else {
+                $counts[] = 0;
+            }
+        }
+
+        $registrationsChart = new RegistrationsChart();
+        $registrationsChart->labels($labels);
+        $registrationsChart
+            ->dataset('Registrations on date', 'bar', $counts)
+            ->backGroundColor('#deb33e');
+
+        $registrationsChart
+            ->barWidth(0.6)
+            ->title('Registrations per day');
+
+        return $registrationsChart;
+    }
+
+    /**
+     * @return RegistrationsMonthlyChart
+     * @throws \Exception
+     */
+    protected function createRegistrationsMonthlyChart(): RegistrationsMonthlyChart
+    {
+        $query = \DB::table('users as u')
+            ->select(
+                \DB::raw(
+                    'DATE_FORMAT(CONVERT_TZ(u.created_at, \'UTC\', \'Europe/Amsterdam\'), \'%Y-%m\') as months, 
+                    COUNT(u.id) as registrationsInMonthsCount'
+                )
+            )
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('ru.role_id', User::TYPE_PEASANT)
+            ->groupBy('months')
+            ->orderBy('months', 'ASC');
+
+        $results = $query->get();
+
+        $labels = [];
+        $counts = [];
+
+        $monthsWithRegistrations = [];
+        $registrationsPerMonth = [];
+        foreach ($results as $result) {
+            $monthsWithRegistrations[] = explode(' ', $result->months)[0];
+            $registrationsPerMonth[explode(' ', $result->months)[0]] = $result->registrationsInMonthsCount;
+        }
+
+        $period = new DatePeriod(
+            new DateTime($monthsWithRegistrations[0]),
+            new DateInterval('P1M'),
+            new DateTime('now')
+        );
+
+        /**
+         * @var  $key
+         * @var DateTime $value
+         */
+        foreach ($period as $key => $value) {
+            $labels[] = $value->format('Y-m');
+
+            if (in_array($value->format('Y-m'), $monthsWithRegistrations)) {
+                $counts[] = $registrationsPerMonth[$value->format('Y-m')];
+            } else {
+                $counts[] = 0;
+            }
+        }
+
+        $registrationsMonthlyChart = new RegistrationsMonthlyChart();
+        $registrationsMonthlyChart->labels($labels);
+        $registrationsMonthlyChart
+            ->dataset('Registrations in month', 'bar', $counts)
+            ->backGroundColor('#deb33e');
+
+        $registrationsMonthlyChart
+            ->barWidth(0.6)
+            ->title('Registrations per month');
+
+        return $registrationsMonthlyChart;
     }
 
     /**
@@ -323,40 +700,54 @@ class DashboardController extends Controller
 
         $revenueChart = new RevenueChart();
         $revenueChart->labels($labels);
-        $revenueChart->dataset('Revenue over time', 'line', $counts);
+
+        $revenueChart
+            ->dataset('Revenue on date', 'bar', $counts)
+            ->backGroundColor('#339929');
+
+        $revenueChart
+            ->barWidth(0.6)
+            ->title('Revenue per day');
+
         return $revenueChart;
     }
 
     /**
-     * @return PaymentsChart
+     * @return RevenueMonthlyChart
      * @throws \Exception
      */
-    protected function createPaymentsChart(): PaymentsChart
+    protected function createRevenueMonthlyChart(): RevenueMonthlyChart
     {
         $query = \DB::table('payments as p')
-            ->select(\DB::raw('DATE(CONVERT_TZ(p.created_at, \'UTC\', \'Europe/Amsterdam\')) as creationDate, COUNT(p.id) AS paymentsCount'))
+            ->select(
+                \DB::raw(
+                    'DATE_FORMAT(CONVERT_TZ(p.created_at, \'UTC\', \'Europe/Amsterdam\'), \'%Y-%m\') as months, 
+                    SUM(p.amount) as revenueInMonth'
+                )
+            )
             ->leftJoin('users as u', 'u.id', 'p.user_id')
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('p.status', Payment::STATUS_COMPLETED)
-            ->groupBy('creationDate')
-            ->orderBy('creationDate', 'ASC');
+            ->groupBy('months')
+            ->orderBy('months', 'ASC');
 
         $results = $query->get();
 
         $labels = [];
         $counts = [];
 
-        $datesWithPayments = [];
-        $paymentsPerDate = [];
+        $datesWithRevenue = [];
+        $revenuePerMonth = [];
+
         foreach ($results as $result) {
-            $datesWithPayments[] = explode(' ', $result->creationDate)[0];
-            $paymentsPerDate[explode(' ', $result->creationDate)[0]] = $result->paymentsCount;
+            $monthsWithRevenue[] = explode(' ', $result->months)[0];
+            $revenuePerMonth[explode(' ', $result->months)[0]] = (int) $result->revenueInMonth / 100;
         }
 
         $period = new DatePeriod(
-            new DateTime($datesWithPayments[0]),
-            new DateInterval('P1D'),
+            new DateTime($monthsWithRevenue[0]),
+            new DateInterval('P1M'),
             new DateTime('now')
         );
 
@@ -365,121 +756,25 @@ class DashboardController extends Controller
          * @var DateTime $value
          */
         foreach ($period as $key => $value) {
-            $labels[] = $value->format('Y-m-d');
+            $labels[] = $value->format('Y-m');
 
-            if (in_array($value->format('Y-m-d'), $datesWithPayments)) {
-                $counts[] = $paymentsPerDate[$value->format('Y-m-d')];
+            if (in_array($value->format('Y-m'), $monthsWithRevenue)) {
+                $counts[] = $revenuePerMonth[$value->format('Y-m')];
             } else {
                 $counts[] = 0;
             }
         }
 
-        $paymentsChart = new PaymentsChart();
-        $paymentsChart->labels($labels);
-        $paymentsChart->dataset('Payments over time', 'line', $counts);
-        return $paymentsChart;
-    }
+        $revenueMonthlyChart = new RevenueMonthlyChart();
+        $revenueMonthlyChart->labels($labels);
+        $revenueMonthlyChart
+            ->dataset('Revenue in month', 'bar', $counts)
+            ->backGroundColor('#339929');
 
-    /**
-     * @return PeasantMessagesChart
-     * @throws \Exception
-     */
-    protected function createPeasantMessagesChart(): PeasantMessagesChart
-    {
-        $query = \DB::table('conversation_messages as cm')
-            ->select(\DB::raw('DATE(CONVERT_TZ(cm.created_at, \'UTC\', \'Europe/Amsterdam\')) as creationDate, COUNT(cm.id) AS messagesCount'))
-            ->leftJoin('users as u', 'u.id', 'cm.sender_id')
-            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
-            ->where('ru.role_id', User::TYPE_PEASANT)
-            ->groupBy('creationDate')
-            ->orderBy('creationDate', 'ASC');
+        $revenueMonthlyChart
+            ->barWidth(0.1)
+            ->title('Revenue per month');
 
-        $results = $query->get();
-
-        $labels = [];
-        $counts = [];
-
-        $datesWithMessages = [];
-        $messagesPerDate = [];
-        foreach ($results as $result) {
-            $datesWithMessages[] = explode(' ', $result->creationDate)[0];
-            $messagesPerDate[explode(' ', $result->creationDate)[0]] = $result->messagesCount;
-        }
-
-        $period = new DatePeriod(
-            new DateTime($datesWithMessages[0]),
-            new DateInterval('P1D'),
-            new DateTime('now')
-        );
-
-        /**
-         * @var  $key
-         * @var DateTime $value
-         */
-        foreach ($period as $key => $value) {
-            $labels[] = $value->format('Y-m-d');
-
-            if (in_array($value->format('Y-m-d'), $datesWithMessages)) {
-                $counts[] = $messagesPerDate[$value->format('Y-m-d')];
-            } else {
-                $counts[] = 0;
-            }
-        }
-
-        $peasantMessagesChart = new PeasantMessagesChart();
-        $peasantMessagesChart->labels($labels);
-        $peasantMessagesChart->dataset('Peasant messages over time', 'line', $counts);
-        return $peasantMessagesChart;
-    }
-
-    /**
-     * @return RegistrationsChart
-     * @throws \Exception
-     */
-    protected function createRegistrationsChart(): RegistrationsChart
-    {
-        $query = \DB::table('users as u')
-            ->select(\DB::raw('DATE(CONVERT_TZ(u.created_at, \'UTC\', \'Europe/Amsterdam\')) as registrationDate, COUNT(u.id) AS registrationCount'))
-            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
-            ->where('ru.role_id', User::TYPE_PEASANT)
-            ->groupBy('registrationDate')
-            ->orderBy('registrationDate', 'ASC');
-
-        $results = $query->get();
-
-        $labels = [];
-        $counts = [];
-
-        $datesWithRegistrations = [];
-        $registrationsPerDate = [];
-        foreach ($results as $result) {
-            $datesWithRegistrations[] = explode(' ', $result->registrationDate)[0];
-            $registrationsPerDate[explode(' ', $result->registrationDate)[0]] = $result->registrationCount;
-        }
-
-        $period = new DatePeriod(
-            new DateTime($datesWithRegistrations[0]),
-            new DateInterval('P1D'),
-            new DateTime('now')
-        );
-
-        /**
-         * @var  $key
-         * @var DateTime $value
-         */
-        foreach ($period as $key => $value) {
-            $labels[] = $value->format('Y-m-d');
-
-            if (in_array($value->format('Y-m-d'), $datesWithRegistrations)) {
-                $counts[] = $registrationsPerDate[$value->format('Y-m-d')];
-            } else {
-                $counts[] = 0;
-            }
-        }
-
-        $registrationsChart = new RegistrationsChart();
-        $registrationsChart->labels($labels);
-        $registrationsChart->dataset('Registrations over time', 'line', $counts);
-        return $registrationsChart;
+        return $revenueMonthlyChart;
     }
 }
