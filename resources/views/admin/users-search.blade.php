@@ -39,6 +39,56 @@
                             @include('helpers.forms.error_message', ['field' => 'query'])
                         </div>
                     </div>
+
+
+                    <div class="col-sm-12">
+                        <hr>
+
+                        <h4>Created at between</h4>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>After:</label>
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text"
+                                               class="form-control pull-right datepicker__date defaultToPresent"
+                                               name="created_at_after"
+                                               value="{{ old('created_at_after') ? old('created_at_after') : '' }}"
+                                        >
+                                        @if ($errors->has('created_at_after'))
+                                            {!! $errors->first('created_at_after', '<small class="form-error">:message</small>') !!}
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Before:</label>
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text"
+                                               class="form-control pull-right datepicker__date defaultToPresent"
+                                               name="created_at_before"
+                                               value="{{ old('created_at_before') ? old('created_at_before') : '' }}"
+                                        >
+                                        @if ($errors->has('created_at_before'))
+                                            {!! $errors->first('created_at_before', '<small class="form-error">:message</small>') !!}
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+                    </div>
+
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="query">Username</label>

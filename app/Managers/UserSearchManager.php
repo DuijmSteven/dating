@@ -100,6 +100,14 @@ class UserSearchManager
                 });
             }
 
+            if (isset($parameters['created_at_after'])) {
+                $query->where('users.created_at', '>=', $parameters['created_at_after']);
+            }
+
+            if (isset($parameters['created_at_before'])) {
+                $query->where('users.created_at', '<=', $parameters['created_at_before']);
+            }
+
             if (isset($parameters['city_name'])) {
                 $client = new Client();
                 $geocoder = new GeocoderService($client);

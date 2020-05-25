@@ -61,6 +61,19 @@ class UserSearchController extends Controller
                 $searchParameters['dob']['max'] = $formattedMaxDate;
             }
 
+            if (isset($searchParameters['created_at_after'])) {
+                $searchParameters['created_at_after'] = (new Carbon($searchParameters['created_at_after']))
+                    ->tz('Europe/Amsterdam')
+                    ->format('Y-m-d H:i:s');
+            }
+
+            if (isset($searchParameters['created_at_before'])) {
+                $searchParameters['created_at_before'] = (new Carbon($searchParameters['created_at_before']))
+                    ->addDays(1)
+                    ->tz('Europe/Amsterdam')
+                    ->format('Y-m-d H:i:s');
+            }
+
             // flash parameters to session so the next request can access them
             $userSearchRequest->session()->put('searchParameters', $searchParameters);
         } catch (\Exception $exception) {
@@ -93,14 +106,6 @@ class UserSearchController extends Controller
             true,
             $request->input('page')
         );
-
-        foreach ($users as $user) {
-            if (!$user->account) {
-                dd($user);
-            }
-        }
-
-     //   dd($users);
 
         $viewData = [
             'carbonNow' => Carbon::now(),

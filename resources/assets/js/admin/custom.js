@@ -12,13 +12,23 @@ $(window).on('load', function () {
      *   CREATE BOT =================================================
      */
     // Instantiate date picker in  bot creation view
-    $('.datepicker__date').datepicker({
+    $('.datepicker__date:not(.defaultToPresent)').datepicker({
         weekStart: 1,
         autoclose: 1,
         startView: 2,
         minView: 2,
         useCurrent: false,
         defaultViewDate: new Date(1990, 11, 24),
+        format: "dd-mm-yyyy"
+    });
+
+    $('.datepicker__date.defaultToPresent').datepicker({
+        weekStart: 1,
+        autoclose: 1,
+        startView: 2,
+        minView: 2,
+        useCurrent: false,
+        defaultViewDate: new Date(),
         format: "dd-mm-yyyy"
     });
 
