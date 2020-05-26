@@ -337,6 +337,7 @@ class DashboardController extends Controller
                 'deactivationsChart' => $this->createDeactivationsChart(),
                 'deactivationsMonthlyChart' => $this->createDeactivationsMonthlyChart(),
                 'netPeasantsAcquiredMonthlyChart' => $this->createNetPeasantsAcquiredMonthlyChart(),
+                'rpuChart' => $this->createRpuChart(),
             ]
         ));
     }
@@ -1125,5 +1126,115 @@ class DashboardController extends Controller
             ->title('Deactivations per month');
 
         return $deactivationsMonthlyChart;
+    }
+
+    /**
+     * @return RevenueChart
+     * @throws \Exception
+     */
+    protected function createRpuChart(): RevenueChart
+    {
+        $query = \DB::table('payments as p')
+            ->select(
+                \DB::raw(
+                    'DATE_FORMAT(CONVERT_TZ(p.created_at, \'UTC\', \'Europe/Amsterdam\'), \'%Y-%m\') as months, 
+                    SUM(p.amount) as revenueInMonth'
+                )
+            )
+            ->leftJoin('users as u', 'u.id', 'p.user_id')
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('ru.role_id', User::TYPE_PEASANT)
+            ->where('p.status', Payment::STATUS_COMPLETED)
+            ->groupBy('months')
+            ->orderBy('months', 'ASC');
+
+        $results = $query->get();
+
+        $monthsWithRevenue = [];
+        $revenuePerMonth = [];
+
+        foreach ($results as $result) {
+            $monthsWithRevenue[] = explode(' ', $result->months)[0];
+            $revenuePerMonth[explode(' ', $result->months)[0]] = (int)$result->revenueInMonth / 100;
+        }
+
+        $query = \DB::table('users as u')
+            ->select(\DB::raw('DATE_FORMAT(CONVERT_TZ(u.created_at, \'UTC\', \'Europe/Amsterdam\'), \'%Y-%m\') as months, COUNT(u.id) AS registrationsCount'))
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('ru.role_id', User::TYPE_PEASANT)
+            ->where(function($query) {
+                $query->where('deactivated_at', null);
+                $query->orWhere('deactivated_at', '>=', 'months');
+            })
+            ->groupBy('months')
+            ->orderBy('months', 'ASC');
+
+        $results = $query->get();
+
+        $registrationsUntilMonth = [];
+        $registrationsCount = 0;
+
+        foreach ($results as $result) {
+            $registrationsUntilMonth[explode(' ', $result->months)[0]] = $registrationsCount + $result->registrationsCount;
+            $registrationsCount += $result->registrationsCount;
+        }
+
+        $period = new DatePeriod(
+            new DateTime($monthsWithRevenue[0]),
+            new DateInterval('P1M'),
+            new DateTime('now')
+        );
+
+
+        $mostRecentRegistrationSum = 0;
+        foreach ($period as $key => $value) {
+            if (!in_array($value->format('Y-m'), array_keys($registrationsUntilMonth))) {
+                $registrationsUntilMonth[$value->format('Y-m')] = $mostRecentRegistrationSum;
+            } else {
+                $mostRecentRegistrationSum = $registrationsUntilMonth[$value->format('Y-m')];
+            }
+        }
+
+        $labels = [];
+        $counts = [];
+
+        $lastMonth = null;
+        $loopCount = 0;
+
+        /**
+         * @var  $key
+         * @var DateTime $value
+         */
+        foreach ($period as $key => $value) {
+            if ($loopCount >= 2) {
+                $labels[] = $value->format('Y-m');
+
+                if (in_array($value->format('Y-m'), $monthsWithRevenue)) {
+                    if ($loopCount == 3) {
+                       // dd($revenuePerMonth[$value->format('Y-m')], $registrationsUntilMonth[$lastMonth], $registrationsUntilMonth);
+
+                    }
+
+                    $counts[] = number_format($revenuePerMonth[$value->format('Y-m')] / $registrationsUntilMonth[$lastMonth], 2);
+                } else {
+                    $counts[] = 0;
+                }
+            }
+
+            $lastMonth = $value->format('Y-m');
+            $loopCount++;
+        }
+
+        $revenueChart = new RevenueChart();
+        $revenueChart->labels($labels);
+
+        $revenueChart
+            ->dataset('ARPU (Average Revenue Per User) in Month', 'bar', $counts)
+            ->backGroundColor('#339929');
+
+        $revenueChart
+            ->title('ARPU per month');
+
+        return $revenueChart;
     }
 }
