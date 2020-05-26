@@ -27,7 +27,7 @@ use Kim\Activity\Activity;
 
 class DashboardController extends Controller
 {
-    const BAR_WIDTH = 0.1;
+    const BAR_WIDTH = 0.3;
 
     /** @var StatisticsManager */
     private $statisticsManager;
@@ -1210,11 +1210,6 @@ class DashboardController extends Controller
                 $labels[] = $value->format('Y-m');
 
                 if (in_array($value->format('Y-m'), $monthsWithRevenue)) {
-                    if ($loopCount == 3) {
-                       // dd($revenuePerMonth[$value->format('Y-m')], $registrationsUntilMonth[$lastMonth], $registrationsUntilMonth);
-
-                    }
-
                     $counts[] = number_format($revenuePerMonth[$value->format('Y-m')] / $registrationsUntilMonth[$lastMonth], 2);
                 } else {
                     $counts[] = 0;
@@ -1233,6 +1228,7 @@ class DashboardController extends Controller
             ->backGroundColor('#339929');
 
         $revenueChart
+            ->barWidth(self::BAR_WIDTH)
             ->title('ARPU per month');
 
         return $revenueChart;
