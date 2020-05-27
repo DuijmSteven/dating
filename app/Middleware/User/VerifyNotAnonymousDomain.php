@@ -28,16 +28,22 @@ class VerifyNotAnonymousDomain
                     return redirect('https://devely-operators.nl/operators/login');
                 } else if (\Auth::user()->roles()->get()[0]->id !== User::TYPE_EDITOR) {
                     return redirect('https://devely-operators.nl/editor/bots/created');
-                } else {
+                } else if (\Auth::user()->roles()->get()[0]->id !== User::TYPE_OPERATOR) {
                     return redirect('https://devely-operators.nl/operator-platform/dashboard');
+                } else {
+                    \Auth::logout();
+                    return redirect('https://devely-operators.nl');
                 }
             } elseif (config('app.env') === 'staging') {
                 if (is_null(\Auth::user())) {
                     return redirect('https://staging.devely-operators.nl/operators/login');
                 } else if (\Auth::user()->roles()->get()[0]->id !== User::TYPE_EDITOR) {
                     return redirect('https://staging.devely-operators.nl/editor/bots/created');
-                } else {
+                } else if (\Auth::user()->roles()->get()[0]->id !== User::TYPE_OPERATOR) {
                     return redirect('https://staging.devely-operators.nl/operator-platform/dashboard');
+                } else {
+                    \Auth::logout();
+                    return redirect('https://staging.devely-operators.nl');
                 }
             }
         }
