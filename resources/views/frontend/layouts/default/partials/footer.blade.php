@@ -46,13 +46,19 @@
                 </ul>
             </div>
         </div>
-        <div class="col-xs-12 text-center Footer__logo-container">
-            <div class="Footer__logo">
-                <img src="{!! asset('img/site_logos/Altijdsex_LogoBig_Neg.svg') !!}" alt="{{ config('app.name') }}">
+
+        @if(
+            !isset($isAnonymousDomain) ||
+            !$isAnonymousDomain
+        )
+            <div class="col-xs-12 text-center Footer__logo-container">
+                <div class="Footer__logo">
+                    <img src="{!! asset('img/site_logos/Altijdsex_LogoBig_Neg.svg') !!}" alt="{{ config('app.name') }}">
+                </div>
+                <div class="col-md-12 copyright">
+                    <h5>{{ @trans('footer.copyright', ['currentYear' => $carbonNow->year]) }}</h5>
+                </div>
             </div>
-            <div class="col-md-12 copyright">
-                <h5>{{ @trans('footer.copyright', ['currentYear' => $carbonNow->year]) }}</h5>
-            </div>
-        </div>
+        @endif
     </div>
 </footer>
