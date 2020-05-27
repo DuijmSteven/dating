@@ -27,7 +27,7 @@ Route::group([
     Route::get('/login', 'Frontend\LandingPageController@showLogin')
         ->middleware('guest')
         ->name('landing-page.show-login');
-    
+
     Route::post('login', 'Auth\LoginController@login')
         ->name('login.post')
         ->middleware(['guest']);
