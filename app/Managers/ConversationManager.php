@@ -221,17 +221,21 @@ class ConversationManager
      */
     public function newPeasantBotConversations()
     {
-        $conversations = Conversation::with(['userA', 'userB', 'messages'])
+        $conversations = Conversation::with(['userA', 'userB', 'userA.roles', 'userB.roles', 'messages'])
             ->whereDoesntHave('messages.sender.roles', function ($query) {
                 $query->where('id', User::TYPE_BOT);
             })
             ->whereHas('userA.roles', function ($query) {
-                $query->where('id', User::TYPE_PEASANT)
-                    ->where('active', 1);
+                $query->where('id', User::TYPE_PEASANT);
             })
             ->whereHas('userB.roles', function ($query) {
-                $query->where('id', User::TYPE_BOT)
-                    ->where('active', 1);
+                $query->where('id', User::TYPE_BOT);
+            })
+            ->whereHas('userA', function ($query) {
+                $query->where('active', true);
+            })
+            ->whereHas('userB', function ($query) {
+                $query->where('active', true);
             })
             ->where(function ($query) {
                 $query->where('locked_at', null)
@@ -257,6 +261,12 @@ class ConversationManager
     public function unrepliedPeasantBotConversations()
     {
         $conversations = Conversation::with(['userA', 'userB'])
+            ->whereHas('userA', function ($query) {
+                $query->where('active', true);
+            })
+            ->whereHas('userB', function ($query) {
+                $query->where('active', true);
+            })
             ->with(['messages' => function ($query) {
                 $query->orderBy('created_at', 'desc');
             }])
@@ -270,18 +280,10 @@ class ConversationManager
             ->where('replyable_at', '!=', null)
             ->get()
             ->filter(function ($value, $key) {
-                if (
-                    $value->messages[0]->sender &&
-                    $value->messages[0]->sender->active &&
-                    $value->messages[0]->recipient &&
-                    $value->messages[0]->recipient->active
-                ) {
-                    return
-                        $value->messages[0]->sender->roles[0]->id === User::TYPE_PEASANT &&
-                        $value->messages[0]->recipient->roles[0]->id === User::TYPE_BOT;
-                } else {
-                    return false;
-                }
+                return
+                    $value->messages[0]->sender->roles[0]->id === User::TYPE_PEASANT &&
+                    $value->messages[0]->recipient->roles[0]->id === User::TYPE_BOT;
+
             })
             ->sortByDesc(function ($conversation) {
                 return $conversation->messages[0]->getCreatedAt();
@@ -297,6 +299,12 @@ class ConversationManager
     public function stoppedPeasantBotConversations()
     {
         $conversations = Conversation::with(['userA', 'userB'])
+            ->whereHas('userA', function ($query) {
+                $query->where('active', true);
+            })
+            ->whereHas('userB', function ($query) {
+                $query->where('active', true);
+            })
             ->with(['messages' => function ($query) {
                 $query->orderBy('created_at', 'desc');
             }])
@@ -310,21 +318,12 @@ class ConversationManager
             ->where('replyable_at', '!=', null)
             ->get()
             ->filter(function ($value, $key) {
-                if (
-                    $value->messages[0]->sender &&
-                    $value->messages[0]->sender->active &&
-                    $value->messages[0]->recipient &&
-                    $value->messages[0]->recipient->active
-                ) {
-                    return
-                        $value->messages[0]->getCreatedAt()->lt(Carbon::now('Europe/Amsterdam')->subDays(2)) &&
-                        $value->messages[0]->getCreatedAt()->gt(Carbon::now('Europe/Amsterdam')->subDays(100)) &&
-                        $value->messages[0]->sender->roles[0]->id === User::TYPE_BOT &&
-                        $value->messages[0]->recipient->roles[0]->id === User::TYPE_PEASANT &&
-                        $value->messages[1]->sender->roles[0]->id !== User::TYPE_BOT;
-                } else {
-                    return false;
-                }
+                return
+                    $value->messages[0]->getCreatedAt()->lt(Carbon::now('Europe/Amsterdam')->subDays(2)) &&
+                    $value->messages[0]->getCreatedAt()->gt(Carbon::now('Europe/Amsterdam')->subDays(100)) &&
+                    $value->messages[0]->sender->roles[0]->id === User::TYPE_BOT &&
+                    $value->messages[0]->recipient->roles[0]->id === User::TYPE_PEASANT &&
+                    $value->messages[1]->sender->roles[0]->id !== User::TYPE_BOT;
             })
             ->sortByDesc(function ($conversation) {
                 return $conversation->messages[0]->getCreatedAt();

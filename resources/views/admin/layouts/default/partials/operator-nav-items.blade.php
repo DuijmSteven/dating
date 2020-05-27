@@ -24,14 +24,25 @@
 </ul>
 
 <div class="navbarUserStats">
-    <h5 class="statsHeading"><strong>Messages sent</strong></h5>
+    <h5 class="statsHeading"><strong>Normal messages sent</strong></h5>
     <div class="statsBody">
-        <strong>All time:</strong> {!! $authenticatedUser->operator_messages_count !!} <br>
-        <strong>Last month:</strong> {!! $authenticatedUser->operator_messages_last_month_count !!} <br>
-        <strong>This month:</strong> {!! $authenticatedUser->operator_messages_this_month_count !!} <br>
-        <strong>Last week:</strong> {!! $authenticatedUser->operator_messages_last_week_count !!} <br>
-        <strong>This week:</strong> {!! $authenticatedUser->operator_messages_this_week_count !!} <br>
-        <strong>Yesterday:</strong> {!! $authenticatedUser->operator_messages_yesterday_count !!} <br>
         <strong>Today:</strong> {!! $authenticatedUser->operator_messages_today_count !!} <br>
+        <strong>Yesterday:</strong> {!! $authenticatedUser->operator_messages_yesterday_count !!} <br>
+        <strong>This week:</strong> {!! $authenticatedUser->operator_messages_this_week_count !!} <br>
+        <strong>Last week:</strong> {!! $authenticatedUser->operator_messages_last_week_count !!} <br>
+        <strong>This month:</strong> {!! $authenticatedUser->operator_messages_this_month_count !!} <br>
+        <strong>Last month:</strong> {!! $authenticatedUser->operator_messages_last_month_count !!} <br>
+        <strong>All time:</strong> {!! $authenticatedUser->operator_messages_count !!} <br>
+    </div>
+
+    <h5 class="statsHeading"><strong>Stopped messages sent</strong></h5>
+    <div class="statsBody">
+        <strong>Today:</strong> {!! $authenticatedUser->operator_messages_to_stopped_conversations_today_count !!} <br>
+        <strong>Yesterday:</strong> {!! $authenticatedUser->operator_messages_to_stopped_conversations_yesterday_count !!} <br>
+        <strong>This week:</strong> {!! $authenticatedUser->operator_messages_to_stopped_conversations_this_week_count !!} <br>
+        <strong>Last week:</strong> {!! $authenticatedUser->operator_messages_to_stopped_conversations_last_week_count !!} <br>
+        <strong>This month:</strong> {!! $authenticatedUser->operator_messages_to_stopped_conversations_this_month_count !!} <br>
+        <strong>Last month:</strong> {!! $authenticatedUser->operator_messages_to_stopped_conversations_last_month_count !!} <br>
+        <strong>All time:</strong> {!! $authenticatedUser->operator_messages_to_stopped_conversations_count !!} <br>
     </div>
 </div>

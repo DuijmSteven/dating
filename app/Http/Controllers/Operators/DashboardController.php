@@ -35,7 +35,7 @@ class DashboardController extends \App\Http\Controllers\Controller
             'operators.dashboard',
             [
                 'title' => 'Operator dashboard - ' . Auth::user()->username,
-                'headingLarge' => 'Operator dashboard',
+                'headingLarge' => 'Dashboard',
                 'headingSmall' => Auth::user()->username,
                 'newConversations' => $this->conversationManager->newPeasantBotConversations(),
                 'unrepliedConversations' => $this->conversationManager->unrepliedPeasantBotConversations(),
