@@ -20,54 +20,59 @@ Route::group([
         ->name('operators.show-login');
 });
 
-Route::post('login', 'Auth\LoginController@login')
-    ->name('login.post')
-    ->middleware(['guest']);
+Route::group([
+    'middleware' => ['not_anonymous_domain']
+], function()
+{
+    Route::get('/login', 'Frontend\LandingPageController@showLogin')
+        ->middleware('guest')
+        ->name('landing-page.show-login');
+    
+    Route::post('login', 'Auth\LoginController@login')
+        ->name('login.post')
+        ->middleware(['guest']);
 
-Route::post('logout', 'Auth\LoginController@logout')
-    ->name('logout.post');
+    Route::post('logout', 'Auth\LoginController@logout')
+        ->name('logout.post');
 
-Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')
-    ->name('password.reset.get');
+    Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')
+        ->name('password.reset.get');
 
-Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')
-    ->name('password.email');
+    Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')
+        ->name('password.email');
 
-Route::post('password/reset', 'Auth\ResetPasswordController@reset')
-    ->name('password.reset.post');
+    Route::post('password/reset', 'Auth\ResetPasswordController@reset')
+        ->name('password.reset.post');
 
-Route::get('password/reset-final', 'Auth\ResetPasswordController@showResetForm')
-    ->name('password.reset.final.get');
+    Route::get('password/reset-final', 'Auth\ResetPasswordController@showResetForm')
+        ->name('password.reset.final.get');
 
-Route::get('contact', 'Frontend\ContactController@showContact')
-    ->name('contact.get');
-Route::post('contact', 'Frontend\ContactController@postContact')
-    ->name('contact.post');
+    Route::get('contact', 'Frontend\ContactController@showContact')
+        ->name('contact.get');
+    Route::post('contact', 'Frontend\ContactController@postContact')
+        ->name('contact.post');
 
-Route::get('/home', 'Frontend\DashboardController@index')
-    ->name('home')
-    ->middleware(['auth', 'not_editor', 'not_operator']);
+    Route::get('/home', 'Frontend\DashboardController@index')
+        ->name('home')
+        ->middleware(['auth', 'not_editor', 'not_operator']);
 
-Route::get('/lps/{id}', 'Frontend\AdsLandingPagesController@showLP')
-    ->middleware('guest');
+    Route::get('/lps/{id}', 'Frontend\AdsLandingPagesController@showLP')
+        ->middleware('guest');
 
-Route::get('/', 'Frontend\LandingPageController@showRegister')
-    ->middleware('guest')
-    ->name('landing-page.show-register');
+    Route::get('/', 'Frontend\LandingPageController@showRegister')
+        ->middleware('guest')
+        ->name('landing-page.show-register');
 
-Route::get('/login', 'Frontend\LandingPageController@showLogin')
-    ->middleware('guest')
-    ->name('landing-page.show-login');
+    Route::post('/', 'Auth\RegisterController@register')
+        ->middleware('guest')
+        ->name('register.post');
 
-Route::post('/', 'Auth\RegisterController@register')
-    ->middleware('guest')
-    ->name('register.post');
+    Route::get('deactivated', 'Frontend\UserController@showDeactivated')
+        ->name('users.deactivated.get');
 
-Route::get('deactivated', 'Frontend\UserController@showDeactivated')
-    ->name('users.deactivated.get');
-
-Route::post('redirect-back', 'Frontend\UserController@redirectBack')
-    ->name('users.redirect-back');
+    Route::post('redirect-back', 'Frontend\UserController@redirectBack')
+        ->name('users.redirect-back');
+});
 
 /* User routes */
 Route::group([
