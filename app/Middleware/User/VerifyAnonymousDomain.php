@@ -23,7 +23,7 @@ class VerifyAnonymousDomain
             Str::contains(request()->getHttpHost(), 'altijdsex') &&
             (is_null(\Auth::user()) || \Auth::user()->roles()->get()[0]->id !== User::TYPE_ADMIN)
         ) {
-            return redirect('https://altijdsex.nl');
+            return redirect(config('app.url'));
         }
 
         return $next($request);

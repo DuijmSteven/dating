@@ -23,7 +23,7 @@ class VerifyNotAnonymousDomain
             !Str::contains(request()->getHttpHost(), 'altijdsex') &&
             (is_null(\Auth::user()) || \Auth::user()->roles()->get()[0]->id !== User::TYPE_ADMIN)
         ) {
-            return redirect('https://devely-operators.nl/operators/login');
+            return redirect(config('app.url') . '/operators/login');
         }
 
         return $next($request);
