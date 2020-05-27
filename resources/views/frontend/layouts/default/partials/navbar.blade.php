@@ -24,8 +24,8 @@
             </button>
 
             @if(
-                !isset($dontShowLogo) ||
-                !$dontShowLogo
+                !isset($isAnonymousDomain) ||
+                !$isAnonymousDomain
             )
                 <a class="navbar-brand" href="{!! route('home') !!}">
                     <img src="{!! asset('img/site_logos/Altijdsex_LogoSmall_Pos@1x.png') !!}">
@@ -138,12 +138,18 @@
                     </li>
 
                 @else
-                    <li class="{!! \Request::route()->getName() == 'login.get' ? 'active' : '' !!}">
-                        <a href="{{ route('landing-page.show-login') }}">{{ @trans('navbar.login') }}</a>
-                    </li>
-                    <li class="{!! \Request::route()->getName() == 'landing-page.show' ? 'active' : '' !!}">
-                        <a href="{{ route('landing-page.show-register') }}">{{ @trans('navbar.register') }}</a>
-                    </li>
+                    @if(
+                        !isset($isAnonymousDomain) ||
+                        !$isAnonymousDomain
+                    )
+
+                        <li class="{!! \Request::route()->getName() == 'login.get' ? 'active' : '' !!}">
+                            <a href="{{ route('landing-page.show-login') }}">{{ @trans('navbar.login') }}</a>
+                        </li>
+                        <li class="{!! \Request::route()->getName() == 'landing-page.show' ? 'active' : '' !!}">
+                            <a href="{{ route('landing-page.show-register') }}">{{ @trans('navbar.register') }}</a>
+                        </li>
+                    @endif
                 @endif
 
             </ul>

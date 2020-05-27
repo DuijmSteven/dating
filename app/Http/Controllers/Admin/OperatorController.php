@@ -107,7 +107,7 @@ class OperatorController extends Controller
             'operators.login',
             [
                 'title' => 'Login - Operators',
-                'dontShowLogo' => true
+                'isAnonymousDomain' => true
             ]
         );
     }
