@@ -22,17 +22,10 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            @if(
-                !isset($dontShowLogo) ||
-                !$dontShowLogo ||
-                (
-                    isset($authenticatedUser) &&
-                    !$authenticatedUser->isOperator() && $authenticatedUser->isEditor())
-                )
-                <a class="navbar-brand" href="{!! route('home') !!}">
-                    <img src="{!! asset('img/site_logos/Altijdsex_LogoSmall_Pos@1x.png') !!}">
-                </a>
-            @endif
+
+            <a class="navbar-brand" href="{!! route('home') !!}">
+                <img src="{!! asset('img/site_logos/Altijdsex_LogoSmall_Pos@1x.png') !!}">
+            </a>
 
             @if(isset($authenticatedUser))
                 <a class="buyCreditsButton" href="{{ route('credits.show') }}">

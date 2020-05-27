@@ -8,10 +8,19 @@
 <div class="wrapper">
     <header class="main-header">
         <!-- Logo -->
-        <a href="{!! route('admin.dashboard') !!}" class="logo">
-            <img class="site-logo" src="{!! asset('img/site_logos/Altijdsex_LogoSmall_Pos@1x.png') !!}">
-        </a>
-        <!-- Header Navbar: style can be found in header.less -->
+        @if(
+            !isset($dontShowLogo) ||
+            !$dontShowLogo ||
+            (
+                isset($authenticatedUser) &&
+                !$authenticatedUser->isOperator() && $authenticatedUser->isEditor())
+            )
+            <a href="{!! route('admin.dashboard') !!}" class="logo">
+                <img class="site-logo" src="{!! asset('img/site_logos/Altijdsex_LogoSmall_Pos@1x.png') !!}">
+            </a>
+        @endif
+
+    <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
             <!-- Sidebar toggle button-->
             <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
