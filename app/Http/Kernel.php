@@ -63,5 +63,6 @@ class Kernel extends HttpKernel
         'not_operator' => \App\Middleware\User\VerifyNotOperator::class,
         'current_user' => \App\Middleware\User\VerifyIsCurrentUser::class,
         'operator' => \App\Middleware\User\VerifyOperator::class,
+        'anonymous_domain' => \App\Middleware\User\VerifyAnonymousDomain::class,
     ];
 }

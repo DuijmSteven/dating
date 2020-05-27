@@ -11,6 +11,15 @@
 |
 */
 
+
+Route::group([
+    'middleware' => ['operator_domain', 'guest']
+], function()
+{
+    Route::get('operators/login', 'Admin\OperatorController@showLogin')
+        ->name('operators.show-login');
+});
+
 Route::post('login', 'Auth\LoginController@login')
     ->name('login.post')
     ->middleware(['guest']);
@@ -553,7 +562,7 @@ Route::group([
 
 Route::group([
     'prefix' => 'editor',
-    'middleware' => ['editor']
+    'middleware' => ['editor', 'anonymous_domain']
 ], function () {
     Route::group([
         'prefix' => 'bots'
@@ -572,7 +581,7 @@ Route::group([
 
 Route::group([
     'prefix' => 'admin',
-    'middleware' => ['editor']
+    'middleware' => ['editor', 'anonymous_domain']
 ], function () {
     Route::group([
         'prefix' => 'bots'
@@ -586,7 +595,7 @@ Route::group([
 
 Route::group([
     'prefix' => 'operator-platform',
-    'middleware' => ['operator']
+    'middleware' => ['operator', 'anonymous_domain']
 ], function () {
     Route::get('dashboard', 'Operators\DashboardController@showDashboard')
     ->name('operator-platform.dashboard');

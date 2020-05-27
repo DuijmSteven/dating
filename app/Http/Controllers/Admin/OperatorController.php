@@ -101,6 +101,17 @@ class OperatorController extends Controller
         );
     }
 
+    public function showLogin()
+    {
+        return view(
+            'operators.login',
+            [
+                'title' => 'Login - Operators',
+                'dontShowLogo' => true
+            ]
+        );
+    }
+
     /**
      * @param int $operatorId
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
