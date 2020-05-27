@@ -24,11 +24,22 @@ class VerifyNotAnonymousDomain
             (is_null(\Auth::user()) || \Auth::user()->roles()->get()[0]->id !== User::TYPE_ADMIN)
         ) {
             if (config('app.env') === 'production') {
-                return redirect('https://devely-operators.nl/operators/login');
+                if (is_null(\Auth::user())) {
+                    return redirect('https://devely-operators.nl/operators/login');
+                } else if (\Auth::user()->roles()->get()[0]->id !== User::TYPE_EDITOR) {
+                    return redirect('https://devely-operators.nl/editor/bots/created');
+                } else {
+                    return redirect('https://devely-operators.nl/operator-platform/dashboard');
+                }
             } elseif (config('app.env') === 'staging') {
-                return redirect('https://staging.devely-operators.nl/operators/login');
+                if (is_null(\Auth::user())) {
+                    return redirect('https://staging.devely-operators.nl/operators/login');
+                } else if (\Auth::user()->roles()->get()[0]->id !== User::TYPE_EDITOR) {
+                    return redirect('https://staging.devely-operators.nl/editor/bots/created');
+                } else {
+                    return redirect('https://staging.devely-operators.nl/operator-platform/dashboard');
+                }
             }
-
         }
 
         return $next($request);

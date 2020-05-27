@@ -37,7 +37,7 @@ class LoginController extends Controller
     /**
      * @param Request $request
      * @param User $user
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse|void
      */
     protected function authenticated(Request $request, $user)
     {
