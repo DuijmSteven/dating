@@ -15,6 +15,9 @@ Route::post('login', 'Auth\LoginController@login')
     ->name('login.post')
     ->middleware(['guest']);
 
+Route::post('logout', 'Auth\LoginController@logout')
+    ->name('logout.post');
+
 Route::group([
     'middleware' => ['anonymous_domain', 'guest']
 ], function()
@@ -30,9 +33,6 @@ Route::group([
     Route::get('/login', 'Frontend\LandingPageController@showLogin')
         ->middleware('guest')
         ->name('landing-page.show-login');
-
-    Route::post('logout', 'Auth\LoginController@logout')
-        ->name('logout.post');
 
     Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')
         ->name('password.reset.get');
