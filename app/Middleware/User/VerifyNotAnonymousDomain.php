@@ -7,7 +7,7 @@ use App\User;
 use Closure;
 use Illuminate\Support\Str;
 
-class VerifyAnonymousDomain
+class VerifyNotAnonymousDomain
 {
     /**
      * Handle an incoming request.
@@ -20,10 +20,10 @@ class VerifyAnonymousDomain
     {
         if (
             config('app.env') !== 'local' &&
-            Str::contains(request()->getHttpHost(), 'altijdsex') &&
+            !Str::contains(request()->getHttpHost(), 'altijdsex') &&
             (is_null(\Auth::user()) || \Auth::user()->roles()->get()[0]->id !== User::TYPE_ADMIN)
         ) {
-            return redirect('https://altijdsex.nl');
+            return redirect('https://devely-operators.nl');
         }
 
         return $next($request);

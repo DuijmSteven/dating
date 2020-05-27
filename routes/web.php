@@ -13,7 +13,7 @@
 
 
 Route::group([
-    'middleware' => ['operator_domain', 'guest']
+    'middleware' => ['anonymous_domain', 'guest']
 ], function()
 {
     Route::get('operators/login', 'Admin\OperatorController@showLogin')
@@ -48,10 +48,6 @@ Route::get('/home', 'Frontend\DashboardController@index')
     ->name('home')
     ->middleware(['auth', 'not_editor', 'not_operator']);
 
-//Route::get('/home', 'Frontend\UserSearchController@showInitialSearchResults')
-//    ->name('home')
-//    ->middleware(['auth', 'not_editor', 'not_operator']);
-
 Route::get('/lps/{id}', 'Frontend\AdsLandingPagesController@showLP')
     ->middleware('guest');
 
@@ -76,7 +72,7 @@ Route::post('redirect-back', 'Frontend\UserController@redirectBack')
 /* User routes */
 Route::group([
     'prefix' => 'users',
-    'middleware' => ['auth', 'not_editor', 'not_operator']
+    'middleware' => ['auth', 'not_editor', 'not_operator', 'not_anonymous_domain']
 ], function () {
 
     Route::group([
@@ -129,7 +125,8 @@ Route::group([
 
 /* Articles routes */
 Route::group([
-    'prefix' => 'articles'
+    'prefix' => 'articles',
+    'middleware' => ['not_anonymous_domain']
 ], function () {
     Route::get('/', 'Frontend\ArticleController@index')
         ->name('articles.overview');
@@ -140,7 +137,7 @@ Route::group([
 /* Conversations routes */
 Route::group([
     'prefix' => 'conversations',
-    'middleware' => ['auth', 'not_editor', 'not_operator']
+    'middleware' => ['auth', 'not_editor', 'not_operator', 'not_anonymous_domain']
 ], function () {
     Route::get('/', 'ConversationController@index')
         ->name('conversations.overview');
@@ -152,7 +149,7 @@ Route::group([
 
 Route::group([
     'prefix' => 'images',
-    'middleware' => ['auth', 'not_editor', 'not_operator']
+    'middleware' => ['auth', 'not_editor', 'not_operator', 'not_anonymous_domain']
 ], function () {
     Route::delete('{imageId}/delete', 'UserImageController@destroy')
         ->name('images.destroy');
@@ -162,7 +159,7 @@ Route::group([
 
 Route::group([
     'prefix' => 'flirts',
-    'middleware' => ['auth', 'not_editor', 'not_operator']
+    'middleware' => ['auth', 'not_editor', 'not_operator', 'not_anonymous_domain']
 ], function () {
     Route::get('{senderId}/{recipientId}', 'Frontend\FlirtController@send');
 });
@@ -172,7 +169,7 @@ Route::get('cities/{countryCode}', 'Admin\UserController@getCities')
 
 Route::group([
     'prefix' => 'payments',
-    'middleware' => ['auth', 'not_editor', 'not_operator']
+    'middleware' => ['auth', 'not_editor', 'not_operator', 'not_anonymous_domain']
 ], function () {
     Route::post('/', 'Frontend\PaymentController@postPayment')
         ->name('payments.post');
@@ -194,7 +191,7 @@ Route::get('faq', 'Frontend\MiscController@showFaq')
 
 Route::group([
     'prefix' => 'credits',
-    'middleware' => ['auth', 'not_editor', 'not_operator']
+    'middleware' => ['auth', 'not_editor', 'not_operator', 'not_anonymous_domain']
 ], function () {
     Route::get('/', 'Frontend\CreditsController@show')
         ->name('credits.show');
@@ -204,7 +201,7 @@ Route::group([
 
 Route::group([
     'prefix' => 'admin',
-    'middleware' => ['admin']
+    'middleware' => ['admin', 'not_anonymous_domain']
 ], function () {
     Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
