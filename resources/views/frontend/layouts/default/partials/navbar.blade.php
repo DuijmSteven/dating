@@ -23,9 +23,14 @@
                 <span class="icon-bar"></span>
             </button>
 
-            <a class="navbar-brand" href="{!! route('home') !!}">
-                <img src="{!! asset('img/site_logos/Altijdsex_LogoSmall_Pos@1x.png') !!}">
-            </a>
+            @if(
+                !isset($dontShowLogo) ||
+                !$dontShowLogo
+            )
+                <a class="navbar-brand" href="{!! route('home') !!}">
+                    <img src="{!! asset('img/site_logos/Altijdsex_LogoSmall_Pos@1x.png') !!}">
+                </a>
+            @endif
 
             @if(isset($authenticatedUser))
                 <a class="buyCreditsButton" href="{{ route('credits.show') }}">

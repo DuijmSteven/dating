@@ -13,7 +13,7 @@
             !$dontShowLogo ||
             (
                 isset($authenticatedUser) &&
-                !$authenticatedUser->isOperator() && $authenticatedUser->isEditor())
+                !$authenticatedUser->isOperator() && !$authenticatedUser->isEditor())
             )
             <a href="{!! route('admin.dashboard') !!}" class="logo">
                 <img class="site-logo" src="{!! asset('img/site_logos/Altijdsex_LogoSmall_Pos@1x.png') !!}">
