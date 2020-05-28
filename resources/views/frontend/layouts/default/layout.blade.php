@@ -80,7 +80,13 @@
 <!-- Creates the bootstrap modal where the image will appear -->
 @include('frontend.components.image-modal')
 
-@include('frontend.layouts.default.partials.footer')
+@if(
+    !isset($isAnonymousDomain) ||
+    !$isAnonymousDomain
+)
+    @include('frontend.layouts.default.partials.footer')
+@endif
+
 <script>
     /*
      * Application namespace
