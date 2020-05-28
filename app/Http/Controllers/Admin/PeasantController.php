@@ -67,6 +67,39 @@ class PeasantController extends Controller
         );
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function deactivations()
+    {
+        $deactivatedPeasants = User::with(
+            array_unique(array_merge(
+                User::COMMON_RELATIONS,
+                User::PEASANT_RELATIONS
+            ))
+        )
+            ->withCount(
+                User::PEASANT_RELATION_COUNTS
+            )
+            ->whereHas('roles', function ($query) {
+                $query->where('name', 'peasant');
+            })
+            ->where('deactivated_at', '!=', null)
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
+
+        return view(
+            'admin.peasants.overview',
+            [
+                'title' => 'Deactivations - ' . \config('app.name'),
+                'headingLarge' => 'Peasant',
+                'headingSmall' => 'Deactivations',
+                'carbonNow' => Carbon::now(),
+                'peasants' => $deactivatedPeasants
+            ]
+        );
+    }
+
     public function showOnMap()
     {
         \Mapper::renderJavascript();

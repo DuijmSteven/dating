@@ -73,6 +73,12 @@
                 On Map
             </a>
         </li>
+        <li class="{!! \Request::route()->getName() == 'admin.peasants.deactivations.overview' ? 'active' : '' !!}">
+            <a href="{!! route('admin.peasants.deactivations.overview') !!}">
+                <i class="fa fa-list"></i>
+                Deactivations
+            </a>
+        </li>
     </ul>
 </li>
 <li class="treeview {!! \Str::contains(\Request::route()->getName(), 'admin.operators') ? 'active' : '' !!}">

@@ -89,19 +89,20 @@
                                                 </div>
                                             @endif
                                         @endforeach
-                                        <strong>Created at</strong> {!! $peasant->getCreatedAt()->tz('Europe/Amsterdam')->format('d-m-Y H:i:s') !!}
-                                                                    ({!! $peasant->getCreatedAt()->tz('Europe/Amsterdam')->diffForHumans() !!})
-                                        <br>
                                     </div>
 
                                     @if($peasant->getLastOnlineAt())
                                         <div class="innerTableWidgetHeading"><strong>Activity</strong></div>
                                         <div class="innerTableWidgetBody">
                                                 <strong>Last active at</strong> {!! $peasant->getLastOnlineAt()->tz('Europe/Amsterdam')->format('d-m-Y H:i:s') !!}
-                                                                                ({!! $peasant->getLastOnlineAt()->tz('Europe/Amsterdam')->diffForHumans() !!})<br>
+                                                                                ({!! $peasant->getLastOnlineAt()->tz('Europe/Amsterdam')->diffForHumans() !!})
+                                                <br>
+
+                                                <strong>Created at</strong> {!! $peasant->getCreatedAt()->tz('Europe/Amsterdam')->format('d-m-Y H:i:s') !!}
+                                                                            ({!! $peasant->getCreatedAt()->tz('Europe/Amsterdam')->diffForHumans() !!})
+                                                <br>
                                         </div>
                                     @endif
-
 
                                     @if(count($peasant->completedPayments) > 0)
                                         <div class="innerTableWidgetHeading"><strong>Payments</strong></div>
@@ -119,6 +120,25 @@
                                             ?>
 
                                             <strong>Money spent</strong>: &euro;{{ number_format($moneySpent/ 100, 2) }} <br>
+                                        </div>
+                                    @endif
+
+                                    @if($peasant->getDeactivatedAt())
+                                        <div class="innerTableWidgetHeading"><strong>Deactivation info</strong></div>
+                                        <div class="innerTableWidgetBody deactivationInfo">
+
+                                            <strong>Deactivated at</strong> {!! $peasant->getDeactivatedAt()->tz('Europe/Amsterdam')->format('d-m-Y H:i:s') !!}
+                                            ({!! $peasant->getDeactivatedAt()->tz('Europe/Amsterdam')->diffForHumans() !!})<br>
+
+                                            <strong>Remained active for</strong> {!! $peasant->getCreatedAt()->tz('Europe/Amsterdam')->shortAbsoluteDiffForHumans($peasant->getDeactivatedAt()->tz('Europe/Amsterdam')) !!}<br>
+                                        </div>
+                                    @endif
+
+                                    @if($peasant->affiliateTracking)
+                                        <div class="innerTableWidgetHeading"><strong>Affiliate tracking</strong></div>
+                                        <div class="innerTableWidgetBody">
+                                            <strong>Click ID</strong> {{ $peasant->affiliateTracking->getClickId() }}<br>
+                                            <strong>Media ID</strong> {{ $peasant->affiliateTracking->getMediaId() }}<br>
                                         </div>
                                     @endif
                                 </td>

@@ -443,6 +443,14 @@ class User extends Authenticatable
         return $this->created_at;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getDeactivatedAt()
+    {
+        return $this->deactivated_at;
+    }
+
     public function getLastOnlineAt()
     {
         return $this->last_online_at;

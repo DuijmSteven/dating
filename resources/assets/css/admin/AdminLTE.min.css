@@ -6376,6 +6376,11 @@ table .action-buttons .btn {
     background-color: #f3ede2;
 }
 
+.innerTableWidgetBody.deactivationInfo {
+    background-color: #a25858;
+    color: #fff;
+}
+
 .table img {
     margin-bottom: 10px;
 }

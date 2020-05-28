@@ -316,6 +316,9 @@ Route::group([
 
         Route::get('{peasantId}/message-as-bot/{onlyOnlineBots}', 'Admin\PeasantController@messagePeasantAsBot')
             ->name('admin.peasants.message-as-bot.get');
+
+        Route::get('/deactivations', 'Admin\PeasantController@deactivations')
+            ->name('admin.peasants.deactivations.overview');
     });
 
     Route::group([
