@@ -28,13 +28,13 @@ class VerifyNotAnonymousDomain
                     \Auth::logout();
                 }
 
-                return redirect('https://devely-operators.nl');
+                return redirect('https://devely-operators.nl/operators/login');
             } elseif (config('app.env') === 'staging') {
                 if (\Auth::user()) {
                     \Auth::logout();
                 }
 
-                return redirect('https://staging.devely-operators.nl');
+                return redirect('https://staging.devely-operators.nl/operators/login');
             }
         }
 

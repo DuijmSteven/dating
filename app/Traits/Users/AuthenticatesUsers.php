@@ -174,14 +174,14 @@ trait AuthenticatesUsers
             if (Str::contains(request()->getHttpHost(), 'altijdsex')) {
                 $redirect = redirect('https://staging.altijdsex.nl/login');
             } else {
-                $redirect = redirect('https://staging.devely-operators.nl');
+                $redirect = redirect('https://staging.devely-operators.nl/operators/login');
             }
 
         } else if (config('app.env') === 'production') {
             if (Str::contains(request()->getHttpHost(), 'altijdsex')) {
                 $redirect = redirect('https://altijdsex.nl/login');
             } else {
-                $redirect = redirect('https://devely-operators.nl');
+                $redirect = redirect('https://devely-operators.nl/operators/login');
             }
 
             $redirect = redirect(route('landing-page.show-login'));
