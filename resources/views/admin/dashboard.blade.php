@@ -575,8 +575,26 @@
     <div class="row">
         <div class="col-xs-12">
             <div style="width: 100%">
+                {!! $revenueWithoutSalesTaxChart->container() !!}
+                {!! $revenueWithoutSalesTaxChart->script() !!}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div style="width: 100%">
                 {!! $revenueMonthlyChart->container() !!}
                 {!! $revenueMonthlyChart->script() !!}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div style="width: 100%">
+                {!! $revenueWithoutSalesTaxMonthlyChart->container() !!}
+                {!! $revenueWithoutSalesTaxMonthlyChart->script() !!}
             </div>
         </div>
     </div>

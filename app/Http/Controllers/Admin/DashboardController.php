@@ -338,6 +338,8 @@ class DashboardController extends Controller
                 'deactivationsMonthlyChart' => $this->createDeactivationsMonthlyChart(),
                 'netPeasantsAcquiredMonthlyChart' => $this->createNetPeasantsAcquiredMonthlyChart(),
                 'rpuChart' => $this->createRpuChart(),
+                'revenueWithoutSalesTaxChart' => $this->createRevenueWithoutSalesTaxChart(),
+                'revenueWithoutSalesTaxMonthlyChart' => $this->createRevenueWithoutSalesTaxMonthlyChart(),
             ]
         ));
     }
@@ -834,6 +836,142 @@ class DashboardController extends Controller
 
         return $revenueMonthlyChart;
     }
+
+    /**
+     * @return RevenueChart
+     * @throws \Exception
+     */
+    protected function createRevenueWithoutSalesTaxChart(): RevenueChart
+    {
+        $query = \DB::table('payments as p')
+            ->select(\DB::raw('DATE(CONVERT_TZ(p.created_at, \'UTC\', \'Europe/Amsterdam\')) as creationDate, SUM(p.amount) as revenueOnDay'))
+            ->leftJoin('users as u', 'u.id', 'p.user_id')
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('ru.role_id', User::TYPE_PEASANT)
+            ->where('p.status', Payment::STATUS_COMPLETED)
+            ->groupBy('creationDate')
+            ->orderBy('creationDate', 'ASC');
+
+        $results = $query->get();
+
+        $labels = [];
+        $counts = [];
+
+        $datesWithRevenue = [];
+        $revenuePerDate = [];
+
+        foreach ($results as $result) {
+            $datesWithRevenue[] = explode(' ', $result->creationDate)[0];
+
+            $revenueInCents = $result->revenueOnDay;
+            $revenueInCentsWithoutSalesTax = $revenueInCents / 1.21;
+
+            $revenueWithoutSalesTaxPerDate[explode(' ', $result->creationDate)[0]] = (int) $revenueInCentsWithoutSalesTax / 100;
+        }
+
+        $period = new DatePeriod(
+            new DateTime($datesWithRevenue[0]),
+            new DateInterval('P1D'),
+            new DateTime('now')
+        );
+
+        /**
+         * @var  $key
+         * @var DateTime $value
+         */
+        foreach ($period as $key => $value) {
+            $labels[] = $value->format('Y-m-d');
+
+            if (in_array($value->format('Y-m-d'), $datesWithRevenue)) {
+                $counts[] = $revenueWithoutSalesTaxPerDate[$value->format('Y-m-d')];
+            } else {
+                $counts[] = 0;
+            }
+        }
+
+        $revenueChart = new RevenueChart();
+        $revenueChart->labels($labels);
+
+        $revenueChart
+            ->dataset('Revenue without sales tax on date', 'line', $counts)
+            ->backGroundColor('#339929');
+
+        $revenueChart
+            ->title('Revenue without sales tax per day');
+
+        return $revenueChart;
+    }
+
+    /**
+     * @return RevenueMonthlyChart
+     * @throws \Exception
+     */
+    protected function createRevenueWithoutSalesTaxMonthlyChart(): RevenueMonthlyChart
+    {
+        $query = \DB::table('payments as p')
+            ->select(
+                \DB::raw(
+                    'DATE_FORMAT(CONVERT_TZ(p.created_at, \'UTC\', \'Europe/Amsterdam\'), \'%Y-%m\') as months, 
+                    SUM(p.amount) as revenueInMonth'
+                )
+            )
+            ->leftJoin('users as u', 'u.id', 'p.user_id')
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('ru.role_id', User::TYPE_PEASANT)
+            ->where('p.status', Payment::STATUS_COMPLETED)
+            ->groupBy('months')
+            ->orderBy('months', 'ASC');
+
+        $results = $query->get();
+
+        $labels = [];
+        $counts = [];
+
+        $monthsWithRevenue = [];
+        $revenuePerMonth = [];
+
+        foreach ($results as $result) {
+            $monthsWithRevenue[] = explode(' ', $result->months)[0];
+
+            $revenueInCents = $result->revenueInMonth;
+            $revenueInCentsWithoutSalesTax = $revenueInCents / 1.21;
+
+            $revenueWithoutSalesTaxPerMonth[explode(' ', $result->months)[0]] = (int) $revenueInCentsWithoutSalesTax / 100;
+        }
+
+        $period = new DatePeriod(
+            new DateTime($monthsWithRevenue[0]),
+            new DateInterval('P1M'),
+            new DateTime('now')
+        );
+
+        /**
+         * @var  $key
+         * @var DateTime $value
+         */
+        foreach ($period as $key => $value) {
+            $labels[] = $value->format('Y-m');
+
+            if (in_array($value->format('Y-m'), $monthsWithRevenue)) {
+                $counts[] = $revenueWithoutSalesTaxPerMonth[$value->format('Y-m')];
+            } else {
+                $counts[] = 0;
+            }
+        }
+
+        $revenueMonthlyChart = new RevenueMonthlyChart();
+        $revenueMonthlyChart->labels($labels);
+        $revenueMonthlyChart
+            ->dataset('Revenue without sales tax in month', 'bar', $counts)
+            ->backGroundColor('#339929');
+
+        $revenueMonthlyChart
+            ->barWidth(self::BAR_WIDTH)
+            ->title('Revenue without sales tax per month');
+
+        return $revenueMonthlyChart;
+    }
+
 
     /**
      * @return NetPeasantsAcquiredChart
