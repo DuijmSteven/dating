@@ -65,7 +65,7 @@
                                         <i class="fa fa-btn fa-sign-in"></i>Login
                                     </button>
 
-                                    <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
+                                    <p style="margin-top: 20px; font-size: 1.7rem">Ben je je wachtwoord vergeten? Vraag je coach om een nieuw wachtwoord.</p>
                                 </div>
                             </div>
                         </form>
