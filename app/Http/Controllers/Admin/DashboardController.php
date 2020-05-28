@@ -28,6 +28,7 @@ use Kim\Activity\Activity;
 class DashboardController extends Controller
 {
     const BAR_WIDTH = 0.3;
+    const SALES_TAX = 0.21;
 
     /** @var StatisticsManager */
     private $statisticsManager;
@@ -325,6 +326,7 @@ class DashboardController extends Controller
                 'title' => 'Dashboard - ' . \config('app.name'),
                 'headingLarge' => 'Dashboard',
                 'headingSmall' => 'Site Statistics',
+                'salesTax' => self::SALES_TAX,
                 'registrationsChart' => $this->createRegistrationsChart(),
                 'registrationsMonthlyChart' => $this->createRegistrationsMonthlyChart(),
                 'peasantMessagesChart' => $this->createPeasantMessagesChart(),
@@ -864,7 +866,7 @@ class DashboardController extends Controller
             $datesWithRevenue[] = explode(' ', $result->creationDate)[0];
 
             $revenueInCents = $result->revenueOnDay;
-            $revenueInCentsWithoutSalesTax = $revenueInCents / 1.21;
+            $revenueInCentsWithoutSalesTax = $revenueInCents / (1 + self::SALES_TAX);
 
             $revenueWithoutSalesTaxPerDate[explode(' ', $result->creationDate)[0]] = (int) $revenueInCentsWithoutSalesTax / 100;
         }
@@ -934,7 +936,7 @@ class DashboardController extends Controller
             $monthsWithRevenue[] = explode(' ', $result->months)[0];
 
             $revenueInCents = $result->revenueInMonth;
-            $revenueInCentsWithoutSalesTax = $revenueInCents / 1.21;
+            $revenueInCentsWithoutSalesTax = $revenueInCents / (1 + self::SALES_TAX);
 
             $revenueWithoutSalesTaxPerMonth[explode(' ', $result->months)[0]] = (int) $revenueInCentsWithoutSalesTax / 100;
         }

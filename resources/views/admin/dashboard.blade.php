@@ -201,29 +201,29 @@
                     <div class="widget-us DashboardWidget_header"
                          style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
                         <i class="fa fa-users DashboardWidget_header-icon"></i>
-                        <span class="DashboardWidget_header-title">Revenue</span>
+                        <span class="DashboardWidget_header-title">Revenue (without sales tax in parentheses)</span>
                     </div>
                     <!-- /.widget-user-image -->
                 </div>
                 <div class="box-footer no-padding">
                     <ul class="nav nav-stacked">
                         <li><a href="#">Today <span
-                                    class="DashboardWidget_count">&euro; {!! $revenueStatistics['revenueToday']/100 !!}</span></a>
+                                    class="DashboardWidget_count">&euro; {{ $revenueStatistics['revenueToday']/100 }} (<span style="color: #08a05e; font-weight: 600">{{ number_format($revenueStatistics['revenueToday']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
                         </li>
                         <li><a href="#">Yesterday <span
-                                    class="DashboardWidget_count">&euro; {!! $revenueStatistics['revenueYesterday']/100 !!}</span></a>
+                                    class="DashboardWidget_count">&euro; {{ $revenueStatistics['revenueYesterday']/100 }} (<span style="color: #08a05e; font-weight: 600">{{ number_format($revenueStatistics['revenueYesterday']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
                         </li>
                         <li><a href="#">Current week <span
-                                    class="DashboardWidget_count">&euro; {!! $revenueStatistics['revenueCurrentWeek']/100 !!}</span></a>
+                                    class="DashboardWidget_count">&euro; {{ $revenueStatistics['revenueCurrentWeek']/100 }} (<span style="color: #08a05e; font-weight: 600">{{ number_format($revenueStatistics['revenueCurrentWeek']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
                         </li>
                         <li><a href="#">Current month <span
-                                    class="DashboardWidget_count">&euro; {!! $revenueStatistics['revenueCurrentMonth']/100 !!}</span></a>
+                                    class="DashboardWidget_count">&euro; {{ $revenueStatistics['revenueCurrentMonth']/100 }} (<span style="color: #08a05e; font-weight: 600">{{ number_format($revenueStatistics['revenueCurrentMonth']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
                         </li>
                         <li><a href="#">Last month <span
-                                    class="DashboardWidget_count">&euro; {!! $revenueStatistics['revenuePreviousMonth']/100 !!}</span></a>
+                                    class="DashboardWidget_count">&euro; {{ $revenueStatistics['revenuePreviousMonth']/100 }} (<span style="color: #08a05e; font-weight: 600">{{ number_format($revenueStatistics['revenuePreviousMonth']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
                         </li>
                         <li><a href="#">Current year <span
-                                    class="DashboardWidget_count">&euro; {!! $revenueStatistics['revenueCurrentYear']/100 !!}</span></a>
+                                    class="DashboardWidget_count">&euro; {{ $revenueStatistics['revenueCurrentYear']/100 }} (<span style="color: #08a05e; font-weight: 600">{{ number_format($revenueStatistics['revenueCurrentYear']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
                         </li>
                     </ul>
                 </div>
