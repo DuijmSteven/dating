@@ -142,8 +142,13 @@
                 <!-- /.box-body -->
 
                 <div class="box-footer">
-                    <form role="form" method="POST" action="{!! route('admin.conversations.store') !!}"
-                          enctype="multipart/form-data">
+                    <form
+                        class="JS--sendMessageForm"
+                        role="form"
+                        method="POST"
+                        action="{!! route('admin.conversations.store') !!}"
+                        enctype="multipart/form-data"
+                    >
                         {!! csrf_field() !!}
                         <input type="hidden" value="{!! $conversation->id !!}" name="conversation_id">
                         <input type="hidden" value="{!! $conversation->userA->id !!}" name="sender_id">
@@ -157,10 +162,18 @@
                         </div>
                         <div>
                             <div class="input-group">
-                                <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                                <textarea
+                                    class="form-control JS--sendMessageTextarea"
+                                    name="message"
+                                    id=""
+                                    rows="5"
+                                    style="width: 94%"
+                                    placeholder="Type Message ..."
+                                >{{ old('message', '') }}</textarea>
+{{--                                <input type="text" name="message" placeholder="Type Message ..." class="form-control">--}}
                                 <span class="input-group-btn">
-                            <button type="submit" class="btn btn-success btn-flat">Send</button>
-                          </span>
+                                    <button type="submit" class="btn btn-success btn-flat">Send</button>
+                                </span>
                             </div>
                         </div>
                         <div class="attachment-path-container">

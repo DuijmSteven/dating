@@ -7,7 +7,12 @@
                 <h4 class="modal-title" id="mySmallModalLabel">Small modal</h4></div>
             <div class="modal-body">
 
-                <form class="form" role="form" method="POST" action="{!! route('admin.conversations.notes.store') !!}">
+                <form
+                    class="form JS--createLogItemForm"
+                    role="form"
+                    method="POST"
+                    action="{!! route('admin.conversations.notes.store') !!}"
+                >
                     {!! csrf_field() !!}
                     <input type="hidden" value="{!! $conversationId !!}" name="conversation_id">
                     <input type="hidden" value="" id="note_user_id" name="user_id">

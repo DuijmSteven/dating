@@ -100,6 +100,30 @@ $(window).on('load', function () {
 
             $('.JS--operatorCountdown').html(minutes + "m " + seconds + "s");
         }, 1000);
+
+        const conversationId = $('.JS--showConversation').data('conversation-id');
+
+        if (localStorage.getItem('conversation' + conversationId)) {
+            $('.JS--sendMessageTextarea').val(localStorage.getItem('conversation' + conversationId));
+        }
+
+        $('.JS--createLogItemForm').submit((event) => {
+            const textAreaValue = $('.JS--sendMessageTextarea').val();
+
+            if (textAreaValue.length > 0) {
+                localStorage.setItem('conversation' + conversationId, textAreaValue);
+            }
+
+            return true;
+        });
+
+        $('.JS--sendMessageForm').submit((event) => {
+            if (localStorage.getItem('conversation' + conversationId)) {
+                localStorage.removeItem('conversation' + conversationId)
+            }
+
+            return true;
+        });
     }
 
     if ($('#js-BotSelection').length > 0) {
@@ -205,6 +229,8 @@ $(window).on('load', function () {
                 .addClass('hidden');
         });
     }
+
+
 
 });
 
