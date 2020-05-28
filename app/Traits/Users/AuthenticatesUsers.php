@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 trait AuthenticatesUsers
@@ -167,7 +168,26 @@ trait AuthenticatesUsers
 
         $request->session()->invalidate();
 
-        return $this->loggedOut($request) ?: redirect(route('landing-page.show-login'));
+        $redirect = redirect(route('landing-page.show-login'));
+
+        if (config('app.env') === 'staging') {
+            if (Str::contains(request()->getHttpHost(), 'altijdsex')) {
+                $redirect = redirect('https://staging.altijdsex.nl/login');
+            } else {
+                $redirect = redirect('https://staging.devely-operators.nl');
+            }
+
+        } else if (config('app.env') === 'production') {
+            if (Str::contains(request()->getHttpHost(), 'altijdsex')) {
+                $redirect = redirect('https://altijdsex.nl/login');
+            } else {
+                $redirect = redirect('https://devely-operators.nl');
+            }
+
+            $redirect = redirect(route('landing-page.show-login'));
+        }
+
+        return $this->loggedOut($request) ?: $redirect;
     }
 
     /**

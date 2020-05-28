@@ -24,10 +24,16 @@ class VerifyNotAnonymousDomain
             (is_null(\Auth::user()) || \Auth::user()->roles()->get()[0]->id !== User::TYPE_ADMIN)
         ) {
             if (config('app.env') === 'production') {
-                \Auth::logout();
+                if (\Auth::user()) {
+                    \Auth::logout();
+                }
+
                 return redirect('https://devely-operators.nl');
             } elseif (config('app.env') === 'staging') {
-                \Auth::logout();
+                if (\Auth::user()) {
+                    \Auth::logout();
+                }
+
                 return redirect('https://staging.devely-operators.nl');
             }
         }
