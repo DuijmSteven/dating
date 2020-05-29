@@ -244,6 +244,15 @@ class ConversationController extends Controller
         /** @var Conversation $conversation */
         $conversation = Conversation::with(['userA', 'userB', 'messages'])->withTrashed()->find($conversationId);
 
+        if (null === $conversation->getReplyableAt() && !$this->authenticatedUser->isAdmin()) {
+            $alerts[] = [
+                'type' => 'warning',
+                'message' => 'The conversation is no longer replyable'
+            ];
+
+            return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
+        }
+
         if ($conversation->getLockedByUserId()) {
             if ($this->authenticatedUser->isAdmin()) {
                 $lockedByUserId = $conversation->getLockedByUserId();
@@ -313,15 +322,6 @@ class ConversationController extends Controller
         if (isset($lockedByUserId) && $this->authenticatedUser->getId() !== $lockedByUserId) {
             $viewData['lockedByUserId'] = $lockedByUserId;
             $viewData['lockedByUser'] = User::find($lockedByUserId);
-        }
-
-        if (null === $conversation->getReplyableAt() && !$this->authenticatedUser->isAdmin()) {
-            $alerts[] = [
-                'type' => 'warning',
-                'message' => 'The conversation is no longer replyable'
-            ];
-
-            return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
         }
 
         return view(
