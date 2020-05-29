@@ -15,6 +15,15 @@
                     <p>No notes available...</p>
                 </div>
             @else
+                <h5 class="recentNotesTitle">Recent notes</h5>
+                @foreach(array_slice($notes->toArray(), 0, 4) as $note)
+                    <div class="recentNote">
+                        {{ $note['body'] }}
+                    </div>
+                    <div class="recentNoteInfo">
+{{--                        {{ $note->z->name }}--}}
+                    </div>
+                    @endforeach
                 @foreach($notes as $note)
                     @if(ucfirst($currentCategory) !== ucfirst($note->category_id))
                         @if(!is_null($currentCategory))

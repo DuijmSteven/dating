@@ -6407,7 +6407,13 @@ table .action-buttons .btn {
     overflow-y: scroll;
 }
 
-.receivedUserImageInfo {
-    /*margin-top: 5px;*/
-    /*margin-bottom: 10px;*/
+.recentNotesTitle {
+    padding: 10px 10px;
+    margin: 0;
+}
+
+.recentNote {
+    font-size: 14px;
+    color: #111111;
+    padding: 0 10px 10px;
 }
