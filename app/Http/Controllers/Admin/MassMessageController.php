@@ -32,21 +32,54 @@ class MassMessageController extends Controller
 
     public function new()
     {
-        /** @var Collection $bots */
-        $queryBuilder = User::with(
-            User::COMMON_RELATIONS
-        )
-            ->withCount(
-                User::EDITOR_RELATION_COUNTS
-            )
-            ->whereHas('roles', function ($query) {
-                $query->where('id', User::TYPE_EDITOR)
-                    ->orWhere('id', User::TYPE_ADMIN);
+//        /** @var Collection $bots */
+//        $queryBuilder = User::with(
+//            User::COMMON_RELATIONS
+//        )
+//            ->withCount(
+//                User::EDITOR_RELATION_COUNTS
+//            )
+//            ->whereHas('roles', function ($query) {
+//                $query->where('id', User::TYPE_EDITOR)
+//                    ->orWhere('id', User::TYPE_ADMIN);
+//            });
+
+        $unlimitedUsersQuery = User::whereHas('roles', function ($query) {
+            $query->where('id', User::TYPE_PEASANT);
+        })
+            ->where('active', true)
+            ->whereHas('meta', function ($query) {
+                $query->where('gender', User::GENDER_MALE);
+                $query->where('looking_for_gender', User::GENDER_FEMALE);
             });
 
-        $editors = $queryBuilder
-            ->orderBy('created_at', 'desc')
-            ->paginate(20);
+        $unlimitedCount = $unlimitedUsersQuery->count();
+
+        $withoutPicUsersQuery = clone $unlimitedUsersQuery;
+        $withPicUsersQuery = clone $unlimitedUsersQuery;
+
+        $withPicUsersQuery->where(function ($query) {
+            $query->whereHas('meta', function ($query) {
+                $query->where('dob', '!=', null);
+                $query->orWhere('city', '!=',  null);
+            })
+                ->orWhereHas('images');
+        });
+
+        $withPicCount = $withPicUsersQuery->count();
+
+        $withoutPicUsersQuery
+            ->whereDoesntHave('images')
+            ->where(function ($query) {
+                $query->whereHas('meta', function ($query) {
+                    $query->where('dob', '=', null);
+                    $query->where('city', '=',  null);
+                    $query->where('eye_color', '=',  null);
+                    $query->where('hair_color', '=',  null);
+                });
+            });
+
+        $withoutPicCount = $withoutPicUsersQuery->count();
 
         return view(
             'admin.mass-messages.new',
@@ -55,7 +88,12 @@ class MassMessageController extends Controller
                 'headingLarge' => 'Mass Messages',
                 'headingSmall' => 'New Mass Message',
                 'pastMassMessages' => PastMassMessage::orderBy('created_at', 'desc')->get(),
-                'carbonNow' => Carbon::now()
+                'carbonNow' => Carbon::now(),
+                'userCounts' => [
+                    'unlimited' => $unlimitedCount,
+                    'withPic' => $withPicCount,
+                    'withoutPic' => $withoutPicCount,
+                ]
             ]
         );
     }
@@ -63,6 +101,7 @@ class MassMessageController extends Controller
     public function send(Request $request)
     {
         $messageBody = $request->get('body');
+        $limitMessage = $request->get('limit_message');
 
         $onlineUserIds = Activity::users(5)->pluck('user_id')->toArray();
 
@@ -75,7 +114,7 @@ class MassMessageController extends Controller
                 $query->where('looking_for_gender', User::GENDER_FEMALE);
             });
 
-        if ($request->get('limited_to_filled_profiles') && $request->get('limited_to_filled_profiles') === '1') {
+        if ($limitMessage === 'limited_with_pic') {
             $usersQuery->where(function ($query) {
                 $query->whereHas('meta', function ($query) {
                     $query->where('dob', '!=', null);
@@ -83,7 +122,17 @@ class MassMessageController extends Controller
                 })
                 ->orWhereHas('images');
             });
-
+        } else if ($limitMessage === 'limited_no_pic') {
+            $usersQuery
+                ->whereDoesntHave('images')
+                ->where(function ($query) {
+                    $query->whereHas('meta', function ($query) {
+                        $query->where('dob', '=', null);
+                        $query->where('city', '=',  null);
+                        $query->where('eye_color', '=',  null);
+                        $query->where('hair_color', '=',  null);
+                });
+            });
         }
 
         $users = $usersQuery->get();

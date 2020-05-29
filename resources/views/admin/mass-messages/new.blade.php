@@ -31,18 +31,29 @@
 
                 <div class="row">
                     <div class="col-sm-6">
+                        <h4>Limitation of reach</h4>
+
                         <div class="form-group">
-                            <label for="limited_to_filled_profiles">
-                                Limit message to users that have filled at least one major profile field (any uploaded
-                                <picture></picture> ,
-                                city, dob, about me)
-                                <input
-                                    type="checkbox"
-                                    name="limited_to_filled_profiles"
-                                    value="1"
-                                    checked
-                                >
-                            </label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="limit_message" id="limit_message1" value="unlimited" checked>
+                                <label class="form-check-label" for="limit_message1">
+                                    ({{ $userCounts['unlimited'] }}) Unlimited
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="limit_message" id="limit_message2" value="limited_with_pic">
+                                <label class="form-check-label" for="limit_message2">
+                                    ({{ $userCounts['withPic'] }}) Only users that have filled at least one major profile field (any uploaded
+                                    picture, city, dob, about me)
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label" for="limit_message3">
+                                <input class="form-check-input" type="radio" name="limit_message" id="limit_message3" value="limited_no_pic">
+                                    ({{ $userCounts['withoutPic'] }})  Only users that have no pictures and very few fields filled
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -61,25 +72,25 @@
         <div class="box-body">
             <table class="table table-hover">
                 <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Body</th>
-                        <th>Sent to # of peasants</th>
-                        <th class="no-wrap">Created at</th>
-                    </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Body</th>
+                    <th>Sent to # of peasants</th>
+                    <th class="no-wrap">Created at</th>
+                </tr>
                 </thead>
                 <tbody>
-                    @foreach($pastMassMessages as $message)
-                        <tr>
-                            <td>{{ $message->getId() }}</td>
-                            <td>{{ $message->getBody() }}</td>
-                            <td>{{ $message->getUserCount() }}</td>
-                            <td>
-                                {{ $message->getCreatedAt()->format('d-m-Y H:i:s') }}
-                                ({{ $message->getCreatedAt()->diffForHumans() }})
-                            </td>
-                        </tr>
-                    @endforeach
+                @foreach($pastMassMessages as $message)
+                    <tr>
+                        <td>{{ $message->getId() }}</td>
+                        <td>{{ $message->getBody() }}</td>
+                        <td>{{ $message->getUserCount() }}</td>
+                        <td>
+                            {{ $message->getCreatedAt()->format('d-m-Y H:i:s') }}
+                            ({{ $message->getCreatedAt()->diffForHumans() }})
+                        </td>
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>
