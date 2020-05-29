@@ -152,6 +152,8 @@ class ConversationManager
             ) {
                 $operatorMessageType = ConversationMessage::OPERATOR_MESSAGE_TYPE_STOPPED;
             }
+        } elseif ($sender->isBot()) {
+            $conversation->setReplyableAt(null);
         }
 
         $conversation->save();

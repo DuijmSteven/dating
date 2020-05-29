@@ -315,6 +315,15 @@ class ConversationController extends Controller
             $viewData['lockedByUser'] = User::find($lockedByUserId);
         }
 
+        if (null === $conversation->getReplyableAt() && !$this->authenticatedUser->isAdmin()) {
+            $alerts[] = [
+                'type' => 'warning',
+                'message' => 'The conversation is no longer replyable'
+            ];
+
+            return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
+        }
+
         return view(
             'admin.conversations.show',
             $viewData
@@ -653,7 +662,7 @@ class ConversationController extends Controller
 
             $sender = User::find($messageData['sender_id']);
 
-            if ($sender->roles()->get()[0]->name == 'bot') {
+            if ($sender->roles()->get()[0]->id === User::TYPE_BOT) {
                 $activity = new Activity;
                 $activity->id = bcrypt((int) time() . $messageData['sender_id'] . $messageData['recipient_id']);
                 $activity->last_activity = time();
