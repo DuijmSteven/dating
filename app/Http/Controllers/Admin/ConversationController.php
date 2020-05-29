@@ -685,7 +685,7 @@ class ConversationController extends Controller
             ];
         } catch (\Exception $exception) {
             if (Str::contains($exception->getMessage(), 'message')) {
-                \Log::error('Stopped convo problem convo ID:' . $conversation->getId());
+                \Log::error('Convo problem convo ID:' . $conversation->getId());
             }
 
             $alerts[] = [
