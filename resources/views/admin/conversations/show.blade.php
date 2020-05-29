@@ -134,7 +134,7 @@
 
                                         @if($message->body)
                                             @if($authenticatedUser->isAdmin())
-                                                {!! $message->body !!}
+                                                {{ $message->body }}
                                             @else
                                                 {!! \App\Helpers\FormattingHelper::stripPhonesAndEmails($message->body) !!}
                                             @endif
