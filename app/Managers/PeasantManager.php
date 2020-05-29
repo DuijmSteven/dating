@@ -118,7 +118,7 @@ class PeasantManager extends UserManager
 
         if ($action == 'create') {
             $userDataToPersist['user']['password'] = Hash::make($userDataToPersist['user']['password']);
-            $userDataToPersist['user']['role'] = UserConstants::selectableField('role', 'peasant', 'array_flip')['peasant'];
+            $userDataToPersist['user']['role'] = User::TYPE_PEASANT;
         }
 
         if ($action == 'update') {

@@ -102,6 +102,12 @@
                 Online
             </a>
         </li>
+        <li class="{!! \Request::route()->getName() == 'admin.operators.create.get' ? 'active' : '' !!}">
+            <a href="{!! route('admin.operators.create.get') !!}">
+                <i class="fa fa-user-plus"></i>
+                Create
+            </a>
+        </li>
     </ul>
 </li>
 <li class="treeview {!! \Str::contains(\Request::route()->getName(), 'admin.editors') ? 'active' : '' !!}">

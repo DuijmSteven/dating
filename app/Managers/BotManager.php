@@ -125,7 +125,7 @@ class BotManager extends UserManager
 
         if ($action == 'create') {
             $userDataToPersist['user']['password'] = Hash::make($userDataToPersist['user']['password']);
-            $userDataToPersist['user']['role'] = UserConstants::selectableField('role', 'bot', 'array_flip')['bot'];
+            $userDataToPersist['user']['role'] = User::TYPE_BOT;
         }
 
         return $userDataToPersist;

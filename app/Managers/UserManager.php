@@ -4,9 +4,11 @@
 namespace App\Managers;
 
 use App\EmailType;
+use App\Helpers\ApplicationConstants\UserConstants;
 use App\Mail\ProfileCompletion;
 use App\Mail\ProfileViewed;
 use App\RoleUser;
+use App\Services\GeocoderService;
 use App\Session;
 use App\User;
 use App\UserEmailTypeInstance;
@@ -14,9 +16,12 @@ use App\UserImage;
 use App\UserMeta;
 use App\UserView;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Kim\Activity\Activity;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -321,6 +326,91 @@ class UserManager
             }
         }
         return $imageFilenames;
+    }
+
+    public function createUser(array $userData)
+    {
+        $userData = $this->buildUserArrayToPersist($userData, 'create');
+        $userData['user']['created_by_id'] = \Auth::user()->getId();
+
+        $this->persistUser($userData);
+    }
+
+    /**
+     * @param array $peasantData
+     * @param string $action
+     * @return array
+     * @throws \Spatie\Geocoder\Exceptions\CouldNotGeocode
+     */
+    private function buildUserArrayToPersist(array $peasantData, string $action)
+    {
+        $usersTableData = Arr::where($peasantData, function ($value, $key) {
+            return in_array(
+                $key,
+                array_merge(
+                    UserConstants::userTableFields('peasant', 'public'),
+                    ['password', 'active']
+                )
+            );
+        });
+
+        $userMetaTableData = Arr::where($peasantData, function ($value, $key) {
+            return in_array(
+                $key,
+                array_merge(
+                    array_keys(UserConstants::selectableFields('peasant')),
+                    UserConstants::textFields('peasant', 'public'),
+                    UserConstants::textInputs('peasant', 'all')
+                )
+            );
+        });
+
+        $userDataToPersist['user'] = $usersTableData;
+        $userDataToPersist['user_meta'] = $userMetaTableData;
+
+        if (isset($userDataToPersist['user_meta']['dob'])) {
+            $userDataToPersist['user_meta']['dob'] = Carbon::parse($userDataToPersist['user_meta']['dob'])->format('Y-m-d');
+        }
+
+        if (isset($userDataToPersist['user_meta']['city'])) {
+            $client = new Client();
+            $geocoder = new GeocoderService($client);
+
+            $coordinates = $geocoder->getCoordinatesForAddress($userDataToPersist['user_meta']['city']);
+
+            $userDataToPersist['user_meta']['lat'] = $coordinates['lat'];
+            $userDataToPersist['user_meta']['lng'] = $coordinates['lng'];
+        }
+
+        if (empty($peasantData['user_images'][0])) {
+            $userDataToPersist['user_images'] = [];
+        } else {
+            $userDataToPersist['user_images'] = $peasantData['user_images'];
+        }
+
+        if (!isset($peasantData['profile_image'])) {
+            $userDataToPersist['profile_image'] = null;
+        } else {
+            $userDataToPersist['profile_image'] = $peasantData['profile_image'];
+        }
+
+        if ($action == 'create') {
+            $userDataToPersist['user']['password'] = Hash::make($userDataToPersist['user']['password']);
+
+            if (isset($peasantData['user']['role'])) {
+                $userDataToPersist['user']['role'] = $peasantData['user']['role'];
+            }
+        }
+
+        if ($action == 'update') {
+            if (isset($peasantData['email_notifications'])) {
+                $userDataToPersist['email_notifications'] = $peasantData['email_notifications'];
+            } else {
+                $userDataToPersist['email_notifications'] = [];
+            }
+        }
+
+        return $userDataToPersist;
     }
 
     /**

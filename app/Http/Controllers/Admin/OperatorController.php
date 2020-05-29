@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Bots\BotCreateRequest;
+use App\Http\Requests\Admin\Operators\OperatorCreateRequest;
 use App\Managers\UserManager;
 use App\User;
 use Carbon\Carbon;
@@ -163,6 +165,54 @@ class OperatorController extends Controller
             ]
         );
     }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function create()
+    {
+        return view(
+            'admin.operators.create',
+            [
+                'title' => 'Create Operator - ' . \config('app.name'),
+                'headingLarge' => 'Operator',
+                'headingSmall' => 'Create',
+                'carbonNow' => Carbon::now(),
+            ]
+        );
+    }
+
+    /**
+     * @param OperatorCreateRequest $operatorCreateRequest
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
+    public function store(OperatorCreateRequest $operatorCreateRequest)
+    {
+        $operatorCreateRequest->formatInput();
+        $operatorData = $operatorCreateRequest->all();
+        $operatorData['city'] = strtolower($operatorData['city']);
+        $operatorData['user']['role'] = User::TYPE_OPERATOR;
+
+        try {
+            $this->userManager->createUser($operatorData);
+
+            $alerts[] = [
+                'type' => 'success',
+                'message' => 'The operator was created successfully'
+            ];
+        } catch (\Exception $exception) {
+            \Log::error($exception->getMessage());
+
+            $alerts[] = [
+                'type' => 'error',
+                'message' => 'The operator was not created due to an exception.'
+            ];
+        }
+
+        return redirect()->back()->with('alerts', $alerts);
+    }
+
 
     /**
      * @param $id

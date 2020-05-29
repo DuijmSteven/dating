@@ -265,6 +265,12 @@ Route::group([
 
         Route::get('/online', 'Admin\OperatorController@showOnline')
             ->name('admin.operators.online.show');
+
+        Route::get('create', 'Admin\OperatorController@create')
+            ->name('admin.operators.create.get');
+
+        Route::post('create', 'Admin\OperatorController@store')
+            ->name('admin.operators.store');
     });
 
     Route::group([
