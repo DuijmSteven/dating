@@ -16,15 +16,17 @@
                 </div>
             @else
                 <h5 class="recentNotesTitle">Recent notes</h5>
-                @foreach(array_slice($notes->toArray(), 0, 4) as $note)
-                    <div class="recentNote">
-                        {{ $note['body'] }}
-                    </div>
-                    <div class="recentNoteInfo">
-{{--                        {{ $note->z->name }}--}}
-                    </div>
-                    @endforeach
-                @foreach($notes as $note)
+                    <ul>
+                        @foreach(array_slice($notes->toArray(), 0, 4) as $note)
+                            <li class="recentNote">
+                                {{ $note['body'] }}
+                            </li>
+                            <div class="recentNoteInfo">
+        {{--                        {{ $note->z->name }}--}}
+                            </div>
+                            @endforeach
+                        @foreach($notes as $note)
+                    </ul>
                     @if(ucfirst($currentCategory) !== ucfirst($note->category_id))
                         @if(!is_null($currentCategory))
                                 </div>

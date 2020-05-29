@@ -301,7 +301,7 @@ class ConversationController extends Controller
                 ' (id: ' . $conversation->userA->id . ') - ' .
                 $conversation->userB->username .
                 ' (id:' . $conversation->userB->id . ')'  .
-                ' - Gemaakt: ' . $conversation->getCreatedAt()->diffForHumans(),
+                ' - Gestart op: ' . $conversation->getCreatedAt()->diffForHumans(),
             'carbonNow' => Carbon::now('Europe/Amsterdam'),
             'conversation' => $conversation,
             'userANotes' => $userANotes,
