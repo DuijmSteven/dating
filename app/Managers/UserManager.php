@@ -11,6 +11,7 @@ use App\RoleUser;
 use App\Services\GeocoderService;
 use App\Session;
 use App\User;
+use App\UserAccount;
 use App\UserEmailTypeInstance;
 use App\UserImage;
 use App\UserMeta;
@@ -451,6 +452,24 @@ class UserManager
             DB::rollBack();
             throw $exception;
         }
+
+        if ($userData['user']['role'] === User::TYPE_PEASANT) {
+            try {
+                $amountOfFreeCredits = 1;
+
+                /** @var UserAccount $userAccountInstance */
+                $userAccountInstance = new UserAccount([
+                    'user_id' => $createdUser->id,
+                    'credits' => $amountOfFreeCredits
+                ]);
+
+                $userAccountInstance->save();
+            } catch (\Exception $exception) {
+                DB::rollBack();
+                throw $exception;
+            }
+        }
+
         return $createdUser;
     }
 

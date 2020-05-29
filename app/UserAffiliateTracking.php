@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserAffiliateTracking extends TimeZonedModel
 {
+    const AFFILIATE_XPARTNERS = 'xpartners';
+
     public $table = 'user_affiliate_tracking';
 
     /**
@@ -17,7 +19,8 @@ class UserAffiliateTracking extends TimeZonedModel
     protected $fillable = [
         'user_id',
         'click_id',
-        'media_id'
+        'media_id',
+        'affiliate'
     ];
 
     /**
@@ -46,6 +49,16 @@ class UserAffiliateTracking extends TimeZonedModel
     public function setClickId(int $clickId)
     {
         $this->click_id = $clickId;
+    }
+
+    public function getAffiliate(): string
+    {
+        return $this->affiliate;
+    }
+
+    public function setAffiliate(string $affiliate)
+    {
+        $this->affiliate = $affiliate;
     }
 
     public function getMediaId()

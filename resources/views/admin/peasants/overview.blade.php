@@ -137,6 +137,7 @@
                                     @if($peasant->affiliateTracking)
                                         <div class="innerTableWidgetHeading"><strong>Affiliate tracking</strong></div>
                                         <div class="innerTableWidgetBody">
+                                            <strong>Affiliate</strong> {{ $peasant->affiliateTracking->getAffiliate() }}<br>
                                             <strong>Click ID</strong> {{ $peasant->affiliateTracking->getClickId() }}<br>
                                             <strong>Media ID</strong> {{ $peasant->affiliateTracking->getMediaId() }}<br>
                                         </div>

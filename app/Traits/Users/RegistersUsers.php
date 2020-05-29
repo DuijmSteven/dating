@@ -119,6 +119,7 @@ trait RegistersUsers
                     'user_id' => $createdUser->id,
                     'media_id' => $request->input('mediaId'),
                     'click_id' => $request->input('clickId'),
+                    'affiliate' => UserAffiliateTracking::AFFILIATE_XPARTNERS
                 ]);
 
                 $userAffiliateTrackingInstance->save();
