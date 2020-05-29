@@ -34,6 +34,21 @@
 
                     <div class="col-sm-6">
                         <div class="form-group">
+                            <label for="password">Email</label>
+                            <input type="email"
+                                   class="form-control"
+                                   id="email"
+                                   name="email"
+                                   value="{!! old('email', '') !!}"
+                                   required>
+                            @if ($errors->has('email'))
+                                {!! $errors->first('email', '<small class="form-error">:message</small>') !!}
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
                             <label for="password">Password</label>
                             <input type="text" class="form-control" id="password" name="password" value="">
                         </div>
