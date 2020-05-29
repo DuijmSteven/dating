@@ -573,13 +573,13 @@ class ConversationController extends Controller
         $messageData = $messageCreateRequest->all();
         $messageData['operator_id'] = $this->authenticatedUser->getId();
 
-        try {
-            /** @var Conversation $conversation */
-            $conversation  = $this->conversationManager->retrieveConversation(
-                $messageData['sender_id'],
-                $messageData['recipient_id']
-            );
+        /** @var Conversation $conversation */
+        $conversation  = $this->conversationManager->retrieveConversation(
+            $messageData['sender_id'],
+            $messageData['recipient_id']
+        );
 
+        try {
             if (
                 $conversation instanceof Conversation &&
                 $conversation->getLockedByUserId() !== $this->authenticatedUser->getId() &&
@@ -684,7 +684,10 @@ class ConversationController extends Controller
                 'message' => 'The message was sent successfully'
             ];
         } catch (\Exception $exception) {
-            if (Str::contains($exception->getMessage(), 'message')) {
+            \Log::error($exception->getMessage());
+
+
+            if (Str::contains($exception->getMessage(), 'message') && $conversation) {
                 \Log::error('Convo problem convo ID:' . $conversation->getId());
             }
 
