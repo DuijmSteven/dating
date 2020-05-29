@@ -6384,3 +6384,30 @@ table .action-buttons .btn {
 .table img {
     margin-bottom: 10px;
 }
+
+.content-header>h1>small {
+    color: #d45827;
+}
+
+.receivedUserImage {
+    display: inline-block;
+    width: 32.3%;
+    height: 150px;
+    margin-bottom: 10px;
+}
+
+.receivedUserImage img {
+    object-fit: cover;
+    width:100%;
+    height: 150px;
+}
+
+.receivedUserImages {
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+.receivedUserImageInfo {
+    /*margin-top: 5px;*/
+    /*margin-bottom: 10px;*/
+}

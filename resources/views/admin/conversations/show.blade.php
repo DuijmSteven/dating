@@ -49,8 +49,16 @@
 
                     @foreach(array_merge(\UserConstants::textFields(), \UserConstants::textInputs()) as $fieldName)
                         @if(isset($conversation->userA->meta->{$fieldName}) && $conversation->userA->meta->{$fieldName} != '')
-                            <strong>{!! @trans('user_constants.' . $fieldName) !!}:
-                            </strong> {!! $conversation->userA->meta->{$fieldName} !!}<br>
+                            @if($fieldName === 'dob')
+                                <strong>{!! @trans('user_constants.' . $fieldName) !!}:
+                                </strong> {!! $conversation->userA->meta->{$fieldName} !!}<br>
+                                <strong>{!! @trans('user_constants.age') !!}:
+                                </strong> {!! $conversation->userA->meta->{$fieldName}->diffInYears(\Carbon\Carbon::now('Europe/Amsterdam')) !!}<br>
+                            @else
+                                <strong>{!! @trans('user_constants.' . $fieldName) !!}:
+                                </strong> {!! $conversation->userA->meta->{$fieldName} !!}<br>
+                            @endif
+
                         @endif
                     @endforeach
                 </div>
@@ -228,6 +236,34 @@
                     </div>
                 </div>
             </div>
+
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Received user images</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body receivedUserImages">
+                    @foreach($conversation->messages->reverse() as $message)
+                        @if($message->attachment && $message->sender->roles[0]->id === \App\User::TYPE_PEASANT)
+                            <div class="receivedUserImage"><img height="100" src="{!! \StorageHelper::messageAttachmentUrl(
+                                                        $conversation->id,
+                                                        $message->attachment->filename
+                                                    ) !!}"
+                                     alt="">
+
+                                <p class="receivedUserImageInfo">
+                                    {{ $message->getCreatedAt()->diffForHumans() }}
+                                </p>
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
         </div>
         <div class="col-xs-12 col-sm-3">
             <div class="box box-userB">
@@ -261,8 +297,16 @@
 
                     @foreach(array_merge(\UserConstants::textFields(), \UserConstants::textInputs()) as $fieldName)
                         @if(isset($conversation->userB->meta->{$fieldName}) && $conversation->userB->meta->{$fieldName} != '')
-                            <strong>{!! @trans('user_constants.' . $fieldName) !!}:
-                            </strong> {!! $conversation->userB->meta->{$fieldName} !!}<br>
+                            @if($fieldName === 'dob')
+                                <strong>{!! @trans('user_constants.' . $fieldName) !!}:
+                                </strong> {!! $conversation->userB->meta->{$fieldName} !!}<br>
+                                <strong>{!! @trans('user_constants.age') !!}:
+                                </strong> {!! $conversation->userB->meta->{$fieldName}->diffInYears(\Carbon\Carbon::now('Europe/Amsterdam')) !!}<br>
+                            @else
+                                <strong>{!! @trans('user_constants.' . $fieldName) !!}:
+                                </strong> {!! $conversation->userB->meta->{$fieldName} !!}<br>
+                            @endif
+
                         @endif
                     @endforeach
                 </div>

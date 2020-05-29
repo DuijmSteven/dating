@@ -23,6 +23,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Kim\Activity\Activity;
 
 /**
@@ -299,7 +300,8 @@ class ConversationController extends Controller
             'headingSmall' => $conversation->userA->username .
                 ' (id: ' . $conversation->userA->id . ') - ' .
                 $conversation->userB->username .
-                ' (id:' . $conversation->userB->id . ')',
+                ' (id:' . $conversation->userB->id . ')'  .
+                ' - Gemaakt: ' . $conversation->getCreatedAt()->diffForHumans(),
             'carbonNow' => Carbon::now('Europe/Amsterdam'),
             'conversation' => $conversation,
             'userANotes' => $userANotes,
@@ -673,6 +675,10 @@ class ConversationController extends Controller
                 'message' => 'The message was sent successfully'
             ];
         } catch (\Exception $exception) {
+            if (Str::contains($exception->getMessage(), 'message')) {
+                \Log::error('Stopped convo problem convo ID:' . $conversation->getId());
+            }
+
             $alerts[] = [
                 'type' => 'error',
                 'message' => $exception->getMessage()
