@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Users\UserSearchRequest;
+use App\Managers\ChartsManager;
 use App\Managers\UserSearchManager;
 use App\User;
 use Carbon\Carbon;
@@ -15,16 +16,22 @@ class UserSearchController extends Controller
 {
     /** @var UserSearchManager */
     private $userSearchManager;
+    /**
+     * @var ChartsManager
+     */
+    private ChartsManager $chartsManager;
 
     /**
      * UserSearchController constructor.
      * @param UserSearchManager $userSearchManager
      */
     public function __construct(
-        UserSearchManager $userSearchManager
+        UserSearchManager $userSearchManager,
+        ChartsManager $chartsManager
     ) {
         $this->userSearchManager = $userSearchManager;
         parent::__construct();
+        $this->chartsManager = $chartsManager;
     }
 
     public function search(UserSearchRequest $userSearchRequest)
@@ -110,7 +117,7 @@ class UserSearchController extends Controller
         $viewData = [
             'carbonNow' => Carbon::now(),
             'title' => 'Search results',
-            'editBotRoute' =>'admin.bots.edit.get'
+            'editBotRoute' =>'admin.bots.edit.get',
         ];
 
         $routeName = '';
@@ -118,6 +125,7 @@ class UserSearchController extends Controller
         if ($roleId === User::TYPE_PEASANT) {
             $routeName = 'admin.peasants.overview';
             $viewData['peasants'] = $users;
+            $viewData['peasantMessagesCharts'] = $this->chartsManager->getMessagesCharts($users);
         } elseif ($roleId === User::TYPE_BOT) {
             $routeName = 'admin.bots.overview';
             $viewData['bots'] = $users;
