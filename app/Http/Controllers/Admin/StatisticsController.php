@@ -170,6 +170,28 @@ class StatisticsController extends Controller
                     $endOfToday
                 )
             ],
+            'topMessagerStatistics' => [
+                'this_month' => $this->statisticsManager->topMessagersBetweenDates($startOfMonth, $endOfMonth, 25)
+            ],
+            'topOperatorMessagerStatistics' => [
+                'this_month' => $this->statisticsManager->topOperatorMessagersBetweenDates($startOfMonth, $endOfMonth, 25)
+            ],
+            'userTypeStatistics' => [
+                'no_credits' => $this->statisticsManager->peasantsWithNoCreditpackCount(),
+                'never_bought' => $this->statisticsManager->peasantsThatNeverHadCreditpackCount(),
+                'small' => $this->statisticsManager->filterPeasantsWithCreditpackIdCount(
+                    $peasantsWithCreditpack,
+                    Creditpack::SMALL
+                ),
+                'medium' => $this->statisticsManager->filterPeasantsWithCreditpackIdCount(
+                    $peasantsWithCreditpack,
+                    Creditpack::MEDIUM
+                ),
+                'large' => $this->statisticsManager->filterPeasantsWithCreditpackIdCount(
+                    $peasantsWithCreditpack,
+                    Creditpack::LARGE
+                ),
+            ],
         ];
 
         return view('admin.statistics', array_merge(

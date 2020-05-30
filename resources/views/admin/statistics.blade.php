@@ -7,6 +7,128 @@
             $amountOfListItemsVisible = 5;
         @endphp
 
+        @foreach([
+                'this_month',
+            ]
+            as $topMessagersWidget
+        )
+
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <div class="box box-widget DashboardWidget expandable">
+                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                    <div class="bg-primary">
+                        <div class="widget-us DashboardWidget_header"
+                             style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
+                            <i class="fa fa-users DashboardWidget_header-icon"></i>
+                            <span
+                                class="DashboardWidget_header-title">Top messagers {{ str_replace('_', ' ', $topMessagersWidget) }}</span>
+                        </div>
+                        <!-- /.widget-user-image -->
+                    </div>
+                    <div class="box-footer no-padding">
+                        <ul class="nav nav-stacked">
+                            @php
+                                $count = 0;
+                            @endphp
+
+                            @foreach($topMessagerStatistics[$topMessagersWidget] as $user)
+                                <li class="{{ $count >= $amountOfListItemsVisible ? 'hidden defaultHidden' : '' }}">
+                                    @php
+                                        $highlightTypeClass = '';
+
+                                        if ($user->account->getCredits() > 10) {
+                                            $highlightTypeClass = 'success';
+                                        } else if ($user->account->credits > 4) {
+                                            $highlightTypeClass = 'warning';
+                                        } else {
+                                            $highlightTypeClass = 'error';
+                                        }
+                                    @endphp
+
+                                    <a href="{{ route('admin.peasants.edit.get', ['peasantId' => $user->getId()]) }}">
+                                        {{ $user->getUsername() }} (ID: {{ $user->getId() }}) - <strong>Credits: <span
+                                                class="highlightAsDisk {{ $highlightTypeClass }}">{{ $user->account->getCredits() }}</span></strong>
+                                        <span class="DashboardWidget_count">{{ $user->messages->count() }}</span>
+                                    </a>
+                                </li>
+
+                                @php
+                                    $count++;
+                                @endphp
+                            @endforeach
+
+                            @if(count($topMessagerStatistics[$topMessagersWidget]) > $amountOfListItemsVisible)
+                                <li>
+                                    <a class="showMore" href="#">
+                                        Show more <i class="fa fa-chevron-down"></i>
+                                    </a>
+
+                                    <a class="showLess hidden" href="#">
+                                        Show less <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                </li>
+                            @endif
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+
+        @foreach([
+                'this_month',
+            ]
+            as $topOperatorMessagersWidget
+        )
+
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <div class="box box-widget DashboardWidget expandable">
+                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                    <div class="bg-primary">
+                        <div class="widget-us DashboardWidget_header"
+                             style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
+                            <i class="fa fa-users DashboardWidget_header-icon"></i>
+                            <span
+                                class="DashboardWidget_header-title">Top operator messagers {{ str_replace('_', ' ', $topOperatorMessagersWidget) }}</span>
+                        </div>
+                        <!-- /.widget-user-image -->
+                    </div>
+                    <div class="box-footer no-padding">
+                        <ul class="nav nav-stacked">
+                            @php
+                                $count = 0;
+                            @endphp
+
+                            @foreach($topOperatorMessagerStatistics[$topOperatorMessagersWidget] as $operator)
+                                <li class="{{ $count >= $amountOfListItemsVisible ? 'hidden defaultHidden' : '' }}">
+                                    <a href="{{ route('admin.operators.edit.get', ['peasantId' => $operator->getId()]) }}">
+                                        {{ $operator->getUsername() }} (ID: {{ $operator->getId() }})
+                                        <span
+                                            class="DashboardWidget_count">{{ $operator->messagesAsOperator->count() }}</span>
+                                    </a>
+                                </li>
+
+                                @php
+                                    $count++;
+                                @endphp
+                            @endforeach
+
+                            @if(count($topOperatorMessagerStatistics[$topOperatorMessagersWidget]) > $amountOfListItemsVisible)
+                                <li>
+                                    <a class="showMore" href="#">
+                                        Show more <i class="fa fa-chevron-down"></i>
+                                    </a>
+
+                                    <a class="showLess hidden" href="#">
+                                        Show less <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                </li>
+                            @endif
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+
         <div class="col-xs-12 col-sm-6 col-md-4">
             <div class="box box-widget DashboardWidget">
                 <!-- Add the bg color to the header using any of the bg-* classes -->
@@ -79,7 +201,36 @@
                 </div>
             </div>
         </div>
-        
+
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <div class="box box-widget DashboardWidget">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="bg-primary">
+                    <div class="widget-us DashboardWidget_header"
+                         style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
+                        <i class="fa fa-close DashboardWidget_header-icon"></i>
+                        <span class="DashboardWidget_header-title">User types</span>
+                    </div>
+                    <!-- /.widget-user-image -->
+                </div>
+                <div class="box-footer no-padding">
+                    <ul class="nav nav-stacked">
+                        <li><a href="#">No credits <span
+                                    class="DashboardWidget_count">{!! $userTypeStatistics['no_credits'] !!}</span></a>
+                        </li>
+                        <li><a href="#">Never bought creditpack <span
+                                    class="DashboardWidget_count">{!! $userTypeStatistics['never_bought'] !!}</span></a>
+                        </li>
+                        <li><a href="{{ route('admin.peasants.with-creditpack.overview') }}">Small <span
+                                    class="DashboardWidget_count">{!! $userTypeStatistics['small'] !!}</span></a></li>
+                        <li><a href="{{ route('admin.peasants.with-creditpack.overview') }}">Medium <span
+                                    class="DashboardWidget_count">{!! $userTypeStatistics['medium'] !!}</span></a></li>
+                        <li><a href="{{ route('admin.peasants.with-creditpack.overview') }}">Large <span
+                                    class="DashboardWidget_count">{!! $userTypeStatistics['large'] !!}</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="row">

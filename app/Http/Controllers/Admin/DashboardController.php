@@ -227,31 +227,13 @@ class DashboardController extends Controller
                     $endOfToday
                 )
             ],
-            'userTypeStatistics' => [
-                'no_credits' => $this->statisticsManager->peasantsWithNoCreditpackCount(),
-                'never_bought' => $this->statisticsManager->peasantsThatNeverHadCreditpackCount(),
-                'small' => $this->statisticsManager->filterPeasantsWithCreditpackIdCount(
-                    $peasantsWithCreditpack,
-                    Creditpack::SMALL
-                ),
-                'medium' => $this->statisticsManager->filterPeasantsWithCreditpackIdCount(
-                    $peasantsWithCreditpack,
-                    Creditpack::MEDIUM
-                ),
-                'large' => $this->statisticsManager->filterPeasantsWithCreditpackIdCount(
-                    $peasantsWithCreditpack,
-                    Creditpack::LARGE
-                ),
-            ],
             'topMessagerStatistics' => [
                 'today' => $this->statisticsManager->topMessagersBetweenDates($startOfToday, $endOfToday, 25),
                 'this_week' => $this->statisticsManager->topMessagersBetweenDates($startOfWeek, $endOfWeek, 25),
-                'this_month' => $this->statisticsManager->topMessagersBetweenDates($startOfMonth, $endOfMonth, 25)
             ],
             'topOperatorMessagerStatistics' => [
                 'today' => $this->statisticsManager->topOperatorMessagersBetweenDates($startOfToday, $endOfToday, 25),
                 'this_week' => $this->statisticsManager->topOperatorMessagersBetweenDates($startOfWeek, $endOfWeek, 25),
-                'this_month' => $this->statisticsManager->topOperatorMessagersBetweenDates($startOfMonth, $endOfMonth, 25)
             ]
         ];
 
