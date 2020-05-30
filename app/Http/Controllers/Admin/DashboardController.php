@@ -12,6 +12,8 @@ use Kim\Activity\Activity;
 
 class DashboardController extends Controller
 {
+    const SALES_TAX = 0.21;
+    
     /** @var StatisticsManager */
     private $statisticsManager;
 
