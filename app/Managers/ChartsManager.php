@@ -23,6 +23,7 @@ use DateTime;
 class ChartsManager
 {
     const BAR_WIDTH = 0.3;
+    const SALES_TAX = 0.21;
 
     /**
      * @return PeasantMessagesChart

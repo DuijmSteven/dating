@@ -2,35 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Charts\DeactivationsChart;
-use App\Charts\DeactivationsMonthlyChart;
-use App\Charts\NetPeasantsAcquiredChart;
-use App\Charts\NetPeasantsAcquiredMonthlyChart;
-use App\Charts\PaymentsChart;
-use App\Charts\PaymentsMonthlyChart;
-use App\Charts\PeasantMessagesChart;
-use App\Charts\PeasantMessagesMonthlyChart;
-use App\Charts\RegistrationsChart;
-use App\Charts\RegistrationsMonthlyChart;
-use App\Charts\RevenueChart;
-use App\Charts\RevenueMonthlyChart;
 use App\Creditpack;
 use App\Http\Controllers\Controller;
 use App\Managers\ChartsManager;
 use App\Managers\StatisticsManager;
-use App\Payment;
 use App\User;
 use Carbon\Carbon;
-use DateInterval;
-use DatePeriod;
-use DateTime;
 use Kim\Activity\Activity;
 
 class DashboardController extends Controller
 {
-    const BAR_WIDTH = 0.3;
-    const SALES_TAX = 0.21;
-
     /** @var StatisticsManager */
     private $statisticsManager;
 
