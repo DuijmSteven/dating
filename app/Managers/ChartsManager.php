@@ -1107,4 +1107,19 @@ class ChartsManager
 
         return $revenueChart;
     }
+
+    public function getMessagesCharts($peasants) {
+        $peasantMessagesCharts = [];
+        $peasantMessagesMonthlyCharts = [];
+
+        foreach ($peasants as $peasant) {
+            $peasantMessagesCharts[] = $this->createPeasantMessagesChart($peasant->getId());
+            $peasantMessagesMonthlyCharts[] = $this->createPeasantMessagesMonthlyChart($peasant->getId());
+        }
+
+        return [
+            'daily' => $peasantMessagesCharts,
+            'monthly' => $peasantMessagesMonthlyCharts
+        ];
+    }
 }

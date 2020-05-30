@@ -185,14 +185,14 @@
                                     </div>
                                 </td>
                                 <td>
-                                    @if($peasantMessagesCharts[$loop->index])
+                                    @if($peasantMessagesCharts['daily'][$loop->index])
                                         <div style="width: 100%">
-                                            {!! $peasantMessagesCharts[$loop->index]->container() !!}
-                                            {!! $peasantMessagesCharts[$loop->index]->script() !!}
+                                            {!! $peasantMessagesCharts['daily'][$loop->index]->container() !!}
+                                            {!! $peasantMessagesCharts['daily'][$loop->index]->script() !!}
                                         </div>
                                         <div style="width: 100%">
-                                            {!! $peasantMessagesMonthlyCharts[$loop->index]->container() !!}
-                                            {!! $peasantMessagesMonthlyCharts[$loop->index]->script() !!}
+                                            {!! $peasantMessagesCharts['monthly'][$loop->index]->container() !!}
+                                            {!! $peasantMessagesCharts['monthly'][$loop->index]->script() !!}
                                         </div>
                                     @endif
                                 </td>

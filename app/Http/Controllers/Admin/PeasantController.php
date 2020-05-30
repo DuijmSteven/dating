@@ -74,14 +74,6 @@ class PeasantController extends Controller
             ->orderBy('id', 'desc')
             ->paginate(20);
 
-        $peasantMessagesCharts = [];
-        $peasantMessagesMonthlyCharts = [];
-
-        foreach ($peasants as $peasant) {
-            $peasantMessagesCharts[] = $this->chartsManager->createPeasantMessagesChart($peasant->getId());
-            $peasantMessagesMonthlyCharts[] = $this->chartsManager->createPeasantMessagesMonthlyChart($peasant->getId());
-        }
-
         return view(
             'admin.peasants.overview',
             [
@@ -90,8 +82,7 @@ class PeasantController extends Controller
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
                 'peasants' => $peasants,
-                'peasantMessagesCharts' => $peasantMessagesCharts,
-                'peasantMessagesMonthlyCharts' => $peasantMessagesMonthlyCharts,
+                'peasantMessagesCharts' => $this->chartsManager->getMessagesCharts($peasants),
             ]
         );
     }
@@ -124,7 +115,8 @@ class PeasantController extends Controller
                 'headingLarge' => 'Peasant',
                 'headingSmall' => 'Deactivations',
                 'carbonNow' => Carbon::now(),
-                'peasants' => $deactivatedPeasants
+                'peasants' => $deactivatedPeasants,
+                'peasantMessagesCharts' => $this->chartsManager->getMessagesCharts($deactivatedPeasants),
             ]
         );
     }
@@ -140,7 +132,8 @@ class PeasantController extends Controller
                 'headingLarge' => 'Peasant',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
-                'peasants' => $peasantsWithCreditpack
+                'peasants' => $peasantsWithCreditpack,
+                'peasantMessagesCharts' => $this->chartsManager->getMessagesCharts($peasantsWithCreditpack),
             ]
         );
     }
@@ -201,7 +194,8 @@ class PeasantController extends Controller
                 'headingLarge' => 'Peasants',
                 'headingSmall' => 'Online',
                 'carbonNow' => Carbon::now(),
-                'peasants' => $peasants
+                'peasants' => $peasants,
+                'peasantMessagesCharts' => $this->chartsManager->getMessagesCharts($peasants),
             ]
         );
     }
