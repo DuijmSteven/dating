@@ -5,6 +5,13 @@
     </a>
 </li>
 
+<li class="{!! \Request::route()->getName() == 'admin.statistics' ? 'active' : '' !!}">
+    <a href="{!! route('admin.statistics') !!}">
+        <i class="fa fa-dashboard"></i>
+        <span>Statistics</span>
+    </a>
+</li>
+
 <li class="treeview {!! \Str::contains(\Request::route()->getName(), 'admin.bots') ? 'active' : '' !!}">
     <a href="#">
         <i class="fa fa-android"></i>

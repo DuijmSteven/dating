@@ -10,7 +10,7 @@ use App\User;
 use Carbon\Carbon;
 use Kim\Activity\Activity;
 
-class DashboardController extends Controller
+class StatisticsController extends Controller
 {
     const SALES_TAX = 0.21;
 
@@ -36,7 +36,7 @@ class DashboardController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Exception
      */
-    public function dashboard()
+    public function index()
     {
         $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
 
@@ -112,161 +112,83 @@ class DashboardController extends Controller
         $peasantsWithCreditpack = $this->statisticsManager->peasantsWithCreditpack();
 
         $viewData = [
-            'onlineFemaleStraightBotsCount' => $onlineFemaleStraightBotsCount,
-            'onlineMaleStraightBotsCount' => $onlineMaleStraightBotsCount,
-            'onlinePeasantsCount' => $onlinePeasantsCount,
-            'activeFemaleStraightBotsCount' => $activeFemaleStraightBotsCount,
-            'activeMaleStraightBotsCount' => $activeMaleStraightBotsCount,
-            'revenueStatistics' => [
-                'revenueToday' => $this->statisticsManager->revenueBetween(
+            'messageStatistics' => [
+                'messagesSentToday' => $this->statisticsManager->messagesSentCountBetween(
                     $startOfToday,
                     $endOfToday
                 ),
-                'revenueYesterday' => $this->statisticsManager->revenueBetween(
+                'messagesSentYesterday' => $this->statisticsManager->messagesSentCountBetween(
                     $startOfYesterday,
                     $endOfYesterday
                 ),
-                'revenueCurrentWeek' => $this->statisticsManager->revenueBetween(
+                'messagesSentCurrentWeek' => $this->statisticsManager->messagesSentCountBetween(
                     $startOfWeek,
                     $endOfWeek
                 ),
-                'revenueCurrentMonth' => $this->statisticsManager->revenueBetween(
+                'messagesSentCurrentMonth' => $this->statisticsManager->messagesSentCountBetween(
                     $startOfMonth,
                     $endOfMonth
                 ),
-                'revenuePreviousMonth' => $this->statisticsManager->revenueBetween(
+                'messagesSentPreviousMonth' => $this->statisticsManager->messagesSentCountBetween(
                     $startOfPreviousMonthUtc,
                     $endOfPreviousMonthUtc
                 ),
-                'revenueCurrentYear' => $this->statisticsManager->revenueBetween(
+                'messagesSentCurrentYear' => $this->statisticsManager->messagesSentCountBetween(
                     $startOfYear,
                     $endOfToday
                 )
             ],
-            'registrationStatistics' => [
-                'registrationsToday' => $this->statisticsManager->registrationsCountBetween(
-                    $startOfToday,
-                    $endOfToday
-                ),
-                'registrationsYesterday' => $this->statisticsManager->registrationsCountBetween(
-                    $startOfYesterday,
-                    $endOfYesterday
-                ),
-                'registrationsCurrentWeek' => $this->statisticsManager->registrationsCountBetween(
-                    $startOfWeek,
-                    $endOfWeek
-                ),
-                'registrationsCurrentMonth' => $this->statisticsManager->registrationsCountBetween(
-                    $startOfMonth,
-                    $endOfMonth
-                ),
-                'registrationsPreviousMonth' => $this->statisticsManager->registrationsCountBetween(
-                    $startOfPreviousMonthUtc,
-                    $endOfPreviousMonthUtc
-                ),
-                'registrationsCurrentYear' => $this->statisticsManager->registrationsCountBetween(
-                    $startOfYear,
-                    $endOfToday
-                )
-            ],
-            'peasantMessageStatistics' => [
+            'botMessageStatistics' => [
                 'messagesSentToday' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
-                    'peasant',
+                    'bot',
                     $startOfToday,
                     $endOfToday
                 ),
                 'messagesSentYesterday' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
-                    'peasant',
+                    'bot',
                     $startOfYesterday,
                     $endOfYesterday
                 ),
                 'messagesSentCurrentWeek' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
-                    'peasant',
+                    'bot',
                     $startOfWeek,
                     $endOfWeek
                 ),
                 'messagesSentCurrentMonth' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
-                    'peasant',
+                    'bot',
                     $startOfMonth,
                     $endOfMonth
                 ),
                 'messagesSentPreviousMonth' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
-                    'peasant',
+                    'bot',
                     $startOfPreviousMonthUtc,
                     $endOfPreviousMonthUtc
                 ),
                 'messagesSentCurrentYear' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
-                    'peasant',
+                    'bot',
                     $startOfYear,
                     $endOfToday
                 )
             ],
-            'peasantDeactivationStatistics' => [
-                'deactivationsToday' => $this->statisticsManager->peasantDeactivationsCountBetween(
-                    $startOfToday,
-                    $endOfToday
-                ),
-                'deactivationsYesterday' => $this->statisticsManager->peasantDeactivationsCountBetween(
-                    $startOfYesterday,
-                    $endOfYesterday
-                ),
-                'deactivationsCurrentWeek' => $this->statisticsManager->peasantDeactivationsCountBetween(
-                    $startOfWeek,
-                    $endOfWeek
-                ),
-                'deactivationsCurrentMonth' => $this->statisticsManager->peasantDeactivationsCountBetween(
-                    $startOfMonth,
-                    $endOfMonth
-                ),
-                'deactivationsPreviousMonth' => $this->statisticsManager->peasantDeactivationsCountBetween(
-                    $startOfPreviousMonthUtc,
-                    $endOfPreviousMonthUtc
-                ),
-                'deactivationsCurrentYear' => $this->statisticsManager->peasantDeactivationsCountBetween(
-                    $startOfYear,
-                    $endOfToday
-                )
-            ],
-            'userTypeStatistics' => [
-                'no_credits' => $this->statisticsManager->peasantsWithNoCreditpackCount(),
-                'never_bought' => $this->statisticsManager->peasantsThatNeverHadCreditpackCount(),
-                'small' => $this->statisticsManager->filterPeasantsWithCreditpackIdCount(
-                    $peasantsWithCreditpack,
-                    Creditpack::SMALL
-                ),
-                'medium' => $this->statisticsManager->filterPeasantsWithCreditpackIdCount(
-                    $peasantsWithCreditpack,
-                    Creditpack::MEDIUM
-                ),
-                'large' => $this->statisticsManager->filterPeasantsWithCreditpackIdCount(
-                    $peasantsWithCreditpack,
-                    Creditpack::LARGE
-                ),
-            ],
-            'topMessagerStatistics' => [
-                'today' => $this->statisticsManager->topMessagersBetweenDates($startOfToday, $endOfToday, 25),
-                'this_week' => $this->statisticsManager->topMessagersBetweenDates($startOfWeek, $endOfWeek, 25),
-                'this_month' => $this->statisticsManager->topMessagersBetweenDates($startOfMonth, $endOfMonth, 25)
-            ],
-            'topOperatorMessagerStatistics' => [
-                'today' => $this->statisticsManager->topOperatorMessagersBetweenDates($startOfToday, $endOfToday, 25),
-                'this_week' => $this->statisticsManager->topOperatorMessagersBetweenDates($startOfWeek, $endOfWeek, 25),
-                'this_month' => $this->statisticsManager->topOperatorMessagersBetweenDates($startOfMonth, $endOfMonth, 25)
-            ]
         ];
 
-        return view('admin.dashboard', array_merge(
+        return view('admin.statistics', array_merge(
             $viewData,
             [
-                'title' => 'Dashboard - ' . \config('app.name'),
-                'headingLarge' => 'Dashboard',
+                'title' => 'Statistics - ' . \config('app.name'),
+                'headingLarge' => 'Statistics',
                 'headingSmall' => '',
                 'salesTax' => self::SALES_TAX,
-                'registrationsChart' => $this->chartsManager->createRegistrationsChart(),
-                'peasantMessagesChart' => $this->chartsManager->createPeasantMessagesChart(),
-                'revenueChart' => $this->chartsManager->createRevenueChart(),
-                'netPeasantsAcquiredChart' => $this->chartsManager->createNetPeasantsAcquiredChart(),
-                'deactivationsChart' => $this->chartsManager->createDeactivationsChart(),
+                'registrationsMonthlyChart' => $this->chartsManager->createRegistrationsMonthlyChart(),
+                'peasantMessagesMonthlyChart' => $this->chartsManager->createPeasantMessagesMonthlyChart(),
+                'paymentsChart' => $this->chartsManager->createPaymentsChart(),
+                'paymentsMonthlyChart' => $this->chartsManager->createPaymentsMonthlyChart(),
+                'revenueMonthlyChart' => $this->chartsManager->createRevenueMonthlyChart(),
+                'deactivationsMonthlyChart' => $this->chartsManager->createDeactivationsMonthlyChart(),
+                'netPeasantsAcquiredMonthlyChart' => $this->chartsManager->createNetPeasantsAcquiredMonthlyChart(),
+                'rpuChart' => $this->chartsManager->createRpuChart(),
+                'revenueWithoutSalesTaxChart' => $this->chartsManager->createRevenueWithoutSalesTaxChart(),
+                'revenueWithoutSalesTaxMonthlyChart' => $this->chartsManager->createRevenueWithoutSalesTaxMonthlyChart(),
             ]
         ));
     }

@@ -212,6 +212,9 @@ Route::group([
     Route::get('dashboard', 'Admin\DashboardController@dashboard')
         ->name('admin.dashboard');
 
+    Route::get('statistics', 'Admin\StatisticsController@index')
+        ->name('admin.statistics');
+
     Route::post('users/search', 'Admin\UserSearchController@search')
         ->name('admin.users.search.post');
     Route::get('users/search-results', 'Admin\UserSearchController@getSearchResults')
