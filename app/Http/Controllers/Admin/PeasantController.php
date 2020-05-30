@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Peasants\PeasantCreateRequest;
 use App\Http\Requests\Admin\Peasants\PeasantUpdateRequest;
+use App\Managers\ChartsManager;
 use App\Managers\PeasantManager;
 use App\Managers\UserManager;
 use App\User;
@@ -14,25 +15,35 @@ use Kim\Activity\Activity;
 
 class PeasantController extends Controller
 {
-    /** @var PeasantManager  */
+    const BAR_WIDTH = 0.3;
+
+    /** @var PeasantManager */
     private $peasantManager;
 
     /**
      * @var UserManager
      */
     private UserManager $userManager;
+    /**
+     * @var ChartsManager
+     */
+    private ChartsManager $chartsManager;
 
     /**
      * PeasantController constructor.
      * @param PeasantManager $peasantManager
+     * @param UserManager $userManager
+     * @param ChartsManager $chartsManager
      */
     public function __construct(
         PeasantManager $peasantManager,
-        UserManager $userManager
+        UserManager $userManager,
+        ChartsManager $chartsManager
     ) {
         $this->peasantManager = $peasantManager;
         parent::__construct();
         $this->userManager = $userManager;
+        $this->chartsManager = $chartsManager;
     }
 
     /**
@@ -106,17 +117,17 @@ class PeasantController extends Controller
         \Mapper::map(52.125927, 5.451147, ['zoom' => 8, 'markers' => ['animation' => 'DROP']]);
 
         $peasants = User::with('meta')
-        ->whereHas('meta', function ($query) {
-            $query->where('lat', '!=', null);
-            $query->where('lng', '!=', null);
-        })
-        ->whereHas('roles', function ($query) {
-            $query->where('id', User::TYPE_PEASANT);
-        })
+            ->whereHas('meta', function ($query) {
+                $query->where('lat', '!=', null);
+                $query->where('lng', '!=', null);
+            })
+            ->whereHas('roles', function ($query) {
+                $query->where('id', User::TYPE_PEASANT);
+            })
             ->get();
 
         foreach ($peasants as $peasant) {
-            \Mapper::marker($peasant->meta->lat,  $peasant->meta->lng);
+            \Mapper::marker($peasant->meta->lat, $peasant->meta->lng);
         }
 
         return view('admin.peasants.map',
@@ -145,7 +156,7 @@ class PeasantController extends Controller
             ->whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_PEASANT);
             })
-            ->whereIn('id', $onlineIds) 
+            ->whereIn('id', $onlineIds)
             ->orderBy('id')
             ->paginate(20);
 
@@ -224,11 +235,13 @@ class PeasantController extends Controller
         return view(
             'admin.peasants.edit',
             [
-                'title' => 'Edit Peasant - '. $peasant['username'] . '(ID: '. $peasant['id'] .') - ' . \config('app.name'),
+                'title' => 'Edit Peasant - ' . $peasant['username'] . '(ID: ' . $peasant['id'] . ') - ' . \config('app.name'),
                 'headingLarge' => 'Peasant',
                 'headingSmall' => 'Edit',
                 'carbonNow' => Carbon::now(),
-                'peasant' => $peasant
+                'peasant' => $peasant,
+                'peasantMessagesChart' => $this->chartsManager->createPeasantMessagesChart($peasant->getId()),
+                'peasantMessagesMonthlyChart' => $this->chartsManager->createPeasantMessagesMonthlyChart($peasant->getId()),
             ]
         );
     }

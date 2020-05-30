@@ -29,6 +29,20 @@
             </form>
         </div>
 
+        <div style="margin-bottom: 20px; padding: 10px 10px 0">
+            <div style="width: 100%">
+                {!! $peasantMessagesChart->container() !!}
+                {!! $peasantMessagesChart->script() !!}
+            </div>
+        </div>
+
+        <div style="margin-bottom: 20px; padding: 10px 10px 0">
+            <div style="width: 100%">
+                {!! $peasantMessagesMonthlyChart->container() !!}
+                {!! $peasantMessagesMonthlyChart->script() !!}
+            </div>
+        </div>
+
         <!-- /.box-header -->
         <!-- form start -->
         <form role="form" method="POST" action="{!! route('admin.peasants.update', ['id' => $peasant->id]) !!}"

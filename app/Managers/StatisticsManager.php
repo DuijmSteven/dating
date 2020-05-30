@@ -87,18 +87,6 @@ class StatisticsManager
         ->count();
     }
 
-    public function peasantsWithSmallCreditpack() : int {
-        return $this->peasantsCreditpackId(Creditpack::SMALL);
-    }
-
-    public function peasantsWithMediumCreditpack() : int {
-        return $this->peasantsCreditpackId(Creditpack::MEDIUM);
-    }
-
-    public function peasantsWithLargeCreditpack() : int {
-        return $this->peasantsCreditpackId(Creditpack::LARGE);
-    }
-
     public function topMessagersBetweenDates($startDate, $endDate, int $amount)
     {
         return User::with(['profileImage', 'account', 'messages' => function ($query) use ($startDate, $endDate) {
