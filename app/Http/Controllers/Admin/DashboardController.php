@@ -13,7 +13,7 @@ use Kim\Activity\Activity;
 class DashboardController extends Controller
 {
     const SALES_TAX = 0.21;
-    
+
     /** @var StatisticsManager */
     private $statisticsManager;
 
@@ -286,17 +286,17 @@ class DashboardController extends Controller
                 )
             ],
             'userTypeStatistics' => [
-                'no_credits' => $this->statisticsManager->peasantsWithNoCreditpack(),
-                'never_bought' => $this->statisticsManager->peasantsThatNeverHadCreditpack(),
-                'small' => $this->statisticsManager->filterPeasantsWithCreditpackId(
+                'no_credits' => $this->statisticsManager->peasantsWithNoCreditpackCount(),
+                'never_bought' => $this->statisticsManager->peasantsThatNeverHadCreditpackCount(),
+                'small' => $this->statisticsManager->filterPeasantsWithCreditpackIdCount(
                     $peasantsWithCreditpack,
                     Creditpack::SMALL
                 ),
-                'medium' => $this->statisticsManager->filterPeasantsWithCreditpackId(
+                'medium' => $this->statisticsManager->filterPeasantsWithCreditpackIdCount(
                     $peasantsWithCreditpack,
                     Creditpack::MEDIUM
                 ),
-                'large' => $this->statisticsManager->filterPeasantsWithCreditpackId(
+                'large' => $this->statisticsManager->filterPeasantsWithCreditpackIdCount(
                     $peasantsWithCreditpack,
                     Creditpack::LARGE
                 ),

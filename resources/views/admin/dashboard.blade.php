@@ -460,11 +460,11 @@
                         <li><a href="#">Never bought creditpack <span
                                     class="DashboardWidget_count">{!! $userTypeStatistics['never_bought'] !!}</span></a>
                         </li>
-                        <li><a href="#">Small <span
+                        <li><a href="{{ route('admin.peasants.with-creditpack.overview') }}">Small <span
                                     class="DashboardWidget_count">{!! $userTypeStatistics['small'] !!}</span></a></li>
-                        <li><a href="#">Medium <span
+                        <li><a href="{{ route('admin.peasants.with-creditpack.overview') }}">Medium <span
                                     class="DashboardWidget_count">{!! $userTypeStatistics['medium'] !!}</span></a></li>
-                        <li><a href="#">Large <span
+                        <li><a href="{{ route('admin.peasants.with-creditpack.overview') }}">Large <span
                                     class="DashboardWidget_count">{!! $userTypeStatistics['large'] !!}</span></a></li>
                     </ul>
                 </div>

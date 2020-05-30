@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\Peasants\PeasantCreateRequest;
 use App\Http\Requests\Admin\Peasants\PeasantUpdateRequest;
 use App\Managers\ChartsManager;
 use App\Managers\PeasantManager;
+use App\Managers\StatisticsManager;
 use App\Managers\UserManager;
 use App\User;
 use Carbon\Carbon;
@@ -28,6 +29,10 @@ class PeasantController extends Controller
      * @var ChartsManager
      */
     private ChartsManager $chartsManager;
+    /**
+     * @var StatisticsManager
+     */
+    private StatisticsManager $statisticsManager;
 
     /**
      * PeasantController constructor.
@@ -38,12 +43,15 @@ class PeasantController extends Controller
     public function __construct(
         PeasantManager $peasantManager,
         UserManager $userManager,
-        ChartsManager $chartsManager
-    ) {
+        ChartsManager $chartsManager,
+        StatisticsManager $statisticsManager
+    )
+    {
         $this->peasantManager = $peasantManager;
         parent::__construct();
         $this->userManager = $userManager;
         $this->chartsManager = $chartsManager;
+        $this->statisticsManager = $statisticsManager;
     }
 
     /**
@@ -66,6 +74,14 @@ class PeasantController extends Controller
             ->orderBy('id', 'desc')
             ->paginate(20);
 
+        $peasantMessagesCharts = [];
+        $peasantMessagesMonthlyCharts = [];
+
+        foreach ($peasants as $peasant) {
+            $peasantMessagesCharts[] = $this->chartsManager->createPeasantMessagesChart($peasant->getId());
+            $peasantMessagesMonthlyCharts[] = $this->chartsManager->createPeasantMessagesMonthlyChart($peasant->getId());
+        }
+
         return view(
             'admin.peasants.overview',
             [
@@ -73,7 +89,9 @@ class PeasantController extends Controller
                 'headingLarge' => 'Peasant',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
-                'peasants' => $peasants
+                'peasants' => $peasants,
+                'peasantMessagesCharts' => $peasantMessagesCharts,
+                'peasantMessagesMonthlyCharts' => $peasantMessagesMonthlyCharts,
             ]
         );
     }
@@ -107,6 +125,22 @@ class PeasantController extends Controller
                 'headingSmall' => 'Deactivations',
                 'carbonNow' => Carbon::now(),
                 'peasants' => $deactivatedPeasants
+            ]
+        );
+    }
+
+    public function withCreditpack()
+    {
+        $peasantsWithCreditpack = $this->statisticsManager->peasantsWithCreditpackQueryBuilder()->paginate(20);
+
+        return view(
+            'admin.peasants.overview',
+            [
+                'title' => 'Peasant Overview - ' . \config('app.name'),
+                'headingLarge' => 'Peasant',
+                'headingSmall' => 'Overview',
+                'carbonNow' => Carbon::now(),
+                'peasants' => $peasantsWithCreditpack
             ]
         );
     }

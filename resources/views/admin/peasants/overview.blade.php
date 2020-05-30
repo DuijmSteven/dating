@@ -27,6 +27,7 @@
                         <tr>
                             <th>User Data & Payments</th>
                             <th>Stats</th>
+                            <th>Graphs</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
@@ -182,6 +183,18 @@
                                         <strong>All time:</strong> {{ $peasant->hasViewed->count() }} <br>
                                         <strong>Unique:</strong> {{ $peasant->hasViewed->unique('viewed_id')->count() }}
                                     </div>
+                                </td>
+                                <td>
+                                    @if($peasantMessagesCharts[$loop->index])
+                                        <div style="width: 100%">
+                                            {!! $peasantMessagesCharts[$loop->index]->container() !!}
+                                            {!! $peasantMessagesCharts[$loop->index]->script() !!}
+                                        </div>
+                                        <div style="width: 100%">
+                                            {!! $peasantMessagesMonthlyCharts[$loop->index]->container() !!}
+                                            {!! $peasantMessagesMonthlyCharts[$loop->index]->script() !!}
+                                        </div>
+                                    @endif
                                 </td>
                                 <td class="action-buttons">
                                     <a href="{!! route('admin.peasants.edit.get', ['peasantId' => $peasant->getId()]) !!}" class="btn btn-default">Edit</a>

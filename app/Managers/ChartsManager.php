@@ -26,10 +26,10 @@ class ChartsManager
     const SALES_TAX = 0.21;
 
     /**
-     * @return PeasantMessagesChart
+     * @return PeasantMessagesChart|null
      * @throws \Exception
      */
-    public function createPeasantMessagesChart(int $userId = null): PeasantMessagesChart
+    public function createPeasantMessagesChart(int $userId = null)
     {
         $query = \DB::table('conversation_messages as cm')
             ->select(\DB::raw('DATE(CONVERT_TZ(cm.created_at, \'UTC\', \'Europe/Amsterdam\')) as creationDate, COUNT(cm.id) AS messagesCount'))
@@ -47,6 +47,10 @@ class ChartsManager
             ->orderBy('creationDate', 'ASC');
 
         $results = $query->get();
+
+        if ($results->count() === 0) {
+            return null;
+        }
 
         $labels = [];
         $counts = [];
@@ -92,10 +96,10 @@ class ChartsManager
 
 
     /**
-     * @return PeasantMessagesMonthlyChart
+     * @return PeasantMessagesMonthlyChart|null
      * @throws \Exception
      */
-    public function createPeasantMessagesMonthlyChart(int $userId = null): PeasantMessagesMonthlyChart
+    public function createPeasantMessagesMonthlyChart(int $userId = null)
     {
         $query = \DB::table('conversation_messages as cm')
             ->select(
@@ -117,6 +121,10 @@ class ChartsManager
             ->orderBy('months', 'ASC');
 
         $results = $query->get();
+
+        if ($results->count() === 0) {
+            return null;
+        }
 
         $labels = [];
         $counts = [];
@@ -163,10 +171,10 @@ class ChartsManager
 
 
     /**
-     * @return PaymentsChart
+     * @return PaymentsChart|null
      * @throws \Exception
      */
-    public function createPaymentsChart(): PaymentsChart
+    public function createPaymentsChart()
     {
         $query = \DB::table('payments as p')
             ->select(\DB::raw('DATE(CONVERT_TZ(p.created_at, \'UTC\', \'Europe/Amsterdam\')) as creationDate, COUNT(p.id) AS paymentsCount'))
@@ -178,6 +186,10 @@ class ChartsManager
             ->orderBy('creationDate', 'ASC');
 
         $results = $query->get();
+
+        if ($results->count() === 0) {
+            return null;
+        }
 
         $labels = [];
         $counts = [];
@@ -222,10 +234,10 @@ class ChartsManager
     }
 
     /**
-     * @return PaymentsMonthlyChart
+     * @return PaymentsMonthlyChart|null
      * @throws \Exception
      */
-    public function createPaymentsMonthlyChart(): PaymentsMonthlyChart
+    public function createPaymentsMonthlyChart()
     {
         $query = \DB::table('payments as p')
             ->select(
@@ -242,6 +254,10 @@ class ChartsManager
             ->orderBy('months', 'ASC');
 
         $results = $query->get();
+
+        if ($results->count() === 0) {
+            return null;
+        }
 
         $labels = [];
         $counts = [];
@@ -287,10 +303,10 @@ class ChartsManager
     }
 
     /**
-     * @return RegistrationsChart
+     * @return RegistrationsChart|null
      * @throws \Exception
      */
-    public function createRegistrationsChart(): RegistrationsChart
+    public function createRegistrationsChart()
     {
         $query = \DB::table('users as u')
             ->select(\DB::raw('DATE(CONVERT_TZ(u.created_at, \'UTC\', \'Europe/Amsterdam\')) as registrationDate, COUNT(u.id) AS registrationsCount'))
@@ -300,6 +316,10 @@ class ChartsManager
             ->orderBy('registrationDate', 'ASC');
 
         $results = $query->get();
+
+        if ($results->count() === 0) {
+            return null;
+        }
 
         $labels = [];
         $counts = [];
@@ -344,10 +364,10 @@ class ChartsManager
     }
 
     /**
-     * @return RegistrationsMonthlyChart
+     * @return RegistrationsMonthlyChart|null
      * @throws \Exception
      */
-    public function createRegistrationsMonthlyChart(): RegistrationsMonthlyChart
+    public function createRegistrationsMonthlyChart()
     {
         $query = \DB::table('users as u')
             ->select(
@@ -362,6 +382,10 @@ class ChartsManager
             ->orderBy('months', 'ASC');
 
         $results = $query->get();
+
+        if ($results->count() === 0) {
+            return null;
+        }
 
         $labels = [];
         $counts = [];
@@ -407,10 +431,10 @@ class ChartsManager
     }
 
     /**
-     * @return RevenueChart
+     * @return RevenueChart|null
      * @throws \Exception
      */
-    public function createRevenueChart(): RevenueChart
+    public function createRevenueChart()
     {
         $query = \DB::table('payments as p')
             ->select(\DB::raw('DATE(CONVERT_TZ(p.created_at, \'UTC\', \'Europe/Amsterdam\')) as creationDate, SUM(p.amount) as revenueOnDay'))
@@ -422,6 +446,10 @@ class ChartsManager
             ->orderBy('creationDate', 'ASC');
 
         $results = $query->get();
+
+        if ($results->count() === 0) {
+            return null;
+        }
 
         $labels = [];
         $counts = [];
@@ -468,10 +496,10 @@ class ChartsManager
     }
 
     /**
-     * @return RevenueMonthlyChart
+     * @return RevenueMonthlyChart|null
      * @throws \Exception
      */
-    public function createRevenueMonthlyChart(): RevenueMonthlyChart
+    public function createRevenueMonthlyChart()
     {
         $query = \DB::table('payments as p')
             ->select(
@@ -488,6 +516,10 @@ class ChartsManager
             ->orderBy('months', 'ASC');
 
         $results = $query->get();
+
+        if ($results->count() === 0) {
+            return null;
+        }
 
         $labels = [];
         $counts = [];
@@ -534,10 +566,10 @@ class ChartsManager
     }
 
     /**
-     * @return RevenueChart
+     * @return RevenueChart|null
      * @throws \Exception
      */
-    public function createRevenueWithoutSalesTaxChart(): RevenueChart
+    public function createRevenueWithoutSalesTaxChart()
     {
         $query = \DB::table('payments as p')
             ->select(\DB::raw('DATE(CONVERT_TZ(p.created_at, \'UTC\', \'Europe/Amsterdam\')) as creationDate, SUM(p.amount) as revenueOnDay'))
@@ -549,6 +581,10 @@ class ChartsManager
             ->orderBy('creationDate', 'ASC');
 
         $results = $query->get();
+
+        if ($results->count() === 0) {
+            return null;
+        }
 
         $labels = [];
         $counts = [];
@@ -599,10 +635,10 @@ class ChartsManager
     }
 
     /**
-     * @return RevenueMonthlyChart
+     * @return RevenueMonthlyChart|null
      * @throws \Exception
      */
-    public function createRevenueWithoutSalesTaxMonthlyChart(): RevenueMonthlyChart
+    public function createRevenueWithoutSalesTaxMonthlyChart()
     {
         $query = \DB::table('payments as p')
             ->select(
@@ -619,6 +655,10 @@ class ChartsManager
             ->orderBy('months', 'ASC');
 
         $results = $query->get();
+
+        if ($results->count() === 0) {
+            return null;
+        }
 
         $labels = [];
         $counts = [];
@@ -670,10 +710,10 @@ class ChartsManager
 
 
     /**
-     * @return NetPeasantsAcquiredChart
+     * @return NetPeasantsAcquiredChart|null
      * @throws \Exception
      */
-    public function createNetPeasantsAcquiredChart(): NetPeasantsAcquiredChart
+    public function createNetPeasantsAcquiredChart()
     {
         $query = \DB::table('users as u')
             ->select(\DB::raw('DATE(CONVERT_TZ(u.created_at, \'UTC\', \'Europe/Amsterdam\')) as registrationDate, COUNT(u.id) AS registrationsCount'))

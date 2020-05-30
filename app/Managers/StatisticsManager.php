@@ -43,7 +43,7 @@ class StatisticsManager
                 ->count();
     }
 
-    public function messagesSentByUserTypeCountBetween(string $userType, $startDate, $endDate) : int {
+    public function messagesSentByUserTypeCountBetween(string $userType, $startDate, $endDate) {
         return ConversationMessage::whereHas('sender.roles', function($query) use ($userType) {
             $query->where('name', $userType);
         })->whereBetween('created_at',
@@ -54,7 +54,7 @@ class StatisticsManager
             ->count();
     }
 
-    public function peasantDeactivationsCountBetween($startDate, $endDate) : int {
+    public function peasantDeactivationsCountBetween($startDate, $endDate) {
         return User::whereHas('roles', function($query) {
             $query->where('name', 'peasant');
         })->whereBetween('deactivated_at',
@@ -65,17 +65,24 @@ class StatisticsManager
         ->count();
     }
 
-    public function peasantsWithNoCreditpack() : int {
+    public function peasantsWithNoCreditpackQueryBuilder() {
         return User::where('active', true)
         ->whereHas('roles', function($query) {
             $query->where('name', 'peasant');
         })->whereHas('account', function($query) {
             $query->where('credits', 0);
-        })
-        ->count();
+        });
     }
 
-    public function peasantsThatNeverHadCreditpack() : int {
+    public function peasantsWithNoCreditpack() {
+        return $this->peasantsWithNoCreditpackQueryBuilder()->get();
+    }
+
+    public function peasantsWithNoCreditpackCount() {
+        return $this->peasantsWithNoCreditpackQueryBuilder()->count();
+    }
+
+    public function peasantsThatNeverHadCreditpackQueryBuilder() {
         return User::where('active', true)
         ->has('payments', '=', 0)
         ->whereHas('roles', function($query) {
@@ -84,7 +91,15 @@ class StatisticsManager
         ->orWhereHas('payments', function ($query) {
             $query->whereNull('creditpack_id');
         })
-        ->count();
+        ->orderBy('created_at', 'desc');
+    }
+
+    public function peasantsThatNeverHadCreditpack() {
+        return $this->peasantsThatNeverHadCreditpackQueryBuilder()->get();
+    }
+
+    public function peasantsThatNeverHadCreditpackCount() {
+        return $this->peasantsThatNeverHadCreditpackQueryBuilder()->count();
     }
 
     public function topMessagersBetweenDates($startDate, $endDate, int $amount)
@@ -130,7 +145,7 @@ class StatisticsManager
             ->take($amount);
     }
 
-    public function peasantsWithCreditpack(): Collection {
+    public function peasantsWithCreditpackQueryBuilder() {
         return User::where('active', true)
             ->whereHas('roles', function($query) {
                 $query->where('name', 'peasant');
@@ -138,12 +153,30 @@ class StatisticsManager
                 $query->where('credits', '>', 0);
             })->whereHas('payments', function($query) {
                 $query->where('status', Payment::STATUS_COMPLETED)->orderBy('created_at', 'desc')->take(1);
-            })->get();
+            })
+            ->orderBy('created_at', 'desc');
     }
 
-    public function filterPeasantsWithCreditpackId(Collection $peasants, int $creditpackId) : int {
+    public function peasantsWithCreditpack() {
+        return $this->peasantsWithCreditpackQueryBuilder()->get();
+    }
+
+    public function peasantsWithCreditpackCount() {
+        return $this->peasantsWithCreditpackQueryBuilder()->count();
+    }
+
+    /**
+     * @param Collection $peasants
+     * @param int $creditpackId
+     * @return Collection
+     */
+    public function filterPeasantsWithCreditpackId(Collection $peasants, int $creditpackId) {
         return $peasants->filter(function ($user) use ($creditpackId) {
             return $user->payments[count($user->payments) - 1]->getCreditpackId() == $creditpackId;
-        })->count();
+        });
+    }
+
+    public function filterPeasantsWithCreditpackIdCount(Collection $peasants, int $creditpackId) {
+        return $this->filterPeasantsWithCreditpackId($peasants, $creditpackId)->count();
     }
 }

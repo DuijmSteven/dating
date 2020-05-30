@@ -325,6 +325,9 @@ Route::group([
 
         Route::get('/deactivations', 'Admin\PeasantController@deactivations')
             ->name('admin.peasants.deactivations.overview');
+
+        Route::get('/with-creditpack', 'Admin\PeasantController@withCreditpack')
+            ->name('admin.peasants.with-creditpack.overview');
     });
 
     Route::group([
