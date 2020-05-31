@@ -258,7 +258,10 @@
                              style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
                             <i class="fa fa-users DashboardWidget_header-icon"></i>
                             <span
-                                class="DashboardWidget_header-title">Messagers on a roll {{ str_replace('_', ' ', $messagersOnARollWidget) }}</span>
+                                class="DashboardWidget_header-title"
+                            >
+                                Messagers on a roll {{ str_replace('_', ' ', $messagersOnARollWidget) }} {{ $messagersOnARollWidget === 'last_ten_minutes' ? '(At least 2 messages sent)': '(At least 5 messages sent)' }}
+                            </span>
                         </div>
                         <!-- /.widget-user-image -->
                     </div>
