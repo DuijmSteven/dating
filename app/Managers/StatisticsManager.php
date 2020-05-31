@@ -125,7 +125,7 @@ class StatisticsManager
             ->take($amount);
     }
 
-    public function peasantMessagersOnARoll($startDate, $endDate, int $amount, $countLimit = 5)
+    public function peasantMessagersOnARoll($startDate, $endDate, int $amount, $countLimit = 1)
     {
         return User::with(['account', 'messages' => function ($query) use ($startDate, $endDate) {
             $query->where('created_at', '>=', $startDate);
