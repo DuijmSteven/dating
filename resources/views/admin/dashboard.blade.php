@@ -16,16 +16,16 @@
                             </div>
                         </div>
                     </a>
-                    <a href="{{ route('admin.bots.online.show') }}" class="box box-widget DashboardWidget">
-                        <!-- Add the bg color to the header using any of the bg-* classes -->
-                        <div class="bg-info">
-                            <div class="widget-us DashboardWidget_header"
-                                 style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
-                                <i class="fa fa-users DashboardWidget_header-icon"></i>
-                                <span class="DashboardWidget_header-title"><b>{{ $onlineMaleStraightBotsCount }} male straight bots online</b></span>
-                            </div>
-                        </div>
-                    </a>
+{{--                    <a href="{{ route('admin.bots.online.show') }}" class="box box-widget DashboardWidget">--}}
+{{--                        <!-- Add the bg color to the header using any of the bg-* classes -->--}}
+{{--                        <div class="bg-info">--}}
+{{--                            <div class="widget-us DashboardWidget_header"--}}
+{{--                                 style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">--}}
+{{--                                <i class="fa fa-users DashboardWidget_header-icon"></i>--}}
+{{--                                <span class="DashboardWidget_header-title"><b>{{ $onlineMaleStraightBotsCount }} male straight bots online</b></span>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </a>--}}
                     <a href="{{ route('admin.bots.retrieve') }}" class="box box-widget DashboardWidget">
                         <!-- Add the bg color to the header using any of the bg-* classes -->
                         <div class="bg-info">
@@ -37,16 +37,16 @@
                         </div>
                     </a>
 
-                    <a href="{{ route('admin.bots.retrieve') }}" class="box box-widget DashboardWidget">
-                        <!-- Add the bg color to the header using any of the bg-* classes -->
-                        <div class="bg-info">
-                            <div class="widget-us DashboardWidget_header"
-                                 style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
-                                <i class="fa fa-users DashboardWidget_header-icon"></i>
-                                <span class="DashboardWidget_header-title"><b>{{ $activeMaleStraightBotsCount }} active male straight bots</b></span>
-                            </div>
-                        </div>
-                    </a>
+{{--                    <a href="{{ route('admin.bots.retrieve') }}" class="box box-widget DashboardWidget">--}}
+{{--                        <!-- Add the bg color to the header using any of the bg-* classes -->--}}
+{{--                        <div class="bg-info">--}}
+{{--                            <div class="widget-us DashboardWidget_header"--}}
+{{--                                 style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">--}}
+{{--                                <i class="fa fa-users DashboardWidget_header-icon"></i>--}}
+{{--                                <span class="DashboardWidget_header-title"><b>{{ $activeMaleStraightBotsCount }} active male straight bots</b></span>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </a>--}}
                     <a href="{{ route('admin.peasants.online.show') }}" class="box box-widget DashboardWidget">
                         <!-- Add the bg color to the header using any of the bg-* classes -->
                         <div class="bg-pinkish">
@@ -60,6 +60,116 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <div class="box box-widget DashboardWidget">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="bg-primary">
+                    <div class="widget-us DashboardWidget_header"
+                         style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
+                        <i class="fa fa-envelope DashboardWidget_header-icon"></i>
+                        <i class="fa fa-user DashboardWidget_header-icon"></i>
+                        <span class="DashboardWidget_header-title">Peasant Messages Sent</span>
+                    </div>
+                    <!-- /.widget-user-image -->
+                </div>
+                <div class="box-footer no-padding">
+                    <ul class="nav nav-stacked">
+                        <li><a href="#">Today <span
+                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentToday'] !!}</span></a>
+                        </li>
+                        <li><a href="#">Yesterday <span
+                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentYesterday'] !!}</span></a>
+                        </li>
+                        <li><a href="#">Current week <span
+                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentCurrentWeek'] !!}</span></a>
+                        </li>
+                        <li><a href="#">Current month <span
+                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentCurrentMonth'] !!}</span></a>
+                        </li>
+                        <li><a href="#">Last month <span
+                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentPreviousMonth'] !!}</span></a>
+                        </li>
+                        <li><a href="#">Current year <span
+                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentCurrentYear'] !!}</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <div class="box box-widget DashboardWidget">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="bg-primary">
+                    <div class="widget-us DashboardWidget_header"
+                         style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
+                        <i class="fa fa-users DashboardWidget_header-icon"></i>
+                        <span class="DashboardWidget_header-title">Revenue (without sales tax in parentheses)</span>
+                    </div>
+                    <!-- /.widget-user-image -->
+                </div>
+                <div class="box-footer no-padding">
+                    <ul class="nav nav-stacked">
+                        <li><a href="#">Today <span
+                                    class="DashboardWidget_count">&euro; {{ $revenueStatistics['revenueToday']/100 }} (<span style="color: #08a05e; font-weight: 600">{{ number_format($revenueStatistics['revenueToday']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
+                        </li>
+                        <li><a href="#">Yesterday <span
+                                    class="DashboardWidget_count">&euro; {{ $revenueStatistics['revenueYesterday']/100 }} (<span style="color: #08a05e; font-weight: 600">{{ number_format($revenueStatistics['revenueYesterday']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
+                        </li>
+                        <li><a href="#">Current week <span
+                                    class="DashboardWidget_count">&euro; {{ $revenueStatistics['revenueCurrentWeek']/100 }} (<span style="color: #08a05e; font-weight: 600">{{ number_format($revenueStatistics['revenueCurrentWeek']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
+                        </li>
+                        <li><a href="#">Current month <span
+                                    class="DashboardWidget_count">&euro; {{ $revenueStatistics['revenueCurrentMonth']/100 }} (<span style="color: #08a05e; font-weight: 600">{{ number_format($revenueStatistics['revenueCurrentMonth']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
+                        </li>
+                        <li><a href="#">Last month <span
+                                    class="DashboardWidget_count">&euro; {{ $revenueStatistics['revenuePreviousMonth']/100 }} (<span style="color: #08a05e; font-weight: 600">{{ number_format($revenueStatistics['revenuePreviousMonth']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
+                        </li>
+                        <li><a href="#">Current year <span
+                                    class="DashboardWidget_count">&euro; {{ $revenueStatistics['revenueCurrentYear']/100 }} (<span style="color: #08a05e; font-weight: 600">{{ number_format($revenueStatistics['revenueCurrentYear']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <div class="box box-widget DashboardWidget">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="bg-primary">
+                    <div class="widget-us DashboardWidget_header"
+                         style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
+                        <i class="fa fa-close DashboardWidget_header-icon"></i>
+                        <span class="DashboardWidget_header-title">Net peasants acquired</span>
+                    </div>
+                    <!-- /.widget-user-image -->
+                </div>
+                <div class="box-footer no-padding">
+                    <ul class="nav nav-stacked">
+                        <li><a href="#">Today <span
+                                    class="DashboardWidget_count">{!! $registrationStatistics['registrationsToday'] - $peasantDeactivationStatistics['deactivationsToday'] !!}</span></a>
+                        </li>
+                        <li><a href="#">Yesterday <span
+                                    class="DashboardWidget_count">{!! $registrationStatistics['registrationsYesterday'] - $peasantDeactivationStatistics['deactivationsYesterday'] !!}</span></a>
+                        </li>
+                        <li><a href="#">Current week <span
+                                    class="DashboardWidget_count">{!! $registrationStatistics['registrationsCurrentWeek'] - $peasantDeactivationStatistics['deactivationsCurrentWeek'] !!}</span></a>
+                        </li>
+                        <li><a href="#">Current month <span
+                                    class="DashboardWidget_count">{!! $registrationStatistics['registrationsCurrentMonth'] - $peasantDeactivationStatistics['deactivationsCurrentMonth'] !!}</span></a>
+                        </li>
+                        <li><a href="#">Last month <span
+                                    class="DashboardWidget_count">{!! $registrationStatistics['registrationsPreviousMonth'] - $peasantDeactivationStatistics['deactivationsPreviousMonth'] !!}</span></a>
+                        </li>
+                        <li><a href="#">Current year <span
+                                    class="DashboardWidget_count">{!! $registrationStatistics['registrationsCurrentYear'] - $peasantDeactivationStatistics['deactivationsCurrentYear'] !!}</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12"></div>
 
         @php
             $amountOfListItemsVisible = 5;
@@ -189,201 +299,6 @@
             </div>
         @endforeach
 
-        <div class="col-xs-12"></div>
-        <div class="col-xs-12 col-sm-6 col-md-4">
-            <div class="box box-widget DashboardWidget">
-                <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="bg-primary">
-                    <div class="widget-us DashboardWidget_header"
-                         style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
-                        <i class="fa fa-users DashboardWidget_header-icon"></i>
-                        <span class="DashboardWidget_header-title">Revenue (without sales tax in parentheses)</span>
-                    </div>
-                    <!-- /.widget-user-image -->
-                </div>
-                <div class="box-footer no-padding">
-                    <ul class="nav nav-stacked">
-                        <li><a href="#">Today <span
-                                    class="DashboardWidget_count">&euro; {{ $revenueStatistics['revenueToday']/100 }} (<span style="color: #08a05e; font-weight: 600">{{ number_format($revenueStatistics['revenueToday']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
-                        </li>
-                        <li><a href="#">Yesterday <span
-                                    class="DashboardWidget_count">&euro; {{ $revenueStatistics['revenueYesterday']/100 }} (<span style="color: #08a05e; font-weight: 600">{{ number_format($revenueStatistics['revenueYesterday']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
-                        </li>
-                        <li><a href="#">Current week <span
-                                    class="DashboardWidget_count">&euro; {{ $revenueStatistics['revenueCurrentWeek']/100 }} (<span style="color: #08a05e; font-weight: 600">{{ number_format($revenueStatistics['revenueCurrentWeek']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
-                        </li>
-                        <li><a href="#">Current month <span
-                                    class="DashboardWidget_count">&euro; {{ $revenueStatistics['revenueCurrentMonth']/100 }} (<span style="color: #08a05e; font-weight: 600">{{ number_format($revenueStatistics['revenueCurrentMonth']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
-                        </li>
-                        <li><a href="#">Last month <span
-                                    class="DashboardWidget_count">&euro; {{ $revenueStatistics['revenuePreviousMonth']/100 }} (<span style="color: #08a05e; font-weight: 600">{{ number_format($revenueStatistics['revenuePreviousMonth']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
-                        </li>
-                        <li><a href="#">Current year <span
-                                    class="DashboardWidget_count">&euro; {{ $revenueStatistics['revenueCurrentYear']/100 }} (<span style="color: #08a05e; font-weight: 600">{{ number_format($revenueStatistics['revenueCurrentYear']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-4">
-            <div class="box box-widget DashboardWidget">
-                <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="bg-primary">
-                    <div class="widget-us DashboardWidget_header"
-                         style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
-                        <i class="fa fa-envelope DashboardWidget_header-icon"></i>
-                        <i class="fa fa-user DashboardWidget_header-icon"></i>
-                        <span class="DashboardWidget_header-title">Peasant Messages Sent</span>
-                    </div>
-                    <!-- /.widget-user-image -->
-                </div>
-                <div class="box-footer no-padding">
-                    <ul class="nav nav-stacked">
-                        <li><a href="#">Today <span
-                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentToday'] !!}</span></a>
-                        </li>
-                        <li><a href="#">Yesterday <span
-                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentYesterday'] !!}</span></a>
-                        </li>
-                        <li><a href="#">Current week <span
-                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentCurrentWeek'] !!}</span></a>
-                        </li>
-                        <li><a href="#">Current month <span
-                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentCurrentMonth'] !!}</span></a>
-                        </li>
-                        <li><a href="#">Last month <span
-                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentPreviousMonth'] !!}</span></a>
-                        </li>
-                        <li><a href="#">Current year <span
-                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentCurrentYear'] !!}</span></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-4">
-            <div class="box box-widget DashboardWidget">
-                <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="bg-primary">
-                    <div class="widget-us DashboardWidget_header"
-                         style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
-                        <i class="fa fa-users DashboardWidget_header-icon"></i>
-                        <span class="DashboardWidget_header-title">Registrations</span>
-                    </div>
-                    <!-- /.widget-user-image -->
-                </div>
-                <div class="box-footer no-padding">
-                    <ul class="nav nav-stacked">
-                        <li><a href="#">Today <span
-                                    class="DashboardWidget_count">{!! $registrationStatistics['registrationsToday'] !!}</span></a>
-                        </li>
-                        <li><a href="#">Yesterday <span
-                                    class="DashboardWidget_count">{!! $registrationStatistics['registrationsYesterday'] !!}</span></a>
-                        </li>
-                        <li><a href="#">Current week <span
-                                    class="DashboardWidget_count">{!! $registrationStatistics['registrationsCurrentWeek'] !!}</span></a>
-                        </li>
-                        <li><a href="#">Current month <span
-                                    class="DashboardWidget_count">{!! $registrationStatistics['registrationsCurrentMonth'] !!}</span></a>
-                        </li>
-                        <li><a href="#">Last month <span
-                                    class="DashboardWidget_count">{!! $registrationStatistics['registrationsPreviousMonth'] !!}</span></a>
-                        </li>
-                        <li><a href="#">Current year <span
-                                    class="DashboardWidget_count">{!! $registrationStatistics['registrationsCurrentYear'] !!}</span></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-4">
-            <div class="box box-widget DashboardWidget">
-                <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="bg-primary">
-                    <div class="widget-us DashboardWidget_header"
-                         style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
-                        <i class="fa fa-close DashboardWidget_header-icon"></i>
-                        <span class="DashboardWidget_header-title">Deactivations</span>
-                    </div>
-                    <!-- /.widget-user-image -->
-                </div>
-                <div class="box-footer no-padding">
-                    <ul class="nav nav-stacked">
-                        <li><a href="#">Today <span
-                                    class="DashboardWidget_count">{!! $peasantDeactivationStatistics['deactivationsToday'] !!}</span></a>
-                        </li>
-                        <li><a href="#">Yesterday <span
-                                    class="DashboardWidget_count">{!! $peasantDeactivationStatistics['deactivationsYesterday'] !!}</span></a>
-                        </li>
-                        <li><a href="#">Current week <span
-                                    class="DashboardWidget_count">{!! $peasantDeactivationStatistics['deactivationsCurrentWeek'] !!}</span></a>
-                        </li>
-                        <li><a href="#">Current month <span
-                                    class="DashboardWidget_count">{!! $peasantDeactivationStatistics['deactivationsCurrentMonth'] !!}</span></a>
-                        </li>
-                        <li><a href="#">Last month <span
-                                    class="DashboardWidget_count">{!! $peasantDeactivationStatistics['deactivationsPreviousMonth'] !!}</span></a>
-                        </li>
-                        <li><a href="#">Current year <span
-                                    class="DashboardWidget_count">{!! $peasantDeactivationStatistics['deactivationsCurrentYear'] !!}</span></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-4">
-            <div class="box box-widget DashboardWidget">
-                <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="bg-primary">
-                    <div class="widget-us DashboardWidget_header"
-                         style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
-                        <i class="fa fa-close DashboardWidget_header-icon"></i>
-                        <span class="DashboardWidget_header-title">Net peasants acquired</span>
-                    </div>
-                    <!-- /.widget-user-image -->
-                </div>
-                <div class="box-footer no-padding">
-                    <ul class="nav nav-stacked">
-                        <li><a href="#">Today <span
-                                    class="DashboardWidget_count">{!! $registrationStatistics['registrationsToday'] - $peasantDeactivationStatistics['deactivationsToday'] !!}</span></a>
-                        </li>
-                        <li><a href="#">Yesterday <span
-                                    class="DashboardWidget_count">{!! $registrationStatistics['registrationsYesterday'] - $peasantDeactivationStatistics['deactivationsYesterday'] !!}</span></a>
-                        </li>
-                        <li><a href="#">Current week <span
-                                    class="DashboardWidget_count">{!! $registrationStatistics['registrationsCurrentWeek'] - $peasantDeactivationStatistics['deactivationsCurrentWeek'] !!}</span></a>
-                        </li>
-                        <li><a href="#">Current month <span
-                                    class="DashboardWidget_count">{!! $registrationStatistics['registrationsCurrentMonth'] - $peasantDeactivationStatistics['deactivationsCurrentMonth'] !!}</span></a>
-                        </li>
-                        <li><a href="#">Last month <span
-                                    class="DashboardWidget_count">{!! $registrationStatistics['registrationsPreviousMonth'] - $peasantDeactivationStatistics['deactivationsPreviousMonth'] !!}</span></a>
-                        </li>
-                        <li><a href="#">Current year <span
-                                    class="DashboardWidget_count">{!! $registrationStatistics['registrationsCurrentYear'] - $peasantDeactivationStatistics['deactivationsCurrentYear'] !!}</span></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-12">
-            <div style="width: 100%">
-                {!! $registrationsChart->container() !!}
-                {!! $registrationsChart->script() !!}
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-12">
-            <div style="width: 100%">
-                {!! $deactivationsChart->container() !!}
-                {!! $deactivationsChart->script() !!}
-            </div>
-        </div>
     </div>
 
     <div class="row">

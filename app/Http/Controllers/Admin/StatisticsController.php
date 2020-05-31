@@ -170,6 +170,58 @@ class StatisticsController extends Controller
                     $endOfToday
                 )
             ],
+            'registrationStatistics' => [
+                'registrationsToday' => $this->statisticsManager->registrationsCountBetween(
+                    $startOfToday,
+                    $endOfToday
+                ),
+                'registrationsYesterday' => $this->statisticsManager->registrationsCountBetween(
+                    $startOfYesterday,
+                    $endOfYesterday
+                ),
+                'registrationsCurrentWeek' => $this->statisticsManager->registrationsCountBetween(
+                    $startOfWeek,
+                    $endOfWeek
+                ),
+                'registrationsCurrentMonth' => $this->statisticsManager->registrationsCountBetween(
+                    $startOfMonth,
+                    $endOfMonth
+                ),
+                'registrationsPreviousMonth' => $this->statisticsManager->registrationsCountBetween(
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc
+                ),
+                'registrationsCurrentYear' => $this->statisticsManager->registrationsCountBetween(
+                    $startOfYear,
+                    $endOfToday
+                )
+            ],
+            'peasantDeactivationStatistics' => [
+                'deactivationsToday' => $this->statisticsManager->peasantDeactivationsCountBetween(
+                    $startOfToday,
+                    $endOfToday
+                ),
+                'deactivationsYesterday' => $this->statisticsManager->peasantDeactivationsCountBetween(
+                    $startOfYesterday,
+                    $endOfYesterday
+                ),
+                'deactivationsCurrentWeek' => $this->statisticsManager->peasantDeactivationsCountBetween(
+                    $startOfWeek,
+                    $endOfWeek
+                ),
+                'deactivationsCurrentMonth' => $this->statisticsManager->peasantDeactivationsCountBetween(
+                    $startOfMonth,
+                    $endOfMonth
+                ),
+                'deactivationsPreviousMonth' => $this->statisticsManager->peasantDeactivationsCountBetween(
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc
+                ),
+                'deactivationsCurrentYear' => $this->statisticsManager->peasantDeactivationsCountBetween(
+                    $startOfYear,
+                    $endOfToday
+                )
+            ],
             'topMessagerStatistics' => [
                 'this_month' => $this->statisticsManager->topMessagersBetweenDates($startOfMonth, $endOfMonth, 25)
             ],
@@ -211,6 +263,8 @@ class StatisticsController extends Controller
                 'rpuChart' => $this->chartsManager->createRpuChart(),
                 'revenueWithoutSalesTaxChart' => $this->chartsManager->createRevenueWithoutSalesTaxChart(),
                 'revenueWithoutSalesTaxMonthlyChart' => $this->chartsManager->createRevenueWithoutSalesTaxMonthlyChart(),
+                'registrationsChart' => $this->chartsManager->createRegistrationsChart(),
+                'deactivationsChart' => $this->chartsManager->createDeactivationsChart(),
             ]
         ));
     }

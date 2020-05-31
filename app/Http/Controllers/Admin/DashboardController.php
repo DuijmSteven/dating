@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Creditpack;
 use App\Http\Controllers\Controller;
 use App\Managers\ChartsManager;
 use App\Managers\StatisticsManager;
@@ -51,16 +50,16 @@ class DashboardController extends Controller
             ->whereIn('id', $onlineIds)
             ->count();
 
-        $onlineMaleStraightBotsCount = User::with('roles')
-            ->whereHas('roles', function ($query) {
-                $query->where('id', User::TYPE_BOT);
-            })
-            ->whereHas('meta', function ($query) {
-                $query->where('gender', User::GENDER_MALE);
-                $query->where('looking_for_gender', User::GENDER_FEMALE);
-            })
-            ->whereIn('id', $onlineIds)
-            ->count();
+//        $onlineMaleStraightBotsCount = User::with('roles')
+//            ->whereHas('roles', function ($query) {
+//                $query->where('id', User::TYPE_BOT);
+//            })
+//            ->whereHas('meta', function ($query) {
+//                $query->where('gender', User::GENDER_MALE);
+//                $query->where('looking_for_gender', User::GENDER_FEMALE);
+//            })
+//            ->whereIn('id', $onlineIds)
+//            ->count();
 
         $onlinePeasantsCount = User::with('roles')
             ->whereHas('roles', function ($query) {
@@ -80,16 +79,16 @@ class DashboardController extends Controller
             ->where('active', true)
             ->count();
 
-        $activeMaleStraightBotsCount = User::with('roles')
-            ->whereHas('roles', function ($query) {
-                $query->where('id', User::TYPE_BOT);
-            })
-            ->whereHas('meta', function ($query) {
-                $query->where('gender', User::GENDER_MALE);
-                $query->where('looking_for_gender', User::GENDER_FEMALE);
-            })
-            ->where('active', true)
-            ->count();
+//        $activeMaleStraightBotsCount = User::with('roles')
+//            ->whereHas('roles', function ($query) {
+//                $query->where('id', User::TYPE_BOT);
+//            })
+//            ->whereHas('meta', function ($query) {
+//                $query->where('gender', User::GENDER_MALE);
+//                $query->where('looking_for_gender', User::GENDER_FEMALE);
+//            })
+//            ->where('active', true)
+//            ->count();
 
         $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');
         $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
@@ -109,14 +108,12 @@ class DashboardController extends Controller
 
         $startOfYear = Carbon::now('Europe/Amsterdam')->startOfYear()->setTimezone('UTC');
 
-        $peasantsWithCreditpack = $this->statisticsManager->peasantsWithCreditpack();
-
         $viewData = [
             'onlineFemaleStraightBotsCount' => $onlineFemaleStraightBotsCount,
-            'onlineMaleStraightBotsCount' => $onlineMaleStraightBotsCount,
+            //'onlineMaleStraightBotsCount' => $onlineMaleStraightBotsCount,
             'onlinePeasantsCount' => $onlinePeasantsCount,
             'activeFemaleStraightBotsCount' => $activeFemaleStraightBotsCount,
-            'activeMaleStraightBotsCount' => $activeMaleStraightBotsCount,
+            //'activeMaleStraightBotsCount' => $activeMaleStraightBotsCount,
             'revenueStatistics' => [
                 'revenueToday' => $this->statisticsManager->revenueBetween(
                     $startOfToday,
@@ -139,32 +136,6 @@ class DashboardController extends Controller
                     $endOfPreviousMonthUtc
                 ),
                 'revenueCurrentYear' => $this->statisticsManager->revenueBetween(
-                    $startOfYear,
-                    $endOfToday
-                )
-            ],
-            'registrationStatistics' => [
-                'registrationsToday' => $this->statisticsManager->registrationsCountBetween(
-                    $startOfToday,
-                    $endOfToday
-                ),
-                'registrationsYesterday' => $this->statisticsManager->registrationsCountBetween(
-                    $startOfYesterday,
-                    $endOfYesterday
-                ),
-                'registrationsCurrentWeek' => $this->statisticsManager->registrationsCountBetween(
-                    $startOfWeek,
-                    $endOfWeek
-                ),
-                'registrationsCurrentMonth' => $this->statisticsManager->registrationsCountBetween(
-                    $startOfMonth,
-                    $endOfMonth
-                ),
-                'registrationsPreviousMonth' => $this->statisticsManager->registrationsCountBetween(
-                    $startOfPreviousMonthUtc,
-                    $endOfPreviousMonthUtc
-                ),
-                'registrationsCurrentYear' => $this->statisticsManager->registrationsCountBetween(
                     $startOfYear,
                     $endOfToday
                 )
@@ -197,6 +168,32 @@ class DashboardController extends Controller
                 ),
                 'messagesSentCurrentYear' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
                     'peasant',
+                    $startOfYear,
+                    $endOfToday
+                )
+            ],
+            'registrationStatistics' => [
+                'registrationsToday' => $this->statisticsManager->registrationsCountBetween(
+                    $startOfToday,
+                    $endOfToday
+                ),
+                'registrationsYesterday' => $this->statisticsManager->registrationsCountBetween(
+                    $startOfYesterday,
+                    $endOfYesterday
+                ),
+                'registrationsCurrentWeek' => $this->statisticsManager->registrationsCountBetween(
+                    $startOfWeek,
+                    $endOfWeek
+                ),
+                'registrationsCurrentMonth' => $this->statisticsManager->registrationsCountBetween(
+                    $startOfMonth,
+                    $endOfMonth
+                ),
+                'registrationsPreviousMonth' => $this->statisticsManager->registrationsCountBetween(
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc
+                ),
+                'registrationsCurrentYear' => $this->statisticsManager->registrationsCountBetween(
                     $startOfYear,
                     $endOfToday
                 )
@@ -244,11 +241,9 @@ class DashboardController extends Controller
                 'headingLarge' => 'Dashboard',
                 'headingSmall' => '',
                 'salesTax' => self::SALES_TAX,
-                'registrationsChart' => $this->chartsManager->createRegistrationsChart(),
                 'peasantMessagesChart' => $this->chartsManager->createPeasantMessagesChart(),
                 'revenueChart' => $this->chartsManager->createRevenueChart(),
                 'netPeasantsAcquiredChart' => $this->chartsManager->createNetPeasantsAcquiredChart(),
-                'deactivationsChart' => $this->chartsManager->createDeactivationsChart(),
             ]
         ));
     }
