@@ -389,6 +389,21 @@ Route::group([
     });
 
     Route::group([
+        'prefix' => 'public-chat-items'
+    ], function () {
+        Route::get('/', 'Admin\PublicChatItemController@index')
+            ->name('admin.public-chat-items.overview');
+        Route::get('peasants/{peasantId}', 'Admin\PublicChatItemController@ofPeasantId')
+            ->name('admin.public-chat-items.peasant');
+        Route::get('bots/{botId}', 'Admin\PublicChatItemController@ofBotId')
+            ->name('admin.public-chat-items.bot');
+        Route::get('operators/{operatorId}', 'Admin\PublicChatItemController@ofOperatorId')
+            ->name('admin.public-chat-items.operator');
+        Route::delete('{chatItemId}', 'Admin\PublicChatItemController@destroy')
+            ->name('admin.public-chat-items.destroy');
+    });
+
+    Route::group([
         'prefix' => 'notes'
     ], function () {
         Route::delete('{noteId}', 'Admin\ConversationNoteController@destroyNote')

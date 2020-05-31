@@ -56,7 +56,7 @@
                                     @if($message->sender)
                                         <a href="{{ route('operator-platform.conversations.show', ['id' => $message->sender->getId()]) }}">
                                             <img style="height: 80px; width: 80px; object-fit: cover"
-                                                 src="{{ \App\Helpers\StorageHelper::profileImageUrl($message->sender) }}"
+                                                 src="{{ \App\Helpers\StorageHelper::profileImageUrl($message->sender, true) }}"
                                                  alt="Sender profile image"><br>
                                         </a>
                                         <b>ID</b>:

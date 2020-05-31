@@ -214,6 +214,23 @@
         </li>
     </ul>
 </li>
+<li class="treeview {!! \Str::contains(\Request::route()->getName(), 'admin.public-chat-items') ? 'active' : '' !!}">
+    <a href="#">
+        <i class="fa fa-comments"></i>
+        <span>Public Chat Items</span>
+        <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+    </a>
+    <ul class="treeview-menu">
+        <li class="{!! \Request::route()->getName() == 'admin.public-chat-items.overview' ? 'active' : '' !!}">
+            <a href="{!! route('admin.public-chat-items.overview', ['page' => 1]) !!}">
+                <i class="fa fa-list"></i>
+                Overview
+            </a>
+        </li>
+    </ul>
+</li>
 <li class="treeview {!! \Str::contains(\Request::route()->getName(), 'operator-platform') ? 'active' : '' !!}">
     <a href="#">
         <i class="fa fa-users"></i>
