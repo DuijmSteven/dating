@@ -7,13 +7,30 @@ class BotMessage extends TimeZonedModel
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
 
+    const USAGE_TYPE_NORMAL_CHAT = 1;
+    const USAGE_TYPE_PUBLIC_CHAT = 2;
+
     public $table = 'bot_messages';
 
     protected $fillable = [
         'bot_id',
         'body',
-        'status'
+        'status',
+        'usage_type'
     ];
+
+    public static function usageTypeDescriptionPerId()
+    {
+        return [
+            self::USAGE_TYPE_NORMAL_CHAT => 'Normal chat',
+            self::USAGE_TYPE_PUBLIC_CHAT => 'Public chat',
+        ];
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
 
     public function getBotId()
     {
@@ -43,6 +60,16 @@ class BotMessage extends TimeZonedModel
     public function setStatus(string $status)
     {
         $this->status = $status;
+    }
+
+    public function getUsageType()
+    {
+        return $this->usage_type;
+    }
+
+    public function setUsageType(string $usageType)
+    {
+        $this->usage_type = $usageType;
     }
 
     /**

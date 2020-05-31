@@ -25,7 +25,9 @@ class BotMessageCreateRequest extends Request
     {
         return [
             'body' => 'required|min:1|max:1000',
-            'status' => 'integer|required'
+            'bot_id' => 'integer',
+            'status' => 'integer|required',
+            'usage_type' => 'integer|required'
         ];
     }
 }

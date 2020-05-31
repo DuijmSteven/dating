@@ -43,6 +43,9 @@ class TimeZonedModel extends Model
         return $this->created_at->tz(self::TIMEZONE);
     }
 
+    /**
+     * @return Carbon
+     */
     public function getUpdatedAt() {
         return $this->updated_at->tz(self::TIMEZONE);
     }

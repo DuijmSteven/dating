@@ -750,12 +750,17 @@ class User extends Authenticatable
 
     public function payments()
     {
-        return $this->hasMany('App\Payment');
+        return $this->hasMany(Payment::class);
     }
 
     public function completedPayments()
     {
-        return $this->hasMany('App\Payment')->where('status', Payment::STATUS_COMPLETED)->orderBy('created_at', 'desc');
+        return $this->hasMany(Payment::class)->where('status', Payment::STATUS_COMPLETED)->orderBy('created_at', 'desc');
+    }
+
+    public function publicChatItems()
+    {
+        return $this->hasMany(PublicChatItem::class, 'sender_id');
     }
 
     /**

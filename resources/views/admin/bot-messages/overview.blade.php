@@ -25,6 +25,7 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>Usage type</th>
                                 <th>Bot</th>
                                 <th>Body</th>
                                 <th>Status</th>
@@ -35,7 +36,8 @@
                         <tbody>
                             @foreach($botMessages as $botMessage)
                                 <tr>
-                                    <td>{{ $botMessage->id }}</td>
+                                    <td>{{ $botMessage->getId() }}</td>
+                                    <td>{{ \App\BotMessage::usageTypeDescriptionPerId()[$botMessage->getUsageType()] }}</td>
                                     <td>
                                         @if($botMessage->bot)
                                             <a href="{!! \StorageHelper::profileImageUrl($botMessage->bot) !!}">
