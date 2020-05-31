@@ -260,7 +260,7 @@
                             <span
                                 class="DashboardWidget_header-title"
                             >
-                                Messagers on a roll {{ str_replace('_', ' ', $messagersOnARollWidget) }} {{ $messagersOnARollWidget === 'last_ten_minutes' ? '(At least 2 messages sent)': '(At least 5 messages sent)' }}
+                                Messagers on a roll {{ str_replace('_', ' ', $messagersOnARollWidget) }} (At least {{ $messagersOnARollStatistics[$messagersOnARollWidget]['countLimit'] }} messages sent)
                             </span>
                         </div>
                         <!-- /.widget-user-image -->
@@ -271,7 +271,7 @@
                                 $count = 0;
                             @endphp
 
-                            @foreach($messagersOnARollStatistics[$messagersOnARollWidget] as $user)
+                            @foreach($messagersOnARollStatistics[$messagersOnARollWidget]['peasants'] as $user)
                                 <li class="{{ $count >= $amountOfListItemsVisible ? 'hidden defaultHidden' : '' }}">
                                     @php
                                         $highlightTypeClass = '';

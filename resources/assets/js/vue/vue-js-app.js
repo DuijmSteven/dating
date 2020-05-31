@@ -83,14 +83,16 @@ if ($('#app').length > 0) {
                         if (response.data && response.data.length > 0) {
                             this.currentConversationPartnersResponse = response;
 
-                            response.data.forEach((key) => {
-                                let split = key.split(':');
+                            response.data.forEach((key, index) => {
+                                if (index <= 3) {
+                                    let split = key.split(':');
 
-                                let userBId = +split[0];
-                                let state = split[1];
+                                    let userBId = +split[0];
+                                    let state = split[1];
 
-                                if (!this.conversationPartners.map(partner => partner.id).includes(userBId) && !['xs', 'sm'].includes(this.$mq)) {
-                                    this.addChat(DP.authenticatedUser.id, userBId, state);
+                                    if (!this.conversationPartners.map(partner => partner.id).includes(userBId) && !['xs', 'sm'].includes(this.$mq)) {
+                                        this.addChat(DP.authenticatedUser.id, userBId, state);
+                                    }
                                 }
                             });
 

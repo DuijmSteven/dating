@@ -237,8 +237,14 @@ class DashboardController extends Controller
                 'this_week' => $this->statisticsManager->topOperatorMessagersBetweenDates($startOfWeek, $endOfWeek, 25),
             ],
             'messagersOnARollStatistics' => [
-                'last_ten_minutes' => $this->statisticsManager->peasantMessagersOnARoll($tenMinutesAgo, $now, 25, 2),
-                'last_hour' => $this->statisticsManager->peasantMessagersOnARoll($oneHourAgo, $now, 25, 5),
+                'last_ten_minutes' => [
+                    'peasants' => $this->statisticsManager->peasantMessagersOnARoll($tenMinutesAgo, $now, 25, 1),
+                    'countLimit' => 1
+                ],
+                'last_hour' => [
+                    'peasants' => $this->statisticsManager->peasantMessagersOnARoll($oneHourAgo, $now, 25, 2),
+                    'countLimit' => 2
+                ]
             ],
         ];
 
