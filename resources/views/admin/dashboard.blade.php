@@ -309,6 +309,10 @@
                     </div>
                 </div>
             </div>
+
+            @if($messagersOnARollWidget === 'last_ten_minutes')
+                <div class="col-xs-12"></div>
+            @endif
         @endforeach
 
         @foreach([
