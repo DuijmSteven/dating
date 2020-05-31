@@ -215,12 +215,14 @@ class PaymentService implements PaymentProvider
             if($peasant->account()->exists()) {
                 $existingCredits = $peasant->account->credits;
                 $peasant->account()->update(['credits' => $existingCredits + (int) $creditpack->getCredits()]);
+                $newAmountOfCredits = $existingCredits + (int) $creditpack->getCredits();
             } else {
                 $account = new UserAccount(['credits' => (int) $creditpack->getCredits()]);
                 $peasant->account()->save($account);
+                $newAmountOfCredits = (int) $creditpack->getCredits();
             }
 
-            \Log::debug('Payment (ID: ' . $payment->getId() . ') - Credits after increasing them: ' . $peasant->account->credits);
+            \Log::debug('Payment (ID: ' . $payment->getId() . ') - Credits after increasing them: ' . $newAmountOfCredits);
         }
 
         //Update payment status
