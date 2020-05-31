@@ -108,6 +108,10 @@ class DashboardController extends Controller
 
         $startOfYear = Carbon::now('Europe/Amsterdam')->startOfYear()->setTimezone('UTC');
 
+        $tenMinutesAgo = Carbon::now('Europe/Amsterdam')->subMinutes(10)->setTimezone('UTC');
+        $oneHourAgo = Carbon::now('Europe/Amsterdam')->subHours(1)->setTimezone('UTC');
+        $now = Carbon::now('Europe/Amsterdam')->setTimezone('UTC');
+
         $viewData = [
             'onlineFemaleStraightBotsCount' => $onlineFemaleStraightBotsCount,
             //'onlineMaleStraightBotsCount' => $onlineMaleStraightBotsCount,
@@ -231,7 +235,11 @@ class DashboardController extends Controller
             'topOperatorMessagerStatistics' => [
                 'today' => $this->statisticsManager->topOperatorMessagersBetweenDates($startOfToday, $endOfToday, 25),
                 'this_week' => $this->statisticsManager->topOperatorMessagersBetweenDates($startOfWeek, $endOfWeek, 25),
-            ]
+            ],
+            'messagersOnARollStatistics' => [
+                'last_ten_minutes' => $this->statisticsManager->peasantMessagersOnARoll($tenMinutesAgo, $now, 25),
+                'last_hour' => $this->statisticsManager->peasantMessagersOnARoll($oneHourAgo, $now, 25),
+            ],
         ];
 
         return view('admin.dashboard', array_merge(

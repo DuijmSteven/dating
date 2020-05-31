@@ -18,20 +18,20 @@ class StatisticsManager
                 $startDate,
                 $endDate
             ])
-            ->where('status', 3)
+            ->where('status', Payment::STATUS_COMPLETED)
             ->sum('amount');
     }
 
     public function registrationsCountBetween($startDate, $endDate) {
         return User::whereHas('roles', function ($query) {
-            $query->where('id', 2);
+            $query->where('id', User::TYPE_PEASANT);
         })
-            ->whereBetween('created_at',
-                [
-                    $startDate,
-                    $endDate
-                ])
-            ->count();
+        ->whereBetween('created_at',
+            [
+                $startDate,
+                $endDate
+            ])
+        ->count();
     }
 
     public function messagesSentCountBetween($startDate, $endDate) {
@@ -108,6 +108,29 @@ class StatisticsManager
                 $query->where('created_at', '>=', $startDate);
                 $query->where('created_at', '<=', $endDate);
             }])
+            ->whereHas('roles', function($query) {
+                $query->where('id', User::TYPE_PEASANT);
+            })
+            ->whereHas('payments', function($query) {
+                $query->where('status', Payment::STATUS_COMPLETED);
+            })
+            ->whereHas('messages', function ($query) use ($startDate, $endDate) {
+                $query->where('created_at', '>=', $startDate);
+                $query->where('created_at', '<=', $endDate);
+            })
+            ->get()
+            ->sortByDesc(function ($user) {
+                return $user->messages->count();
+            })
+            ->take($amount);
+    }
+
+    public function peasantMessagersOnARoll($startDate, $endDate, int $amount)
+    {
+        return User::with(['account', 'messages' => function ($query) use ($startDate, $endDate) {
+            $query->where('created_at', '>=', $startDate);
+            $query->where('created_at', '<=', $endDate);
+        }])
             ->whereHas('roles', function($query) {
                 $query->where('id', User::TYPE_PEASANT);
             })
