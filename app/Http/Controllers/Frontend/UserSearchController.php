@@ -116,6 +116,10 @@ class UserSearchController extends FrontendController
         $searchParameters['active'] = true;
         $searchParameters['radius'] = 80;
 
+        if (isset($searchParameters['city_name'])) {
+            $searchParameters['city_name'] = 'Amsterdam';
+        }
+
         $users = $this->userSearchManager->searchUsers(
             $searchParameters,
             true,
