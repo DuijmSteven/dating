@@ -97,6 +97,10 @@ class ConversationMessage extends TimeZonedModel
         $this->operator_id = $operatorId;
     }
 
+    public function setOperatorMessageType(?int $operatorMessageType)
+    {
+        $this->operator_message_type = $operatorMessageType;
+    }
 
     public function getRecipientId()
     {

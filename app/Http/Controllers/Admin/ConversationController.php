@@ -448,6 +448,25 @@ class ConversationController extends Controller
             return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
         }
 
+        if ($conversation->messages->count() > 2) {
+            if (
+                $conversation->messages[0]->sender->roles[0]->id === User::TYPE_PEASANT
+            ) {
+                if (2 === rand(1, 2)) {
+                    $conversation->setReplyableAt(null);
+                } else {
+                    $conversation->setReplyableAt(Carbon::now()->addDays(ConversationManager::CONVERSATION_PRE_STOPPED_PERIOD_IN_DAYS));
+                }
+            }
+
+            if (
+                $conversation->messages[0]->sender->roles[0]->id === User::TYPE_BOT
+            ) {
+                $operatorMessageType = ConversationMessage::OPERATOR_MESSAGE_TYPE_STOPPED;
+            }
+        } elseif ($sender->isBot()) {
+            $conversation->setReplyableAt(null);
+        }
 
         $body = $request->get('body') ?? null;
 
@@ -463,6 +482,7 @@ class ConversationController extends Controller
         $message->setBody($body);
         $message->save();
         $message->setOperatorId($this->authenticatedUser->getId());
+        $message->setOperatorMessageType(isset($operatorMessageType) ? $operatorMessageType : null);
 
         $fileExists = $this->storageManager->fileExists(
             $image->getFilename(),
