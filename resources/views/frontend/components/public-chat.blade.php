@@ -75,7 +75,7 @@
                     <span class="label label-default JS--PublicChat__countChars PublicChat__countChars"></span>
                 </div>
                 <div class="text-center PublicChat__submitButton">
-                    <button class="btn btn-info" type="submit">{{ trans('home.post_new_message') }}</button>
+                    <button class="btn" type="submit">{{ trans('home.post_new_message') }}</button>
                 </div>
             </form>
         </div>
