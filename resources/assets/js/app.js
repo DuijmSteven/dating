@@ -383,6 +383,17 @@ $(window).on('load', function () {
         });
     }
 
+    if ($('.JS--PublicChat__countChars').length > 0) {
+        var max = 1000;
+        $('.JS--PublicChat__countChars').html('0 / ' + max );
+
+        $('.JS--PublicChat__textarea').keyup(function() {
+            var textLength = $('.JS--PublicChat__textarea').val().length;
+            var textRemaining = max - textLength;
+
+            $('.JS--PublicChat__countChars').html(textLength + ' / ' + max);
+        });
+    }
 });
 
 

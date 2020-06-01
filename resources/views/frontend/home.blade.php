@@ -5,6 +5,17 @@
     <div class="Tile Activity">
         <div class="Tile__heading" style="padding: 5px">
             <span class="material-icons">
+                chat
+            </span>
+            {{ trans('home.public_chat') }}
+        </div>
+    </div>
+
+    @include('frontend.components.public-chat')
+
+    <div class="Tile Activity">
+        <div class="Tile__heading" style="padding: 5px">
+            <span class="material-icons">
                 account_box
             </span>
             {{ trans('home.new_members') }}
