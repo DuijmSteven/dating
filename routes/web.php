@@ -416,6 +416,26 @@ Route::group([
     });
 
     Route::group([
+        'prefix' => 'expenses'
+    ], function () {
+        Route::get('/', 'Admin\ExpenseController@index')
+            ->name('admin.expenses.overview');
+
+        Route::delete('{expenseId}', 'Admin\ExpenseController@destroy')
+            ->name('admin.expenses.destroy');
+
+        Route::get('create', 'Admin\ExpenseController@getCreate')
+            ->name('admin.expenses.create');
+        Route::post('/', 'Admin\ExpenseController@post')
+            ->name('admin.expenses.post');
+
+        Route::get('{expenseId}', 'Admin\ExpenseController@getUpdate')
+            ->name('admin.expenses.edit');
+        Route::put('{expenseId}', 'Admin\ExpenseController@update')
+            ->name('admin.expenses.update');
+    });
+
+    Route::group([
         'prefix' => 'bot-messages'
     ], function () {
         Route::get('/', 'Admin\BotMessageController@index')
