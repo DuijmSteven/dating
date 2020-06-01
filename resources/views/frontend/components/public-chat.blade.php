@@ -70,7 +70,7 @@
         </div>
         <div class="panel-footer PublicChat__panelFooter">
             <form action="" method="POST">
-                <textarea class="form-control JS--PublicChat__textarea" id="text" name="text" maxlength="1000" placeholder="Type in your message" rows="3"></textarea>
+                <textarea class="form-control JS--PublicChat__textarea" id="text" name="text" maxlength="1000" placeholder="Type in your message" rows="2"></textarea>
                 <div class="text-right">
                     <span class="label label-default JS--PublicChat__countChars PublicChat__countChars"></span>
                 </div>
