@@ -496,6 +496,73 @@ class ChartsManager
     }
 
     /**
+     * @return RevenueChart|null
+     * @throws \Exception
+     */
+    public function createXpartnersRevenueChart()
+    {
+        $query = \DB::table('payments as p')
+            ->select(\DB::raw('DATE(CONVERT_TZ(p.created_at, \'UTC\', \'Europe/Amsterdam\')) as creationDate, SUM(p.amount) as revenueOnDay'))
+            ->leftJoin('users as u', 'u.id', 'p.user_id')
+            ->leftJoin('user_affiliate_tracking as uat', 'uat.user_id', 'u.id')
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('ru.role_id', User::TYPE_PEASANT)
+            ->where('p.status', Payment::STATUS_COMPLETED)
+            ->where('uat.affiliate', 'xpartners')
+            ->groupBy('creationDate')
+            ->orderBy('creationDate', 'ASC');
+
+        $results = $query->get();
+
+        if ($results->count() === 0) {
+            return null;
+        }
+
+        $labels = [];
+        $counts = [];
+
+        $datesWithRevenue = [];
+        $revenuePerDate = [];
+
+        foreach ($results as $result) {
+            $datesWithRevenue[] = explode(' ', $result->creationDate)[0];
+            $revenuePerDate[explode(' ', $result->creationDate)[0]] = (int)$result->revenueOnDay / 100;
+        }
+
+        $period = new DatePeriod(
+            new DateTime($datesWithRevenue[0]),
+            new DateInterval('P1D'),
+            new DateTime('now')
+        );
+
+        /**
+         * @var  $key
+         * @var DateTime $value
+         */
+        foreach ($period as $key => $value) {
+            $labels[] = $value->format('Y-m-d');
+
+            if (in_array($value->format('Y-m-d'), $datesWithRevenue)) {
+                $counts[] = $revenuePerDate[$value->format('Y-m-d')];
+            } else {
+                $counts[] = 0;
+            }
+        }
+
+        $revenueChart = new RevenueChart();
+        $revenueChart->labels($labels);
+
+        $revenueChart
+            ->dataset('X-Parterns revenue on date', 'line', $counts)
+            ->backGroundColor('#339929');
+
+        $revenueChart
+            ->title('X-Parterns revenue per day');
+
+        return $revenueChart;
+    }
+
+    /**
      * @return RevenueMonthlyChart|null
      * @throws \Exception
      */

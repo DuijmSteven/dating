@@ -144,6 +144,32 @@ class DashboardController extends Controller
                     $endOfToday
                 )
             ],
+            'xpartnersRevenueStatistics' => [
+                'revenueToday' => $this->statisticsManager->xpartnersRevenueBetween(
+                    $startOfToday,
+                    $endOfToday
+                ),
+                'revenueYesterday' => $this->statisticsManager->xpartnersRevenueBetween(
+                    $startOfYesterday,
+                    $endOfYesterday
+                ),
+                'revenueCurrentWeek' => $this->statisticsManager->xpartnersRevenueBetween(
+                    $startOfWeek,
+                    $endOfWeek
+                ),
+                'revenueCurrentMonth' => $this->statisticsManager->xpartnersRevenueBetween(
+                    $startOfMonth,
+                    $endOfMonth
+                ),
+                'revenuePreviousMonth' => $this->statisticsManager->xpartnersRevenueBetween(
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc
+                ),
+                'revenueCurrentYear' => $this->statisticsManager->xpartnersRevenueBetween(
+                    $startOfYear,
+                    $endOfToday
+                )
+            ],
             'peasantMessageStatistics' => [
                 'messagesSentToday' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
                     'peasant',
@@ -248,6 +274,8 @@ class DashboardController extends Controller
             ],
         ];
 
+
+
         return view('admin.dashboard', array_merge(
             $viewData,
             [
@@ -257,6 +285,7 @@ class DashboardController extends Controller
                 'salesTax' => self::SALES_TAX,
                 'peasantMessagesChart' => $this->chartsManager->createPeasantMessagesChart(),
                 'revenueChart' => $this->chartsManager->createRevenueChart(),
+                'xpartnersRevenueChart' => $this->chartsManager->createXpartnersRevenueChart(),
                 'netPeasantsAcquiredChart' => $this->chartsManager->createNetPeasantsAcquiredChart(),
             ]
         ));
