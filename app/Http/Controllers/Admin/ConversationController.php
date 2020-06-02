@@ -244,10 +244,13 @@ class ConversationController extends Controller
         /** @var Conversation $conversation */
         $conversation = Conversation::with(['userA', 'userB', 'messages'])->withTrashed()->find($conversationId);
 
-        if (null === $conversation->getReplyableAt() && !$this->authenticatedUser->isAdmin()) {
+        if (
+            (null === $conversation->getReplyableAt() || $conversation->getReplyableAt()->gt(Carbon::now())) &&
+            !$this->authenticatedUser->isAdmin()
+        ) {
             $alerts[] = [
                 'type' => 'warning',
-                'message' => 'The conversation is no longer replyable'
+                'message' => 'The conversation is not replyable'
             ];
 
             return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
@@ -598,6 +601,18 @@ class ConversationController extends Controller
             $messageData['sender_id'],
             $messageData['recipient_id']
         );
+
+        if (
+            (null === $conversation->getReplyableAt() || $conversation->getReplyableAt()->gt(Carbon::now())) &&
+            !$this->authenticatedUser->isAdmin()
+        ) {
+            $alerts[] = [
+                'type' => 'warning',
+                'message' => 'The conversation is not replyable'
+            ];
+
+            return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
+        }
 
         try {
             if (
