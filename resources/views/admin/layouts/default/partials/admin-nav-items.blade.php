@@ -248,6 +248,30 @@
         </li>
     </ul>
 </li>
+<li class="treeview {!! \Str::contains(\Request::route()->getName(), 'admin.expenses') ? 'active' : '' !!}">
+    <a href="#">
+        <i class="fa fa-money"></i>
+        <span>Expenses</span>
+        <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+    </a>
+    <ul class="treeview-menu">
+        <li class="{!! \Request::route()->getName() == 'admin.expenses.overview' ? 'active' : '' !!}">
+            <a href="{!! route('admin.expenses.overview', ['page' => 1]) !!}">
+                <i class="fa fa-list"></i>
+                Overview
+            </a>
+        </li>
+        <li class="{!! \Request::route()->getName() == 'admin.expenses.create' ? 'active' : '' !!}">
+            <a href="{!! route('admin.expenses.create') !!}">
+                <i class="fa fa-plus"></i>
+                Create
+            </a>
+        </li>
+    </ul>
+</li>
+
 @php
     $routeName = \Request::route()->getName();
     $lmsRoutesTruthArray = array_map(function ($value) use ($routeName) {

@@ -22,6 +22,19 @@ class StatisticsManager
             ->sum('amount');
     }
 
+    public function xpartnersRevenueBetween($startDate, $endDate) {
+        return Payment::whereHas('peasant.affiliateTracking', function ($query) {
+            $query->where('affiliate', 'xpartners');
+        })
+            ->whereBetween('created_at',
+                [
+                    $startDate,
+                    $endDate
+                ])
+            ->where('status', Payment::STATUS_COMPLETED)
+            ->sum('amount');
+    }
+
     public function registrationsCountBetween($startDate, $endDate) {
         return User::whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_PEASANT);

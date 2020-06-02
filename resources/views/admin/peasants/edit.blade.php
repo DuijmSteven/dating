@@ -29,19 +29,23 @@
             </form>
         </div>
 
-        <div style="margin-bottom: 20px; padding: 10px 10px 0">
-            <div style="width: 100%">
-                {!! $peasantMessagesChart->container() !!}
-                {!! $peasantMessagesChart->script() !!}
+        @if($peasantMessagesChart)
+            <div style="margin-bottom: 20px; padding: 10px 10px 0">
+                <div style="width: 100%">
+                    {!! $peasantMessagesChart->container() !!}
+                    {!! $peasantMessagesChart->script() !!}
+                </div>
             </div>
-        </div>
+        @endif
 
-        <div style="margin-bottom: 20px; padding: 10px 10px 0">
-            <div style="width: 100%">
-                {!! $peasantMessagesMonthlyChart->container() !!}
-                {!! $peasantMessagesMonthlyChart->script() !!}
+        @if($peasantMessagesMonthlyChart)
+            <div style="margin-bottom: 20px; padding: 10px 10px 0">
+                <div style="width: 100%">
+                    {!! $peasantMessagesMonthlyChart->container() !!}
+                    {!! $peasantMessagesMonthlyChart->script() !!}
+                </div>
             </div>
-        </div>
+        @endif
 
         <!-- /.box-header -->
         <!-- form start -->

@@ -394,6 +394,28 @@
         position: relative;
     }
 
+    //@keyframes shine{
+    //    80% {
+    //        opacity: 0.4;
+    //        top: 0;
+    //        left: 8px;
+    //        transition-property: left, top, opacity;
+    //        //transition-timing-function: ease-out;
+    //    }
+    //    90% {
+    //        opacity: 1;
+    //        transition-property: left, top, opacity;
+    //    }
+    //
+    //    100% {
+    //        opacity: 0;
+    //        top: 0;
+    //        left: 100%;
+    //        transition-property: left, top, opacity;
+    //        transition-timing-function: ease-out;
+    //    }
+    //}
+
     .buyCreditsButton {
         position: absolute;
         left: 340px;
@@ -426,6 +448,29 @@
         @media (max-width: $screen-xs-max) {
             display: none;
         }
+
+
+        //&:after {
+        //    animation: shine 2.5s ease-out  infinite;
+        //    animation-fill-mode: forwards;
+        //    content: "";
+        //    position: absolute;
+        //    top: 0;
+        //    left: 8px;
+        //    width: 14px;
+        //    height: 92%;
+        //    opacity: 0.1;
+        //    transform: rotate(30deg);
+        //
+        //    background: rgba(255, 255, 255, 0.13);
+        //    background: linear-gradient(
+        //                    to right,
+        //                    rgba(255, 255, 255, 0.13) 0%,
+        //                    rgba(255, 255, 255, 0.13) 77%,
+        //                    rgba(255, 255, 255, 0.5) 92%,
+        //                    rgba(255, 255, 255, 0.0) 100%
+        //    );
+        //}
     }
 
     .searchToggleButton {

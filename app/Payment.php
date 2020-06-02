@@ -62,7 +62,6 @@ class Payment extends TimeZonedModel
         $this->description = $description;
     }
 
-
     public function getAmount()
     {
         return $this->amount;

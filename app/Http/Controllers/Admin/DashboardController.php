@@ -144,6 +144,32 @@ class DashboardController extends Controller
                     $endOfToday
                 )
             ],
+            'xpartnersRevenueStatistics' => [
+                'revenueToday' => $this->statisticsManager->xpartnersRevenueBetween(
+                    $startOfToday,
+                    $endOfToday
+                ),
+                'revenueYesterday' => $this->statisticsManager->xpartnersRevenueBetween(
+                    $startOfYesterday,
+                    $endOfYesterday
+                ),
+                'revenueCurrentWeek' => $this->statisticsManager->xpartnersRevenueBetween(
+                    $startOfWeek,
+                    $endOfWeek
+                ),
+                'revenueCurrentMonth' => $this->statisticsManager->xpartnersRevenueBetween(
+                    $startOfMonth,
+                    $endOfMonth
+                ),
+                'revenuePreviousMonth' => $this->statisticsManager->xpartnersRevenueBetween(
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc
+                ),
+                'revenueCurrentYear' => $this->statisticsManager->xpartnersRevenueBetween(
+                    $startOfYear,
+                    $endOfToday
+                )
+            ],
             'peasantMessageStatistics' => [
                 'messagesSentToday' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
                     'peasant',
@@ -229,24 +255,26 @@ class DashboardController extends Controller
                 )
             ],
             'topMessagerStatistics' => [
-                'today' => $this->statisticsManager->topMessagersBetweenDates($startOfToday, $endOfToday, 25),
-                'this_week' => $this->statisticsManager->topMessagersBetweenDates($startOfWeek, $endOfWeek, 25),
+                'today' => $this->statisticsManager->topMessagersBetweenDates($startOfToday, $endOfToday, 50),
+                'this_week' => $this->statisticsManager->topMessagersBetweenDates($startOfWeek, $endOfWeek, 50),
             ],
             'topOperatorMessagerStatistics' => [
-                'today' => $this->statisticsManager->topOperatorMessagersBetweenDates($startOfToday, $endOfToday, 25),
-                'this_week' => $this->statisticsManager->topOperatorMessagersBetweenDates($startOfWeek, $endOfWeek, 25),
+                'today' => $this->statisticsManager->topOperatorMessagersBetweenDates($startOfToday, $endOfToday, 50),
+                'this_week' => $this->statisticsManager->topOperatorMessagersBetweenDates($startOfWeek, $endOfWeek, 50),
             ],
             'messagersOnARollStatistics' => [
                 'last_ten_minutes' => [
-                    'peasants' => $this->statisticsManager->peasantMessagersOnARoll($tenMinutesAgo, $now, 25, 1),
+                    'peasants' => $this->statisticsManager->peasantMessagersOnARoll($tenMinutesAgo, $now, 50, 1),
                     'countLimit' => 1
                 ],
                 'last_hour' => [
-                    'peasants' => $this->statisticsManager->peasantMessagersOnARoll($oneHourAgo, $now, 25, 2),
+                    'peasants' => $this->statisticsManager->peasantMessagersOnARoll($oneHourAgo, $now, 50, 2),
                     'countLimit' => 2
                 ]
             ],
         ];
+
+
 
         return view('admin.dashboard', array_merge(
             $viewData,
@@ -257,6 +285,7 @@ class DashboardController extends Controller
                 'salesTax' => self::SALES_TAX,
                 'peasantMessagesChart' => $this->chartsManager->createPeasantMessagesChart(),
                 'revenueChart' => $this->chartsManager->createRevenueChart(),
+                'xpartnersRevenueChart' => $this->chartsManager->createXpartnersRevenueChart(),
                 'netPeasantsAcquiredChart' => $this->chartsManager->createNetPeasantsAcquiredChart(),
             ]
         ));

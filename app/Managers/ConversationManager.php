@@ -19,6 +19,7 @@ use Kim\Activity\Activity;
 class ConversationManager
 {
     const CONVERSATION_LOCKING_TIME = 6;
+    const CONVERSATION_PRE_STOPPED_PERIOD_IN_DAYS = 2;
 
     /** @var Conversation */
     private $conversation;
@@ -141,10 +142,13 @@ class ConversationManager
             $conversation->setReplyableAt($replyableAt);
         } elseif ($sender->isBot() && $conversation->messages->count() > 2) {
             if (
-                $conversation->messages[0]->sender->roles[0]->id === User::TYPE_PEASANT &&
-                2 === rand(1, 2)
+                $conversation->messages[0]->sender->roles[0]->id === User::TYPE_PEASANT
             ) {
-                $conversation->setReplyableAt(null);
+                if (2 === rand(1, 2)) {
+                    $conversation->setReplyableAt(null);
+                } else {
+                    $conversation->setReplyableAt(Carbon::now()->addDays(self::CONVERSATION_PRE_STOPPED_PERIOD_IN_DAYS));
+                }
             }
             
             if (
@@ -321,7 +325,7 @@ class ConversationManager
             ->get()
             ->filter(function ($value, $key) {
                 return
-                    $value->messages[0]->getCreatedAt()->lt(Carbon::now('Europe/Amsterdam')->subDays(2)) &&
+                    $value->messages[0]->getCreatedAt()->lt(Carbon::now('Europe/Amsterdam')->subDays(self::CONVERSATION_PRE_STOPPED_PERIOD_IN_DAYS)) &&
                     $value->messages[0]->getCreatedAt()->gt(Carbon::now('Europe/Amsterdam')->subDays(100)) &&
                     $value->messages[0]->sender->roles[0]->id === User::TYPE_BOT &&
                     $value->messages[0]->recipient->roles[0]->id === User::TYPE_PEASANT &&
