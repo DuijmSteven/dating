@@ -6868,6 +6868,20 @@ a.thumbnail.active {
   color: #843534;
 }
 
+.alert-error {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+
+.alert-error hr {
+  border-top-color: #e4b9c0;
+}
+
+.alert-error .alert-link {
+  color: #843534;
+}
+
 @-webkit-keyframes progress-bar-stripes {
   from {
     background-position: 40px 0;
@@ -10197,7 +10211,7 @@ img {
   -o-object-fit: cover;
      object-fit: cover;
   position: absolute;
-  top: 6px;
+  top: 0;
   left: 0;
   width: 24px;
   height: 24px;
@@ -12971,6 +12985,14 @@ small.form-error {
   font-weight: 400;
 }
 
+.PublicChat__textarea.form-control {
+  height: 42px;
+}
+
+.PublicChat__timeAgo {
+  color: #ce5338;
+}
+
 .PublicChat__panel {
   padding: 0;
 }
@@ -12984,11 +13006,22 @@ small.form-error {
 .PublicChat__chat li {
   margin-bottom: 10px;
   padding-bottom: 5px;
-  border-bottom: 1px dotted #B3A9A9;
+  border-bottom: 1px dashed #bfbfbf;
+}
+
+.PublicChat__chat li:last-of-type {
+  border-bottom: 0;
 }
 
 .PublicChat__body {
   margin-left: 60px;
+}
+
+.PublicChat__body p {
+  font-size: 1.6rem;
+  line-height: 2.1rem;
+  color: #524e4d;
+  font-style: italic;
 }
 
 .PublicChat__panelBody {
@@ -13038,7 +13071,8 @@ small.form-error {
 
 .PublicChat__countChars {
   background-color: #b1b7ba;
-  margin-top: 5px;
+  margin-top: 7px;
+  display: inline-block;
 }
 
 .PublicChat__submitButton {

@@ -1,4 +1,13 @@
 .PublicChat {
+
+    &__textarea.form-control {
+        height: 42px;
+    }
+
+    &__timeAgo {
+        color: #ce5338;
+    }
+
     &__panel {
         padding: 0;
     }
@@ -11,12 +20,23 @@
         li {
             margin-bottom: 10px;
             padding-bottom: 5px;
-            border-bottom: 1px dotted #B3A9A9;
+            border-bottom: 1px dashed #bfbfbf;
+
+            &:last-of-type {
+                border-bottom: 0;
+            }
         }
     }
 
     &__body {
         margin-left: 60px;
+
+        p {
+            font-size: 1.6rem;
+            line-height: 2.1rem;
+            color: #524e4d;
+            font-style: italic;
+        }
     }
 
     &__panelBody {
@@ -67,8 +87,12 @@
     }
 
     &__countChars {
+        //display: flex;
+        //justify-content: center;
+        //align-items: center;
         background-color: $input-color-placeholder;
-        margin-top: 5px;
+        margin-top: 7px;
+        display: inline-block;
     }
 
     &__submitButton {

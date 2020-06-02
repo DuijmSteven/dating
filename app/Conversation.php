@@ -33,7 +33,7 @@ class Conversation extends TimeZonedModel
 
     public function getUpdatedAtHumanReadableAttribute()
     {
-        return Carbon::createFromTimeStamp(strtotime($this->getUpdatedAt()))->diffForHumans();
+        return $this->updated_at->diffForHumans();
     }
 
     /**

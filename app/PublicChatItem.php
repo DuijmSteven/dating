@@ -36,6 +36,13 @@ class PublicChatItem extends TimeZonedModel
         ];
     }
 
+    protected $appends = ['publishedAtHumanReadable'];
+
+    public function getPublishedAtHumanReadableAttribute()
+    {
+        return $this->published_at->diffForHumans();
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

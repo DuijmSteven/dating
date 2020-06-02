@@ -71,6 +71,13 @@ Route::group([
 
     Route::post('redirect-back', 'Frontend\UserController@redirectBack')
         ->name('users.redirect-back');
+
+    Route::group([
+        'prefix' => 'public-chat-items'
+    ], function () {
+        Route::post('/', 'Frontend\PublicChatController@post')
+            ->name('public-chat-items.post');
+    });
 });
 
 /* User routes */

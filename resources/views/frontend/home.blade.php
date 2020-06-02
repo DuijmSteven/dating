@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    @include('frontend.components.public-chat')
+    <public-chat></public-chat>
 
     <div class="Tile Activity">
         <div class="Tile__heading" style="padding: 5px">
