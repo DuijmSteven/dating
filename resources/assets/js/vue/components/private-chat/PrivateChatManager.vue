@@ -183,7 +183,7 @@
                     title: this.$parent.chatTranslations['delete_conversation'],
                     body: this.$parent.chatTranslations['delete_conversation_confirm']
                 }, {
-                    customClass: 'ConfirmDialog',
+                    customClass: 'ConfirmModal',
                     okText: this.$parent.chatTranslations['yes'],
                     cancelText: this.$parent.chatTranslations['no']
                 })
