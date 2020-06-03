@@ -34,6 +34,7 @@ class PublicChatItem extends TimeZonedModel
             self::TYPE_AUTOMATED => 'Automated',
             self::TYPE_PEASANT => 'Peasant',
             self::TYPE_OPERATOR => 'Operator',
+            self::TYPE_ADMIN => 'Admin',
         ];
     }
 
