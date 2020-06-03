@@ -145,12 +145,13 @@ class BotMessageController extends Controller
             BotMessage::create([
                 'body' => $request->get('body'),
                 'bot_id' => $request->get('bot_id'),
-                'status' => $request->get('status')
+                'status' => $request->get('status'),
+                'usage_type' => $request->get('usage_type')
             ]);
 
             $alerts[] = [
                 'type' => 'success',
-                'message' => 'The article was created.'
+                'message' => 'The bot message was created.'
             ];
         } catch (\Exception $exception) {
             \Log::error($exception->getMessage());
@@ -175,6 +176,7 @@ class BotMessageController extends Controller
             $botMessage = BotMessage::findOrFail($botMessageId);
             $botMessage->setBody($request->get('body'));
             $botMessage->setStatus($request->get('status'));
+            $botMessage->setUsageType($request->get('usage_type'));
             $botMessage->setBotId($request->get('bot_id'));
             $botMessage->save();
 

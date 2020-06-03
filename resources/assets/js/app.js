@@ -40,6 +40,7 @@ Vue.component('private-chat', require('./vue/components/private-chat/PrivateChat
 Vue.component('chat-message', require('./vue/components/private-chat/ChatMessage.vue'));
 Vue.component('chat-form', require('./vue/components/private-chat/ChatForm.vue'));
 Vue.component('credits-count', require('./vue/components/CreditsCount.vue'));
+Vue.component('public-chat', require('./vue/components/public-chat/PublicChat.vue'));
 
 require('./vue/vue-js-app');
 
@@ -383,6 +384,17 @@ $(window).on('load', function () {
         });
     }
 
+    // if ($('.JS--PublicChat__countChars').length > 0) {
+    //     var max = 1000;
+    //     $('.JS--PublicChat__countChars').html('0 / ' + max );
+    //
+    //     $('.JS--PublicChat__textarea').keyup(function() {
+    //         var textLength = $('.JS--PublicChat__textarea').val().length;
+    //         var textRemaining = max - textLength;
+    //
+    //         $('.JS--PublicChat__countChars').html(textLength + ' / ' + max);
+    //     });
+    // }
 });
 
 

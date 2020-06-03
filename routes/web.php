@@ -71,6 +71,13 @@ Route::group([
 
     Route::post('redirect-back', 'Frontend\UserController@redirectBack')
         ->name('users.redirect-back');
+
+    Route::group([
+        'prefix' => 'public-chat-items'
+    ], function () {
+        Route::post('/', 'Frontend\PublicChatController@post')
+            ->name('public-chat-items.post');
+    });
 });
 
 /* User routes */
@@ -386,6 +393,27 @@ Route::group([
             ->name('admin.messages.operator');
         Route::delete('{messageId}', 'Admin\MessageController@destroy')
             ->name('admin.messages.destroy');
+    });
+
+    Route::group([
+        'prefix' => 'public-chat-items'
+    ], function () {
+        Route::get('/', 'Admin\PublicChatItemController@index')
+            ->name('admin.public-chat-items.overview');
+        Route::get('peasants/{peasantId}', 'Admin\PublicChatItemController@ofPeasantId')
+            ->name('admin.public-chat-items.peasant');
+        Route::get('bots/{botId}', 'Admin\PublicChatItemController@ofBotId')
+            ->name('admin.public-chat-items.bot');
+        Route::get('operators/{operatorId}', 'Admin\PublicChatItemController@ofOperatorId')
+            ->name('admin.public-chat-items.operator');
+        Route::delete('{chatItemId}', 'Admin\PublicChatItemController@destroy')
+            ->name('admin.public-chat-items.destroy');
+
+        Route::get('send-as-bot', 'Admin\PublicChatItemController@showSendAsBot')
+            ->name('admin.public-chat-items.send-as-bot.show');
+
+        Route::post('send-as-bot', 'Admin\PublicChatItemController@sendAsBot')
+            ->name('admin.public-chat-items.send-as-bot.post');
     });
 
     Route::group([

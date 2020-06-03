@@ -340,7 +340,8 @@ class User extends Authenticatable
         'active',
         'conversation_manager_state',
         'created_by_id',
-        'tracked'
+        'tracked',
+        'api_token'
     ];
 
     /**
@@ -396,6 +397,11 @@ class User extends Authenticatable
     public function setLocale($locale = '')
     {
         $this->locale = $locale;
+    }
+
+    public function setApiToken(string $apiToken)
+    {
+        $this->api_token = $apiToken;
     }
 
     /**
@@ -750,12 +756,17 @@ class User extends Authenticatable
 
     public function payments()
     {
-        return $this->hasMany('App\Payment');
+        return $this->hasMany(Payment::class);
     }
 
     public function completedPayments()
     {
-        return $this->hasMany('App\Payment')->where('status', Payment::STATUS_COMPLETED)->orderBy('created_at', 'desc');
+        return $this->hasMany(Payment::class)->where('status', Payment::STATUS_COMPLETED)->orderBy('created_at', 'desc');
+    }
+
+    public function publicChatItems()
+    {
+        return $this->hasMany(PublicChatItem::class, 'sender_id');
     }
 
     /**

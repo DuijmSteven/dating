@@ -128,6 +128,16 @@ $(window).on('load', function () {
 
     if ($('#js-BotSelection').length > 0) {
         $('.js-fillBotData').click(function () {
+
+            const isPublicChatView = $(this).closest('#js-BotSelection').hasClass('js-publicChat');
+
+            if (isPublicChatView) {
+                const botId = $(this).closest('li').data('bot-id');
+                console.log(botId);
+
+                $('#sender_id_input').val(botId);
+            }
+
             $('#js-goToConversation').attr(
                 'href',
                 DP.baseUrl +

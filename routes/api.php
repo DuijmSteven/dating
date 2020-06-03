@@ -81,3 +81,17 @@ Route::get('{userId}/chat-translations', 'Api\ConversationController@getChatTran
 
 Route::get('cities/{countryCode}', 'Api\LocationController@getCities')
     ->name('cities.get');
+
+Route::group([
+    'prefix' => 'public-chat'
+], function () {
+    Route::get('items/{forGender}/{forLookingForGender}/{offset}/{limit}', 'Api\PublicChatController@getPublicChatItems')
+        ->name('public-chat.get-items')
+        ->middleware(['auth:api']);
+
+    Route::get('items-with-higher-id-than/{messageIdHigherThan}/{forGender}/{forLookingForGender}', 'Api\PublicChatController@getPublicChatItemsWithIdHigherThan')
+        ->name('public-chat.get-items-with-higher-id');
+
+//    Route::post('items', 'Api\PublicChatController@post')
+//        ->name('public-chat.post-item');
+});

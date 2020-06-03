@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Admin\BotMessages;
+namespace App\Http\Requests;
 
+use App\Helpers\ApplicationConstants\UserConstants;
 use App\Http\Requests\Request;
 
-class BotMessageUpdateRequest extends Request
+class CreatePublicChatItemRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +24,13 @@ class BotMessageUpdateRequest extends Request
      */
     public function rules()
     {
-        return [
-            'body' => 'required|min:1|max:1000',
-            'bot_id' => 'integer',
-            'status' => 'integer|required',
-            'usage_type' => 'integer|required'
+        $rules = [
+            'sender_id' => 'required|integer',
+            'text' => 'required|string|min:1|max:200',
+            'operator_id' => 'integer',
+            'type' => 'integer',
         ];
+
+        return $rules;
     }
 }
