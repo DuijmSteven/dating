@@ -9,6 +9,7 @@ use App\Payment;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class StatisticsManager
 {
@@ -57,13 +58,23 @@ class StatisticsManager
     }
 
     public function messagesSentByUserTypeBetweenQueryBuilder(int $userType, $startDate, $endDate) {
-        return ConversationMessage::whereHas('sender.roles', function($query) use ($userType) {
-            $query->where('id', $userType);
-        })->whereBetween('created_at',
-            [
+
+        return DB::table('conversation_messages as cm')
+            ->leftJoin('users as u', 'u.id', 'cm.sender_id')
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('ru.role_id', $userType)
+            ->whereBetween('cm.created_at', [
                 $startDate,
                 $endDate
             ]);
+
+//        return ConversationMessage::whereHas('sender.roles', function($query) use ($userType) {
+//            $query->where('id', $userType);
+//        })->whereBetween('created_at',
+//            [
+//                $startDate,
+//                $endDate
+//            ]);
     }
 
     public function messagesSentByUserTypeBetween(int $userType, $startDate, $endDate) {

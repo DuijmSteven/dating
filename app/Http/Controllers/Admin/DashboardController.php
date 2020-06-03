@@ -118,11 +118,11 @@ class DashboardController extends Controller
             'onlinePeasantsCount' => $onlinePeasantsCount,
             'activeFemaleStraightBotsCount' => $activeFemaleStraightBotsCount,
             //'activeMaleStraightBotsCount' => $activeMaleStraightBotsCount,
-            'peasantMessagesSentToday' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
-                User::TYPE_PEASANT,
-                $startOfToday,
-                $endOfToday
-            ),
+//            'peasantMessagesSentToday' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
+//                User::TYPE_PEASANT,
+//                $startOfToday,
+//                $endOfToday
+//            ),
             'revenueStatistics' => [
                 'revenueToday' => $this->statisticsManager->revenueBetween(
                     $startOfToday,
@@ -171,6 +171,38 @@ class DashboardController extends Controller
                     $endOfPreviousMonthUtc
                 ),
                 'revenueCurrentYear' => $this->statisticsManager->xpartnersRevenueBetween(
+                    $startOfYear,
+                    $endOfToday
+                )
+            ],
+            'peasantMessageStatistics' => [
+                'messagesSentToday' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfToday,
+                    $endOfToday
+                ),
+                'messagesSentYesterday' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfYesterday,
+                    $endOfYesterday
+                ),
+                'messagesSentCurrentWeek' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfWeek,
+                    $endOfWeek
+                ),
+                'messagesSentCurrentMonth' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfMonth,
+                    $endOfMonth
+                ),
+                'messagesSentPreviousMonth' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc
+                ),
+                'messagesSentCurrentYear' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
                     $startOfYear,
                     $endOfToday
                 )
