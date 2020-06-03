@@ -408,6 +408,12 @@ Route::group([
             ->name('admin.public-chat-items.operator');
         Route::delete('{chatItemId}', 'Admin\PublicChatItemController@destroy')
             ->name('admin.public-chat-items.destroy');
+
+        Route::get('send-as-bot', 'Admin\PublicChatItemController@showSendAsBot')
+            ->name('admin.public-chat-items.send-as-bot.show');
+
+        Route::post('send-as-bot', 'Admin\PublicChatItemController@sendAsBot')
+            ->name('admin.public-chat-items.send-as-bot.post');
     });
 
     Route::group([

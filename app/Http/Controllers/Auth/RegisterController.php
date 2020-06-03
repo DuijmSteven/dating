@@ -6,6 +6,7 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\Users\RegistersUsers;
+use Illuminate\Support\Str;
 
 /**
  * Class RegisterController
@@ -71,6 +72,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'active' => 1,
             'password' => bcrypt($data['password']),
+            'api_token' => Str::random(60),
         ]);
     }
 }

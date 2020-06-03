@@ -15,5 +15,6 @@ return [
     'post_new_message' => 'Plaats bericht',
     'delete_conversation' => 'Verwijder gesprek',
     'delete_conversation_confirm' => 'Weet je zeker dat je dit gesprek wilt verwijderen?',
-    'no_conversations' => 'Je hebt nog geen actieve gesprekken. Zodra je begint met chatten worden al je gesprekken hier zichtbaar!'
+    'no_conversations' => 'Je hebt nog geen actieve gesprekken. Zodra je begint met chatten worden al je gesprekken hier zichtbaar!',
+    'buy_credits_to_post' => 'Koop credits om berichten te verzenden!'
 ];

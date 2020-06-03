@@ -26,7 +26,7 @@ class CreatePublicChatItemRequest extends Request
     {
         $rules = [
             'sender_id' => 'required|integer',
-            'body' => 'required|string|min:1|max:200',
+            'text' => 'required|string|min:1|max:200',
             'operator_id' => 'integer',
             'type' => 'integer',
         ];

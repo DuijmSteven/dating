@@ -2,25 +2,22 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\CreatePublicChatItemRequest;
-use App\Managers\ConversationManager;
+use App\Http\Controllers\Controller;
 use App\PublicChatItem;
-use App\User;
-use App\UserAccount;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
 
 /**
  * Class PublicChatController
  * @package App\Http\Controllers
  */
-class PublicChatController
+class PublicChatController extends Controller
 {
     /**
-     * @param int $userAId
-     * @param int $userBId
-     * @param int $messageIdHigherThan
+     * @param int $forGender
+     * @param int $forLookingForGender
+     * @param int $offset
+     * @param int $limit
      * @return JsonResponse
      */
     public function getPublicChatItems(
@@ -34,13 +31,11 @@ class PublicChatController
                 ::with(['sender'])
                 ->where(function ($query) use ($forGender, $forLookingForGender) {
                     $query->whereHas('sender.meta', function ($query) use ($forGender, $forLookingForGender) {
-                        $query->gender = $forLookingForGender;
-                        $query->looking_for_gender = $forGender;
-                    });
-
-                    $query->orWhereHas('sender.meta', function ($query) use ($forGender, $forLookingForGender) {
-                        $query->looking_for_gender = $forLookingForGender;
-                        $query->gender = $forGender;
+                        $query->where('gender', $forLookingForGender);
+                        $query->where('looking_for_gender', $forGender);
+                    })
+                    ->orWhereHas('sender', function ($query) {
+                        $query->where('id', auth('api')->user()->getId());
                     });
                 })
                 ->whereHas('sender', function ($query) {
@@ -65,6 +60,12 @@ class PublicChatController
         }
     }
 
+    /**
+     * @param int $messageIdHigherThan
+     * @param int $forGender
+     * @param int $forLookingForGender
+     * @return JsonResponse
+     */
     public function getPublicChatItemsWithIdHigherThan(
         int $messageIdHigherThan,
         int $forGender,
@@ -75,13 +76,11 @@ class PublicChatController
                 ::with(['sender'])
                 ->where(function ($query) use ($forGender, $forLookingForGender) {
                     $query->whereHas('sender.meta', function ($query) use ($forGender, $forLookingForGender) {
-                        $query->gender = $forLookingForGender;
-                        $query->looking_for_gender = $forGender;
-                    });
-
-                    $query->orWhereHas('sender.meta', function ($query) use ($forGender, $forLookingForGender) {
-                        $query->looking_for_gender = $forLookingForGender;
-                        $query->gender = $forGender;
+                        $query->where('gender', $forLookingForGender);
+                        $query->where('looking_for_gender', $forGender);
+                    })
+                    ->orWhereHas('sender', function ($query) {
+                        $query->where('id', auth('api')->user()->getId());
                     });
                 })
                 ->whereHas('sender', function ($query) {

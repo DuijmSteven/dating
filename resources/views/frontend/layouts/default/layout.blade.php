@@ -105,7 +105,9 @@
         creditsUrl: '{{ route('credits.show') }}',
         singleProfileUrl: '{{ url('/') . '/users/' }}',
         locale: '{{ app()->getLocale() }}',
-        postChatItemRoute: '{{ route('public-chat-items.post') }}'
+        postChatItemRoute: '{{ route('public-chat-items.post') }}',
+        csrfToken: '{{ csrf_token() }}',
+        publicChatItemPeasantType: '{{ \App\PublicChatItem::TYPE_PEASANT }}'
     };
 </script>
 <script src="{{ mix('js/app.js') }}"></script>
