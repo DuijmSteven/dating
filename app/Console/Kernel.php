@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Console\Commands\CheckRecentStartedPayments;
 use App\Console\Commands\ExportDb;
+use App\Console\Commands\SendMassMessage;
 use App\Console\Commands\SendProfileCompletionEmails;
 use App\Console\Commands\SendProfileViewedEmails;
 use App\Console\Commands\UpdateCurrentEnvDbAndAws;
@@ -27,7 +28,8 @@ class Kernel extends ConsoleKernel
         Commands\DuplicateProductionS3BucketToCurrentEnvironmentBucket::class,
         Commands\UpdateCurrentEnvDbAndAws::class,
         Commands\SendProfileCompletionEmails::class,
-        CheckRecentStartedPayments::class
+        CheckRecentStartedPayments::class,
+        SendMassMessage::class,
     ];
 
     /**
