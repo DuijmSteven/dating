@@ -16,6 +16,7 @@ use App\Charts\RevenueChart;
 use App\Charts\RevenueMonthlyChart;
 use App\Payment;
 use App\User;
+use Carbon\Carbon;
 use DateInterval;
 use DatePeriod;
 use DateTime;
@@ -34,7 +35,8 @@ class ChartsManager
         $query = \DB::table('conversation_messages as cm')
             ->select(\DB::raw('DATE(CONVERT_TZ(cm.created_at, \'UTC\', \'Europe/Amsterdam\')) as creationDate, COUNT(cm.id) AS messagesCount'))
             ->leftJoin('users as u', 'u.id', 'cm.sender_id')
-            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id');
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('cm.created_at', '>=', Carbon::now('Europe/Amsterdam')->subMonths(5)->format('Y-m-d'));
 
 
         if (null  == $userId) {
@@ -442,6 +444,7 @@ class ChartsManager
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('p.status', Payment::STATUS_COMPLETED)
+            ->where('p.created_at', '>=', Carbon::now('Europe/Amsterdam')->subMonths(5)->format('Y-m-d'))
             ->groupBy('creationDate')
             ->orderBy('creationDate', 'ASC');
 
@@ -509,6 +512,7 @@ class ChartsManager
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('p.status', Payment::STATUS_COMPLETED)
             ->where('uat.affiliate', 'xpartners')
+            ->where('p.created_at', '>=', Carbon::now('Europe/Amsterdam')->subMonths(5)->format('Y-m-d'))
             ->groupBy('creationDate')
             ->orderBy('creationDate', 'ASC');
 
@@ -786,6 +790,7 @@ class ChartsManager
             ->select(\DB::raw('DATE(CONVERT_TZ(u.created_at, \'UTC\', \'Europe/Amsterdam\')) as registrationDate, COUNT(u.id) AS registrationsCount'))
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
+            ->where('u.created_at', '>=', Carbon::now('Europe/Amsterdam')->subMonths(5)->format('Y-m-d'))
             ->groupBy('registrationDate')
             ->orderBy('registrationDate', 'ASC');
 
@@ -803,6 +808,7 @@ class ChartsManager
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('u.deactivated_at', '!=', null)
+            ->where('u.created_at', '>=', Carbon::now('Europe/Amsterdam')->subMonths(5)->format('Y-m-d'))
             ->groupBy('deactivationDate')
             ->orderBy('deactivationDate', 'ASC');
 

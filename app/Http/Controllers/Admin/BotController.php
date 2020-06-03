@@ -57,7 +57,7 @@ class BotController extends Controller
                 User::BOT_RELATION_COUNTS
             )
             ->whereHas('roles', function ($query) {
-                $query->where('name', 'bot');
+                $query->where('id', User::TYPE_BOT);
             });
 
         $bots = $queryBuilder

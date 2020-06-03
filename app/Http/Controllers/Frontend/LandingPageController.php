@@ -103,7 +103,7 @@ class LandingPageController extends FrontendController
     private function getUsers()
     {
         $users = User::with(['roles', 'meta'])->whereHas('roles', function ($query) {
-            $query->where('name', 'bot');
+            $query->where('id', User::TYPE_BOT);
         })
             ->whereHas('meta', function ($query) {
                 $query->where('gender', 2);
