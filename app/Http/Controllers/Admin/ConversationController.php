@@ -603,7 +603,7 @@ class ConversationController extends Controller
         );
 
         if (
-            (null === $conversation->getReplyableAt() || $conversation->getReplyableAt()->gt(Carbon::now())) &&
+            ($conversation && (null === $conversation->getReplyableAt() || $conversation->getReplyableAt()->gt(Carbon::now()))) &&
             !$this->authenticatedUser->isAdmin()
         ) {
             $alerts[] = [
