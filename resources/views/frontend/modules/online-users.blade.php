@@ -1,10 +1,12 @@
-<div class="Tile Online-users">
+<div class="Tile Online-users JS--Tile Tile--withToggle">
     <div class="Tile__heading Online-users__heading">
         <span class="onlineCircle blinking"></span>
 
         {{ trans('online_users.online_users') }}
+
+        @include('frontend.components.tile-toggle')
     </div>
-    <div class="Tile__body Online-users__body">
+    <div class="Tile__body Online-users__body JS--Tile__body">
         @forelse($onlineUsers as $user)
             <div class="Online-users__bodyWrapper">
                 <a href="{!! route('users.show', ['username' => $user->getUsername()]) !!}" class="Online-users__item">
