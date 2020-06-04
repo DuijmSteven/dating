@@ -72,7 +72,7 @@ class OperatorController extends Controller
 
     public function showOnline()
     {
-        $onlineIds = Activity::users(1)->pluck('user_id')->toArray();
+        $onlineIds = Activity::users(7)->pluck('user_id')->toArray();
 
         $operators = User::with(
             array_unique(array_merge(
