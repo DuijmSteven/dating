@@ -67,14 +67,6 @@ class StatisticsManager
                 $startDate,
                 $endDate
             ]);
-
-//        return ConversationMessage::whereHas('sender.roles', function($query) use ($userType) {
-//            $query->where('id', $userType);
-//        })->whereBetween('created_at',
-//            [
-//                $startDate,
-//                $endDate
-//            ]);
     }
 
     public function messagesSentByUserTypeBetween(int $userType, $startDate, $endDate) {
