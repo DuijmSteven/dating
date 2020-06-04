@@ -96,19 +96,18 @@
                                         <br>
                                         <b>Username</b>: {{ $publicChatItem->sender->username }} <br>
                                         <br>
-                                    @else
-                                        <span style="font-weight: bold; color: red">Operator does not exist</span>
                                     @endif
                                 </td>
                                 <td>
                                     <div style="max-width: 240px; white-space: normal">
-                                        {{ $publicChatItem->getBody() }}
+                                        {!! $publicChatItem->getBody() !!}
                                     </div>
                                 </td>
-                                <td>{{ $publicChatItem->created_at->format('d-m-Y H:i:s') }}</td>
+                                <td>{{ $publicChatItem->getCreatedAt()->format('d-m-Y H:i:s') }}</td>
+                                <td>{{ $publicChatItem->getPublishedAt()->format('d-m-Y H:i:s') }}</td>
                                 <td class="action-buttons">
                                     <form method="POST"
-                                          action="{{ route('admin.public-chat-items.destroy', ['messageId' => $publicChatItem->getId()]) }}">
+                                          action="{{ route(    'admin.public-chat-items.destroy', ['messageId' => $publicChatItem->getId()]) }}">
                                         {!! csrf_field() !!}
                                         {!! method_field('DELETE') !!}
                                         <button type="submit"

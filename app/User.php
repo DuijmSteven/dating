@@ -340,7 +340,8 @@ class User extends Authenticatable
         'active',
         'conversation_manager_state',
         'created_by_id',
-        'tracked'
+        'tracked',
+        'api_token'
     ];
 
     /**
@@ -396,6 +397,11 @@ class User extends Authenticatable
     public function setLocale($locale = '')
     {
         $this->locale = $locale;
+    }
+
+    public function setApiToken(string $apiToken)
+    {
+        $this->api_token = $apiToken;
     }
 
     /**

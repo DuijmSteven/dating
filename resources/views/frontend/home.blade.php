@@ -2,16 +2,9 @@
 
 @section('content')
 
-    <div class="Tile Activity">
-        <div class="Tile__heading" style="padding: 5px">
-            <span class="material-icons">
-                chat
-            </span>
-            {{ trans('home.public_chat') }}
-        </div>
-    </div>
-
-    <public-chat></public-chat>
+    @if(config('app.env') !== 'production')
+        <public-chat></public-chat>
+    @endif
 
     <div class="Tile Activity">
         <div class="Tile__heading" style="padding: 5px">

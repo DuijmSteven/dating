@@ -1,5 +1,28 @@
 .PublicChat {
 
+    .fetchMoreButton,
+    .fetchingMessages,
+    .allMessagesFetched {
+        margin: 0px auto;
+        //height: 40px;
+        display: flex;
+        justify-content: center;
+        padding: 10px 0;
+        text-align: center;
+        font-size: 1.8rem;
+    }
+
+    .fetchMoreButton {
+        cursor: pointer;
+
+        .material-icons {
+            line-height: 27px;
+            font-size: 24px;
+            margin-left: 5px;
+            position: relative;
+        }
+    }
+
     &__textarea.form-control {
         height: 42px;
     }
@@ -40,6 +63,7 @@
     }
 
     &__panelBody {
+        position: relative;
         overflow-y: scroll;
         height: 400px;
         padding: 15px;

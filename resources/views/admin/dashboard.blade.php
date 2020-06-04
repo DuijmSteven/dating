@@ -6,6 +6,16 @@
         <div class="col-xs-12">
             <div class="row" style="margin-bottom: 20px">
                 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+{{--                    <a href="#" class="box box-widget DashboardWidget">--}}
+{{--                        <!-- Add the bg color to the header using any of the bg-* classes -->--}}
+{{--                        <div class="bg-info">--}}
+{{--                            <div class="widget-us DashboardWidget_header"--}}
+{{--                                 style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">--}}
+{{--                                <i class="fa fa-users DashboardWidget_header-icon"></i>--}}
+{{--                                <span class="DashboardWidget_header-title"><b>{{ $peasantMessagesSentToday }} peasant messages today</b></span>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </a>--}}
                     <a href="{{ route('admin.bots.online.show') }}" class="box box-widget DashboardWidget">
                         <!-- Add the bg color to the header using any of the bg-* classes -->
                         <div class="bg-info">

@@ -86,7 +86,8 @@ Route::group([
     'prefix' => 'public-chat'
 ], function () {
     Route::get('items/{forGender}/{forLookingForGender}/{offset}/{limit}', 'Api\PublicChatController@getPublicChatItems')
-        ->name('public-chat.get-items');
+        ->name('public-chat.get-items')
+        ->middleware(['auth:api']);
 
     Route::get('items-with-higher-id-than/{messageIdHigherThan}/{forGender}/{forLookingForGender}', 'Api\PublicChatController@getPublicChatItemsWithIdHigherThan')
         ->name('public-chat.get-items-with-higher-id');

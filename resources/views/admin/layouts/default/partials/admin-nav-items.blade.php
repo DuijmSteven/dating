@@ -229,6 +229,12 @@
                 Overview
             </a>
         </li>
+        <li class="{!! \Request::route()->getName() == 'admin.public-chat-items.send-as-bot.show' ? 'active' : '' !!}">
+            <a href="{!! route('admin.public-chat-items.send-as-bot.show') !!}">
+                <i class="fa fa-list"></i>
+                Send as bot
+            </a>
+        </li>
     </ul>
 </li>
 <li class="treeview {!! \Str::contains(\Request::route()->getName(), 'operator-platform') ? 'active' : '' !!}">

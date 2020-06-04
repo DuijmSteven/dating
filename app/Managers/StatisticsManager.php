@@ -9,6 +9,7 @@ use App\Payment;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class StatisticsManager
 {
@@ -56,20 +57,37 @@ class StatisticsManager
                 ->count();
     }
 
-    public function messagesSentByUserTypeCountBetween(string $userType, $startDate, $endDate) {
+    public function messagesSentByUserTypeBetweenQueryBuilder(int $userType, $startDate, $endDate) {
+
+        return DB::table('conversation_messages as cm')
+            ->leftJoin('users as u', 'u.id', 'cm.sender_id')
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('ru.role_id', $userType)
+            ->whereBetween('cm.created_at', [
+                $startDate,
+                $endDate
+            ]);
+    }
+
+    public function messagesSentByUserTypeBetween(int $userType, $startDate, $endDate) {
         return ConversationMessage::whereHas('sender.roles', function($query) use ($userType) {
-            $query->where('name', $userType);
+            $query->where('id', $userType);
         })->whereBetween('created_at',
             [
                 $startDate,
                 $endDate
             ])
+        ->get();
+    }
+
+    public function messagesSentByUserTypeCountBetween(int $userType, $startDate, $endDate) {
+        return $this->messagesSentByUserTypeBetweenQueryBuilder($userType, $startDate, $endDate)
             ->count();
     }
 
     public function peasantDeactivationsCountBetween($startDate, $endDate) {
         return User::whereHas('roles', function($query) {
-            $query->where('name', 'peasant');
+            $query->where('id', User::TYPE_PEASANT);
         })->whereBetween('deactivated_at',
             [
                 $startDate,
@@ -81,7 +99,7 @@ class StatisticsManager
     public function peasantsWithNoCreditpackQueryBuilder() {
         return User::where('active', true)
         ->whereHas('roles', function($query) {
-            $query->where('name', 'peasant');
+            $query->where('id', User::TYPE_PEASANT);
         })->whereHas('account', function($query) {
             $query->where('credits', 0);
         });
@@ -99,7 +117,7 @@ class StatisticsManager
         return User::where('active', true)
         ->has('payments', '=', 0)
         ->whereHas('roles', function($query) {
-            $query->where('name', 'peasant');
+            $query->where('id', User::TYPE_PEASANT);
         })
         ->orWhereHas('payments', function ($query) {
             $query->whereNull('creditpack_id');
@@ -187,7 +205,7 @@ class StatisticsManager
     public function peasantsWithCreditpackQueryBuilder() {
         return User::where('active', true)
             ->whereHas('roles', function($query) {
-                $query->where('name', 'peasant');
+                $query->where('id', User::TYPE_PEASANT);
             })->whereHas('account', function($query) {
                 $query->where('credits', '>', 0);
             })->whereHas('payments', function($query) {

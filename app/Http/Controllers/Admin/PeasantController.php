@@ -69,7 +69,7 @@ class PeasantController extends Controller
                 User::PEASANT_RELATION_COUNTS
             )
             ->whereHas('roles', function ($query) {
-                $query->where('name', 'peasant');
+                $query->where('id', User::TYPE_PEASANT);
             })
             ->orderBy('id', 'desc')
             ->paginate(20);
@@ -102,7 +102,7 @@ class PeasantController extends Controller
                 User::PEASANT_RELATION_COUNTS
             )
             ->whereHas('roles', function ($query) {
-                $query->where('name', 'peasant');
+                $query->where('id', User::TYPE_PEASANT);
             })
             ->where('deactivated_at', '!=', null)
             ->orderBy('created_at', 'desc')

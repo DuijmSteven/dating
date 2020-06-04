@@ -1,15 +1,16 @@
-<div class="Tile LatestViewed">
+<div class="Tile LatestViewed JS--Tile Tile--withToggle">
     <div class="Tile__heading LatestViewed__heading">
         <span class="material-icons">
             remove_red_eye
         </span>
 
         {{ trans('viewed_users.viewed_users') }}
+
+        @include('frontend.components.tile-toggle')
     </div>
-    <div class="Tile__body LatestViewed__body">
+    <div class="Tile__body LatestViewed__body JS--Tile__body">
         @forelse($latestViewed as $view)
             <div class="LatestViewed__bodyWrapper">
-
                 <a href="{!! route('users.show', ['username' => $view->viewed->getUsername()]) !!}" class="LatestViewed__item">
                     <span class="LatestViewed__profile-image">
                         <img src="{!! \StorageHelper::profileImageUrl($view->viewed, true) !!}" alt="">
@@ -28,7 +29,7 @@
                      v-on:click="addChat({!! $authenticatedUser->getId() !!}, {!! $view->viewed->getId() !!}, '1', true)"
                 >
                     <i class="material-icons material-icon LatestViewed__sendMessage__icon">textsms</i>
-                </div >
+                </div>
             </div>
         @empty
             <p>

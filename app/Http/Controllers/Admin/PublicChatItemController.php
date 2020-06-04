@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\ConversationMessage;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreatePublicChatItemRequest;
 use App\PublicChatItem;
 use App\User;
+use App\UserAccount;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Kim\Activity\Activity;
 
 /**
  * Class PublicChatItemController
@@ -149,6 +152,71 @@ class PublicChatItemController extends Controller
             $alerts[] = [
                 'type' => 'error',
                 'message' => 'The message was not deleted due to an exception.'
+            ];
+        }
+
+        return redirect()->back()->with('alerts', $alerts);
+    }
+
+    public function showSendAsBot()
+    {
+        $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
+
+        $onlineBotIds = User::whereHas('roles', function ($query) {
+            $query->where('id', User::TYPE_BOT);
+        })
+            ->whereIn('id', $onlineIds)
+            ->get()->pluck('id')->toArray();
+
+        $botsQueryBuilder = User::with('meta', 'roles', 'profileImage')
+            ->whereHas('roles', function ($query) {
+                $query->where('id', User::TYPE_BOT);
+            });
+
+//        if ($onlyOnlineBots) {
+//            $botsQueryBuilder->whereIn('id', $onlineBotIds);
+//        }
+
+        return view(
+            'admin.public-chat-items.send-as-bot',
+            [
+                'title' => 'Public chat as Bot- ' . \config('app.name'),
+                'headingLarge' => 'Peasants',
+                'headingSmall' => 'Post in public chat as bot',
+                'carbonNow' => Carbon::now(),
+                'bots' => $botsQueryBuilder->get(),
+                'onlineBotIds' => $onlineBotIds
+            ]
+        );
+    }
+
+    public function sendAsBot(CreatePublicChatItemRequest $createPublicChatItemRequest) {
+        try {
+            DB::beginTransaction();
+
+            $messageData = $createPublicChatItemRequest->all();
+
+            $publicChatItem = new PublicChatItem();
+            $publicChatItem->setBody($messageData['text']);
+            $publicChatItem->setSenderId($messageData['sender_id']);
+            $publicChatItem->setType($messageData['type']);
+            $publicChatItem->setPublishedAt(Carbon::now());
+            $publicChatItem->save();
+
+            DB::commit();
+
+            $alerts[] = [
+                'type' => 'success',
+                'message' => 'The message was posted.'
+            ];
+        } catch (\Exception $exception) {
+            \Log::error($exception->getMessage());
+
+            DB::rollBack();
+
+            $alerts[] = [
+                'type' => 'error',
+                'message' => 'The message was not posted due to an exception.'
             ];
         }
 

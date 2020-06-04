@@ -100,7 +100,7 @@ class EditorController extends Controller
                 USER::BOT_RELATION_COUNTS
             )
             ->whereHas('roles', function ($query) {
-                $query->where('name', 'bot');
+                $query->where('id', User::TYPE_BOT);
             });
 
         $queryBuilder->where('created_by_id', $editorId);

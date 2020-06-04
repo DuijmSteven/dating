@@ -51,8 +51,8 @@ class UserController extends FrontendController
     {
         $viewData = [
             'users' => $this->user->with(['meta', 'roles'])->whereHas('roles', function ($query) {
-                $query->where('name', 'peasant');
-                $query->orWhere('name', 'bot');
+                $query->where('id', User::TYPE_PEASANT);
+                $query->orWhere('id', User::TYPE_BOT);
             })->paginate(15),
             'carbonNow' => Carbon::now()
         ];

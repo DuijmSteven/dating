@@ -1,5 +1,13 @@
 <template>
     <div class="Tile PublicChat">
+        <div class="Tile__heading PublicChat__heading">
+            <span class="material-icons">
+                chat
+            </span>
+
+            {{ this.$parent.chatTranslations ? this.$parent.chatTranslations['public_chat'] : '' }}
+        </div>
+
         <div class="Tile__body PublicChat__panel">
             <div class="PublicChat__panelBody" id="PublicChat__panelBody">
                 <ul class="PublicChat__chat">
@@ -7,18 +15,39 @@
                         v-for="(item, index) in displayedMessages"
                         class="clearfix"
                     >
-                        <span class="PublicChat__Img pull-left">
-                            <a href="#">
+                        <div class="PublicChat__Img pull-left">
+                            <a
+                                v-if="item.sender.id !== this.DP.authenticatedUser.id"
+                                :href="this.DP.singleProfileUrl + item.sender.username"
+                            >
                                 <img
                                     :src="item.sender.profileImageUrlThumb"
                                     alt="" class="PublicChat__profilePicture"/>
                             </a>
-                        </span>
+
+                           <div
+                               v-if="item.sender.id === this.DP.authenticatedUser.id"
+                           >
+                                <img
+                                    :src="item.sender.profileImageUrlThumb"
+                                    alt="" class="PublicChat__profilePicture"/>
+                            </div>
+                        </div>
                         <div class="PublicChat__body clearfix">
                             <div class="PublicChat__header">
-                                <a href="#">
+                                <a
+                                    v-if="item.sender.id !== this.DP.authenticatedUser.id"
+                                    :href="this.DP.singleProfileUrl + item.sender.username"
+                                >
                                     <strong class="primary-font">{{ item.sender.username }}</strong>
                                 </a>
+
+                                <div
+                                    v-if="item.sender.id === this.DP.authenticatedUser.id"
+                                >
+                                    <strong class="primary-font">{{ item.sender.username }}</strong>
+                                </div>
+
                                 <small class="pull-right PublicChat__timeAgo">
                                     <span class="glyphicon glyphicon-time"></span> {{ item.publishedAtHumanReadable }}
                                 </small>
@@ -29,14 +58,61 @@
                         </div>
                     </li>
                 </ul>
+
+                <!--                <div-->
+                <!--                    class="fetchMoreButton"-->
+                <!--                >-->
+                <!--                    {{ this.$parent.chatTranslations['older_messages'] }}-->
+                <!--                    <i class="material-icons">-->
+                <!--                        get_app-->
+                <!--                    </i>-->
+                <!--                </div>-->
+
+                <div
+                    v-if="fetchingInitial"
+                    class="fetchingMessages"
+                >
+                    <div class="loader"></div>
+                </div>
+
+                <!--                <div-->
+                <!--                    v-if="allMessagesFetched && (displayedMessages.length >= messagesPerRequest)"-->
+                <!--                    class="allMessagesFetched"-->
+                <!--                >-->
+                <!--                    {{ this.$parent.chatTranslations['no_more_messages'] }}-->
+                <!--                </div>-->
+
+                <!--                <div-->
+                <!--                    v-if="allMessagesFetched && displayedMessages.length === 0"-->
+                <!--                    class="allMessagesFetched"-->
+                <!--                >-->
+                <!--                    {{ this.$parent.chatTranslations['no_messages_yet'] }}-->
+                <!--                </div>-->
             </div>
             <div class="panel-footer PublicChat__panelFooter">
-                <form :action="DP.postChatItemRoute" method="POST">
+                <form :action="this.DP.postChatItemRoute" method="POST">
+                    <input
+                        type="hidden"
+                        name="_token"
+                        :value="DP.csrfToken"
+                    >
+
+                    <input
+                        type="hidden"
+                        name="sender_id"
+                        :value="DP.authenticatedUser.id"
+                    >
+
+                    <input
+                        type="hidden"
+                        name="type"
+                        :value="DP.publicChatItemPeasantType"
+                    >
+
                     <textarea
                         v-bind:style="{ height: computedTextareaHeight }"
-                        v-on:focus="increaseTextareaHeight()"
-                        v-on:blur="decreaseTextareaHeight()"
-                        :placeholder="chatTranslations ? chatTranslations['your_message'] : ''"
+
+                        :placeholder="this.$parent.chatTranslations ? this.$parent.chatTranslations['your_message'] : ''"
                         class="form-control PublicChat__textarea JS--PublicChat__textarea"
                         id="text"
                         name="text"
@@ -50,12 +126,20 @@
                     </div>
                     <div class="text-center PublicChat__submitButton">
                         <button
-                            v-if="chatTranslations"
+                            v-if="this.DP.authenticatedUser.account.credits > 0 && this.$parent.chatTranslations"
                             class="btn"
                             type="submit"
                         >
-                            {{ chatTranslations['post_new_message'] }}
+                            {{ this.$parent.chatTranslations['post_new_message'] }}
                         </button>
+
+                        <a
+                            v-if="this.DP.authenticatedUser.account.credits === 0 && this.$parent.chatTranslations"
+                            class="btn"
+                            :href="DP.creditsUrl"
+                        >
+                            {{ this.$parent.chatTranslations['buy_credits_to_post'] }}
+                        </a>
                     </div>
                 </form>
             </div>
@@ -65,8 +149,7 @@
 
 <script>
     export default {
-        props: [
-        ],
+        props: [],
 
         data() {
             return {
@@ -87,11 +170,9 @@
         },
 
         created() {
-            axios.get('/api/' + DP.authenticatedUser.id + '/chat-translations').then(response => {
-                this.chatTranslations = response.data;
-            });
-
             this.fetchMessagesAndListenToChannel();
+
+            console.log(this.DP);
         },
 
         methods: {
@@ -125,15 +206,24 @@
             //         this.sendingMessage = false;
             //
             //     }).catch((error) => {
-            //         this.sendingMessage = false;
+            //         this.sendingMessage = false;                fetchingOlderMessages: true,
+
             //     });
             // },
 
             checkForNewMessagesAndShowThem() {
                 this.checkingForNewAndShowing = true;
 
+                const config = {
+                    headers: {
+                        'Authorization': 'Bearer ' + DP.authenticatedUser.api_token
+                    }
+                }
+
                 axios.get(
-                    '/api/public-chat/items-with-higher-id-than/' + this.currentHighestMessageId + '/' + DP.authenticatedUser.meta.gender + '/' + DP.authenticatedUser.meta.looking_for_gender).then(response => {
+                    '/api/public-chat/items-with-higher-id-than/' + this.currentHighestMessageId + '/' + DP.authenticatedUser.meta.gender + '/' + DP.authenticatedUser.meta.looking_for_gender,
+                    config
+                ).then(response => {
                     let messages = response.data;
 
                     if (messages.length > 0) {
@@ -146,8 +236,16 @@
             },
 
             fetchMessagesAndPopulate() {
+                const config = {
+                    headers: {
+                        'Authorization': 'Bearer ' + DP.authenticatedUser.api_token
+                    }
+                }
+
                 axios.get(
-                    '/api/public-chat/items/' + DP.authenticatedUser.meta.gender + '/' + DP.authenticatedUser.meta.looking_for_gender + '/0/10').then(response => {
+                    '/api/public-chat/items/' + DP.authenticatedUser.meta.gender + '/' + DP.authenticatedUser.meta.looking_for_gender + '/0/100',
+                    config
+                ).then(response => {
                     this.chatItems = response.data;
 
                     if (this.chatItems.length > 0) {

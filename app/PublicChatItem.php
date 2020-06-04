@@ -10,6 +10,7 @@ class PublicChatItem extends TimeZonedModel
     const TYPE_AUTOMATED = 1;
     const TYPE_PEASANT = 2;
     const TYPE_OPERATOR = 3;
+    const TYPE_ADMIN = 4;
 
     use SoftDeletes;
 
@@ -33,6 +34,7 @@ class PublicChatItem extends TimeZonedModel
             self::TYPE_AUTOMATED => 'Automated',
             self::TYPE_PEASANT => 'Peasant',
             self::TYPE_OPERATOR => 'Operator',
+            self::TYPE_ADMIN => 'Admin',
         ];
     }
 
@@ -101,10 +103,16 @@ class PublicChatItem extends TimeZonedModel
         $this->type = $type;
     }
 
+    public function setPublishedAt(Carbon $publishedAt)
+    {
+        $this->published_at = $publishedAt;
+    }
+
     /**
      * @return Carbon
      */
-    public function getPublishedAt() {
+    public function getPublishedAt()
+    {
         return $this->published_at->tz(self::TIMEZONE);
     }
 }

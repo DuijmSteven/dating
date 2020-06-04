@@ -38,59 +38,6 @@ class StatisticsController extends Controller
      */
     public function index()
     {
-        $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
-
-        $onlineFemaleStraightBotsCount = User::with('roles')
-            ->whereHas('roles', function ($query) {
-                $query->where('id', User::TYPE_BOT);
-            })
-            ->whereHas('meta', function ($query) {
-                $query->where('gender', User::GENDER_FEMALE);
-                $query->where('looking_for_gender', User::GENDER_MALE);
-            })
-            ->whereIn('id', $onlineIds)
-            ->count();
-
-        $onlineMaleStraightBotsCount = User::with('roles')
-            ->whereHas('roles', function ($query) {
-                $query->where('id', User::TYPE_BOT);
-            })
-            ->whereHas('meta', function ($query) {
-                $query->where('gender', User::GENDER_MALE);
-                $query->where('looking_for_gender', User::GENDER_FEMALE);
-            })
-            ->whereIn('id', $onlineIds)
-            ->count();
-
-        $onlinePeasantsCount = User::with('roles')
-            ->whereHas('roles', function ($query) {
-                $query->where('id', User::TYPE_PEASANT);
-            })
-            ->whereIn('id', $onlineIds)
-            ->count();
-
-        $activeFemaleStraightBotsCount = User::with('roles')
-            ->whereHas('roles', function ($query) {
-                $query->where('id', User::TYPE_BOT);
-            })
-            ->whereHas('meta', function ($query) {
-                $query->where('gender', User::GENDER_FEMALE);
-                $query->where('looking_for_gender', User::GENDER_MALE);
-            })
-            ->where('active', true)
-            ->count();
-
-        $activeMaleStraightBotsCount = User::with('roles')
-            ->whereHas('roles', function ($query) {
-                $query->where('id', User::TYPE_BOT);
-            })
-            ->whereHas('meta', function ($query) {
-                $query->where('gender', User::GENDER_MALE);
-                $query->where('looking_for_gender', User::GENDER_FEMALE);
-            })
-            ->where('active', true)
-            ->count();
-
         $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');
         $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
         $startOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->startOfDay()->setTimezone('UTC');
@@ -140,32 +87,32 @@ class StatisticsController extends Controller
             ],
             'botMessageStatistics' => [
                 'messagesSentToday' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
-                    'bot',
+                    User::TYPE_BOT,
                     $startOfToday,
                     $endOfToday
                 ),
                 'messagesSentYesterday' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
-                    'bot',
+                    User::TYPE_BOT,
                     $startOfYesterday,
                     $endOfYesterday
                 ),
                 'messagesSentCurrentWeek' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
-                    'bot',
+                    User::TYPE_BOT,
                     $startOfWeek,
                     $endOfWeek
                 ),
                 'messagesSentCurrentMonth' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
-                    'bot',
+                    User::TYPE_BOT,
                     $startOfMonth,
                     $endOfMonth
                 ),
                 'messagesSentPreviousMonth' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
-                    'bot',
+                    User::TYPE_BOT,
                     $startOfPreviousMonthUtc,
                     $endOfPreviousMonthUtc
                 ),
                 'messagesSentCurrentYear' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
-                    'bot',
+                    User::TYPE_BOT,
                     $startOfYear,
                     $endOfToday
                 )

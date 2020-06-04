@@ -3,12 +3,10 @@
 namespace App\Console\Commands;
 
 use App\EmailType;
-use App\Mail\ProfileViewed;
 use App\Managers\UserManager;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Mail;
 
 class SendProfileCompletionEmails extends Command
 {
