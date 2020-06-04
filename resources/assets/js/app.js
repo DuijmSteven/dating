@@ -384,6 +384,23 @@ $(window).on('load', function () {
         });
     }
 
+    if ($('.JS--Tile__toggle').length > 0) {
+        $('.JS--Tile__toggle').click(function () {
+            const closestTile = $(this).closest('.JS--Tile');
+            const isCollapsed = closestTile.find('.JS--Tile__toggleCollapse').hasClass('hidden');
+
+            if (isCollapsed) {
+                closestTile.find('.JS--Tile__toggle.JS--Tile__toggleExpand').addClass('hidden');
+                closestTile.find('.JS--Tile__toggle.JS--Tile__toggleCollapse').removeClass('hidden');
+                closestTile.find('.JS--Tile__body').css('display', 'block');
+            } else {
+                closestTile.find('.JS--Tile__toggle.JS--Tile__toggleCollapse').addClass('hidden');
+                closestTile.find('.JS--Tile__toggle.JS--Tile__toggleExpand').removeClass('hidden');
+                closestTile.find('.JS--Tile__body').css('display', 'none');
+            }
+        });
+    }
+
     // if ($('.JS--PublicChat__countChars').length > 0) {
     //     var max = 1000;
     //     $('.JS--PublicChat__countChars').html('0 / ' + max );

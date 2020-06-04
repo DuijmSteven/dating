@@ -1,5 +1,13 @@
 <template>
     <div class="Tile PublicChat">
+        <div class="Tile__heading PublicChat__heading">
+            <span class="material-icons">
+                chat
+            </span>
+
+            {{ this.$parent.chatTranslations ? this.$parent.chatTranslations['public_chat'] : '' }}
+        </div>
+
         <div class="Tile__body PublicChat__panel">
             <div class="PublicChat__panelBody" id="PublicChat__panelBody">
                 <ul class="PublicChat__chat">
@@ -7,13 +15,10 @@
                         v-for="(item, index) in displayedMessages"
                         class="clearfix"
                     >
-                        <span class="PublicChat__Img pull-left">
+                        <div class="PublicChat__Img pull-left">
                             <a
-                                v-if="
-                                    item.sender.meta.gender === DP.authenticatedUser.meta.looking_for_gender &&
-                                    item.sender.id !== DP.authenticatedUser.id
-                                "
-                                :href="DP.singleProfileUrl + item.sender.username"
+                                v-if="item.sender.id !== this.DP.authenticatedUser.id"
+                                :href="this.DP.singleProfileUrl + item.sender.username"
                             >
                                 <img
                                     :src="item.sender.profileImageUrlThumb"
@@ -21,18 +26,28 @@
                             </a>
 
                            <div
-                               v-if="item.sender.meta.gender !== DP.authenticatedUser.meta.looking_for_gender"
-                                       >
+                               v-if="item.sender.id === this.DP.authenticatedUser.id"
+                           >
                                 <img
                                     :src="item.sender.profileImageUrlThumb"
                                     alt="" class="PublicChat__profilePicture"/>
                             </div>
-                        </span>
+                        </div>
                         <div class="PublicChat__body clearfix">
                             <div class="PublicChat__header">
-                                <a href="#">
+                                <a
+                                    v-if="item.sender.id !== this.DP.authenticatedUser.id"
+                                    :href="this.DP.singleProfileUrl + item.sender.username"
+                                >
                                     <strong class="primary-font">{{ item.sender.username }}</strong>
                                 </a>
+
+                                <div
+                                    v-if="item.sender.id === this.DP.authenticatedUser.id"
+                                >
+                                    <strong class="primary-font">{{ item.sender.username }}</strong>
+                                </div>
+
                                 <small class="pull-right PublicChat__timeAgo">
                                     <span class="glyphicon glyphicon-time"></span> {{ item.publishedAtHumanReadable }}
                                 </small>
@@ -44,14 +59,14 @@
                     </li>
                 </ul>
 
-<!--                <div-->
-<!--                    class="fetchMoreButton"-->
-<!--                >-->
-<!--                    {{ this.$parent.chatTranslations['older_messages'] }}-->
-<!--                    <i class="material-icons">-->
-<!--                        get_app-->
-<!--                    </i>-->
-<!--                </div>-->
+                <!--                <div-->
+                <!--                    class="fetchMoreButton"-->
+                <!--                >-->
+                <!--                    {{ this.$parent.chatTranslations['older_messages'] }}-->
+                <!--                    <i class="material-icons">-->
+                <!--                        get_app-->
+                <!--                    </i>-->
+                <!--                </div>-->
 
                 <div
                     v-if="fetchingInitial"
@@ -60,22 +75,22 @@
                     <div class="loader"></div>
                 </div>
 
-<!--                <div-->
-<!--                    v-if="allMessagesFetched && (displayedMessages.length >= messagesPerRequest)"-->
-<!--                    class="allMessagesFetched"-->
-<!--                >-->
-<!--                    {{ this.$parent.chatTranslations['no_more_messages'] }}-->
-<!--                </div>-->
+                <!--                <div-->
+                <!--                    v-if="allMessagesFetched && (displayedMessages.length >= messagesPerRequest)"-->
+                <!--                    class="allMessagesFetched"-->
+                <!--                >-->
+                <!--                    {{ this.$parent.chatTranslations['no_more_messages'] }}-->
+                <!--                </div>-->
 
-<!--                <div-->
-<!--                    v-if="allMessagesFetched && displayedMessages.length === 0"-->
-<!--                    class="allMessagesFetched"-->
-<!--                >-->
-<!--                    {{ this.$parent.chatTranslations['no_messages_yet'] }}-->
-<!--                </div>-->
+                <!--                <div-->
+                <!--                    v-if="allMessagesFetched && displayedMessages.length === 0"-->
+                <!--                    class="allMessagesFetched"-->
+                <!--                >-->
+                <!--                    {{ this.$parent.chatTranslations['no_messages_yet'] }}-->
+                <!--                </div>-->
             </div>
             <div class="panel-footer PublicChat__panelFooter">
-                <form :action="DP.postChatItemRoute" method="POST">
+                <form :action="this.DP.postChatItemRoute" method="POST">
                     <input
                         type="hidden"
                         name="_token"
@@ -111,7 +126,7 @@
                     </div>
                     <div class="text-center PublicChat__submitButton">
                         <button
-                            v-if="DP.authenticatedUser.account.credits > 0 && this.$parent.chatTranslations"
+                            v-if="this.DP.authenticatedUser.account.credits > 0 && this.$parent.chatTranslations"
                             class="btn"
                             type="submit"
                         >
@@ -119,7 +134,7 @@
                         </button>
 
                         <a
-                            v-if="DP.authenticatedUser.account.credits === 0 && this.$parent.chatTranslations"
+                            v-if="this.DP.authenticatedUser.account.credits === 0 && this.$parent.chatTranslations"
                             class="btn"
                             :href="DP.creditsUrl"
                         >
@@ -134,8 +149,7 @@
 
 <script>
     export default {
-        props: [
-        ],
+        props: [],
 
         data() {
             return {
@@ -157,6 +171,8 @@
 
         created() {
             this.fetchMessagesAndListenToChannel();
+
+            console.log(this.DP);
         },
 
         methods: {

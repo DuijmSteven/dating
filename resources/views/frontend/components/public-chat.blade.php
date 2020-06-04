@@ -1,4 +1,11 @@
 <div class="Tile PublicChat">
+    <div class="Tile__heading PublicChat__heading">
+        <span class="material-icons">
+            chat
+        </span>
+
+        {{ trans('home.public_chat') }}
+    </div>
     <div class="Tile__body PublicChat__panel">
         <div class="PublicChat__panelBody">
             <ul class="PublicChat__chat">
