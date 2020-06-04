@@ -50,6 +50,9 @@ class MassMessageController extends Controller
         $withPicUsersQuery = clone $unlimitedUsersQuery;
         $havePayedUsersQuery = clone $unlimitedUsersQuery;
         $havePayedAndDontHaveImagesUsersQuery = clone $unlimitedUsersQuery;
+        $registeredTodayUsersQuery = clone $unlimitedUsersQuery;
+        $registeredYesterdayUsersQuery = clone $unlimitedUsersQuery;
+        $registeredYesterdayUpToFourDaysAgoUsersQuery = clone $unlimitedUsersQuery;
 
         $withPicUsersQuery->where(function ($query) {
             $query->whereHas('meta', function ($query) {
@@ -87,6 +90,27 @@ class MassMessageController extends Controller
 
         $havePayedAndDontHaveImagesCount = $havePayedAndDontHaveImagesUsersQuery->count();
 
+        $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');
+        $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
+        $startOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->startOfDay()->setTimezone('UTC');
+        $endOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->endOfDay()->setTimezone('UTC');
+        $startOfFourDaysAgo = Carbon::now('Europe/Amsterdam')->subDays(4)->startOfDay()->setTimezone('UTC');
+
+        $registeredTodayUsersQuery
+            ->whereBetween('created_at', [$startOfToday, $endOfToday]);
+
+        $registeredTodayCount = $registeredTodayUsersQuery->count();
+
+        $registeredYesterdayUsersQuery
+            ->whereBetween('created_at', [$startOfYesterday, $endOfYesterday]);
+
+        $registeredYesterdayCount = $registeredYesterdayUsersQuery->count();
+
+        $registeredYesterdayUpToFourDaysAgoUsersQuery
+            ->whereBetween('created_at', [$startOfFourDaysAgo, $endOfYesterday]);
+
+        $registeredYesterdayUpToFourDaysAgoCount = $registeredYesterdayUpToFourDaysAgoUsersQuery->count();
+
         return view(
             'admin.mass-messages.new',
             [
@@ -101,6 +125,9 @@ class MassMessageController extends Controller
                     'withoutPic' => $withoutPicCount,
                     'havePayed' => $havePayedCount,
                     'havePayedAndDontHaveImages' => $havePayedAndDontHaveImagesCount,
+                    'registeredToday' => $registeredTodayCount,
+                    'registeredYesterday' => $registeredYesterdayCount,
+                    'haveYesterdayUpToFourDaysAgo' => $registeredYesterdayUpToFourDaysAgoCount,
                 ]
             ]
         );
@@ -114,6 +141,12 @@ class MassMessageController extends Controller
         $limitMessage = $request->get('limit_message');
 
         $onlineUserIds = Activity::users(5)->pluck('user_id')->toArray();
+
+        $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');
+        $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
+        $startOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->startOfDay()->setTimezone('UTC');
+        $endOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->endOfDay()->setTimezone('UTC');
+        $startOfFourDaysAgo = Carbon::now('Europe/Amsterdam')->subDays(4)->startOfDay()->setTimezone('UTC');
 
         $usersQuery = User::whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_PEASANT);
@@ -154,6 +187,15 @@ class MassMessageController extends Controller
                     $query->where('status', Payment::STATUS_COMPLETED);
                 })
                 ->whereDoesntHave('images');
+        } else if ($limitMessage === 'limited_today') {
+            $usersQuery
+                ->whereBetween('created_at', [$startOfToday, $endOfToday]);
+        } else if ($limitMessage === 'limited_yesterday') {
+            $usersQuery
+                ->whereBetween('created_at', [$startOfYesterday, $endOfYesterday]);
+        } else if ($limitMessage === 'limited_yesterday_up_to_four_days_ago') {
+            $usersQuery
+                ->whereBetween('created_at', [$startOfFourDaysAgo, $endOfYesterday]);
         }
 
         $users = $usersQuery->get();

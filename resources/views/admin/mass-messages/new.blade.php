@@ -65,6 +65,24 @@
                                     ({{ $userCounts['havePayedAndDontHaveImages'] }})  Only users that have bought at least once and have no images
                                 </label>
                             </div>
+                            <div class="form-check">
+                                <label class="form-check-label" for="limit_message6">
+                                    <input class="form-check-input" type="radio" name="limit_message" id="limit_message6" value="limited_today">
+                                    ({{ $userCounts['registeredToday'] }})  Only today's registrations
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label" for="limit_message7">
+                                    <input class="form-check-input" type="radio" name="limit_message" id="limit_message7" value="limited_yesterday">
+                                    ({{ $userCounts['registeredYesterday'] }})  Only yesterday's registrations
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label" for="limit_message8">
+                                    <input class="form-check-input" type="radio" name="limit_message" id="limit_message8" value="limited_yesterday_up_to_four_days_ago">
+                                    ({{ $userCounts['haveYesterdayUpToFourDaysAgo'] }})  Registrations from yesterday up to 4 days ago
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
