@@ -40,7 +40,12 @@
                                     ({{ $userCounts['unlimited'] }}) Unlimited
                                 </label>
                             </div>
-
+                            <div class="form-check">
+                                <label class="form-check-label" for="limit_message3">
+                                <input class="form-check-input" type="radio" name="limit_message" id="limit_message3" value="limited_no_pic">
+                                    ({{ $userCounts['withoutPic'] }})  Only users that have no pictures and very few fields filled
+                                </label>
+                            </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="limit_message" id="limit_message2" value="limited_with_pic">
                                 <label class="form-check-label" for="limit_message2">
@@ -49,9 +54,15 @@
                                 </label>
                             </div>
                             <div class="form-check">
-                                <label class="form-check-label" for="limit_message3">
-                                <input class="form-check-input" type="radio" name="limit_message" id="limit_message3" value="limited_no_pic">
-                                    ({{ $userCounts['withoutPic'] }})  Only users that have no pictures and very few fields filled
+                                <label class="form-check-label" for="limit_message4">
+                                    <input class="form-check-input" type="radio" name="limit_message" id="limit_message4" value="limited_have_payed">
+                                    ({{ $userCounts['havePayed'] }})  Only users that have bought at least once
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label" for="limit_message4">
+                                    <input class="form-check-input" type="radio" name="limit_message" id="limit_message4" value="limited_have_payed_and_no_images">
+                                    ({{ $userCounts['havePayedAndDontHaveImages'] }})  Only users that have bought at least once and have no images
                                 </label>
                             </div>
                         </div>
