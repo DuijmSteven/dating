@@ -115,10 +115,9 @@ class MassMessageController extends Controller
 
         $onlineUserIds = Activity::users(5)->pluck('user_id')->toArray();
 
-        $straightMaleActiveUsersQuery = User::with(['conversationsAsUserA', 'conversationsAsUserB'])
-            ->whereHas('roles', function ($query) {
-                $query->where('id', User::TYPE_PEASANT);
-            })
+        $usersQuery = User::whereHas('roles', function ($query) {
+            $query->where('id', User::TYPE_PEASANT);
+        })
             ->where('active', true)
             ->whereHas('meta', function ($query) {
                 $query->where('gender', User::GENDER_MALE);
@@ -126,7 +125,7 @@ class MassMessageController extends Controller
             });
 
         if ($limitMessage === 'limited_with_pic') {
-            $straightMaleActiveUsersQuery->where(function ($query) {
+            $usersQuery->where(function ($query) {
                 $query->whereHas('meta', function ($query) {
                     $query->where('dob', '!=', null);
                     $query->orWhere('city', '!=',  null);
@@ -134,7 +133,7 @@ class MassMessageController extends Controller
                     ->orWhereHas('images');
             });
         } else if ($limitMessage === 'limited_no_pic') {
-            $straightMaleActiveUsersQuery
+            $usersQuery
                 ->whereDoesntHave('images')
                 ->where(function ($query) {
                     $query->whereHas('meta', function ($query) {
@@ -145,47 +144,43 @@ class MassMessageController extends Controller
                     });
                 });
         } else if ($limitMessage === 'limited_have_payed') {
-            $straightMaleActiveUsersQuery
+            $usersQuery
                 ->whereHas('payments', function ($query) {
                     $query->where('status', Payment::STATUS_COMPLETED);
                 });
         } else if ($limitMessage === 'limited_have_payed_and_no_images') {
-            $straightMaleActiveUsersQuery
+            $usersQuery
                 ->whereHas('payments', function ($query) {
                     $query->where('status', Payment::STATUS_COMPLETED);
                 })
                 ->whereDoesntHave('images');
         }
 
-        $users = $straightMaleActiveUsersQuery->get();
+        $users = $usersQuery->get();
 
         $errorsCount = 0;
-
-        $bots = User::with(['conversationsAsUserA', 'conversationsAsUserB'])
-            ->where('active', true)
-            ->whereHas('meta', function ($query) {
-                $query->where('looking_for_gender', User::GENDER_MALE);
-                $query->where('gender',  User::GENDER_FEMALE);
-            })
-            ->whereHas('roles', function ($query) {
-                $query->where('id', User::TYPE_BOT);
-            })
-            ->get();
 
         /** @var User $user */
         foreach ($users as $user) {
             try {
                 \DB::beginTransaction();
-                $bot = $bots->filter(function ($bot, $key) use ($user) {
-                    return !$bot->conversationsAsUserA->contains(function ($conversation, $key) use ($user) {
-                        return $conversation->user_b_id === $user->getId();
+
+                $bot = User::where('active', true)
+                    ->whereHas('meta', function ($query) use ($user) {
+                        $query->where('looking_for_gender', $user->meta->gender);
+                        $query->where('gender', $user->meta->looking_for_gender);
                     })
-                        &&
-                    !$bot->conversationsAsUserB->contains(function ($conversation, $key) use ($user) {
-                        return $conversation->user_a_id === $user->getId();
-                    });
-                })
-                ->random();
+                    ->whereHas('roles', function ($query) {
+                        $query->where('id', User::TYPE_BOT);
+                    })
+                    ->whereDoesntHave('conversationsAsUserA', function ($query) use ($user) {
+                        $query->where('user_b_id', $user->getId());
+                    })
+                    ->whereDoesntHave('conversationsAsUserB', function ($query) use ($user) {
+                        $query->where('user_a_id', $user->getId());
+                    })
+                    ->orderBy(\DB::raw('RAND()'))
+                    ->first();
 
                 if (!($bot instanceof User)) {
                     continue;
