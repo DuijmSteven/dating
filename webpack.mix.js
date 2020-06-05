@@ -55,7 +55,7 @@ mix.scripts([
 
 mix.js(
     'resources/assets/js/admin/custom.js',
-    'public/admin/js/custom-force.js'
+    'public/admin/js/custom.js'
 )
     .sass('resources/assets/sass/admin/custom.scss', 'public/admin/css')
     .sourceMaps()
