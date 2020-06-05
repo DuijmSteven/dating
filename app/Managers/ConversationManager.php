@@ -131,7 +131,7 @@ class ConversationManager
                 if ($recipientBotIsOnline || $exemptFromDelay) {
                     $replyableAt = Carbon::now();
                 } else {
-                    if (!$conversation->messages && $conversation->messages[0]->sender->roles[0]->id === User::TYPE_BOT) {
+                    if ($isNewConversation || $conversation->messages[0]->sender->roles[0]->id === User::TYPE_BOT) {
                         $replyableAt = Carbon::now()->addMinutes(rand(1, 10));
                     } else {
                         if ($conversation->getReplyableAt() && $conversation->getReplyableAt()->gt(Carbon::now())) {
