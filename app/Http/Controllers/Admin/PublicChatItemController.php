@@ -235,6 +235,12 @@ class PublicChatItemController extends Controller
             $publicChatItem->setPublishedAt(Carbon::now());
             $publicChatItem->save();
 
+            $activity = new Activity;
+            $activity->id = bcrypt((int) time() . $messageData['sender_id']);
+            $activity->last_activity = time();
+            $activity->user_id = $messageData['sender_id'];
+            $activity->save();
+
             DB::commit();
 
             $alerts[] = [
