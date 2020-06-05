@@ -390,12 +390,12 @@ $(window).on('load', function () {
             const isCollapsed = closestTile.find('.JS--Tile__toggleCollapse').hasClass('hidden');
 
             if (isCollapsed) {
-                closestTile.find('.JS--Tile__toggle.JS--Tile__toggleExpand').addClass('hidden');
-                closestTile.find('.JS--Tile__toggle.JS--Tile__toggleCollapse').removeClass('hidden');
+                closestTile.find('.JS--Tile__toggle .JS--Tile__toggleExpand').addClass('hidden');
+                closestTile.find('.JS--Tile__toggle .JS--Tile__toggleCollapse').removeClass('hidden');
                 closestTile.find('.JS--Tile__body').css('display', 'block');
             } else {
-                closestTile.find('.JS--Tile__toggle.JS--Tile__toggleCollapse').addClass('hidden');
-                closestTile.find('.JS--Tile__toggle.JS--Tile__toggleExpand').removeClass('hidden');
+                closestTile.find('.JS--Tile__toggle .JS--Tile__toggleCollapse').addClass('hidden');
+                closestTile.find('.JS--Tile__toggle .JS--Tile__toggleExpand').removeClass('hidden');
                 closestTile.find('.JS--Tile__body').css('display', 'none');
             }
         });

@@ -1,5 +1,5 @@
 <div class="Tile LatestViewed JS--Tile Tile--withToggle">
-    <div class="Tile__heading LatestViewed__heading">
+    <div class="Tile__heading LatestViewed__heading JS--Tile__toggle">
         <span class="material-icons">
             remove_red_eye
         </span>

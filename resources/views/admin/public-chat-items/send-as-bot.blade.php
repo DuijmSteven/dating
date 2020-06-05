@@ -5,12 +5,12 @@
 
     <div id="js-BotSelection" class="box box-primary js-publicChat publicChat" style="overflow: auto">
         <div class="box-header with-border">
-            <h3 class="box-title">Select bot to send message from</h3>
+            <h3 class="box-title">Select bot to send message from ({{ $bots->count() }} bots available)</h3>
         </div>
 
         <div class="box-body">
             @if(count($bots) === 0)
-                <div style="padding-left: 15px; font-weight: bold; font-size: 23px; color: #245269"><p>No bots</p></div>
+                <div style="padding-left: 15px; font-weight: bold; font-size: 23px; color: #245269"><p>No bots available</p></div>
             @else
                 <ul style="max-height: 230px;
                         overflow-y: scroll;
