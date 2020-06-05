@@ -6244,6 +6244,15 @@ table .action-buttons .btn {
     border-radius: 50%;
 }
 
+.publicChat .publicChatBotMessagesCount {
+    margin-left: 25px;
+    color: #2a88bd;
+}
+
+.publicChat .latestBotMessage {
+    color: #9b4d3c;
+}
+
 .DashboardWidget:hover {
     text-decoration: none;
 }
