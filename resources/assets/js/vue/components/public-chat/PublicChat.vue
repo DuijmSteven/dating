@@ -42,11 +42,11 @@
                                     <strong class="primary-font">{{ item.sender.username }}</strong>
                                 </a>
 
-                                <div
+                                <span
                                     v-if="item.sender.id === this.DP.authenticatedUser.id"
                                 >
                                     <strong class="primary-font">{{ item.sender.username }}</strong>
-                                </div>
+                                </span>
 
                                 <small class="pull-right PublicChat__timeAgo">
                                     <span class="glyphicon glyphicon-time"></span> {{ item.publishedAtHumanReadable }}

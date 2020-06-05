@@ -59,6 +59,8 @@
             line-height: 2.1rem;
             color: #524e4d;
             font-style: italic;
+            text-overflow: ellipsis;
+            overflow: hidden;
         }
     }
 
