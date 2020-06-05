@@ -96,6 +96,18 @@
         overflow-y: scroll;
         height: 400px;
         padding: 15px;
+
+        &.noMessages {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    &__noMessages {
+        font-size: 17px;
+        color: #827e79;
+        font-weight: 500;
     }
 
     &__profilePicture {

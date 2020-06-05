@@ -10,6 +10,7 @@ window.Vue = require('vue/dist/vue.min.js');
 import VuejsDialog from 'vuejs-dialog';
 
 import VueMq from 'vue-mq';
+import $ from "jquery";
 
 Vue.use(require('vue-moment'));
 
@@ -398,6 +399,13 @@ $(window).on('load', function () {
                 closestTile.find('.JS--Tile__toggle .JS--Tile__toggleExpand').removeClass('hidden');
                 closestTile.find('.JS--Tile__body').css('display', 'none');
             }
+        });
+    }
+
+    if ($('input[type="submit"]').length > 0 || $('button[type="submit"]').length > 0) {
+        $('form').submit(function(){
+            $('input[type=submit]', this).attr('disabled', 'disabled');
+            $('button[type="submit"]', this).attr('disabled', 'disabled');
         });
     }
 

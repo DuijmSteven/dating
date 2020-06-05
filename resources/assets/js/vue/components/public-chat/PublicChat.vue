@@ -11,8 +11,15 @@
         </div>
 
         <div class="Tile__body PublicChat__panel">
-            <div class="PublicChat__panelBody" id="PublicChat__panelBody">
-                <ul class="PublicChat__chat">
+            <div
+                v-bind:class="{'noMessages': displayedMessages.length === 0}"
+                class="PublicChat__panelBody"
+                id="PublicChat__panelBody"
+            >
+                <ul
+                    v-if="displayedMessages.length > 0"
+                    class="PublicChat__chat"
+                >
                     <li
                         v-for="(item, index) in displayedMessages"
                         class="clearfix"
@@ -60,6 +67,13 @@
                         </div>
                     </li>
                 </ul>
+
+                <div
+                    v-if="displayedMessages.length === 0 && !this.fetchingInitial"
+                    class="PublicChat__noMessages"
+                    style="display: flex; align-items: center; justify-content: center">
+                    <span>Geen berichten ...</span>
+                </div>
 
                 <!--                <div-->
                 <!--                    class="fetchMoreButton"-->
@@ -182,7 +196,7 @@
                 this.fetchMessagesAndPopulate();
 
                 this.intervalToFetchMessages = setInterval(() => {
-                    if (this.currentHighestMessageId !== undefined && !this.checkingForNewAndShowing) {
+                    if (!this.checkingForNewAndShowing) {
                         this.checkForNewMessagesAndShowThem();
                     }
                 }, 10000);
@@ -214,6 +228,12 @@
             // },
 
             checkForNewMessagesAndShowThem() {
+                if (this.currentHighestMessageId === undefined) {
+                    this.fetchMessagesAndPopulate();
+
+                    return;
+                }
+
                 this.checkingForNewAndShowing = true;
 
                 const config = {
