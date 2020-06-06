@@ -13203,9 +13203,10 @@ small.form-error {
   z-index: 9;
   bottom: 0;
   right: 25px;
-  width: 55px;
+  width: auto;
   -webkit-box-shadow: 0 0 24px rgba(0, 0, 0, 0.2);
           box-shadow: 0 0 24px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
 }
 
 .NotificationsManager__head {
@@ -13218,19 +13219,24 @@ small.form-error {
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
   height: 50px;
+  background-color: #4f5d75;
   color: #fff;
   background: #3e3838;
 }
 
 .NotificationsManager__toggle {
-  top: 0;
-  left: 0;
   padding: 15px;
   cursor: pointer;
-  text-align: center;
+  text-align: left;
+  width: 100%;
+}
+
+.NotificationsManager__toggle__minimize {
+  float: right;
+  padding-top: 3px;
 }
 
 .NotificationsManager__newNotifications {
@@ -13245,6 +13251,49 @@ small.form-error {
   background-color: #2c2c2c;
   padding: 5px 8px;
   border-radius: 50%;
+}
+
+.NotificationsManager.maximized {
+  z-index: 11;
+}
+
+.NotificationsManager.maximized .NotificationsManager__body {
+  display: block;
+}
+
+.NotificationsManager.maximized .NotificationsManager__head {
+  height: 57px;
+}
+
+.NotificationsManager__body {
+  display: none;
+  max-height: 600px;
+  overflow-y: scroll;
+  width: 370px;
+}
+
+.NotificationsManager__body__item {
+  padding: 15px 10px;
+}
+
+@media (max-width: 991px) {
+  .NotificationsManager.maximized {
+    top: 40%;
+    left: 0;
+    right: 0;
+    z-index: 11;
+  }
+
+  .NotificationsManager.maximized .NotificationsManager__head {
+    height: 57px;
+  }
+
+  .NotificationsManager.maximized .NotificationsManager__body {
+    width: auto;
+    max-height: initial;
+    background-color: #fff;
+    height: calc(100% - 57px);
+  }
 }
 
 .Online-users__bodyWrapper {
