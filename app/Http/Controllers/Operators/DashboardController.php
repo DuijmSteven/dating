@@ -38,7 +38,7 @@ class DashboardController extends \App\Http\Controllers\Controller
                 'headingLarge' => 'Dashboard',
                 'headingSmall' => Auth::user()->username,
                 'newConversations' => $this->conversationManager->newPeasantBotConversations(),
-                'unrepliedConversations' => $this->conversationManager->unrepliedPeasantBotConversations(),
+                'unrepliedConversations' => $this->conversationManager->unrepliedPeasantBotConversations(10, true),
                 'stoppedConversations' => $this->conversationManager->stoppedPeasantBotConversations(),
             ]
         );

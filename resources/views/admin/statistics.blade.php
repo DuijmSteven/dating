@@ -287,19 +287,21 @@
                 <div class="box-footer no-padding">
                     <ul class="nav nav-stacked">
                         <li><a href="#">No credits <span
-                                    class="DashboardWidget_count">{!! $userTypeStatistics['no_credits'] !!}</span></a>
+                                    class="DashboardWidget_count">{{ $userTypeStatistics['no_credits'] }}</span></a>
                         </li>
                         <li><a href="#">Never bought creditpack <span
-                                    class="DashboardWidget_count">{!! $userTypeStatistics['never_bought'] !!}</span></a>
+                                    class="DashboardWidget_count">{{ $userTypeStatistics['never_bought'] }}</span></a>
                         </li>
                         <li><a href="{{ route('admin.peasants.with-creditpack.overview') }}">Small <span
-                                    class="DashboardWidget_count">{!! $userTypeStatistics['small'] !!}</span></a></li>
+                                    class="DashboardWidget_count">{{ $userTypeStatistics['small'] }}</span></a></li>
                         <li><a href="{{ route('admin.peasants.with-creditpack.overview') }}">Medium <span
-                                    class="DashboardWidget_count">{!! $userTypeStatistics['medium'] !!}</span></a></li>
+                                    class="DashboardWidget_count">{{ $userTypeStatistics['medium'] }}</span></a></li>
                         <li><a href="{{ route('admin.peasants.with-creditpack.overview') }}">Large <span
-                                    class="DashboardWidget_count">{!! $userTypeStatistics['large'] !!}</span></a></li>
-                        <li><a href="{{ route('admin.peasants.with-creditpack.overview') }}">Large <span
-                                    class="DashboardWidget_count">{!! $userTypeStatistics['xl'] !!}</span></a></li>
+                                    class="DashboardWidget_count">{{ $userTypeStatistics['large'] }}</span></a></li>
+                        <li><a href="{{ route('admin.peasants.with-creditpack.overview') }}">XL <span
+                                    class="DashboardWidget_count">{{ $userTypeStatistics['xl'] }}</span></a></li>
+                        <li><a href="{{ route('admin.peasants.with-creditpack.overview') }}">Any creditpack <span
+                                    class="DashboardWidget_count">{{ $userTypeStatistics['small'] + $userTypeStatistics['medium'] + $userTypeStatistics['large'] + $userTypeStatistics['xl'] }}</span></a></li>
                     </ul>
                 </div>
             </div>

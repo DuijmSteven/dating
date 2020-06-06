@@ -229,7 +229,7 @@ class ConversationManager
     /**
      * @return array
      */
-    public function newPeasantBotConversations()
+    public function newPeasantBotConversations($limit = null, $sort = false)
     {
         $conversations = Conversation::with(['userA', 'userB', 'userA.roles', 'userB.roles', 'messages'])
             ->whereDoesntHave('messages.sender.roles', function ($query) {
@@ -255,20 +255,36 @@ class ConversationManager
             ->where('replyable_at', '<=', Carbon::now())
             ->where('replyable_at', '!=', null)
             ->withTrashed()
-            ->get()
+            ->get();
 
-            ->sortByDesc(function ($conversation) {
+        if ($sort) {
+            $conversations = $conversations->sortByDesc(function ($conversation) {
                 return $conversation->messages[0]->getCreatedAt();
-            })
-            ->take(10);
+            });
+        }
+
+        if ($limit) {
+            $conversations = $conversations->take($limit);
+        }
 
         return $conversations;
     }
 
     /**
-     * @return array
+     * @return int
      */
-    public function unrepliedPeasantBotConversations()
+    public function newPeasantBotConversationsCount()
+    {
+        return $this->newPeasantBotConversations()->count();
+    }
+
+
+    /**
+     * @param null $limit
+     * @param bool $sort
+     * @return Conversation[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Query\Builder[]|\Illuminate\Support\Collection
+     */
+    public function unrepliedPeasantBotConversations($limit = null, $sort = false)
     {
         $conversations = Conversation::with(['userA', 'userB'])
             ->whereHas('userA', function ($query) {
@@ -294,19 +310,35 @@ class ConversationManager
                     $value->messages[0]->sender->roles[0]->id === User::TYPE_PEASANT &&
                     $value->messages[0]->recipient->roles[0]->id === User::TYPE_BOT;
 
-            })
-            ->sortByDesc(function ($conversation) {
+            });
+
+        if ($sort) {
+            $conversations = $conversations->sortByDesc(function ($conversation) {
                 return $conversation->messages[0]->getCreatedAt();
-            })
-            ->take(10);
+            });
+        }
+
+        if ($limit) {
+            $conversations->take($limit);
+        }
 
         return $conversations;
     }
 
     /**
-     * @return array
+     * @return int
      */
-    public function stoppedPeasantBotConversations()
+    public function unrepliedPeasantBotConversationsCount()
+    {
+        return $this->unrepliedPeasantBotConversations()->count();
+    }
+
+    /**
+     * @param null $limit
+     * @param bool $sort
+     * @return Conversation[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Query\Builder[]|\Illuminate\Support\Collection
+     */
+    public function stoppedPeasantBotConversations($limit = null, $sort = false)
     {
         $conversations = Conversation::with(['userA', 'userB'])
             ->whereHas('userA', function ($query) {
@@ -334,13 +366,27 @@ class ConversationManager
                     $value->messages[0]->sender->roles[0]->id === User::TYPE_BOT &&
                     $value->messages[0]->recipient->roles[0]->id === User::TYPE_PEASANT &&
                     $value->messages[1]->sender->roles[0]->id !== User::TYPE_BOT;
-            })
-            ->sortByDesc(function ($conversation) {
+            });
+
+        if ($sort) {
+            $conversations = $conversations->sortByDesc(function ($conversation) {
                 return $conversation->messages[0]->getCreatedAt();
-            })
-            ->take(10);
+            });
+        }
+
+        if ($limit) {
+            $conversations->take($limit);
+        }
 
         return $conversations;
+    }
+
+    /**
+     * @return int
+     */
+    public function stoppedPeasantBotConversationsCount()
+    {
+        return $this->stoppedPeasantBotConversations()->count();
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Managers\ChartsManager;
+use App\Managers\ConversationManager;
 use App\Managers\StatisticsManager;
 use App\User;
 use Carbon\Carbon;
@@ -21,14 +22,20 @@ class DashboardController extends Controller
      */
     private ChartsManager $chartsManager;
 
+    /**
+     * @var ConversationManager
+     */
+    private ConversationManager $conversationManager;
+
     public function __construct(
         StatisticsManager $statisticsManager,
+        ConversationManager $conversationManager,
         ChartsManager $chartsManager
-    )
-    {
+    ) {
         parent::__construct();
         $this->statisticsManager = $statisticsManager;
         $this->chartsManager = $chartsManager;
+        $this->conversationManager = $conversationManager;
     }
 
     /**
@@ -123,6 +130,9 @@ class DashboardController extends Controller
 //                $startOfToday,
 //                $endOfToday
 //            ),
+            'availableConversationsCount' => $this->conversationManager->unrepliedPeasantBotConversationsCount() +
+                $this->conversationManager->newPeasantBotConversationsCount(),
+            'stoppedConversationsCount' => $this->conversationManager->stoppedPeasantBotConversationsCount(),
             'revenueStatistics' => [
                 'revenueToday' => $this->statisticsManager->revenueBetween(
                     $startOfToday,
@@ -238,6 +248,38 @@ class DashboardController extends Controller
                     $startOfYear,
                     $endOfToday
                 )
+            ],
+            'peasantMessagesPerHourStatistics' => [
+                'today' => number_format($this->statisticsManager->messagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfToday,
+                    $endOfToday
+                ) / (Carbon::now('Europe/Amsterdam')->diffInHours($startOfToday)), 0),
+                'yesterday' => number_format($this->statisticsManager->messagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfYesterday,
+                    $endOfYesterday
+                ) / $endOfYesterday->diffInHours($startOfYesterday), 0),
+                'currentWeek' => number_format($this->statisticsManager->messagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfWeek,
+                    $endOfWeek
+                ) / $endOfWeek->diffInHours($startOfWeek), 0),
+                'currentMonth' => number_format($this->statisticsManager->messagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfMonth,
+                    $endOfMonth
+                ) / $endOfMonth->diffInHours($startOfMonth), 0),
+                'previousMonth' => number_format($this->statisticsManager->messagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc
+                ) / $endOfPreviousMonthUtc->diffInHours($startOfPreviousMonthUtc), 0),
+                'currentYear' => number_format($this->statisticsManager->messagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfYear,
+                    $endOfToday
+                ) / (Carbon::now('Europe/Amsterdam')->diffInHours($startOfYear)), 0)
             ],
             'registrationStatistics' => [
                 'registrationsToday' => $this->statisticsManager->registrationsCountBetween(

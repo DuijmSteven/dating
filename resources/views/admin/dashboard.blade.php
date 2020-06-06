@@ -67,6 +67,27 @@
                             </div>
                         </div>
                     </a>
+
+                    <a href="{{ route('admin.peasants.online.show') }}" class="box box-widget DashboardWidget">
+                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                        <div class="bg-aqua">
+                            <div class="widget-us DashboardWidget_header"
+                                 style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
+                                <i class="fa fa-users DashboardWidget_header-icon"></i>
+                                <span class="DashboardWidget_header-title"><b>{{ $availableConversationsCount }} available conversations</b></span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="{{ route('admin.peasants.online.show') }}" class="box box-widget DashboardWidget">
+                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                        <div class="bg-aqua">
+                            <div class="widget-us DashboardWidget_header"
+                                 style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
+                                <i class="fa fa-users DashboardWidget_header-icon"></i>
+                                <span class="DashboardWidget_header-title"><b>{{ $stoppedConversationsCount }} stopped conversations</b></span>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -79,29 +100,29 @@
                          style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
                         <i class="fa fa-envelope DashboardWidget_header-icon"></i>
                         <i class="fa fa-user DashboardWidget_header-icon"></i>
-                        <span class="DashboardWidget_header-title">Peasant Messages Sent</span>
+                        <span class="DashboardWidget_header-title">Peasant Messages Sent (+ per hour)</span>
                     </div>
                     <!-- /.widget-user-image -->
                 </div>
                 <div class="box-footer no-padding">
                     <ul class="nav nav-stacked">
                         <li><a href="#">Today <span
-                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentToday'] !!}</span></a>
+                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentToday'] !!} ({{ $peasantMessagesPerHourStatistics['today'] }})</span></a>
                         </li>
                         <li><a href="#">Yesterday <span
-                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentYesterday'] !!}</span></a>
+                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentYesterday'] !!} ({{ $peasantMessagesPerHourStatistics['yesterday'] }})</span></a>
                         </li>
                         <li><a href="#">Current week <span
-                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentCurrentWeek'] !!}</span></a>
+                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentCurrentWeek'] !!} ({{ $peasantMessagesPerHourStatistics['currentWeek'] }})</span></a>
                         </li>
                         <li><a href="#">Current month <span
-                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentCurrentMonth'] !!}</span></a>
+                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentCurrentMonth'] !!} ({{ $peasantMessagesPerHourStatistics['currentMonth'] }})</span></a>
                         </li>
                         <li><a href="#">Last month <span
-                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentPreviousMonth'] !!}</span></a>
+                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentPreviousMonth'] !!} ({{ $peasantMessagesPerHourStatistics['previousMonth'] }})</span></a>
                         </li>
                         <li><a href="#">Current year <span
-                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentCurrentYear'] !!}</span></a>
+                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentCurrentYear'] !!} ({{ $peasantMessagesPerHourStatistics['currentYear'] }})</span></a>
                         </li>
                     </ul>
                 </div>
