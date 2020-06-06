@@ -78,13 +78,18 @@ class ConversationController extends Controller
             DB::beginTransaction();
 
             $conversationMessage = $this->conversationManager->createMessage($messageData);
-            $recipientPartnerIds = OpenConversationPartner::where('user_id', $recipientId)
-                ->get()
-                ->pluck('partner_id')
-                ->toArray();
 
-            if (!in_array($senderId, $recipientPartnerIds)) {
-                $recipient->addOpenConversationPartner($sender, 1);
+            if ($recipient->isPeasant()) {
+                $recipientPartnerIds = OpenConversationPartner::where('user_id', $recipientId)
+                    ->get()
+                    ->pluck('partner_id')
+                    ->toArray();
+
+                $recipientOpenConversationPartnersCount = count($recipientPartnerIds);
+
+                if (!in_array($senderId, $recipientPartnerIds) && $recipientOpenConversationPartnersCount < 4) {
+                    $recipient->addOpenConversationPartner($sender, 1);
+                }
             }
 
             /** @var UserAccount $senderAccount */

@@ -42,7 +42,6 @@ $(window).on('load', function () {
 
     $('.JS--register-button').click(function(event) {
         grecaptcha.execute(DP.recaptchaKey, {action: 'register'}).then(function(token) {
-            console.log(token);
             document.getElementById('g-recaptcha-response').value = token;
 
             $('#JS--registrationForm').submit();

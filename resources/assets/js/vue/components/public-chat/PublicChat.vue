@@ -187,8 +187,6 @@
 
         created() {
             this.fetchMessagesAndListenToChannel();
-
-            console.log(this.DP);
         },
 
         methods: {

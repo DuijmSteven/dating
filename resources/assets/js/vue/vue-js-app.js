@@ -84,7 +84,7 @@ if ($('#app').length > 0) {
                             this.currentConversationPartnersResponse = response;
 
                             response.data.forEach((key, index) => {
-                                if (index <= 3) {
+                                if (index <= 2) {
                                     let split = key.split(':');
 
                                     let userBId = +split[0];

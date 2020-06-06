@@ -308,7 +308,6 @@
             });
 
             if (this.$mq === 'xs' || this.$mq === 'sm') {
-                console.log('mobile');
                 $('#PrivateChatManager__body').slideToggle('fast');
                 this.isMaximized = !this.isMaximized;
 

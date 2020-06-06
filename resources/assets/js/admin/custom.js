@@ -140,8 +140,6 @@ $(window).on('load', function () {
 
             if (isPublicChatView) {
                 const botId = $(this).closest('li').data('bot-id');
-                console.log(botId);
-
                 $('#sender_id_input').val(botId);
             }
 
