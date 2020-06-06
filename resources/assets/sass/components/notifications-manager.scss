@@ -1,0 +1,49 @@
+.NotificationsManager {
+    position: fixed;
+    z-index: 9;
+    bottom: 0;
+    right: 25px;
+
+    width: 55px;
+
+    box-shadow: 0 0 24px rgba(0, 0, 0, 0.2);
+
+    &__head {
+        position: relative;
+        cursor: pointer;
+        border-radius: 2px 2px 0 0;
+        text-align: center;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        height: 50px;
+        color: #fff;
+        background: #3e3838;
+    }
+
+    &__toggle {
+        top: 0;
+        left: 0;
+        padding: 15px;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    &__newNotifications {
+        position: absolute;
+        color: #ff5b49;
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 14px;
+        right: -6px;
+        bottom: initial;
+        top: -6px;
+        background-color: #2c2c2c;
+        padding: 5px 8px;
+        border-radius: 50%;
+    }
+}

@@ -63,6 +63,9 @@
             >
             </private-chat-manager>
 
+            <notifications-manager>
+            </notifications-manager>
+
             @include('frontend.layouts.default.partials.search-bar')
 
         @endif

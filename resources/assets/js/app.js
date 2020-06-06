@@ -42,6 +42,7 @@ Vue.component('chat-message', require('./vue/components/private-chat/ChatMessage
 Vue.component('chat-form', require('./vue/components/private-chat/ChatForm.vue'));
 Vue.component('credits-count', require('./vue/components/CreditsCount.vue'));
 Vue.component('public-chat', require('./vue/components/public-chat/PublicChat.vue'));
+Vue.component('notifications-manager', require('./vue/components/notifications/NotificationsManager.vue'));
 
 require('./vue/vue-js-app');
 
