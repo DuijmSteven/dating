@@ -269,7 +269,7 @@ class DashboardController extends Controller
                     User::TYPE_PEASANT,
                     $startOfMonth,
                     $endOfMonth
-                ) / $endOfMonth->diffInHours($startOfMonth), 0),
+                ) / (Carbon::now('Europe/Amsterdam')->diffInHours($startOfMonth)), 0),
                 'previousMonth' => number_format($this->statisticsManager->messagesSentByUserTypeCountBetween(
                     User::TYPE_PEASANT,
                     $startOfPreviousMonthUtc,
