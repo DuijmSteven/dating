@@ -254,7 +254,7 @@ class DashboardController extends Controller
                     User::TYPE_PEASANT,
                     $startOfToday,
                     $endOfToday
-                ) / (Carbon::now('Europe/Amsterdam')->diffInHours($startOfToday)), 0),
+                ) / (Carbon::now('Europe/Amsterdam')->setTimezone('UTC')->diffInHours($startOfToday)), 0),
                 'yesterday' => number_format($this->statisticsManager->messagesSentByUserTypeCountBetween(
                     User::TYPE_PEASANT,
                     $startOfYesterday,
@@ -269,7 +269,7 @@ class DashboardController extends Controller
                     User::TYPE_PEASANT,
                     $startOfMonth,
                     $endOfMonth
-                ) / (Carbon::now('Europe/Amsterdam')->diffInHours($startOfMonth)), 0),
+                ) / (Carbon::now('Europe/Amsterdam')->setTimezone('UTC')->diffInHours($startOfMonth)), 0),
                 'previousMonth' => number_format($this->statisticsManager->messagesSentByUserTypeCountBetween(
                     User::TYPE_PEASANT,
                     $startOfPreviousMonthUtc,
@@ -279,7 +279,7 @@ class DashboardController extends Controller
                     User::TYPE_PEASANT,
                     $startOfYear,
                     $endOfToday
-                ) / (Carbon::now('Europe/Amsterdam')->diffInHours($startOfYear)), 0)
+                ) / (Carbon::now('Europe/Amsterdam')->setTimezone('UTC')->diffInHours($startOfYear)), 0)
             ],
             'registrationStatistics' => [
                 'registrationsToday' => $this->statisticsManager->registrationsCountBetween(
