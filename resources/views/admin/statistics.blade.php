@@ -298,6 +298,8 @@
                                     class="DashboardWidget_count">{!! $userTypeStatistics['medium'] !!}</span></a></li>
                         <li><a href="{{ route('admin.peasants.with-creditpack.overview') }}">Large <span
                                     class="DashboardWidget_count">{!! $userTypeStatistics['large'] !!}</span></a></li>
+                        <li><a href="{{ route('admin.peasants.with-creditpack.overview') }}">Large <span
+                                    class="DashboardWidget_count">{!! $userTypeStatistics['xl'] !!}</span></a></li>
                     </ul>
                 </div>
             </div>

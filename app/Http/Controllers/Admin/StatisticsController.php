@@ -190,6 +190,10 @@ class StatisticsController extends Controller
                     $peasantsWithCreditpack,
                     Creditpack::LARGE
                 ),
+                'xl' => $this->statisticsManager->filterPeasantsWithCreditpackIdCount(
+                    $peasantsWithCreditpack,
+                    Creditpack::XL
+                ),
             ],
         ];
 

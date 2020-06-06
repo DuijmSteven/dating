@@ -9,6 +9,7 @@ class Creditpack extends Model
     const SMALL = 1;
     const MEDIUM = 2;
     const LARGE = 3;
+    const XL = 5;
 
     public $table = 'creditpacks';
 
