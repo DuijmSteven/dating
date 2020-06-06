@@ -8,7 +8,7 @@
                 <div class="row">
                     @foreach($creditpacks as $creditpack)
                         @if($creditpack->id !== 4 || $authenticatedUser->isAdmin())
-                            <div class="col-xs-12 col-md-4">
+                            <div class="col-xs-12 col-md-3">
                                 <div data-creditpack-id="{{ $creditpack->id }}"
                                      class="block block-pricing {{ $loop->iteration == 2 ? 'block-raised' : '' }} JS--creditpack"
                                 >
@@ -33,7 +33,7 @@
                                             <div class="usp-label most-popular">
                                                 {{ trans('credits.most_popular') }}
                                             </div>
-                                        @elseif($creditpack->id === 3)
+                                        @elseif($creditpack->id === 5)
                                             <div class="usp-label best-value">
                                                 {{ trans('credits.best_value') }}
                                             </div>
