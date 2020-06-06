@@ -168,14 +168,43 @@ class PublicChatItemController extends Controller
             ->whereIn('id', $onlineIds)
             ->get()->pluck('id')->toArray();
 
-        $botsQueryBuilder = User::with('meta', 'roles', 'profileImage')
+        $botsQueryBuilder = User::with(['meta', 'roles', 'profileImage', 'publicChatMessages', 'uniqueViews'])
+            ->withCount(['publicChatMessages'])
+            ->whereDoesntHave('conversationsAsUserA', function ($query) {
+                $query->has('messages', '>', 20);
+                $query->whereHas('messages', function ($query) {
+                    $query->where('created_at', '>=', Carbon::now()->subDays(6));
+                });
+            })
+            ->whereDoesntHave('conversationsAsUserB', function ($query) {
+                $query->has('messages', '>', 20);
+                $query->whereHas('messages', function ($query) {
+                    $query->where('created_at', '>=', Carbon::now()->subDays(6));
+                });
+            })
             ->whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_BOT);
             });
 
-//        if ($onlyOnlineBots) {
-//            $botsQueryBuilder->whereIn('id', $onlineBotIds);
-//        }
+        $publicChatMessagesQueryBuilder = PublicChatItem
+            ::with(['sender', 'sender.roles'])
+//            ->where(function ($query) use ($forGender, $forLookingForGender) {
+//                $query->whereHas('sender.meta', function ($query) use ($forGender, $forLookingForGender) {
+//                    $query->where('gender', $forLookingForGender);
+//                    $query->where('looking_for_gender', $forGender);
+//                })
+//                    ->orWhereHas('sender', function ($query) {
+//                        $query->where('id', auth('api')->user()->getId());
+//                    });
+//            })
+            ->whereHas('sender', function ($query) {
+                $query->where('active', true);
+            })
+            ->where('published_at', '<=', Carbon::now())
+            ->orderBy('published_at', 'desc');
+
+        $publicChatMessagesQueryBuilder->skip(0);
+        $publicChatMessagesQueryBuilder->take(100);
 
         return view(
             'admin.public-chat-items.send-as-bot',
@@ -184,8 +213,11 @@ class PublicChatItemController extends Controller
                 'headingLarge' => 'Peasants',
                 'headingSmall' => 'Post in public chat as bot',
                 'carbonNow' => Carbon::now(),
-                'bots' => $botsQueryBuilder->get(),
-                'onlineBotIds' => $onlineBotIds
+                'bots' => $botsQueryBuilder->get()->sortByDesc(function ($bot) {
+                    return $bot->uniqueViews->count();
+                }),
+                'onlineBotIds' => $onlineBotIds,
+                'publicChatItems' =>  $publicChatMessagesQueryBuilder->get()
             ]
         );
     }
@@ -202,6 +234,12 @@ class PublicChatItemController extends Controller
             $publicChatItem->setType($messageData['type']);
             $publicChatItem->setPublishedAt(Carbon::now());
             $publicChatItem->save();
+
+            $activity = new Activity;
+            $activity->id = bcrypt((int) time() . $messageData['sender_id']);
+            $activity->last_activity = time();
+            $activity->user_id = $messageData['sender_id'];
+            $activity->save();
 
             DB::commit();
 

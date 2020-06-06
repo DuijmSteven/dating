@@ -15,7 +15,7 @@
                 class="PrivateChatItem__textarea JS--PrivateChatItem__textarea"
                 maxlength="1000"
                 :placeholder="chatTranslations ? chatTranslations['your_message'] : ''"
-                v-on:keyup="textareaKeyUp"
+                v-on:keydown="textareaKeyDown"
                 @focus="chatFocused()"
                 v-model="text"
             ></textarea>
@@ -119,13 +119,16 @@
                 this.removeNotificationClass();
                 this.$parent.setConversationActivityForUserFalse();
             },
-            textareaKeyUp(event) {
+            textareaKeyDown(event) {
                 if (this.userCredits === 0) {
-                    this.text = '';
                     this.file = null;
                     this.imagePreviewUrl = null;
 
                     this.$emit('show-no-credits');
+
+                    setTimeout(() => {
+                        this.text = '';
+                    }, 300);
                 } else if (event.key === "Enter") {
                     this.sendMessage();
                 }

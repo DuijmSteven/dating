@@ -2,9 +2,7 @@
 
 @section('content')
 
-    @if(config('app.env') !== 'production')
-        <public-chat></public-chat>
-    @endif
+    <public-chat></public-chat>
 
     <div class="Tile Activity">
         <div class="Tile__heading" style="padding: 5px">

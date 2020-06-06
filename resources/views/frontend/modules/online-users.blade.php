@@ -1,5 +1,5 @@
 <div class="Tile Online-users JS--Tile Tile--withToggle">
-    <div class="Tile__heading Online-users__heading">
+    <div class="Tile__heading Online-users__heading JS--Tile__toggle">
         <span class="onlineCircle blinking"></span>
 
         {{ trans('online_users.online_users') }}

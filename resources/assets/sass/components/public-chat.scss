@@ -1,4 +1,27 @@
 .PublicChat {
+    position: relative;
+    overflow: visible;
+
+    .labelNew {
+        position: absolute;
+        background-color: #de6873;
+        padding: 5px 10px;
+        border-radius: 2px;
+        color: #fff;
+        font-weight: 500;
+        font-size: 18px;
+        top: -10px;
+        right: -10px;
+        box-shadow: 0 1px 2px 0 rgba(45, 49, 66, 0.25);
+
+        @media (max-width: $screen-xs-max) {
+            font-size: 12px;
+            top: -10px;
+            right: -10px;
+            padding: 3px 8px;
+        }
+    }
+
 
     .fetchMoreButton,
     .fetchingMessages,
@@ -29,6 +52,10 @@
 
     &__timeAgo {
         color: #ce5338;
+
+        @media (max-width: $screen-xs-max) {
+            font-size: 11px;
+        }
     }
 
     &__panel {
@@ -59,6 +86,8 @@
             line-height: 2.1rem;
             color: #524e4d;
             font-style: italic;
+            text-overflow: ellipsis;
+            overflow: hidden;
         }
     }
 
@@ -67,6 +96,18 @@
         overflow-y: scroll;
         height: 400px;
         padding: 15px;
+
+        &.noMessages {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    &__noMessages {
+        font-size: 17px;
+        color: #827e79;
+        font-weight: 500;
     }
 
     &__profilePicture {
@@ -79,8 +120,16 @@
 
     &__header {
         a {
+            max-width: 114px;
+            display: inline-block;
             color: #555;
-            font-weight: 500;
+
+            @media (max-width: $screen-xs-max) {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                color: #555;
+                font-weight: 500;
+            }
 
             &:hover {
                 color: #216a94;

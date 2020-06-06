@@ -69,6 +69,18 @@ class StatisticsManager
             ]);
     }
 
+    public function publicChatMessagesSentByUserTypeBetweenQueryBuilder(int $userType, $startDate, $endDate) {
+
+        return DB::table('public_chat_items as pci')
+            ->leftJoin('users as u', 'u.id', 'pci.sender_id')
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('ru.role_id', $userType)
+            ->whereBetween('pci.created_at', [
+                $startDate,
+                $endDate
+            ]);
+    }
+
     public function messagesSentByUserTypeBetween(int $userType, $startDate, $endDate) {
         return ConversationMessage::whereHas('sender.roles', function($query) use ($userType) {
             $query->where('id', $userType);
@@ -82,6 +94,11 @@ class StatisticsManager
 
     public function messagesSentByUserTypeCountBetween(int $userType, $startDate, $endDate) {
         return $this->messagesSentByUserTypeBetweenQueryBuilder($userType, $startDate, $endDate)
+            ->count();
+    }
+
+    public function publicChatMessagesSentByUserTypeCountBetween(int $userType, $startDate, $endDate) {
+        return $this->publicChatMessagesSentByUserTypeBetweenQueryBuilder($userType, $startDate, $endDate)
             ->count();
     }
 

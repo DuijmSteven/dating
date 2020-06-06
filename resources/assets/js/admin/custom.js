@@ -73,6 +73,13 @@ $(window).on('load', function () {
         $('#note_user_id').val(userId);
     });
 
+    if ($('input[type="submit"]').length > 0 || $('button[type="submit"]').length > 0) {
+        $('form').submit(function(){
+            $('input[type=submit]', this).attr('disabled', 'disabled');
+            $('button[type="submit"]', this).attr('disabled', 'disabled');
+        });
+    }
+
     if ($('.JS--showConversation').length > 0 && $('.JS--operatorCountdown').length > 0) {
         var lockedDate = new Date($('.JS--showConversation').data('locked-at'));
 

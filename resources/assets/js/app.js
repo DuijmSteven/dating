@@ -10,6 +10,7 @@ window.Vue = require('vue/dist/vue.min.js');
 import VuejsDialog from 'vuejs-dialog';
 
 import VueMq from 'vue-mq';
+import $ from "jquery";
 
 Vue.use(require('vue-moment'));
 
@@ -390,14 +391,21 @@ $(window).on('load', function () {
             const isCollapsed = closestTile.find('.JS--Tile__toggleCollapse').hasClass('hidden');
 
             if (isCollapsed) {
-                closestTile.find('.JS--Tile__toggle.JS--Tile__toggleExpand').addClass('hidden');
-                closestTile.find('.JS--Tile__toggle.JS--Tile__toggleCollapse').removeClass('hidden');
+                closestTile.find('.JS--Tile__toggle .JS--Tile__toggleExpand').addClass('hidden');
+                closestTile.find('.JS--Tile__toggle .JS--Tile__toggleCollapse').removeClass('hidden');
                 closestTile.find('.JS--Tile__body').css('display', 'block');
             } else {
-                closestTile.find('.JS--Tile__toggle.JS--Tile__toggleCollapse').addClass('hidden');
-                closestTile.find('.JS--Tile__toggle.JS--Tile__toggleExpand').removeClass('hidden');
+                closestTile.find('.JS--Tile__toggle .JS--Tile__toggleCollapse').addClass('hidden');
+                closestTile.find('.JS--Tile__toggle .JS--Tile__toggleExpand').removeClass('hidden');
                 closestTile.find('.JS--Tile__body').css('display', 'none');
             }
+        });
+    }
+
+    if ($('input[type="submit"]').length > 0 || $('button[type="submit"]').length > 0) {
+        $('form').submit(function(){
+            $('input[type=submit]', this).attr('disabled', 'disabled');
+            $('button[type="submit"]', this).attr('disabled', 'disabled');
         });
     }
 

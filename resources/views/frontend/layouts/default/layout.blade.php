@@ -36,7 +36,9 @@
                     </div>
                 @endif
 
-                <div class="col-xs-12 col-sm-12 col-md-{!! $sidebarCount == 1 ? '9' : '6' !!} col-md-pull-3">
+                <div
+                    class="col-xs-12 col-sm-12 col-md-{{ $sidebarCount == 1 ? '9' : '6' }} col-md-pull-3 {{ $sidebarCount === 2 ? 'removePadding' : ''}}"
+                >
                     @include('frontend.layouts.default.partials.main')
                 </div>
             </div>

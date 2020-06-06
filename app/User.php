@@ -796,6 +796,11 @@ class User extends Authenticatable
         return $this->hasMany(Conversation::class, 'user_b_id')->withTrashed();
     }
 
+    public function publicChatMessages()
+    {
+        return $this->hasMany(PublicChatItem::class, 'sender_id')->orderBy('published_at', 'desc');
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

@@ -704,6 +704,11 @@ class ConversationController extends Controller
                 $activity->user_id = $sender->getId();
                 $activity->save();
 
+                if (!is_object($conversation->messages)) {
+                    \Log::error('Sender ID: ' . $sender->getId());
+                    \Log::error('Message body: ' . $messageData['message']);
+                }
+
                 // Sometimes pretend that the bot viewed the user's profile. Always when it is the first time they chat
                 if ($conversation->messages->count() == 1 || rand(0, 1)) {
                     $userViewInstance = new UserView();
