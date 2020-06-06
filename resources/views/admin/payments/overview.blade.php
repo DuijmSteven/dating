@@ -41,6 +41,28 @@
                                         @if($payment->peasant)
                                             <strong>Username:</strong> {{ $payment->peasant->username }}<br>
                                             <strong>ID:</strong> <a href="{{ route('admin.peasants.edit.get', ['peasantId' => $payment->peasant->id]) }}">{{ $payment->peasant->id }}</a><br>
+
+                                            @if($payment->peasant->getLastOnlineAt())
+                                                <div class="innerTableWidgetHeading"><strong>Activity</strong></div>
+                                                <div class="innerTableWidgetBody">
+                                                    <strong>Last active at</strong> {!! $payment->peasant->getLastOnlineAt()->tz('Europe/Amsterdam')->format('d-m-Y H:i:s') !!}
+                                                    ({!! $payment->peasant->getLastOnlineAt()->tz('Europe/Amsterdam')->diffForHumans() !!})
+                                                    <br>
+
+                                                    <strong>Created at</strong> {!! $payment->peasant->getCreatedAt()->tz('Europe/Amsterdam')->format('d-m-Y H:i:s') !!}
+                                                    ({!! $payment->peasant->getCreatedAt()->tz('Europe/Amsterdam')->diffForHumans() !!})
+                                                    <br>
+                                                </div>
+                                            @endif
+
+                                            @if($payment->peasant->affiliateTracking)
+                                                <div class="innerTableWidgetHeading"><strong>Affiliate tracking</strong></div>
+                                                <div class="innerTableWidgetBody">
+                                                    <strong>Affiliate</strong> {{ $payment->peasant->affiliateTracking->getAffiliate() }}<br>
+                                                    <strong>Click ID</strong> {{ $payment->peasant->affiliateTracking->getClickId() }}<br>
+                                                    <strong>Media ID</strong> {{ $payment->peasant->affiliateTracking->getMediaId() }}<br>
+                                                </div>
+                                            @endif
                                         @else
                                             The user does not exist
                                         @endif

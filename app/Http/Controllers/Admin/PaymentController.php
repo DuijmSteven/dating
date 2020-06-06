@@ -21,7 +21,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $payments = Payment::with('peasant')
+        $payments = Payment::with(['peasant', 'peasant.affiliateTracking'])
             ->orderBy('created_at', 'desc')
             ->paginate(PaginationConstants::$perPage['backend']['default']);
 

@@ -109,9 +109,15 @@
                                         <div class="innerTableWidgetHeading"><strong>Payments</strong></div>
                                         <div class="innerTableWidgetBody">
                                             <strong># of payments</strong>: {{ count($peasant->completedPayments) }} <br>
-                                            <strong>Last Payment amount</strong>: &euro;{{ number_format($peasant->completedPayments[0]->amount/ 100, 2) }} <br>
-                                            <strong>Last Payment date</strong>: {{ $peasant->completedPayments[0]->created_at->tz('Europe/Amsterdam')->format('d-m-Y H:i:s') }}
+                                            <strong>Latest Payment amount</strong>: &euro;{{ number_format($peasant->completedPayments[0]->amount/ 100, 2) }} <br>
+                                            <strong>Latest Payment date</strong>: {{ $peasant->completedPayments[0]->created_at->tz('Europe/Amsterdam')->format('d-m-Y H:i:s') }}
                                                                                 ({!! $peasant->completedPayments[0]->created_at->tz('Europe/Amsterdam')->diffForHumans() !!})<br>
+
+                                            @if(count($peasant->completedPayments) > 1)
+                                                <strong>Previous Payment amount</strong>: &euro;{{ number_format($peasant->completedPayments[1]->amount/ 100, 2) }} <br>
+                                                <strong>Previous Payment date</strong>: {{ $peasant->completedPayments[1]->created_at->tz('Europe/Amsterdam')->format('d-m-Y H:i:s') }}
+                                                ({!! $peasant->completedPayments[1]->created_at->tz('Europe/Amsterdam')->diffForHumans() !!})<br>
+                                            @endif
 
                                             <?php
                                             $moneySpent = 0;

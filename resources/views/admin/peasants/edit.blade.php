@@ -125,24 +125,30 @@
                             </div>
                         </div>
 
-                        <div class="col-xs-12 col-sm-6 col-md-4">
-                            @if($peasant->getLastOnlineAt())
+                        @if($peasant->getLastOnlineAt())
+                            <div class="col-xs-12 col-sm-6 col-md-4">
                                 <div class="innerTableWidgetHeading"><strong>Activity</strong></div>
                                 <div class="innerTableWidgetBody">
                                     <strong>Last active at</strong> {!! $peasant->getLastOnlineAt()->tz('Europe/Amsterdam')->format('d-m-Y H:i:s') !!}
                                     ({!! $peasant->getLastOnlineAt()->tz('Europe/Amsterdam')->diffForHumans() !!})<br>
                                 </div>
-                            @endif
-                        </div>
+                            </div>
+                        @endif
 
-                        <div class="col-xs-12 col-sm-6 col-md-4">
-                            @if(count($peasant->completedPayments) > 0)
+                        @if(count($peasant->completedPayments) > 0)
+                            <div class="col-xs-12 col-sm-6 col-md-4">
                                 <div class="innerTableWidgetHeading"><strong>Payments</strong></div>
                                 <div class="innerTableWidgetBody">
                                     <strong># of payments</strong>: {{ count($peasant->completedPayments) }} <br>
                                     <strong>Last Payment amount</strong>: &euro;{{ number_format($peasant->completedPayments[0]->amount/ 100, 2) }} <br>
                                     <strong>Last Payment date</strong>: {{ $peasant->completedPayments[0]->created_at->tz('Europe/Amsterdam')->format('d-m-Y H:i:s') }}
                                     ({!! $peasant->completedPayments[0]->created_at->tz('Europe/Amsterdam')->diffForHumans() !!})<br>
+
+                                    @if(count($peasant->completedPayments) > 1)
+                                        <strong>Previous Payment amount</strong>: &euro;{{ number_format($peasant->completedPayments[1]->amount/ 100, 2) }} <br>
+                                        <strong>Previous Payment date</strong>: {{ $peasant->completedPayments[1]->created_at->tz('Europe/Amsterdam')->format('d-m-Y H:i:s') }}
+                                        ({!! $peasant->completedPayments[1]->created_at->tz('Europe/Amsterdam')->diffForHumans() !!})<br>
+                                    @endif
 
                                     <?php
                                     $moneySpent = 0;
@@ -153,8 +159,32 @@
 
                                     <strong>Money spent</strong>: &euro;{{ number_format($moneySpent/ 100, 2) }} <br>
                                 </div>
-                            @endif
-                        </div>
+                            </div>
+                        @endif
+
+                        @if($peasant->getDeactivatedAt())
+                            <div class="col-xs-12 col-sm-6 col-md-4">
+                                <div class="innerTableWidgetHeading"><strong>Deactivation info</strong></div>
+                                <div class="innerTableWidgetBody deactivationInfo">
+
+                                    <strong>Deactivated at</strong> {!! $peasant->getDeactivatedAt()->tz('Europe/Amsterdam')->format('d-m-Y H:i:s') !!}
+                                    ({!! $peasant->getDeactivatedAt()->tz('Europe/Amsterdam')->diffForHumans() !!})<br>
+
+                                    <strong>Remained active for</strong> {!! $peasant->getCreatedAt()->tz('Europe/Amsterdam')->shortAbsoluteDiffForHumans($peasant->getDeactivatedAt()->tz('Europe/Amsterdam')) !!}<br>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if($peasant->affiliateTracking)
+                            <div class="col-xs-12 col-sm-6 col-md-4">
+                                <div class="innerTableWidgetHeading"><strong>Affiliate tracking</strong></div>
+                                <div class="innerTableWidgetBody">
+                                    <strong>Affiliate</strong> {{ $peasant->affiliateTracking->getAffiliate() }}<br>
+                                    <strong>Click ID</strong> {{ $peasant->affiliateTracking->getClickId() }}<br>
+                                    <strong>Media ID</strong> {{ $peasant->affiliateTracking->getMediaId() }}<br>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
 
