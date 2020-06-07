@@ -55,6 +55,31 @@
                                                 </div>
                                             @endif
 
+                                            @if(count($payment->peasant->completedPayments) > 0)
+                                                <div class="innerTableWidgetHeading"><strong>Payments</strong></div>
+                                                <div class="innerTableWidgetBody">
+                                                    <strong># of payments</strong>: {{ count($payment->peasant->completedPayments) }} <br>
+                                                    <strong>Latest Payment amount</strong>: &euro;{{ number_format($payment->peasant->completedPayments[0]->amount/ 100, 2) }} <br>
+                                                    <strong>Latest Payment date</strong>: {{ $payment->peasant->completedPayments[0]->created_at->tz('Europe/Amsterdam')->format('d-m-Y H:i:s') }}
+                                                    ({!! $payment->peasant->completedPayments[0]->created_at->tz('Europe/Amsterdam')->diffForHumans() !!})<br>
+
+                                                    @if(count($payment->peasant->completedPayments) > 1)
+                                                        <strong>Previous Payment amount</strong>: &euro;{{ number_format($payment->peasant->completedPayments[1]->amount/ 100, 2) }} <br>
+                                                        <strong>Previous Payment date</strong>: {{ $payment->peasant->completedPayments[1]->created_at->tz('Europe/Amsterdam')->format('d-m-Y H:i:s') }}
+                                                        ({!! $payment->peasant->completedPayments[1]->created_at->tz('Europe/Amsterdam')->diffForHumans() !!})<br>
+                                                    @endif
+
+                                                    <?php
+                                                    $moneySpent = 0;
+                                                    foreach ($payment->peasant->completedPayments as $payment) {
+                                                        $moneySpent += $payment->amount;
+                                                    }
+                                                    ?>
+
+                                                    <strong>Money spent</strong>: &euro;{{ number_format($moneySpent/ 100, 2) }} <br>
+                                                </div>
+                                            @endif
+
                                             @if($payment->peasant->affiliateTracking)
                                                 <div class="innerTableWidgetHeading"><strong>Affiliate tracking</strong></div>
                                                 <div class="innerTableWidgetBody">

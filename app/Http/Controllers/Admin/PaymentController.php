@@ -8,6 +8,7 @@ use App\Helpers\ApplicationConstants\PaginationConstants;
 use App\Http\Controllers\Controller;
 use App\Payment;
 use App\User;
+use App\UserAffiliateTracking;
 use Carbon\Carbon;
 
 /**

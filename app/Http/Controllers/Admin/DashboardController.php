@@ -185,6 +185,32 @@ class DashboardController extends Controller
                     $endOfToday
                 )
             ],
+            'xpartnersConversionStatistics' => [
+                'conversionsToday' => $this->statisticsManager->xpartnersConversionsBetweenCount(
+                    $startOfToday,
+                    $endOfToday
+                ),
+                'conversionsYesterday' => $this->statisticsManager->xpartnersConversionsBetweenCount(
+                    $startOfYesterday,
+                    $endOfYesterday
+                ),
+                'conversionsCurrentWeek' => $this->statisticsManager->xpartnersConversionsBetweenCount(
+                    $startOfWeek,
+                    $endOfWeek
+                ),
+                'conversionsCurrentMonth' => $this->statisticsManager->xpartnersConversionsBetweenCount(
+                    $startOfMonth,
+                    $endOfMonth
+                ),
+                'conversionsPreviousMonth' => $this->statisticsManager->xpartnersConversionsBetweenCount(
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc
+                ),
+                'conversionsCurrentYear' => $this->statisticsManager->xpartnersConversionsBetweenCount(
+                    $startOfYear,
+                    $endOfToday
+                )
+            ],
             'peasantMessageStatistics' => [
                 'messagesSentToday' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
                     User::TYPE_PEASANT,

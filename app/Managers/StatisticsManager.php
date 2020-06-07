@@ -7,6 +7,7 @@ use App\Creditpack;
 use App\Facades\Helpers\PaymentsHelper;
 use App\Payment;
 use App\User;
+use App\UserAffiliateTracking;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -34,6 +35,34 @@ class StatisticsManager
                 ])
             ->where('status', Payment::STATUS_COMPLETED)
             ->sum('amount');
+    }
+
+    public function xpartnersConversionsBetweenQueryBuilder($startDate, $endDate) {
+        return User::whereDoesntHave('payments', function ($query) use ($startDate) {
+            $query->whereDate(
+                'created_at',
+                '<',
+                $startDate
+            )
+                ->where('status', Payment::STATUS_COMPLETED);
+        })
+            ->whereHas('payments', function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('created_at',
+                    [
+                        $startDate,
+                        $endDate
+                    ])
+                    ->where('status', Payment::STATUS_COMPLETED);
+            })
+            ->whereHas('affiliateTracking', function ($query) {
+                $query->where('affiliate', UserAffiliateTracking::AFFILIATE_XPARTNERS);
+            })
+            ->distinct();
+    }
+
+    public function xpartnersConversionsBetweenCount($startDate, $endDate) {
+        return $this->xpartnersConversionsBetweenQueryBuilder()
+            ->count();
     }
 
     public function registrationsCountBetween($startDate, $endDate) {
