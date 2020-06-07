@@ -97,6 +97,60 @@ class StatisticsManager
             ->count();
     }
 
+    public function messagesSentByUserTypePerHourToday()
+    {
+        $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');
+        $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
+
+        $messagesToday = $this->messagesSentByUserTypeCountBetween(
+            User::TYPE_PEASANT,
+            $startOfToday,
+            $endOfToday
+        );
+
+        if ($messagesToday === 0) {
+            return 'No messages';
+        }
+
+        return number_format($messagesToday / (Carbon::now('Europe/Amsterdam')->setTimezone('UTC')->diffInHours($startOfToday)), 0);
+    }
+
+    public function messagesSentByUserTypePerHourCurrentMonth()
+    {
+        $startOfMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->setTimezone('UTC');
+        $endOfMonth = Carbon::now('Europe/Amsterdam')->endOfMonth()->setTimezone('UTC');
+
+        $messagesCurrentMonth = $this->messagesSentByUserTypeCountBetween(
+            User::TYPE_PEASANT,
+            $startOfMonth,
+            $endOfMonth
+        );
+
+        if ($messagesCurrentMonth === 0) {
+            return 'No messages';
+        }
+
+        return number_format($messagesCurrentMonth / (Carbon::now('Europe/Amsterdam')->setTimezone('UTC')->diffInHours($startOfMonth)), 0);
+    }
+
+    public function messagesSentByUserTypePerHourCurrentWeek()
+    {
+        $startOfWeek = Carbon::now('Europe/Amsterdam')->startOfWeek()->setTimezone('UTC');
+        $endOfWeek = Carbon::now('Europe/Amsterdam')->endOfWeek()->setTimezone('UTC');
+
+        $messagesCurrentWeek = $this->messagesSentByUserTypeCountBetween(
+            User::TYPE_PEASANT,
+            $startOfWeek,
+            $endOfWeek
+        );
+
+        if ($messagesCurrentWeek === 0) {
+            return 'No messages';
+        }
+
+        return number_format($messagesCurrentWeek / (Carbon::now('Europe/Amsterdam')->setTimezone('UTC')->diffInHours($startOfWeek)), 0);
+    }
+
     public function publicChatMessagesSentByUserTypeCountBetween(int $userType, $startDate, $endDate) {
         return $this->publicChatMessagesSentByUserTypeBetweenQueryBuilder($userType, $startDate, $endDate)
             ->count();

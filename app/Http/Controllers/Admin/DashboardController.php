@@ -250,26 +250,14 @@ class DashboardController extends Controller
                 )
             ],
             'peasantMessagesPerHourStatistics' => [
-                'today' => number_format($this->statisticsManager->messagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfToday,
-                    $endOfToday
-                ) / 1),
+                'today' => $this->statisticsManager->messagesSentByUserTypePerHourToday(),
                 'yesterday' => number_format($this->statisticsManager->messagesSentByUserTypeCountBetween(
                     User::TYPE_PEASANT,
                     $startOfYesterday,
                     $endOfYesterday
                 ) / $endOfYesterday->diffInHours($startOfYesterday), 0),
-                'currentWeek' => number_format($this->statisticsManager->messagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfWeek,
-                    $endOfWeek
-                ) / $endOfWeek->diffInHours($startOfWeek), 0),
-                'currentMonth' => number_format($this->statisticsManager->messagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfMonth,
-                    $endOfMonth
-                ) / 1),
+                'currentWeek' => $this->statisticsManager->messagesSentByUserTypePerHourCurrentWeek(),
+                'currentMonth' => $this->statisticsManager->messagesSentByUserTypePerHourCurrentMonth(),
                 'previousMonth' => number_format($this->statisticsManager->messagesSentByUserTypeCountBetween(
                     User::TYPE_PEASANT,
                     $startOfPreviousMonthUtc,
