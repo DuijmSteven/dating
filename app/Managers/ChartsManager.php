@@ -36,7 +36,7 @@ class ChartsManager
             ->select(\DB::raw('DATE(CONVERT_TZ(cm.created_at, \'UTC\', \'Europe/Amsterdam\')) as creationDate, COUNT(cm.id) AS messagesCount'))
             ->leftJoin('users as u', 'u.id', 'cm.sender_id')
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
-            ->where('cm.created_at', '>=', Carbon::now('Europe/Amsterdam')->subMonths(5)->format('Y-m-d'));
+            ->where('cm.created_at', '>=', '2020-05-23 00:00:00');
 
 
         if (null  == $userId) {
@@ -111,7 +111,9 @@ class ChartsManager
                 )
             )
             ->leftJoin('users as u', 'u.id', 'cm.sender_id')
-            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id');
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('cm.created_at', '>=', '2020-05-01 00:00:00');
+
 
         if (null  == $userId) {
             $query->where('ru.role_id', User::TYPE_PEASANT);
@@ -184,6 +186,7 @@ class ChartsManager
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('p.status', Payment::STATUS_COMPLETED)
+            ->where('p.created_at', '>=', '2020-05-23 00:00:00')
             ->groupBy('creationDate')
             ->orderBy('creationDate', 'ASC');
 
@@ -252,6 +255,7 @@ class ChartsManager
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('p.status', Payment::STATUS_COMPLETED)
+            ->where('p.created_at', '>=', '2020-05-01 00:00:00')
             ->groupBy('months')
             ->orderBy('months', 'ASC');
 
@@ -314,6 +318,7 @@ class ChartsManager
             ->select(\DB::raw('DATE(CONVERT_TZ(u.created_at, \'UTC\', \'Europe/Amsterdam\')) as registrationDate, COUNT(u.id) AS registrationsCount'))
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
+            ->where('u.created_at', '>=', '2020-05-23 00:00:00')
             ->groupBy('registrationDate')
             ->orderBy('registrationDate', 'ASC');
 
@@ -380,6 +385,7 @@ class ChartsManager
             )
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
+            ->where('u.created_at', '>=', '2020-05-01 00:00:00')
             ->groupBy('months')
             ->orderBy('months', 'ASC');
 
@@ -444,7 +450,7 @@ class ChartsManager
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('p.status', Payment::STATUS_COMPLETED)
-            ->where('p.created_at', '>=', Carbon::now('Europe/Amsterdam')->subMonths(5)->format('Y-m-d'))
+            ->where('p.created_at', '>=', '2020-05-23 00:00:00')
             ->groupBy('creationDate')
             ->orderBy('creationDate', 'ASC');
 
@@ -512,7 +518,7 @@ class ChartsManager
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('p.status', Payment::STATUS_COMPLETED)
             ->where('uat.affiliate', 'xpartners')
-            ->where('p.created_at', '>=', Carbon::now('Europe/Amsterdam')->subMonths(5)->format('Y-m-d'))
+            ->where('p.created_at', '>=', '2020-05-23 00:00:00')
             ->groupBy('creationDate')
             ->orderBy('creationDate', 'ASC');
 
@@ -583,6 +589,7 @@ class ChartsManager
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('p.status', Payment::STATUS_COMPLETED)
+            ->where('p.created_at', '>=', '2020-05-01 00:00:00')
             ->groupBy('months')
             ->orderBy('months', 'ASC');
 
@@ -648,6 +655,7 @@ class ChartsManager
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('p.status', Payment::STATUS_COMPLETED)
+            ->where('p.created_at', '>=', '2020-05-23 00:00:00')
             ->groupBy('creationDate')
             ->orderBy('creationDate', 'ASC');
 
@@ -722,6 +730,7 @@ class ChartsManager
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('p.status', Payment::STATUS_COMPLETED)
+            ->where('p.created_at', '>=', '2020-05-01 00:00:00')
             ->groupBy('months')
             ->orderBy('months', 'ASC');
 
@@ -790,7 +799,7 @@ class ChartsManager
             ->select(\DB::raw('DATE(CONVERT_TZ(u.created_at, \'UTC\', \'Europe/Amsterdam\')) as registrationDate, COUNT(u.id) AS registrationsCount'))
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
-            ->where('u.created_at', '>=', Carbon::now('Europe/Amsterdam')->subMonths(5)->format('Y-m-d'))
+            ->where('u.created_at', '>=', '2020-05-23 00:00:00')
             ->groupBy('registrationDate')
             ->orderBy('registrationDate', 'ASC');
 
@@ -808,7 +817,7 @@ class ChartsManager
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('u.deactivated_at', '!=', null)
-            ->where('u.created_at', '>=', Carbon::now('Europe/Amsterdam')->subMonths(5)->format('Y-m-d'))
+            ->where('u.created_at', '>=', '2020-05-23 00:00:00')
             ->groupBy('deactivationDate')
             ->orderBy('deactivationDate', 'ASC');
 
@@ -877,6 +886,7 @@ class ChartsManager
             )
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
+            ->where('u.created_at', '>=', '2020-05-01 00:00:00')
             ->groupBy('months')
             ->orderBy('months', 'ASC');
 
@@ -964,6 +974,7 @@ class ChartsManager
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('u.deactivated_at', '!=', null)
+            ->where('u.deactivated_at', '>=', '2020-05-23 00:00:00')
             ->groupBy('deactivationDate')
             ->orderBy('deactivationDate', 'ASC');
 
@@ -1027,6 +1038,7 @@ class ChartsManager
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('u.deactivated_at', '!=', null)
+            ->where('u.deactivated_at', '>=', '2020-05-01 00:00:00')
             ->groupBy('months')
             ->orderBy('months', 'ASC');
 
