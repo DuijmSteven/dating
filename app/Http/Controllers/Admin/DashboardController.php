@@ -263,11 +263,7 @@ class DashboardController extends Controller
                     $startOfPreviousMonthUtc,
                     $endOfPreviousMonthUtc
                 ) / $endOfPreviousMonthUtc->diffInHours($startOfPreviousMonthUtc), 0),
-                'currentYear' => number_format($this->statisticsManager->messagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfYear,
-                    $endOfToday
-                ) / 1)
+                'currentYear' => $this->statisticsManager->messagesSentByUserTypePerHourCurrentYear()
             ],
             'registrationStatistics' => [
                 'registrationsToday' => $this->statisticsManager->registrationsCountBetween(

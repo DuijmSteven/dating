@@ -151,6 +151,25 @@ class StatisticsManager
         return number_format($messagesCurrentWeek / (Carbon::now('Europe/Amsterdam')->setTimezone('UTC')->diffInHours($startOfWeek)), 0);
     }
 
+    public function messagesSentByUserTypePerHourCurrentYear()
+    {
+        $startOfYear = Carbon::now('Europe/Amsterdam')->startOfYear()->setTimezone('UTC');
+        $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
+        $now = Carbon::now('Europe/Amsterdam')->setTimezone('UTC');
+
+        $messagesCurrentYear = $this->messagesSentByUserTypeCountBetween(
+            User::TYPE_PEASANT,
+            $startOfYear,
+            $endOfToday
+        );
+
+        if ($messagesCurrentYear === 0) {
+            return 'No messages';
+        }
+
+        return number_format($messagesCurrentYear / ($now->diffInHours($startOfYear)), 0);
+    }
+
     public function publicChatMessagesSentByUserTypeCountBetween(int $userType, $startDate, $endDate) {
         return $this->publicChatMessagesSentByUserTypeBetweenQueryBuilder($userType, $startDate, $endDate)
             ->count();
