@@ -112,7 +112,11 @@ class StatisticsManager
             return 'No messages';
         }
 
-        return number_format($messagesToday / 1);
+        if (Carbon::now('Europe/Amsterdam')->setTimezone('UTC')->diffInHours($startOfToday) === 0) {
+            return 'Not available until 1am';
+        }
+
+        return number_format($messagesToday / Carbon::now('Europe/Amsterdam')->setTimezone('UTC')->diffInHours($startOfToday), 0);
     }
 
     public function messagesSentByUserTypePerHourCurrentMonth()
@@ -130,7 +134,11 @@ class StatisticsManager
             return 'No messages';
         }
 
-        return number_format($messagesCurrentMonth / 1);
+        if (Carbon::now('Europe/Amsterdam')->setTimezone('UTC')->diffInHours($startOfMonth) === 0) {
+            return 'Not available until 1am';
+        }
+
+        return number_format($messagesCurrentMonth / Carbon::now('Europe/Amsterdam')->setTimezone('UTC')->diffInHours($startOfMonth), 0);
     }
 
     public function messagesSentByUserTypePerHourCurrentWeek()
@@ -148,7 +156,11 @@ class StatisticsManager
             return 'No messages';
         }
 
-        return number_format($messagesCurrentWeek / 1);
+        if (Carbon::now('Europe/Amsterdam')->setTimezone('UTC')->diffInHours($startOfWeek) === 0) {
+            return 'Not available until 1am';
+        }
+
+        return number_format($messagesCurrentWeek / Carbon::now('Europe/Amsterdam')->setTimezone('UTC')->diffInHours($startOfWeek), 0);
     }
 
     public function messagesSentByUserTypePerHourCurrentYear()
@@ -167,7 +179,11 @@ class StatisticsManager
             return 'No messages';
         }
 
-        return number_format($messagesCurrentYear / ($now->diffInHours($startOfYear)), 0);
+        if ($now->diffInHours($startOfYear) === 0) {
+            return 'Not available until 1am';
+        }
+
+        return number_format($messagesCurrentYear / $now->diffInHours($startOfYear), 0);
     }
 
     public function publicChatMessagesSentByUserTypeCountBetween(int $userType, $startDate, $endDate) {
