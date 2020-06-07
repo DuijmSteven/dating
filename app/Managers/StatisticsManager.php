@@ -112,7 +112,7 @@ class StatisticsManager
             return 'No messages';
         }
 
-        return number_format($messagesToday / (Carbon::now('Europe/Amsterdam')->setTimezone('UTC')->diffInHours($startOfToday)), 0);
+        return number_format($messagesToday / 1);
     }
 
     public function messagesSentByUserTypePerHourCurrentMonth()
@@ -130,7 +130,7 @@ class StatisticsManager
             return 'No messages';
         }
 
-        return number_format($messagesCurrentMonth / (Carbon::now('Europe/Amsterdam')->setTimezone('UTC')->diffInHours($startOfMonth)), 0);
+        return number_format($messagesCurrentMonth / 1);
     }
 
     public function messagesSentByUserTypePerHourCurrentWeek()
@@ -148,7 +148,7 @@ class StatisticsManager
             return 'No messages';
         }
 
-        return number_format($messagesCurrentWeek / (Carbon::now('Europe/Amsterdam')->setTimezone('UTC')->diffInHours($startOfWeek)), 0);
+        return number_format($messagesCurrentWeek / 1);
     }
 
     public function messagesSentByUserTypePerHourCurrentYear()
