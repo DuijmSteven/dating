@@ -61,7 +61,7 @@ class StatisticsManager
     }
 
     public function xpartnersConversionsBetweenCount($startDate, $endDate) {
-        return $this->xpartnersConversionsBetweenQueryBuilder()
+        return $this->xpartnersConversionsBetweenQueryBuilder($startDate, $endDate)
             ->count();
     }
 
