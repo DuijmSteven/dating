@@ -26,7 +26,7 @@ class StatisticsManager
 
     public function xpartnersRevenueBetween($startDate, $endDate) {
         return Payment::whereHas('peasant.affiliateTracking', function ($query) {
-            $query->where('affiliate', 'xpartners');
+            $query->where('affiliate', UserAffiliateTracking::AFFILIATE_XPARTNERS);
         })
             ->whereBetween('created_at',
                 [
@@ -39,7 +39,7 @@ class StatisticsManager
 
     public function xpartnersConversionsBetweenQueryBuilder($startDate, $endDate) {
         return User::whereDoesntHave('payments', function ($query) use ($startDate) {
-                $query->whereDate(
+                $query->where(
                     'created_at',
                     '<',
                     $startDate
@@ -56,12 +56,13 @@ class StatisticsManager
             })
             ->whereHas('affiliateTracking', function ($query) {
                 $query->where('affiliate', UserAffiliateTracking::AFFILIATE_XPARTNERS);
-            });
+            })
+            ->distinct('id');
     }
 
     public function xpartnersConversionsBetweenCount($startDate, $endDate) {
         return $this->xpartnersConversionsBetweenQueryBuilder($startDate, $endDate)
-            ->count();
+            ->count('id');
     }
 
     public function registrationsCountBetween($startDate, $endDate) {
