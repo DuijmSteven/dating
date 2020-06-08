@@ -68,7 +68,7 @@
                         </div>
                     </a>
 
-                    <a href="{{ route('admin.peasants.online.show') }}" class="box box-widget DashboardWidget">
+                    <a href="{{ route('operator-platform.dashboard') }}" class="box box-widget DashboardWidget">
                         <!-- Add the bg color to the header using any of the bg-* classes -->
                         <div class="bg-aqua">
                             <div class="widget-us DashboardWidget_header"
@@ -78,13 +78,23 @@
                             </div>
                         </div>
                     </a>
-                    <a href="{{ route('admin.peasants.online.show') }}" class="box box-widget DashboardWidget">
+                    <a href="{{ route('operator-platform.dashboard') }}" class="box box-widget DashboardWidget">
                         <!-- Add the bg color to the header using any of the bg-* classes -->
                         <div class="bg-aqua">
                             <div class="widget-us DashboardWidget_header"
                                  style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
                                 <i class="fa fa-users DashboardWidget_header-icon"></i>
                                 <span class="DashboardWidget_header-title"><b>{{ $stoppedConversationsCount }} stopped conversations</b></span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#" class="box box-widget DashboardWidget">
+                        <!-- Add the bg color to the header using any of the bg-* classes -->
+                        <div class="bg-aqua">
+                            <div class="widget-us DashboardWidget_header"
+                                 style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
+                                <i class="fa fa-users DashboardWidget_header-icon"></i>
+                                <span class="DashboardWidget_header-title"><b>{{ $messageRateLastHour }} peasant messages per hour</b></span>
                             </div>
                         </div>
                     </a>

@@ -125,11 +125,28 @@ class StatisticsManager
             ->count();
     }
 
+    public function messagesSentByUserTypeLastHour()
+    {
+        $oneHourAgo = Carbon::now('Europe/Amsterdam')->subHours(1)->setTimezone('UTC');
+        $now = Carbon::now('Europe/Amsterdam')->setTimezone('UTC');
+
+        $messagesLastHour = $this->messagesSentByUserTypeCountBetween(
+            User::TYPE_PEASANT,
+            $oneHourAgo,
+            $now
+        );
+
+        if ($messagesLastHour === 0) {
+            return 'No messages';
+        }
+
+        return $messagesLastHour;
+    }
+
     public function messagesSentByUserTypePerHourToday()
     {
         $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');
         $now = Carbon::now('Europe/Amsterdam')->setTimezone('UTC');
-        $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
 
         $messagesTodayCount = $this->messagesSentByUserTypeCountBetween(
             User::TYPE_PEASANT,

@@ -133,6 +133,7 @@ class DashboardController extends Controller
             'availableConversationsCount' => $this->conversationManager->unrepliedPeasantBotConversationsCount() +
                 $this->conversationManager->newPeasantBotConversationsCount(),
             'stoppedConversationsCount' => $this->conversationManager->stoppedPeasantBotConversationsCount(),
+            'messageRateLastHour' => $this->statisticsManager->messagesSentByUserTypeLastHour(),
             'revenueStatistics' => [
                 'revenueToday' => $this->statisticsManager->revenueBetween(
                     $startOfToday,
