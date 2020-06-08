@@ -128,24 +128,24 @@ class StatisticsManager
     public function messagesSentByUserTypePerHourToday()
     {
         $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');
-        $previousHour = Carbon::now('Europe/Amsterdam')->subHours(1)->endOfHour()->setTimezone('UTC');
+        $now = Carbon::now('Europe/Amsterdam')->setTimezone('UTC');
         $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
 
         $messagesTodayCount = $this->messagesSentByUserTypeCountBetween(
             User::TYPE_PEASANT,
             $startOfToday,
-            $previousHour
+            $now
         );
 
         if ($messagesTodayCount === 0) {
             return 'No messages';
         }
 
-        if (Carbon::now('Europe/Amsterdam')->setTimezone('UTC')->diffInHours($startOfToday) === 0) {
-            return 'Not available until 1am';
+        if ($now->diffInMinutes($startOfToday) === 0) {
+            return 'Not available until 00:01am';
         }
 
-        return number_format($messagesTodayCount / Carbon::now('Europe/Amsterdam')->subHours(1)->endOfHour()->setTimezone('UTC')->diffInHours($startOfToday), 0);
+        return number_format(($messagesTodayCount / $now->diffInMinutes($startOfToday)) * 60, 0);
     }
 
     public function messagesSentByUserTypePerHourCurrentMonth()
