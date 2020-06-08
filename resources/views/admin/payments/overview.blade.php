@@ -95,8 +95,8 @@
                                     <td>{{ ucfirst($payment->method) }}</td>
                                     <td>{{ $payment->creditpack_id ? ucfirst($creditpackNamePerId[$payment->creditpack_id]) . ' Creditpack' : '' }}</td>
                                     <td>{{ \App\Helpers\PaymentsHelper::$statuses[$payment->status] }}</td>
-                                    <td class="no-wrap">{{ $payment->created_at->format('d-m-Y H:i:s') }}</td>
-                                    <td class="no-wrap">{{ $payment->updated_at->format('d-m-Y H:i:s') }}</td>
+                                    <td class="no-wrap">{{ $payment->getCreatedAt()->format('d-m-Y H:i:s') }}</td>
+                                    <td class="no-wrap">{{ $payment->getUpdatedAt()->format('d-m-Y H:i:s') }}</td>
                                     <td class="action-buttons">
                                     </td>
                                 </tr>
