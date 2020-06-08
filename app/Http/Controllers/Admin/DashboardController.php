@@ -374,8 +374,13 @@ class DashboardController extends Controller
                 'headingSmall' => '',
                 'salesTax' => self::SALES_TAX,
                 'peasantMessagesChart' => $this->chartsManager->createPeasantMessagesChart(),
+                'averagePeasantMessagesPerHourChart' => $this->chartsManager->createAveragePeasantMessagesPerHourInPeriodChart(
+                    Carbon::now('Europe/Amsterdam')->subDays(10)->setTimezone('UTC'),
+                    Carbon::now('Europe/Amsterdam')->setTimezone('UTC')
+                ),
                 'revenueChart' => $this->chartsManager->createRevenueChart(),
                 'xpartnersRevenueChart' => $this->chartsManager->createXpartnersRevenueChart(),
+                'xpartnersConversionsChart' => $this->chartsManager->createXpartnersConversionsChart(),
                 'netPeasantsAcquiredChart' => $this->chartsManager->createNetPeasantsAcquiredChart(),
             ]
         ));

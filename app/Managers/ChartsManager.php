@@ -2,6 +2,8 @@
 
 namespace App\Managers;
 
+use App\Charts\AveragePeasantMessagesPerHourChart;
+use App\Charts\ConversionsChart;
 use App\Charts\DeactivationsChart;
 use App\Charts\DeactivationsMonthlyChart;
 use App\Charts\NetPeasantsAcquiredChart;
@@ -96,7 +98,6 @@ class ChartsManager
         return $peasantMessagesChart;
     }
 
-
     /**
      * @return PeasantMessagesMonthlyChart|null
      * @throws \Exception
@@ -173,6 +174,83 @@ class ChartsManager
         return $peasantMessagesMonthlyChart;
     }
 
+    /**
+     * @return AveragePeasantMessagesPerHourChart()|null
+     * @throws \Exception
+     */
+    public function createAveragePeasantMessagesPerHourInPeriodChart($startDate, $endDate, int $userId = null)
+    {
+        $query = \DB::table('conversation_messages as cm')
+            ->select(
+                \DB::raw(
+                    'DATE_FORMAT(CONVERT_TZ(cm.created_at, \'UTC\', \'Europe/Amsterdam\'), \'%H\') as creationHour, 
+                    (COUNT(cm.id) / DATEDIFF("' .  $endDate->format('Y-m-d') . '", "' .  $startDate->format('Y-m-d') . '")) AS messagesAverageInHour'
+                )
+            )
+            ->leftJoin('users as u', 'u.id', 'cm.sender_id')
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->whereBetween('cm.created_at', [
+                $startDate,
+                $endDate
+            ]);
+
+
+        if (null  == $userId) {
+            $query->where('ru.role_id', User::TYPE_PEASANT);
+        } else {
+            $query->where('u.id', $userId);
+        }
+
+        $query->groupBy('creationHour')
+            ->orderBy('creationHour', 'ASC');
+
+        $results = $query->get();
+
+        if ($results->count() === 0) {
+            return null;
+        }
+
+        $labels = [];
+        $counts = [];
+
+        $hoursWithMessages = [];
+        $messagesPerHour = [];
+        foreach ($results as $result) {
+            $hoursWithMessages[] = explode(' ', $result->creationHour)[0];
+            $messagesPerHour[explode(' ', $result->creationHour)[0]] = $result->messagesAverageInHour;
+        }
+
+        $period = new DatePeriod(
+            new DateTime($hoursWithMessages[0] . ':00'),
+            new DateInterval('PT1H'),
+            new DateTime('now')
+        );
+
+        /**
+         * @var  $key
+         * @var DateTime $value
+         */
+        foreach ($period as $key => $value) {
+            $labels[] = $value->format('H');
+
+            if (in_array($value->format('H'), $hoursWithMessages)) {
+                $counts[] = $messagesPerHour[$value->format('H')];
+            } else {
+                $counts[] = 0;
+            }
+        }
+
+        $averagePeasantMessagesPerHourChart = new AveragePeasantMessagesPerHourChart();
+        $averagePeasantMessagesPerHourChart->labels($labels);
+        $averagePeasantMessagesPerHourChart
+            ->dataset('Average peasant messages in hour', 'line', $counts)
+            ->backGroundColor('#de3e7b');
+
+        $averagePeasantMessagesPerHourChart
+            ->title('Average peasant messages per hour (past 10 days)');
+
+        return $averagePeasantMessagesPerHourChart;
+    }
 
     /**
      * @return PaymentsChart|null
@@ -570,6 +648,73 @@ class ChartsManager
             ->title('X-Parterns revenue per day');
 
         return $revenueChart;
+    }
+
+    /**
+     * @return ConversionsChart()|null
+     * @throws \Exception
+     */
+    public function createXpartnersConversionsChart()
+    {
+        $query = \DB::table('users as u')
+            ->select(\DB::raw('DATE(CONVERT_TZ(p.created_at, \'UTC\', \'Europe/Amsterdam\')) as creationDate, COUNT(DISTINCT(u.id)) as conversionsOnDate'))
+            ->leftJoin('payments as p', 'u.id', 'p.user_id')
+            ->leftJoin('user_affiliate_tracking as uat', 'uat.user_id', 'u.id')
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('p.status', Payment::STATUS_COMPLETED)
+            ->where('uat.affiliate', 'xpartners')
+            ->where('p.created_at', '>=', '2020-05-23 00:00:00')
+            ->groupBy('creationDate')
+            ->orderBy('creationDate', 'ASC');
+
+        $results = $query->get();
+
+        if ($results->count() === 0) {
+            return null;
+        }
+
+        $labels = [];
+        $counts = [];
+
+        $datesWithConversions = [];
+        $conversionsPerDate = [];
+
+        foreach ($results as $result) {
+            $datesWithConversions[] = explode(' ', $result->creationDate)[0];
+            $conversionsPerDate[explode(' ', $result->creationDate)[0]] = $result->conversionsOnDate;
+        }
+
+        $period = new DatePeriod(
+            new DateTime($datesWithConversions[0]),
+            new DateInterval('P1D'),
+            new DateTime('now')
+        );
+
+        /**
+         * @var  $key
+         * @var DateTime $value
+         */
+        foreach ($period as $key => $value) {
+            $labels[] = $value->format('Y-m-d');
+
+            if (in_array($value->format('Y-m-d'), $datesWithConversions)) {
+                $counts[] = $conversionsPerDate[$value->format('Y-m-d')];
+            } else {
+                $counts[] = 0;
+            }
+        }
+
+        $conversionsChart = new ConversionsChart();
+        $conversionsChart->labels($labels);
+
+        $conversionsChart
+            ->dataset('X-Parterns conversions on date', 'line', $counts)
+            ->backGroundColor('#6d6913');
+
+        $conversionsChart
+            ->title('X-Parterns conversions per day');
+
+        return $conversionsChart;
     }
 
     /**
