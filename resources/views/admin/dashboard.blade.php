@@ -3,101 +3,99 @@
 @section('content')
 
     <div class="row">
-        <div class="col-xs-12">
-            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                {{--                    <a href="#" class="box box-widget DashboardWidget">--}}
-                {{--                        <!-- Add the bg color to the header using any of the bg-* classes -->--}}
-                {{--                        <div class="bg-info">--}}
-                {{--                            <div class="widget-us DashboardWidget_header"--}}
-                {{--                                 style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">--}}
-                {{--                                <i class="fa fa-users DashboardWidget_header-icon"></i>--}}
-                {{--                                <span class="DashboardWidget_header-title"><b>{{ $peasantMessagesSentToday }} peasant messages today</b></span>--}}
-                {{--                            </div>--}}
-                {{--                        </div>--}}
-                {{--                    </a>--}}
-                <a href="{{ route('admin.bots.online.show') }}" class="box box-widget DashboardWidget">
-                    <!-- Add the bg color to the header using any of the bg-* classes -->
-                    <div class="bg-info">
-                        <div class="widget-us DashboardWidget_header"
-                             style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
-                            <i class="fa fa-users DashboardWidget_header-icon"></i>
-                            <span class="DashboardWidget_header-title"><b>{{ $onlineFemaleStraightBotsCount }} female straight bots online</b></span>
-                        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            {{--                    <a href="#" class="box box-widget DashboardWidget">--}}
+            {{--                        <!-- Add the bg color to the header using any of the bg-* classes -->--}}
+            {{--                        <div class="bg-info">--}}
+            {{--                            <div class="widget-us DashboardWidget_header"--}}
+            {{--                                 style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">--}}
+            {{--                                <i class="fa fa-users DashboardWidget_header-icon"></i>--}}
+            {{--                                <span class="DashboardWidget_header-title"><b>{{ $peasantMessagesSentToday }} peasant messages today</b></span>--}}
+            {{--                            </div>--}}
+            {{--                        </div>--}}
+            {{--                    </a>--}}
+            <a href="{{ route('admin.bots.online.show') }}" class="box box-widget DashboardWidget">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="bg-info">
+                    <div class="widget-us DashboardWidget_header"
+                         style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
+                        <i class="fa fa-users DashboardWidget_header-icon"></i>
+                        <span class="DashboardWidget_header-title"><b>{{ $onlineFemaleStraightBotsCount }} female straight bots online</b></span>
                     </div>
-                </a>
-                {{--                    <a href="{{ route('admin.bots.online.show') }}" class="box box-widget DashboardWidget">--}}
-                {{--                        <!-- Add the bg color to the header using any of the bg-* classes -->--}}
-                {{--                        <div class="bg-info">--}}
-                {{--                            <div class="widget-us DashboardWidget_header"--}}
-                {{--                                 style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">--}}
-                {{--                                <i class="fa fa-users DashboardWidget_header-icon"></i>--}}
-                {{--                                <span class="DashboardWidget_header-title"><b>{{ $onlineMaleStraightBotsCount }} male straight bots online</b></span>--}}
-                {{--                            </div>--}}
-                {{--                        </div>--}}
-                {{--                    </a>--}}
-                <a href="{{ route('admin.bots.retrieve') }}" class="box box-widget DashboardWidget">
-                    <!-- Add the bg color to the header using any of the bg-* classes -->
-                    <div class="bg-info">
-                        <div class="widget-us DashboardWidget_header"
-                             style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
-                            <i class="fa fa-users DashboardWidget_header-icon"></i>
-                            <span class="DashboardWidget_header-title"><b>{{ $activeFemaleStraightBotsCount }} active female straight bots</b></span>
-                        </div>
+                </div>
+            </a>
+            {{--                    <a href="{{ route('admin.bots.online.show') }}" class="box box-widget DashboardWidget">--}}
+            {{--                        <!-- Add the bg color to the header using any of the bg-* classes -->--}}
+            {{--                        <div class="bg-info">--}}
+            {{--                            <div class="widget-us DashboardWidget_header"--}}
+            {{--                                 style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">--}}
+            {{--                                <i class="fa fa-users DashboardWidget_header-icon"></i>--}}
+            {{--                                <span class="DashboardWidget_header-title"><b>{{ $onlineMaleStraightBotsCount }} male straight bots online</b></span>--}}
+            {{--                            </div>--}}
+            {{--                        </div>--}}
+            {{--                    </a>--}}
+            <a href="{{ route('admin.bots.retrieve') }}" class="box box-widget DashboardWidget">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="bg-info">
+                    <div class="widget-us DashboardWidget_header"
+                         style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
+                        <i class="fa fa-users DashboardWidget_header-icon"></i>
+                        <span class="DashboardWidget_header-title"><b>{{ $activeFemaleStraightBotsCount }} active female straight bots</b></span>
                     </div>
-                </a>
+                </div>
+            </a>
 
-                {{--                    <a href="{{ route('admin.bots.retrieve') }}" class="box box-widget DashboardWidget">--}}
-                {{--                        <!-- Add the bg color to the header using any of the bg-* classes -->--}}
-                {{--                        <div class="bg-info">--}}
-                {{--                            <div class="widget-us DashboardWidget_header"--}}
-                {{--                                 style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">--}}
-                {{--                                <i class="fa fa-users DashboardWidget_header-icon"></i>--}}
-                {{--                                <span class="DashboardWidget_header-title"><b>{{ $activeMaleStraightBotsCount }} active male straight bots</b></span>--}}
-                {{--                            </div>--}}
-                {{--                        </div>--}}
-                {{--                    </a>--}}
-                <a href="{{ route('admin.peasants.online.show') }}" class="box box-widget DashboardWidget">
-                    <!-- Add the bg color to the header using any of the bg-* classes -->
-                    <div class="bg-pinkish">
-                        <div class="widget-us DashboardWidget_header"
-                             style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
-                            <i class="fa fa-users DashboardWidget_header-icon"></i>
-                            <span class="DashboardWidget_header-title"><b>{{ $onlinePeasantsCount }} peasants online</b></span>
-                        </div>
+            {{--                    <a href="{{ route('admin.bots.retrieve') }}" class="box box-widget DashboardWidget">--}}
+            {{--                        <!-- Add the bg color to the header using any of the bg-* classes -->--}}
+            {{--                        <div class="bg-info">--}}
+            {{--                            <div class="widget-us DashboardWidget_header"--}}
+            {{--                                 style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">--}}
+            {{--                                <i class="fa fa-users DashboardWidget_header-icon"></i>--}}
+            {{--                                <span class="DashboardWidget_header-title"><b>{{ $activeMaleStraightBotsCount }} active male straight bots</b></span>--}}
+            {{--                            </div>--}}
+            {{--                        </div>--}}
+            {{--                    </a>--}}
+            <a href="{{ route('admin.peasants.online.show') }}" class="box box-widget DashboardWidget">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="bg-pinkish">
+                    <div class="widget-us DashboardWidget_header"
+                         style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
+                        <i class="fa fa-users DashboardWidget_header-icon"></i>
+                        <span class="DashboardWidget_header-title"><b>{{ $onlinePeasantsCount }} peasants online</b></span>
                     </div>
-                </a>
+                </div>
+            </a>
 
-                <a href="{{ route('operator-platform.dashboard') }}" class="box box-widget DashboardWidget">
-                    <!-- Add the bg color to the header using any of the bg-* classes -->
-                    <div class="bg-aqua">
-                        <div class="widget-us DashboardWidget_header"
-                             style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
-                            <i class="fa fa-users DashboardWidget_header-icon"></i>
-                            <span class="DashboardWidget_header-title"><b>{{ $availableConversationsCount }} available conversations</b></span>
-                        </div>
+            <a href="{{ route('operator-platform.dashboard') }}" class="box box-widget DashboardWidget">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="bg-aqua">
+                    <div class="widget-us DashboardWidget_header"
+                         style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
+                        <i class="fa fa-users DashboardWidget_header-icon"></i>
+                        <span class="DashboardWidget_header-title"><b>{{ $availableConversationsCount }} available conversations</b></span>
                     </div>
-                </a>
-                <a href="{{ route('operator-platform.dashboard') }}" class="box box-widget DashboardWidget">
-                    <!-- Add the bg color to the header using any of the bg-* classes -->
-                    <div class="bg-aqua">
-                        <div class="widget-us DashboardWidget_header"
-                             style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
-                            <i class="fa fa-users DashboardWidget_header-icon"></i>
-                            <span class="DashboardWidget_header-title"><b>{{ $stoppedConversationsCount }} stopped conversations</b></span>
-                        </div>
+                </div>
+            </a>
+            <a href="{{ route('operator-platform.dashboard') }}" class="box box-widget DashboardWidget">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="bg-aqua">
+                    <div class="widget-us DashboardWidget_header"
+                         style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
+                        <i class="fa fa-users DashboardWidget_header-icon"></i>
+                        <span class="DashboardWidget_header-title"><b>{{ $stoppedConversationsCount }} stopped conversations</b></span>
                     </div>
-                </a>
-                <a href="#" class="box box-widget DashboardWidget">
-                    <!-- Add the bg color to the header using any of the bg-* classes -->
-                    <div class="bg-aqua">
-                        <div class="widget-us DashboardWidget_header"
-                             style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
-                            <i class="fa fa-users DashboardWidget_header-icon"></i>
-                            <span class="DashboardWidget_header-title"><b>{{ $messageRateLastHour }} peasant messages per hour</b></span>
-                        </div>
+                </div>
+            </a>
+            <a href="#" class="box box-widget DashboardWidget">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="bg-aqua">
+                    <div class="widget-us DashboardWidget_header"
+                         style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
+                        <i class="fa fa-users DashboardWidget_header-icon"></i>
+                        <span class="DashboardWidget_header-title"><b>{{ $messageRateLastHour }} peasant messages per hour</b></span>
                     </div>
-                </a>
-            </div>
+                </div>
+            </a>
         </div>
 
         <div class="col-xs-12 col-sm-6 col-md-4">
