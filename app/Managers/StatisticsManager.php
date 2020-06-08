@@ -128,7 +128,7 @@ class StatisticsManager
     public function messagesSentByUserTypePerHourToday()
     {
         $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');
-        $previousHour = Carbon::now('Europe/Amsterdam')->subHours(1)->setTimezone('UTC');
+        $previousHour = Carbon::now('Europe/Amsterdam')->subHours(1)->endOfHour()->setTimezone('UTC');
         $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
 
         $messagesTodayCount = $this->messagesSentByUserTypeCountBetween(
