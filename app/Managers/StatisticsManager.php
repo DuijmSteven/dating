@@ -39,13 +39,13 @@ class StatisticsManager
 
     public function xpartnersConversionsBetweenQueryBuilder($startDate, $endDate) {
         return User::whereDoesntHave('payments', function ($query) use ($startDate) {
-            $query->whereDate(
-                'created_at',
-                '<',
-                $startDate
-            )
+                $query->whereDate(
+                    'created_at',
+                    '<',
+                    $startDate
+                )
                 ->where('status', Payment::STATUS_COMPLETED);
-        })
+            })
             ->whereHas('payments', function ($query) use ($startDate, $endDate) {
                 $query->whereBetween('created_at',
                     [
@@ -56,8 +56,7 @@ class StatisticsManager
             })
             ->whereHas('affiliateTracking', function ($query) {
                 $query->where('affiliate', UserAffiliateTracking::AFFILIATE_XPARTNERS);
-            })
-            ->distinct();
+            });
     }
 
     public function xpartnersConversionsBetweenCount($startDate, $endDate) {
@@ -146,7 +145,7 @@ class StatisticsManager
             return 'Not available until 1am';
         }
 
-        return number_format($messagesTodayCount / Carbon::now('Europe/Amsterdam')->subHours(1)->setTimezone('UTC')->diffInHours($startOfToday), 0);
+        return number_format($messagesTodayCount / Carbon::now('Europe/Amsterdam')->subHours(1)->endOfHour()->setTimezone('UTC')->diffInHours($startOfToday), 0);
     }
 
     public function messagesSentByUserTypePerHourCurrentMonth()
