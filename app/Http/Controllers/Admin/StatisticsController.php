@@ -216,6 +216,10 @@ class StatisticsController extends Controller
                 'revenueWithoutSalesTaxMonthlyChart' => $this->chartsManager->createRevenueWithoutSalesTaxMonthlyChart(),
                 'registrationsChart' => $this->chartsManager->createRegistrationsChart(),
                 'deactivationsChart' => $this->chartsManager->createDeactivationsChart(),
+                'averagePeasantMessagesPerHourChart' => $this->chartsManager->createAveragePeasantMessagesPerHourInPeriodChart(
+                    Carbon::now('Europe/Amsterdam')->subDays(10)->setTimezone('UTC'),
+                    Carbon::now('Europe/Amsterdam')->setTimezone('UTC')
+                ),
             ]
         ));
     }
