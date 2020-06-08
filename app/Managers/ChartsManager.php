@@ -223,7 +223,7 @@ class ChartsManager
         $period = new DatePeriod(
             new DateTime($hoursWithMessages[0] . ':00'),
             new DateInterval('PT1H'),
-            new DateTime('now')
+            new DateTime('24:00')
         );
 
         /**
