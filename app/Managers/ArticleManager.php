@@ -7,6 +7,7 @@ use App\Helpers\ApplicationConstants\UserConstants;
 use App\User;
 use DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -46,7 +47,8 @@ class ArticleManager
                 'title' => $articleData['title'],
                 'body' => $articleData['body'],
                 'status' => $articleData['status'],
-                'meta_description' => $articleData['meta_description']
+                'meta_description' => $articleData['meta_description'],
+                'slug' => Str::slug($articleData['title'])
             ]);
         } catch (\Exception $exception) {
             throw $exception;
@@ -85,6 +87,7 @@ class ArticleManager
             $article->setBody($articleData['body']);
             $article->setMetaDescription($articleData['meta_description']);
             $article->setStatus($articleData['status']);
+            $article->setSlug(Str::slug($articleData['title']));
 
         } catch (\Exception $exception) {
             throw $exception;

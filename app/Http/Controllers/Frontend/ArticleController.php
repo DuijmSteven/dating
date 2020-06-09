@@ -19,9 +19,9 @@ class ArticleController extends FrontendController
         );
     }
 
-    public function show($articleId)
+    public function show($slug)
     {
-        $article = Article::where('id', $articleId)->first();
+        $article = Article::where('slug', $slug)->first();
 
         return view(
             'frontend.articles.show',

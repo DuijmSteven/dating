@@ -141,7 +141,7 @@ Route::group([
 ], function () {
     Route::get('/', 'Frontend\ArticleController@index')
         ->name('articles.overview');
-    Route::get('/{articleId}', 'Frontend\ArticleController@show')
+    Route::get('/{slug}', 'Frontend\ArticleController@show')
         ->name('articles.show');
 });
 

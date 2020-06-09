@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="Article__title">
-                            <a href="{{ route('articles.show', ['articleId' => $article->getId()])  }}">{{ strtoupper($article->title) }}</a>
+                            <a href="{{ route('articles.show', ['slug' => $article->getSlug()])  }}">{{ strtoupper($article->title) }}</a>
                         </div>
 
                     </div>
@@ -29,7 +29,7 @@
                             {!! \GrahamCampbell\Markdown\Facades\Markdown::convertToHtml(Str::limit($article->getBody(), 400)) !!}
                         </div>
                         <div class="text-right Article__readMore">
-                            <a href="{{ route('articles.show', ['article_id' => $article->getId()]) }}" class="Button Button--primary">
+                            <a href="{{ route('articles.show', ['slug' => $article->getSlug()]) }}" class="Button Button--primary">
                                 <span class="Button__content">{{ @trans('articles.read_more') }}</span>
                             </a>
                         </div>

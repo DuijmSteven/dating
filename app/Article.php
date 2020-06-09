@@ -13,7 +13,8 @@ class Article extends TimeZonedModel
         'body',
         'status',
         'meta_description',
-        'image_filename'
+        'image_filename',
+        'slug'
     ];
 
     public static $statuses = [
@@ -91,6 +92,22 @@ class Article extends TimeZonedModel
     public function setStatus(string $status)
     {
         $this->status = $status;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     */
+    public function setSlug(string $slug)
+    {
+        $this->slug = $slug;
     }
 
     /**
