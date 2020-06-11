@@ -228,6 +228,7 @@
 
 
                                     @if(
+                                        $peasant->affiliateTracking &&
                                         $peasant->affiliateTracking->affiliate === \App\UserAffiliateTracking::AFFILIATE_XPARTNERS &&
                                         $peasant->affiliateTracking->getLeadStatus() === \App\UserAffiliateTracking::LEAD_STATUS_UNVALIDATED
                                     )
