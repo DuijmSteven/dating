@@ -760,7 +760,7 @@
                                 <input type="hidden" name="mediaId" value="{{ $mediaId }}">
                             @endif
 
-                            @if(isset($clickId) && $clickId === 'xpartners')
+                            @if(isset($clickId))
                                 <input type="hidden" name="clickId" value="{{ $clickId }}">
                                 <input type="hidden" name="affiliate" value="{{ $affiliate }}">
                             @endif
