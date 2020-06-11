@@ -2,9 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\SomeEvent;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Events\LogSuccessfulLogin;
 
 class EventListener
 {
@@ -21,10 +19,10 @@ class EventListener
     /**
      * Handle the event.
      *
-     * @param  SomeEvent  $event
+     * @param  LogSuccessfulLogin  $event
      * @return void
      */
-    public function handle(SomeEvent $event)
+    public function handle(LogSuccessfulLogin $event)
     {
         //
     }

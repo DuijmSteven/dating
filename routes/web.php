@@ -311,6 +311,12 @@ Route::group([
         Route::get('/', 'Admin\PeasantController@index')
             ->name('admin.peasants.retrieve');
 
+        Route::get('/from-{affiliate}', 'Admin\PeasantController@fromAffiliate')
+            ->name('admin.peasants.from-affiliate');
+
+        Route::get('{peasantId}/validate-xpartners-lead', 'Admin\PeasantController@validateXpartnersLead')
+            ->name('admin.peasants.validate-xpartners-lead');
+
         Route::delete('{id}', 'Admin\PeasantController@destroy')
             ->name('admin.peasants.destroy');
 

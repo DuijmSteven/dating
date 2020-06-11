@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Peasants\PeasantCreateRequest;
 use App\Http\Requests\Admin\Peasants\PeasantUpdateRequest;
+use App\Managers\AffiliateManager;
 use App\Managers\ChartsManager;
 use App\Managers\PeasantManager;
 use App\Managers\StatisticsManager;
@@ -33,6 +34,10 @@ class PeasantController extends Controller
      * @var StatisticsManager
      */
     private StatisticsManager $statisticsManager;
+    /**
+     * @var AffiliateManager
+     */
+    private AffiliateManager $affiliateManager;
 
     /**
      * PeasantController constructor.
@@ -44,14 +49,15 @@ class PeasantController extends Controller
         PeasantManager $peasantManager,
         UserManager $userManager,
         ChartsManager $chartsManager,
-        StatisticsManager $statisticsManager
-    )
-    {
+        StatisticsManager $statisticsManager,
+        AffiliateManager $affiliateManager
+    ) {
         $this->peasantManager = $peasantManager;
         parent::__construct();
         $this->userManager = $userManager;
         $this->chartsManager = $chartsManager;
         $this->statisticsManager = $statisticsManager;
+        $this->affiliateManager = $affiliateManager;
     }
 
     /**
@@ -85,6 +91,63 @@ class PeasantController extends Controller
                 'peasantMessagesCharts' => $this->chartsManager->getMessagesCharts($peasants),
             ]
         );
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function fromAffiliate(string $affiliate)
+    {
+        $peasants = User::with(
+            array_unique(array_merge(
+                User::COMMON_RELATIONS,
+                User::PEASANT_RELATIONS
+            ))
+        )
+            ->withCount(
+                User::PEASANT_RELATION_COUNTS
+            )
+            ->whereHas('roles', function ($query) {
+                $query->where('id', User::TYPE_PEASANT);
+            })
+            ->whereHas('affiliateTracking', function ($query) use ($affiliate) {
+                $query->where('affiliate', $affiliate);
+            })
+            ->orderBy('id', 'desc')
+            ->paginate(20);
+
+        return view(
+            'admin.peasants.overview',
+            [
+                'title' => 'Peasant Overview - ' . \config('app.name'),
+                'headingLarge' => 'Peasant',
+                'headingSmall' => 'Overview',
+                'carbonNow' => Carbon::now(),
+                'peasants' => $peasants,
+                'peasantMessagesCharts' => $this->chartsManager->getMessagesCharts($peasants),
+            ]
+        );
+    }
+
+    public function validateXpartnersLead(int $peasantId)
+    {
+        try {
+            $peasant = User::findOrFail($peasantId);
+
+            $this->affiliateManager->validateXpartnersLead($peasant);
+
+            $alerts[] = [
+                'type' => 'success',
+                'message' => 'The lead was validated successfully'
+            ];
+        } catch (\Exception $exception) {
+            $alerts[] = [
+                'type' => 'error',
+                'message' => 'The was a problem.'
+            ];
+        }
+
+        return redirect()->back()->with('alerts', $alerts);
     }
 
     /**

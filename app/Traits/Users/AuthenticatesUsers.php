@@ -2,7 +2,11 @@
 
 namespace App\Traits\Users;
 
+use App\Events\LogSuccessfulLogin;
+use App\User;
+use App\UserMeta;
 use Carbon\Carbon;
+use Illuminate\Auth\Events\Login;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -101,8 +105,8 @@ trait AuthenticatesUsers
     /**
      * Send the response after the user was authenticated.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|void
      */
     protected function sendLoginResponse(Request $request)
     {
@@ -117,11 +121,10 @@ trait AuthenticatesUsers
     /**
      * The user has been authenticated.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $user
-     * @return mixed
+     * @param Request $request
+     * @param User $user
      */
-    protected function authenticated(Request $request, $user)
+    protected function authenticated(Request $request, User $user)
     {
         //
     }

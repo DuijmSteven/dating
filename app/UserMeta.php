@@ -37,6 +37,8 @@ class UserMeta extends Model
         'country',
         'about_me',
         'looking_for',
+        'registration_ip',
+        'logins_count',
         'created_at',
         'updated_at'
     ];
@@ -77,6 +79,26 @@ class UserMeta extends Model
     public function getHeight()
     {
         return $this->height;
+    }
+
+    public function getLoginsCount()
+    {
+        return $this->logins_count;
+    }
+
+    public function setLoginsCount(int $loginsCount)
+    {
+        $this->logins_count = $loginsCount;
+    }
+
+    public function getRegistrationIp()
+    {
+        return $this->registration_ip;
+    }
+
+    public function setRegistrationIp(int $registrationIp)
+    {
+        $this->registration_ip = $registrationIp;
     }
 
     public function getRelationshipStatus()

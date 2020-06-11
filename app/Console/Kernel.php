@@ -3,11 +3,13 @@
 namespace App\Console;
 
 use App\Console\Commands\CheckRecentStartedPayments;
+use App\Console\Commands\CheckXpartnersLeadsWIthPendingEligibilityStatus;
 use App\Console\Commands\ExportDb;
 use App\Console\Commands\SendMassMessage;
 use App\Console\Commands\SendProfileCompletionEmails;
 use App\Console\Commands\SendProfileViewedEmails;
 use App\Console\Commands\UpdateCurrentEnvDbAndAws;
+use App\Console\Commands\ValidateEligibleXpartnersLeads;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
@@ -30,6 +32,8 @@ class Kernel extends ConsoleKernel
         Commands\SendProfileCompletionEmails::class,
         CheckRecentStartedPayments::class,
         SendMassMessage::class,
+        CheckXpartnersLeadsWIthPendingEligibilityStatus::class,
+        ValidateEligibleXpartnersLeads::class
     ];
 
     /**
@@ -47,6 +51,9 @@ class Kernel extends ConsoleKernel
             $schedule->command(SendProfileCompletionEmails::class)->dailyAt("19:00");
             $schedule->command(ExportDb::class)->dailyAt("05:30");
             $schedule->command(CheckRecentStartedPayments::class)->everyMinute();
+
+//            $schedule->command(CheckXpartnersLeadsWIthPendingEligibilityStatus::class)->hourlyAt(10);
+//            $schedule->command(ValidateEligibleXpartnersLeads::class)->hourlyAt(20);
         }
         
         if (config('app.env') === 'staging') {

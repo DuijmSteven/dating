@@ -78,8 +78,15 @@
 
                             <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
                             <input type="hidden" name="action" value="validate_captcha">
-                            <input type="hidden" name="mediaId" value="{{ $mediaId }}">
-                            <input type="hidden" name="clickId" value="{{ $clickId }}">
+
+                            @if(isset($mediaId))
+                                <input type="hidden" name="mediaId" value="{{ $mediaId }}">
+                            @endif
+
+                            @if(isset($clickId) && $clickId === 'xpartners')
+                                <input type="hidden" name="clickId" value="{{ $clickId }}">
+                                <input type="hidden" name="affiliate" value="{{ $affiliate }}">
+                            @endif
 
                             <div class="wizard-header">
                                 <h3 class="wizard-title">

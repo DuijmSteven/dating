@@ -16,12 +16,24 @@ class AdsLandingPagesController extends FrontendController
     public function showLP(Request $request, $id)
     {
         if(view()->exists('frontend.landing-pages.ads.' . $id)) {
+
+            $viewData = [];
+
+            if ($request->input('utm_campaign')) {
+                $viewData['mediaId'] = $request->input('utm_campaign');
+            }
+
+            if ($request->input('clid')) {
+                $viewData['clickId'] = $request->input('clid');
+                $viewData['affilate'] = App\UserAffiliateTracking::AFFILIATE_XPARTNERS;
+            } elseif ($request->input('gclid')) {
+                $viewData['clickId'] = $request->input('gclid');
+                $viewData['affilate'] = App\UserAffiliateTracking::AFFILIATE_GOOGLE;
+            }
+
             return view(
                 'frontend.landing-pages.ads.' . $id,
-                [
-                    'mediaId' => $request->input('utm_campaign'),
-                    'clickId' => $request->input('clid')
-                ]
+                $viewData
             );
         } else {
             return abort(404);

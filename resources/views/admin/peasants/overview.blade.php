@@ -146,7 +146,23 @@
                                         <div class="innerTableWidgetBody">
                                             <strong>Affiliate</strong> {{ $peasant->affiliateTracking->getAffiliate() }}<br>
                                             <strong>Click ID</strong> {{ $peasant->affiliateTracking->getClickId() }}<br>
-                                            <strong>Media ID</strong> {{ $peasant->affiliateTracking->getMediaId() }}<br>
+
+                                            <strong>Lead eligibility</strong>
+                                                <span>
+                                                    {{ \App\UserAffiliateTracking::eligibilityDescriptionPerId()[$peasant->affiliateTracking->getLeadEligibility()] }}
+                                                </span>
+                                            <br>
+
+                                            <strong>Lead validation status</strong>
+                                                <span>
+                                                    {{ \App\UserAffiliateTracking::statusDescriptionPerId()[$peasant->affiliateTracking->getLeadStatus()] }}
+                                                </span>
+                                            <br>
+
+                                        @if($peasant->affiliateTracking->getMediaId())
+                                                <strong>Media ID</strong> {{ $peasant->affiliateTracking->getMediaId() }}
+                                            @endif
+                                            <br>
                                         </div>
                                     @endif
                                 </td>
@@ -209,6 +225,15 @@
                                     <a href="{!! route('admin.payments.peasant.overview', ['peasantId' => $peasant->getId()]) !!}" class="btn btn-default">Payments <b>({{ $peasant->payments_count}})</b></a>
                                     <a href="{!! route('admin.peasants.message-as-bot.get', ['peasantId' => $peasant->getId(), 'onlyOnlineBots' => '0']) !!}" class="btn btn-default">Message user as bot</a>
                                     <a href="{!! route('admin.peasants.message-as-bot.get', [ 'peasantId' => $peasant->getId(), 'onlyOnlineBots' => '1']) !!}" class="btn btn-default">Message user as online bot</a>
+
+
+                                    @if(
+                                        $peasant->affiliateTracking->affiliate === \App\UserAffiliateTracking::AFFILIATE_XPARTNERS &&
+                                        $peasant->affiliateTracking->getLeadStatus() === \App\UserAffiliateTracking::LEAD_STATUS_UNVALIDATED
+                                    )
+                                        <a href="{!! route('admin.peasants.validate-xpartners-lead', ['peasantId' => $peasant->getId()]) !!}" class="btn btn-default">Validate lead</a>
+                                    @endif
+
 
                                     <form method="POST" action="{!! route('admin.users.destroy', ['userId' => $peasant->getId()]) !!}">
                                         {!! csrf_field() !!}

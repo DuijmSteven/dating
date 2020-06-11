@@ -19,17 +19,31 @@ class LandingPageController extends FrontendController
         $users = $this->getUsers();
         $testimonials = $this->getTestimonials();
 
+        $viewData = [
+            'title' => 'De beste datingsite voor sex dating | ' . config('app.name'),
+            'users' => $users,
+            'carbonNow' => Carbon::now(),
+            'testimonials' => $testimonials,
+            'formType' => 'register',
+            'mediaId' => $request->input('utm_campaign'),
+            'clickId' => $request->input('clid')
+        ];
+
+        if ($request->input('utm_campaign')) {
+            $viewData['mediaId'] = $request->input('utm_campaign');
+        }
+
+        if ($request->input('clid')) {
+            $viewData['clickId'] = $request->input('clid');
+            $viewData['affilate'] = App\UserAffiliateTracking::AFFILIATE_XPARTNERS;
+        } elseif ($request->input('gclid')) {
+            $viewData['clickId'] = $request->input('gclid');
+            $viewData['affilate'] = App\UserAffiliateTracking::AFFILIATE_GOOGLE;
+        }
+
         return view(
             'frontend.landing-pages.1',
-            [
-                'title' => 'De beste datingsite voor sex dating | ' . config('app.name'),
-                'users' => $users,
-                'carbonNow' => Carbon::now(),
-                'testimonials' => $testimonials,
-                'formType' => 'register',
-                'mediaId' => $request->input('utm_campaign'),
-                'clickId' => $request->input('clid')
-            ]
+            $viewData
         );
     }
 

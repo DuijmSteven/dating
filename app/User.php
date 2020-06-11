@@ -443,7 +443,7 @@ class User extends Authenticatable
     }
 
     /**
-     * @return mixed
+     * @return Carbon
      */
     public function getCreatedAt()
     {

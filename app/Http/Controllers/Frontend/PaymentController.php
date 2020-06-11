@@ -7,8 +7,10 @@ use App\Helpers\ApplicationConstants\UserConstants;
 use App\Mail\CreditsBought;
 use App\Mail\UserBoughtCredits;
 use App\Mail\Welcome;
+use App\Managers\AffiliateManager;
 use App\Payment;
 use App\User;
+use App\UserAffiliateTracking;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\RequestException;
@@ -37,8 +39,10 @@ class PaymentController extends FrontendController
      * @param  PaymentManager  $paymentManager
      * @param  PaymentProvider  $paymentProvider
      */
-    public function __construct(PaymentManager $paymentManager, PaymentProvider $paymentProvider)
-    {
+    public function __construct(
+        PaymentManager $paymentManager,
+        PaymentProvider $paymentProvider
+    ) {
         $this->paymentManager = $paymentManager;
         $this->paymentProvider = $paymentProvider;
         parent::__construct();
