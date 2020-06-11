@@ -28,6 +28,28 @@
 
                     <div class="col-sm-6">
                         <div class="form-group">
+                            <label for="affiliate">Affiliate</label>
+                            <select name="affiliate" id="affiliate" class="form-control">
+                                <option value=""
+                                    {!! old('affiliate') == '' ? 'selected' : '' !!}
+                                ></option>
+                                <option value="xpartners"
+                                    {{ (old('affiliate') === 'xpartners') ? 'selected' : '' }}
+                                >
+                                    Xpartners
+                                </option>
+                                <option value="google"
+                                    {{ (old('affiliate') === 'google') ? 'selected' : '' }}
+                                >
+                                    Google Ads
+                                </option>
+                            </select>
+                            @include('helpers.forms.error_message', ['field' => 'affiliate'])
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
                             <label for="query">Query</label>
                             <input type="text"
                                    autocomplete="off"

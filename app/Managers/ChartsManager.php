@@ -18,6 +18,7 @@ use App\Charts\RevenueChart;
 use App\Charts\RevenueMonthlyChart;
 use App\Payment;
 use App\User;
+use App\UserAffiliateTracking;
 use Carbon\Carbon;
 use DateInterval;
 use DatePeriod;
@@ -29,6 +30,7 @@ class ChartsManager
     const SALES_TAX = 0.21;
 
     /**
+     *
      * @return PeasantMessagesChart|null
      * @throws \Exception
      */
@@ -390,6 +392,71 @@ class ChartsManager
      * @return RegistrationsChart|null
      * @throws \Exception
      */
+    public function createGoogleLeadsChart()
+    {
+        $query = \DB::table('users as u')
+            ->select(\DB::raw('DATE(CONVERT_TZ(u.created_at, \'UTC\', \'Europe/Amsterdam\')) as registrationDate, COUNT(u.id) AS registrationsCount'))
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->leftJoin('user_affiliate_tracking as uat', 'uat.user_id', 'u.id')
+            ->where('uat.affiliate', UserAffiliateTracking::AFFILIATE_GOOGLE)
+            ->where('ru.role_id', User::TYPE_PEASANT)
+            ->where('u.created_at', '>=', '2020-05-23 00:00:00')
+            ->groupBy('registrationDate')
+            ->orderBy('registrationDate', 'ASC');
+
+        $results = $query->get();
+
+        if ($results->count() === 0) {
+            return null;
+        }
+
+        $labels = [];
+        $counts = [];
+
+        $datesWithGoogleLeads = [];
+        $googleLeadsPerDate = [];
+        foreach ($results as $result) {
+            $datesWithGoogleLeads[] = explode(' ', $result->registrationDate)[0];
+            $googleLeadsPerDate[explode(' ', $result->registrationDate)[0]] = $result->registrationsCount;
+        }
+
+        $period = new DatePeriod(
+            new DateTime($datesWithGoogleLeads[0]),
+            new DateInterval('P1D'),
+            new DateTime('now')
+        );
+
+        /**
+         * @var  $key
+         * @var DateTime $value
+         */
+        foreach ($period as $key => $value) {
+            $labels[] = $value->format('Y-m-d');
+
+            if (in_array($value->format('Y-m-d'), $datesWithGoogleLeads)) {
+                $counts[] = $googleLeadsPerDate[$value->format('Y-m-d')];
+            } else {
+                $counts[] = 0;
+            }
+        }
+
+        $googleLeadsChart = new RegistrationsChart();
+        $googleLeadsChart->labels($labels);
+        $googleLeadsChart
+            ->dataset('Google Ads Leads on date', 'line', $counts)
+            ->backGroundColor('#deb33e');
+
+        $googleLeadsChart
+            ->title('Google Ads Leads per day');
+
+        return $googleLeadsChart;
+    }
+
+
+    /**
+     * @return RegistrationsChart|null
+     * @throws \Exception
+     */
     public function createRegistrationsChart()
     {
         $query = \DB::table('users as u')
@@ -586,7 +653,7 @@ class ChartsManager
      * @return RevenueChart|null
      * @throws \Exception
      */
-    public function createXpartnersRevenueChart()
+    public function createAffiliateRevenueChart(string $affiliate = 'google')
     {
         $query = \DB::table('payments as p')
             ->select(\DB::raw('DATE(CONVERT_TZ(p.created_at, \'UTC\', \'Europe/Amsterdam\')) as creationDate, SUM(p.amount) as revenueOnDay'))
@@ -595,7 +662,7 @@ class ChartsManager
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('p.status', Payment::STATUS_COMPLETED)
-            ->where('uat.affiliate', 'xpartners')
+            ->where('uat.affiliate', $affiliate)
             ->where('p.created_at', '>=', '2020-05-23 00:00:00')
             ->groupBy('creationDate')
             ->orderBy('creationDate', 'ASC');

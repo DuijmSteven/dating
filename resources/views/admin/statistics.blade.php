@@ -329,6 +329,15 @@
     <div class="row">
         <div class="col-xs-12">
             <div style="width: 100%">
+                {!! $googleLeadsChart->container() !!}
+                {!! $googleLeadsChart->script() !!}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div style="width: 100%">
                 {!! $deactivationsChart->container() !!}
                 {!! $deactivationsChart->script() !!}
             </div>
@@ -415,6 +424,17 @@
             </div>
         </div>
     </div>
+
+    @if($googleAdsRevenueChart)
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="width: 100%">
+                    {!! $googleAdsRevenueChart->container() !!}
+                    {!! $googleAdsRevenueChart->script() !!}
+                </div>
+            </div>
+        </div>
+    @endif
 
     <div class="row">
         <div class="col-xs-12">

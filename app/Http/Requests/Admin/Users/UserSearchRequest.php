@@ -40,6 +40,7 @@ class UserSearchRequest extends Request
             'smoking_habits' => 'in:'. implode(',', array_keys($userProfileFields['drinking_habits'])),
             'about_me' => 'string|max:100',
             'looking_for' => 'string|max:100',
+            'affiliate' => 'string',
             'role' => 'in:'. implode(array_keys(\UserConstants::selectableField('role')))
         ];
     }

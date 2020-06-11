@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Managers\ChartsManager;
 use App\Managers\StatisticsManager;
 use App\User;
+use App\UserAffiliateTracking;
 use Carbon\Carbon;
 use Kim\Activity\Activity;
 
@@ -215,10 +216,14 @@ class StatisticsController extends Controller
                 'revenueWithoutSalesTaxChart' => $this->chartsManager->createRevenueWithoutSalesTaxChart(),
                 'revenueWithoutSalesTaxMonthlyChart' => $this->chartsManager->createRevenueWithoutSalesTaxMonthlyChart(),
                 'registrationsChart' => $this->chartsManager->createRegistrationsChart(),
+                'googleLeadsChart' => $this->chartsManager->createGoogleLeadsChart(),
                 'deactivationsChart' => $this->chartsManager->createDeactivationsChart(),
                 'averagePeasantMessagesPerHourChart' => $this->chartsManager->createAveragePeasantMessagesPerHourInPeriodChart(
                     Carbon::now('Europe/Amsterdam')->subDays(10)->setTimezone('UTC'),
                     Carbon::now('Europe/Amsterdam')->setTimezone('UTC')
+                ),
+                'googleAdsRevenueChart' => $this->chartsManager->createAffiliateRevenueChart(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE
                 ),
             ]
         ));

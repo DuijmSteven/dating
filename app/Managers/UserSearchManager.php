@@ -100,6 +100,12 @@ class UserSearchManager
                 });
             }
 
+            if (isset($parameters['affiliate'])) {
+                $query = $query->whereHas('affiliateTracking', function ($query) use ($parameters) {
+                    $query->where('affiliate', $parameters['affiliate']);
+                });
+            }
+
             if (isset($parameters['created_at_after'])) {
                 $query->where('users.created_at', '>=', $parameters['created_at_after']);
             }

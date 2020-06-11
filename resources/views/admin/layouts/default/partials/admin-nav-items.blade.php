@@ -63,6 +63,12 @@
             </a>
         </li>
         <li class="{!! \Request::route()->getName() == 'admin.peasants.from-affiliate' ? 'active' : '' !!}">
+            <a href="{!! route('admin.peasants.from-affiliate', ['affiliate' => \App\UserAffiliateTracking::AFFILIATE_GOOGLE]) !!}">
+                <i class="fa fa-list"></i>
+                Google Ads
+            </a>
+        </li>
+        <li class="{!! \Request::route()->getName() == 'admin.peasants.from-affiliate' ? 'active' : '' !!}">
             <a href="{!! route('admin.peasants.from-affiliate', ['affiliate' => \App\UserAffiliateTracking::AFFILIATE_XPARTNERS]) !!}">
                 <i class="fa fa-list"></i>
                 Xpartners

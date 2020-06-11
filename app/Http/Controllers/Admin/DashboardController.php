@@ -7,6 +7,7 @@ use App\Managers\ChartsManager;
 use App\Managers\ConversationManager;
 use App\Managers\StatisticsManager;
 use App\User;
+use App\UserAffiliateTracking;
 use Carbon\Carbon;
 use Kim\Activity\Activity;
 
@@ -375,9 +376,11 @@ class DashboardController extends Controller
                 'salesTax' => self::SALES_TAX,
                 'peasantMessagesChart' => $this->chartsManager->createPeasantMessagesChart(),
                 'revenueChart' => $this->chartsManager->createRevenueChart(),
-                'xpartnersRevenueChart' => $this->chartsManager->createXpartnersRevenueChart(),
-                'xpartnersConversionsChart' => $this->chartsManager->createXpartnersConversionsChart(),
+                'xpartnersRevenueChart' => $this->chartsManager->createAffiliateRevenueChart(
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS
+                ),
                 'netPeasantsAcquiredChart' => $this->chartsManager->createNetPeasantsAcquiredChart(),
+//                'xpartnersConversionsChart' => $this->chartsManager->createXpartnersConversionsChart(),
             ]
         ));
     }
