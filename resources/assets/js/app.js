@@ -150,6 +150,11 @@ $(window).on('load', function () {
             $.get(DP.baseUrl + '/api/users/' + DP.authenticatedUser.id + '/milestones/accepted-welcome-message', function( data ) {
             });
         }, 1000);
+
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            'event': 'registration'
+        });
     }
 
     if ($('.JS--ScrollTopButton').length > 0) {
