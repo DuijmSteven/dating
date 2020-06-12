@@ -35,10 +35,10 @@ class LandingPageController extends FrontendController
 
         if ($request->input('clid')) {
             $viewData['clickId'] = $request->input('clid');
-            $viewData['affilate'] = App\UserAffiliateTracking::AFFILIATE_XPARTNERS;
+            $viewData['affiliate'] = App\UserAffiliateTracking::AFFILIATE_XPARTNERS;
         } elseif ($request->input('gclid')) {
             $viewData['clickId'] = $request->input('gclid');
-            $viewData['affilate'] = App\UserAffiliateTracking::AFFILIATE_GOOGLE;
+            $viewData['affiliate'] = App\UserAffiliateTracking::AFFILIATE_GOOGLE;
         }
 
         return view(
