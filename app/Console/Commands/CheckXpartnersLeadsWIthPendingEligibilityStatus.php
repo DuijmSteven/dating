@@ -10,6 +10,7 @@ use Illuminate\Console\Command;
 class CheckXpartnersLeadsWIthPendingEligibilityStatus extends Command
 {
     const UNIQUE_PROFILES_VIEWED_THRESHOLD = 3;
+    const OVERALL_PROFILE_VIEWS_THRESHOLD = 5;
     const MAX_DAYS_SINCE_REGISTRATION_TO_REACT = 60;
     const AMOUNT_OF_LOGINS_THRESHOLD = 3;
 
@@ -88,25 +89,34 @@ class CheckXpartnersLeadsWIthPendingEligibilityStatus extends Command
                 );
                 continue;
             }
+//
+//            if (
+//                !$leadIsDutch &&
+//                $daysSinceRegistration > 5
+//            ) {
+//                $this->setLeadEligibility(
+//                    $lead,
+//                    UserAffiliateTracking::LEAD_ELIGIBILITY_INELIGIBLE
+//                );
+//                continue;
+//            }
 
-            if (
-                !$leadIsDutch &&
-                $daysSinceRegistration > 5
-            ) {
-                $this->setLeadEligibility(
-                    $lead,
-                    UserAffiliateTracking::LEAD_ELIGIBILITY_INELIGIBLE
-                );
-                continue;
-            }
+
+//            \Log::debug($lead->messages_count);
+//            \Log::debug($lead->hasViewed->count());
+
+           // \Log::debug($lead->hasViewed->count());
 
             if (
                 $hasSentFreeCredit &&
-                $amountOfUniqueProfilesViewed > self::UNIQUE_PROFILES_VIEWED_THRESHOLD &&
-                $amountOfLogins > self::AMOUNT_OF_LOGINS_THRESHOLD &&
-                $leadIsDutch &&
-                $daysSinceRegistration > 1
+                $amountOfProfilesViewed >= self::OVERALL_PROFILE_VIEWS_THRESHOLD
+                //$amountOfLogins > self::AMOUNT_OF_LOGINS_THRESHOLD &&
+                //$leadIsDutch &&
+                //$daysSinceRegistration > 1
             ) {
+
+
+//                \Log::debug($lead->messages_count);
                 $this->setLeadEligibility(
                     $lead,
                     UserAffiliateTracking::LEAD_ELIGIBILITY_ELIGIBLE

@@ -214,32 +214,32 @@ class DashboardController extends Controller
                 )
             ],
             'peasantMessageStatistics' => [
-                'messagesSentToday' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
+                'messagesSentToday' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
                     User::TYPE_PEASANT,
                     $startOfToday,
                     $endOfToday
                 ),
-                'messagesSentYesterday' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
+                'messagesSentYesterday' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
                     User::TYPE_PEASANT,
                     $startOfYesterday,
                     $endOfYesterday
                 ),
-                'messagesSentCurrentWeek' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
+                'messagesSentCurrentWeek' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
                     User::TYPE_PEASANT,
                     $startOfWeek,
                     $endOfWeek
                 ),
-                'messagesSentCurrentMonth' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
+                'messagesSentCurrentMonth' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
                     User::TYPE_PEASANT,
                     $startOfMonth,
                     $endOfMonth
                 ),
-                'messagesSentPreviousMonth' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
+                'messagesSentPreviousMonth' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
                     User::TYPE_PEASANT,
                     $startOfPreviousMonthUtc,
                     $endOfPreviousMonthUtc
                 ),
-                'messagesSentCurrentYear' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
+                'messagesSentCurrentYear' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
                     User::TYPE_PEASANT,
                     $startOfYear,
                     $endOfToday

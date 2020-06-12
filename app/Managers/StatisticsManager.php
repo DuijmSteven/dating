@@ -126,6 +126,41 @@ class StatisticsManager
             ->count();
     }
 
+
+    public function paidMessagesSentByUserTypeCountBetween(int $userType, $startDate, $endDate) {
+        $allMessagesCount = $this->messagesSentByUserTypeBetweenQueryBuilder($userType, $startDate, $endDate)
+            ->count();
+
+        $unpaidMessagesInPeriod = \DB::table('conversation_messages as cm')
+            ->select(\DB::raw('COUNT(DISTINCT(u.id)) AS uniqueMessagers'))
+            ->leftJoin('users as u', 'u.id', 'cm.sender_id')
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('ru.role_id', $userType)
+            ->whereBetween('u.created_at', [
+                $startDate,
+                $endDate
+            ])
+            ->whereBetween('cm.created_at', [
+                $startDate,
+                $endDate
+            ])
+            ->get()[0]->uniqueMessagers;
+
+
+        $query = DB::table('conversation_messages as cm')
+            ->leftJoin('users as u', 'u.id', 'cm.sender_id')
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('ru.role_id', $userType)
+            ->whereBetween('cm.created_at', [
+                $startDate,
+                $endDate
+            ]);
+
+
+
+        return $allMessagesCount - $unpaidMessagesInPeriod;
+    }
+
     public function messagesSentByUserTypeLastHour()
     {
         $oneHourAgo = Carbon::now('Europe/Amsterdam')->subHours(1)->setTimezone('UTC');
