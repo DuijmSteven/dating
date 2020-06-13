@@ -64,11 +64,16 @@ class StatisticsController extends Controller
             $query->where('status', Payment::STATUS_COMPLETED);
         })->get()->count();
 
+        $allUsers = User::whereHas('roles', function ($query) {
+            $query->where('id', User::TYPE_PEASANT);
+        })->get()->count();
+
         $allTimeRevenue = $this->statisticsManager->revenueBetween(
             Carbon::now()->subYears(10),
             $endOfToday
         );
 
+        $averageRevenuePerAllTimeUser = $allUsers / $allTimePayingUsers;
         $averageRevenuePerAllTimePayingUser = $allTimeRevenue / $allTimePayingUsers;
 
         $viewData = [
@@ -278,7 +283,8 @@ class StatisticsController extends Controller
                     Creditpack::XL
                 ),
                 'all_time_paying_users' => $allTimePayingUsers,
-                'averageRevenuePerAllTimePayingUser' => number_format($averageRevenuePerAllTimePayingUser / 100, 2)
+                'averageRevenuePerAllTimePayingUser' => number_format($averageRevenuePerAllTimePayingUser / 100, 2),
+                'averageRevenuePerUser' => number_format($averageRevenuePerAllTimeUser / 100, 2)
             ],
         ];
 

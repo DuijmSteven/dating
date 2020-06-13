@@ -386,6 +386,8 @@
                                     class="DashboardWidget_count">{{ $userTypeStatistics['all_time_paying_users'] }}</span></a></li>
                         <li><a href="{{ route('admin.peasants.with-creditpack.overview') }}">RPPU <span
                                     class="DashboardWidget_count">{{ $userTypeStatistics['averageRevenuePerAllTimePayingUser'] }}</span></a></li>
+                        <li><a href="{{ route('admin.peasants.with-creditpack.overview') }}">RPU <span
+                                    class="DashboardWidget_count">{{ $userTypeStatistics['averageRevenuePerUser'] }}</span></a></li>
                     </ul>
                 </div>
             </div>
