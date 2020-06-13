@@ -2,6 +2,9 @@
 
 namespace App\Traits\Users;
 
+use App\UserAffiliateTracking;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,6 +38,26 @@ trait RegistersUsers
      */
     protected function registered(Request $request, $user)
     {
-        //
+        if ($user->affiliateTracking()->exists() && $user->affiliateTracking->affiliate === UserAffiliateTracking::AFFILIATE_XPARTNERS) {
+            $genderLookingForGender = explode("-", $request->all()['lookingFor']);
+            $gender = $genderLookingForGender[0];
+            $clientIP = $this->getUserIp();
+            $countryCode = $this->getLocationFromIp($clientIP);
+            $client = new Client();
+            try {
+                $response = $client->request(
+                    'GET',
+                    'https://mt67.net/d/?bdci='. $user->affiliateTracking->getClickId() .'&ti=' . $user->id . '&pn=lead-XP-Altijdsex.nl&iv=media-' . $user->affiliateTracking->getMediaId() . '&c=' . $countryCode .'&g=' . $gender . '&cc=lead',
+                    [
+                        'timeout' => 4
+                    ]
+                );
+            } catch (RequestException $e) {
+                \Log::error('Affiliate postback error - ' . Psr7\str($e->getRequest()));
+                if ($e->hasResponse()) {
+                    \Log::error('Affiliate postback error - ' . Psr7\str($e->getResponse()));
+                }
+            }
+        }
     }
 }
