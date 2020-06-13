@@ -261,6 +261,38 @@ class DashboardController extends Controller
                     $endOfToday
                 )
             ],
+            'googleAdsConversionStatistics' => [
+                'conversionsToday' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfToday,
+                    $endOfToday
+                ),
+                'conversionsYesterday' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfYesterday,
+                    $endOfYesterday
+                ),
+                'conversionsCurrentWeek' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfWeek,
+                    $endOfWeek
+                ),
+                'conversionsCurrentMonth' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfMonth,
+                    $endOfMonth
+                ),
+                'conversionsPreviousMonth' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc
+                ),
+                'conversionsCurrentYear' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfYear,
+                    $endOfToday
+                )
+            ],
             'googleAdsRevenueStatistics' => [
                 'revenueToday' => $this->statisticsManager->affiliateRevenueBetween(
                     UserAffiliateTracking::AFFILIATE_GOOGLE,
