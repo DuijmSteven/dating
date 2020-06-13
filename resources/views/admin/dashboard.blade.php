@@ -142,6 +142,49 @@
                     <div class="widget-us DashboardWidget_header"
                          style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
                         <i class="fa fa-users DashboardWidget_header-icon"></i>
+                        <span
+                            class="DashboardWidget_header-title">Google Ads Revenue (without sales tax in parentheses)</span>
+                    </div>
+                    <!-- /.widget-user-image -->
+                </div>
+                <div class="box-footer no-padding">
+                    <ul class="nav nav-stacked">
+                        <li><a href="#">Today <span
+                                    class="DashboardWidget_count">&euro; {{ $googleAdsRevenueStatistics['revenueToday']/100 }} (<span
+                                        style="color: #08a05e; font-weight: 600">{{ number_format($googleAdsRevenueStatistics['revenueToday']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
+                        </li>
+                        <li><a href="#">Yesterday <span
+                                    class="DashboardWidget_count">&euro; {{ $googleAdsRevenueStatistics['revenueYesterday']/100 }} (<span
+                                        style="color: #08a05e; font-weight: 600">{{ number_format($googleAdsRevenueStatistics['revenueYesterday']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
+                        </li>
+                        <li><a href="#">Current week <span
+                                    class="DashboardWidget_count">&euro; {{ $googleAdsRevenueStatistics['revenueCurrentWeek']/100 }} (<span
+                                        style="color: #08a05e; font-weight: 600">{{ number_format($googleAdsRevenueStatistics['revenueCurrentWeek']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
+                        </li>
+                        <li><a href="#">Current month <span
+                                    class="DashboardWidget_count">&euro; {{ $googleAdsRevenueStatistics['revenueCurrentMonth']/100 }} (<span
+                                        style="color: #08a05e; font-weight: 600">{{ number_format($googleAdsRevenueStatistics['revenueCurrentMonth']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
+                        </li>
+                        <li><a href="#">Last month <span
+                                    class="DashboardWidget_count">&euro; {{ $googleAdsRevenueStatistics['revenuePreviousMonth']/100 }} (<span
+                                        style="color: #08a05e; font-weight: 600">{{ number_format($googleAdsRevenueStatistics['revenuePreviousMonth']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
+                        </li>
+                        <li><a href="#">Current year <span
+                                    class="DashboardWidget_count">&euro; {{ $googleAdsRevenueStatistics['revenueCurrentYear']/100 }} (<span
+                                        style="color: #08a05e; font-weight: 600">{{ number_format($googleAdsRevenueStatistics['revenueCurrentYear']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <div class="box box-widget DashboardWidget">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="bg-primary">
+                    <div class="widget-us DashboardWidget_header"
+                         style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
+                        <i class="fa fa-users DashboardWidget_header-icon"></i>
                         <span class="DashboardWidget_header-title">Revenue (without sales tax in parentheses)</span>
                     </div>
                     <!-- /.widget-user-image -->

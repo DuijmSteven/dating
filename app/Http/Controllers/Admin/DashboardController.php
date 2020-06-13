@@ -261,6 +261,38 @@ class DashboardController extends Controller
                     $endOfToday
                 )
             ],
+            'googleAdsRevenueStatistics' => [
+                'revenueToday' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfToday,
+                    $endOfToday
+                ),
+                'revenueYesterday' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfYesterday,
+                    $endOfYesterday
+                ),
+                'revenueCurrentWeek' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfWeek,
+                    $endOfWeek
+                ),
+                'revenueCurrentMonth' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfMonth,
+                    $endOfMonth
+                ),
+                'revenuePreviousMonth' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc
+                ),
+                'revenueCurrentYear' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfYear,
+                    $endOfToday
+                )
+            ],
             'topMessagerStatistics' => [
                 'today' => $this->statisticsManager->topMessagersBetweenDates($startOfToday, $endOfToday, 50),
                 'this_week' => $this->statisticsManager->topMessagersBetweenDates($startOfWeek, $endOfWeek, 50),

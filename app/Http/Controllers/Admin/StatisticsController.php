@@ -145,53 +145,65 @@ class StatisticsController extends Controller
                 )
             ],
             'xpartnersRevenueStatistics' => [
-                'revenueToday' => $this->statisticsManager->xpartnersRevenueBetween(
+                'revenueToday' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
                     $startOfToday,
                     $endOfToday
                 ),
-                'revenueYesterday' => $this->statisticsManager->xpartnersRevenueBetween(
+                'revenueYesterday' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
                     $startOfYesterday,
                     $endOfYesterday
                 ),
-                'revenueCurrentWeek' => $this->statisticsManager->xpartnersRevenueBetween(
+                'revenueCurrentWeek' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
                     $startOfWeek,
                     $endOfWeek
                 ),
-                'revenueCurrentMonth' => $this->statisticsManager->xpartnersRevenueBetween(
+                'revenueCurrentMonth' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
                     $startOfMonth,
                     $endOfMonth
                 ),
-                'revenuePreviousMonth' => $this->statisticsManager->xpartnersRevenueBetween(
+                'revenuePreviousMonth' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
                     $startOfPreviousMonthUtc,
                     $endOfPreviousMonthUtc
                 ),
-                'revenueCurrentYear' => $this->statisticsManager->xpartnersRevenueBetween(
+                'revenueCurrentYear' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
                     $startOfYear,
                     $endOfToday
                 )
             ],
             'xpartnersConversionStatistics' => [
-                'conversionsToday' => $this->statisticsManager->xpartnersConversionsBetweenCount(
+                'conversionsToday' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
                     $startOfToday,
                     $endOfToday
                 ),
-                'conversionsYesterday' => $this->statisticsManager->xpartnersConversionsBetweenCount(
+                'conversionsYesterday' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
                     $startOfYesterday,
                     $endOfYesterday
                 ),
-                'conversionsCurrentWeek' => $this->statisticsManager->xpartnersConversionsBetweenCount(
+                'conversionsCurrentWeek' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
                     $startOfWeek,
                     $endOfWeek
                 ),
-                'conversionsCurrentMonth' => $this->statisticsManager->xpartnersConversionsBetweenCount(
+                'conversionsCurrentMonth' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
                     $startOfMonth,
                     $endOfMonth
                 ),
-                'conversionsPreviousMonth' => $this->statisticsManager->xpartnersConversionsBetweenCount(
+                'conversionsPreviousMonth' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
                     $startOfPreviousMonthUtc,
                     $endOfPreviousMonthUtc
                 ),
-                'conversionsCurrentYear' => $this->statisticsManager->xpartnersConversionsBetweenCount(
+                'conversionsCurrentYear' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
                     $startOfYear,
                     $endOfToday
                 )
