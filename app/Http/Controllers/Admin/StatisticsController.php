@@ -6,6 +6,7 @@ use App\Creditpack;
 use App\Http\Controllers\Controller;
 use App\Managers\ChartsManager;
 use App\Managers\StatisticsManager;
+use App\Payment;
 use App\User;
 use App\UserAffiliateTracking;
 use Carbon\Carbon;
@@ -58,6 +59,10 @@ class StatisticsController extends Controller
         $startOfYear = Carbon::now('Europe/Amsterdam')->startOfYear()->setTimezone('UTC');
 
         $peasantsWithCreditpack = $this->statisticsManager->peasantsWithCreditpack();
+
+        $allTimePayingUsers = User::whereHas('payments', function ($query) {
+            $query->where('status', Payment::STATUS_COMPLETED);
+        })->get()->count();
 
         $viewData = [
             'botMessageStatistics' => [
@@ -265,6 +270,7 @@ class StatisticsController extends Controller
                     $peasantsWithCreditpack,
                     Creditpack::XL
                 ),
+                'all_time_paying_users' => $allTimePayingUsers,
             ],
         ];
 

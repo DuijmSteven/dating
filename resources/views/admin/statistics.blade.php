@@ -382,6 +382,8 @@
                                     class="DashboardWidget_count">{{ $userTypeStatistics['xl'] }}</span></a></li>
                         <li><a href="{{ route('admin.peasants.with-creditpack.overview') }}">Any creditpack <span
                                     class="DashboardWidget_count">{{ $userTypeStatistics['small'] + $userTypeStatistics['medium'] + $userTypeStatistics['large'] + $userTypeStatistics['xl'] }}</span></a></li>
+                        <li><a href="{{ route('admin.peasants.with-creditpack.overview') }}">All time paying users <span
+                                    class="DashboardWidget_count">{{ $userTypeStatistics['all_time_paying_users'] }}</span></a></li>
                     </ul>
                 </div>
             </div>
