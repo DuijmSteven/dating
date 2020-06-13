@@ -73,7 +73,7 @@ class StatisticsController extends Controller
             $endOfToday
         );
 
-        $averageRevenuePerAllTimeUser = $allUsers / $allTimePayingUsers;
+        $averageRevenuePerAllTimeUser = $allTimeRevenue / $allUsers;
         $averageRevenuePerAllTimePayingUser = $allTimeRevenue / $allTimePayingUsers;
 
         $viewData = [
