@@ -64,6 +64,13 @@ class StatisticsController extends Controller
             $query->where('status', Payment::STATUS_COMPLETED);
         })->get()->count();
 
+        $allTimeRevenue = $this->statisticsManager->revenueBetween(
+            Carbon::now()->subYears(10),
+            $endOfToday
+        );
+
+        $averageRevenuePerAllTimePayingUser = $allTimeRevenue / $allTimePayingUsers;
+
         $viewData = [
             'botMessageStatistics' => [
                 'messagesSentToday' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
@@ -271,6 +278,7 @@ class StatisticsController extends Controller
                     Creditpack::XL
                 ),
                 'all_time_paying_users' => $allTimePayingUsers,
+                'averageRevenuePerAllTimePayingUser' => number_format($averageRevenuePerAllTimePayingUser / 100, 2)
             ],
         ];
 
