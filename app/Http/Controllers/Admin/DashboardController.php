@@ -161,58 +161,6 @@ class DashboardController extends Controller
                     $endOfToday
                 )
             ],
-            'xpartnersRevenueStatistics' => [
-                'revenueToday' => $this->statisticsManager->xpartnersRevenueBetween(
-                    $startOfToday,
-                    $endOfToday
-                ),
-                'revenueYesterday' => $this->statisticsManager->xpartnersRevenueBetween(
-                    $startOfYesterday,
-                    $endOfYesterday
-                ),
-                'revenueCurrentWeek' => $this->statisticsManager->xpartnersRevenueBetween(
-                    $startOfWeek,
-                    $endOfWeek
-                ),
-                'revenueCurrentMonth' => $this->statisticsManager->xpartnersRevenueBetween(
-                    $startOfMonth,
-                    $endOfMonth
-                ),
-                'revenuePreviousMonth' => $this->statisticsManager->xpartnersRevenueBetween(
-                    $startOfPreviousMonthUtc,
-                    $endOfPreviousMonthUtc
-                ),
-                'revenueCurrentYear' => $this->statisticsManager->xpartnersRevenueBetween(
-                    $startOfYear,
-                    $endOfToday
-                )
-            ],
-            'xpartnersConversionStatistics' => [
-                'conversionsToday' => $this->statisticsManager->xpartnersConversionsBetweenCount(
-                    $startOfToday,
-                    $endOfToday
-                ),
-                'conversionsYesterday' => $this->statisticsManager->xpartnersConversionsBetweenCount(
-                    $startOfYesterday,
-                    $endOfYesterday
-                ),
-                'conversionsCurrentWeek' => $this->statisticsManager->xpartnersConversionsBetweenCount(
-                    $startOfWeek,
-                    $endOfWeek
-                ),
-                'conversionsCurrentMonth' => $this->statisticsManager->xpartnersConversionsBetweenCount(
-                    $startOfMonth,
-                    $endOfMonth
-                ),
-                'conversionsPreviousMonth' => $this->statisticsManager->xpartnersConversionsBetweenCount(
-                    $startOfPreviousMonthUtc,
-                    $endOfPreviousMonthUtc
-                ),
-                'conversionsCurrentYear' => $this->statisticsManager->xpartnersConversionsBetweenCount(
-                    $startOfYear,
-                    $endOfToday
-                )
-            ],
             'peasantMessageStatistics' => [
                 'messagesSentToday' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
                     User::TYPE_PEASANT,
@@ -240,38 +188,6 @@ class DashboardController extends Controller
                     $endOfPreviousMonthUtc
                 ),
                 'messagesSentCurrentYear' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfYear,
-                    $endOfToday
-                )
-            ],
-            'peasantPublicChatMessageStatistics' => [
-                'messagesSentToday' => $this->statisticsManager->publicChatMessagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfToday,
-                    $endOfToday
-                ),
-                'messagesSentYesterday' => $this->statisticsManager->publicChatMessagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfYesterday,
-                    $endOfYesterday
-                ),
-                'messagesSentCurrentWeek' => $this->statisticsManager->publicChatMessagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfWeek,
-                    $endOfWeek
-                ),
-                'messagesSentCurrentMonth' => $this->statisticsManager->publicChatMessagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfMonth,
-                    $endOfMonth
-                ),
-                'messagesSentPreviousMonth' => $this->statisticsManager->publicChatMessagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfPreviousMonthUtc,
-                    $endOfPreviousMonthUtc
-                ),
-                'messagesSentCurrentYear' => $this->statisticsManager->publicChatMessagesSentByUserTypeCountBetween(
                     User::TYPE_PEASANT,
                     $startOfYear,
                     $endOfToday
@@ -365,8 +281,6 @@ class DashboardController extends Controller
             ],
         ];
 
-
-
         return view('admin.dashboard', array_merge(
             $viewData,
             [
@@ -376,11 +290,12 @@ class DashboardController extends Controller
                 'salesTax' => self::SALES_TAX,
                 'peasantMessagesChart' => $this->chartsManager->createPeasantMessagesChart(),
                 'revenueChart' => $this->chartsManager->createRevenueChart(),
-                'xpartnersRevenueChart' => $this->chartsManager->createAffiliateRevenueChart(
-                    UserAffiliateTracking::AFFILIATE_XPARTNERS
-                ),
                 'netPeasantsAcquiredChart' => $this->chartsManager->createNetPeasantsAcquiredChart(),
 //                'xpartnersConversionsChart' => $this->chartsManager->createXpartnersConversionsChart(),
+                'googleLeadsChart' => $this->chartsManager->createGoogleLeadsChart(),
+                'googleAdsRevenueChart' => $this->chartsManager->createAffiliateRevenueChart(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE
+                ),
             ]
         ));
     }

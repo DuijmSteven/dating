@@ -653,7 +653,7 @@ class ChartsManager
      * @return RevenueChart|null
      * @throws \Exception
      */
-    public function createAffiliateRevenueChart(string $affiliate = 'google')
+    public function createAffiliateRevenueChart(string $affiliate)
     {
         $query = \DB::table('payments as p')
             ->select(\DB::raw('DATE(CONVERT_TZ(p.created_at, \'UTC\', \'Europe/Amsterdam\')) as creationDate, SUM(p.amount) as revenueOnDay'))
@@ -707,12 +707,14 @@ class ChartsManager
         $revenueChart = new RevenueChart();
         $revenueChart->labels($labels);
 
+        $affiliateName = $affiliate === UserAffiliateTracking::AFFILIATE_GOOGLE ? 'Google Ads' : 'Xpartners';
+
         $revenueChart
-            ->dataset('X-Parterns revenue on date', 'line', $counts)
+            ->dataset($affiliateName . ' revenue on date', 'line', $counts)
             ->backGroundColor('#339929');
 
         $revenueChart
-            ->title('X-Parterns revenue per day');
+            ->title($affiliateName . ' revenue per day');
 
         return $revenueChart;
     }
