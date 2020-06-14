@@ -145,6 +145,7 @@
                                         <div class="innerTableWidgetHeading"><strong>Affiliate tracking</strong></div>
                                         <div class="innerTableWidgetBody">
                                             <strong>Affiliate</strong> {{ $peasant->affiliateTracking->getAffiliate() }}<br>
+                                            <strong>Publisher</strong> {{ $peasant->affiliateTracking->getPublisher() ? \App\UserAffiliateTracking::publisherDescriptionPerId()[$peasant->affiliateTracking->getPublisher()] : 'Not available' }}<br>
                                             <strong>Click ID</strong> {{ $peasant->affiliateTracking->getClickId() }}<br>
 
                                             <strong>Lead eligibility</strong>

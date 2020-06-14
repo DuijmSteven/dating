@@ -12,6 +12,7 @@ use App\RoleUser;
 use App\Traits\Users\RegistersUsers;
 use App\User;
 use App\UserAccount;
+use App\UserAffiliateTracking;
 use App\UserMeta;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
@@ -141,13 +142,22 @@ class RegisterController extends Controller
 
         //Set the affiliate tracking data
         if ($request->input('clickId')) {
+            $mediaId = $request->input('mediaId');
+            if (in_array($mediaId, array_keys(UserAffiliateTracking::publisherPerMediaId()))) {
+                $publisher = UserAffiliateTracking::publisherPerMediaId()[$mediaId];
+            } else {
+                $publisher = null;
+                \Log::debug('Media ID ' . $mediaId . ' does not have a publisher set');
+            }
+
             try {
                 $this->affiliateManager->storeAffiliateTrackingInfo(
                     $createdUser->id,
                     $request->input('affiliate'),
                     $request->input('clickId'),
                     $this->getLocationFromIp($userIp),
-                    $request->input('mediaId'),
+                    $mediaId,
+                    $publisher
                 );
             } catch (\Exception $exception) {
                 DB::rollBack();
