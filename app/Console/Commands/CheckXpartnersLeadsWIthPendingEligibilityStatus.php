@@ -10,7 +10,7 @@ use Illuminate\Console\Command;
 class CheckXpartnersLeadsWIthPendingEligibilityStatus extends Command
 {
     const UNIQUE_PROFILES_VIEWED_THRESHOLD = 3;
-    const OVERALL_PROFILE_VIEWS_THRESHOLD = 5;
+    const OVERALL_PROFILE_VIEWS_THRESHOLD = 6;
     const MAX_DAYS_SINCE_REGISTRATION_TO_REACT = 60;
     const AMOUNT_OF_LOGINS_THRESHOLD = 3;
 
