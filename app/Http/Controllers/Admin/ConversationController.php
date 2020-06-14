@@ -245,6 +245,18 @@ class ConversationController extends Controller
         $conversation = Conversation::with(['userA', 'userB', 'messages'])->withTrashed()->find($conversationId);
 
         if (
+           !$this->authenticatedUser->isAdmin() &&
+            $this->authenticatedUser->lockedConversations->count() > 1
+        ) {
+            $alerts[] = [
+                'type' => 'warning',
+                'message' => 'You already have two conversations locked in your name.'
+            ];
+
+            return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
+        }
+
+        if (
             (null === $conversation->getReplyableAt() || $conversation->getReplyableAt()->gt(Carbon::now())) &&
             !$this->authenticatedUser->isAdmin()
         ) {

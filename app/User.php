@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Managers\ConversationManager;
 use App\Notifications\MailResetPasswordNotification;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -149,7 +150,8 @@ class User extends Authenticatable
 
     protected $dates = [
         'deactivated_at',
-        'last_online_at'
+        'last_online_at',
+        'locked_at'
     ];
 
     protected $appends = [
@@ -236,6 +238,12 @@ class User extends Authenticatable
     {
         return $this->createdBots->pluck('id')->toArray();
     }
+
+    public function getLockedConversationsCountAttribute()
+    {
+        return $this->createdBots->pluck('id')->toArray();
+    }
+
 
     public function getProfileImageUrlAttribute()
     {
@@ -635,6 +643,13 @@ class User extends Authenticatable
     public function botCategories()
     {
         return $this->belongsToMany('App\BotCategory');
+    }
+
+    public function lockedConversations()
+    {
+        $minutesAgo = (new Carbon('now'))->subMinutes(ConversationManager::CONVERSATION_LOCKING_TIME);
+
+        return $this->hasMany(Conversation::class, 'locked_by_user_id')->where('locked_at', '>=', $minutesAgo);
     }
 
     /**
