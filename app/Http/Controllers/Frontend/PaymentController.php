@@ -201,7 +201,11 @@ class PaymentController extends FrontendController
             ->queue($userBoughtCreditsEmail);
 
         //In case the buyer came from an affiliate, hit publisher callback
-        /*if ($user->affiliateTracking()->exists()) {
+        if (
+            $user->affiliateTracking()->exists() &&
+            $user->affiliateTracking->getAffiliate() == 'xpartners' &&
+            $user->affiliateTracking->getMediaId() != '147374'
+        ) {
             $client = new Client();
             try {
                 $response = $client->request(
@@ -217,6 +221,6 @@ class PaymentController extends FrontendController
                     \Log::error('Affiliate postback error - '.Psr7\str($e->getResponse()));
                 }
             }
-        }*/
+        }
     }
 }
