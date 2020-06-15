@@ -17,6 +17,7 @@ class Conversation extends TimeZonedModel
     const CYCLE_STAGE_UNREPLIED = 1;
     const CYCLE_STAGE_STOPPED = 2;
     const CYCLE_STAGE_STOPPED_AND_REATTEMPTED = 3;
+    const CYCLE_STAGE_BALL_IN_PEASANTS_COURT = 4;
 
     public $table = 'conversations';
 

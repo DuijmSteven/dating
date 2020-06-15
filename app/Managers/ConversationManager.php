@@ -157,6 +157,10 @@ class ConversationManager
 
             $conversation->setReplyableAt($replyableAt);
         } elseif ($sender->isBot() && $conversation->messages->count() > 2) {
+            $conversation->setCycleStage(
+                Conversation::CYCLE_STAGE_BALL_IN_PEASANTS_COURT
+            );
+
             if (
                 $conversation->messages[0]->sender->roles[0]->id === User::TYPE_PEASANT
             ) {
@@ -177,6 +181,10 @@ class ConversationManager
                 $operatorMessageType = ConversationMessage::OPERATOR_MESSAGE_TYPE_STOPPED;
             }
         } elseif ($sender->isBot()) {
+            $conversation->setCycleStage(
+                Conversation::CYCLE_STAGE_BALL_IN_PEASANTS_COURT
+            );
+
             $conversation->setReplyableAt(null);
         }
 
@@ -299,7 +307,7 @@ class ConversationManager
      * @param bool $sort
      * @return Conversation[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Query\Builder[]|\Illuminate\Support\Collection
      */
-    public function getConversationsByCycleStage(int $cycleStage, $limit = null, $sort = false)
+    public function getConversationsByCycleStage($cycleStages = [], $limit = null, $sort = false)
     {
         $conversations = Conversation::with(['userA', 'userB'])
             ->whereHas('userA', function ($query) {
@@ -311,7 +319,15 @@ class ConversationManager
             ->with(['messages' => function ($query) {
                 $query->orderBy('created_at', 'desc');
             }])
-            ->where('cycle_stage', $cycleStage)
+            ->where(function ($query) use ($cycleStages) {
+                $query->where('cycle_stage', $cycleStages[0]);
+
+                if (count($cycleStages) > 1) {
+                    foreach (array_slice($cycleStages, 1, count($cycleStages) - 1) as $cycleStage) {
+                        $query->orWhere('cycle_stage', $cycleStage);
+                    }
+                }
+            })
             ->where(function ($query) {
                 $query->where('locked_at', null)
                     ->orWhere('locked_at', '<', Carbon::now()->subMinutes(self::CONVERSATION_LOCKING_TIME));
@@ -384,9 +400,13 @@ class ConversationManager
     /**
      * @return int
      */
-    public function unrepliedPeasantBotConversationsCount()
+    public function getConversationsByCycleStageCount($cycleStages = [])
     {
-        return $this->unrepliedPeasantBotConversations()->count();
+        return $this->getConversationsByCycleStage(
+            $cycleStages,
+            null,
+            false
+        )->count();
     }
 
     /**

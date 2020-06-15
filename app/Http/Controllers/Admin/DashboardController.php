@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Conversation;
 use App\Http\Controllers\Controller;
 use App\Managers\ChartsManager;
 use App\Managers\ConversationManager;
@@ -131,9 +132,13 @@ class DashboardController extends Controller
 //                $startOfToday,
 //                $endOfToday
 //            ),
-            'availableConversationsCount' => $this->conversationManager->unrepliedPeasantBotConversationsCount() +
-                $this->conversationManager->newPeasantBotConversationsCount(),
-            'stoppedConversationsCount' => $this->conversationManager->stoppedPeasantBotConversationsCount(),
+            'availableConversationsCount' => $this->conversationManager->getConversationsByCycleStageCount([
+                Conversation::CYCLE_STAGE_NEW,
+                Conversation::CYCLE_STAGE_UNREPLIED
+            ]),
+            'stoppedConversationsCount' => $this->conversationManager->getConversationsByCycleStageCount([
+                Conversation::CYCLE_STAGE_STOPPED
+            ]),
             'messageRateLastHour' => $this->statisticsManager->messagesSentByUserTypeLastHour(),
             'revenueStatistics' => [
                 'revenueToday' => $this->statisticsManager->revenueBetween(

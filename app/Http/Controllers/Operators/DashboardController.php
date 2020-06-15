@@ -39,17 +39,17 @@ class DashboardController extends \App\Http\Controllers\Controller
                 'headingLarge' => 'Dashboard',
                 'headingSmall' => Auth::user()->username,
                 'newConversations' => $this->conversationManager->getConversationsByCycleStage(
-                    Conversation::CYCLE_STAGE_NEW,
+                    [Conversation::CYCLE_STAGE_NEW],
                     10,
                     true
                 ),
                 'unrepliedConversations' => $this->conversationManager->getConversationsByCycleStage(
-                    Conversation::CYCLE_STAGE_UNREPLIED,
+                    [Conversation::CYCLE_STAGE_UNREPLIED],
                     10,
                     true
                 ),
                 'stoppedConversations' => $this->conversationManager->getConversationsByCycleStage(
-                    Conversation::CYCLE_STAGE_STOPPED,
+                    [Conversation::CYCLE_STAGE_STOPPED],
                     10,
                     true
                 ),
