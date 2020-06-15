@@ -433,7 +433,10 @@ class ConversationController extends Controller
         $recipient = User::find($request->get('recipient_id'));
 
         /** @var Conversation $conversation */
-        $conversation  = $this->conversationManager->createOrRetrieveConversation($sender->getId(), $recipient->getId());
+        $conversation  = $this->conversationManager->createOrRetrieveConversation(
+            $sender,
+            $recipient
+        );
 
         if (
             $conversation instanceof Conversation && 

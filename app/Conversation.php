@@ -13,6 +13,11 @@ class Conversation extends TimeZonedModel
 {
     use SoftDeletes;
 
+    const CYCLE_STAGE_NEW = 0;
+    const CYCLE_STAGE_UNREPLIED = 1;
+    const CYCLE_STAGE_STOPPED = 2;
+    const CYCLE_STAGE_STOPPED_AND_REATTEMPTED = 3;
+
     public $table = 'conversations';
 
     public $dates = [
@@ -28,7 +33,8 @@ class Conversation extends TimeZonedModel
         'user_b_id',
         'new_activity_for_user_a',
         'new_activity_for_user_b',
-        'replyable_at'
+        'replyable_at',
+        'cycle_stage'
     ];
 
     public function getUpdatedAtHumanReadableAttribute()
@@ -117,9 +123,22 @@ class Conversation extends TimeZonedModel
     /**
      * @param int|null $userId
      */
-    public function setLockedByUserId(?int $userId)
+    public function setLockedByUserId(?int $cycleStage)
     {
-        $this->locked_by_user_id = $userId;
+        $this->locked_by_user_id = $cycleStage;
+    }
+
+    public function getCycleStage()
+    {
+        return $this->cycle_stage;
+    }
+
+    /**
+     * @param int|null $cycleStage
+     */
+    public function setCycleStage(?int $cycleStage)
+    {
+        $this->cycle_stage = $cycleStage;
     }
 
     /**

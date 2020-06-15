@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Operators;
 
+use App\Conversation;
 use App\Managers\ConversationManager;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,9 +38,21 @@ class DashboardController extends \App\Http\Controllers\Controller
                 'title' => 'Operator dashboard - ' . Auth::user()->username,
                 'headingLarge' => 'Dashboard',
                 'headingSmall' => Auth::user()->username,
-                'newConversations' => $this->conversationManager->newPeasantBotConversations(),
-                'unrepliedConversations' => $this->conversationManager->unrepliedPeasantBotConversations(10, true),
-                'stoppedConversations' => $this->conversationManager->stoppedPeasantBotConversations(),
+                'newConversations' => $this->conversationManager->getConversationsByCycleStage(
+                    Conversation::CYCLE_STAGE_NEW,
+                    10,
+                    true
+                ),
+                'unrepliedConversations' => $this->conversationManager->getConversationsByCycleStage(
+                    Conversation::CYCLE_STAGE_UNREPLIED,
+                    10,
+                    true
+                ),
+                'stoppedConversations' => $this->conversationManager->getConversationsByCycleStage(
+                    Conversation::CYCLE_STAGE_STOPPED,
+                    10,
+                    true
+                ),
             ]
         );
     }

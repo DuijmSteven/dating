@@ -63,8 +63,8 @@ class ConversationManager
 
         try {
             $conversation = $this->createOrRetrieveConversation(
-                $messageData['sender_id'],
-                $messageData['recipient_id']
+                $sender,
+                $recipient
             );
         } catch (\Exception $exception) {
             throw $exception;
@@ -89,6 +89,10 @@ class ConversationManager
 
             // some new convos need to be set to never be replied
             if ($isNewConversation) {
+                $conversation->setCycleStage(
+                    Conversation::CYCLE_STAGE_NEW
+                );
+
                 if ($senderConversationsWithRepliesTodayCount === 0) {
                     $replyable = true;
                 } elseif (3 === rand(1, 3)) {
@@ -102,6 +106,10 @@ class ConversationManager
                 $exemptFromDelay = false;
 
                 if (!$isNewConversation) {
+                    $conversation->setCycleStage(
+                        Conversation::CYCLE_STAGE_UNREPLIED
+                    );
+
                     $recentBotMessage = null;
                     $maxIterations = min($messagesCount, 3);
 
@@ -124,6 +132,10 @@ class ConversationManager
                     if ($botHasRecentlySentMessageToPeasant) {
                         $exemptFromDelay = true;
                     }
+                } else {
+                    $conversation->setCycleStage(
+                        Conversation::CYCLE_STAGE_NEW
+                    );
                 }
 
                 $recipientBotIsOnline = in_array($messageData['recipient_id'], $onlineBotIds);
@@ -132,12 +144,12 @@ class ConversationManager
                     $replyableAt = Carbon::now();
                 } else {
                     if ($isNewConversation || $conversation->messages[0]->sender->roles[0]->id === User::TYPE_BOT) {
-                        $replyableAt = Carbon::now()->addMinutes(rand(1, 10));
+                        $replyableAt = Carbon::now()->addMinutes(rand(0, 5));
                     } else {
                         if ($conversation->getReplyableAt() && $conversation->getReplyableAt()->gt(Carbon::now())) {
                             $replyableAt = $conversation->getReplyableAt();
                         } else {
-                            $replyableAt = Carbon::now()->addMinutes(rand(1, 10));
+                            $replyableAt = Carbon::now()->addMinutes(rand(0, 5));
                         }
                     }
                 }
@@ -151,6 +163,10 @@ class ConversationManager
                 if (2 === rand(1, 2)) {
                     $conversation->setReplyableAt(null);
                 } else {
+                    $conversation->setCycleStage(
+                        Conversation::CYCLE_STAGE_STOPPED
+                    );
+
                     $conversation->setReplyableAt(Carbon::now()->addDays(self::CONVERSATION_PRE_STOPPED_PERIOD_IN_DAYS));
                 }
             }
@@ -276,6 +292,46 @@ class ConversationManager
     public function newPeasantBotConversationsCount()
     {
         return $this->newPeasantBotConversations()->count();
+    }
+
+    /**
+     * @param null $limit
+     * @param bool $sort
+     * @return Conversation[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Query\Builder[]|\Illuminate\Support\Collection
+     */
+    public function getConversationsByCycleStage(int $cycleStage, $limit = null, $sort = false)
+    {
+        $conversations = Conversation::with(['userA', 'userB'])
+            ->whereHas('userA', function ($query) {
+                $query->where('active', true);
+            })
+            ->whereHas('userB', function ($query) {
+                $query->where('active', true);
+            })
+            ->with(['messages' => function ($query) {
+                $query->orderBy('created_at', 'desc');
+            }])
+            ->where('cycle_stage', $cycleStage)
+            ->where(function ($query) {
+                $query->where('locked_at', null)
+                    ->orWhere('locked_at', '<', Carbon::now()->subMinutes(self::CONVERSATION_LOCKING_TIME));
+            })
+            ->withTrashed()
+            ->where('replyable_at', '<=', Carbon::now())
+            ->where('replyable_at', '!=', null)
+            ->get();
+
+        if ($sort) {
+            $conversations = $conversations->sortByDesc(function ($conversation) {
+                return $conversation->messages[0]->getCreatedAt();
+            });
+        }
+
+        if ($limit) {
+            $conversations->take($limit);
+        }
+
+        return $conversations;
     }
 
 
@@ -737,34 +793,36 @@ class ConversationManager
      * @param int $userBId
      * @return Conversation
      */
-    public function createOrRetrieveConversation(int $userAId, int $userBId)
+    public function createOrRetrieveConversation(User $userA, User $userB)
     {
         $conversation = $this->conversation
             ->with(['messages' => function ($query) {
                 $query->orderBy('created_at', 'desc');
             }])
-            ->where('user_a_id', $userAId)
-            ->where('user_b_id', $userBId)
-            ->orWhere(function ($query) use ($userAId, $userBId) {
-                $query->where('user_a_id', $userBId);
-                $query->where('user_b_id', $userAId);
+            ->where('user_a_id', $userA->getId())
+            ->where('user_b_id', $userB->getId())
+            ->orWhere(function ($query) use ($userA, $userB) {
+                $query->where('user_a_id', $userB->getId());
+                $query->where('user_b_id', $userA->getId());
             })
             ->withTrashed()
             ->first();
 
         if (!($conversation instanceof Conversation)) {
             $conversation = new Conversation([
-                'user_a_id' => $userAId,
-                'user_b_id' => $userBId
+                'user_a_id' => $userA->getId(),
+                'user_b_id' => $userB->getId()
             ]);
 
-            $conversation->setNewActivityForUserB(true);
+            if ($userB->isPeasant()) {
+                $conversation->setNewActivityForUserB(true);
+            }
         } else {
             if ($conversation->getDeletedAt()) {
                 $conversation->setDeletedAt(null);
             }
 
-            if ($conversation->getUserBId() === $userBId) {
+            if ($conversation->getUserBId() === $userB->getId()) {
                 $conversation->setNewActivityForUserB(true);
                 $conversation->setNewActivityForUserA(false);
             } else {
