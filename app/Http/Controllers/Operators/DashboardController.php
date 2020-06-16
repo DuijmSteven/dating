@@ -24,7 +24,6 @@ class DashboardController extends \App\Http\Controllers\Controller
         parent::__construct();
     }
 
-
     /**
      * Show the application dashboard.
      *

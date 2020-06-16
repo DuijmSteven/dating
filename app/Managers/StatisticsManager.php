@@ -4,6 +4,7 @@ namespace App\Managers;
 
 use App\ConversationMessage;
 use App\Creditpack;
+use App\Expense;
 use App\Facades\Helpers\PaymentsHelper;
 use App\Payment;
 use App\User;
@@ -34,6 +35,17 @@ class StatisticsManager
                     $endDate
                 ])
             ->where('status', Payment::STATUS_COMPLETED)
+            ->sum('amount');
+    }
+
+    public function affiliateExpensesBetween(int $payee, int $type, $startDate, $endDate) {
+        return Expense::where('payee', $payee)
+            ->where('type', $type)
+            ->whereBetween('takes_place_at',
+                [
+                    $startDate,
+                    $endDate
+                ])
             ->sum('amount');
     }
 

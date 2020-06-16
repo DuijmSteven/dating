@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Conversation;
+use App\Expense;
 use App\Http\Controllers\Controller;
 use App\Managers\ChartsManager;
 use App\Managers\ConversationManager;
@@ -120,6 +121,21 @@ class DashboardController extends Controller
         $tenMinutesAgo = Carbon::now('Europe/Amsterdam')->subMinutes(10)->setTimezone('UTC');
         $oneHourAgo = Carbon::now('Europe/Amsterdam')->subHours(1)->setTimezone('UTC');
         $now = Carbon::now('Europe/Amsterdam')->setTimezone('UTC');
+
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+
+        $googleAdsExpensesAllTime = $this->statisticsManager->affiliateExpensesBetween(
+            Expense::PAYEE_GOOGLE,
+            Expense::TYPE_ADS,
+            $launchDate,
+            $endOfToday
+        );
+
+        $googleAdsRevenueAllTime = $this->statisticsManager->affiliateRevenueBetween(
+            UserAffiliateTracking::AFFILIATE_GOOGLE,
+            $launchDate,
+            $endOfToday
+        );
 
         $viewData = [
             'onlineFemaleStraightBotsCount' => $onlineFemaleStraightBotsCount,
@@ -328,7 +344,9 @@ class DashboardController extends Controller
                     UserAffiliateTracking::AFFILIATE_GOOGLE,
                     $startOfYear,
                     $endOfToday
-                )
+                ),
+                'allTimeExpenses' => $googleAdsExpensesAllTime,
+                'allTimeNetRevenue' => $googleAdsRevenueAllTime - $googleAdsExpensesAllTime
             ],
             'topMessagerStatistics' => [
                 'today' => $this->statisticsManager->topMessagersBetweenDates($startOfToday, $endOfToday, 50),

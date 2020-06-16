@@ -101,7 +101,7 @@ class ExpenseController extends Controller
             /** @var Expense $createdExpense */
             $createdExpense = Expense::create([
                 'description' => $data['description'],
-                'amount' => $data['amount'] * 1000,
+                'amount' => $data['amount'] * 100,
                 'payee' => $data['payee'],
                 'type' => $data['type'],
                 'takes_place_at' => Carbon::parse($data['takes_place_at'])->format('Y-m-d')

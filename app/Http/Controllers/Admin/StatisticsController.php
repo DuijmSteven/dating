@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Creditpack;
+use App\Expense;
 use App\Http\Controllers\Controller;
 use App\Managers\ChartsManager;
 use App\Managers\StatisticsManager;
@@ -75,6 +76,21 @@ class StatisticsController extends Controller
 
         $averageRevenuePerAllTimeUser = $allTimeRevenue / $allUsers;
         $averageRevenuePerAllTimePayingUser = $allTimeRevenue / $allTimePayingUsers;
+
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+
+        $xpartnersExpensesAllTime = $this->statisticsManager->affiliateExpensesBetween(
+            Expense::PAYEE_XPARTNERS,
+            Expense::TYPE_ADS,
+            $launchDate,
+            $endOfToday
+        );
+
+        $xpartnersRevenueAllTime = $this->statisticsManager->affiliateRevenueBetween(
+            UserAffiliateTracking::AFFILIATE_XPARTNERS,
+            $launchDate,
+            $endOfToday
+        );
 
         $viewData = [
             'botMessageStatistics' => [
@@ -191,7 +207,9 @@ class StatisticsController extends Controller
                     UserAffiliateTracking::AFFILIATE_XPARTNERS,
                     $startOfYear,
                     $endOfToday
-                )
+                ),
+                'allTimeExpenses' => $xpartnersExpensesAllTime,
+                'allTimeNetRevenue' => $xpartnersRevenueAllTime - $xpartnersExpensesAllTime
             ],
             'xpartnersConversionStatistics' => [
                 'conversionsToday' => $this->statisticsManager->affiliateConversionsBetweenCount(
