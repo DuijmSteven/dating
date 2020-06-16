@@ -79,9 +79,16 @@ class StatisticsController extends Controller
 
         $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
 
-        $xpartnersExpensesAllTime = $this->statisticsManager->affiliateExpensesBetween(
+        $xpartnersAdExpensesAllTime = $this->statisticsManager->affiliateExpensesBetween(
             Expense::PAYEE_XPARTNERS,
             Expense::TYPE_ADS,
+            $launchDate,
+            $endOfToday
+        );
+
+        $xpartnersOtherExpensesAllTime = $this->statisticsManager->affiliateExpensesBetween(
+            Expense::PAYEE_XPARTNERS,
+            Expense::TYPE_OTHER,
             $launchDate,
             $endOfToday
         );
@@ -208,8 +215,9 @@ class StatisticsController extends Controller
                     $startOfYear,
                     $endOfToday
                 ),
-                'allTimeExpenses' => $xpartnersExpensesAllTime,
-                'allTimeNetRevenue' => $xpartnersRevenueAllTime - $xpartnersExpensesAllTime
+                'allTimeAdExpenses' => $xpartnersAdExpensesAllTime,
+                'allTimeOtherExpenses' => $xpartnersOtherExpensesAllTime,
+                'allTimeNetRevenue' => $xpartnersRevenueAllTime - $xpartnersAdExpensesAllTime - $xpartnersOtherExpensesAllTime
             ],
             'xpartnersConversionStatistics' => [
                 'conversionsToday' => $this->statisticsManager->affiliateConversionsBetweenCount(

@@ -119,6 +119,9 @@
                         <li><a href="#">All time expenses <span
                                     class="DashboardWidget_count">&euro; {{ $xpartnersRevenueStatistics['allTimeExpenses']/100 }} </span></a>
                         </li>
+                        <li><a href="#">All time other expenses <span
+                                    class="DashboardWidget_count">&euro; {{ $xpartnersRevenueStatistics['allTimeOtherExpenses']/100 }} </span></a>
+                        </li>
                         <li><a href="#">All time net revenue <span
                                     class="DashboardWidget_count">&euro; {{ $xpartnersRevenueStatistics['allTimeNetRevenue']/100 }} </span></a>
                         </li>

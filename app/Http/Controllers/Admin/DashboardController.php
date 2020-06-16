@@ -131,6 +131,13 @@ class DashboardController extends Controller
             $endOfToday
         );
 
+        $googleOtherExpensesAllTime = $this->statisticsManager->affiliateExpensesBetween(
+            Expense::PAYEE_GOOGLE,
+            Expense::TYPE_OTHER,
+            $launchDate,
+            $endOfToday
+        );
+
         $googleAdsRevenueAllTime = $this->statisticsManager->affiliateRevenueBetween(
             UserAffiliateTracking::AFFILIATE_GOOGLE,
             $launchDate,
@@ -345,8 +352,9 @@ class DashboardController extends Controller
                     $startOfYear,
                     $endOfToday
                 ),
-                'allTimeExpenses' => $googleAdsExpensesAllTime,
-                'allTimeNetRevenue' => $googleAdsRevenueAllTime - $googleAdsExpensesAllTime
+                'allTimeAdExpenses' => $googleAdsExpensesAllTime,
+                'allTimeOtherExpenses' => $googleOtherExpensesAllTime,
+                'allTimeNetRevenue' => $googleAdsRevenueAllTime - $googleAdsExpensesAllTime - $googleOtherExpensesAllTime
             ],
             'topMessagerStatistics' => [
                 'today' => $this->statisticsManager->topMessagersBetweenDates($startOfToday, $endOfToday, 50),
