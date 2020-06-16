@@ -8,10 +8,12 @@ class Expense extends TimeZonedModel
 {
     const PAYEE_XPARTNERS = 1;
     const PAYEE_GOOGLE = 2;
+    const PAYEE_OTHER = 3;
 
     const TYPE_ADS = 1;
     const TYPE_INFRASTRUCTURE = 2;
     const TYPE_SALARY = 3;
+    const TYPE_OTHER = 4;
 
     public $table = 'expenses';
 
@@ -32,6 +34,7 @@ class Expense extends TimeZonedModel
         return [
             self::PAYEE_XPARTNERS => 'X-Partners',
             self::PAYEE_GOOGLE => 'Google',
+            self::PAYEE_OTHER => 'Other',
         ];
     }
 
@@ -41,6 +44,7 @@ class Expense extends TimeZonedModel
             self::TYPE_ADS => 'Ads',
             self::TYPE_INFRASTRUCTURE => 'Infrastructure',
             self::TYPE_SALARY => 'Salary',
+            self::TYPE_OTHER => 'Other',
         ];
     }
 
