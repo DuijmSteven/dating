@@ -117,7 +117,7 @@
                                         style="color: #08a05e; font-weight: 600">{{ number_format($xpartnersRevenueStatistics['revenueCurrentYear']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
                         </li>
                         <li><a href="#">All time expenses <span
-                                    class="DashboardWidget_count">&euro; {{ $xpartnersRevenueStatistics['allTimeExpenses']/100 }} </span></a>
+                                    class="DashboardWidget_count">&euro; {{ $xpartnersRevenueStatistics['allTimeAdExpenses']/100 }} </span></a>
                         </li>
                         <li><a href="#">All time other expenses <span
                                     class="DashboardWidget_count">&euro; {{ $xpartnersRevenueStatistics['allTimeOtherExpenses']/100 }} </span></a>
