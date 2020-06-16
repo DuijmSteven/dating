@@ -174,7 +174,7 @@
                                         style="color: #08a05e; font-weight: 600">{{ number_format($googleAdsRevenueStatistics['revenueCurrentYear']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
                         </li>
                         <li><a href="#">All time ad expenses <span
-                                    class="DashboardWidget_count">&euro; {{ $googleAdsRevenueStatistics['allTimeExpenses']/100 }} </span></a>
+                                    class="DashboardWidget_count">&euro; {{ $googleAdsRevenueStatistics['allTimeAdExpenses']/100 }} </span></a>
                         </li>
                         <li><a href="#">All time other expenses <span
                                     class="DashboardWidget_count">&euro; {{ $googleAdsRevenueStatistics['allTimeOtherExpenses']/100 }} </span></a>
