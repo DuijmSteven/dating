@@ -27,6 +27,9 @@
                                 <option value="{{ \App\Expense::PAYEE_GOOGLE }}" {!! (old('payee') === \App\Expense::PAYEE_GOOGLE) ? 'selected' : '' !!}>
                                     {{ \App\Expense::payeeDescriptionPerId()[\App\Expense::PAYEE_GOOGLE] }}
                                 </option>
+                                <option value="{{ \App\Expense::PAYEE_OTHER }}" {!! (old('payee') === \App\Expense::PAYEE_OTHER) ? 'selected' : '' !!}>
+                                    {{ \App\Expense::payeeDescriptionPerId()[\App\Expense::PAYEE_GOOGLE] }}
+                                </option>
                             </select>
                             @if ($errors->has('payee'))
                                 {!! $errors->first('payee', '<small class="form-error">:message</small>') !!}
@@ -50,6 +53,9 @@
                                 </option>
                                 <option value="{{ \App\Expense::TYPE_SALARY }}" {!! (old('type') === \App\Expense::TYPE_SALARY) ? 'selected' : '' !!}>
                                     {{ \App\Expense::typeDescriptionPerId()[\App\Expense::TYPE_SALARY] }}
+                                </option>
+                                <option value="{{ \App\Expense::TYPE_OTHER }}" {!! (old('type') === \App\Expense::TYPE_OTHER) ? 'selected' : '' !!}>
+                                    {{ \App\Expense::typeDescriptionPerId()[\App\Expense::TYPE_OTHER] }}
                                 </option>
                             </select>
                             @if ($errors->has('type'))
