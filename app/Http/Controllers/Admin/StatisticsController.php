@@ -110,8 +110,8 @@ class StatisticsController extends Controller
         })->whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_PEASANT);
         })
-            ->where('created_at', '>=', $launchDate)
-            ->count();
+        ->where('created_at', '>=', $launchDate)
+        ->count();
 
         $viewData = [
             'botMessageStatistics' => [
@@ -264,7 +264,7 @@ class StatisticsController extends Controller
                     $startOfYear,
                     $endOfToday
                 ),
-                'allTimeConversionRate' => $xpartnersConversionsAllTimeCount / $xpartnersLeadsAllTimeCount / 100
+                'allTimeConversionRate' => $xpartnersConversionsAllTimeCount / $xpartnersLeadsAllTimeCount * 100
             ],
             'peasantPublicChatMessageStatistics' => [
                 'messagesSentToday' => $this->statisticsManager->publicChatMessagesSentByUserTypeCountBetween(

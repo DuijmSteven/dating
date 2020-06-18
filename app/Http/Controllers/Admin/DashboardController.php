@@ -327,7 +327,7 @@ class DashboardController extends Controller
                     $startOfYear,
                     $endOfToday
                 ),
-                'allTimeConversionRate' => $googleAdsConversionsAllTimeCount / $googleAdsLeadsAllTimeCount / 100
+                'allTimeConversionRate' => $googleAdsConversionsAllTimeCount / $googleAdsLeadsAllTimeCount * 100
             ],
             'googleAdsRevenueStatistics' => [
                 'revenueToday' => $this->statisticsManager->affiliateRevenueBetween(

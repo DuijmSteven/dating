@@ -259,7 +259,7 @@
                                     class="DashboardWidget_count">{{ $googleAdsConversionStatistics['conversionsCurrentYear'] }} </span></a>
                         </li>
                         <li><a href="#">All time conversion rate <span
-                                    class="DashboardWidget_count">{{ number_format($googleAdsConversionStatistics['allTimeConversionRate'], 0) }}% </span></a>
+                                    class="DashboardWidget_count">{{ number_format($googleAdsConversionStatistics['allTimeConversionRate'], 1) }}% </span></a>
                         </li>
                     </ul>
                 </div>
