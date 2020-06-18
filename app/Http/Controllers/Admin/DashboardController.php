@@ -131,18 +131,25 @@ class DashboardController extends Controller
             $endOfToday
         );
 
-        $googleOtherExpensesAllTime = $this->statisticsManager->affiliateExpensesBetween(
-            Expense::PAYEE_GOOGLE,
-            Expense::TYPE_OTHER,
-            $launchDate,
-            $endOfToday
-        );
-
         $googleAdsRevenueAllTime = $this->statisticsManager->affiliateRevenueBetween(
             UserAffiliateTracking::AFFILIATE_GOOGLE,
             $launchDate,
             $endOfToday
         );
+
+        $googleAdsConversionsAllTimeCount = $this->statisticsManager->affiliateConversionsBetweenCount(
+            UserAffiliateTracking::AFFILIATE_GOOGLE,
+            $launchDate,
+            $endOfToday
+        );
+
+        $googleAdsLeadsAllTimeCount = User::whereHas('affiliateTracking', function ($query) {
+           $query->where('affiliate', UserAffiliateTracking::AFFILIATE_GOOGLE);
+        })->whereHas('roles', function ($query) {
+            $query->where('id', User::TYPE_PEASANT);
+        })
+        ->where('created_at', '>=', $launchDate)
+        ->count();
 
         $viewData = [
             'onlineFemaleStraightBotsCount' => $onlineFemaleStraightBotsCount,
@@ -319,7 +326,8 @@ class DashboardController extends Controller
                     UserAffiliateTracking::AFFILIATE_GOOGLE,
                     $startOfYear,
                     $endOfToday
-                )
+                ),
+                'allTimeConversionRate' => $googleAdsConversionsAllTimeCount / $googleAdsLeadsAllTimeCount / 100
             ],
             'googleAdsRevenueStatistics' => [
                 'revenueToday' => $this->statisticsManager->affiliateRevenueBetween(
@@ -353,8 +361,7 @@ class DashboardController extends Controller
                     $endOfToday
                 ),
                 'allTimeAdExpenses' => $googleAdsExpensesAllTime,
-                'allTimeOtherExpenses' => $googleOtherExpensesAllTime,
-                'allTimeNetRevenue' => $googleAdsRevenueAllTime - $googleAdsExpensesAllTime - $googleOtherExpensesAllTime
+                'allTimeNetRevenue' => $googleAdsRevenueAllTime - $googleAdsExpensesAllTime,
             ],
             'topMessagerStatistics' => [
                 'today' => $this->statisticsManager->topMessagersBetweenDates($startOfToday, $endOfToday, 50),

@@ -161,6 +161,9 @@
                         <li><a href="#">Current year <span
                                     class="DashboardWidget_count">{{ $xpartnersConversionStatistics['conversionsCurrentYear'] }} </span></a>
                         </li>
+                        <li><a href="#">All time conversion rate <span
+                                    class="DashboardWidget_count">{{ number_format($xpartnersConversionStatistics['allTimeConversionRate'], 0) }}% </span></a>
+                        </li>
                     </ul>
                 </div>
             </div>

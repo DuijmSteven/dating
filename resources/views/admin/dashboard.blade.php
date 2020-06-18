@@ -61,7 +61,8 @@
                     <div class="widget-us DashboardWidget_header"
                          style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
                         <i class="fa fa-users DashboardWidget_header-icon"></i>
-                        <span class="DashboardWidget_header-title"><b>{{ $onlinePeasantsCount }} peasants online</b></span>
+                        <span
+                            class="DashboardWidget_header-title"><b>{{ $onlinePeasantsCount }} peasants online</b></span>
                     </div>
                 </div>
             </a>
@@ -176,9 +177,6 @@
                         <li><a href="#">All time ad expenses <span
                                     class="DashboardWidget_count">&euro; {{ $googleAdsRevenueStatistics['allTimeAdExpenses']/100 }} </span></a>
                         </li>
-                        <li><a href="#">All time other expenses <span
-                                    class="DashboardWidget_count">&euro; {{ $googleAdsRevenueStatistics['allTimeOtherExpenses']/100 }} </span></a>
-                        </li>
                         <li><a href="#">All time net revenue <span
                                     class="DashboardWidget_count">&euro; {{ $googleAdsRevenueStatistics['allTimeNetRevenue']/100 }} </span></a>
                         </li>
@@ -259,6 +257,9 @@
                         </li>
                         <li><a href="#">Current year <span
                                     class="DashboardWidget_count">{{ $googleAdsConversionStatistics['conversionsCurrentYear'] }} </span></a>
+                        </li>
+                        <li><a href="#">All time conversion rate <span
+                                    class="DashboardWidget_count">{{ number_format($googleAdsConversionStatistics['allTimeConversionRate'], 0) }}% </span></a>
                         </li>
                     </ul>
                 </div>
@@ -549,12 +550,12 @@
         </div>
     @endif
 
-{{--    <div class="row">--}}
-{{--        <div class="col-xs-12">--}}
-{{--            <div style="width: 100%">--}}
-{{--                {!! $xpartnersConversionsChart->container() !!}--}}
-{{--                {!! $xpartnersConversionsChart->script() !!}--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
+    {{--    <div class="row">--}}
+    {{--        <div class="col-xs-12">--}}
+    {{--            <div style="width: 100%">--}}
+    {{--                {!! $xpartnersConversionsChart->container() !!}--}}
+    {{--                {!! $xpartnersConversionsChart->script() !!}--}}
+    {{--            </div>--}}
+    {{--        </div>--}}
+    {{--    </div>--}}
 @endsection

@@ -3,6 +3,7 @@ window.$ = window.jQuery = $;
 
 require("jquery-ui/ui/widgets/autocomplete");
 
+require('moment');
 require('bootstrap');
 require('bootstrap-datepicker');
 

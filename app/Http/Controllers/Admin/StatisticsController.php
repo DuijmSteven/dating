@@ -99,6 +99,20 @@ class StatisticsController extends Controller
             $endOfToday
         );
 
+        $xpartnersConversionsAllTimeCount = $this->statisticsManager->affiliateConversionsBetweenCount(
+            UserAffiliateTracking::AFFILIATE_XPARTNERS,
+            $launchDate,
+            $endOfToday
+        );
+
+        $xpartnersLeadsAllTimeCount = User::whereHas('affiliateTracking', function ($query) {
+            $query->where('affiliate', UserAffiliateTracking::AFFILIATE_XPARTNERS);
+        })->whereHas('roles', function ($query) {
+            $query->where('id', User::TYPE_PEASANT);
+        })
+            ->where('created_at', '>=', $launchDate)
+            ->count();
+
         $viewData = [
             'botMessageStatistics' => [
                 'messagesSentToday' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
@@ -249,7 +263,8 @@ class StatisticsController extends Controller
                     UserAffiliateTracking::AFFILIATE_XPARTNERS,
                     $startOfYear,
                     $endOfToday
-                )
+                ),
+                'allTimeConversionRate' => $xpartnersConversionsAllTimeCount / $xpartnersLeadsAllTimeCount / 100
             ],
             'peasantPublicChatMessageStatistics' => [
                 'messagesSentToday' => $this->statisticsManager->publicChatMessagesSentByUserTypeCountBetween(
