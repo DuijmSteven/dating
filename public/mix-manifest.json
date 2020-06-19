@@ -5,10 +5,10 @@
     "/js/app.js.map": "/js/app.js.map?id=6233681c16d4a5a03c61",
     "/css/app.css.map": "/css/app.css.map?id=4982abacdc32f6fe1116",
     "/admin/css/custom.css.map": "/admin/css/custom.css.map?id=db3150abfbbc953c70c3",
-    "/admin/js/custom.js": "/admin/js/custom.js?id=4ed4057a3bcfe0052593",
-    "/admin/js/custom.js.map": "/admin/js/custom.js.map?id=0992328e02bf10abd53f",
+    "/admin/js/custom-force.js": "/admin/js/custom-force.js?id=c247d3af816bf56c1ac0",
+    "/admin/js/custom-force.js.map": "/admin/js/custom-force.js.map?id=f7689a0346845072889a",
     "/js/lp.js": "/js/lp.js?id=faaefe1aed440ea842c7",
     "/js/lp.js.map": "/js/lp.js.map?id=150161410fb3ce63b8e3",
     "/admin/css/plugins.css": "/admin/css/plugins.css?id=45a84309d4c66993673d",
-    "/admin/js/plugins.js": "/admin/js/plugins.js?id=e8da6036ef883032d432"
+    "/admin/js/plugins-force.js": "/admin/js/plugins-force.js?id=e8da6036ef883032d432"
 }

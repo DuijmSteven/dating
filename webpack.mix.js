@@ -50,13 +50,13 @@ mix.scripts([
     'resources/assets/js/admin/moment.min.js',
     'resources/assets/js/admin/boostrap-datetimepicker.min.js',
     'resources/assets/js/admin/raphael.min.js'
-], 'public/admin/js/plugins.js')
+], 'public/admin/js/plugins-force.js')
     .sourceMaps()
     .version();
 
 mix.js(
     'resources/assets/js/admin/custom.js',
-    'public/admin/js/custom.js'
+    'public/admin/js/custom-force.js'
 )
     .sass('resources/assets/sass/admin/custom.scss', 'public/admin/css')
     .sourceMaps()
