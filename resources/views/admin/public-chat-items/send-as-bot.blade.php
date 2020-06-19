@@ -10,7 +10,8 @@
 
         <div class="box-body">
             @if(count($bots) === 0)
-                <div style="padding-left: 15px; font-weight: bold; font-size: 23px; color: #245269"><p>No bots available</p></div>
+                <div style="padding-left: 15px; font-weight: bold; font-size: 23px; color: #245269"><p>No bots
+                        available</p></div>
             @else
                 <ul style="max-height: 230px;
                         overflow-y: scroll;
@@ -45,11 +46,13 @@
                              </span>
 
                             @if($bot->public_chat_messages_count > 0)
-                                <span class="publicChatBotMessagesCount">- # of past bot messages: {{ $bot->public_chat_messages_count }}</span>
+                                <span
+                                    class="publicChatBotMessagesCount">- # of past bot messages: {{ $bot->public_chat_messages_count }}</span>
 
                                 -
 
-                                <span class="latestBotMessage">Most recent message: {{ \Illuminate\Support\Str::substr($bot->publicChatMessages[0]->body, 0, 100) }}{{ \Illuminate\Support\Str::length($bot->publicChatMessages[0]->body) > 100 ? '...' : '' }} ({{ $bot->publicChatMessages[0]->getPublishedAt() }})</span>
+                                <span
+                                    class="latestBotMessage">Most recent message: {{ \Illuminate\Support\Str::substr($bot->publicChatMessages[0]->body, 0, 100) }}{{ \Illuminate\Support\Str::length($bot->publicChatMessages[0]->body) > 100 ? '...' : '' }} ({{ $bot->publicChatMessages[0]->getPublishedAt() }})</span>
                             @endif
 
                         </li>
@@ -120,22 +123,45 @@
                                     <input id="sender_id_input" type="hidden" name="sender_id" value="">
                                     <input type="hidden" name="type" value="{{ \App\PublicChatItem::TYPE_ADMIN }}">
 
-                                    <textarea
-                                        class="form-control"
-                                        id="text"
-                                        name="text"
-                                        maxlength="200"
-                                        rows="2"
-                                    ></textarea>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div class="form-group">
+                                                <textarea
+                                                    class="form-control"
+                                                    id="text"
+                                                    name="text"
+                                                    maxlength="200"
+                                                    rows="2"
+                                                ></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                                    <div style="text-align: right">
-                                        <button
-                                            class="btn btn-success form-control"
-                                            type="submit"
-                                            style="margin-top: 20px"
-                                        >
-                                            Send
-                                        </button>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div class="form-group">
+                                                <div class='input-group date' id='datetimepicker1'>
+                                                    <input type="text" name="published_at" class="form-control"/>
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div style="text-align: right">
+                                                <button
+                                                    class="btn btn-success form-control"
+                                                    type="submit"
+                                                    style="margin-top: 20px"
+                                                >
+                                                    Send
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </form>
                             </div>

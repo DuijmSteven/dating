@@ -27,12 +27,10 @@ class DashboardController extends FrontendController
     {
         $lastThirtyDays = Carbon::now('Europe/Amsterdam')->subDays(30)->setTimezone('UTC');
 
-        return view('frontend.home', [
-            'title' => config('app.name') . ' - Dashboard',
-            'users' => User::with(['meta', 'profileImage'])
+        $users = User::with(['meta', 'profileImage'])
+            ->whereHas('profileImage')
             ->whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_BOT);
-                $query->orWhere('id', User::TYPE_PEASANT);
             })
             ->whereHas('meta', function ($query) {
                 $query->where('gender', $this->authenticatedUser->meta->getLookingForGender());
@@ -42,7 +40,32 @@ class DashboardController extends FrontendController
             ->where('created_at', '>=', $lastThirtyDays)
             ->orderByRaw('RAND()')
             ->take(10)
-            ->get(),
+            ->get();
+
+        if (count($users) < 10) {
+            \Log::debug('Not enough recent bots with profile pic');
+
+            $lastSixtyDays = Carbon::now('Europe/Amsterdam')->subDays(60)->setTimezone('UTC');
+
+            $users = User::with(['meta', 'profileImage'])
+                ->whereHas('profileImage')
+                ->whereHas('roles', function ($query) {
+                    $query->where('id', User::TYPE_BOT);
+                })
+                ->whereHas('meta', function ($query) {
+                    $query->where('gender', $this->authenticatedUser->meta->getLookingForGender());
+                    $query->where('looking_for_gender', $this->authenticatedUser->meta->getGender());
+                })
+                ->where('active', true)
+                ->where('created_at', '>=', $lastSixtyDays)
+                ->orderByRaw('RAND()')
+                ->take(10)
+                ->get();
+        }
+
+        return view('frontend.home', [
+            'title' => config('app.name') . ' - Dashboard',
+            'users' => $users,
             'carbonNow' => Carbon::now(),
         ]);
     }

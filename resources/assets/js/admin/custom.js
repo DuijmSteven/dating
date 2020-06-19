@@ -33,6 +33,10 @@ $(window).on('load', function () {
         format: "dd-mm-yyyy"
     });
 
+    $('#datetimepicker1').datetimepicker({
+        format: "DD-MM-YYYY HH:mm:ss"
+    });
+
     if ($('.JS--autoCompleteCites').length > 0) {
         // Auto-completes Dutch cities in bot creation view text field
         $.getJSON(DP.baseUrl + '/api/cities/nl')

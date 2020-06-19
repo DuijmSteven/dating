@@ -224,6 +224,12 @@ class PublicChatItemController extends Controller
 
     public function sendAsBot(CreatePublicChatItemRequest $createPublicChatItemRequest) {
         try {
+            $publishedAtInCurrentTimezone = Carbon::parse($createPublicChatItemRequest->get('published_at'),
+                'Europe/Amsterdam'
+            );
+
+            $publishedAtInUtc = $publishedAtInCurrentTimezone->setTimezone('UTC');
+
             DB::beginTransaction();
 
             $messageData = $createPublicChatItemRequest->all();
@@ -232,7 +238,7 @@ class PublicChatItemController extends Controller
             $publicChatItem->setBody($messageData['text']);
             $publicChatItem->setSenderId($messageData['sender_id']);
             $publicChatItem->setType($messageData['type']);
-            $publicChatItem->setPublishedAt(Carbon::now());
+            $publicChatItem->setPublishedAt($publishedAtInUtc);
             $publicChatItem->save();
 
             $activity = new Activity;

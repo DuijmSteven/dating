@@ -48,6 +48,7 @@ mix.scripts([
     'resources/assets/js/admin/jquery.slimscroll.min.js',
     'resources/assets/js/admin/jquery.sparkline.min.js',
     'resources/assets/js/admin/moment.min.js',
+    'resources/assets/js/admin/boostrap-datetimepicker.min.js',
     'resources/assets/js/admin/raphael.min.js'
 ], 'public/admin/js/plugins.js')
     .sourceMaps()
