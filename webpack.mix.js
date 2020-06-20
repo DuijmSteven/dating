@@ -12,7 +12,8 @@ let mix = require('laravel-mix');
  */
 
 mix.js('resources/assets/js/app.js', 'public/js')
-    .sass('resources/assets/sass/app.scss', 'public/css')
+    .sass('resources/assets/sass/altijdsex-nl.scss', 'public/css/altijdsex-nl/app.css')
+    .sass('resources/assets/sass/whitelabel-nl.scss', 'public/css/whitelabel-nl/app.css')
     .sourceMaps()
     .version();
 

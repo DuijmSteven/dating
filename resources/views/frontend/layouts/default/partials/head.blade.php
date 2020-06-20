@@ -14,7 +14,13 @@
             })(window,document,'script','dataLayer','GTM-MJG2S4N');</script>
         <!-- End Google Tag Manager -->
     @endif
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+
+    @if(config('app.name') === 'Altijdsex.nl')
+        <link rel="stylesheet" href="{{ mix('css/altijdsex-nl/app.css') }}">
+    @elseif(config('app.name') === 'Whitelabel.nl')
+        <link rel="stylesheet" href="{{ mix('css/whitelabel-nl/app.css') }}">
+    @endif
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
