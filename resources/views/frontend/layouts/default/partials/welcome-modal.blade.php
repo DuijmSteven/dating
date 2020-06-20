@@ -26,6 +26,8 @@
                         Ons doel is om je te voorzien van de handvatten die je nodig hebt om snel en eenvoudig een spannende date te vinden en je de best
                         mogelijke ervaring te bieden.
 
+                        <br><br>
+
                         We hopen dat je veel plezier beleeft aan het gebruik van onze moderne chat vorzien van <strong>live
                             updates en meldingen</strong>, zodat je binnenkort je volgende sexy date(s) kunt ontmoeten.
                         <br><br>

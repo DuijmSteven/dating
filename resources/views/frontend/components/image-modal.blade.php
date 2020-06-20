@@ -8,21 +8,22 @@
                     </i>
                 </button>
 
-                <img class="{{ isset($authenticatedUser) && !$authenticatedUser->isPayingUser() ? 'very-blurred' : '' }}" alt="imagePreview" src="" id="imagePreview" style="width: 100%" >
+{{--                <img class="{{ isset($authenticatedUser) && !$authenticatedUser->isPayingUser() ? 'very-blurred' : '' }}" alt="imagePreview" src="" id="imagePreview" style="width: 100%" >--}}
+                <img alt="imagePreview" src="" id="imagePreview" style="width: 100%" >
             </div>
         </div>
 
-        @if(isset($authenticatedUser) && !$authenticatedUser->isPayingUser())
-            <div class="nonPayingUserMessage">
-                @include('frontend.components.button', [
-                        'buttonContext' => 'general',
-                        'buttonState' => 'primary',
-                        'buttonText' => trans('navbar.credits'),
-                        'buttonClasses' => 'centered Button--tall Button--highlighted',
-                        'url' => route('credits.show'),
-                    ])
-            </div>
-        @endif
+{{--        @if(isset($authenticatedUser) && !$authenticatedUser->isPayingUser())--}}
+{{--            <div class="nonPayingUserMessage">--}}
+{{--                @include('frontend.components.button', [--}}
+{{--                        'buttonContext' => 'general',--}}
+{{--                        'buttonState' => 'primary',--}}
+{{--                        'buttonText' => trans('navbar.credits'),--}}
+{{--                        'buttonClasses' => 'centered Button--tall Button--highlighted',--}}
+{{--                        'url' => route('credits.show'),``--}}
+{{--                    ])--}}
+{{--            </div>--}}
+{{--        @endif--}}
     </div>
 
     <i class="material-icons imageModalArrow leftArrow hidden JS--imageModalArrow JS--leftArrow">

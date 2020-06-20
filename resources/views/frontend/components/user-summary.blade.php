@@ -83,15 +83,12 @@
             <div class="UserSummary__otherImages">
                 {{-- DON'T reformat this loop, it is structured like this to avoid spacing between inline blocks --}}
                 @foreach($user->visibleImagesNotProfile as $image)<a href="#" class="modalImage UserSummary__nonProfileImageModalWrapper"><div class="UserSummary__nonProfileImageWrapper"><img
-                                class="UserSummary__nonProfileImage JS--galleryImage {{ !$authenticatedUser->isPayingUser() ? 'blurred' : '' }}"
+{{--                                class="UserSummary__nonProfileImage JS--galleryImage {{ !$authenticatedUser->isPayingUser() ? 'blurred' : '' }}"--}}
+                                class="UserSummary__nonProfileImage JS--galleryImage"
                                 src="{{ \StorageHelper::userImageUrl($user->getId(), $image->getFilename()) }}"
                                 data-src="{{ \StorageHelper::userImageUrl($user->getId(), $image->getFilename()) }}"
                                 alt="user image"
-                            ><div class="nonPayingUserOverlay {{ !$authenticatedUser->isPayingUser() ? 'showIfNonPayingUser' : '' }}">
-                            <i class="material-icons">
-                                search
-                            </i>
-                        </div></div></a>@endforeach
+                            ></div></a>@endforeach
 
 
             </div>
