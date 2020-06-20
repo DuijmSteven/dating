@@ -29,7 +29,7 @@ class CreatePublicChatItemRequest extends Request
             'text' => 'required|string|min:1|max:200',
             'operator_id' => 'integer',
             'type' => 'integer',
-            'published_at' => 'required|date_format:d-m-Y H:i:s',
+            'published_at' => 'date_format:d-m-Y H:i:s',
         ];
 
         return $rules;
