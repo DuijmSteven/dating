@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Managers\AffiliateManager;
 use App\Services\UserLocationService;
 use App\User;
+use App\UserIp;
 use Illuminate\Http\Request;
 use App\Traits\Users\AuthenticatesUsers;
 
@@ -61,7 +62,9 @@ class LoginController extends Controller
             return redirect()->route('operator-platform.dashboard');
         }
 
-        if ($request->ip()) {
+        $existingIps = UserIp::all()->pluck('ip')->toArray();
+
+        if ($request->ip() && !in_array(request()->ip(), $existingIps)) {
             $userIpInstance = new \App\UserIp();
             $userIpInstance->setUserId($user->id);
             $userIpInstance->setIp($request->ip());
