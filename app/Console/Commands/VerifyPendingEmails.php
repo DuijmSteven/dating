@@ -46,12 +46,16 @@ class VerifyPendingEmails extends Command
      */
     public function handle()
     {
+        \Log::debug('Checking for users tha have pending verification email...');
+
         $users = User::with(['meta'])
         ->whereHas('meta', function ($query) {
             $query->where('email_verification_status', UserMeta::EMAIL_VERIFICATION_STATUS_PENDING);
         })
         ->take(30)
         ->get();
+
+        \Log::debug('User count: ' . $users->count());
 
         foreach ($users as $user) {
 
@@ -81,5 +85,7 @@ class VerifyPendingEmails extends Command
 
             $user->meta->save();
         }
+
+        \Log::debug('...done');
     }
 }
