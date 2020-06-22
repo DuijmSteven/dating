@@ -30,7 +30,7 @@ class EmailVerificationService
         $this->setApiKey(config('the_checker.api_key'));
     }
 
-    private function setApiKey(string $apiKey)
+    private function setApiKey($apiKey)
     {
         $this->apiKey = $apiKey;
     }
