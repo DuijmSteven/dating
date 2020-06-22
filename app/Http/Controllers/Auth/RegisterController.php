@@ -152,6 +152,8 @@ class RegisterController extends Controller
 
             $userMetaInstance->save();
 
+            \Log::debug('User with IP: ' . $userIp . ' registered.');
+
             if ($userIp) {
                 $userIpInstance = new \App\UserIp();
                 $userIpInstance->setUserId($createdUser->id);
