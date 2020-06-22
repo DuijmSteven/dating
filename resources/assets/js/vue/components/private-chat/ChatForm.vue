@@ -18,6 +18,7 @@
                 v-on:keydown="textareaKeyDown"
                 @focus="chatFocused()"
                 v-model="text"
+                :disabled="this.disableTextarea"
             ></textarea>
 
             <div class="PrivateChatItem__attachmentIcon">
@@ -73,7 +74,8 @@
                 textBeingSent: '',
                 fileBeingSent: null,
                 imagePreviewUrlBackup: null,
-                userCredits: undefined
+                userCredits: undefined,
+                disableTextarea: false
             }
         },
 
@@ -124,11 +126,13 @@
                     this.file = null;
                     this.imagePreviewUrl = null;
 
-                    this.$emit('show-no-credits');
-
                     setTimeout(() => {
                         this.text = '';
-                    }, 300);
+                    }, 50);
+
+                    this.disableTextarea = true;
+
+                    this.$emit('show-no-credits');
                 } else if (event.key === "Enter") {
                     this.sendMessage();
                 }

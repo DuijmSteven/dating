@@ -409,9 +409,16 @@
 
             promptToBuyCredits() {
                 this.showNoCredits = true;
+
                 setTimeout(() => {
                     this.showNoCredits = false;
-                }, 4000)
+                    window.location = this.creditsUrl;
+                }, 2000)
+
+
+                // setTimeout(() => {
+                //     this.showNoCredits = false;
+                // }, 4000)
             },
             addMessage(message) {
                 this.sendingMessage = true;
