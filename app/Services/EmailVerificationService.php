@@ -47,12 +47,19 @@ class EmailVerificationService
 
             $responseContents = json_decode($response->getBody()->getContents(), true);
 
+            \Log::debug('context', $responseContents);
+            \Log::debug($responseContents['result']);
+
+
             if ($responseContents && isset($responseContents['result'])) {
+
                 return $responseContents['result'];
             }
 
             return null;
         } catch (\Exception $exception) {
+            \Log::debug('error');
+
             return 'error';
         }
     }

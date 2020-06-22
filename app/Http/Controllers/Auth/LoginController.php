@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 
+use App\Managers\AffiliateManager;
+use App\Services\UserLocationService;
 use App\User;
 use Illuminate\Http\Request;
 use App\Traits\Users\AuthenticatesUsers;
@@ -58,6 +60,13 @@ class LoginController extends Controller
         if ($user->isOperator()) {
             return redirect()->route('operator-platform.dashboard');
         }
+
+        if ($request->ip()) {
+            $userIpInstance = new \App\UserIp();
+            $userIpInstance->setUserId($user->id);
+            $userIpInstance->setIp($request->ip());
+            $userIpInstance->save();
+        }
     }
 
     /**
@@ -65,8 +74,7 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
         $this->middleware('guest', ['except' => 'logout']);
     }

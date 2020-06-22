@@ -99,6 +99,12 @@
                                         {{ @trans('lp1.captcha_failed_message') }}
                                     </div>
                                 @endif
+
+                                @if ($errors->first('ipExists'))
+                                    <div class="captchaFailed">
+                                        Er is al een account met jou IP adres!
+                                    </div>
+                                @endif
                             </div>
                             <div class="wizard-navigation">
                                 <div class="progress" style="width: 95%; margin: 0 auto">

@@ -9,10 +9,12 @@ use App\Http\Requests\RegisterRequest;
 use App\Mail\Welcome;
 use App\Managers\AffiliateManager;
 use App\RoleUser;
+use App\Services\UserLocationService;
 use App\Traits\Users\RegistersUsers;
 use App\User;
 use App\UserAccount;
 use App\UserAffiliateTracking;
+use App\UserIp;
 use App\UserMeta;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
@@ -21,6 +23,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 use ReCaptcha\ReCaptcha;
 use GuzzleHttp\Psr7;
 
@@ -56,15 +59,22 @@ class RegisterController extends Controller
     private AffiliateManager $affiliateManager;
 
     /**
+     * @var UserLocationService
+     */
+    private UserLocationService $userLocationService;
+
+    /**
      * Create a new controller instance.
      *
      * @return void
      */
     public function __construct(
-        AffiliateManager $affiliateManager
+        AffiliateManager $affiliateManager,
+        UserLocationService $userLocationService
     ) {
         $this->middleware('guest');
         $this->affiliateManager = $affiliateManager;
+        $this->userLocationService = $userLocationService;
     }
 
     /**
@@ -98,6 +108,12 @@ class RegisterController extends Controller
             return redirect()->back()->with('recaptchaFailed', true);
         }
 
+        $existingIps = UserIp::all()->pluck('ip')->toArray();
+
+        if (in_array(request()->ip(), $existingIps)) {
+            throw ValidationException::withMessages(['ipExists' => 'Er is al een account met jou IP adres!']);
+        }
+
         $genderLookingForGender = explode("-", $request->all()['lookingFor']);
         $gender = $genderLookingForGender[0];
         $lookingFor = $genderLookingForGender[1];
@@ -121,7 +137,7 @@ class RegisterController extends Controller
 
         try {
             /** @var UserMeta $userMetaInstance */
-            $userIp = $this->getUserIp();
+            $userIp = $request->ip();
             $userMetaInstance = new UserMeta([
                 'user_id' => $createdUser->id,
                 'country' => 'nl',
@@ -135,6 +151,13 @@ class RegisterController extends Controller
             ]);
 
             $userMetaInstance->save();
+
+            if ($userIp) {
+                $userIpInstance = new \App\UserIp();
+                $userIpInstance->setUserId($createdUser->id);
+                $userIpInstance->setIp($userIp);
+                $userIpInstance->save();
+            }
         } catch (\Exception $exception) {
             DB::rollBack();
             throw $exception;
@@ -155,7 +178,7 @@ class RegisterController extends Controller
                     $createdUser->id,
                     $request->input('affiliate'),
                     $request->input('clickId'),
-                    $this->getLocationFromIp($userIp),
+                    $this->userLocationService->getLocationFromIp($userIp),
                     $mediaId,
                     $publisher
                 );
@@ -225,45 +248,6 @@ class RegisterController extends Controller
 
         return $this->registered($request, $createdUser)
             ?: redirect($this->redirectPath());
-    }
-
-
-    protected function getUserIp()
-    {
-        if (isset($_SERVER["HTTP_CF_CONNECTING_IP"])) {
-            $_SERVER['REMOTE_ADDR'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
-            $_SERVER['HTTP_CLIENT_IP'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
-        }
-        $client  = @$_SERVER['HTTP_CLIENT_IP'];
-        $forward = @$_SERVER['HTTP_X_FORWARDED_FOR'];
-        $remote  = $_SERVER['REMOTE_ADDR'];
-
-        if(filter_var($client, FILTER_VALIDATE_IP)) { $ip = $client; }
-        elseif(filter_var($forward, FILTER_VALIDATE_IP)) { $ip = $forward; }
-        else { $ip = $remote; }
-
-        return $ip;
-    }
-
-    protected function getLocationFromIp($ip)
-    {
-        $client = new Client();
-        try {
-            $response = $client->request(
-                'GET',
-                'http://api.ipstack.com/' . $ip . '?access_key=b56f13e4f12b980317694de933fd340d',
-                [
-                    'timeout' => 4
-                ]
-            );
-            $response = json_decode($response->getBody(), true);
-            return $response['country_code'];
-        } catch (RequestException $e) {
-            \Log::error('Cannot get IP - ' . Psr7\str($e->getRequest()));
-            if ($e->hasResponse()) {
-                \Log::error('Cannot get IP - ' . Psr7\str($e->getResponse()));
-            }
-        }
     }
 
     /**

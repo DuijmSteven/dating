@@ -2,10 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Helpers\ApplicationConstants\UserConstants;
-use App\Http\Requests\Request;
-use Illuminate\Support\Carbon;
-
 /**
  * Class RegisterRequest
  * @package App\Http\Requests
