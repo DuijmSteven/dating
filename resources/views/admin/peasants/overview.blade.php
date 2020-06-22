@@ -52,6 +52,8 @@
                                         <br>
                                         <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $peasant->username !!} <br>
                                         <strong>{!! @trans('user_constants.email') !!}:</strong> {!! $peasant->email !!} <br>
+                                        <strong>Email verification status:</strong> {!! \App\UserMeta::emailVerificationStatusDescriptionPerId()[$peasant->meta->getEmailVerificationStatus()] !!} <br>
+                                        <strong>Email verified:</strong> {!! \App\UserMeta::emailVerifiedDescriptionPerId()[$peasant->meta->getEmailVerified()] !!} <br>
 
                                         @php
                                             $highlightTypeClass = '';

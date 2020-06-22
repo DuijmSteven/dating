@@ -14,6 +14,23 @@ class UserMeta extends Model
     const EMAIL_VERIFICATION_STATUS_DONE = 1;
     const EMAIL_VERIFICATION_STATUS_FAILED = 2;
 
+    public static function emailVerifiedDescriptionPerId()
+    {
+        return [
+            self::EMAIL_VERIFIED_FALSE => 'Unverified',
+            self::EMAIL_VERIFIED_TRUE => 'Verified',
+        ];
+    }
+
+    public static function emailVerificationStatusDescriptionPerId()
+    {
+        return [
+            self::EMAIL_VERIFICATION_STATUS_PENDING => 'Pending',
+            self::EMAIL_VERIFICATION_STATUS_DONE => 'Done',
+            self::EMAIL_VERIFICATION_STATUS_FAILED => 'Failed',
+        ];
+    }
+
     public $table = 'user_meta';
 
     protected $dates = [
