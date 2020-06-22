@@ -10,8 +10,7 @@ use App\Console\Commands\SendProfileCompletionEmails;
 use App\Console\Commands\SendProfileViewedEmails;
 use App\Console\Commands\UpdateCurrentEnvDbAndAws;
 use App\Console\Commands\ValidateEligibleXpartnersLeads;
-use App\User;
-use Carbon\Carbon;
+use App\Console\Commands\VerifyPendingEmails;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -33,7 +32,8 @@ class Kernel extends ConsoleKernel
         CheckRecentStartedPayments::class,
         SendMassMessage::class,
         CheckXpartnersLeadsWIthPendingEligibilityStatus::class,
-        ValidateEligibleXpartnersLeads::class
+        ValidateEligibleXpartnersLeads::class,
+        VerifyPendingEmails::class
     ];
 
     /**
@@ -51,6 +51,8 @@ class Kernel extends ConsoleKernel
             $schedule->command(SendProfileCompletionEmails::class)->dailyAt("19:00");
             $schedule->command(ExportDb::class)->dailyAt("05:30");
             $schedule->command(CheckRecentStartedPayments::class)->everyMinute();
+
+            $schedule->command(VerifyPendingEmails::class)->everyMinute();
 
 //            $schedule->command(CheckXpartnersLeadsWIthPendingEligibilityStatus::class)->hourlyAt(10);
 //            $schedule->command(ValidateEligibleXpartnersLeads::class)->hourlyAt(20);

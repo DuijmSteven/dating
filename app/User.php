@@ -570,7 +570,7 @@ class User extends Authenticatable
      */
     public function meta()
     {
-        return $this->hasOne('App\UserMeta');
+        return $this->hasOne(UserMeta::class);
     }
 
     /**

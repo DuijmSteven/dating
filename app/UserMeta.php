@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserMeta extends Model
 {
+    const EMAIL_VERIFIED_FALSE = 0;
+    const EMAIL_VERIFIED_TRUE = 1;
+
+    const EMAIL_VERIFICATION_STATUS_PENDING = 0;
+    const EMAIL_VERIFICATION_STATUS_DONE = 1;
+    const EMAIL_VERIFICATION_STATUS_FAILED = 2;
+
     public $table = 'user_meta';
 
     protected $dates = [
@@ -39,6 +46,8 @@ class UserMeta extends Model
         'looking_for',
         'registration_ip',
         'logins_count',
+        'email_verified',
+        'email_verification_status',
         'created_at',
         'updated_at'
     ];
@@ -109,6 +118,26 @@ class UserMeta extends Model
     public function getBodyType()
     {
         return $this->body_type;
+    }
+
+    public function getEmailVerificationStatus()
+    {
+        return $this->email_verification_status;
+    }
+
+    public function setEmailVerificationStatus(int $emailVerificationStatus)
+    {
+        $this->email_verification_status = $emailVerificationStatus;
+    }
+
+    public function getEmailVerified()
+    {
+        return $this->email_verified;
+    }
+
+    public function setEmailVerified(int $emailVerified)
+    {
+        $this->email_verified = $emailVerified;
     }
 
     public function getGender()
