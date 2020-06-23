@@ -28,6 +28,8 @@ Vue.use(VuejsDialog);
 require('./bootstrap');
 require('bootstrap-datepicker');
 
+require('clientjs');
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -57,7 +59,7 @@ $(window).on('load', function () {
     require('./global_helpers');
 
     if ($('#JS--SearchBarForm')) {
-       // $('#JS--SearchBarForm').disableAutoFill();
+        // $('#JS--SearchBarForm').disableAutoFill();
     }
 
     if ($('#JS--EditProfileUserDetailsForm')) {
@@ -65,18 +67,17 @@ $(window).on('load', function () {
     }
 
     // this will disable right-click on all images
-    $("img").on("contextmenu",function(e){
+    $("img").on("contextmenu", function (e) {
         return false;
     });
 
     // this will disable dragging of all images
-    $("img").mousedown(function(e){
+    $("img").mousedown(function (e) {
         e.preventDefault()
     });
 
-    $('#JS--search-city-input').keydown(function(e){
-        if(e.keyCode === 13)
-        {
+    $('#JS--search-city-input').keydown(function (e) {
+        if (e.keyCode === 13) {
             e.preventDefault();
             $('#JS--SearchBarForm').find('.Button').click();
         }
@@ -85,14 +86,14 @@ $(window).on('load', function () {
     if ($('.JS--searchResultsHeader').length > 0) {
         clearTimeout($.data(this, 'removeHeadingTimer'));
 
-        $.data(this, 'removeHeadingTimer', setTimeout(function() {
+        $.data(this, 'removeHeadingTimer', setTimeout(function () {
             $('.JS--searchResultsHeader').addClass('hidden');
         }, 2500));
 
-        $(window).scroll(function() {
+        $(window).scroll(function () {
             clearTimeout($.data(this, 'scrollTimer'));
 
-            $.data(this, 'scrollTimer', setTimeout(function() {
+            $.data(this, 'scrollTimer', setTimeout(function () {
                 if ($(window).scrollTop() > 60) {
                     $('.JS--searchResultsHeader').addClass('hidden');
                 } else {
@@ -102,7 +103,7 @@ $(window).on('load', function () {
 
                     clearTimeout($.data(this, 'removeHeadingTimer'));
 
-                    $.data(this, 'removeHeadingTimer', setTimeout(function() {
+                    $.data(this, 'removeHeadingTimer', setTimeout(function () {
                         $('.JS--searchResultsHeader').addClass('hidden');
                     }, 2500));
                 }
@@ -147,7 +148,7 @@ $(window).on('load', function () {
         $('.welcomeModal').modal('show');
 
         setTimeout(() => {
-            $.get(DP.baseUrl + '/api/users/' + DP.authenticatedUser.id + '/milestones/accepted-welcome-message', function( data ) {
+            $.get(DP.baseUrl + '/api/users/' + DP.authenticatedUser.id + '/milestones/accepted-welcome-message', function (data) {
             });
         }, 1000);
 
@@ -159,11 +160,11 @@ $(window).on('load', function () {
 
     if ($('.JS--ScrollTopButton').length > 0) {
         $('.JS--ScrollTopButton').click(() => {
-            $('html, body').animate({scrollTop:0}, 500, 'swing');
+            $('html, body').animate({scrollTop: 0}, 500, 'swing');
         });
 
         $(window).scroll(() => {
-            if ( $(window).scrollTop() > 400) {
+            if ($(window).scrollTop() > 400) {
                 $('.JS--ScrollTopButton').removeClass('hidden');
             } else {
                 $('.JS--ScrollTopButton').addClass('hidden');
@@ -366,14 +367,12 @@ $(window).on('load', function () {
             Cookies.set('searchBarState', 'open');
         });
 
-        $(document).on("mousedown", function(e)
-        {
+        $(document).on("mousedown", function (e) {
             var container = $(".JS--SearchBar");
             var autocompleteCities = $(".ui-autocomplete");
 
             // if the target of the click isn't the container nor a descendant of the container
-            if ((!container.is(e.target) && container.has(e.target).length === 0) && (!autocompleteCities.is(e.target) && autocompleteCities.has(e.target).length === 0))
-            {
+            if ((!container.is(e.target) && container.has(e.target).length === 0) && (!autocompleteCities.is(e.target) && autocompleteCities.has(e.target).length === 0)) {
                 container.addClass('hidden');
                 $('.JS--searchToggleButton').removeClass('pressed');
                 Cookies.set('searchBarState', 'hidden');
@@ -408,7 +407,7 @@ $(window).on('load', function () {
     }
 
     if ($('input[type="submit"]').length > 0 || $('button[type="submit"]').length > 0) {
-        $('form').submit(function(){
+        $('form').submit(function () {
             $('input[type=submit]', this).attr('disabled', 'disabled');
             $('button[type="submit"]', this).attr('disabled', 'disabled');
         });

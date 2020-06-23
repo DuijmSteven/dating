@@ -5,9 +5,9 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
-class UserIp extends Model
+class UserFingerprint extends Model
 {
-    public $table = 'user_ips';
+    public $table = 'user_fingerprints';
 
     protected $dates = [
         'dob'
@@ -20,7 +20,7 @@ class UserIp extends Model
      */
     protected $fillable = [
         'user_id',
-        'ip',
+        'fingerprint',
         'created_at',
         'updated_at'
     ];
@@ -33,14 +33,14 @@ class UserIp extends Model
         return $this->belongsTo('App\User', 'user_id', 'id');
     }
 
-    public function getIp()
+    public function getFingerprint()
     {
-        return $this->ip;
+        return $this->fingerprint;
     }
 
-    public function setIp(string $ip)
+    public function setFingerprint(string $fingerprint)
     {
-        $this->ip = $ip;
+        $this->fingerprint = $fingerprint;
     }
 
     public function getUserId()

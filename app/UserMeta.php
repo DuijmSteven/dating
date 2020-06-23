@@ -67,7 +67,6 @@ class UserMeta extends Model
         'country',
         'about_me',
         'looking_for',
-        'registration_ip',
         'logins_count',
         'email_verified',
         'email_verification_status',
@@ -121,16 +120,6 @@ class UserMeta extends Model
     public function setLoginsCount(int $loginsCount)
     {
         $this->logins_count = $loginsCount;
-    }
-
-    public function getRegistrationIp()
-    {
-        return $this->registration_ip;
-    }
-
-    public function setRegistrationIp(int $registrationIp)
-    {
-        $this->registration_ip = $registrationIp;
     }
 
     public function getRelationshipStatus()

@@ -14,6 +14,7 @@ use App\Traits\Users\RegistersUsers;
 use App\User;
 use App\UserAccount;
 use App\UserAffiliateTracking;
+use App\UserFingerprint;
 use App\UserIp;
 use App\UserMeta;
 use GuzzleHttp\Client;
@@ -108,11 +109,17 @@ class RegisterController extends Controller
             return redirect()->back()->with('recaptchaFailed', true);
         }
 
-        $existingIps = UserIp::all()->pluck('ip')->toArray();
+        $fingerprint = $request->get('user_fingerprint');
 
-        /*if (in_array(request()->ip(), $existingIps)) {
-            throw ValidationException::withMessages(['ipExists' => 'Er is al een account met jou IP adres!']);
-        }*/
+        if ($fingerprint) {
+            $existingFingerprints = UserFingerprint::all()->pluck('fingerprint')->toArray();
+
+            /*if (in_array(request()->ip(), $existingFingerprints)) {
+                throw ValidationException::withMessages(['fingerprintExists' => 'Het ziet uit als je al een account heb! Als dat niet waar is neem contact op met de helpdesk.']);
+            }*/
+        } else {
+            \Log::debug('No fingerprint on registration of user with username:' . $request->get('username'));
+        }
 
         $genderLookingForGender = explode("-", $request->all()['lookingFor']);
         $gender = $genderLookingForGender[0];
@@ -137,13 +144,11 @@ class RegisterController extends Controller
 
         try {
             /** @var UserMeta $userMetaInstance */
-            $userIp = $request->ip();
             $userMetaInstance = new UserMeta([
                 'user_id' => $createdUser->id,
                 'country' => 'nl',
                 'gender' => UserConstants::selectableField('gender', 'peasant', 'array_flip')[$gender],
                 'looking_for_gender' => UserConstants::selectableField('gender', 'peasant', 'array_flip')[$lookingFor],
-                'registration_ip' => $userIp,
                 'email_verification_status' => 0
                 //'dob' =>  new Carbon($request->all()['dob']),
 //                'lat' => $lat,
@@ -153,13 +158,11 @@ class RegisterController extends Controller
 
             $userMetaInstance->save();
 
-            \Log::debug('User with IP: ' . $userIp . ' registered.');
-
-            if ($userIp) {
-                $userIpInstance = new \App\UserIp();
-                $userIpInstance->setUserId($createdUser->id);
-                $userIpInstance->setIp($userIp);
-                $userIpInstance->save();
+            if ($fingerprint) {
+                $userFingerprintInstance = new \App\UserFingerprint();
+                $userFingerprintInstance->setUserId($createdUser->id);
+                $userFingerprintInstance->setFingerprint($fingerprint);
+                $userFingerprintInstance->save();
             }
         } catch (\Exception $exception) {
             DB::rollBack();

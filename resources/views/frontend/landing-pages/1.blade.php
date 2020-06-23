@@ -755,6 +755,7 @@
 
                             <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
                             <input type="hidden" name="action" value="validate_captcha">
+                            <input id="userFingerprintInput" type="hidden" name="user_fingerprint" value="">
 
                             @if(isset($mediaId))
                                 <input type="hidden" name="mediaId" value="{{ $mediaId }}">
@@ -772,9 +773,9 @@
 
                             @endif
 
-                            @if ($errors->first('ipExists'))
+                            @if ($errors->first('fingerprintExists'))
                                 <div class="captchaFailed">
-                                    Er is al een account met jou IP adres!
+                                    Het ziet uit als je al een account heb! Als dat niet waar is neem contact op met de helpdesk.
                                 </div>
                             @endif
 
@@ -887,6 +888,9 @@
                             id="JS--loginForm"
                         >
                             {{ csrf_field() }}
+
+                            <input id="userFingerprintInput" type="hidden" name="user_fingerprint" value="">
+
                             <div class="form-row">
                                 <div class="enhancedFormGroup JS--enhancedFormGroup form-group col-md-12 {{ $errors->has('identity') || $errors->has('username') || $errors->has('email') ? ' has-error' : '' }}">
                                     <label for="login-identity">{{ @trans('lp1.form.identity') }}</label>

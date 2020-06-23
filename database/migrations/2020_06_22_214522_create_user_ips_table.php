@@ -28,13 +28,6 @@ class CreateUserIpsTable extends Migration
             $query->where('registration_ip', '!=', null);
         })
         ->get();
-
-        foreach ($peasants as $peasant) {
-            $userIpInstance = new \App\UserIp();
-            $userIpInstance->setUserId($peasant->getId());
-            $userIpInstance->setIp($peasant->meta->getRegistrationIp());
-            $userIpInstance->save();
-        }
     }
 
     /**

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Managers\AffiliateManager;
 use App\Services\UserLocationService;
 use App\User;
+use App\UserFingerprint;
 use App\UserIp;
 use Illuminate\Http\Request;
 use App\Traits\Users\AuthenticatesUsers;
@@ -62,13 +63,19 @@ class LoginController extends Controller
             return redirect()->route('operator-platform.dashboard');
         }
 
-        $existingIps = UserIp::all()->pluck('ip')->toArray();
+        $fingerprint = $request->get('user_fingerprint');
 
-        if ($request->ip() && !in_array(request()->ip(), $existingIps)) {
-            $userIpInstance = new \App\UserIp();
-            $userIpInstance->setUserId($user->id);
-            $userIpInstance->setIp($request->ip());
-            $userIpInstance->save();
+        if ($fingerprint) {
+            $existingFingerprints = UserFingerprint::all()->pluck('fingerprint')->toArray();
+
+            if (!in_array($fingerprint, $existingFingerprints)) {
+                $userFingerprintInstance = new \App\UserFingerprint();
+                $userFingerprintInstance->setUserId($user->id);
+                $userFingerprintInstance->setFingerprint($fingerprint);
+                $userFingerprintInstance->save();
+            }
+        } else {
+            \Log::debug('No fingerprint on login of user with ID: ' . $user->id);
         }
     }
 

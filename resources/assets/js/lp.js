@@ -2,6 +2,7 @@ require('./bootstrap');
 require('bootstrap-datepicker');
 require('jquery-ui/ui/widgets/autocomplete');
 require('disableautofill');
+require('clientjs');
 
 import isUndefined from "admin-lte/bower_components/moment/src/lib/utils/is-undefined";
 
@@ -47,6 +48,16 @@ $(window).on('load', function () {
             $('#JS--registrationForm').submit();
         });
     });
+
+    setTimeout(() => {
+        // Create a new ClientJS object
+        var client = new ClientJS();
+
+        // Get the client's fingerprint id
+        var fingerprint = client.getFingerprint();
+
+        $('#userFingerprintInput').val(fingerprint)
+    }, 100);
 
     $('.scrollToRegistration').click(() => {
         $('html, body').animate({scrollTop:0}, 500, 'swing');
