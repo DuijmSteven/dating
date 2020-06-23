@@ -143,7 +143,8 @@ class RegisterController extends Controller
                 'country' => 'nl',
                 'gender' => UserConstants::selectableField('gender', 'peasant', 'array_flip')[$gender],
                 'looking_for_gender' => UserConstants::selectableField('gender', 'peasant', 'array_flip')[$lookingFor],
-                'registration_ip' => $userIp
+                'registration_ip' => $userIp,
+                'email_verification_status' => 0
                 //'dob' =>  new Carbon($request->all()['dob']),
 //                'lat' => $lat,
 //                'lng' => $lng,
