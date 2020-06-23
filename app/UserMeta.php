@@ -22,6 +22,9 @@ class UserMeta extends Model
         return [
             self::EMAIL_VERIFIED_FALSE => 'Unverified',
             self::EMAIL_VERIFIED_TRUE => 'Verified',
+            self::EMAIL_VERIFIED_RISKY => 'Risky',
+            self::EMAIL_VERIFIED_UNKNOWN => 'Unknown',
+            self::EMAIL_VERIFIED_OTHER => 'Other',
         ];
     }
 
