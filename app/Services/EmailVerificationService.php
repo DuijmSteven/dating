@@ -13,6 +13,8 @@ class EmailVerificationService
 {
     const VALID_EMAIL_RESULT = 'deliverable';
     const INVALID_EMAIL_RESULT = 'undeliverable';
+    const RISKY_EMAIL_RESULT = 'risky';
+    const UNKNOWN_EMAIL_RESULT = 'unknown';
     const ERROR_RESULT = 'error';
 
     /** @var string */

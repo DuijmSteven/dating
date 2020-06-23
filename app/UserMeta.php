@@ -9,6 +9,9 @@ class UserMeta extends Model
 {
     const EMAIL_VERIFIED_FALSE = 0;
     const EMAIL_VERIFIED_TRUE = 1;
+    const EMAIL_VERIFIED_RISKY = 2;
+    const EMAIL_VERIFIED_UNKNOWN = 3;
+    const EMAIL_VERIFIED_OTHER = 4  ;
 
     const EMAIL_VERIFICATION_STATUS_PENDING = 0;
     const EMAIL_VERIFICATION_STATUS_DONE = 1;

@@ -77,9 +77,33 @@ class VerifyPendingEmails extends Command
                 $user->meta->setEmailVerified(
                     UserMeta::EMAIL_VERIFIED_FALSE
                 );
+            } elseif ($result === EmailVerificationService::RISKY_EMAIL_RESULT) {
+                $user->meta->setEmailVerificationStatus(
+                    UserMeta::EMAIL_VERIFICATION_STATUS_DONE
+                );
+
+                $user->meta->setEmailVerified(
+                    UserMeta::EMAIL_VERIFIED_RISKY
+                );
+            } elseif ($result === EmailVerificationService::UNKNOWN_EMAIL_RESULT) {
+                $user->meta->setEmailVerificationStatus(
+                    UserMeta::EMAIL_VERIFICATION_STATUS_DONE
+                );
+
+                $user->meta->setEmailVerified(
+                    UserMeta::EMAIL_VERIFIED_UNKNOWN
+                );
             } elseif ($result === EmailVerificationService::ERROR_RESULT) {
                 $user->meta->setEmailVerificationStatus(
                     UserMeta::EMAIL_VERIFICATION_STATUS_FAILED
+                );
+            } else {
+                $user->meta->setEmailVerificationStatus(
+                    UserMeta::EMAIL_VERIFICATION_STATUS_DONE
+                );
+
+                $user->meta->setEmailVerified(
+                    UserMeta::EMAIL_VERIFIED_OTHER
                 );
             }
 
