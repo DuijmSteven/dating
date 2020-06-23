@@ -293,6 +293,7 @@ class StatisticsManager
                 $startDate,
                 $endDate
             ])
+        ->where('deactivated_at', '!=', null)
         ->count();
     }
 
