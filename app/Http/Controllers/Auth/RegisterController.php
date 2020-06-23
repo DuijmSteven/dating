@@ -110,9 +110,9 @@ class RegisterController extends Controller
 
         $existingIps = UserIp::all()->pluck('ip')->toArray();
 
-        if (in_array(request()->ip(), $existingIps)) {
+        /*if (in_array(request()->ip(), $existingIps)) {
             throw ValidationException::withMessages(['ipExists' => 'Er is al een account met jou IP adres!']);
-        }
+        }*/
 
         $genderLookingForGender = explode("-", $request->all()['lookingFor']);
         $gender = $genderLookingForGender[0];
