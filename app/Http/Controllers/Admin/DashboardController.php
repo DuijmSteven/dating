@@ -234,7 +234,7 @@ class DashboardController extends Controller
                     User::TYPE_PEASANT,
                     $startOfYesterday,
                     $endOfYesterday
-                ) / $endOfYesterday->diffInHours($startOfYesterday), 0),
+                ) / round($endOfYesterday->diffInMinutes($startOfYesterday)/60), 0),
                 'currentWeek' => $this->statisticsManager->messagesSentByUserTypePerHourCurrentWeek(),
                 'currentMonth' => $this->statisticsManager->messagesSentByUserTypePerHourCurrentMonth(),
                 'previousMonth' => number_format($this->statisticsManager->messagesSentByUserTypeCountBetween(
