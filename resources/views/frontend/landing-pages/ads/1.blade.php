@@ -266,7 +266,11 @@
 <script src="/lps/t1/assets/js/material-bootstrap-wizard.js?v=11"></script>
 
 <script src="/lps/t1/assets/js/jquery.validate.min.js"></script>
+<script src="/lps/t1/assets/js/jquery.validate.min.js"></script>
+<script src="{{ mix('js/lps/ads/lp1.js') }}"></script>
 <script>
+
+
     /*
      * Application namespace
      *
@@ -290,18 +294,6 @@
 
             $('#JS--registrationForm').submit();
         });
-    });
-
-    $(window).on('load', function () {
-        setTimeout(() => {
-            // Create a new ClientJS object
-            var client = new ClientJS();
-
-            // Get the client's fingerprint id
-            var fingerprint = client.getFingerprint();
-
-            $('#userFingerprintInput').val(fingerprint)
-        }, 100);
     });
 
     function startTimer(duration, display) {

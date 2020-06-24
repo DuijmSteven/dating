@@ -21,6 +21,14 @@ mix.js('resources/assets/js/lp.js', 'public/js')
     .sourceMaps()
     .version();
 
+mix.js('resources/assets/js/lps/ads/lp1.js', 'public/js/lps/ads')
+    .sourceMaps()
+    .version();
+
+mix.js('resources/assets/js/lps/ads/lp2.js', 'public/js/lps/ads')
+    .sourceMaps()
+    .version();
+
 mix.copy('resources/assets/styleguide', 'public/styleguide');
 mix.copy('node_modules/bootstrap-sass/assets/fonts/bootstrap', 'public/admin/fonts');
 mix.copy('resources/assets/img', 'public/img');
