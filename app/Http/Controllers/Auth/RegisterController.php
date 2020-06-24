@@ -99,7 +99,7 @@ class RegisterController extends Controller
 
         $response = (new ReCaptcha(config('app.recaptcha_secret')))
             ->setExpectedAction('register')
-            ->verify($captcha, $request->ip());
+            ->verify($captcha, $this->userLocationService->getUserIp());
 
         if (!$response->isSuccess()) {
             \Log::info('Failed recaptcha attempt from username: ' . $request->get('username') . ' and email: ' . $request->get('email'));
@@ -186,7 +186,7 @@ class RegisterController extends Controller
                     $createdUser->id,
                     $request->input('affiliate'),
                     $request->input('clickId'),
-                    $this->userLocationService->getLocationFromIp($request->ip()),
+                    $this->userLocationService->getLocationFromIp($this->userLocationService->getUserIp()),
                     $mediaId,
                     $publisher
                 );
