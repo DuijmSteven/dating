@@ -63,20 +63,20 @@ class LoginController extends Controller
             return redirect()->route('operator-platform.dashboard');
         }
 
-        $fingerprint = $request->get('user_fingerprint');
-
-        if ($fingerprint) {
-            $existingFingerprints = UserFingerprint::all()->pluck('fingerprint')->toArray();
-
-            if (!in_array($fingerprint, $existingFingerprints)) {
-                $userFingerprintInstance = new \App\UserFingerprint();
-                $userFingerprintInstance->setUserId($user->id);
-                $userFingerprintInstance->setFingerprint($fingerprint);
-                $userFingerprintInstance->save();
-            }
-        } else {
-            \Log::debug('No fingerprint on login of user with ID: ' . $user->id);
-        }
+//        $fingerprint = $request->get('user_fingerprint');
+//
+//        if ($fingerprint) {
+//            $existingFingerprints = UserFingerprint::all()->pluck('fingerprint')->toArray();
+//
+//            if (!in_array($fingerprint, $existingFingerprints)) {
+//                $userFingerprintInstance = new \App\UserFingerprint();
+//                $userFingerprintInstance->setUserId($user->id);
+//                $userFingerprintInstance->setFingerprint($fingerprint);
+//                $userFingerprintInstance->save();
+//            }
+//        } else {
+//            \Log::debug('No fingerprint on login of user with ID: ' . $user->id);
+//        }
     }
 
     /**
