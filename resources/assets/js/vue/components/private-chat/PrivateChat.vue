@@ -124,6 +124,14 @@
                         {{ this.$parent.chatTranslations['no_messages_yet'] }}
                     </div>
 
+
+                    <div
+                        v-if="allMessagesFetched && displayedMessages.length === 0 && user.messages_count === 0"
+                        class="allMessagesFetched lower"
+                    >
+                        <p>Bovenin je scherm zie je dat je alvast één gratis credit hebt gekregen om je eerste bericht mee te versturen. <a :href="this.creditsUrl">Koop meer credits</a> om te blijven chatten.</p>
+                    </div>
+
                     <chat-message
                         v-for="(message, index) in displayedMessages"
                         :message="message"

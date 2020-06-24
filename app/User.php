@@ -79,7 +79,7 @@ class User extends Authenticatable
         'completedPayments',
         'hasViewed',
         'hasViewedUnique',
-        'affiliateTracking'
+        'affiliateTracking',
     ];
 
     const PEASANT_RELATION_COUNTS = [
