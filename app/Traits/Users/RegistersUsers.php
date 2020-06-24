@@ -42,8 +42,8 @@ trait RegistersUsers
         if ($user->affiliateTracking()->exists() && $user->affiliateTracking->affiliate === UserAffiliateTracking::AFFILIATE_XPARTNERS) {
             $genderLookingForGender = explode("-", $request->all()['lookingFor']);
             $gender = $genderLookingForGender[0];
-            $clientIP = $this->getUserIp();
-            $countryCode = $this->getLocationFromIp($clientIP);
+            $clientIP = $this->userLocationService->getUserIp();
+            $countryCode = $this->userLocationService->getLocationFromIp($clientIP);
             $client = new Client();
             try {
                 $response = $client->request(
