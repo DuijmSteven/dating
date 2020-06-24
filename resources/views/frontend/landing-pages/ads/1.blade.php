@@ -187,7 +187,8 @@
 														<i class="material-icons">label</i>
 													</span>
                                                 <div
-                                                    class="form-group label-floating {{ $errors->has('username') ? ' has-error' : '' }}">
+                                                    class="form-group label-floating {{ $errors->has('username') ? ' has-error' : '' }}"
+                                                >
                                                     <label
                                                         class="control-label">{{ @trans('lp1.form.username') }}</label>
                                                     <input name="username"
@@ -206,7 +207,8 @@
 														<i class="material-icons">lock_outline</i>
 													</span>
                                                 <div
-                                                    class="form-group label-floating {{ $errors->has('password') ? ' has-error' : '' }}">
+                                                    class="form-group label-floating {{ $errors->has('password') ? ' has-error' : '' }}"
+                                                >
                                                     <label
                                                         class="control-label">{{ @trans('lp1.form.password') }}</label>
                                                     <input name="password"

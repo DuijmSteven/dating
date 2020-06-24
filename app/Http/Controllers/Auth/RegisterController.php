@@ -111,17 +111,17 @@ class RegisterController extends Controller
             return redirect()->back()->with('recaptchaFailed', true);
         }
 
-        $fingerprint = $request->get('user_fingerprint');
-
-        if ($fingerprint) {
-            $existingFingerprints = UserFingerprint::all()->pluck('fingerprint')->toArray();
-
-            /*if (in_array(request()->ip(), $existingFingerprints)) {
-                throw ValidationException::withMessages(['fingerprintExists' => 'Het ziet uit als je al een account heb! Als dat niet waar is neem contact op met de helpdesk.']);
-            }*/
-        } else {
-            \Log::debug('No fingerprint on registration of user with username:' . $request->get('username'));
-        }
+//        $fingerprint = $request->get('user_fingerprint');
+//
+//        if ($fingerprint) {
+//            $existingFingerprints = UserFingerprint::all()->pluck('fingerprint')->toArray();
+//
+//            /*if (in_array(request()->ip(), $existingFingerprints)) {
+//                throw ValidationException::withMessages(['fingerprintExists' => 'Het ziet uit als je al een account heb! Als dat niet waar is neem contact op met de helpdesk.']);
+//            }*/
+//        } else {
+//            \Log::debug('No fingerprint on registration of user with username:' . $request->get('username'));
+//        }
 
         $genderLookingForGender = explode("-", $request->all()['lookingFor']);
         $gender = $genderLookingForGender[0];
@@ -160,12 +160,12 @@ class RegisterController extends Controller
 
             $userMetaInstance->save();
 
-            if ($fingerprint) {
-                $userFingerprintInstance = new \App\UserFingerprint();
-                $userFingerprintInstance->setUserId($createdUser->id);
-                $userFingerprintInstance->setFingerprint($fingerprint);
-                $userFingerprintInstance->save();
-            }
+//            if ($fingerprint) {
+//                $userFingerprintInstance = new \App\UserFingerprint();
+//                $userFingerprintInstance->setUserId($createdUser->id);
+//                $userFingerprintInstance->setFingerprint($fingerprint);
+//                $userFingerprintInstance->save();
+//            }
         } catch (\Exception $exception) {
             DB::rollBack();
             throw $exception;
