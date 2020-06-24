@@ -92,6 +92,8 @@ class RegisterController extends Controller
         }
 
         if (!$captcha) {
+            \Log::debug('Recaptcha does not exist!');
+
             throw new \Exception('no captcha');
         }
 
