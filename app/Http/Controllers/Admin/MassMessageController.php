@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Console\Commands\SendMassMessage;
 use App\Conversation;
 use App\ConversationMessage;
 use App\EmailType;
@@ -11,14 +10,12 @@ use App\Mail\MessageReceived;
 use App\Managers\UserManager;
 use App\PastMassMessage;
 use App\Payment;
+use App\Services\UserActivityService;
 use App\User;
 use App\UserView;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Mail;
-use Kim\Activity\Activity;
 
 class MassMessageController extends Controller
 {
@@ -27,9 +24,11 @@ class MassMessageController extends Controller
      */
     private UserManager $userManager;
 
-    public function __construct(UserManager $userManager)
-    {
-        parent::__construct();
+    public function __construct(
+        UserManager $userManager,
+        UserActivityService $userActivityService
+    ) {
+        parent::__construct($userActivityService);
         $this->userManager = $userManager;
     }
 
@@ -140,7 +139,9 @@ class MassMessageController extends Controller
         $messageBody = $request->get('body');
         $limitMessage = $request->get('limit_message');
 
-        $onlineUserIds = Activity::users(5)->pluck('user_id')->toArray();
+        $onlineUserIds = $this->userActivityService->getOnlineUserIds(
+            $this->userActivityService::PEASANT_MAILING_ONLINE_TIMEFRAME_IN_MINUTES
+        );
 
         $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');
         $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');

@@ -7,6 +7,7 @@ use App\Managers\UserManager;
 use App\Module;
 use App\ModuleInstance;
 use App\Services\LatestViewedModuleService;
+use App\Services\UserActivityService;
 use App\User;
 use App\View;
 use Faker\Generator;
@@ -20,6 +21,7 @@ class LayoutPartComposer
 {
     /** @var UserManager */
     private $userManager;
+
     /**
      * @var LatestViewedModuleService
      */
@@ -52,7 +54,7 @@ class LayoutPartComposer
         foreach ($modules as $name) {
             switch ($name) {
                 case 'online-users':
-                    $onlineUsers = (new UserManager(new User(), new StorageManager()))->latestOnline(10, 12);
+                    $onlineUsers = (new UserManager(new User(), new StorageManager(), new UserActivityService()))->latestOnline(10, 12);
 
                     $viewData = [
                         'onlineUsers' => $onlineUsers

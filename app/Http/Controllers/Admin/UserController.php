@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Http\Controllers\Controller;
 use App\Managers\UserManager;
+use App\Services\UserActivityService;
 
 /**
  * Class UserController
@@ -19,10 +20,12 @@ class UserController extends Controller
      * UserController constructor.
      * @param UserManager $userManager
      */
-    public function __construct(UserManager $userManager)
-    {
+    public function __construct(
+        UserManager $userManager,
+        UserActivityService $userActivityService
+    ) {
         $this->userManager = $userManager;
-        parent::__construct();
+        parent::__construct($userActivityService);
     }
 
     /**

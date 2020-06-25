@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Request;
+use App\Services\UserActivityService;
 use App\View;
 use Carbon\Carbon;
 
@@ -21,9 +22,9 @@ class FrontendController extends Controller
     /**
      * Controller constructor.
      */
-    public function __construct()
+    public function __construct(UserActivityService $userActivityService)
     {
-        parent::__construct();
+        parent::__construct($userActivityService);
 
         $leftSidebar = false;
         $rightSidebar = false;

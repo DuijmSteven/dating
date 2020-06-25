@@ -6,14 +6,16 @@ use App\BotMessage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BotMessages\BotMessageCreateRequest;
 use App\Http\Requests\Admin\BotMessages\BotMessageUpdateRequest;
+use App\Services\UserActivityService;
 use App\User;
 use Carbon\Carbon;
 
 class BotMessageController extends Controller
 {
     public function __construct(
+        UserActivityService $userActivityService
     ) {
-        parent::__construct();
+        parent::__construct($userActivityService);
     }
 
     /**

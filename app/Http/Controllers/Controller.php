@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Managers\UserManager;
+use App\Services\UserActivityService;
 use App\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-use Kim\Activity\Activity;
 
 /**
  * Class Controller
@@ -21,16 +21,22 @@ class Controller extends BaseController
     /** @var User|null */
     protected $authenticatedUser;
     protected $onlineUserIds;
+    protected $userActivityService;
 
     /**
      * Controller constructor.
      */
-    public function __construct()
-    {
-        $this->middleware(function ($request, $next) {
+    public function __construct(
+        UserActivityService $userActivityService
+    ) {
+        $this->userActivityService = $userActivityService;
+
+        $this->middleware(function ($request, $next) use ($userActivityService) {
             $this->authenticatedUser = UserManager::getAndFormatAuthenticatedUser();
 
-            $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
+            $onlineIds = $userActivityService->getOnlineUserIds(
+                $userActivityService::GENERAL_ONLINE_TIMEFRAME_IN_MINUTES
+            );
 
             $this->onlineUserIds = $onlineIds;
 

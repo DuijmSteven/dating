@@ -8,10 +8,10 @@ use App\Http\Controllers\Controller;
 use App\Managers\ChartsManager;
 use App\Managers\StatisticsManager;
 use App\Payment;
+use App\Services\UserActivityService;
 use App\User;
 use App\UserAffiliateTracking;
 use Carbon\Carbon;
-use Kim\Activity\Activity;
 
 class StatisticsController extends Controller
 {
@@ -27,10 +27,10 @@ class StatisticsController extends Controller
 
     public function __construct(
         StatisticsManager $statisticsManager,
-        ChartsManager $chartsManager
-    )
-    {
-        parent::__construct();
+        ChartsManager $chartsManager,
+        UserActivityService $userActivityService
+    ) {
+        parent::__construct($userActivityService);
         $this->statisticsManager = $statisticsManager;
         $this->chartsManager = $chartsManager;
     }

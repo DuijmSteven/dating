@@ -6,6 +6,7 @@ use App\ConversationNote;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Conversations\NoteCreateRequest;
 use App\Managers\ConversationNoteManager as NoteManager;
+use App\Services\UserActivityService;
 
 class ConversationNoteController extends Controller
 {
@@ -15,10 +16,12 @@ class ConversationNoteController extends Controller
      * ConversationNoteController constructor.
      * @param NoteManager $noteManager
      */
-    public function __construct(NoteManager $noteManager)
-    {
+    public function __construct(
+        NoteManager $noteManager,
+        UserActivityService $userActivityService
+    ) {
         $this->noteManager = $noteManager;
-        parent::__construct();
+        parent::__construct($userActivityService);
     }
 
     /**

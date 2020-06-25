@@ -10,10 +10,10 @@ use App\Managers\ChartsManager;
 use App\Managers\PeasantManager;
 use App\Managers\StatisticsManager;
 use App\Managers\UserManager;
+use App\Services\UserActivityService;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Kim\Activity\Activity;
 
 class PeasantController extends Controller
 {
@@ -50,10 +50,11 @@ class PeasantController extends Controller
         UserManager $userManager,
         ChartsManager $chartsManager,
         StatisticsManager $statisticsManager,
-        AffiliateManager $affiliateManager
+        AffiliateManager $affiliateManager,
+        UserActivityService $userActivityService
     ) {
+        parent::__construct($userActivityService);
         $this->peasantManager = $peasantManager;
-        parent::__construct();
         $this->userManager = $userManager;
         $this->chartsManager = $chartsManager;
         $this->statisticsManager = $statisticsManager;
@@ -232,7 +233,9 @@ class PeasantController extends Controller
 
     public function showOnline()
     {
-        $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
+        $onlineIds = $this->userActivityService->getOnlineUserIds(
+            $this->userActivityService::GENERAL_ONLINE_TIMEFRAME_IN_MINUTES
+        );
 
         $peasants = User::with(
             array_unique(array_merge(
@@ -365,7 +368,9 @@ class PeasantController extends Controller
 
     public function messagePeasantAsBot(int $peasantId, bool $onlyOnlineBots = false)
     {
-        $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
+        $onlineIds = $this->userActivityService->getOnlineUserIds(
+            $this->userActivityService::GENERAL_ONLINE_TIMEFRAME_IN_MINUTES
+        );
 
         $onlineBotIds = User::whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_BOT);

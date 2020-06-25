@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Services\UserActivityService;
 use App\Traits\Users\SendsPasswordResetEmails;
 
 /**
@@ -29,9 +30,10 @@ class ForgotPasswordController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        parent::__construct();
+    public function __construct(
+        UserActivityService $userActivityService
+    ) {
+        parent::__construct($userActivityService);
         $this->middleware('guest');
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Http\Requests\UserRequests\UserSearchRequest;
 use App\Managers\UserSearchManager;
+use App\Services\UserActivityService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
@@ -23,10 +24,11 @@ class UserSearchController extends FrontendController
      * @param UserSearchManager $userSearchManager
      */
     public function __construct(
-        UserSearchManager $userSearchManager
+        UserSearchManager $userSearchManager,
+        UserActivityService $userActivityService
     ) {
         $this->userSearchManager = $userSearchManager;
-        parent::__construct();
+        parent::__construct($userActivityService);
     }
 
     /**

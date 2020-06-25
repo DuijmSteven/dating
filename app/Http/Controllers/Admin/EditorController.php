@@ -8,13 +8,13 @@ use App\Http\Requests\Admin\Articles\ArticleCreateRequest;
 use App\Http\Requests\Admin\Articles\ArticleUpdateRequest;
 use App\Managers\ArticleManager;
 use App\Managers\UserManager;
+use App\Services\UserActivityService;
 use App\User;
 use Carbon\Carbon;
 use DB;
 use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Kim\Activity\Activity;
 
 /**
  * Class EditorController
@@ -31,9 +31,10 @@ class EditorController extends Controller
      * OperatorController constructor.
      */
     public function __construct(
-        UserManager $userManager
+        UserManager $userManager,
+        UserActivityService $userActivityService
     ) {
-        parent::__construct();
+        parent::__construct($userActivityService);
         $this->userManager = $userManager;
     }
 
@@ -125,7 +126,9 @@ class EditorController extends Controller
 
     public function showOnline()
     {
-        $onlineIds = Activity::users(1)->pluck('user_id')->toArray();
+        $onlineIds = $this->userActivityService->getOnlineUserIds(
+            $this->userActivityService::GENERAL_ONLINE_TIMEFRAME_IN_MINUTES
+        );
 
         $editors = User::with(
             User::COMMON_RELATIONS

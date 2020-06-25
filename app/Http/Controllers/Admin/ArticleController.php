@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Articles\ArticleCreateRequest;
 use App\Http\Requests\Admin\Articles\ArticleUpdateRequest;
 use App\Managers\ArticleManager;
+use App\Services\UserActivityService;
 use Carbon\Carbon;
 use DB;
 use GrahamCampbell\Markdown\Facades\Markdown;
@@ -27,10 +28,11 @@ class ArticleController extends Controller
      * @param ArticleManager $articleManager
      */
     public function __construct(
-      ArticleManager $articleManager
+      ArticleManager $articleManager,
+      UserActivityService $userActivityService
     ) {
         $this->articleManager = $articleManager;
-        parent::__construct();
+        parent::__construct($userActivityService);
     }
 
     /**

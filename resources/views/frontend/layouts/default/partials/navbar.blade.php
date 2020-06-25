@@ -82,7 +82,7 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="{!! route('users.edit-profile.get', ['userId' => $authenticatedUser->getUsername()]) !!}">{{ @trans('navbar.edit_profile') }}</a></li>
+                            <li><a href="{!! route('users.edit-profile.get', ['username' => $authenticatedUser->getUsername()]) !!}">{{ @trans('navbar.edit_profile') }}</a></li>
                             <li><a href="{{ route('credits.show') }}">{{ @trans('navbar.credits') }}</a></li>
 
                             <li class="dropdown-submenu languagesSubmenu">

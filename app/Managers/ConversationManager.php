@@ -6,11 +6,10 @@ use App\Conversation;
 use App\ConversationMessage;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\MessageAttachment;
+use App\Services\UserActivityService;
 use App\User;
 use Carbon\Carbon;
-use Cassandra\Type\UserType;
 use Illuminate\Support\Facades\DB;
-use Kim\Activity\Activity;
 
 /**
  * Class ConversationManager
@@ -30,6 +29,10 @@ class ConversationManager
      * @var ConversationMessage
      */
     private $conversationMessage;
+    /**
+     * @var UserActivityService
+     */
+    private UserActivityService $userActivityService;
 
     /**
      * ConversationManager constructor.
@@ -38,11 +41,13 @@ class ConversationManager
     public function __construct(
         Conversation $conversation,
         ConversationMessage $conversationMessage,
-        StorageManager $storageManager
+        StorageManager $storageManager,
+        UserActivityService $userActivityService
     ) {
         $this->conversation = $conversation;
         $this->storageManager = $storageManager;
         $this->conversationMessage = $conversationMessage;
+        $this->userActivityService = $userActivityService;
     }
 
     /**
@@ -70,7 +75,9 @@ class ConversationManager
             throw $exception;
         }
 
-        $onlineIds = Activity::users(5)->pluck('user_id')->toArray();
+        $onlineIds = $this->userActivityService->getOnlineUserIds(
+            $this->userActivityService::PEASANT_MAILING_ONLINE_TIMEFRAME_IN_MINUTES
+        );
 
         $onlineBotIds = User::whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_BOT);

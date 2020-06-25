@@ -15,18 +15,13 @@ use App\User;
 use App\UserAccount;
 use App\UserAffiliateTracking;
 use App\UserFingerprint;
-use App\UserIp;
 use App\UserMeta;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Illuminate\Validation\ValidationException;
 use ReCaptcha\ReCaptcha;
-use GuzzleHttp\Psr7;
 
 /**
  * Class RegisterController

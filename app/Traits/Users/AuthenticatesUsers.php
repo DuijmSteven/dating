@@ -2,11 +2,7 @@
 
 namespace App\Traits\Users;
 
-use App\Events\LogSuccessfulLogin;
 use App\User;
-use App\UserMeta;
-use Carbon\Carbon;
-use Illuminate\Auth\Events\Login;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

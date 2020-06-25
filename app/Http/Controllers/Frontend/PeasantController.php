@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Managers\PeasantManager;
+use App\Services\UserActivityService;
 use Illuminate\Http\Request;
 
 /**
@@ -19,10 +20,12 @@ class PeasantController extends FrontendController
      *
      * @return void
      */
-    public function __construct(PeasantManager $peasantManager)
-    {
+    public function __construct(
+        PeasantManager $peasantManager,
+        UserActivityService $userActivityService
+    ) {
         $this->peasantManager = $peasantManager;
-        parent::__construct();
+        parent::__construct($userActivityService);
     }
 
     /**

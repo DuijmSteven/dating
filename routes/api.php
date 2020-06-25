@@ -29,7 +29,7 @@ Route::group([
         ->name('users.get-user-credits');
 
     Route::get('{userId}/milestones/accepted-welcome-message', 'Api\UserController@acceptedWelcomeMessageMilestone')
-        ->name('users.get-user-credits');
+        ->name('users.milestones.award.accepted-welcome-message');
 });
 
 
@@ -77,7 +77,7 @@ Route::group([
 });
 
 Route::get('{userId}/chat-translations', 'Api\ConversationController@getChatTranslations')
-    ->name('cities.get');
+    ->name('chat-translations.get');
 
 Route::get('cities/{countryCode}', 'Api\LocationController@getCities')
     ->name('cities.get');

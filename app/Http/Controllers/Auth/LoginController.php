@@ -3,14 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-
-use App\Managers\AffiliateManager;
-use App\Services\UserLocationService;
+use App\Services\UserActivityService;
+use App\Traits\Users\AuthenticatesUsers;
 use App\User;
 use App\UserFingerprint;
-use App\UserIp;
 use Illuminate\Http\Request;
-use App\Traits\Users\AuthenticatesUsers;
 
 /**
  * Class LoginController
@@ -84,8 +81,10 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct() {
-        parent::__construct();
+    public function __construct(
+        UserActivityService $userActivityService
+    ) {
+        parent::__construct($userActivityService);
         $this->middleware('guest', ['except' => 'logout']);
     }
 }

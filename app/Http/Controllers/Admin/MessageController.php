@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\ConversationMessage;
 use App\Http\Controllers\Controller;
+use App\Services\UserActivityService;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -16,8 +17,9 @@ use Illuminate\Support\Facades\DB;
 class MessageController extends Controller
 {
     public function __construct(
+        UserActivityService $userActivityService
     ) {
-        parent::__construct();
+        parent::__construct($userActivityService);
     }
 
     /**

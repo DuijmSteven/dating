@@ -8,12 +8,12 @@ use App\EmailType;
 use App\Mail\MessageReceived;
 use App\Managers\UserManager;
 use App\PastMassMessage;
+use App\Services\UserActivityService;
 use App\User;
 use App\UserView;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
-use Kim\Activity\Activity;
 
 class SendMassMessage extends Command
 {
@@ -37,15 +37,22 @@ class SendMassMessage extends Command
     private UserManager $userManager;
 
     /**
+     * @var UserActivityService
+     */
+    private UserActivityService $userActivityService;
+
+    /**
      * Create a new command instance.
      *
      * @return void
      */
     public function __construct(
-      UserManager $userManager
+        UserManager $userManager,
+        UserActivityService $userActivityService
     ) {
         parent::__construct();
         $this->userManager = $userManager;
+        $this->userActivityService = $userActivityService;
     }
 
     /**
@@ -58,7 +65,9 @@ class SendMassMessage extends Command
         $messageBody = $this->argument('body');
         $limitMessage = $this->argument('limitation');
 
-        $onlineUserIds = Activity::users(5)->pluck('user_id')->toArray();
+        $onlineIds = $this->userActivityService->getOnlineUserIds(
+            $this->userActivityService::PEASANT_MAILING_ONLINE_TIMEFRAME_IN_MINUTES
+        );
 
         $usersQuery = User::whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_PEASANT);
@@ -73,7 +82,7 @@ class SendMassMessage extends Command
             $usersQuery->where(function ($query) {
                 $query->whereHas('meta', function ($query) {
                     $query->where('dob', '!=', null);
-                    $query->orWhere('city', '!=',  null);
+                    $query->orWhere('city', '!=', null);
                 })
                     ->orWhereHas('images');
             });
@@ -83,9 +92,9 @@ class SendMassMessage extends Command
                 ->where(function ($query) {
                     $query->whereHas('meta', function ($query) {
                         $query->where('dob', '=', null);
-                        $query->where('city', '=',  null);
-                        $query->where('eye_color', '=',  null);
-                        $query->where('hair_color', '=',  null);
+                        $query->where('city', '=', null);
+                        $query->where('eye_color', '=', null);
+                        $query->where('hair_color', '=', null);
                     });
                 });
         }
@@ -154,7 +163,7 @@ class SendMassMessage extends Command
 
                 if (
                     $recipientHasMessageNotificationsEnabled &&
-                    !in_array($user->getId(), $onlineUserIds)
+                    !in_array($user->getId(), $onlineIds)
                 ) {
                     if (config('app.env') === 'production') {
                         $messageReceivedEmail = (new MessageReceived(

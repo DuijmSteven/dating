@@ -6,11 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Bots\BotCreateRequest;
 use App\Http\Requests\Admin\Operators\OperatorCreateRequest;
 use App\Managers\UserManager;
+use App\Services\UserActivityService;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Kim\Activity\Activity;
 
 /**
  * Class OperatorController
@@ -27,9 +27,10 @@ class OperatorController extends Controller
      * OperatorController constructor.
      */
     public function __construct(
-        UserManager $userManager
+        UserManager $userManager,
+        UserActivityService $userActivityService
     ) {
-        parent::__construct();
+        parent::__construct($userActivityService);
         $this->userManager = $userManager;
     }
 
@@ -72,7 +73,9 @@ class OperatorController extends Controller
 
     public function showOnline()
     {
-        $onlineIds = Activity::users(7)->pluck('user_id')->toArray();
+        $onlineIds = $this->userActivityService->getOnlineUserIds(
+            $this->userActivityService::GENERAL_ONLINE_TIMEFRAME_IN_MINUTES
+        );
 
         $operators = User::with(
             array_unique(array_merge(

@@ -8,6 +8,7 @@ use App\Mail\Deactivated;
 use App\Managers\PeasantManager;
 use App\Managers\UserManager;
 use App\Milestone;
+use App\Services\UserActivityService;
 use App\User;
 use App\UserView;
 use App\UserViews;
@@ -36,9 +37,13 @@ class UserController extends FrontendController
      * @param User $user
      * @param UserManager $userManager
      */
-    public function __construct(User $user, UserManager $userManager, PeasantManager $peasantManager)
-    {
-        parent::__construct();
+    public function __construct(
+        User $user,
+        UserManager $userManager,
+        PeasantManager $peasantManager,
+        UserActivityService $userActivityService
+    ) {
+        parent::__construct($userActivityService);
         $this->user = $user;
         $this->userManager = $userManager;
         $this->peasantManager = $peasantManager;

@@ -8,10 +8,10 @@ use App\Http\Controllers\Controller;
 use App\Managers\ChartsManager;
 use App\Managers\ConversationManager;
 use App\Managers\StatisticsManager;
+use App\Services\UserActivityService;
 use App\User;
 use App\UserAffiliateTracking;
 use Carbon\Carbon;
-use Kim\Activity\Activity;
 
 class DashboardController extends Controller
 {
@@ -33,9 +33,10 @@ class DashboardController extends Controller
     public function __construct(
         StatisticsManager $statisticsManager,
         ConversationManager $conversationManager,
-        ChartsManager $chartsManager
+        ChartsManager $chartsManager,
+        UserActivityService $userActivityService
     ) {
-        parent::__construct();
+        parent::__construct($userActivityService);
         $this->statisticsManager = $statisticsManager;
         $this->chartsManager = $chartsManager;
         $this->conversationManager = $conversationManager;
@@ -47,7 +48,9 @@ class DashboardController extends Controller
      */
     public function dashboard()
     {
-        $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
+        $onlineIds = $this->userActivityService->getOnlineUserIds(
+            $this->userActivityService::GENERAL_ONLINE_TIMEFRAME_IN_MINUTES
+        );
 
         $onlineFemaleStraightBotsCount = User::with('roles')
             ->whereHas('roles', function ($query) {

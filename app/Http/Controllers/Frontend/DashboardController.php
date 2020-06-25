@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Activity;
 use App\Http\Requests\Request;
+use App\Services\UserActivityService;
 use App\User;
 use Carbon\Carbon;
 use Hash;
@@ -18,9 +19,10 @@ class DashboardController extends FrontendController
     /**
      * HomeController constructor.
      */
-    public function __construct()
-    {
-        parent::__construct();
+    public function __construct(
+        UserActivityService $userActivityService
+    ) {
+        parent::__construct($userActivityService);
     }
 
     public function index()

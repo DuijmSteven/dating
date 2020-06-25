@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\ConversationMessage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreatePublicChatItemRequest;
 use App\PublicChatItem;
+use App\Services\UserActivityService;
 use App\User;
-use App\UserAccount;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Kim\Activity\Activity;
 
 /**
  * Class PublicChatItemController
@@ -20,8 +18,9 @@ use Kim\Activity\Activity;
 class PublicChatItemController extends Controller
 {
     public function __construct(
+        UserActivityService $userActivityService
     ) {
-        parent::__construct();
+        parent::__construct($userActivityService);
     }
 
     /**
@@ -160,7 +159,9 @@ class PublicChatItemController extends Controller
 
     public function showSendAsBot()
     {
-        $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
+        $onlineIds = $this->userActivityService->getOnlineUserIds(
+            $this->userActivityService::GENERAL_ONLINE_TIMEFRAME_IN_MINUTES
+        );
 
         $onlineBotIds = User::whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_BOT);

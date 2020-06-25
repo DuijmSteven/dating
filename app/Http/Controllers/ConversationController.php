@@ -8,11 +8,11 @@ use App\Http\Requests\Admin\Conversations\MessageCreateRequest;
 use App\Mail\MessageReceived;
 use App\Managers\ConversationManager;
 use App\OpenConversationPartner;
+use App\Services\UserActivityService;
 use App\User;
 use App\UserAccount;
 use DB;
 use Illuminate\Http\JsonResponse;
-use Kim\Activity\Activity;
 use Mail;
 
 /**
@@ -38,12 +38,13 @@ class ConversationController extends Controller
     public function __construct(
         ConversationManager $conversationManager,
         ConversationMessage $conversationMessage,
-        User $user
+        User $user,
+        UserActivityService $userActivityService
     ) {
         $this->conversationManager = $conversationManager;
         $this->conversationMessage = $conversationMessage;
         $this->user = $user;
-        parent::__construct();
+        parent::__construct($userActivityService);
     }
 
     public function index()
@@ -106,7 +107,9 @@ class ConversationController extends Controller
             );
 
             if ($recipientHasMessageNotificationsEnabled) {
-                $onlineUserIds = Activity::users(5)->pluck('user_id')->toArray();
+                $onlineUserIds = $this->userActivityService->getOnlineUserIds(
+                    $this->userActivityService::PEASANT_MAILING_ONLINE_TIMEFRAME_IN_MINUTES
+                );
 
                 if (!in_array($recipient->getId(), $onlineUserIds) && $recipient->isPeasant()) {
                     if (config('app.env') === 'production') {

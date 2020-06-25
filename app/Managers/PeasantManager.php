@@ -4,6 +4,7 @@ namespace App\Managers;
 
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Services\GeocoderService;
+use App\Services\UserActivityService;
 use App\User;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
@@ -23,10 +24,17 @@ class PeasantManager extends UserManager
      * @param User $user
      * @param StorageManager $storageManager
      */
-    public function __construct(User $user, StorageManager $storageManager)
-    {
+    public function __construct(
+        User $user,
+        StorageManager $storageManager,
+        UserActivityService $userActivityService
+    ) {
         $this->user = $user;
-        parent::__construct($this->user, $storageManager);
+        parent::__construct(
+            $this->user,
+            $storageManager,
+            $userActivityService
+        );
     }
 
     /**
