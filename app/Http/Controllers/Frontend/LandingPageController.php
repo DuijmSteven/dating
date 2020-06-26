@@ -8,6 +8,7 @@ use App\User;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use Spatie\Geocoder\Geocoder;
 use function foo\func;
 
@@ -33,11 +34,39 @@ class LandingPageController extends FrontendController
             $viewData['mediaId'] = $request->input('utm_campaign');
         }
 
-        if ($request->input('clid')) {
-            $viewData['clickId'] = $request->input('clid');
+        if ($request->input('clid') || Cookie::has('clid')) {
+            if (!Cookie::has('clid')) {
+                Cookie::make(
+                    'clid',
+                    $request->input('clid'),
+                    100000
+                );
+            }
+
+            if ($request->input('clid')) {
+                $clid = $request->input('clid');
+            } else {
+                $clid = Cookie::get('clid');
+            }
+
+            $viewData['clickId'] = $clid;
             $viewData['affiliate'] = App\UserAffiliateTracking::AFFILIATE_XPARTNERS;
-        } elseif ($request->input('gclid')) {
-            $viewData['clickId'] = $request->input('gclid');
+        } elseif ($request->input('gclid') || Cookie::has('gclid')) {
+            if (!Cookie::has('gclid')) {
+                Cookie::make(
+                    'gclid',
+                    $request->input('gclid'),
+                    100000
+                );
+            }
+
+            if ($request->input('gclid')) {
+                $glcid = $request->input('gclid');
+            } else {
+                $glcid = Cookie::get('gclid');
+            }
+
+            $viewData['clickId'] = $glcid;
             $viewData['affiliate'] = App\UserAffiliateTracking::AFFILIATE_GOOGLE;
         }
 
