@@ -96,6 +96,34 @@ class PeasantController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+    public function conversions()
+    {
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+        $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
+
+        $conversions = $this->statisticsManager->affiliateConversionsBetweenQueryBuilder(
+            'any',
+            $launchDate,
+            $endOfToday
+        )
+        ->paginate(20);
+
+        return view(
+            'admin.peasants.overview',
+            [
+                'title' => 'Conversions Overview - ' . \config('app.name'),
+                'headingLarge' => 'Conversions',
+                'headingSmall' => 'Overview',
+                'carbonNow' => Carbon::now(),
+                'peasants' => $conversions,
+                'peasantMessagesCharts' => $this->chartsManager->getMessagesCharts($conversions),
+            ]
+        );
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function fromAffiliate(string $affiliate)
     {
         $peasants = User::with(

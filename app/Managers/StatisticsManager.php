@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\DB;
 
 class StatisticsManager
 {
-    public function revenueBetween($startDate, $endDate) {
+    public function revenueBetween($startDate, $endDate)
+    {
         return Payment::whereBetween('created_at',
             [
                 $startDate,
@@ -25,7 +26,8 @@ class StatisticsManager
             ->sum('amount');
     }
 
-    public function affiliateRevenueBetween(string $affiliate, $startDate, $endDate) {
+    public function affiliateRevenueBetween(string $affiliate, $startDate, $endDate)
+    {
         return Payment::whereHas('peasant.affiliateTracking', function ($query) use ($affiliate) {
             $query->where('affiliate', $affiliate);
         })
@@ -38,7 +40,8 @@ class StatisticsManager
             ->sum('amount');
     }
 
-    public function affiliateExpensesBetween(int $payee, int $type, $startDate, $endDate) {
+    public function affiliateExpensesBetween(int $payee, int $type, $startDate, $endDate)
+    {
         return Expense::where('payee', $payee)
             ->where('type', $type)
             ->whereBetween('takes_place_at',
@@ -49,56 +52,68 @@ class StatisticsManager
             ->sum('amount');
     }
 
-    public function affiliateConversionsBetweenQueryBuilder(string $affiliate, $startDate, $endDate) {
-        return User::whereDoesntHave('payments', function ($query) use ($startDate) {
-                $query->where(
-                    'created_at',
-                    '<',
-                    $startDate
-                )
+    public function affiliateConversionsBetweenQueryBuilder(string $affiliate, $startDate, $endDate)
+    {
+        $query = User::whereDoesntHave('payments', function ($query) use ($startDate) {
+            $query->where(
+                'created_at',
+                '<',
+                $startDate
+            )
                 ->where('status', Payment::STATUS_COMPLETED);
-            })
-            ->whereHas('payments', function ($query) use ($startDate, $endDate) {
-                $query->whereBetween('created_at',
-                    [
-                        $startDate,
-                        $endDate
-                    ])
-                    ->where('status', Payment::STATUS_COMPLETED);
-            })
-            ->whereHas('affiliateTracking', function ($query) use ($affiliate) {
-                $query->where('affiliate', $affiliate);
-            })
-            ->distinct('id');
-    }
-
-    public function affiliateConversionsBetweenCount(string $affiliate, $startDate, $endDate) {
-        return $this->affiliateConversionsBetweenQueryBuilder($affiliate, $startDate, $endDate)
-            ->count('id');
-    }
-
-    public function registrationsCountBetween($startDate, $endDate) {
-        return User::whereHas('roles', function ($query) {
-            $query->where('id', User::TYPE_PEASANT);
         })
-        ->whereBetween('created_at',
-            [
-                $startDate,
-                $endDate
-            ])
-        ->count();
-    }
-
-    public function messagesSentCountBetween($startDate, $endDate) {
-        return ConversationMessage::whereBetween('created_at',
+        ->whereHas('payments', function ($query) use ($startDate, $endDate) {
+            $query->whereBetween('created_at',
                 [
                     $startDate,
                     $endDate
                 ])
-                ->count();
+                ->where('status', Payment::STATUS_COMPLETED);
+        });
+
+        if ($affiliate !== 'any') {
+            $query->whereHas('affiliateTracking', function ($query) use ($affiliate) {
+                $query->where('affiliate', $affiliate);
+            });
+        }
+
+        $query->distinct('id')
+            ->orderBy('id', 'desc');
+
+        return $query;
     }
 
-    public function messagesSentByUserTypeBetweenQueryBuilder(int $userType, $startDate, $endDate) {
+    public function affiliateConversionsBetweenCount(string $affiliate, $startDate, $endDate)
+    {
+        return $this->affiliateConversionsBetweenQueryBuilder($affiliate, $startDate, $endDate)
+            ->count('id');
+    }
+
+    public function registrationsCountBetween($startDate, $endDate)
+    {
+        return User::whereHas('roles', function ($query) {
+            $query->where('id', User::TYPE_PEASANT);
+        })
+            ->whereBetween('created_at',
+                [
+                    $startDate,
+                    $endDate
+                ])
+            ->count();
+    }
+
+    public function messagesSentCountBetween($startDate, $endDate)
+    {
+        return ConversationMessage::whereBetween('created_at',
+            [
+                $startDate,
+                $endDate
+            ])
+            ->count();
+    }
+
+    public function messagesSentByUserTypeBetweenQueryBuilder(int $userType, $startDate, $endDate)
+    {
 
         return DB::table('conversation_messages as cm')
             ->leftJoin('users as u', 'u.id', 'cm.sender_id')
@@ -110,7 +125,8 @@ class StatisticsManager
             ]);
     }
 
-    public function publicChatMessagesSentByUserTypeBetweenQueryBuilder(int $userType, $startDate, $endDate) {
+    public function publicChatMessagesSentByUserTypeBetweenQueryBuilder(int $userType, $startDate, $endDate)
+    {
 
         return DB::table('public_chat_items as pci')
             ->leftJoin('users as u', 'u.id', 'pci.sender_id')
@@ -122,24 +138,27 @@ class StatisticsManager
             ]);
     }
 
-    public function messagesSentByUserTypeBetween(int $userType, $startDate, $endDate) {
-        return ConversationMessage::whereHas('sender.roles', function($query) use ($userType) {
+    public function messagesSentByUserTypeBetween(int $userType, $startDate, $endDate)
+    {
+        return ConversationMessage::whereHas('sender.roles', function ($query) use ($userType) {
             $query->where('id', $userType);
         })->whereBetween('created_at',
             [
                 $startDate,
                 $endDate
             ])
-        ->get();
+            ->get();
     }
 
-    public function messagesSentByUserTypeCountBetween(int $userType, $startDate, $endDate) {
+    public function messagesSentByUserTypeCountBetween(int $userType, $startDate, $endDate)
+    {
         return $this->messagesSentByUserTypeBetweenQueryBuilder($userType, $startDate, $endDate)
             ->count();
     }
 
 
-    public function paidMessagesSentByUserTypeCountBetween(int $userType, $startDate, $endDate) {
+    public function paidMessagesSentByUserTypeCountBetween(int $userType, $startDate, $endDate)
+    {
         $allMessagesCount = $this->messagesSentByUserTypeBetweenQueryBuilder($userType, $startDate, $endDate)
             ->count();
 
@@ -167,7 +186,6 @@ class StatisticsManager
                 $startDate,
                 $endDate
             ]);
-
 
 
         return $allMessagesCount - $unpaidMessagesInPeriod;
@@ -280,70 +298,78 @@ class StatisticsManager
         return number_format($messagesCurrentYear / $now->diffInHours($startOfYear), 0);
     }
 
-    public function publicChatMessagesSentByUserTypeCountBetween(int $userType, $startDate, $endDate) {
+    public function publicChatMessagesSentByUserTypeCountBetween(int $userType, $startDate, $endDate)
+    {
         return $this->publicChatMessagesSentByUserTypeBetweenQueryBuilder($userType, $startDate, $endDate)
             ->count();
     }
 
-    public function peasantDeactivationsCountBetween($startDate, $endDate) {
-        return User::whereHas('roles', function($query) {
+    public function peasantDeactivationsCountBetween($startDate, $endDate)
+    {
+        return User::whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_PEASANT);
         })->whereBetween('deactivated_at',
             [
                 $startDate,
                 $endDate
             ])
-        ->where('deactivated_at', '!=', null)
-        ->count();
+            ->where('deactivated_at', '!=', null)
+            ->count();
     }
 
-    public function peasantsWithNoCreditpackQueryBuilder() {
+    public function peasantsWithNoCreditpackQueryBuilder()
+    {
         return User::where('active', true)
-        ->whereHas('roles', function($query) {
-            $query->where('id', User::TYPE_PEASANT);
-        })->whereHas('account', function($query) {
-            $query->where('credits', 0);
-        });
+            ->whereHas('roles', function ($query) {
+                $query->where('id', User::TYPE_PEASANT);
+            })->whereHas('account', function ($query) {
+                $query->where('credits', 0);
+            });
     }
 
-    public function peasantsWithNoCreditpack() {
+    public function peasantsWithNoCreditpack()
+    {
         return $this->peasantsWithNoCreditpackQueryBuilder()->get();
     }
 
-    public function peasantsWithNoCreditpackCount() {
+    public function peasantsWithNoCreditpackCount()
+    {
         return $this->peasantsWithNoCreditpackQueryBuilder()->count();
     }
 
-    public function peasantsThatNeverHadCreditpackQueryBuilder() {
+    public function peasantsThatNeverHadCreditpackQueryBuilder()
+    {
         return User::where('active', true)
-        ->has('payments', '=', 0)
-        ->whereHas('roles', function($query) {
-            $query->where('id', User::TYPE_PEASANT);
-        })
-        ->orWhereHas('payments', function ($query) {
-            $query->whereNull('creditpack_id');
-        })
-        ->orderBy('created_at', 'desc');
+            ->has('payments', '=', 0)
+            ->whereHas('roles', function ($query) {
+                $query->where('id', User::TYPE_PEASANT);
+            })
+            ->orWhereHas('payments', function ($query) {
+                $query->whereNull('creditpack_id');
+            })
+            ->orderBy('created_at', 'desc');
     }
 
-    public function peasantsThatNeverHadCreditpack() {
+    public function peasantsThatNeverHadCreditpack()
+    {
         return $this->peasantsThatNeverHadCreditpackQueryBuilder()->get();
     }
 
-    public function peasantsThatNeverHadCreditpackCount() {
+    public function peasantsThatNeverHadCreditpackCount()
+    {
         return $this->peasantsThatNeverHadCreditpackQueryBuilder()->count();
     }
 
     public function topMessagersBetweenDates($startDate, $endDate, int $amount)
     {
         return User::with(['profileImage', 'account', 'messages' => function ($query) use ($startDate, $endDate) {
-                $query->where('created_at', '>=', $startDate);
-                $query->where('created_at', '<=', $endDate);
-            }])
-            ->whereHas('roles', function($query) {
+            $query->where('created_at', '>=', $startDate);
+            $query->where('created_at', '<=', $endDate);
+        }])
+            ->whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_PEASANT);
             })
-            ->whereHas('payments', function($query) {
+            ->whereHas('payments', function ($query) {
                 $query->where('status', Payment::STATUS_COMPLETED);
             })
             ->whereHas('messages', function ($query) use ($startDate, $endDate) {
@@ -363,10 +389,10 @@ class StatisticsManager
             $query->where('created_at', '>=', $startDate);
             $query->where('created_at', '<=', $endDate);
         }])
-            ->whereHas('roles', function($query) {
+            ->whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_PEASANT);
             })
-            ->whereHas('payments', function($query) {
+            ->whereHas('payments', function ($query) {
                 $query->where('status', Payment::STATUS_COMPLETED);
             })
             ->whereHas('messages', function ($query) use ($startDate, $endDate) {
@@ -389,7 +415,7 @@ class StatisticsManager
             $query->where('created_at', '>=', $startDate);
             $query->where('created_at', '<=', $endDate);
         }])
-            ->whereHas('roles', function($query) {
+            ->whereHas('roles', function ($query) {
                 $query->whereIn('id', [User::TYPE_OPERATOR, User::TYPE_ADMIN]);
             })
             ->whereHas('messagesAsOperator', function ($query) use ($startDate, $endDate) {
@@ -403,23 +429,26 @@ class StatisticsManager
             ->take($amount);
     }
 
-    public function peasantsWithCreditpackQueryBuilder() {
+    public function peasantsWithCreditpackQueryBuilder()
+    {
         return User::where('active', true)
-            ->whereHas('roles', function($query) {
+            ->whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_PEASANT);
-            })->whereHas('account', function($query) {
+            })->whereHas('account', function ($query) {
                 $query->where('credits', '>', 0);
-            })->whereHas('payments', function($query) {
+            })->whereHas('payments', function ($query) {
                 $query->where('status', Payment::STATUS_COMPLETED)->orderBy('created_at', 'desc')->take(1);
             })
             ->orderBy('created_at', 'desc');
     }
 
-    public function peasantsWithCreditpack() {
+    public function peasantsWithCreditpack()
+    {
         return $this->peasantsWithCreditpackQueryBuilder()->get();
     }
 
-    public function peasantsWithCreditpackCount() {
+    public function peasantsWithCreditpackCount()
+    {
         return $this->peasantsWithCreditpackQueryBuilder()->count();
     }
 
@@ -428,13 +457,15 @@ class StatisticsManager
      * @param int $creditpackId
      * @return Collection
      */
-    public function filterPeasantsWithCreditpackId(Collection $peasants, int $creditpackId) {
+    public function filterPeasantsWithCreditpackId(Collection $peasants, int $creditpackId)
+    {
         return $peasants->filter(function ($user) use ($creditpackId) {
             return $user->payments[count($user->payments) - 1]->getCreditpackId() == $creditpackId;
         });
     }
 
-    public function filterPeasantsWithCreditpackIdCount(Collection $peasants, int $creditpackId) {
+    public function filterPeasantsWithCreditpackIdCount(Collection $peasants, int $creditpackId)
+    {
         return $this->filterPeasantsWithCreditpackId($peasants, $creditpackId)->count();
     }
 }

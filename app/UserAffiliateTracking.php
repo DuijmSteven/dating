@@ -9,6 +9,7 @@ class UserAffiliateTracking extends TimeZonedModel
 {
     const AFFILIATE_XPARTNERS = 'xpartners';
     const AFFILIATE_GOOGLE = 'google';
+    const AFFILIATE_DATECENTRALE = 'datecentrale';
 
     const PUBLISHER_GRATIS_PORNO_FILM = 1;
     const PUBLISHER_EROTIC_FOR_YOU = 2;
@@ -17,6 +18,7 @@ class UserAffiliateTracking extends TimeZonedModel
     const PUBLISHER_DATINGSITE_CHECKER = 5;
     const PUBLISHER_GEILE_SEX_FILMS = 6;
     const PUBLISHER_GENOTSPLEKJE = 7;
+    const PUBLISHER_DATECENTRALE = 8;
 
     const LEAD_STATUS_UNVALIDATED = 0;
     const LEAD_STATUS_VALIDATED = 1;
@@ -35,6 +37,7 @@ class UserAffiliateTracking extends TimeZonedModel
             self::PUBLISHER_DATINGSITE_CHECKER => 'datingsitechecker.nl',
             self::PUBLISHER_GEILE_SEX_FILMS => 'geilesexfilms',
             self::PUBLISHER_GENOTSPLEKJE => 'genotsplekje',
+            self::PUBLISHER_DATECENTRALE => 'datecentrale.nl',
         ];
     }
 
