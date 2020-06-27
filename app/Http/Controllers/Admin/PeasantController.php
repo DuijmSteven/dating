@@ -83,6 +83,8 @@ class PeasantController extends Controller
             ->orderBy('id', 'desc')
             ->paginate(20);
 
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+
         return view(
             'admin.peasants.overview',
             [
@@ -110,6 +112,8 @@ class PeasantController extends Controller
             $endOfToday
         )
         ->paginate(20);
+
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
 
         return view(
             'admin.peasants.overview',
@@ -204,6 +208,8 @@ class PeasantController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(20);
 
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+
         return view(
             'admin.peasants.overview',
             [
@@ -212,7 +218,7 @@ class PeasantController extends Controller
                 'headingSmall' => 'Deactivations',
                 'carbonNow' => Carbon::now(),
                 'peasants' => $deactivatedPeasants,
-                'peasantMessagesCharts' => $this->chartsManager->getMessagesCharts($deactivatedPeasants),
+                'peasantMessagesCharts' => $this->chartsManager->getMessagesCharts($deactivatedPeasants, $launchDate),
             ]
         );
     }
@@ -220,6 +226,8 @@ class PeasantController extends Controller
     public function withCreditpack()
     {
         $peasantsWithCreditpack = $this->statisticsManager->peasantsWithCreditpackQueryBuilder()->paginate(20);
+
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
 
         return view(
             'admin.peasants.overview',
@@ -229,7 +237,7 @@ class PeasantController extends Controller
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
                 'peasants' => $peasantsWithCreditpack,
-                'peasantMessagesCharts' => $this->chartsManager->getMessagesCharts($peasantsWithCreditpack),
+                'peasantMessagesCharts' => $this->chartsManager->getMessagesCharts($peasantsWithCreditpack, $launchDate),
             ]
         );
     }
@@ -360,6 +368,8 @@ class PeasantController extends Controller
             )
             ->findOrFail($peasantId);
 
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+
         return view(
             'admin.peasants.edit',
             [
@@ -368,7 +378,7 @@ class PeasantController extends Controller
                 'headingSmall' => 'Edit',
                 'carbonNow' => Carbon::now(),
                 'peasant' => $peasant,
-                'peasantMessagesChart' => $this->chartsManager->createPeasantMessagesChart($peasant->getId()),
+                'peasantMessagesChart' => $this->chartsManager->createPeasantMessagesChart($peasant->getId(), $launchDate),
                 'peasantMessagesMonthlyChart' => $this->chartsManager->createPeasantMessagesMonthlyChart($peasant->getId()),
             ]
         );
