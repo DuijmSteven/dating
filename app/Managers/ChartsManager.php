@@ -1407,12 +1407,12 @@ class ChartsManager
         return $revenueChart;
     }
 
-    public function getMessagesCharts($peasants) {
+    public function getMessagesCharts($peasants, $since) {
         $peasantMessagesCharts = [];
         $peasantMessagesMonthlyCharts = [];
 
         foreach ($peasants as $peasant) {
-            $peasantMessagesCharts[] = $this->createPeasantMessagesChart($peasant->getId());
+            $peasantMessagesCharts[] = $this->createPeasantMessagesChart($peasant->getId(), $since);
             $peasantMessagesMonthlyCharts[] = $this->createPeasantMessagesMonthlyChart($peasant->getId());
         }
 
