@@ -66,6 +66,8 @@ class PeasantController extends Controller
      */
     public function index()
     {
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+
         $peasants = User::with(
             array_unique(array_merge(
                 User::COMMON_RELATIONS,
@@ -89,7 +91,7 @@ class PeasantController extends Controller
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
                 'peasants' => $peasants,
-                'peasantMessagesCharts' => $this->chartsManager->getMessagesCharts($peasants),
+                'peasantMessagesCharts' => $this->chartsManager->getMessagesCharts($peasants, $launchDate),
             ]
         );
     }
@@ -117,7 +119,7 @@ class PeasantController extends Controller
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
                 'peasants' => $conversions,
-                'peasantMessagesCharts' => $this->chartsManager->getMessagesCharts($conversions),
+                'peasantMessagesCharts' => $this->chartsManager->getMessagesCharts($conversions, $launchDate),
             ]
         );
     }
@@ -145,6 +147,8 @@ class PeasantController extends Controller
             ->orderBy('id', 'desc')
             ->paginate(20);
 
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+
         return view(
             'admin.peasants.overview',
             [
@@ -153,7 +157,7 @@ class PeasantController extends Controller
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
                 'peasants' => $peasants,
-                'peasantMessagesCharts' => $this->chartsManager->getMessagesCharts($peasants),
+                'peasantMessagesCharts' => $this->chartsManager->getMessagesCharts($peasants, $launchDate),
             ]
         );
     }
@@ -281,6 +285,8 @@ class PeasantController extends Controller
             ->orderBy('id')
             ->paginate(20);
 
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+
         return view(
             'admin.peasants.overview',
             [
@@ -289,7 +295,7 @@ class PeasantController extends Controller
                 'headingSmall' => 'Online',
                 'carbonNow' => Carbon::now(),
                 'peasants' => $peasants,
-                'peasantMessagesCharts' => $this->chartsManager->getMessagesCharts($peasants),
+                'peasantMessagesCharts' => $this->chartsManager->getMessagesCharts($peasants, $launchDate),
             ]
         );
     }
