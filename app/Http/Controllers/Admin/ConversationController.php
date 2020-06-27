@@ -414,7 +414,7 @@ class ConversationController extends Controller
                 );
         }
 
-        return redirect()->route('operator-platform.conversations.show', [$conversation->getId()]);
+        return redirect()->route('operator-platform.conversations.show', ['conversationId' => $conversation->getId()]);
     }
 
     /**

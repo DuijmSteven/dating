@@ -62,7 +62,7 @@
 
                                                 $routeName = 'admin.' . $userRoleName . 's.edit.get';
                                             @endphp
-                                            <a href="{{ route($routeName,['id' => $publicChatItem->sender->getId()]) }}">
+                                            <a href="{{ route($routeName,[$userRoleName . 'Id' => $publicChatItem->sender->getId()]) }}">
                                                 {{ $publicChatItem->sender->getId() }}
                                             </a>
                                         @else
@@ -90,7 +90,7 @@
                                                  alt="Sender profile image"><br>
                                         </a>
                                         <b>ID</b>:
-                                            <a href="{{ route('admin.operators.edit.get',['id' => $publicChatItem->operator->getId()]) }}">
+                                            <a href="{{ route('admin.operators.edit.get',[$userRoleName . 'Id' => $publicChatItem->operator->getId()]) }}">
                                                 {{ $publicChatItem->operator->getId() }}
                                             </a>
                                         <br>
@@ -107,7 +107,7 @@
                                 <td>{{ $publicChatItem->getPublishedAt()->format('d-m-Y H:i:s') }}</td>
                                 <td class="action-buttons">
                                     <form method="POST"
-                                          action="{{ route(    'admin.public-chat-items.destroy', ['messageId' => $publicChatItem->getId()]) }}">
+                                          action="{{ route(    'admin.public-chat-items.destroy', ['chatItemId' => $publicChatItem->getId()]) }}">
                                         {!! csrf_field() !!}
                                         {!! method_field('DELETE') !!}
                                         <button type="submit"
