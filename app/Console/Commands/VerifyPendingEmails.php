@@ -49,8 +49,11 @@ class VerifyPendingEmails extends Command
         \Log::debug('Checking for users tha have pending verification email...');
 
         $users = User::with(['meta'])
+        ->whereHas('roles', function ($query) {
+            $query->where('id', User::TYPE_PEASANT);
+        })
         ->whereHas('meta', function ($query) {
-            $query->where('email_verification_status', UserMeta::EMAIL_VERIFICATION_STATUS_PENDING);
+            $query->where('email_verified', UserMeta::EMAIL_VERIFIED_PENDING);
         })
         ->take(30)
         ->get();
