@@ -288,6 +288,8 @@ class PeasantController extends Controller
             ->orderBy('id')
             ->paginate(20);
 
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+
         return view(
             'admin.peasants.overview',
             [
@@ -296,7 +298,7 @@ class PeasantController extends Controller
                 'headingSmall' => 'Online',
                 'carbonNow' => Carbon::now(),
                 'peasants' => $peasants,
-                'peasantMessagesCharts' => $this->chartsManager->getMessagesCharts($peasants),
+                'peasantMessagesCharts' => $this->chartsManager->getMessagesCharts($peasants, $launchDate),
             ]
         );
     }
