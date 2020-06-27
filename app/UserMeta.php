@@ -7,33 +7,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserMeta extends Model
 {
-    const EMAIL_VERIFIED_FALSE = 0;
-    const EMAIL_VERIFIED_TRUE = 1;
+    const EMAIL_VERIFIED_PENDING = 0;
+    const EMAIL_VERIFIED_DELIVERABLE = 1;
     const EMAIL_VERIFIED_RISKY = 2;
     const EMAIL_VERIFIED_UNKNOWN = 3;
     const EMAIL_VERIFIED_OTHER = 4;
-
-    const EMAIL_VERIFICATION_STATUS_PENDING = 0;
-    const EMAIL_VERIFICATION_STATUS_DONE = 1;
-    const EMAIL_VERIFICATION_STATUS_FAILED = 2;
+    const EMAIL_VERIFIED_FAILED = 5;
+    const EMAIL_VERIFIED_UNDELIVERABLE= 6;
 
     public static function emailVerifiedDescriptionPerId()
     {
         return [
-            self::EMAIL_VERIFIED_FALSE => 'Unverified',
-            self::EMAIL_VERIFIED_TRUE => 'Verified',
+            self::EMAIL_VERIFIED_PENDING => 'Pending',
+            self::EMAIL_VERIFIED_DELIVERABLE => 'Deliverable',
             self::EMAIL_VERIFIED_RISKY => 'Risky',
             self::EMAIL_VERIFIED_UNKNOWN => 'Unknown',
             self::EMAIL_VERIFIED_OTHER => 'Other',
-        ];
-    }
-
-    public static function emailVerificationStatusDescriptionPerId()
-    {
-        return [
-            self::EMAIL_VERIFICATION_STATUS_PENDING => 'Pending',
-            self::EMAIL_VERIFICATION_STATUS_DONE => 'Done',
-            self::EMAIL_VERIFICATION_STATUS_FAILED => 'Failed',
+            self::EMAIL_VERIFIED_FAILED => 'Failed',
+            self::EMAIL_VERIFIED_UNDELIVERABLE => 'Undeliverable',
         ];
     }
 

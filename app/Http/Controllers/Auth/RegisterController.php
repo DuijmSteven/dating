@@ -9,6 +9,7 @@ use App\Http\Requests\RegisterRequest;
 use App\Mail\Welcome;
 use App\Managers\AffiliateManager;
 use App\RoleUser;
+use App\Services\EmailVerificationService;
 use App\Services\UserLocationService;
 use App\Traits\Users\RegistersUsers;
 use App\User;
@@ -58,19 +59,25 @@ class RegisterController extends Controller
      * @var UserLocationService
      */
     private UserLocationService $userLocationService;
+    /**
+     * @var EmailVerificationService
+     */
+    private EmailVerificationService $emailVerificationService;
 
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * RegisterController constructor.
+     * @param AffiliateManager $affiliateManager
+     * @param UserLocationService $userLocationService
      */
     public function __construct(
         AffiliateManager $affiliateManager,
-        UserLocationService $userLocationService
+        UserLocationService $userLocationService,
+        EmailVerificationService $emailVerificationService
     ) {
         $this->middleware('guest');
         $this->affiliateManager = $affiliateManager;
         $this->userLocationService = $userLocationService;
+        $this->emailVerificationService = $emailVerificationService;
     }
 
     /**
@@ -146,7 +153,7 @@ class RegisterController extends Controller
                 'country' => 'nl',
                 'gender' => UserConstants::selectableField('gender', 'peasant', 'array_flip')[$gender],
                 'looking_for_gender' => UserConstants::selectableField('gender', 'peasant', 'array_flip')[$lookingFor],
-                'email_verification_status' => 0
+                'email_verified' => 0
                 //'dob' =>  new Carbon($request->all()['dob']),
 //                'lat' => $lat,
 //                'lng' => $lng,
@@ -154,6 +161,13 @@ class RegisterController extends Controller
             ]);
 
             $userMetaInstance->save();
+
+            $result = $this->emailVerificationService->verifySingleEmail($createdUser->getEmail());
+
+            $this->emailVerificationService->setUserMetaFromVerificationResult(
+                $createdUser,
+                $result
+            );
 
             if ($fingerprint) {
                 $userFingerprintInstance = new \App\UserFingerprint();
@@ -240,17 +254,18 @@ class RegisterController extends Controller
         }
 
         try {
-            $welcomeEmail = (new Welcome($createdUser))->onQueue('emails');
+            if ($createdUser->meta->getEmailVerified() === UserMeta::EMAIL_VERIFIED_DELIVERABLE) {
+                $welcomeEmail = (new Welcome($createdUser))->onQueue('emails');
 
-            Mail::to($createdUser)
-                ->queue($welcomeEmail);
+                Mail::to($createdUser)
+                    ->queue($welcomeEmail);
 
-            $createdUser->emailTypeInstances()->attach(EmailType::WELCOME, [
-                'email' => $createdUser->getEmail(),
-                'email_type_id' => EmailType::WELCOME,
-                'actor_id' => null
-            ]);
-
+                $createdUser->emailTypeInstances()->attach(EmailType::WELCOME, [
+                    'email' => $createdUser->getEmail(),
+                    'email_type_id' => EmailType::WELCOME,
+                    'actor_id' => null
+                ]);
+            }
         } catch (\Exception $exception) {
             DB::rollBack();
             throw $exception;

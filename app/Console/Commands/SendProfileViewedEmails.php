@@ -3,13 +3,12 @@
 namespace App\Console\Commands;
 
 use App\EmailType;
-use App\Mail\ProfileViewed;
 use App\Managers\UserManager;
 use App\User;
+use App\UserMeta;
 use App\UserView;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Mail;
 
 class SendProfileViewedEmails extends Command
 {
@@ -79,7 +78,10 @@ class SendProfileViewedEmails extends Command
                     $number = rand(1, 1000);
 
                     if ($number === 1) {
-                        $viewerBot = $this->userManager->setProfileViewedEmail($user);
+                        if ($user->meta->getEmailVerified() === UserMeta::EMAIL_VERIFIED_DELIVERABLE) {
+                            $viewerBot = $this->userManager->setProfileViewedEmail($user);
+                        }
+
                         $this->userManager->storeProfileView(
                             $viewerBot,
                             $user,

@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\User;
+use App\UserMeta;
 use GuzzleHttp\Client;
 use Spatie\Geocoder\Geocoder;
 
@@ -64,5 +66,36 @@ class EmailVerificationService
 
             return 'error';
         }
+    }
+
+    public function setUserMetaFromVerificationResult(User $user, $result)
+    {
+        $user->meta->setEmailVerified(
+            UserMeta::EMAIL_VERIFIED_OTHER
+        );
+
+        if ($result === EmailVerificationService::VALID_EMAIL_RESULT) {
+            $user->meta->setEmailVerified(
+                UserMeta::EMAIL_VERIFIED_DELIVERABLE
+            );
+        } elseif ($result === EmailVerificationService::INVALID_EMAIL_RESULT) {
+            $user->meta->setEmailVerified(
+                UserMeta::EMAIL_VERIFIED_UNDELIVERABLE
+            );
+        } elseif ($result === EmailVerificationService::RISKY_EMAIL_RESULT) {
+            $user->meta->setEmailVerified(
+                UserMeta::EMAIL_VERIFIED_RISKY
+            );
+        } elseif ($result === EmailVerificationService::UNKNOWN_EMAIL_RESULT) {
+            $user->meta->setEmailVerified(
+                UserMeta::EMAIL_VERIFIED_UNKNOWN
+            );
+        } elseif ($result === EmailVerificationService::ERROR_RESULT) {
+            $user->meta->setEmailVerified(
+                UserMeta::EMAIL_VERIFIED_FAILED
+            );
+        }
+
+        $user->meta->save();
     }
 }

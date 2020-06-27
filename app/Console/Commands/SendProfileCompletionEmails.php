@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\EmailType;
 use App\Managers\UserManager;
 use App\User;
+use App\UserMeta;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
@@ -47,7 +48,8 @@ class SendProfileCompletionEmails extends Command
      */
     public function handle()
     {
-        $users = User::whereHas('roles', function ($query) {
+        $users = User::with(['meta'])
+        ->whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_PEASANT);
         })
         ->whereHas('emailTypes', function ($query) {
@@ -66,7 +68,9 @@ class SendProfileCompletionEmails extends Command
         /** @var User $user */
         foreach ($users as $user) {
             if (!$user->isPayingUser()) {
-                $this->userManager->setProfileCompletionEmail($user);
+                if ($user->meta->getEmailVerified() === UserMeta::EMAIL_VERIFIED_DELIVERABLE) {
+                    $this->userManager->setProfileCompletionEmail($user);
+                }
             }
         }
     }

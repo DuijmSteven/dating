@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Console\Commands\SendMassMessage;
+use Activity;
 use App\Conversation;
 use App\ConversationMessage;
 use App\EmailType;
@@ -12,13 +12,11 @@ use App\Managers\UserManager;
 use App\PastMassMessage;
 use App\Payment;
 use App\User;
+use App\UserMeta;
 use App\UserView;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Mail;
-use Kim\Activity\Activity;
 
 class MassMessageController extends Controller
 {
@@ -57,7 +55,7 @@ class MassMessageController extends Controller
         $withPicUsersQuery->where(function ($query) {
             $query->whereHas('meta', function ($query) {
                 $query->where('dob', '!=', null);
-                $query->orWhere('city', '!=',  null);
+                $query->orWhere('city', '!=', null);
             })
                 ->orWhereHas('images');
         });
@@ -69,9 +67,9 @@ class MassMessageController extends Controller
             ->where(function ($query) {
                 $query->whereHas('meta', function ($query) {
                     $query->where('dob', '=', null);
-                    $query->where('city', '=',  null);
-                    $query->where('eye_color', '=',  null);
-                    $query->where('hair_color', '=',  null);
+                    $query->where('city', '=', null);
+                    $query->where('eye_color', '=', null);
+                    $query->where('hair_color', '=', null);
                 });
             });
 
@@ -148,7 +146,8 @@ class MassMessageController extends Controller
         $endOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->endOfDay()->setTimezone('UTC');
         $startOfFourDaysAgo = Carbon::now('Europe/Amsterdam')->subDays(4)->startOfDay()->setTimezone('UTC');
 
-        $usersQuery = User::whereHas('roles', function ($query) {
+        $usersQuery = User::with(['meta'])
+        ->whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_PEASANT);
         })
             ->where('active', true)
@@ -161,7 +160,7 @@ class MassMessageController extends Controller
             $usersQuery->where(function ($query) {
                 $query->whereHas('meta', function ($query) {
                     $query->where('dob', '!=', null);
-                    $query->orWhere('city', '!=',  null);
+                    $query->orWhere('city', '!=', null);
                 })
                     ->orWhereHas('images');
             });
@@ -171,9 +170,9 @@ class MassMessageController extends Controller
                 ->where(function ($query) {
                     $query->whereHas('meta', function ($query) {
                         $query->where('dob', '=', null);
-                        $query->where('city', '=',  null);
-                        $query->where('eye_color', '=',  null);
-                        $query->where('hair_color', '=',  null);
+                        $query->where('city', '=', null);
+                        $query->where('eye_color', '=', null);
+                        $query->where('hair_color', '=', null);
                     });
                 });
         } else if ($limitMessage === 'limited_have_payed') {
@@ -261,7 +260,8 @@ class MassMessageController extends Controller
 
                 if (
                     $recipientHasMessageNotificationsEnabled &&
-                    !in_array($user->getId(), $onlineUserIds)
+                    !in_array($user->getId(), $onlineUserIds) &&
+                    $user->meta->getEmailVerified() === UserMeta::EMAIL_VERIFIED_DELIVERABLE
                 ) {
                     if (config('app.env') === 'production') {
                         $messageReceivedEmail = (new MessageReceived(

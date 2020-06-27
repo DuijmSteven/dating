@@ -17,6 +17,7 @@ use App\MessageAttachment;
 use App\OpenConversationPartner;
 use App\User;
 use App\UserImage;
+use App\UserMeta;
 use App\UserView;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -560,7 +561,10 @@ class ConversationController extends Controller
             $recipientEmailTypeIds
         );
 
-        if ($recipientHasMessageNotificationsEnabled) {
+        if (
+            $recipientHasMessageNotificationsEnabled &&
+            $recipient->meta->getEmailVerified() === UserMeta::EMAIL_VERIFIED_DELIVERABLE
+        ) {
             $onlineUserIds = Activity::users(5)->pluck('user_id')->toArray();
 
             if (!in_array($recipient->getId(), $onlineUserIds)) {
@@ -685,7 +689,10 @@ class ConversationController extends Controller
                 $recipientEmailTypeIds
             );
 
-            if ($recipientHasMessageNotificationsEnabled) {
+            if (
+                $recipientHasMessageNotificationsEnabled &&
+                $recipient->meta->getEmailVerified() === UserMeta::EMAIL_VERIFIED_DELIVERABLE
+            ) {
                 $onlineUserIds = Activity::users(5)->pluck('user_id')->toArray();
 
                 if (!in_array($recipient->getId(), $onlineUserIds)) {
