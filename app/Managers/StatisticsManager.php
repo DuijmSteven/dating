@@ -71,12 +71,11 @@ class StatisticsManager
                 ->where('status', Payment::STATUS_COMPLETED);
         });
 
-        $query->whereDoesntHave('affiliateTracking');
-//        if ($affiliate !== 'any') {
-//            $query->whereHas('affiliateTracking', function ($query) use ($affiliate) {
-//                $query->where('affiliate', $affiliate);
-//            });
-//        }
+        if ($affiliate !== 'any') {
+            $query->whereHas('affiliateTracking', function ($query) use ($affiliate) {
+                $query->where('affiliate', $affiliate);
+            });
+        }
 
         $query->distinct('id')
             ->orderBy('id', 'desc');
