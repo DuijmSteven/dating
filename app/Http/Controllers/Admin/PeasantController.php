@@ -363,6 +363,8 @@ class PeasantController extends Controller
             )
             ->findOrFail($peasantId);
 
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+
         return view(
             'admin.peasants.edit',
             [
@@ -371,7 +373,7 @@ class PeasantController extends Controller
                 'headingSmall' => 'Edit',
                 'carbonNow' => Carbon::now(),
                 'peasant' => $peasant,
-                'peasantMessagesChart' => $this->chartsManager->createPeasantMessagesChart($peasant->getId()),
+                'peasantMessagesChart' => $this->chartsManager->createPeasantMessagesChart($peasant->getId(), $launchDate),
                 'peasantMessagesMonthlyChart' => $this->chartsManager->createPeasantMessagesMonthlyChart($peasant->getId()),
             ]
         );

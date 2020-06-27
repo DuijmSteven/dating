@@ -34,7 +34,7 @@ class ChartsManager
      * @return PeasantMessagesChart|null
      * @throws \Exception
      */
-    public function createPeasantMessagesChart(int $userId = null, $since)
+    public function createPeasantMessagesChart(int $userId = null, $since = null)
     {
         $query = \DB::table('conversation_messages as cm')
             ->select(\DB::raw('DATE(CONVERT_TZ(cm.created_at, \'UTC\', \'Europe/Amsterdam\')) as creationDate, COUNT(cm.id) AS messagesCount'))
