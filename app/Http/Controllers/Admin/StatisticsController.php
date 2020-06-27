@@ -78,6 +78,7 @@ class StatisticsController extends Controller
         $averageRevenuePerAllTimePayingUser = $allTimeRevenue / $allTimePayingUsers;
 
         $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+        $googleAdsLaunchDate = Carbon::createFromFormat('d-m-Y H:i:s', '11-06-2020 00:00:00');
 
         $xpartnersAdExpensesAllTime = $this->statisticsManager->affiliateExpensesBetween(
             Expense::PAYEE_XPARTNERS,
@@ -338,7 +339,9 @@ class StatisticsController extends Controller
                 'salesTax' => self::SALES_TAX,
                 'registrationsMonthlyChart' => $this->chartsManager->createRegistrationsMonthlyChart(),
                 'peasantMessagesMonthlyChart' => $this->chartsManager->createPeasantMessagesMonthlyChart(),
-                'paymentsChart' => $this->chartsManager->createPaymentsChart(),
+                'paymentsChart' => $this->chartsManager->createPaymentsChart(
+                    $googleAdsLaunchDate
+                ),
                 'paymentsMonthlyChart' => $this->chartsManager->createPaymentsMonthlyChart(),
                 'revenueMonthlyChart' => $this->chartsManager->createRevenueMonthlyChart(),
                 'deactivationsMonthlyChart' => $this->chartsManager->createDeactivationsMonthlyChart(),
@@ -346,8 +349,12 @@ class StatisticsController extends Controller
                 'rpuChart' => $this->chartsManager->createRpuChart(),
                 'revenueWithoutSalesTaxChart' => $this->chartsManager->createRevenueWithoutSalesTaxChart(),
                 'revenueWithoutSalesTaxMonthlyChart' => $this->chartsManager->createRevenueWithoutSalesTaxMonthlyChart(),
-                'registrationsChart' => $this->chartsManager->createRegistrationsChart(),
-                'deactivationsChart' => $this->chartsManager->createDeactivationsChart(),
+                'registrationsChart' => $this->chartsManager->createRegistrationsChart(
+                    $googleAdsLaunchDate
+                ),
+                'deactivationsChart' => $this->chartsManager->createDeactivationsChart(
+                    $googleAdsLaunchDate
+                ),
                 'averagePeasantMessagesPerHourChart' => $this->chartsManager->createAveragePeasantMessagesPerHourInPeriodChart(
                     Carbon::now('Europe/Amsterdam')->subDays(10)->setTimezone('UTC'),
                     Carbon::now('Europe/Amsterdam')->setTimezone('UTC')

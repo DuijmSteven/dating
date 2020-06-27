@@ -326,6 +326,10 @@ Route::group([
         Route::get('/online', 'Admin\PeasantController@showOnline')
             ->name('admin.peasants.online.show');
 
+        Route::get('/conversions', 'Admin\PeasantController@conversions')
+            ->name('admin.peasants.conversions.show');
+
+
         Route::get('create', 'Admin\PeasantController@create')
             ->name('admin.peasants.create.get');
         Route::post('create', 'Admin\PeasantController@store')

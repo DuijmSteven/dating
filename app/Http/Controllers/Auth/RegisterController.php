@@ -191,6 +191,17 @@ class RegisterController extends Controller
             }
         }
 
+        if ($request->input('affiliate') && $request->input('affiliate') === UserAffiliateTracking::AFFILIATE_DATECENTRALE) {
+            $this->affiliateManager->storeAffiliateTrackingInfo(
+                $createdUser->id,
+                $request->input('affiliate'),
+                null,
+                $this->userLocationService->getLocationFromIp($this->userLocationService->getUserIp()),
+                null,
+                UserAffiliateTracking::AFFILIATE_DATECENTRALE
+            );
+        }
+
         try {
             $amountOfFreeCredits = 1;
 

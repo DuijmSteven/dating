@@ -127,6 +127,8 @@ class DashboardController extends Controller
 
         $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
 
+        $googleAdsLaunchDate = Carbon::createFromFormat('d-m-Y H:i:s', '11-06-2020 00:00:00');
+
         $googleAdsExpensesAllTime = $this->statisticsManager->affiliateExpensesBetween(
             Expense::PAYEE_GOOGLE,
             Expense::TYPE_ADS,
@@ -393,9 +395,16 @@ class DashboardController extends Controller
                 'headingLarge' => 'Dashboard',
                 'headingSmall' => '',
                 'salesTax' => self::SALES_TAX,
-                'peasantMessagesChart' => $this->chartsManager->createPeasantMessagesChart(),
-                'revenueChart' => $this->chartsManager->createRevenueChart(),
-                'netPeasantsAcquiredChart' => $this->chartsManager->createNetPeasantsAcquiredChart(),
+                'peasantMessagesChart' => $this->chartsManager->createPeasantMessagesChart(
+                    null,
+                    $googleAdsLaunchDate
+                ),
+                'revenueChart' => $this->chartsManager->createRevenueChart(
+                    $googleAdsLaunchDate
+                ),
+                'netPeasantsAcquiredChart' => $this->chartsManager->createNetPeasantsAcquiredChart(
+                    $googleAdsLaunchDate
+                ),
 //                'xpartnersConversionsChart' => $this->chartsManager->createXpartnersConversionsChart(),
                 'googleLeadsChart' => $this->chartsManager->createGoogleLeadsChart(),
                 'googleAdsRevenueChart' => $this->chartsManager->createAffiliateRevenueChart(

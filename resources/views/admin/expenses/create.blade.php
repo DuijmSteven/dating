@@ -28,7 +28,7 @@
                                     {{ \App\Expense::payeeDescriptionPerId()[\App\Expense::PAYEE_GOOGLE] }}
                                 </option>
                                 <option value="{{ \App\Expense::PAYEE_OTHER }}" {!! (old('payee') === \App\Expense::PAYEE_OTHER) ? 'selected' : '' !!}>
-                                    {{ \App\Expense::payeeDescriptionPerId()[\App\Expense::PAYEE_GOOGLE] }}
+                                    {{ \App\Expense::payeeDescriptionPerId()[\App\Expense::PAYEE_OTHER] }}
                                 </option>
                             </select>
                             @if ($errors->has('payee'))
