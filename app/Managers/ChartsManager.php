@@ -34,13 +34,13 @@ class ChartsManager
      * @return PeasantMessagesChart|null
      * @throws \Exception
      */
-    public function createPeasantMessagesChart(int $userId = null)
+    public function createPeasantMessagesChart(int $userId = null, $since = null)
     {
         $query = \DB::table('conversation_messages as cm')
             ->select(\DB::raw('DATE(CONVERT_TZ(cm.created_at, \'UTC\', \'Europe/Amsterdam\')) as creationDate, COUNT(cm.id) AS messagesCount'))
             ->leftJoin('users as u', 'u.id', 'cm.sender_id')
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
-            ->where('cm.created_at', '>=', '2020-05-23 00:00:00');
+            ->where('cm.created_at', '>=', $since);
 
 
         if (null  == $userId) {
@@ -258,7 +258,7 @@ class ChartsManager
      * @return PaymentsChart|null
      * @throws \Exception
      */
-    public function createPaymentsChart()
+    public function createPaymentsChart($since)
     {
         $query = \DB::table('payments as p')
             ->select(\DB::raw('DATE(CONVERT_TZ(p.created_at, \'UTC\', \'Europe/Amsterdam\')) as creationDate, COUNT(p.id) AS paymentsCount'))
@@ -266,7 +266,7 @@ class ChartsManager
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('p.status', Payment::STATUS_COMPLETED)
-            ->where('p.created_at', '>=', '2020-05-23 00:00:00')
+            ->where('p.created_at', '>=', $since)
             ->groupBy('creationDate')
             ->orderBy('creationDate', 'ASC');
 
@@ -457,13 +457,13 @@ class ChartsManager
      * @return RegistrationsChart|null
      * @throws \Exception
      */
-    public function createRegistrationsChart()
+    public function createRegistrationsChart($since)
     {
         $query = \DB::table('users as u')
             ->select(\DB::raw('DATE(CONVERT_TZ(u.created_at, \'UTC\', \'Europe/Amsterdam\')) as registrationDate, COUNT(u.id) AS registrationsCount'))
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
-            ->where('u.created_at', '>=', '2020-05-23 00:00:00')
+            ->where('u.created_at', '>=', $since)
             ->groupBy('registrationDate')
             ->orderBy('registrationDate', 'ASC');
 
@@ -587,7 +587,7 @@ class ChartsManager
      * @return RevenueChart|null
      * @throws \Exception
      */
-    public function createRevenueChart()
+    public function createRevenueChart($since)
     {
         $query = \DB::table('payments as p')
             ->select(\DB::raw('DATE(CONVERT_TZ(p.created_at, \'UTC\', \'Europe/Amsterdam\')) as creationDate, SUM(p.amount) as revenueOnDay'))
@@ -595,7 +595,7 @@ class ChartsManager
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('p.status', Payment::STATUS_COMPLETED)
-            ->where('p.created_at', '>=', '2020-05-23 00:00:00')
+            ->where('p.created_at', '>=', $since)
             ->groupBy('creationDate')
             ->orderBy('creationDate', 'ASC');
 
@@ -1007,13 +1007,13 @@ class ChartsManager
      * @return NetPeasantsAcquiredChart|null
      * @throws \Exception
      */
-    public function createNetPeasantsAcquiredChart()
+    public function createNetPeasantsAcquiredChart($since )
     {
         $query = \DB::table('users as u')
             ->select(\DB::raw('DATE(CONVERT_TZ(u.created_at, \'UTC\', \'Europe/Amsterdam\')) as registrationDate, COUNT(u.id) AS registrationsCount'))
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
-            ->where('u.created_at', '>=', '2020-05-23 00:00:00')
+            ->where('u.created_at', '>=', $since)
             ->groupBy('registrationDate')
             ->orderBy('registrationDate', 'ASC');
 
@@ -1181,14 +1181,14 @@ class ChartsManager
      * @return DeactivationsChart
      * @throws \Exception
      */
-    public function createDeactivationsChart(): DeactivationsChart
+    public function createDeactivationsChart($since): DeactivationsChart
     {
         $query = \DB::table('users as u')
             ->select(\DB::raw('DATE(CONVERT_TZ(u.deactivated_at, \'UTC\', \'Europe/Amsterdam\')) as deactivationDate, COUNT(u.id) AS deactivationsCount'))
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('u.deactivated_at', '!=', null)
-            ->where('u.deactivated_at', '>=', '2020-05-23 00:00:00')
+            ->where('u.deactivated_at', '>=', $since)
             ->groupBy('deactivationDate')
             ->orderBy('deactivationDate', 'ASC');
 
