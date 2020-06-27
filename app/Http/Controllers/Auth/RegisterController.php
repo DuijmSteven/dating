@@ -162,11 +162,11 @@ class RegisterController extends Controller
 
             $userMetaInstance->save();
 
-            $result = $this->emailVerificationService->verifySingleEmail($createdUser->getEmail());
+            $emailValidationResult = $this->emailVerificationService->verifySingleEmail($createdUser->getEmail());
 
             $this->emailVerificationService->setUserMetaFromVerificationResult(
                 $createdUser,
-                $result
+                $emailValidationResult
             );
 
             if ($fingerprint) {
@@ -254,7 +254,7 @@ class RegisterController extends Controller
         }
 
         try {
-            if ($createdUser->meta->getEmailVerified() === UserMeta::EMAIL_VERIFIED_DELIVERABLE) {
+            if ($emailValidationResult === $this->emailVerificationService::VALID_EMAIL_RESULT) {
                 $welcomeEmail = (new Welcome($createdUser))->onQueue('emails');
 
                 Mail::to($createdUser)
