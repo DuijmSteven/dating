@@ -122,10 +122,16 @@ class UserSearchController extends Controller
 
         $routeName = '';
         $roleId = (int) $searchParameters['role_id'];
+
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+
         if ($roleId === User::TYPE_PEASANT) {
             $routeName = 'admin.peasants.overview';
             $viewData['peasants'] = $users;
-            $viewData['peasantMessagesCharts'] = $this->chartsManager->getMessagesCharts($users);
+            $viewData['peasantMessagesCharts'] = $this->chartsManager->getMessagesCharts(
+                $users,
+                $launchDate
+        );
         } elseif ($roleId === User::TYPE_BOT) {
             $routeName = 'admin.bots.overview';
             $viewData['bots'] = $users;
