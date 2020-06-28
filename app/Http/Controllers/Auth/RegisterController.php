@@ -18,6 +18,7 @@ use App\UserAffiliateTracking;
 use App\UserFingerprint;
 use App\UserMeta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -203,16 +204,14 @@ class RegisterController extends Controller
                 DB::rollBack();
                 throw $exception;
             }
-        }
-
-        if ($request->input('affiliate') && $request->input('affiliate') === UserAffiliateTracking::AFFILIATE_DATECENTRALE) {
+        } else if ($request->input('affiliate') && $request->input('affiliate') === UserAffiliateTracking::AFFILIATE_DATECENTRALE) {
             $this->affiliateManager->storeAffiliateTrackingInfo(
                 $createdUser->id,
                 $request->input('affiliate'),
                 null,
                 $this->userLocationService->getLocationFromIp($this->userLocationService->getUserIp()),
                 null,
-                UserAffiliateTracking::AFFILIATE_DATECENTRALE
+                UserAffiliateTracking::PUBLISHER_DATECENTRALE
             );
         }
 
@@ -272,6 +271,11 @@ class RegisterController extends Controller
         }
 
         DB::commit();
+
+        Cookie::queue(Cookie::forget('affiliate'));
+        Cookie::queue(Cookie::forget('clid'));
+        Cookie::queue(Cookie::forget('gclid'));
+        Cookie::queue(Cookie::forget('mediaId'));
 
         $this->guard()->login($createdUser);
 

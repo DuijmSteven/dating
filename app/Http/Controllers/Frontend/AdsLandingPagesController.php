@@ -4,32 +4,32 @@ namespace App\Http\Controllers\Frontend;
 
 
 use App;
-use App\User;
-use Carbon\Carbon;
-use GuzzleHttp\Client;
+use App\Services\RegistrationService;
 use Illuminate\Http\Request;
-use Spatie\Geocoder\Geocoder;
-use function foo\func;
+use Illuminate\Support\Facades\Cookie;
 
 class AdsLandingPagesController extends FrontendController
 {
+    private RegistrationService $registrationService;
+
+    /**
+     * LandingPageController constructor.
+     * @param RegistrationService $registrationService
+     */
+    public function __construct(
+        App\Services\RegistrationService $registrationService
+    ) {
+        $this->registrationService = $registrationService;
+        parent::__construct();
+    }
+
     public function showLP(Request $request, $id)
     {
         if(view()->exists('frontend.landing-pages.ads.' . $id)) {
 
             $viewData = [];
 
-            if ($request->input('utm_campaign')) {
-                $viewData['mediaId'] = $request->input('utm_campaign');
-            }
-
-            if ($request->input('clid')) {
-                $viewData['clickId'] = $request->input('clid');
-                $viewData['affiliate'] = App\UserAffiliateTracking::AFFILIATE_XPARTNERS;
-            } elseif ($request->input('gclid')) {
-                $viewData['clickId'] = $request->input('gclid');
-                $viewData['affiliate'] = App\UserAffiliateTracking::AFFILIATE_GOOGLE;
-            }
+            $viewData = $this->registrationService->checkAffiliateRequestDataAndSetRegistrationViewData($request, $viewData);
 
             return view(
                 'frontend.landing-pages.ads.' . $id,

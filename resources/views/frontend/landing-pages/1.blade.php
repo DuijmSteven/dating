@@ -764,6 +764,8 @@
                             @if(isset($clickId))
                                 <input type="hidden" name="clickId" value="{{ $clickId }}">
                                 <input type="hidden" name="affiliate" value="{{ $affiliate }}">
+                            @elseif(isset($affiliate) && $affiliate === \App\UserAffiliateTracking::AFFILIATE_DATECENTRALE)
+                                <input type="hidden" name="affiliate" value="{{ \App\UserAffiliateTracking::AFFILIATE_DATECENTRALE }}">
                             @endif
 
                             @if(session()->has('recaptchaFailed') && session()->get('recaptchaFailed'))

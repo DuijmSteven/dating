@@ -4,16 +4,26 @@ namespace App\Http\Controllers\Frontend;
 
 
 use App;
+use App\Services\RegistrationService;
 use App\User;
 use Carbon\Carbon;
-use GuzzleHttp\Client;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cookie;
-use Spatie\Geocoder\Geocoder;
-use function foo\func;
 
 class LandingPageController extends FrontendController
 {
+    private RegistrationService $registrationService;
+
+    /**
+     * LandingPageController constructor.
+     * @param RegistrationService $registrationService
+     */
+    public function __construct(
+      App\Services\RegistrationService $registrationService
+    ) {
+        $this->registrationService = $registrationService;
+        parent::__construct();
+    }
+
     public function showRegister(Request $request)
     {
         $this->setLocale($request);
@@ -26,49 +36,9 @@ class LandingPageController extends FrontendController
             'carbonNow' => Carbon::now(),
             'testimonials' => $testimonials,
             'formType' => 'register',
-            'mediaId' => $request->input('utm_campaign'),
-            'clickId' => $request->input('clid')
         ];
 
-        if ($request->input('utm_campaign')) {
-            $viewData['mediaId'] = $request->input('utm_campaign');
-        }
-
-        if ($request->input('clid') || Cookie::has('clid')) {
-            if (!Cookie::has('clid')) {
-                Cookie::make(
-                    'clid',
-                    $request->input('clid'),
-                    100000
-                );
-            }
-
-            if ($request->input('clid')) {
-                $clid = $request->input('clid');
-            } else {
-                $clid = Cookie::get('clid');
-            }
-
-            $viewData['clickId'] = $clid;
-            $viewData['affiliate'] = App\UserAffiliateTracking::AFFILIATE_XPARTNERS;
-        } elseif ($request->input('gclid') || Cookie::has('gclid')) {
-            if (!Cookie::has('gclid')) {
-                Cookie::make(
-                    'gclid',
-                    $request->input('gclid'),
-                    100000
-                );
-            }
-
-            if ($request->input('gclid')) {
-                $glcid = $request->input('gclid');
-            } else {
-                $glcid = Cookie::get('gclid');
-            }
-
-            $viewData['clickId'] = $glcid;
-            $viewData['affiliate'] = App\UserAffiliateTracking::AFFILIATE_GOOGLE;
-        }
+        $viewData = $this->registrationService->checkAffiliateRequestDataAndSetRegistrationViewData($request, $viewData);
 
         return view(
             'frontend.landing-pages.1',
