@@ -52,7 +52,7 @@ class Kernel extends ConsoleKernel
             $schedule->command(ExportDb::class)->dailyAt("05:30");
             $schedule->command(CheckRecentStartedPayments::class)->everyMinute();
 
-            $schedule->command(VerifyPendingEmails::class)->everyMinute();
+            $schedule->command(VerifyPendingEmails::class)->daily();
 
 //            $schedule->command(CheckXpartnersLeadsWIthPendingEligibilityStatus::class)->hourlyAt(10);
 //            $schedule->command(ValidateEligibleXpartnersLeads::class)->hourlyAt(20);

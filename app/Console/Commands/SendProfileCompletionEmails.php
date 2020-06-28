@@ -68,7 +68,7 @@ class SendProfileCompletionEmails extends Command
         /** @var User $user */
         foreach ($users as $user) {
             if (!$user->isPayingUser()) {
-                if ($user->meta->getEmailVerified() === UserMeta::EMAIL_VERIFIED_DELIVERABLE) {
+                if ($user->isMailable) {
                     $this->userManager->setProfileCompletionEmail($user);
                 }
             }

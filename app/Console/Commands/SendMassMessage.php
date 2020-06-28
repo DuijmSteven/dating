@@ -9,6 +9,7 @@ use App\Mail\MessageReceived;
 use App\Managers\UserManager;
 use App\PastMassMessage;
 use App\User;
+use App\UserMeta;
 use App\UserView;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -60,9 +61,10 @@ class SendMassMessage extends Command
 
         $onlineUserIds = Activity::users(5)->pluck('user_id')->toArray();
 
-        $usersQuery = User::whereHas('roles', function ($query) {
-            $query->where('id', User::TYPE_PEASANT);
-        })
+        $usersQuery = User::with(['meta'])
+            ->whereHas('roles', function ($query) {
+                $query->where('id', User::TYPE_PEASANT);
+            })
             ->where('active', true)
             ->whereHas('meta', function ($query) {
                 $query->where('gender', User::GENDER_MALE);
@@ -154,7 +156,8 @@ class SendMassMessage extends Command
 
                 if (
                     $recipientHasMessageNotificationsEnabled &&
-                    !in_array($user->getId(), $onlineUserIds)
+                    !in_array($user->getId(), $onlineUserIds) &&
+                    $user->isMailable
                 ) {
                     if (config('app.env') === 'production') {
                         $messageReceivedEmail = (new MessageReceived(

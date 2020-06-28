@@ -78,7 +78,7 @@ class SendProfileViewedEmails extends Command
                     $number = rand(1, 1000);
 
                     if ($number === 1) {
-                        if ($user->meta->getEmailVerified() === UserMeta::EMAIL_VERIFIED_DELIVERABLE) {
+                        if ($user->isMailable) {
                             $viewerBot = $this->userManager->setProfileViewedEmail($user);
                         }
 

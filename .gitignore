@@ -9,3 +9,4 @@ public/css/app.css.map
 public/js/app.js.map
 bootstrap
 storage
+queue-worker.log

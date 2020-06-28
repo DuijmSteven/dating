@@ -261,7 +261,7 @@ class MassMessageController extends Controller
                 if (
                     $recipientHasMessageNotificationsEnabled &&
                     !in_array($user->getId(), $onlineUserIds) &&
-                    $user->meta->getEmailVerified() === UserMeta::EMAIL_VERIFIED_DELIVERABLE
+                    $user->meta->isMailable
                 ) {
                     if (config('app.env') === 'production') {
                         $messageReceivedEmail = (new MessageReceived(

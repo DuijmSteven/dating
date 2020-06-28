@@ -159,6 +159,12 @@ class User extends Authenticatable
         'profileImageUrlThumb'
     ];
 
+    public function getIsMailableAttribute()
+    {
+        return $this->meta->getEmailVerified() === UserMeta::EMAIL_VERIFIED_DELIVERABLE ||
+        $this->meta->getEmailVerified() === UserMeta::EMAIL_VERIFIED_RISKY;
+    }
+
     public function messagedVsMessagesPercentage()
     {
         if ($this->messages_count > 0) {

@@ -563,7 +563,7 @@ class ConversationController extends Controller
 
         if (
             $recipientHasMessageNotificationsEnabled &&
-            $recipient->meta->getEmailVerified() === UserMeta::EMAIL_VERIFIED_DELIVERABLE
+            $recipient->isMailable
         ) {
             $onlineUserIds = Activity::users(5)->pluck('user_id')->toArray();
 
@@ -691,7 +691,7 @@ class ConversationController extends Controller
 
             if (
                 $recipientHasMessageNotificationsEnabled &&
-                $recipient->meta->getEmailVerified() === UserMeta::EMAIL_VERIFIED_DELIVERABLE
+                $recipient->isMailable
             ) {
                 $onlineUserIds = Activity::users(5)->pluck('user_id')->toArray();
 
