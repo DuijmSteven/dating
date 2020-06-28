@@ -58,6 +58,8 @@ class CheckRecentStartedPayments extends Command
 
         /** @var Payment $payment */
         foreach ($recentStartedPayments as $payment) {
+            \Log::debug('Payment ID: ' . $payment->id);
+
             $check = $this->paymentProvider->paymentCheck(
                 $payment->peasant,
                 $payment->getMethod(),
