@@ -87,7 +87,10 @@ class UserController extends FrontendController
         }
 
         if ($this->authenticatedUser->isPeasant()) {
-            if ($user->isPeasant()) {
+            if (
+                $user->isPeasant() &&
+                $user->isMailable
+            ) {
                 $timeNow = Carbon::now('Europe/Amsterdam'); // Current time
 
                 $hasRecentProfileViewedEmails = $user
