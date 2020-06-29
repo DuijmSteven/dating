@@ -139,11 +139,21 @@ class DashboardController extends Controller
             $endOfToday
         );
 
-        $googleAdsConversionsAllTimeCount = $this->statisticsManager->affiliateConversionsBetweenCount(
+        $conversionsAllTimeCount = $this->statisticsManager->affiliateConversionsBetweenCount(
             UserAffiliateTracking::AFFILIATE_GOOGLE,
             $launchDate,
             $endOfToday
         );
+
+        $conversionsAllTimeCount = $this->statisticsManager->affiliateConversionsBetweenCount(
+            'any',
+            $launchDate,
+            $endOfToday
+        );
+
+        $allUsersCount = User::whereHas('roles', function ($query) {
+            $query->where('id', User::TYPE_PEASANT);
+        })->count();
 
         $googleAdsLeadsAllTimeCount = User::whereHas('affiliateTracking', function ($query) {
            $query->where('affiliate', UserAffiliateTracking::AFFILIATE_GOOGLE);
@@ -329,7 +339,7 @@ class DashboardController extends Controller
                     $startOfYear,
                     $endOfToday
                 ),
-                'allTimeConversionRate' => $googleAdsConversionsAllTimeCount / $googleAdsLeadsAllTimeCount * 100
+                'allTimeConversionRate' => $conversionsAllTimeCount / $googleAdsLeadsAllTimeCount * 100
             ],
             'conversionStatistics' => [
                 'conversionsToday' => $this->statisticsManager->affiliateConversionsBetweenCount(
@@ -362,7 +372,7 @@ class DashboardController extends Controller
                     $startOfYear,
                     $endOfToday
                 ),
-                'allTimeConversionRate' => $googleAdsConversionsAllTimeCount / $googleAdsLeadsAllTimeCount * 100
+                'allTimeConversionRate' => $conversionsAllTimeCount / $allUsersCount * 100
             ],
             'googleAdsRevenueStatistics' => [
                 'revenueToday' => $this->statisticsManager->affiliateRevenueBetween(
