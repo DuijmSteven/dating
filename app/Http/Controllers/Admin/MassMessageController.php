@@ -40,10 +40,6 @@ class MassMessageController extends Controller
             ->whereHas('meta', function ($query) {
                 $query->where('gender', User::GENDER_MALE);
                 $query->where('looking_for_gender', User::GENDER_FEMALE);
-                $query->whereIn('email_verified', [
-                    UserMeta::EMAIL_VERIFIED_DELIVERABLE,
-                    UserMeta::EMAIL_VERIFIED_RISKY
-                ]);
             });
 
         $unlimitedCount = $unlimitedUsersQuery->count();
@@ -158,11 +154,6 @@ class MassMessageController extends Controller
         ->whereHas('meta', function ($query) {
             $query->where('gender', User::GENDER_MALE);
             $query->where('looking_for_gender', User::GENDER_FEMALE);
-            $query->whereIn(
-                'email_verified', [
-                    UserMeta::EMAIL_VERIFIED_DELIVERABLE,
-                    UserMeta::EMAIL_VERIFIED_RISKY
-            ]);
         });
 
         if ($limitMessage === 'limited_with_pic') {
@@ -314,18 +305,18 @@ class MassMessageController extends Controller
         if ($errorsCount) {
             $alerts[] = [
                 'type' => 'warning',
-                'message' => ($users->count() - $errorsCount - $unmailableCount) . ' messages were sent and ' . $errorsCount . ' messages were not sent due to errors, ' . $unmailableCount . ' not sent due to the emails being un-mailable'
+                'message' => ($users->count() - $errorsCount) . ' messages were sent and ' . $errorsCount . ' messages were not sent due to errors, ' . $unmailableCount . ' not sent due to the emails being un-mailable. ' . $unmailableCount . ' emails were not sent to un-mailable accounts.'
             ];
         } else {
             $alerts[] = [
                 'type' => 'success',
-                'message' => $users->count() . ' messages were sent successfully and ' . $unmailableCount . ' were not sent due to the emails being un-mailable'
+                'message' => $users->count() . ' messages were sent successfully. ' . $unmailableCount . ' emails were not sent to un-mailable accounts'
             ];
         }
 
         $pastMassMessageInstance = new PastMassMessage();
         $pastMassMessageInstance->setBody($messageBody);
-        $pastMassMessageInstance->setUserCount($users->count() - $errorsCount - $unmailableCount);
+        $pastMassMessageInstance->setUserCount($users->count() - $errorsCount);
         $pastMassMessageInstance->save();
 
         return redirect()->back()->with('alerts', $alerts);
