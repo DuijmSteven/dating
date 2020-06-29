@@ -310,12 +310,12 @@ class MassMessageController extends Controller
         if ($errorsCount) {
             $alerts[] = [
                 'type' => 'warning',
-                'message' => ($users->count() - $errorsCount) . ' messages were sent and ' . $errorsCount . ' messages were not sent due to errors, ' . $unmailableCount . ' not sent due to not being mailable users.'
+                'message' => ($users->count() - $errorsCount - $unmailableCount) . ' messages were sent and ' . $errorsCount . ' messages were not sent due to errors, ' . $unmailableCount . ' not sent due to the emails being un-mailable'
             ];
         } else {
             $alerts[] = [
                 'type' => 'success',
-                'message' => $users->count() . ' messages were sent successfully'
+                'message' => $users->count() . ' messages were sent successfully and ' . $unmailableCount . ' were not sent due to the emails being un-mailable'
             ];
         }
 
