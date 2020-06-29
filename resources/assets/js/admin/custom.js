@@ -1,4 +1,5 @@
 import $ from 'jquery';
+
 window.$ = window.jQuery = $;
 
 require("jquery-ui/ui/widgets/autocomplete");
@@ -79,7 +80,7 @@ $(window).on('load', function () {
     });
 
     if ($('input[type="submit"]').length > 0 || $('button[type="submit"]').length > 0) {
-        $('form').submit(function(){
+        $('form').submit(function () {
             $('input[type=submit]', this).attr('disabled', 'disabled');
             $('button[type="submit"]', this).attr('disabled', 'disabled');
         });
@@ -92,7 +93,7 @@ $(window).on('load', function () {
 
         var redirect = false;
         // start the countdown timer
-        var x = setInterval(function() {
+        var x = setInterval(function () {
             var now = new Date().getTime();
             var timeLeft = countdownTime - now;
 
@@ -136,6 +137,22 @@ $(window).on('load', function () {
 
             return true;
         });
+    }
+
+    if ($('.JS--operatorDashboard').length > 0) {
+        var redirectRefresh = false;
+
+        var x = setInterval(function() {
+            const newConvosCount = parseInt($('.JS--counterLabelContainer.new').data('conversation-count'));
+            const unrepliedConvosCount = parseInt($('.JS--counterLabelContainer.unreplied').data('conversation-count'));
+            const stoppedConvosCount = parseInt($('.JS--counterLabelContainer.stopped').data('conversation-count'));
+
+            if (!redirectRefresh && (newConvosCount + unrepliedConvosCount + stoppedConvosCount === 0)) {
+                window.location = DP.operatorDashboardRoute;
+                redirectRefresh = true;
+            }
+
+        }, 10000);
     }
 
     if ($('#js-BotSelection').length > 0) {
@@ -249,7 +266,6 @@ $(window).on('load', function () {
                 .addClass('hidden');
         });
     }
-
 
 
 });

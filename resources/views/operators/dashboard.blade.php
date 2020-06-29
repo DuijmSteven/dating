@@ -5,7 +5,7 @@
 
 
 
-    <div class="panel-group operatorDashboard" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel-group operatorDashboard JS--operatorDashboard" id="accordion" role="tablist" aria-multiselectable="true">
 
         <?php $counter = 0 ?>
 
@@ -22,9 +22,10 @@
                        data-toggle="collapse"
                        data-parent="#accordion"
                        href="#{!! $conversationType !!}"
+                       data-conversation-count="{{ count(${$conversationType}) }}"
                        aria-expanded="false"
                        aria-controls="collapseOne"
-                       class="collapsed counterLabelContainer">
+                       class="collapsed counterLabelContainer JS--counterLabelContainer {{ $typeName }}">
                         {!! ucfirst($typeName) !!} <span class="label counterLabel">{!! count(${$conversationType}) !!}</span>
                     </a>
                 </h4>
