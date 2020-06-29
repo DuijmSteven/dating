@@ -40,6 +40,10 @@ class MassMessageController extends Controller
             ->whereHas('meta', function ($query) {
                 $query->where('gender', User::GENDER_MALE);
                 $query->where('looking_for_gender', User::GENDER_FEMALE);
+                $query->whereIn('email_verified', [
+                    UserMeta::EMAIL_VERIFIED_DELIVERABLE,
+                    UserMeta::EMAIL_VERIFIED_RISKY
+                ]);
             });
 
         $unlimitedCount = $unlimitedUsersQuery->count();
