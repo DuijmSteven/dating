@@ -59,24 +59,6 @@ class StatisticsController extends Controller
 
         $startOfYear = Carbon::now('Europe/Amsterdam')->startOfYear()->setTimezone('UTC');
 
-        $peasantsWithCreditpack = $this->statisticsManager->peasantsWithCreditpack();
-
-        $allTimePayingUsers = User::whereHas('payments', function ($query) {
-            $query->where('status', Payment::STATUS_COMPLETED);
-        })->get()->count();
-
-        $allUsers = User::whereHas('roles', function ($query) {
-            $query->where('id', User::TYPE_PEASANT);
-        })->get()->count();
-
-        $allTimeRevenue = $this->statisticsManager->revenueBetween(
-            Carbon::now()->subYears(10),
-            $endOfToday
-        );
-
-        $averageRevenuePerAllTimeUser = $allTimeRevenue / $allUsers;
-        $averageRevenuePerAllTimePayingUser = $allTimeRevenue / $allTimePayingUsers;
-
         $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
         $googleAdsLaunchDate = Carbon::createFromFormat('d-m-Y H:i:s', '11-06-2020 00:00:00');
 
@@ -305,29 +287,7 @@ class StatisticsController extends Controller
             'topOperatorMessagerStatistics' => [
                 'this_month' => $this->statisticsManager->topOperatorMessagersBetweenDates($startOfMonth, $endOfMonth, 25)
             ],
-            'userTypeStatistics' => [
-                'no_credits' => $this->statisticsManager->peasantsWithNoCreditpackCount(),
-                'never_bought' => $this->statisticsManager->peasantsThatNeverHadCreditpackCount(),
-                'small' => $this->statisticsManager->filterPeasantsWithCreditpackIdCount(
-                    $peasantsWithCreditpack,
-                    Creditpack::SMALL
-                ),
-                'medium' => $this->statisticsManager->filterPeasantsWithCreditpackIdCount(
-                    $peasantsWithCreditpack,
-                    Creditpack::MEDIUM
-                ),
-                'large' => $this->statisticsManager->filterPeasantsWithCreditpackIdCount(
-                    $peasantsWithCreditpack,
-                    Creditpack::LARGE
-                ),
-                'xl' => $this->statisticsManager->filterPeasantsWithCreditpackIdCount(
-                    $peasantsWithCreditpack,
-                    Creditpack::XL
-                ),
-                'all_time_paying_users' => $allTimePayingUsers,
-                'averageRevenuePerAllTimePayingUser' => number_format($averageRevenuePerAllTimePayingUser / 100, 2),
-                'averageRevenuePerUser' => number_format($averageRevenuePerAllTimeUser / 100, 2)
-            ],
+            'userTypeStatistics' => $this->statisticsManager->getUserTypeStatistics(),
         ];
 
         return view('admin.statistics', array_merge(

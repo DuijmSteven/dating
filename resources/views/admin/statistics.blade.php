@@ -395,11 +395,19 @@
                         <li><a href="{{ route('admin.peasants.with-creditpack.overview') }}">Any creditpack <span
                                     class="DashboardWidget_count">{{ $userTypeStatistics['small'] + $userTypeStatistics['medium'] + $userTypeStatistics['large'] + $userTypeStatistics['xl'] }}</span></a></li>
                         <li><a href="{{ route('admin.peasants.with-creditpack.overview') }}">All time paying users <span
-                                    class="DashboardWidget_count">{{ $userTypeStatistics['all_time_paying_users'] }}</span></a></li>
+                                    class="DashboardWidget_count">{{ $userTypeStatistics['allTimePayingUsersCount'] }}</span></a></li>
                         <li><a href="{{ route('admin.peasants.with-creditpack.overview') }}">RPPU <span
                                     class="DashboardWidget_count">{{ $userTypeStatistics['averageRevenuePerAllTimePayingUser'] }}</span></a></li>
                         <li><a href="{{ route('admin.peasants.with-creditpack.overview') }}">RPU <span
                                     class="DashboardWidget_count">{{ $userTypeStatistics['averageRevenuePerUser'] }}</span></a></li>
+                        <li><a href="{{ route('admin.peasants.created-until-date.show', ['date' => \Carbon\Carbon::now('Europe/Amsterdam')->subMonths(4)->format('d-m-Y')]) }}">LVU registered until 4 months ago ( {{ $userTypeStatistics['payingUsersRegisteredUntilFourMonthsAgoCount'] }} users) <span
+                                    class="DashboardWidget_count">{{ $userTypeStatistics['averageLifetimeValuePerUserRegisteredUntilFourMonthsAgo'] }}</span></a></li>
+                        <li><a href="{{ route('admin.peasants.created-until-date.show', ['date' => \Carbon\Carbon::now('Europe/Amsterdam')->subMonths(3)->format('d-m-Y')]) }}">LVU registered until 3 months ago ( {{ $userTypeStatistics['payingUsersRegisteredUntilThreeMonthsAgoCount'] }} users) <span
+                                    class="DashboardWidget_count">{{ $userTypeStatistics['averageLifetimeValuePerUserRegisteredUntilThreeMonthsAgo'] }}</span></a></li>
+                        <li><a href="{{ route('admin.peasants.created-until-date.show', ['date' => \Carbon\Carbon::now('Europe/Amsterdam')->subMonths(2)->format('d-m-Y')]) }}">LVU registered until 2 months ago ( {{ $userTypeStatistics['payingUsersRegisteredUntilTwoMonthsAgoCount'] }} users) <span
+                                    class="DashboardWidget_count">{{ $userTypeStatistics['averageLifetimeValuePerUserRegisteredUntilTwoMonthsAgo'] }}</span></a></li>
+                        <li><a href="{{ route('admin.peasants.created-until-date.show', ['date' => \Carbon\Carbon::now('Europe/Amsterdam')->subMonths(1)->format('d-m-Y')]) }}">LVU registered until 1 month ago ( {{ $userTypeStatistics['payingUsersRegisteredUntilOneMonthAgoCount'] }} users) <span
+                                    class="DashboardWidget_count">{{ $userTypeStatistics['averageLifetimeValuePerUserRegisteredUntilOneMonthAgo'] }}</span></a></li>
                     </ul>
                 </div>
             </div>

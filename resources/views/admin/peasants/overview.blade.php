@@ -214,6 +214,9 @@
                                             {!! $peasantMessagesCharts['daily'][$loop->index]->container() !!}
                                             {!! $peasantMessagesCharts['daily'][$loop->index]->script() !!}
                                         </div>
+                                    @endif
+
+                                    @if($peasantMessagesCharts['monthly'][$loop->index])
                                         <div style="width: 100%">
                                             {!! $peasantMessagesCharts['monthly'][$loop->index]->container() !!}
                                             {!! $peasantMessagesCharts['monthly'][$loop->index]->script() !!}

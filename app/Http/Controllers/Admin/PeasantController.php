@@ -98,6 +98,33 @@ class PeasantController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+    public function createdUntilDate($date)
+    {
+        $peasants = $this->statisticsManager
+            ->payingUsersCreatedUntilDateQuery(
+                Carbon::createFromFormat('d-m-Y', $date)
+            )
+            ->orderBy('id', 'desc')
+            ->paginate(20);
+
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+
+        return view(
+            'admin.peasants.overview',
+            [
+                'title' => 'Peasants created until date - ' . \config('app.name'),
+                'headingLarge' => 'Peasants created until date',
+                'headingSmall' => $date,
+                'carbonNow' => Carbon::now(),
+                'peasants' => $peasants,
+                'peasantMessagesCharts' => $this->chartsManager->getMessagesCharts($peasants, $launchDate),
+            ]
+        );
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function conversions()
     {
         $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');

@@ -329,6 +329,8 @@ Route::group([
         Route::get('/conversions', 'Admin\PeasantController@conversions')
             ->name('admin.peasants.conversions.show');
 
+        Route::get('/created-until-date/{date}', 'Admin\PeasantController@createdUntilDate')
+            ->name('admin.peasants.created-until-date.show');
 
         Route::get('create', 'Admin\PeasantController@create')
             ->name('admin.peasants.create.get');

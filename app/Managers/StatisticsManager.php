@@ -15,14 +15,22 @@ use Illuminate\Support\Facades\DB;
 
 class StatisticsManager
 {
-    public function revenueBetween($startDate, $endDate)
+    public function revenueBetween($startDate, $endDate, $fromUsersRegisteredUntilDate = null)
     {
-        return Payment::whereBetween('created_at',
+        $query = Payment::whereBetween('created_at',
             [
                 $startDate,
                 $endDate
             ])
-            ->where('status', Payment::STATUS_COMPLETED)
+            ->where('status', Payment::STATUS_COMPLETED);
+
+        if (null !== $fromUsersRegisteredUntilDate) {
+            $query->whereHas('peasant', function ($query) use ($fromUsersRegisteredUntilDate) {
+                $query->where('created_at', '<=', $fromUsersRegisteredUntilDate);
+            });
+        }
+
+        return $query
             ->sum('amount');
     }
 
@@ -50,6 +58,119 @@ class StatisticsManager
                     $endDate
                 ])
             ->sum('amount');
+    }
+
+    public function getUserTypeStatistics()
+    {
+        $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
+        $oneMonthAgo = Carbon::now('Europe/Amsterdam')->subMonths(1)->setTimezone('UTC');
+        $twoMonthsAgo = Carbon::now('Europe/Amsterdam')->subMonths(2)->setTimezone('UTC');
+        $threeMonthsAgo = Carbon::now('Europe/Amsterdam')->subMonths(3)->setTimezone('UTC');
+        $fourMonthsAgo = Carbon::now('Europe/Amsterdam')->subMonths(4)->setTimezone('UTC');
+
+        $allTimePayingUsersCount = $this->payingUsersCreatedUntilDateCount($endOfToday);
+        $payingUsersUntilFourMonthsAgoCount = $this->payingUsersCreatedUntilDateCount($fourMonthsAgo);
+        $payingUsersUntilThreeMonthsAgoCount = $this->payingUsersCreatedUntilDateCount($threeMonthsAgo);
+        $payingUsersUntilTwoMonthsAgoCount = $this->payingUsersCreatedUntilDateCount($twoMonthsAgo);
+        $payingUsersUntilOneMonthAgoCount = $this->payingUsersCreatedUntilDateCount($oneMonthAgo);
+
+        $allUsersCount = User::whereHas('roles', function ($query) {
+            $query->where('id', User::TYPE_PEASANT);
+        })
+        ->count();
+
+        $allTimeRevenue = $this->revenueBetween(
+            Carbon::now()->subYears(10),
+            $endOfToday
+        );
+
+        $revenueFromUsersUntilFourMonthsAgo = $this->revenueBetween(
+            Carbon::now()->subYears(10),
+            $endOfToday,
+            $fourMonthsAgo
+        );
+
+        $revenueFromUsersUntilThreeMonthsAgo = $this->revenueBetween(
+            Carbon::now()->subYears(10),
+            $endOfToday,
+            $threeMonthsAgo
+        );
+
+        $revenueFromUsersUntilTwoMonthsAgo = $this->revenueBetween(
+            Carbon::now()->subYears(10),
+            $endOfToday,
+            $threeMonthsAgo
+        );
+
+        $revenueFromUsersUntilOneMonthAgo = $this->revenueBetween(
+            Carbon::now()->subYears(10),
+            $endOfToday,
+            $threeMonthsAgo
+        );
+
+        $averageRevenuePerAllTimeUser = $allTimeRevenue / $allUsersCount;
+        $averageRevenuePerAllTimePayingUser = $allTimeRevenue / $allTimePayingUsersCount;
+        $averageLifetimeValuePerUserRegisteredUntilFourMonthsAgo = $revenueFromUsersUntilFourMonthsAgo / $payingUsersUntilFourMonthsAgoCount;
+        $averageLifetimeValuePerUserRegisteredUntilThreeMonthsAgo = $revenueFromUsersUntilThreeMonthsAgo / $payingUsersUntilThreeMonthsAgoCount;
+        $averageLifetimeValuePerUserRegisteredUntilTwoMonthsAgo = $revenueFromUsersUntilTwoMonthsAgo / $payingUsersUntilTwoMonthsAgoCount;
+        $averageLifetimeValuePerUserRegisteredUntilOneMonthAgo = $revenueFromUsersUntilOneMonthAgo / $payingUsersUntilOneMonthAgoCount;
+
+        $peasantsWithCreditpack = $this->peasantsWithCreditpack();
+
+        return [
+            'no_credits' => $this->peasantsWithNoCreditpackCount(),
+            'never_bought' => $this->peasantsThatNeverHadCreditpackCount(),
+            'small' => $this->filterPeasantsWithCreditpackIdCount(
+                $peasantsWithCreditpack,
+                Creditpack::SMALL
+            ),
+            'medium' => $this->filterPeasantsWithCreditpackIdCount(
+                $peasantsWithCreditpack,
+                Creditpack::MEDIUM
+            ),
+            'large' => $this->filterPeasantsWithCreditpackIdCount(
+                $peasantsWithCreditpack,
+                Creditpack::LARGE
+            ),
+            'xl' => $this->filterPeasantsWithCreditpackIdCount(
+                $peasantsWithCreditpack,
+                Creditpack::XL
+            ),
+            'allTimePayingUsersCount' => $allTimePayingUsersCount,
+            'payingUsersRegisteredUntilFourMonthsAgoCount' => $payingUsersUntilFourMonthsAgoCount,
+            'payingUsersRegisteredUntilThreeMonthsAgoCount' => $payingUsersUntilThreeMonthsAgoCount,
+            'payingUsersRegisteredUntilTwoMonthsAgoCount' => $payingUsersUntilTwoMonthsAgoCount,
+            'payingUsersRegisteredUntilOneMonthAgoCount' => $payingUsersUntilOneMonthAgoCount,
+            'averageRevenuePerAllTimePayingUser' => number_format($averageRevenuePerAllTimePayingUser / 100, 2),
+            'averageRevenuePerUser' => number_format($averageRevenuePerAllTimeUser / 100, 2),
+            'averageLifetimeValuePerUserRegisteredUntilFourMonthsAgo' => number_format($averageLifetimeValuePerUserRegisteredUntilFourMonthsAgo / 100, 2),
+            'averageLifetimeValuePerUserRegisteredUntilThreeMonthsAgo' => number_format($averageLifetimeValuePerUserRegisteredUntilThreeMonthsAgo / 100, 2),
+            'averageLifetimeValuePerUserRegisteredUntilTwoMonthsAgo' => number_format($averageLifetimeValuePerUserRegisteredUntilTwoMonthsAgo / 100, 2),
+            'averageLifetimeValuePerUserRegisteredUntilOneMonthAgo' => number_format($averageLifetimeValuePerUserRegisteredUntilOneMonthAgo / 100, 2),
+        ];
+    }
+
+    public function payingUsersCreatedUntilDateCount($date)
+    {
+        return $this->payingUsersCreatedUntilDateQuery($date)
+            ->count();
+    }
+
+    public function payingUsersCreatedUntilDateQuery($date)
+    {
+        return User::whereHas('payments', function ($query) {
+            $query->where('status', Payment::STATUS_COMPLETED);
+        })
+        ->whereHas('roles', function ($query) {
+            $query->where('id', User::TYPE_PEASANT);
+        })
+        ->where('created_at', '<=', $date);
+    }
+
+    public function payingUsersCreatedUntilDate($date)
+    {
+        return $this->payingUsersCreatedUntilDateQuery($date)
+            ->get();
     }
 
     public function affiliateConversionsBetweenQueryBuilder(string $affiliate, $startDate, $endDate)
