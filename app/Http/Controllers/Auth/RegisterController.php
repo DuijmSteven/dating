@@ -163,12 +163,12 @@ class RegisterController extends Controller
 
             $userMetaInstance->save();
 
-            $emailValidationResult = $this->emailVerificationService->verifySingleEmail($createdUser->getEmail());
-
-            $this->emailVerificationService->setUserMetaFromVerificationResult(
-                $createdUser,
-                $emailValidationResult
-            );
+//            $emailValidationResult = $this->emailVerificationService->verifySingleEmail($createdUser->getEmail());
+//
+//            $this->emailVerificationService->setUserMetaFromVerificationResult(
+//                $createdUser,
+//                $emailValidationResult
+//            );
 
             if ($fingerprint) {
                 $userFingerprintInstance = new \App\UserFingerprint();
@@ -253,18 +253,16 @@ class RegisterController extends Controller
         }
 
         try {
-            if ($emailValidationResult === $this->emailVerificationService::VALID_EMAIL_RESULT) {
-                $welcomeEmail = (new Welcome($createdUser))->onQueue('emails');
+            $welcomeEmail = (new Welcome($createdUser))->onQueue('emails');
 
-                Mail::to($createdUser)
-                    ->queue($welcomeEmail);
+            Mail::to($createdUser)
+                ->queue($welcomeEmail);
 
-                $createdUser->emailTypeInstances()->attach(EmailType::WELCOME, [
-                    'email' => $createdUser->getEmail(),
-                    'email_type_id' => EmailType::WELCOME,
-                    'actor_id' => null
-                ]);
-            }
+            $createdUser->emailTypeInstances()->attach(EmailType::WELCOME, [
+                'email' => $createdUser->getEmail(),
+                'email_type_id' => EmailType::WELCOME,
+                'actor_id' => null
+            ]);
         } catch (\Exception $exception) {
             DB::rollBack();
             throw $exception;

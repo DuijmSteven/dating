@@ -187,11 +187,13 @@ class PaymentController extends FrontendController
      */
     public function successfulPayment($user, $creditPack, $transactionId, string $transactionTotal): void
     {
-        $creditsBoughtEmail = (new CreditsBought($user, $creditPack))
-            ->onQueue('emails');
 
-        Mail::to($user)
-            ->queue($creditsBoughtEmail);
+        if ($user->isMailable) {
+            $creditsBoughtEmail = (new CreditsBought($user, $creditPack))
+                ->onQueue('emails');
+            Mail::to($user)
+                ->queue($creditsBoughtEmail);
+        }
 
         // email to us about the sale
         $userBoughtCreditsEmail = (new UserBoughtCredits($user, $creditPack))

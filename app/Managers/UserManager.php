@@ -215,7 +215,10 @@ class UserManager
             }
 
             if ($viewerUser instanceof User) {
-                if (config('app.env') === 'production') {
+                if (
+                    config('app.env') === 'production' &&
+                    $viewed->isMailable
+                ) {
                     $profileViewedEmail = (new ProfileViewed(
                         $viewerUser,
                         $viewed,

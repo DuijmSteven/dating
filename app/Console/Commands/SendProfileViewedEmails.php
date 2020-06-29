@@ -78,9 +78,7 @@ class SendProfileViewedEmails extends Command
                     $number = rand(1, 1000);
 
                     if ($number === 1) {
-                        if ($user->isMailable) {
-                            $viewerBot = $this->userManager->setProfileViewedEmail($user);
-                        }
+                        $viewerBot = $this->userManager->setProfileViewedEmail($user);
 
                         $this->userManager->storeProfileView(
                             $viewerBot,
