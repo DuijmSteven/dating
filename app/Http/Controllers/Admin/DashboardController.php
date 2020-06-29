@@ -331,6 +331,39 @@ class DashboardController extends Controller
                 ),
                 'allTimeConversionRate' => $googleAdsConversionsAllTimeCount / $googleAdsLeadsAllTimeCount * 100
             ],
+            'conversionStatistics' => [
+                'conversionsToday' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    'any',
+                    $startOfToday,
+                    $endOfToday
+                ),
+                'conversionsYesterday' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    'any',
+                    $startOfYesterday,
+                    $endOfYesterday
+                ),
+                'conversionsCurrentWeek' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    'any',
+                    $startOfWeek,
+                    $endOfWeek
+                ),
+                'conversionsCurrentMonth' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    'any',
+                    $startOfMonth,
+                    $endOfMonth
+                ),
+                'conversionsPreviousMonth' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    'any',
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc
+                ),
+                'conversionsCurrentYear' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    'any',
+                    $startOfYear,
+                    $endOfToday
+                ),
+                'allTimeConversionRate' => $googleAdsConversionsAllTimeCount / $googleAdsLeadsAllTimeCount * 100
+            ],
             'googleAdsRevenueStatistics' => [
                 'revenueToday' => $this->statisticsManager->affiliateRevenueBetween(
                     UserAffiliateTracking::AFFILIATE_GOOGLE,
