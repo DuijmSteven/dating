@@ -150,11 +150,16 @@ class MassMessageController extends Controller
         ->whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_PEASANT);
         })
-            ->where('active', true)
-            ->whereHas('meta', function ($query) {
-                $query->where('gender', User::GENDER_MALE);
-                $query->where('looking_for_gender', User::GENDER_FEMALE);
-            });
+        ->where('active', true)
+        ->whereHas('meta', function ($query) {
+            $query->where('gender', User::GENDER_MALE);
+            $query->where('looking_for_gender', User::GENDER_FEMALE);
+            $query->whereIn(
+                'email_verified', [
+                    UserMeta::EMAIL_VERIFIED_DELIVERABLE,
+                    UserMeta::EMAIL_VERIFIED_RISKY
+            ]);
+        });
 
         if ($limitMessage === 'limited_with_pic') {
             $usersQuery->where(function ($query) {
@@ -200,6 +205,7 @@ class MassMessageController extends Controller
         $users = $usersQuery->get();
 
         $errorsCount = 0;
+        $unmailableCount = 0;
 
         /** @var User $user */
         foreach ($users as $user) {
@@ -260,26 +266,29 @@ class MassMessageController extends Controller
 
                 if (
                     $recipientHasMessageNotificationsEnabled &&
-                    !in_array($user->getId(), $onlineUserIds) &&
-                    $user->isMailable
+                    !in_array($user->getId(), $onlineUserIds)
                 ) {
-                    if (config('app.env') === 'production') {
-                        $messageReceivedEmail = (new MessageReceived(
-                            $bot,
-                            $user,
-                            $messageBody,
-                            false
-                        ))->onQueue('emails');
+                    if ($user->isMailable) {
+                        if (config('app.env') === 'production') {
+                            $messageReceivedEmail = (new MessageReceived(
+                                $bot,
+                                $user,
+                                $messageBody,
+                                false
+                            ))->onQueue('emails');
 
-                        Mail::to($user)
-                            ->queue($messageReceivedEmail);
+                            Mail::to($user)
+                                ->queue($messageReceivedEmail);
+                        }
+
+                        $user->emailTypeInstances()->attach(EmailType::MESSAGE_RECEIVED, [
+                            'email' => $user->getEmail(),
+                            'email_type_id' => EmailType::MESSAGE_RECEIVED,
+                            'actor_id' => $bot->getId()
+                        ]);
+                    } else {
+                        $unmailableCount++;
                     }
-
-                    $user->emailTypeInstances()->attach(EmailType::MESSAGE_RECEIVED, [
-                        'email' => $user->getEmail(),
-                        'email_type_id' => EmailType::MESSAGE_RECEIVED,
-                        'actor_id' => $bot->getId()
-                    ]);
                 }
 
                 $this->userManager->storeProfileView(
@@ -301,7 +310,7 @@ class MassMessageController extends Controller
         if ($errorsCount) {
             $alerts[] = [
                 'type' => 'warning',
-                'message' => ($users->count() - $errorsCount) . ' messages were sent and ' . $errorsCount . ' messages were not sent'
+                'message' => ($users->count() - $errorsCount) . ' messages were sent and ' . $errorsCount . ' messages were not sent due to errors, ' . $unmailableCount . ' not sent due to not being mailable users.'
             ];
         } else {
             $alerts[] = [
@@ -312,7 +321,7 @@ class MassMessageController extends Controller
 
         $pastMassMessageInstance = new PastMassMessage();
         $pastMassMessageInstance->setBody($messageBody);
-        $pastMassMessageInstance->setUserCount($users->count() - $errorsCount);
+        $pastMassMessageInstance->setUserCount($users->count() - $errorsCount - $unmailableCount);
         $pastMassMessageInstance->save();
 
         return redirect()->back()->with('alerts', $alerts);
