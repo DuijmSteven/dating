@@ -139,7 +139,7 @@ class DashboardController extends Controller
             $endOfToday
         );
 
-        $conversionsAllTimeCount = $this->statisticsManager->affiliateConversionsBetweenCount(
+        $googleAdsConversionsAllTimeCount = $this->statisticsManager->affiliateConversionsBetweenCount(
             UserAffiliateTracking::AFFILIATE_GOOGLE,
             $launchDate,
             $endOfToday
@@ -339,7 +339,7 @@ class DashboardController extends Controller
                     $startOfYear,
                     $endOfToday
                 ),
-                'allTimeConversionRate' => $conversionsAllTimeCount / $googleAdsLeadsAllTimeCount * 100
+                'allTimeConversionRate' => $googleAdsConversionsAllTimeCount / $googleAdsLeadsAllTimeCount * 100
             ],
             'conversionStatistics' => [
                 'conversionsToday' => $this->statisticsManager->affiliateConversionsBetweenCount(
