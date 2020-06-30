@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Managers\ChartsManager;
 use App\Managers\ConversationManager;
 use App\Managers\StatisticsManager;
+use App\Services\ProbabilityService;
 use App\User;
 use App\UserAffiliateTracking;
 use Carbon\Carbon;

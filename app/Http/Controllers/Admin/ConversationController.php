@@ -15,9 +15,9 @@ use App\Managers\ConversationManager;
 use App\Managers\StorageManager;
 use App\MessageAttachment;
 use App\OpenConversationPartner;
+use App\Services\ProbabilityService;
 use App\User;
 use App\UserImage;
-use App\UserMeta;
 use App\UserView;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -258,7 +258,12 @@ class ConversationController extends Controller
         }
 
         if (
-            (null === $conversation->getReplyableAt() || $conversation->getReplyableAt()->gt(Carbon::now())) &&
+            (
+                null === $conversation->getReplyableAt() ||
+                $conversation->getReplyableAt()->gt(Carbon::now()) ||
+                $conversation->getCycleStage() === Conversation::CYCLE_STAGE_BALL_IN_PEASANTS_COURT
+
+            ) &&
             !$this->authenticatedUser->isAdmin()
         ) {
             $alerts[] = [
@@ -440,6 +445,25 @@ class ConversationController extends Controller
         );
 
         if (
+            (
+                $conversation &&
+                (
+                    null === $conversation->getReplyableAt() ||
+                    $conversation->getReplyableAt()->gt(Carbon::now()) ||
+                    $conversation->getCycleStage() === Conversation::CYCLE_STAGE_BALL_IN_PEASANTS_COURT
+                )
+            ) &&
+            !$this->authenticatedUser->isAdmin()
+        ) {
+            $alerts[] = [
+                'type' => 'warning',
+                'message' => 'The conversation is not replyable'
+            ];
+
+            return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
+        }
+
+        if (
             $conversation instanceof Conversation && 
             $conversation->getLockedByUserId() !== $this->authenticatedUser->getId() &&
             !$this->authenticatedUser->isAdmin()
@@ -468,12 +492,20 @@ class ConversationController extends Controller
         }
 
         if ($conversation->messages->count() > 2) {
+            $conversation->setCycleStage(
+                Conversation::CYCLE_STAGE_BALL_IN_PEASANTS_COURT
+            );
+
             if (
                 $conversation->messages[0]->sender->roles[0]->id === User::TYPE_PEASANT
             ) {
-                if (2 === rand(1, 2)) {
+                if (ProbabilityService::getTrueAPercentageOfTheTime(30)) {
                     $conversation->setReplyableAt(null);
                 } else {
+                    $conversation->setCycleStage(
+                        Conversation::CYCLE_STAGE_STOPPED
+                    );
+
                     $conversation->setReplyableAt(Carbon::now()->addDays(ConversationManager::CONVERSATION_PRE_STOPPED_PERIOD_IN_DAYS));
                 }
             }
@@ -622,7 +654,14 @@ class ConversationController extends Controller
         );
 
         if (
-            ($conversation && (null === $conversation->getReplyableAt() || $conversation->getReplyableAt()->gt(Carbon::now()))) &&
+            (
+                $conversation &&
+                (
+                    null === $conversation->getReplyableAt() ||
+                    $conversation->getReplyableAt()->gt(Carbon::now()) ||
+                    $conversation->getCycleStage() === Conversation::CYCLE_STAGE_BALL_IN_PEASANTS_COURT
+                )
+            ) &&
             !$this->authenticatedUser->isAdmin()
         ) {
             $alerts[] = [

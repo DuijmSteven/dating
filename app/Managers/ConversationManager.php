@@ -6,6 +6,7 @@ use App\Conversation;
 use App\ConversationMessage;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\MessageAttachment;
+use App\Services\ProbabilityService;
 use App\User;
 use Carbon\Carbon;
 use Cassandra\Type\UserType;
@@ -164,7 +165,7 @@ class ConversationManager
             if (
                 $conversation->messages[0]->sender->roles[0]->id === User::TYPE_PEASANT
             ) {
-                if (2 === rand(1, 2)) {
+                if (ProbabilityService::getTrueAPercentageOfTheTime(30)) {
                     $conversation->setReplyableAt(null);
                 } else {
                     $conversation->setCycleStage(
