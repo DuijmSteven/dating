@@ -61,6 +61,8 @@ class ConversationController extends Controller
         $senderId = $messageData['sender_id'];
         $recipientId = $messageData['recipient_id'];
 
+        \Log::debug($messageData['message']);
+
         /** @var User $recipient */
         $recipient = User::with('emailTypes')->find($recipientId);
 
