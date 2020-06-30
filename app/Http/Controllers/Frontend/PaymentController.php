@@ -187,7 +187,6 @@ class PaymentController extends FrontendController
      */
     public function successfulPayment($user, $creditPack, $transactionId, string $transactionTotal): void
     {
-
         if ($user->isMailable) {
             $creditsBoughtEmail = (new CreditsBought($user, $creditPack))
                 ->onQueue('emails');
@@ -201,28 +200,5 @@ class PaymentController extends FrontendController
 
         Mail::to('develyvof@gmail.com')
             ->queue($userBoughtCreditsEmail);
-
-        //In case the buyer came from an affiliate, hit publisher callback
-        if (
-            $user->affiliateTracking()->exists() &&
-            $user->affiliateTracking->getAffiliate() == 'xpartners' &&
-            $user->affiliateTracking->getMediaId() != '147374'
-        ) {
-            $client = new Client();
-            try {
-                $response = $client->request(
-                    'GET',
-                    'https://mt67.net/d/?bdci='.$user->affiliateTracking->getClickId().'&ti='.$transactionId.'&r='.$transactionTotal.'&pn=sale-XP-Altijdsex.nl&iv=media-'.$user->affiliateTracking->getMediaId().'&cc=sale&g='.UserConstants::selectableField('gender')[$user->meta->gender],
-                    [
-                        'timeout' => 4
-                    ]
-                );
-            } catch (RequestException $e) {
-                \Log::error('Affiliate postback error - '.Psr7\str($e->getRequest()));
-                if ($e->hasResponse()) {
-                    \Log::error('Affiliate postback error - '.Psr7\str($e->getResponse()));
-                }
-            }
-        }
     }
 }
