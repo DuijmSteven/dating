@@ -19,7 +19,17 @@
                 @focus="chatFocused()"
                 v-model="text"
                 :disabled="this.disableTextarea"
+                ref="textarea"
             ></textarea>
+
+            <div
+                class="PrivateChatItem__emoticonsIcon"
+            >
+                <emoji-picker
+                    :data="emojiData"
+                    @emoji:picked="handleEmojiPicked"
+                />
+            </div>
 
             <div class="PrivateChatItem__attachmentIcon">
                 <label>
@@ -56,6 +66,8 @@
 </template>
 
 <script>
+    import emojiData from '@zaichaopan/emoji-picker/data/emojis.json';
+
     export default {
         props: [
             'user',
@@ -75,7 +87,10 @@
                 fileBeingSent: null,
                 imagePreviewUrlBackup: null,
                 userCredits: undefined,
-                disableTextarea: false
+                disableTextarea: false,
+                showEmoticonPicker: false,
+                emojiData: emojiData,
+                textarea: undefined
             }
         },
 
@@ -110,6 +125,36 @@
         },
 
         methods: {
+            // clickedOutsideOfEmoticonPicker() {
+            //     if (this.showEmoticonPicker) {
+            //         this.closeEmoticonPicker();
+            //     }
+            //
+            //     console.log(this.showEmoticonPicker);
+            // },
+            // toggleEmoticonPicker() {
+            //     this.showEmoticonPicker = !this.showEmoticonPicker;
+            //
+            //     console.log(this.showEmoticonPicker);
+            // },
+            closeEmoticonPicker() {
+                this.showEmoticonPicker = false;
+            },
+            handleEmojiPicked(emoji) {
+                this.closeEmoticonPicker();
+
+                let textarea = this.$refs.textarea;
+
+                const cursorPosition = textarea.selectionStart;
+                const oldTextareaValue = textarea.value;
+
+                const textBeforeCursor = oldTextareaValue.substring(0, cursorPosition);
+                const textAfterCursor = oldTextareaValue.substring(cursorPosition + 1);
+
+                const newText = textBeforeCursor + emoji + textAfterCursor;
+
+                textarea.value = newText;
+            },
             getUserCredits: function () {
                 axios.get('/api/users/' + parseInt(DP.authenticatedUser.id) + '/credits').then(
                     response => {

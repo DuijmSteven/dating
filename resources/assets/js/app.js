@@ -9,10 +9,25 @@ window.Vue = require('vue/dist/vue.min.js');
 
 import VuejsDialog from 'vuejs-dialog';
 
+
 import VueMq from 'vue-mq';
 import $ from "jquery";
 
 Vue.use(require('vue-moment'));
+
+Vue.directive('click-outside', {
+    bind: function (el, binding, vnode) {
+        window.event = function (event) {
+            if (!(el === event.target || el.contains(event.target))) {
+                vnode.context[binding.expression](event);
+            }
+        };
+        document.body.addEventListener('click', window.event)
+    },
+    unbind: function (el) {
+        document.body.removeEventListener('click', window.event)
+    },
+});
 
 Vue.use(VueMq, {
     breakpoints: {
@@ -24,6 +39,10 @@ Vue.use(VueMq, {
 });
 
 Vue.use(VuejsDialog);
+
+import EmojiPicker from '@zaichaopan/emoji-picker';
+
+Vue.use(EmojiPicker);
 
 require('./bootstrap');
 require('bootstrap-datepicker');

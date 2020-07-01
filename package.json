@@ -33,6 +33,7 @@
     "webpack-dev-server": "^3.10.1"
   },
   "dependencies": {
+    "@zaichaopan/emoji-picker": "^0.1.7",
     "clientjs": "^0.1.11",
     "disableautofill": "^1.2.8",
     "jquery-ui": "^1.12.1",

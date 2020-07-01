@@ -1,7 +1,9 @@
 import isUndefined from "admin-lte/bower_components/moment/src/lib/utils/is-undefined";
 import {isNull} from "lodash";
 
+
 if ($('#app').length > 0) {
+
     const app = new Vue({
         el: '#app',
 
