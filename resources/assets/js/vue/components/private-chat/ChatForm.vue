@@ -120,7 +120,7 @@
 
         computed: {
             characterCount() {
-                return this.text.length;
+                return [...this.text].length;
             }
         },
 
@@ -143,17 +143,20 @@
             handleEmojiPicked(emoji) {
                 this.closeEmoticonPicker();
 
+                let newText = '';
                 let textarea = this.$refs.textarea;
 
-                const cursorPosition = textarea.selectionStart;
                 const oldTextareaValue = textarea.value;
+
+                const cursorPosition = textarea.selectionStart;
 
                 const textBeforeCursor = oldTextareaValue.substring(0, cursorPosition);
                 const textAfterCursor = oldTextareaValue.substring(cursorPosition + 1);
 
-                const newText = textBeforeCursor + emoji + textAfterCursor;
+                newText = textBeforeCursor + emoji + textAfterCursor;
+      
 
-                textarea.value = newText;
+                this.text = newText;
             },
             getUserCredits: function () {
                 axios.get('/api/users/' + parseInt(DP.authenticatedUser.id) + '/credits').then(
@@ -193,7 +196,7 @@
                     this.imagePreviewUrlBackup = this.imagePreviewUrl;
                     this.imagePreviewUrl = null;
 
-                    if (this.textBeingSent.length > 0 || this.fileBeingSent != null) {
+                    if ([...this.textBeingSent].length > 0 || this.fileBeingSent != null) {
                         this.$emit('message-sent', {
                             text: this.textBeingSent,
                             attachment: this.fileBeingSent != null ? this.fileBeingSent : null
