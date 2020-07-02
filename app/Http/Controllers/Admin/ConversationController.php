@@ -262,7 +262,6 @@ class ConversationController extends Controller
                 null === $conversation->getReplyableAt() ||
                 $conversation->getReplyableAt()->gt(Carbon::now()) ||
                 $conversation->getCycleStage() === Conversation::CYCLE_STAGE_BALL_IN_PEASANTS_COURT
-
             ) &&
             !$this->authenticatedUser->isAdmin()
         ) {

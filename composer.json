@@ -28,7 +28,8 @@
         "symfony/process": "^4.4.4",
         "doctrine/dbal": "^2.10",
         "consoletvs/charts": "6.*",
-        "google/recaptcha": "^1.2"
+        "google/recaptcha": "^1.2",
+        "mxl/laravel-queue-rate-limit": "^1.0"
     },
     "require-dev": {
         "mockery/mockery": "^1.0",

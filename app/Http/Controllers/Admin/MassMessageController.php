@@ -156,6 +156,11 @@ class MassMessageController extends Controller
             $query->where('looking_for_gender', User::GENDER_FEMALE);
         });
 
+        if ($limitMessage === 'unlimited') {
+            // temporary solution
+            $usersQuery->where('exclude_from_mass_messages', false);
+        }
+
         if ($limitMessage === 'limited_with_pic') {
             $usersQuery->where(function ($query) {
                 $query->whereHas('meta', function ($query) {
@@ -176,11 +181,19 @@ class MassMessageController extends Controller
                     });
                 });
         } else if ($limitMessage === 'limited_have_payed') {
+
+            // temporary solution
+            $usersQuery->where('exclude_from_mass_messages', false);
+
             $usersQuery
                 ->whereHas('payments', function ($query) {
                     $query->where('status', Payment::STATUS_COMPLETED);
                 });
         } else if ($limitMessage === 'limited_have_payed_and_no_images') {
+
+            // temporary solution
+            $usersQuery->where('exclude_from_mass_messages', false);
+
             $usersQuery
                 ->whereHas('payments', function ($query) {
                     $query->where('status', Payment::STATUS_COMPLETED);

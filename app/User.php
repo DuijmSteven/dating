@@ -245,12 +245,6 @@ class User extends Authenticatable
         return $this->createdBots->pluck('id')->toArray();
     }
 
-    public function getLockedConversationsCountAttribute()
-    {
-        return $this->createdBots->pluck('id')->toArray();
-    }
-
-
     public function getProfileImageUrlAttribute()
     {
         return \StorageHelper::profileImageUrl($this);
@@ -653,9 +647,12 @@ class User extends Authenticatable
 
     public function lockedConversations()
     {
-        $minutesAgo = (new Carbon('now'))->subMinutes(ConversationManager::CONVERSATION_LOCKING_TIME);
+        $minutesAgo = (new Carbon('now'))
+            ->subMinutes(ConversationManager::CONVERSATION_LOCKING_TIME);
 
-        return $this->hasMany(Conversation::class, 'locked_by_user_id')->where('locked_at', '>=', $minutesAgo);
+        return $this
+            ->hasMany(Conversation::class, 'locked_by_user_id')
+            ->where('locked_at', '>=', $minutesAgo);
     }
 
     /**
@@ -1413,5 +1410,10 @@ class User extends Authenticatable
     public function botMessages()
     {
         return $this->hasMany(BotMessage::class, 'bot_id');
+    }
+    
+    public function getExcludeFromMassMessages()
+    {
+        return $this->exclude_from_mass_messages;
     }
 }
