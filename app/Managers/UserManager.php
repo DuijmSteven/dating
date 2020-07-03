@@ -184,7 +184,7 @@ class UserManager
         $userViewInstance->save();
     }
 
-    public function setProfileViewedEmail(User $viewed, User $viewer = null) {
+    public function setProfileViewedEmail(User $viewed, User $viewer = null, $delay = 0) {
         $userEmailTypeIds = $viewed->emailTypes()->get()->pluck('id')->toArray();
 
         $profileViewedEmailEnabled = in_array(
@@ -224,7 +224,9 @@ class UserManager
                         $viewed,
                         $viewerUser,
                         new Carbon('now')
-                    ))->onQueue('emails');
+                    ))
+                    ->delay($delay)
+                    ->onQueue('emails');
 
                     Mail::to($viewed)
                         ->queue($profileViewedEmail);

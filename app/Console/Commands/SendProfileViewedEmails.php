@@ -72,13 +72,20 @@ class SendProfileViewedEmails extends Command
             ->where('active', true)
             ->get();
 
+            $emailDelay = 0;
+            $loopCount = 0;
+
             /** @var User $user */
             foreach ($users as $user) {
+                if ($loopCount % 5 === 0) {
+                    $emailDelay++;
+                }
+
                 try {
                     $number = rand(1, 1000);
 
                     if ($number === 1) {
-                        $viewerBot = $this->userManager->setProfileViewedEmail($user);
+                        $viewerBot = $this->userManager->setProfileViewedEmail($user, null, $emailDelay);
 
                         $this->userManager->storeProfileView(
                             $viewerBot,
@@ -91,6 +98,7 @@ class SendProfileViewedEmails extends Command
                     continue;
                 }
 
+                $loopCount++;
             }
         }
     }
