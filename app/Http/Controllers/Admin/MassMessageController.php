@@ -166,11 +166,11 @@ class MassMessageController extends Controller
 
         if ($limitMessage === 'unlimited') {
             // temporary solution
-            $usersQuery->where('exclude_from_mass_messages', '=', '1');
+            $usersQuery->where('exclude_from_mass_messages', '=', false);
         }
 
         if ($limitMessage === 'limited_with_pic') {
-            $usersQuery->where('exclude_from_mass_messages', '=', '1');
+            $usersQuery->where('exclude_from_mass_messages', '=', false);
 
             $usersQuery->where(function ($query) {
                 $query->whereHas('meta', function ($query) {
@@ -180,7 +180,7 @@ class MassMessageController extends Controller
                     ->orWhereHas('images');
             });
         } else if ($limitMessage === 'limited_no_pic') {
-            $usersQuery->where('exclude_from_mass_messages', '=', '1');
+            $usersQuery->where('exclude_from_mass_messages', '=', false);
 
             $usersQuery
                 ->whereDoesntHave('images')
@@ -195,7 +195,7 @@ class MassMessageController extends Controller
         } else if ($limitMessage === 'limited_have_payed') {
 
             // temporary solution
-            $usersQuery->where('exclude_from_mass_messages', '=', '1');
+            $usersQuery->where('exclude_from_mass_messages', '=', false);
 
             $usersQuery
                 ->whereHas('payments', function ($query) {
@@ -204,7 +204,7 @@ class MassMessageController extends Controller
         } else if ($limitMessage === 'limited_have_payed_and_no_images') {
 
             // temporary solution
-            $usersQuery->where('exclude_from_mass_messages', '=', '1');
+            $usersQuery->where('exclude_from_mass_messages', '=', false);
 
             $usersQuery
                 ->whereHas('payments', function ($query) {
@@ -223,8 +223,6 @@ class MassMessageController extends Controller
         }
 
         $users = $usersQuery->get();
-
-        dd($limitMessage, $users->count());
 
         $errorsCount = 0;
         $unmailableCount = 0;
