@@ -42,7 +42,8 @@ class MassMessageController extends Controller
                 $query->where('looking_for_gender', User::GENDER_FEMALE);
             });
 
-        $unlimitedCount = $unlimitedUsersQuery->count();
+
+        $unlimitedCount = $unlimitedUsersQuery->where('exclude_from_mass_messages', '=', false)->count();
 
         $withoutPicUsersQuery = clone $unlimitedUsersQuery;
         $withPicUsersQuery = clone $unlimitedUsersQuery;
@@ -52,17 +53,20 @@ class MassMessageController extends Controller
         $registeredYesterdayUsersQuery = clone $unlimitedUsersQuery;
         $registeredYesterdayUpToFourDaysAgoUsersQuery = clone $unlimitedUsersQuery;
 
-        $withPicUsersQuery->where(function ($query) {
-            $query->whereHas('meta', function ($query) {
-                $query->where('dob', '!=', null);
-                $query->orWhere('city', '!=', null);
-            })
-                ->orWhereHas('images');
-        });
+        $withPicUsersQuery
+            ->where('exclude_from_mass_messages', '=', false)
+            ->where(function ($query) {
+                $query->whereHas('meta', function ($query) {
+                    $query->where('dob', '!=', null);
+                    $query->orWhere('city', '!=', null);
+                })
+                    ->orWhereHas('images');
+            });
 
         $withPicCount = $withPicUsersQuery->count();
 
         $withoutPicUsersQuery
+            ->where('exclude_from_mass_messages', '=', false)
             ->whereDoesntHave('images')
             ->where(function ($query) {
                 $query->whereHas('meta', function ($query) {
@@ -75,16 +79,20 @@ class MassMessageController extends Controller
 
         $withoutPicCount = $withoutPicUsersQuery->count();
 
-        $havePayedUsersQuery->whereHas('payments', function ($query) {
-            $query->where('status', Payment::STATUS_COMPLETED);
-        });
+        $havePayedUsersQuery
+            ->where('exclude_from_mass_messages', '=', false)
+            ->whereHas('payments', function ($query) {
+                $query->where('status', Payment::STATUS_COMPLETED);
+            });
 
         $havePayedCount = $havePayedUsersQuery->count();
 
-        $havePayedAndDontHaveImagesUsersQuery->whereHas('payments', function ($query) {
-            $query->where('status', Payment::STATUS_COMPLETED);
-        })
-        ->whereDoesntHave('images');
+        $havePayedAndDontHaveImagesUsersQuery
+            ->where('exclude_from_mass_messages', '=', false)
+            ->whereHas('payments', function ($query) {
+                $query->where('status', Payment::STATUS_COMPLETED);
+            })
+            ->whereDoesntHave('images');
 
         $havePayedAndDontHaveImagesCount = $havePayedAndDontHaveImagesUsersQuery->count();
 
@@ -158,10 +166,12 @@ class MassMessageController extends Controller
 
         if ($limitMessage === 'unlimited') {
             // temporary solution
-            $usersQuery->where('exclude_from_mass_messages', false);
+            $usersQuery->where('exclude_from_mass_messages', '=', '1');
         }
 
         if ($limitMessage === 'limited_with_pic') {
+            $usersQuery->where('exclude_from_mass_messages', '=', '1');
+
             $usersQuery->where(function ($query) {
                 $query->whereHas('meta', function ($query) {
                     $query->where('dob', '!=', null);
@@ -170,6 +180,8 @@ class MassMessageController extends Controller
                     ->orWhereHas('images');
             });
         } else if ($limitMessage === 'limited_no_pic') {
+            $usersQuery->where('exclude_from_mass_messages', '=', '1');
+
             $usersQuery
                 ->whereDoesntHave('images')
                 ->where(function ($query) {
@@ -183,7 +195,7 @@ class MassMessageController extends Controller
         } else if ($limitMessage === 'limited_have_payed') {
 
             // temporary solution
-            $usersQuery->where('exclude_from_mass_messages', false);
+            $usersQuery->where('exclude_from_mass_messages', '=', '1');
 
             $usersQuery
                 ->whereHas('payments', function ($query) {
@@ -192,7 +204,7 @@ class MassMessageController extends Controller
         } else if ($limitMessage === 'limited_have_payed_and_no_images') {
 
             // temporary solution
-            $usersQuery->where('exclude_from_mass_messages', false);
+            $usersQuery->where('exclude_from_mass_messages', '=', '1');
 
             $usersQuery
                 ->whereHas('payments', function ($query) {
@@ -211,6 +223,8 @@ class MassMessageController extends Controller
         }
 
         $users = $usersQuery->get();
+
+        dd($limitMessage, $users->count());
 
         $errorsCount = 0;
         $unmailableCount = 0;
