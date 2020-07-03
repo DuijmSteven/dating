@@ -224,11 +224,17 @@ class MassMessageController extends Controller
 
         $users = $usersQuery->get();
 
+        $emailDelay = 0;
+        $loopCount = 0;
         $errorsCount = 0;
         $unmailableCount = 0;
 
         /** @var User $user */
         foreach ($users as $user) {
+            if ($loopCount % 5 === 0) {
+                $emailDelay++;
+            }
+
             try {
                 \DB::beginTransaction();
 
@@ -290,12 +296,15 @@ class MassMessageController extends Controller
                 ) {
                     if ($user->isMailable) {
                         if (config('app.env') === 'production') {
-                            $messageReceivedEmail = (new MessageReceived(
-                                $bot,
-                                $user,
-                                $messageBody,
-                                false
-                            ))->onQueue('emails');
+                            $messageReceivedEmail =
+                                (new MessageReceived(
+                                    $bot,
+                                    $user,
+                                    $messageBody,
+                                    false
+                                ))
+                                ->delay($emailDelay)
+                                ->onQueue('emails');
 
                             Mail::to($user)
                                 ->queue($messageReceivedEmail);
@@ -325,6 +334,8 @@ class MassMessageController extends Controller
 
                 \Log::info(__CLASS__ . ' - ' . $exception->getMessage());
             }
+
+            $loopCount++;
         }
 
         if ($errorsCount) {

@@ -46,7 +46,6 @@ class VerifyPendingEmails extends Command
      */
     public function handle()
     {
-        \Log::debug('Checking for users tha have pending verification email...');
 
         $users = User::with(['meta'])
         ->whereHas('roles', function ($query) {
@@ -58,7 +57,11 @@ class VerifyPendingEmails extends Command
         ->take(30)
         ->get();
 
-        \Log::debug('User count: ' . $users->count());
+        if ($users->count() > 0) {
+            \Log::debug('Checking for users tha have pending verification email...');
+            \Log::debug('User count: ' . $users->count());
+            \Log::debug('...done');
+        }
 
         foreach ($users as $user) {
             $result = $this->emailVerificationService->verifySingleEmail($user->getEmail());
@@ -69,6 +72,5 @@ class VerifyPendingEmails extends Command
             );
         }
 
-        \Log::debug('...done');
     }
 }
