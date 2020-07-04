@@ -34,7 +34,7 @@ class ChartsManager
      * @return PeasantMessagesChart|null
      * @throws \Exception
      */
-    public function createPeasantMessagesChart(int $userId = null, $since = null)
+    public function createPeasantMessagesChart(int $userId = null, $since = null, $affiliate = null)
     {
         $query = \DB::table('conversation_messages as cm')
             ->select(\DB::raw('DATE(CONVERT_TZ(cm.created_at, \'UTC\', \'Europe/Amsterdam\')) as creationDate, COUNT(cm.id) AS messagesCount'))
@@ -42,8 +42,13 @@ class ChartsManager
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('cm.created_at', '>=', $since);
 
+        if ($affiliate) {
+            $query->leftJoin('user_affiliate_tracking as uat', 'u.id', 'uat.user_id')
+                ->where('uat.affiliate', $affiliate);
+        }
 
-        if (null  == $userId) {
+
+        if (null == $userId) {
             $query->where('ru.role_id', User::TYPE_PEASANT);
         } else {
             $query->where('u.id', $userId);
@@ -90,12 +95,21 @@ class ChartsManager
 
         $peasantMessagesChart = new PeasantMessagesChart();
         $peasantMessagesChart->labels($labels);
+
+        $chartTitle = '';
+
+        if ($affiliate) {
+            $chartTitle .= ucfirst($affiliate) . ' ';
+        }
+
+        $chartTitle .= 'Peasant Messages';
+
         $peasantMessagesChart
-            ->dataset('Peasant messages on date', 'line', $counts)
+            ->dataset('' . $chartTitle . ' on date', 'line', $counts)
             ->backGroundColor('#de3e7b');
 
         $peasantMessagesChart
-            ->title('Peasant messages per day');
+            ->title($chartTitle . ' per day');
 
         return $peasantMessagesChart;
     }
