@@ -43,9 +43,30 @@ class DashboardController extends FrontendController
             ->get();
 
         if (count($users) < 10) {
-            \Log::debug('Not enough recent bots with profile pic');
+            \Log::debug('Not enough recent bots with profile pic in last 30 days. Going to 30 days.');
 
             $lastSixtyDays = Carbon::now('Europe/Amsterdam')->subDays(60)->setTimezone('UTC');
+
+            $users = User::with(['meta', 'profileImage'])
+                ->whereHas('profileImage')
+                ->whereHas('roles', function ($query) {
+                    $query->where('id', User::TYPE_BOT);
+                })
+                ->whereHas('meta', function ($query) {
+                    $query->where('gender', $this->authenticatedUser->meta->getLookingForGender());
+                    $query->where('looking_for_gender', $this->authenticatedUser->meta->getGender());
+                })
+                ->where('active', true)
+                ->where('created_at', '>=', $lastSixtyDays)
+                ->orderByRaw('RAND()')
+                ->take(10)
+                ->get();
+        }
+
+        if (count($users) < 10) {
+            \Log::debug('Not enough recent bots with profile pic in 60 days either. Going to 100 days.');
+
+            $lastSixtyDays = Carbon::now('Europe/Amsterdam')->subDays(100)->setTimezone('UTC');
 
             $users = User::with(['meta', 'profileImage'])
                 ->whereHas('profileImage')

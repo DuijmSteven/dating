@@ -154,9 +154,10 @@
                 const textAfterCursor = oldTextareaValue.substring(cursorPosition + 1);
 
                 newText = textBeforeCursor + emoji + textAfterCursor;
-      
 
                 this.text = newText;
+
+                this.$nextTick(() => textarea.focus());
             },
             getUserCredits: function () {
                 axios.get('/api/users/' + parseInt(DP.authenticatedUser.id) + '/credits').then(
