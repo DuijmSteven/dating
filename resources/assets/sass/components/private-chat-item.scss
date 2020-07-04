@@ -511,7 +511,8 @@
 
         .PrivateChatItem__head {
             height: map_get($privateChatItem, 'headHeightMobileMaximized') + px;
-            padding-top: 15px;
+            padding-top: 8px;
+            padding-bottom: 8px;
         }
 
         .PrivateChatItem__body {
@@ -535,11 +536,7 @@
             }
 
             .PrivateChatItem__textarea__container {
-                height: calc(100% - 176px);
-
-                @media screen and (max-width: $screen-xs-max) {
-                    height: calc(100% - 126px);
-                }
+                height: calc(100% - 126px);
             }
 
             .PrivateChatItem__body__content {
@@ -557,7 +554,7 @@
             }
 
             .PrivateChatItem__body__content {
-                height: calc(100% - 150px);
+                height: calc(100% - 100px);
                 padding-bottom: 10px;
             }
         }
@@ -568,30 +565,25 @@
             left: 0;
             bottom: 0;
             right: 0;
-            height: 150px;
+            height: 100px;
         }
 
         &.PrivateChatItem--showingPreview {
             .PrivateChatItem__body {
                 &__content {
-                    height: -webkit-calc(90% - 220px);
-                    height: -moz-calc(90% - 220px);
-                    height: calc(90% - 220px);
+                    height: -webkit-calc(90% - 172px);
+                    height: -moz-calc(90% - 172px);
+                    height: calc(90% - 172px);
                 }
             }
 
             .PrivateChatItem__textarea__wrapper {
-                height: -webkit-calc(10% + 220px);
-                height: -moz-calc(10% + 220px);
-                height: calc(10% + 220px);
+                height: -webkit-calc(10% + 172px);
+                height: -moz-calc(10% + 172px);
+                height: calc(10% + 172px);
             }
         }
     }
-
-    .PrivateChatItem:not(.showingPreview) {
-
-    }
-
 }
 
 .PrivateChatItem.fullScreen {
@@ -626,7 +618,8 @@
     .PrivateChatItem__head {
         border-radius: 0 0 0 0;
         height: map_get($privateChatItem, 'headHeightMobileMaximized') + px;
-        padding-top: 16px;
+        padding-top: 8px;
+        padding-bottom: 8px;
     }
 
     .PrivateChatItem__body {

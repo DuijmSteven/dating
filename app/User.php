@@ -1407,6 +1407,14 @@ class User extends Authenticatable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
+    public function fingerprints()
+    {
+        return $this->hasMany(UserFingerprint::class, 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function botMessages()
     {
         return $this->hasMany(BotMessage::class, 'bot_id');
