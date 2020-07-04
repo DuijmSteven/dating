@@ -111,7 +111,7 @@
             color: #ff5b49;
             font-size: 24px;
 
-            @media (max-width: $screen-sm-max) {
+            @media (max-width: $screen-md-max) {
                 display: inline-block !important;
                 border: 1px solid #ddd;
             }
@@ -164,6 +164,7 @@
             padding: 0 10px;
             flex: 1;
             text-align: center;
+            max-width: 65px;
         }
 
         &__profilePicture {
@@ -284,7 +285,7 @@
     overflow-y: scroll;
 }
 
-@media (max-width: $screen-sm-max) {
+@media (max-width: $screen-xs-max) {
     .PrivateChatManager {
         width: auto;
 
@@ -306,6 +307,33 @@
                 }
             }
         }
+    }
+}
+
+@media (max-width: $screen-md-max) {
+    .PrivateChatManager {
+        &.maximized {
+            width: auto;
+        }
+
+        //&.minimized {
+        //    .PrivateChatManager {
+        //        &__toggle {
+        //            top: 0;
+        //            left: 0;
+        //            padding: 15px;
+        //        }
+        //    }
+        //
+        //    .PrivateChatManager {
+        //        &__head {
+        //            &__title {
+        //                display: none;
+        //                padding-left: 0;
+        //            }
+        //        }
+        //    }
+        //}
 
         &__item {
             &__deleteIcon {
@@ -365,6 +393,11 @@
                 max-width: initial;
                 flex: 10;
                 margin-right: 0;
+                padding-right: 93px;
+
+                @media (max-width: $screen-md-max) {
+                    padding-right: 10px;
+                }
             }
 
             &__date {

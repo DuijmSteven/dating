@@ -278,15 +278,22 @@ class StatisticsManager
     }
 
 
-    public function paidMessagesSentByUserTypeCountBetween(int $userType, $startDate, $endDate)
+    public function paidMessagesSentByUserTypeCountBetween(int $userType, $startDate, $endDate, $affiliate = null)
     {
         $allMessagesCount = $this->messagesSentByUserTypeBetweenQueryBuilder($userType, $startDate, $endDate)
             ->count();
 
-        $unpaidMessagesInPeriod = \DB::table('conversation_messages as cm')
+        $query = \DB::table('conversation_messages as cm')
             ->select(\DB::raw('COUNT(DISTINCT(u.id)) AS uniqueMessagers'))
             ->leftJoin('users as u', 'u.id', 'cm.sender_id')
-            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id');
+
+        if ($affiliate) {
+            $query->leftJoin('user_affiliate_tracking as uat', 'u.id', 'uat.user_id')
+                ->where('uat.affiliate', $affiliate);
+        }
+
+        $unpaidMessagesInPeriod = $query
             ->where('ru.role_id', $userType)
             ->whereBetween('u.created_at', [
                 $startDate,
@@ -296,18 +303,8 @@ class StatisticsManager
                 $startDate,
                 $endDate
             ])
-            ->get()[0]->uniqueMessagers;
-
-
-        $query = DB::table('conversation_messages as cm')
-            ->leftJoin('users as u', 'u.id', 'cm.sender_id')
-            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
-            ->where('ru.role_id', $userType)
-            ->whereBetween('cm.created_at', [
-                $startDate,
-                $endDate
-            ]);
-
+            ->get()[0]
+            ->uniqueMessagers;
 
         return $allMessagesCount - $unpaidMessagesInPeriod;
     }

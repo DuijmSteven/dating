@@ -241,6 +241,43 @@ class DashboardController extends Controller
                     $endOfToday
                 )
             ],
+            'googleAdsPeasantMessageStatistics' => [
+                'messagesSentToday' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfToday,
+                    $endOfToday,
+                    UserAffiliateTracking::AFFILIATE_GOOGLE
+                ),
+                'messagesSentYesterday' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfYesterday,
+                    $endOfYesterday,
+                    UserAffiliateTracking::AFFILIATE_GOOGLE
+                ),
+                'messagesSentCurrentWeek' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfWeek,
+                    $endOfWeek,
+                    UserAffiliateTracking::AFFILIATE_GOOGLE
+                ),
+                'messagesSentCurrentMonth' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfMonth,
+                    $endOfMonth,
+                    UserAffiliateTracking::AFFILIATE_GOOGLE
+                ),
+                'messagesSentPreviousMonth' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc,
+                    UserAffiliateTracking::AFFILIATE_GOOGLE
+                ),
+                'messagesSentCurrentYear' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfYear,
+                    $endOfToday
+                )
+            ],
             'peasantMessagesPerHourStatistics' => [
                 'today' => $this->statisticsManager->messagesSentByUserTypePerHourToday(),
                 'yesterday' => number_format($this->statisticsManager->messagesSentByUserTypeCountBetween(
