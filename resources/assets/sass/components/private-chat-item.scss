@@ -41,6 +41,10 @@
     top: 16px !important;
 }
 
+.emoji-picker .emoji-dropdown .search {
+    display: none;
+}
+
 .PrivateChatItem {
     position: fixed;
     z-index: 10;
@@ -641,6 +645,11 @@
 
     .PrivateChatItem__textarea {
         height: 100%;
+
+        @media (min-width: $screen-md-min) {
+            max-width: 100%;
+        }
+
     }
 
     .PrivateChatItem__textarea__container {

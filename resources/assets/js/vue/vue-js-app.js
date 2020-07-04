@@ -99,8 +99,9 @@ if ($('#app').length > 0) {
                             });
 
                             this.previousConversationPartnersResponse = this.currentConversationPartnersResponse;
-                            this.gettingPartners = false;
                         }
+
+                        this.gettingPartners = false;
                     }
                 );
             },
