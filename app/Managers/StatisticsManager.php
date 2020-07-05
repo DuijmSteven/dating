@@ -164,7 +164,7 @@ class StatisticsManager
     {
         $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
         $tenDaysAgo = Carbon::now('Europe/Amsterdam')->subDays(10)->setTimezone('UTC');
-        $twentyDaysAgo = Carbon::now('Europe/Amsterdam')->subDays(10)->setTimezone('UTC');
+        $twentyDaysAgo = Carbon::now('Europe/Amsterdam')->subDays(20)->setTimezone('UTC');
         $oneMonthAgo = Carbon::now('Europe/Amsterdam')->subMonths(1)->setTimezone('UTC');
         $oneAndAHalfMonthAgo = Carbon::now('Europe/Amsterdam')->subDays(45)->setTimezone('UTC');
         $twoMonthsAgo = Carbon::now('Europe/Amsterdam')->subMonths(2)->setTimezone('UTC');
@@ -231,7 +231,7 @@ class StatisticsManager
         );
 
         $revenueFromUsersUntilTwentyDaysAgo = $this->revenueBetween(
-            Carbon::now()->subYears(20),
+            Carbon::now()->subYears(10),
             $endOfToday,
             $twentyDaysAgo,
             UserAffiliateTracking::AFFILIATE_GOOGLE
