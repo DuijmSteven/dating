@@ -436,7 +436,7 @@ class StatisticsManager
         $alvPerPayingUserRegisteredUntilTwentyDaysAgo = $this->calculateAverageRevenuePerUser($revenueFromUsersUntilTwentyDaysAgo, $payingUsersUntilTwentyDaysAgoCount);
         $alvPerPayingUserRegisteredUntilTenDaysAgo = $this->calculateAverageRevenuePerUser($revenueFromUsersUntilTenDaysAgo, $payingUsersUntilTenDaysAgoCount);
 
-        $peasantsWithCreditpack = $this->peasantsWithCreditpack(UserAffiliateTracking::AFFILIATE_GOOGLE);
+        $peasantsWithCreditpack = $this->peasantsWithCreditpack(null, UserAffiliateTracking::AFFILIATE_XPARTNERS);
 
         return [
             'no_credits' => $this->peasantsWithNoCreditpackCount(null, UserAffiliateTracking::AFFILIATE_XPARTNERS),
