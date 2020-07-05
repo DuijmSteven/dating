@@ -92,9 +92,12 @@
                                         @if($fingerprint2->user->getLastOnlineAt() || $fingerprint2->user->getCreatedAt())
                                             <div class="innerTableWidgetHeading"><strong>Activity</strong></div>
                                             <div class="innerTableWidgetBody">
+                                                @if($fingerprint2->user->getLastOnlineAt())
+
                                                     <strong>Last active at</strong> {!! $fingerprint2->user->getLastOnlineAt()->tz('Europe/Amsterdam')->format('d-m-Y H:i:s') !!}
-                                                                                    ({!! $fingerprint2->user->getLastOnlineAt()->tz('Europe/Amsterdam')->diffForHumans() !!})
-                                                    <br>
+                                                                                        ({!! $fingerprint2->user->getLastOnlineAt()->tz('Europe/Amsterdam')->diffForHumans() !!})
+                                                        <br>
+                                                @endif
 
                                                     <strong>Created at</strong> {!! $fingerprint2->user->getCreatedAt()->tz('Europe/Amsterdam')->format('d-m-Y H:i:s') !!}
                                                                                 ({!! $fingerprint2->user->getCreatedAt()->tz('Europe/Amsterdam')->diffForHumans() !!})
