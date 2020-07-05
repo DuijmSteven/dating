@@ -231,7 +231,7 @@ class StatisticsManager
         );
 
         $revenueFromUsersUntilTwentyDaysAgo = $this->revenueBetween(
-            Carbon::now()->subYears(10),
+            Carbon::now()->subYears(20),
             $endOfToday,
             $twentyDaysAgo,
             UserAffiliateTracking::AFFILIATE_GOOGLE
