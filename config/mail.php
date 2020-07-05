@@ -56,7 +56,7 @@ return [
     */
 
     'from' => [
-        'address' => 'noreply@altijdsex.nl',
+        'address' => 'info@altijdsex.nl',
         'name' => 'Altijdsex.nl',
     ],
 
