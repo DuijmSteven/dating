@@ -289,6 +289,7 @@ class StatisticsController extends Controller
             ],
             'userTypeStatistics' => $this->statisticsManager->getUserTypeStatistics(),
             'googleAdsUserTypeStatistics' => $this->statisticsManager->getGoogleAdsLvuStatistics(),
+            'excludingXpartnersUserTypeStatistics' => $this->statisticsManager->getexcludingXpartnersLvuStatistics(),
         ];
 
         return view('admin.statistics', array_merge(

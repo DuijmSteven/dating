@@ -19,7 +19,8 @@ class StatisticsManager
         $startDate,
         $endDate,
         $fromUsersRegisteredUntilDate = null,
-        $affiliate = null
+        $affiliate = null,
+        $excludeAffiliate = null
     ) {
         $query = Payment::whereBetween('created_at',
             [
@@ -37,6 +38,12 @@ class StatisticsManager
         if ($affiliate) {
             $query->whereHas('peasant.affiliateTracking', function ($query) use ($fromUsersRegisteredUntilDate, $affiliate) {
                 $query->where('affiliate', $affiliate);
+            });
+        }
+
+        if ($excludeAffiliate) {
+            $query->whereDoesntHave('peasant.affiliateTracking', function ($query) use ($fromUsersRegisteredUntilDate, $excludeAffiliate) {
+                $query->where('affiliate', $excludeAffiliate);
             });
         }
 
@@ -295,6 +302,181 @@ class StatisticsManager
         ];
     }
 
+    public function getExcludingXpartnersLvuStatistics()
+    {
+        $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
+        $tenDaysAgo = Carbon::now('Europe/Amsterdam')->subDays(10)->setTimezone('UTC');
+        $twentyDaysAgo = Carbon::now('Europe/Amsterdam')->subDays(20)->setTimezone('UTC');
+        $oneMonthAgo = Carbon::now('Europe/Amsterdam')->subMonths(1)->setTimezone('UTC');
+        $oneAndAHalfMonthAgo = Carbon::now('Europe/Amsterdam')->subDays(45)->setTimezone('UTC');
+        $twoMonthsAgo = Carbon::now('Europe/Amsterdam')->subMonths(2)->setTimezone('UTC');
+        $threeMonthsAgo = Carbon::now('Europe/Amsterdam')->subMonths(3)->setTimezone('UTC');
+        $fourMonthsAgo = Carbon::now('Europe/Amsterdam')->subMonths(4)->setTimezone('UTC');
+
+        $allTimePayingUsersCount = $this->payingUsersCreatedUntilDateCount(
+            $endOfToday,
+            null,
+            UserAffiliateTracking::AFFILIATE_XPARTNERS
+        );
+        $payingUsersUntilFourMonthsAgoCount = $this->payingUsersCreatedUntilDateCount(
+            $fourMonthsAgo,
+            null,
+            UserAffiliateTracking::AFFILIATE_XPARTNERS
+        );
+        $payingUsersUntilThreeMonthsAgoCount = $this->payingUsersCreatedUntilDateCount(
+            $threeMonthsAgo,
+            null,
+            UserAffiliateTracking::AFFILIATE_XPARTNERS
+        );
+        $payingUsersUntilTwoMonthsAgoCount = $this->payingUsersCreatedUntilDateCount(
+            $twoMonthsAgo,
+            null,
+            UserAffiliateTracking::AFFILIATE_XPARTNERS
+        );
+        $payingUsersUntilOneMonthAndAHalfAgoCount = $this->payingUsersCreatedUntilDateCount(
+            $oneAndAHalfMonthAgo,
+            null,
+            UserAffiliateTracking::AFFILIATE_XPARTNERS
+        );
+        $payingUsersUntilOneMonthAgoCount = $this->payingUsersCreatedUntilDateCount(
+            $oneMonthAgo,
+            null,
+            UserAffiliateTracking::AFFILIATE_XPARTNERS
+        );
+        $payingUsersUntilTwentyDaysAgoCount = $this->payingUsersCreatedUntilDateCount(
+            $twentyDaysAgo,
+            null,
+            UserAffiliateTracking::AFFILIATE_XPARTNERS
+        );
+        $payingUsersUntilTenDaysAgoCount = $this->payingUsersCreatedUntilDateCount(
+            $tenDaysAgo,
+            null,
+            UserAffiliateTracking::AFFILIATE_XPARTNERS
+            );
+
+        $allUsersCount = User::whereHas('roles', function ($query) {
+            $query->where('id', User::TYPE_PEASANT);
+        })
+            ->whereDoesntHave('affiliateTracking', function ($query) {
+                $query->where('affiliate', UserAffiliateTracking::AFFILIATE_XPARTNERS);
+            })
+            ->count();
+
+        $allTimeRevenue = $this->revenueBetween(
+            Carbon::now()->subYears(10),
+            $endOfToday,
+            null,
+            null,
+            UserAffiliateTracking::AFFILIATE_XPARTNERS
+        );
+
+        $revenueFromUsersUntilFourMonthsAgo = $this->revenueBetween(
+            Carbon::now()->subYears(10),
+            $endOfToday,
+            $fourMonthsAgo,
+            null,
+            UserAffiliateTracking::AFFILIATE_XPARTNERS
+        );
+
+        $revenueFromUsersUntilThreeMonthsAgo = $this->revenueBetween(
+            Carbon::now()->subYears(10),
+            $endOfToday,
+            $threeMonthsAgo,
+            null,
+            UserAffiliateTracking::AFFILIATE_XPARTNERS
+        );
+
+        $revenueFromUsersUntilTwoMonthsAgo = $this->revenueBetween(
+            Carbon::now()->subYears(10),
+            $endOfToday,
+            $threeMonthsAgo,
+            null,
+            UserAffiliateTracking::AFFILIATE_XPARTNERS
+        );
+
+        $revenueFromUsersUntilOneMonthAndAHalfAgo = $this->revenueBetween(
+            Carbon::now()->subYears(10),
+            $endOfToday,
+            $oneAndAHalfMonthAgo,
+            null,
+            UserAffiliateTracking::AFFILIATE_XPARTNERS
+        );
+
+        $revenueFromUsersUntilOneMonthAgo = $this->revenueBetween(
+            Carbon::now()->subYears(10),
+            $endOfToday,
+            $threeMonthsAgo,
+            null,
+            UserAffiliateTracking::AFFILIATE_XPARTNERS
+        );
+
+        $revenueFromUsersUntilTwentyDaysAgo = $this->revenueBetween(
+            Carbon::now()->subYears(10),
+            $endOfToday,
+            $twentyDaysAgo,
+            null,
+            UserAffiliateTracking::AFFILIATE_XPARTNERS
+        );
+
+        $revenueFromUsersUntilTenDaysAgo = $this->revenueBetween(
+            Carbon::now()->subYears(10),
+            $endOfToday,
+            $tenDaysAgo,
+            null,
+            UserAffiliateTracking::AFFILIATE_XPARTNERS
+        );
+
+        $alvPerUserRegisteredAllTime = $this->calculateAverageRevenuePerUser($allTimeRevenue, $allUsersCount);
+        $alvPerPayingUserRegisteredAllTime = $this->calculateAverageRevenuePerUser($allTimeRevenue, $allTimePayingUsersCount);
+        $alvPerPayingUserRegisteredUntilFourMonthsAgo = $this->calculateAverageRevenuePerUser($revenueFromUsersUntilFourMonthsAgo, $payingUsersUntilFourMonthsAgoCount);
+        $alvPerPayingUserRegisteredUntilThreeMonthsAgo = $this->calculateAverageRevenuePerUser($revenueFromUsersUntilThreeMonthsAgo, $payingUsersUntilThreeMonthsAgoCount);
+        $alvPerPayingUserRegisteredUntilTwoMonthsAgo = $this->calculateAverageRevenuePerUser($revenueFromUsersUntilTwoMonthsAgo, $payingUsersUntilTwoMonthsAgoCount);
+        $alvPerPayingUserRegisteredUntilOneMonthAndAHalfAgo = $this->calculateAverageRevenuePerUser($revenueFromUsersUntilOneMonthAndAHalfAgo, $payingUsersUntilOneMonthAndAHalfAgoCount);
+        $alvPerPayingUserRegisteredUntilOneMonthAgo = $this->calculateAverageRevenuePerUser($revenueFromUsersUntilOneMonthAgo, $payingUsersUntilOneMonthAgoCount);
+        $alvPerPayingUserRegisteredUntilTwentyDaysAgo = $this->calculateAverageRevenuePerUser($revenueFromUsersUntilTwentyDaysAgo, $payingUsersUntilTwentyDaysAgoCount);
+        $alvPerPayingUserRegisteredUntilTenDaysAgo = $this->calculateAverageRevenuePerUser($revenueFromUsersUntilTenDaysAgo, $payingUsersUntilTenDaysAgoCount);
+
+        $peasantsWithCreditpack = $this->peasantsWithCreditpack(UserAffiliateTracking::AFFILIATE_GOOGLE);
+
+        return [
+            'no_credits' => $this->peasantsWithNoCreditpackCount(null, UserAffiliateTracking::AFFILIATE_XPARTNERS),
+            'never_bought' => $this->peasantsThatNeverHadCreditpackCount(null, UserAffiliateTracking::AFFILIATE_XPARTNERS),
+            'small' => $this->filterPeasantsWithCreditpackIdCount(
+                $peasantsWithCreditpack,
+                Creditpack::SMALL
+            ),
+            'medium' => $this->filterPeasantsWithCreditpackIdCount(
+                $peasantsWithCreditpack,
+                Creditpack::MEDIUM
+            ),
+            'large' => $this->filterPeasantsWithCreditpackIdCount(
+                $peasantsWithCreditpack,
+                Creditpack::LARGE
+            ),
+            'xl' => $this->filterPeasantsWithCreditpackIdCount(
+                $peasantsWithCreditpack,
+                Creditpack::XL
+            ),
+            'allTimePayingUsersCount' => $allTimePayingUsersCount,
+            'payingUsersRegisteredUntilFourMonthsAgoCount' => $payingUsersUntilFourMonthsAgoCount,
+            'payingUsersRegisteredUntilThreeMonthsAgoCount' => $payingUsersUntilThreeMonthsAgoCount,
+            'payingUsersRegisteredUntilTwoMonthsAgoCount' => $payingUsersUntilTwoMonthsAgoCount,
+            'payingUsersRegisteredUntilOneMonthAndAHalfAgoCount' => $payingUsersUntilOneMonthAndAHalfAgoCount,
+            'payingUsersRegisteredUntilOneMonthAgoCount' => $payingUsersUntilOneMonthAgoCount,
+            'payingUsersRegisteredUntilTwentyDaysAgoCount' => $payingUsersUntilTwentyDaysAgoCount,
+            'payingUsersRegisteredUntilTenDaysAgoCount' => $payingUsersUntilTenDaysAgoCount,
+            'alvPerPayingUserRegistered' => number_format($alvPerPayingUserRegisteredAllTime / 100, 2),
+            'alvPerUserRegistered' => number_format($alvPerUserRegisteredAllTime / 100, 2),
+            'alvPerUserRegisteredUntilFourMonthsAgo' => number_format($alvPerPayingUserRegisteredUntilFourMonthsAgo / 100, 2),
+            'alvPerUserRegisteredUntilThreeMonthsAgo' => number_format($alvPerPayingUserRegisteredUntilThreeMonthsAgo / 100, 2),
+            'alvPerUserRegisteredUntilTwoMonthsAgo' => number_format($alvPerPayingUserRegisteredUntilTwoMonthsAgo / 100, 2),
+            'alvPerUserRegisteredUntilOneMonthAndAHalfAgo' => number_format($alvPerPayingUserRegisteredUntilOneMonthAndAHalfAgo / 100, 2),
+            'alvPerUserRegisteredUntilOneMonthAgo' => number_format($alvPerPayingUserRegisteredUntilOneMonthAgo / 100, 2),
+            'alvPerUserRegisteredUntilTwentyDaysAgo' => number_format($alvPerPayingUserRegisteredUntilTwentyDaysAgo / 100, 2),
+            'alvPerUserRegisteredUntilTenDaysAgo' => number_format($alvPerPayingUserRegisteredUntilTenDaysAgo / 100, 2),
+        ];
+    }
+
     public function calculateAverageRevenuePerUser(int $revenue, int $userCount)
     {
         if ($userCount === 0) {
@@ -304,13 +486,13 @@ class StatisticsManager
         return $revenue / $userCount;
     }
 
-    public function payingUsersCreatedUntilDateCount($date, $affiliate = null)
+    public function payingUsersCreatedUntilDateCount($date, $affiliate = null, $excludeAffiliate = null)
     {
-        return $this->payingUsersCreatedUntilDateQuery($date, $affiliate)
+        return $this->payingUsersCreatedUntilDateQuery($date, $affiliate, $excludeAffiliate)
             ->count();
     }
 
-    public function payingUsersCreatedUntilDateQuery($date, $affiliate = null)
+    public function payingUsersCreatedUntilDateQuery($date, $affiliate = null, $excludeAffiliate = null)
     {
         $query = User::whereHas('payments', function ($query) {
             $query->where('status', Payment::STATUS_COMPLETED);
@@ -323,6 +505,12 @@ class StatisticsManager
         if ($affiliate) {
             $query->whereHas('affiliateTracking', function ($query) use ($affiliate) {
                 $query->where('affiliate', $affiliate);
+            });
+        }
+
+        if ($excludeAffiliate) {
+            $query->whereDoesntHave('affiliateTracking', function ($query) use ($excludeAffiliate) {
+                $query->where('affiliate', $excludeAffiliate);
             });
         }
 
@@ -597,8 +785,10 @@ class StatisticsManager
             ->count();
     }
 
-    public function peasantsWithNoCreditpackQueryBuilder($affiliate = null)
-    {
+    public function peasantsWithNoCreditpackQueryBuilder(
+        $affiliate = null,
+        $excludeAffiliate = null
+    ) {
         $query = User::where('active', true)
             ->whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_PEASANT);
@@ -612,21 +802,33 @@ class StatisticsManager
             });
         }
 
+        if ($excludeAffiliate) {
+            $query->whereDoesntHave('affiliateTracking', function ($query) use ($excludeAffiliate) {
+                $query->where('affiliate', $excludeAffiliate);
+            });
+        }
+
         return $query;
     }
 
-    public function peasantsWithNoCreditpack($affiliate = null)
-    {
-        return $this->peasantsWithNoCreditpackQueryBuilder($affiliate)->get();
+    public function peasantsWithNoCreditpack(
+        $affiliate = null,
+        $excludeAffiliate = null
+    ) {
+        return $this->peasantsWithNoCreditpackQueryBuilder($affiliate, $excludeAffiliate)->get();
     }
 
-    public function peasantsWithNoCreditpackCount($affiliate = null)
-    {
-        return $this->peasantsWithNoCreditpackQueryBuilder($affiliate)->count();
+    public function peasantsWithNoCreditpackCount(
+        $affiliate = null,
+        $excludeAffiliate = null
+    ) {
+        return $this->peasantsWithNoCreditpackQueryBuilder($affiliate, $excludeAffiliate)->count();
     }
 
-    public function peasantsThatNeverHadCreditpackQueryBuilder($affiliate = null)
-    {
+    public function peasantsThatNeverHadCreditpackQueryBuilder(
+        $affiliate = null,
+        $excludeAffiliate = null
+    ) {
         $query = User::where('active', true)
             ->where(function ($query) {
                 $query
@@ -645,19 +847,29 @@ class StatisticsManager
             });
         }
 
+        if ($excludeAffiliate) {
+            $query->whereDoesntHave('affiliateTracking', function ($query) use ($excludeAffiliate) {
+                $query->where('affiliate', $excludeAffiliate);
+            });
+        }
+
         $query->orderBy('created_at', 'desc');
 
         return $query;
     }
 
-    public function peasantsThatNeverHadCreditpack($affiliate = null)
-    {
-        return $this->peasantsThatNeverHadCreditpackQueryBuilder($affiliate)->get();
+    public function peasantsThatNeverHadCreditpack(
+        $affiliate = null,
+        $excludeAffiliate = null
+    ) {
+        return $this->peasantsThatNeverHadCreditpackQueryBuilder($affiliate, $excludeAffiliate)->get();
     }
 
-    public function peasantsThatNeverHadCreditpackCount($affiliate = null)
-    {
-        return $this->peasantsThatNeverHadCreditpackQueryBuilder($affiliate)->count();
+    public function peasantsThatNeverHadCreditpackCount(
+        $affiliate = null,
+        $excludeAffiliate = null
+    ) {
+        return $this->peasantsThatNeverHadCreditpackQueryBuilder($affiliate, $excludeAffiliate)->count();
     }
 
     public function topMessagersBetweenDates($startDate, $endDate, int $amount)
@@ -729,8 +941,10 @@ class StatisticsManager
             ->take($amount);
     }
 
-    public function peasantsWithCreditpackQueryBuilder($affiliate = null)
-    {
+    public function peasantsWithCreditpackQueryBuilder(
+        $affiliate = null,
+        $excludeAffiliate = null
+    ) {
         $query = User::where('active', true)
             ->whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_PEASANT);
@@ -740,10 +954,15 @@ class StatisticsManager
                 $query->where('status', Payment::STATUS_COMPLETED)->orderBy('created_at', 'desc')->take(1);
             });
 
-
         if ($affiliate) {
             $query->whereHas('affiliateTracking', function ($query) use ($affiliate) {
                 $query->where('affiliate', $affiliate);
+            });
+        }
+
+        if ($excludeAffiliate) {
+            $query->whereDoesntHave('affiliateTracking', function ($query) use ($excludeAffiliate) {
+                $query->where('affiliate', $excludeAffiliate);
             });
         }
 
@@ -752,14 +971,18 @@ class StatisticsManager
         return $query;
     }
 
-    public function peasantsWithCreditpack($affiliate = null)
-    {
-        return $this->peasantsWithCreditpackQueryBuilder($affiliate)->get();
+    public function peasantsWithCreditpack(
+        $affiliate = null,
+        $excludeAffiliate = null
+    ) {
+        return $this->peasantsWithCreditpackQueryBuilder($affiliate, $excludeAffiliate)->get();
     }
 
-    public function peasantsWithCreditpackCount($affiliate = null)
-    {
-        return $this->peasantsWithCreditpackQueryBuilder($affiliate)->count();
+    public function peasantsWithCreditpackCount(
+        $affiliate = null,
+        $excludeAffiliate = null
+    ) {
+        return $this->peasantsWithCreditpackQueryBuilder($affiliate, $excludeAffiliate)->count();
     }
 
     /**
