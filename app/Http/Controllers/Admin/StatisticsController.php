@@ -288,6 +288,7 @@ class StatisticsController extends Controller
                 'this_month' => $this->statisticsManager->topOperatorMessagersBetweenDates($startOfMonth, $endOfMonth, 25)
             ],
             'userTypeStatistics' => $this->statisticsManager->getUserTypeStatistics(),
+            'googleAdsUserTypeStatistics' => $this->statisticsManager->getGoogleAdsLvuStatistics(),
         ];
 
         return view('admin.statistics', array_merge(
