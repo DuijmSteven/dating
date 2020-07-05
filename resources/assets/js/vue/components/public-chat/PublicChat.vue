@@ -263,7 +263,7 @@
                 }
 
                 axios.get(
-                    '/api/public-chat/items/' + DP.authenticatedUser.meta.gender + '/' + DP.authenticatedUser.meta.looking_for_gender + '/0/40',
+                    '/api/public-chat/items/' + DP.authenticatedUser.meta.gender + '/' + DP.authenticatedUser.meta.looking_for_gender + '/0/20',
                     config
                 ).then(response => {
                     this.chatItems = response.data;

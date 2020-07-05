@@ -11,8 +11,10 @@ use App\Managers\PeasantManager;
 use App\Managers\StatisticsManager;
 use App\Managers\UserManager;
 use App\User;
+use App\UserFingerprint;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Kim\Activity\Activity;
 
 class PeasantController extends Controller
@@ -51,7 +53,8 @@ class PeasantController extends Controller
         ChartsManager $chartsManager,
         StatisticsManager $statisticsManager,
         AffiliateManager $affiliateManager
-    ) {
+    )
+    {
         $this->peasantManager = $peasantManager;
         parent::__construct();
         $this->userManager = $userManager;
@@ -135,7 +138,7 @@ class PeasantController extends Controller
             $launchDate,
             $endOfToday
         )
-        ->paginate(20);
+            ->paginate(20);
 
         $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
 
@@ -148,6 +151,43 @@ class PeasantController extends Controller
                 'carbonNow' => Carbon::now(),
                 'peasants' => $conversions,
                 'peasantMessagesCharts' => $this->chartsManager->getMessagesCharts($conversions, $launchDate),
+            ]
+        );
+    }
+
+    public function fingerprints()
+    {
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+
+        $fingerprintsWithPeasants = UserFingerprint::with(['user'])
+            ->whereHas('user')
+            ->whereIn('fingerprint', DB::table('user_fingerprints')
+                ->select(['fingerprint', DB::raw('COUNT(*) as count')])
+                ->groupBy(['fingerprint'])
+                ->having('count', '>', 1)
+                ->orderBy('count', 'desc')
+                ->get()
+                ->pluck('fingerprint')->toArray())
+            ->get()
+            ->groupBy('fingerprint');
+
+        $peasants = [];
+
+        foreach ($fingerprintsWithPeasants as $fingerprint) {
+            foreach ($fingerprint as $fingerprint2) {
+                $peasants[] = $fingerprint2->user;
+            }
+        }
+
+        return view(
+            'admin.peasants.fingerprints',
+            [
+                'title' => 'Duplicate Fingeprints Overview - ' . \config('app.name'),
+                'headingLarge' => 'Duplicate Fingeprints',
+                'headingSmall' => 'Overview',
+                'carbonNow' => Carbon::now(),
+                'fingerprintsWithPeasants' => $fingerprintsWithPeasants,
+                'peasantMessagesCharts' => $this->chartsManager->getMessagesCharts($peasants, $launchDate),
             ]
         );
     }

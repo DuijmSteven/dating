@@ -104,6 +104,12 @@
                 Deactivations
             </a>
         </li>
+        <li class="{!! \Request::route()->getName() == 'admin.peasants.fingerprints.overview' ? 'active' : '' !!}">
+            <a href="{!! route('admin.peasants.fingerprints.overview') !!}">
+                <i class="fa fa-list"></i>
+                Fingerprints
+            </a>
+        </li>
     </ul>
 </li>
 <li class="treeview {!! \Str::contains(\Request::route()->getName(), 'admin.operators') ? 'active' : '' !!}">

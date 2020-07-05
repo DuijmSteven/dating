@@ -30,7 +30,15 @@ class UserFingerprint extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id', 'id');
+        return $this->belongsTo('App\User', 'user_id', 'id')->with(
+            array_unique(array_merge(
+                User::COMMON_RELATIONS,
+                User::PEASANT_RELATIONS
+            ))
+        )
+            ->withCount(
+                User::PEASANT_RELATION_COUNTS
+            );
     }
 
     public function getFingerprint()

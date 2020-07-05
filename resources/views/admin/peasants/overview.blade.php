@@ -93,7 +93,7 @@
                                         @endforeach
                                     </div>
 
-                                    @if($peasant->getLastOnlineAt())
+                                    @if($peasant->getLastOnlineAt() || $peasant->getCreatedAt())
                                         <div class="innerTableWidgetHeading"><strong>Activity</strong></div>
                                         <div class="innerTableWidgetBody">
                                                 <strong>Last active at</strong> {!! $peasant->getLastOnlineAt()->tz('Europe/Amsterdam')->format('d-m-Y H:i:s') !!}
