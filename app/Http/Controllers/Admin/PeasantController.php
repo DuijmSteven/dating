@@ -439,9 +439,9 @@ class PeasantController extends Controller
                 'title' => 'Edit Peasant - ' . $peasant['username'] . '(ID: ' . $peasant['id'] . ') - ' . \config('app.name'),
                 'headingLarge' => 'Peasant',
                 'headingSmall' => 'Edit',
-                'availableEmailTypes' => EmailType::all(),
+                'availableEmailTypes' => EmailType::where('editable', 1)->get(),
                 'userEmailTypeIds' => $peasant->emailTypes()
-                    ->get()
+                    ->where('editable', 1)
                     ->pluck('id')
                     ->toArray(),
                 'carbonNow' => Carbon::now(),
