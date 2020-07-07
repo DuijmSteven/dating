@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\EmailType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Peasants\PeasantCreateRequest;
 use App\Http\Requests\Admin\Peasants\PeasantUpdateRequest;
@@ -438,6 +439,11 @@ class PeasantController extends Controller
                 'title' => 'Edit Peasant - ' . $peasant['username'] . '(ID: ' . $peasant['id'] . ') - ' . \config('app.name'),
                 'headingLarge' => 'Peasant',
                 'headingSmall' => 'Edit',
+                'availableEmailTypes' => EmailType::all(),
+                'userEmailTypeIds' => $peasant->emailTypes()
+                    ->get()
+                    ->pluck('id')
+                    ->toArray(),
                 'carbonNow' => Carbon::now(),
                 'peasant' => $peasant,
                 'peasantMessagesChart' => $this->chartsManager->createPeasantMessagesChart($peasant->getId(), $launchDate),

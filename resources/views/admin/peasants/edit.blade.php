@@ -313,6 +313,33 @@
                     @endforeach
 
                     <div class="col-xs-12">
+                        <div class="form-group">
+                            <label
+                                for="email_notification_settings">{{ @trans('edit_profile.email_notification_settings') }}</label>
+
+                            @foreach($availableEmailTypes as $emailType)
+                                <div class="checkbox notificationSettingsItem">
+                                    <label for="emailType{{ $emailType->id }}">
+                                        <input
+                                            id="emailType{{ $emailType->id }}"
+                                            type="checkbox"
+                                            value="{{ $emailType->id }}"
+                                            name="email_notifications[]"
+                                            {{ in_array($emailType->id, $userEmailTypeIds) ? 'checked' : '' }}
+                                        >
+                                        {{ @trans('edit_profile.user_email_types.' . $emailType->name) }}
+                                    </label>
+                                    @if($emailType->id !== \App\EmailType::GENERAL)
+                                        <div class="helpText">
+                                            {{ @trans('edit_profile.user_email_types.' . $emailType->name . '_help') }}
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12">
                         <hr/>
                     </div>
 

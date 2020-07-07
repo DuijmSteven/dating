@@ -96,10 +96,12 @@
                                     @if($peasant->getLastOnlineAt() || $peasant->getCreatedAt())
                                         <div class="innerTableWidgetHeading"><strong>Activity</strong></div>
                                         <div class="innerTableWidgetBody">
-                                                <strong>Last active at</strong> {!! $peasant->getLastOnlineAt()->tz('Europe/Amsterdam')->format('d-m-Y H:i:s') !!}
-                                                                                ({!! $peasant->getLastOnlineAt()->tz('Europe/Amsterdam')->diffForHumans() !!})
-                                                <br>
 
+                                            @if($peasant->getLastOnlineAt())
+                                                <strong>Last active at</strong> {!! $peasant->getLastOnlineAt()->tz('Europe/Amsterdam')->format('d-m-Y H:i:s') !!}
+                                                                                    ({!! $peasant->getLastOnlineAt()->tz('Europe/Amsterdam')->diffForHumans() !!})
+                                                    <br>
+                                            @endif
                                                 <strong>Created at</strong> {!! $peasant->getCreatedAt()->tz('Europe/Amsterdam')->format('d-m-Y H:i:s') !!}
                                                                             ({!! $peasant->getCreatedAt()->tz('Europe/Amsterdam')->diffForHumans() !!})
                                                 <br>
