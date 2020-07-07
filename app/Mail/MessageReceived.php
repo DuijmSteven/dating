@@ -69,6 +69,11 @@ class MessageReceived extends Mailable implements ShouldQueue
      */
     public function build()
     {
+        $this->withSwiftMessage(function ($message) {
+            $message->getHeaders()
+                ->addTextHeader('List-Unsubscribe', '<mailto:unsubscribe@altijdsex.nl>');
+        });
+        
         return $this->subject(trans('emails.subjects.message_received'))->view('emails.message-received');
     }
 }

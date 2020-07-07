@@ -31,6 +31,11 @@ class Welcome extends Mailable implements ShouldQueue
      */
     public function build()
     {
+        $this->withSwiftMessage(function ($message) {
+            $message->getHeaders()
+                ->addTextHeader('List-Unsubscribe', '<mailto:unsubscribe@altijdsex.nl>');
+        });
+
         return $this->subject(trans('emails.subjects.welcome'))->view('emails.welcome');
     }
 }
