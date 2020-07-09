@@ -245,8 +245,11 @@ class ConversationController extends Controller
         /** @var Conversation $conversation */
         $conversation = Conversation::with(['userA', 'userB', 'messages'])->withTrashed()->find($conversationId);
 
+        $idsOfLockedConvos = $this->authenticatedUser->lockedConversations->pluck('id')->toArray();
+
         if (
            !$this->authenticatedUser->isAdmin() &&
+           !in_array($conversation->getId(), $idsOfLockedConvos) &&
             $this->authenticatedUser->lockedConversations->count() > 1
         ) {
             $alerts[] = [
