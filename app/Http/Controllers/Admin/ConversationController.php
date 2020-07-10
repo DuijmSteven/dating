@@ -360,6 +360,18 @@ class ConversationController extends Controller
      */
     public function showNew(int $userAId, int $userBId)
     {
+        if (
+            !$this->authenticatedUser->isAdmin() &&
+            $this->authenticatedUser->lockedConversations->count() > 1
+        ) {
+            $alerts[] = [
+                'type' => 'warning',
+                'message' => 'You already have two conversations locked in your name.'
+            ];
+
+            return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
+        }
+
         if ($this->conversationManager->retrieveConversation($userAId, $userBId)) {
             $alerts[] = [
                 'type' => 'error',
