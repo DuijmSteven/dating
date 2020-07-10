@@ -75,7 +75,7 @@ class Expense extends TimeZonedModel
 
     public function getAmountInEuroAttribute()
     {
-        return $this->amount/1000;
+        return $this->amount/100;
     }
 
     public function getType()
