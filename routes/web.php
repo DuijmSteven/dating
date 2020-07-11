@@ -18,6 +18,10 @@ Route::post('login', 'Auth\LoginController@login')
 Route::post('logout', 'Auth\LoginController@logout')
     ->name('logout.post');
 
+//SEO Redirects
+Route::permanentRedirect('/articles/1', '/articles/4-tips-om-een-snelle-online-seksdate-te-regelen-als-man');
+Route::permanentRedirect('/articles/2', '/articles/sexplaatsen-top-12');
+
 Route::group([
     'middleware' => ['anonymous_domain', 'guest']
 ], function()
