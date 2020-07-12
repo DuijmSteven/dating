@@ -251,11 +251,11 @@ class ConversationController extends Controller
                 $latestDate = Carbon::now();
 
                 if ($messagesAfterDate) {
-                    $earliestDate = Carbon::createFromFormat('d-m-Y', $messagesAfterDate);
+                    $earliestDate = Carbon::createFromFormat('d-m-Y', $messagesAfterDate)->format('Y-m-d');
                 }
 
-                if ($messagesAfterDate) {
-                    $latestDate = Carbon::createFromFormat('d-m-Y', $messagesBeforeDate);
+                if ($messagesBeforeDate) {
+                    $latestDate = Carbon::createFromFormat('d-m-Y', $messagesBeforeDate)->format('Y-m-d');
                 }
 
                 $query->where('created_at', '>=', $earliestDate);

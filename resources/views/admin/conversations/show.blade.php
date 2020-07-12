@@ -333,6 +333,15 @@
             Unlock conversation
         </a>
 
+        <a href="{{ route('operator-platform.conversations.show', [
+                                        'conversationId' => $conversation->getId(),
+                                        'messagesAfterDate' => \Carbon\Carbon::parse('2020-01-01')->format('d-m-Y'),
+                                    ]) }}"
+           class="btn btn-success btn-flat"
+        >
+            Show full conversation
+        </a>
+
         @if($conversation->getReplyableAt())
             <a href="{!! route('admin.conversations.set-unreplyable', [$conversation->getId()]) !!}"
                class="btn btn-default">Make unreplyable</a>
