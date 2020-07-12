@@ -502,6 +502,8 @@
                                     class="DashboardWidget_count">{{ $excludingXpartnersUserTypeStatistics['alvPerPayingUserRegistered'] }}</span></a></li>
                         <li><a href="{{ route('admin.peasants.with-creditpack.overview') }}">ALVU <span
                                     class="DashboardWidget_count">{{ $excludingXpartnersUserTypeStatistics['alvPerUserRegistered'] }}</span></a></li>
+                        <li><a href="{{ route('admin.peasants.created-until-date.show', ['date' => \Carbon\Carbon::now('Europe/Amsterdam')->subMonths(5)->format('d-m-Y')]) }}">ALVPU regist. by 5 months ago ( {{ $excludingXpartnersUserTypeStatistics['payingUsersRegisteredUntilFiveMonthsAgoCount'] }} users) <span
+                                    class="DashboardWidget_count">{{ $excludingXpartnersUserTypeStatistics['alvPerUserRegisteredUntilFiveMonthsAgo'] }}</span></a></li>
                         <li><a href="{{ route('admin.peasants.created-until-date.show', ['date' => \Carbon\Carbon::now('Europe/Amsterdam')->subMonths(4)->format('d-m-Y')]) }}">ALVPU regist. by 4 months ago ( {{ $excludingXpartnersUserTypeStatistics['payingUsersRegisteredUntilFourMonthsAgoCount'] }} users) <span
                                     class="DashboardWidget_count">{{ $excludingXpartnersUserTypeStatistics['alvPerUserRegisteredUntilFourMonthsAgo'] }}</span></a></li>
                         <li><a href="{{ route('admin.peasants.created-until-date.show', ['date' => \Carbon\Carbon::now('Europe/Amsterdam')->subMonths(3)->format('d-m-Y')]) }}">ALVPU regist. by 3 months ago ( {{ $excludingXpartnersUserTypeStatistics['payingUsersRegisteredUntilThreeMonthsAgoCount'] }} users) <span
