@@ -122,7 +122,7 @@ class StatisticsManager
         $revenueFromUsersUntilOneMonthAgo = $this->revenueBetween(
             Carbon::now()->subYears(10),
             $endOfToday,
-            $threeMonthsAgo
+            $oneMonthAgo
         );
 
         $averageRevenuePerAllTimeUser = $allTimeRevenue / $allUsersCount;
