@@ -686,7 +686,7 @@ Route::group([
     Route::group([
         'prefix' => 'conversations'
     ], function () {
-        Route::get('{conversationId}', 'Admin\ConversationController@show')
+        Route::get('{conversationId}/{messagesAfterDate?}/{messagesBeforeDate?}', 'Admin\ConversationController@show')
                 ->name('operator-platform.conversations.show');
 
 

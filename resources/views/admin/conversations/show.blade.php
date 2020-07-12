@@ -116,8 +116,8 @@
                                     <span
                                         class="direct-chat-timestamp pull-{!! ($alignment === 'right') ? 'left' : 'right' !!}">{!! $message->created_at->diffForHumans() !!} ({!! $message->created_at->format('d-m-Y H:i:s') !!})</span>
                                 </div>
-                                <img class="direct-chat-img" src="{{ $profileImageUrl }}"
-                                     alt="message user image">
+{{--                                <img class="direct-chat-img" src="{{ $profileImageUrl }}"--}}
+{{--                                     alt="message user image">--}}
                                 <div class="direct-chat-text {!! ($alignment === 'right') ? 'userB' : 'userA' !!}">
                                     @if($message->type === 'flirt')
                                         <i class="fa fa-heart" style="color:red"></i>
@@ -248,19 +248,17 @@
                     </div>
                 </div>
                 <div class="box-body receivedUserImages">
-                    @foreach($conversation->messages->reverse() as $message)
-                        @if($message->attachment && $message->sender->roles[0]->id === \App\User::TYPE_PEASANT)
-                            <div class="receivedUserImage"><img height="100" src="{!! \StorageHelper::messageAttachmentUrl(
-                                                        $conversation->id,
-                                                        $message->attachment->filename
-                                                    ) !!}"
-                                     alt="">
+                    @foreach($userAttachments as $attachment)
+                        <div class="receivedUserImage"><img height="100" src="{!! \StorageHelper::messageAttachmentUrl(
+                                                    $conversation->id,
+                                                    $attachment->filename
+                                                ) !!}"
+                                 alt="">
 
-                                <p class="receivedUserImageInfo">
-                                    {{ $message->getCreatedAt()->diffForHumans() }}
-                                </p>
-                            </div>
-                        @endif
+                            <p class="receivedUserImageInfo">
+                                {{ $attachment->conversationMessage->getCreatedAt()->diffForHumans() }}
+                            </p>
+                        </div>
                     @endforeach
                 </div>
             </div>

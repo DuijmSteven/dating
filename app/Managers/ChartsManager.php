@@ -47,7 +47,6 @@ class ChartsManager
                 ->where('uat.affiliate', $affiliate);
         }
 
-
         if (null == $userId) {
             $query->where('ru.role_id', User::TYPE_PEASANT);
         } else {

@@ -240,10 +240,37 @@ class ConversationController extends Controller
      * @param int $conversationId
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function show(int $conversationId)
+    public function show(int $conversationId, $messagesAfterDate = null, $messagesBeforeDate = null)
     {
         /** @var Conversation $conversation */
-        $conversation = Conversation::with(['userA', 'userB', 'messages'])->withTrashed()->find($conversationId);
+        $conversation = Conversation::with([
+            'userA',
+            'userB',
+            'messages' => function ($query) use ($messagesAfterDate, $messagesBeforeDate) {
+                $earliestDate = Carbon::now()->subDays(10);
+                $latestDate = Carbon::now();
+
+                if ($messagesAfterDate) {
+                    $earliestDate = Carbon::createFromFormat('d-m-Y', $messagesAfterDate);
+                }
+
+                if ($messagesAfterDate) {
+                    $latestDate = Carbon::createFromFormat('d-m-Y', $messagesBeforeDate);
+                }
+
+                $query->where('created_at', '>=', $earliestDate);
+                $query->where('created_at', '<=', $latestDate);
+            }
+        ])
+        ->withTrashed()
+        ->find($conversationId);
+
+        $userAttachments = MessageAttachment
+            ::whereHas('conversationMessage.sender.roles', function ($query) {
+                $query->where('id', User::TYPE_PEASANT);
+            })
+            ->where('conversation_id', $conversationId)
+            ->get();
 
         $idsOfLockedConvos = $this->authenticatedUser->lockedConversations->pluck('id')->toArray();
 
@@ -339,7 +366,8 @@ class ConversationController extends Controller
             'userANotes' => $userANotes,
             'userBNotes' => $userBNotes,
             'lockedAt' => $conversation->getLockedAt()->tz('Europe/Amsterdam'),
-            'hasCountdown' => true
+            'hasCountdown' => true,
+            'userAttachments' => $userAttachments
         ];
 
         if (isset($lockedByUserId) && $this->authenticatedUser->getId() !== $lockedByUserId) {
