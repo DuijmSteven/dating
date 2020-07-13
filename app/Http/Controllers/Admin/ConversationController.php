@@ -305,7 +305,7 @@ class ConversationController extends Controller
             return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
         }
 
-        if ($conversation->getLockedByUserId()) {
+        if ($conversation && $conversation->getLockedByUserId()) {
             if ($this->authenticatedUser->isAdmin()) {
                 $lockedByUserId = $conversation->getLockedByUserId();
             }
