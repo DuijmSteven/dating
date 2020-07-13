@@ -26,6 +26,7 @@
     "laravel-mix": "^2.0",
     "lodash": "^4.17.15",
     "popper.js": "^1.16.1",
+    "pusher-js": "^4.1.0",
     "tar": "^4.4.13",
     "vue": "^2.6.11",
     "vue-template-compiler": "^2.6.11",

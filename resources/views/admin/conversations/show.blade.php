@@ -237,32 +237,35 @@
                 </div>
             </div>
 
-            <div class="box">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Received user images</h3>
+            @if(isset($userAttachments))
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Received user images</h3>
 
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                class="fa fa-minus"></i>
-                        </button>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                    class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body receivedUserImages">
+                        @foreach($userAttachments as $attachment)
+                            <div class="receivedUserImage"><img height="100" src="{!! \StorageHelper::messageAttachmentUrl(
+                                                        $conversation->id,
+                                                        $attachment->filename
+                                                    ) !!}"
+                                     alt="">
+
+                                <p class="receivedUserImageInfo">
+                                    {{ $attachment->conversationMessage->getCreatedAt()->diffForHumans() }}
+                                </p>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
-                <div class="box-body receivedUserImages">
-                    @foreach($userAttachments as $attachment)
-                        <div class="receivedUserImage"><img height="100" src="{!! \StorageHelper::messageAttachmentUrl(
-                                                    $conversation->id,
-                                                    $attachment->filename
-                                                ) !!}"
-                                 alt="">
-
-                            <p class="receivedUserImageInfo">
-                                {{ $attachment->conversationMessage->getCreatedAt()->diffForHumans() }}
-                            </p>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
+            @endif
         </div>
+
         <div class="col-xs-12 col-sm-3">
             <div class="box box-userB">
                 <div class="box-header with-border">

@@ -289,11 +289,9 @@ class ConversationController extends Controller
 
         if (
             (
-                $conversation && (
-                    null === $conversation->getReplyableAt() ||
-                    $conversation->getReplyableAt()->gt(Carbon::now()) ||
-                    $conversation->getCycleStage() === Conversation::CYCLE_STAGE_BALL_IN_PEASANTS_COURT
-                )
+                null === $conversation->getReplyableAt() ||
+                $conversation->getReplyableAt()->gt(Carbon::now()) ||
+                $conversation->getCycleStage() === Conversation::CYCLE_STAGE_BALL_IN_PEASANTS_COURT
             ) &&
             !$this->authenticatedUser->isAdmin()
         ) {
@@ -305,52 +303,50 @@ class ConversationController extends Controller
             return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
         }
 
-        if ($conversation) {
-            if ($conversation->getLockedByUserId()) {
-                if ($this->authenticatedUser->isAdmin()) {
-                    $lockedByUserId = $conversation->getLockedByUserId();
-                }
+        if ($conversation->getLockedByUserId()) {
+            if ($this->authenticatedUser->isAdmin()) {
+                $lockedByUserId = $conversation->getLockedByUserId();
+            }
 
-                $minutesAgo = (new Carbon('now'))->subMinutes(ConversationManager::CONVERSATION_LOCKING_TIME);
+            $minutesAgo = (new Carbon('now'))->subMinutes(ConversationManager::CONVERSATION_LOCKING_TIME);
 
-                if ($conversation->getLockedByUserId() === $this->authenticatedUser->getId()) {
-                    if ($conversation->getLockedAt() < $minutesAgo) {
-                        if (!$this->authenticatedUser->isAdmin()) {
-                            $conversation->setLockedByUserId(null);
-                            $conversation->setLockedAt(null);
-                            $conversation->save();
-
-                            $alerts[] = [
-                                'type' => 'warning',
-                                'message' => 'You had locked the conversation for too long.'
-                            ];
-
-                            return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
-                        } else {
-                            $conversation->setLockedByUserId($this->authenticatedUser->getId());
-                            $conversation->setLockedAt(new Carbon('now'));
-                            $conversation->save();
-                        }
-                    }
-                } else {
-                    if ($conversation->getLockedAt() < $minutesAgo) {
-                        $conversation->setLockedByUserId($this->authenticatedUser->getId());
-                        $conversation->setLockedAt(new Carbon('now'));
+            if ($conversation->getLockedByUserId() === $this->authenticatedUser->getId()) {
+                if ($conversation->getLockedAt() < $minutesAgo) {
+                    if (!$this->authenticatedUser->isAdmin()) {
+                        $conversation->setLockedByUserId(null);
+                        $conversation->setLockedAt(null);
                         $conversation->save();
-                    } else {
+
                         $alerts[] = [
                             'type' => 'warning',
-                            'message' => 'The conversation is locked by someone else'
+                            'message' => 'You had locked the conversation for too long.'
                         ];
 
                         return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
+                    } else {
+                        $conversation->setLockedByUserId($this->authenticatedUser->getId());
+                        $conversation->setLockedAt(new Carbon('now'));
+                        $conversation->save();
                     }
                 }
             } else {
-                $conversation->setLockedByUserId($this->authenticatedUser->getId());
-                $conversation->setLockedAt(new Carbon('now'));
-                $conversation->save();
+                if ($conversation->getLockedAt() < $minutesAgo) {
+                    $conversation->setLockedByUserId($this->authenticatedUser->getId());
+                    $conversation->setLockedAt(new Carbon('now'));
+                    $conversation->save();
+                } else {
+                    $alerts[] = [
+                        'type' => 'warning',
+                        'message' => 'The conversation is locked by someone else'
+                    ];
+
+                    return redirect()->route('operator-platform.dashboard')->with('alerts', $alerts);
+                }
             }
+        } else {
+            $conversation->setLockedByUserId($this->authenticatedUser->getId());
+            $conversation->setLockedAt(new Carbon('now'));
+            $conversation->save();
         }
 
         $conversation = $this->prepareConversationObject($conversation);

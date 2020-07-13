@@ -169,7 +169,7 @@ $(window).on('load', function () {
                 'href',
                 DP.baseUrl +
                 '/' +
-                'operator-platform/conversations/' +
+                'operator-platform/conversations/exists/' +
                 $(this).closest('li').data('bot-id') +
                 '/' +
                 $('#js-peasant-profile').data('peasant-id')
@@ -197,7 +197,7 @@ $(window).on('load', function () {
                 'href',
                 DP.baseUrl +
                 '/' +
-                'operator-platform/conversations/' +
+                'operator-platform/conversations/exists/' +
                 $(this).closest('li').data('peasant-id') +
                 '/' +
                 $('#js-peasant-profile').data('bot-id')

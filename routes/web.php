@@ -686,15 +686,14 @@ Route::group([
     Route::group([
         'prefix' => 'conversations'
     ], function () {
-        Route::get('{conversationId}/{messagesAfterDate?}/{messagesBeforeDate?}', 'Admin\ConversationController@show')
-                ->name('operator-platform.conversations.show');
-
-
-        Route::get('{userAId}/{userBId}', 'Admin\ConversationController@checkIfConversationExists')
+        Route::get('exists/{userAId}/{userBId}', 'Admin\ConversationController@checkIfConversationExists')
             ->name('admin.conversations.check-if-exists');
 
         Route::get('new/{userAId}/{userBId}', 'Admin\ConversationController@showNew')
             ->name('operator-platform.new-conversation.show');
+
+        Route::get('{conversationId}/{messagesAfterDate?}/{messagesBeforeDate?}', 'Admin\ConversationController@show')
+                ->name('operator-platform.conversations.show');
 
         Route::post('/store', 'ConversationController@store')
             ->name('conversations.store');
