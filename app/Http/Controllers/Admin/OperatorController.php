@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Bots\BotCreateRequest;
 use App\Http\Requests\Admin\Operators\OperatorCreateRequest;
 use App\Managers\UserManager;
 use App\User;
@@ -56,7 +55,7 @@ class OperatorController extends Controller
 
         $operators = $queryBuilder
             ->orderBy('created_at', 'desc')
-            ->paginate(20);
+            ->paginate(10);
 
         return view(
             'admin.operators.overview',
