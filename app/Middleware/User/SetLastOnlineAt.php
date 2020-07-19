@@ -3,8 +3,8 @@
 namespace App\Middleware\User;
 
 use App\User;
-use DB;
 use Closure;
+use Illuminate\Support\Facades\DB;
 
 class SetLastOnlineAt
 {

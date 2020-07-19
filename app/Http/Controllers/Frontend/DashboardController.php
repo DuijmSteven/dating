@@ -25,6 +25,12 @@ class DashboardController extends FrontendController
 
     public function index()
     {
+        if (!$this->authenticatedUser->getActive()) {
+            $this->authenticatedUser->setActive(true);
+            $this->authenticatedUser->setDeactivatedAt(null);
+            $this->authenticatedUser->save();
+        }
+
         $lastThirtyDays = Carbon::now('Europe/Amsterdam')->subDays(30)->setTimezone('UTC');
 
         $users = User::with(['meta', 'profileImage'])
