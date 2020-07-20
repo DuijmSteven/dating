@@ -179,12 +179,12 @@
                     </span>
     </a>
     <ul class="treeview-menu">
-        <li class="{!! \Request::route()->getName() == 'admin.invoices.overview' ? 'active' : '' !!}">
-            <a href="{!! route('admin.invoices.overview') !!}">
-                <i class="fa fa-list"></i>
-                Overview
-            </a>
-        </li>
+{{--        <li class="{!! \Request::route()->getName() == 'admin.invoices.overview' ? 'active' : '' !!}">--}}
+{{--            <a href="{!! route('admin.invoices.overview') !!}">--}}
+{{--                <i class="fa fa-list"></i>--}}
+{{--                Overview--}}
+{{--            </a>--}}
+{{--        </li>--}}
         <li class="{!! \Request::route()->getName() == 'admin.invoices.create.get' ? 'active' : '' !!}">
             <a href="{!! route('admin.invoices.create.get') !!}">
                 <i class="fa fa-user-plus"></i>
