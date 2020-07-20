@@ -36,6 +36,7 @@ class LandingPageController extends FrontendController
             'carbonNow' => Carbon::now(),
             'testimonials' => $testimonials,
             'formType' => 'register',
+            'canonical' => 'https://altijdsex.nl/'
         ];
 
         $viewData = $this->registrationService->checkAffiliateRequestDataAndSetRegistrationViewData($request, $viewData);
@@ -59,7 +60,8 @@ class LandingPageController extends FrontendController
                 'users' => $users,
                 'carbonNow' => Carbon::now(),
                 'testimonials' => $testimonials,
-                'formType' => 'login'
+                'formType' => 'login',
+                'canonical' => 'https://altijdsex.nl/'
             ]
         );
     }

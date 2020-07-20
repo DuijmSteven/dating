@@ -3,6 +3,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ isset ($title) ? $title : 'Title'  }}</title>
     <meta name="description" content="{{ isset($description) ? $description : 'Op zoek naar een flirt, casual date of losse sekscontacten? Maak een account aan op de beste gratis sexdating site en kom in contact via de unieke Live Chat!' }}">
+    @if(isset($canonical))
+        <link rel="canonical" href="{{ $canonical }}" />
+    @endif
     <meta name="author" content="Dating">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @if(App::environment('production'))
