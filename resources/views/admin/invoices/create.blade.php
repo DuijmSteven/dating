@@ -32,7 +32,7 @@
 
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="employeeId">Operator/Editor</label>
+                            <label for="employeeId">Operator</label>
                             <select name="employeeId"
                                     id="employeeId"
                                     class="form-control"
