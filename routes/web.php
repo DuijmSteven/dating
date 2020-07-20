@@ -310,6 +310,22 @@ Route::group([
     });
 
     Route::group([
+        'prefix' => 'invoices'
+    ], function () {
+        Route::get('/', 'Admin\InvoiceController@index')
+            ->name('admin.invoices.overview');
+
+        Route::get('create', 'Admin\InvoiceController@getCreate')
+            ->name('admin.invoices.create.get');
+
+        Route::post('post', 'Admin\InvoiceController@fromParameters')
+            ->name('admin.invoices.post');
+
+//        Route::get('from-parameters/{userId}/{fromDate}/{untilDate}', 'Admin\InvoiceController@fromParameters')
+//            ->name('admin.invoices.from-parameters');
+    });
+
+    Route::group([
         'prefix' => 'peasants'
     ], function () {
         Route::get('/', 'Admin\PeasantController@index')
@@ -716,6 +732,10 @@ Route::group([
 Route::group([
     'prefix' => 'test'
 ], function () {
+
+    Route::get('example-invoice', 'TestController@exampleInvoice')
+        ->name('test.invoices.show-example');
+
     Route::group([
         'prefix' => 'email'
     ], function () {

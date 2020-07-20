@@ -37,6 +37,7 @@ class OperatorUpdateRequest extends Request
             'dob' => 'date_format:d-m-Y|before:' . Carbon::now('Europe/Amsterdam')->subYears(18)->format('d-m-Y') . '|after:' . Carbon::now('Europe/Amsterdam')->subYears(100)->format('d-m-Y'),
             'gender' => 'in:'. implode(',', array_keys($userProfileFields['gender'])),
             'city' => 'string|min:3|max:40',
+            'email' => 'unique:users,email,' . trim($this->route('id') . ',id'),
         ];
 
         if (!is_null($this->files->get('user_images'))) {

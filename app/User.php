@@ -350,7 +350,11 @@ class User extends Authenticatable
         'conversation_manager_state',
         'created_by_id',
         'tracked',
-        'api_token'
+        'api_token',
+        'first_name',
+        'last_name',
+        'postal_code',
+        'street_name'
     ];
 
     /**
@@ -390,6 +394,70 @@ class User extends Authenticatable
     public function setUsername($username = '')
     {
         $this->username = $username;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFirstName()
+    {
+        return $this->first_name;
+    }
+
+    /**
+     * @param string $firstName
+     */
+    public function setFirstName($firstName = '')
+    {
+        $this->first_name = $firstName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastName()
+    {
+        return $this->last_name;
+    }
+
+    /**
+     * @param string $lastName
+     */
+    public function setLastName($lastName = '')
+    {
+        $this->last_name = $lastName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStreetName()
+    {
+        return $this->street_name;
+    }
+
+    /**
+     * @param string $streetName
+     */
+    public function setStreetName($streetName = '')
+    {
+        $this->street_name = $streetName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPostalCode()
+    {
+        return $this->postal_code;
+    }
+
+    /**
+     * @param string $postalCode
+     */
+    public function setPostalCode($postalCode = '')
+    {
+        $this->postal_code = $postalCode;
     }
 
     /**

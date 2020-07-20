@@ -42,7 +42,11 @@ class UserConstants
     public static $userTableFields = [
         'common' => [
             'public' => [
-                'username'
+                'username',
+                'first_name',
+                'last_name',
+                'postal_code',
+                'street_name'
             ],
             'private' => [
                 'password',

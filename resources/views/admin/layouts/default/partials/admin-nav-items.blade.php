@@ -170,6 +170,29 @@
         {{--         </li>--}}
     </ul>
 </li>
+<li class="treeview {!! \Str::contains(\Request::route()->getName(), 'admin.invoices') ? 'active' : '' !!}">
+    <a href="#">
+        <i class="fa fa-users"></i>
+        <span>Invoices</span>
+        <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+    </a>
+    <ul class="treeview-menu">
+        <li class="{!! \Request::route()->getName() == 'admin.invoices.overview' ? 'active' : '' !!}">
+            <a href="{!! route('admin.invoices.overview') !!}">
+                <i class="fa fa-list"></i>
+                Overview
+            </a>
+        </li>
+        <li class="{!! \Request::route()->getName() == 'admin.invoices.create.get' ? 'active' : '' !!}">
+            <a href="{!! route('admin.invoices.create.get') !!}">
+                <i class="fa fa-user-plus"></i>
+                Create
+            </a>
+        </li>
+    </ul>
+</li>
 <li class="treeview {!! \Str::contains(\Request::route()->getName(), 'admin.payments') ? 'active' : '' !!}">
     <a href="#">
         <i class="fa fa-money"></i>

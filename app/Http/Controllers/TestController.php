@@ -3,15 +3,41 @@
 namespace App\Http\Controllers;
 
 use App\Creditpack;
-use App\Mail\Contact;
 use App\Mail\Welcome;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redis;
+use LaravelDaily\Invoices\Classes\Buyer;
+use LaravelDaily\Invoices\Classes\InvoiceItem;
+use LaravelDaily\Invoices\Invoice;
 
 class TestController extends Controller
 {
+    public function exampleInvoice()
+    {
+        $customer = new Buyer([
+            'name'          => 'Operator name',
+            'address' => 'asdasdasd',
+        ]);
+
+        $item = (new InvoiceItem())
+            ->title('Content diensten week ' . Carbon::now()->week . ' ' . Carbon::now()->year)
+            ->pricePerUnit(2);
+
+        $invoice = Invoice::make()
+            ->name('Creditnota')
+            ->notes('De factuur zal binnen 7 werkdagen worden voldaan onder vermelding van het factuurnummer.')
+            ->buyer($customer)
+            ->date(Carbon::now())
+            ->dateFormat('d-m-Y')
+            ->taxRate(0)
+            ->taxableAmount(0)
+            ->addItem($item);
+
+        return $invoice->stream();
+    }
+
     public function storeUserFavorite(int $userId, int $favoriteId)
     {
         $key = 'users.favorites.' . $userId;

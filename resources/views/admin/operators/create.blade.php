@@ -49,6 +49,83 @@
 
                     <div class="col-sm-6">
                         <div class="form-group">
+                            <label for="first_name">First Name</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="first_name"
+                                   name="first_name"
+                                   required
+                                   value="{!! old('first_name', '') !!}"
+                            >
+                            @if ($errors->has('first_name'))
+                                {!! $errors->first('first_name', '<small class="form-error">:message</small>') !!}
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="last_name">Last Name</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="last_name"
+                                   name="last_name"
+                                   required
+                                   value="{!! old('last_name', '') !!}"
+                            >
+                            @if ($errors->has('last_name'))
+                                {!! $errors->first('last_name', '<small class="form-error">:message</small>') !!}
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="postal_code">Postal Name</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="postal_code"
+                                   name="postal_code"
+                                   required
+                                   value="{!! old('postal_code', '') !!}"
+                            >
+                            @if ($errors->has('postal_code'))
+                                {!! $errors->first('postal_code', '<small class="form-error">:message</small>') !!}
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="street_name">Street</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="street_name"
+                                   name="street_name"
+                                   required
+                                   value="{!! old('street_name', '') !!}"
+                            >
+                            @if ($errors->has('street_name'))
+                                {!! $errors->first('street_name', '<small class="form-error">:message</small>') !!}
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="country"
+                                   name="country"
+                                   required
+                                   value="{!! old('country', '') !!}"
+                            >
+                            @if ($errors->has('country'))
+                                {!! $errors->first('country', '<small class="form-error">:message</small>') !!}
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
                             <label for="password">Password</label>
                             <input type="text" class="form-control" id="password" name="password" value="">
                         </div>

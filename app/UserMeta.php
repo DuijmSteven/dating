@@ -103,6 +103,11 @@ class UserMeta extends Model
         return $this->height;
     }
 
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
     public function getLoginsCount()
     {
         return $this->logins_count;
