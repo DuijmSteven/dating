@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Article;
+use Illuminate\Support\Str;
 
 class ArticleController extends FrontendController
 {
@@ -27,6 +28,7 @@ class ArticleController extends FrontendController
             'frontend.articles.show',
             [
                 'title' => $this->buildTitleWith(trans('view_titles.articles') . ' - ' . $article->title),
+                'description' => Str::limit($article->getBody(), 155),
                 'article' => $article,
                 'markdownInstance' => new \Markdown()
             ]

@@ -37,10 +37,10 @@
             "mainEntityOfPage": {
                 "@type": "WebPage"
             },
-            "headline": "<?php echo $article->getTitle(); ?>",
-            "image": "<?php echo \StorageHelper::articleImageUrl($article->id, $article->image_filename, false); ?>",
-            "datePublished": "<?php echo $article->created_at->toFormattedDateString(); ?>",
-            "dateModified": "<?php echo $article->created_at->toFormattedDateString(); ?>",
+            "headline": "<?= $article->getTitle(); ?>",
+            "image": "<?= \StorageHelper::articleImageUrl($article->id, $article->image_filename, false); ?>",
+            "datePublished": "<?= $article->created_at->toFormattedDateString(); ?>",
+            "dateModified": "<?= $article->updated_at->toFormattedDateString(); ?>",
             "author": {
                 "@type": "Person",
                 "name": "Altijdsex Author",
@@ -58,7 +58,7 @@
                 },
                 "url": "https://altijdsex.nl/"
             },
-            "description": "<?php echo \GrahamCampbell\Markdown\Facades\Markdown::convertToHtml(Str::limit($article->getBody(), 400)); ?>"
+            "description": "<?= Str::limit($article->getBody(), 400) ?>"
         }
 </script>
 
