@@ -16,6 +16,8 @@
                 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
             })(window,document,'script','dataLayer','GTM-MJG2S4N');</script>
         <!-- End Google Tag Manager -->
+    @else
+        <meta name="robots" content="noindex, nofollow">
     @endif
 
     @if(config('app.name') === 'Altijdsex.nl')
