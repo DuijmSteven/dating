@@ -29,7 +29,7 @@ class ArticleController extends FrontendController
             'frontend.articles.show',
             [
                 'title' =>  $article->title . ' - ' . $this->buildTitleWith(trans('view_titles.articles')),
-                'description' => Str::limit($article->getBody(), 155),
+                'description' => $article->meta_description ?? Str::limit($article->getBody(), 155),
                 'article' => $article,
                 'markdownInstance' => new \Markdown()
             ]
