@@ -17,5 +17,6 @@ return [
     'feedback' => [
         'message_sent' => 'Bedankt voor je bericht! We zullen zo spoedig mogelijk antwoorden.',
         'message_not_sent' => 'Er is een probleem opgetreden. Probeer het opnieuw.'
-    ]
+    ],
+    'description' => 'Heb je een vraag die niet genoemd staat bij de veelgestelde vragen? Neem contact met ons op en we beantwoorden je bericht zo snel als mogelijk.',
 ];

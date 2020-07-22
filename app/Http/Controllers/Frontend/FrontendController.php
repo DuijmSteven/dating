@@ -63,6 +63,6 @@ class FrontendController extends Controller
 
     protected function buildTitleWith(string $string)
     {
-        return config('app.name') . ' - ' . $string;
+        return  $string . ' | ' . config('app.name');
     }
 }

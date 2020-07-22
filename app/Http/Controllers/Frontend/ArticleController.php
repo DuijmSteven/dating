@@ -15,7 +15,8 @@ class ArticleController extends FrontendController
             'frontend.articles.overview',
             [
                 'title' => $this->buildTitleWith(trans('view_titles.articles')),
-                'articles' => $articles
+                'articles' => $articles,
+                'description' => trans('articles.description')
             ]
         );
     }

@@ -18,6 +18,7 @@ class ContactController extends FrontendController
             'frontend.contact',
             [
                 'title' => $this->buildTitleWith(trans('view_titles.contact')),
+                'description' => trans('contact.description')
             ]
         );
     }
