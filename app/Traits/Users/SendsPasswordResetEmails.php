@@ -12,7 +12,12 @@ trait SendsPasswordResetEmails
      */
     public function showLinkRequestForm()
     {
-        return view('auth.passwords.email');
+        return view(
+            'auth.passwords.email',
+            [
+                'title' => trans('reset_password.reset_password') . ' | ' . config('app.name')
+            ]
+        );
     }
 
     /**
