@@ -24,7 +24,7 @@ class LocationController extends Controller
             }
 
             return response()->json([
-                'cities' => \Cache::get('cities-' . $countryCode)
+                'cities' => \UserConstants::getCities($countryCode)
             ]);
         } else {
             $userCountryCode = 'nl';
@@ -39,7 +39,7 @@ class LocationController extends Controller
             }
 
             return response()->json([
-                'cities' => \Cache::get('cities-all-' . $userCountryCode)
+                'cities' => \UserConstants::getCities($countryCode, $userCountryCode)
             ]);
         }
     }
