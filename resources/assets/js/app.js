@@ -207,15 +207,20 @@ $(window).on('load', function () {
 
     if ($('.JS--autoCompleteCites').length > 0) {
         // Auto-completes Dutch cities in bot creation view text field
-        $.getJSON(DP.baseUrl + '/api/cities/nl')
-            .done(function (response) {
-                cityList = response.cities;
 
-                $('.JS--autoCompleteCites').autocomplete({
-                    source: response.cities,
+
+        $.ajax({
+            beforeSend: function(request) {
+                request.setRequestHeader("Authorization", 'Bearer ' + DP.authenticatedUser.api_token);
+            },
+            dataType: "json",
+            url: DP.baseUrl + '/api/cities/nl',
+            success: function(data) {
+                $(".JS--autoCompleteCites").autocomplete({
+                    source: data.cities,
                     minLength: 2
                 })
-            }).fail(function () {
+            }
         });
 
         /* used when radius is available for the user to select */

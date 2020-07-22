@@ -40,12 +40,18 @@ $(window).on('load', function () {
 
     if ($('.JS--autoCompleteCites').length > 0) {
         // Auto-completes Dutch cities in bot creation view text field
-        $.getJSON(DP.baseUrl + '/api/cities/nl')
-            .done(function (response) {
+
+        $.ajax({
+            beforeSend: function(request) {
+                request.setRequestHeader("Authorization", 'Bearer ' + DP.authenticatedUserApiToken);
+            },
+            dataType: "json",
+            url: DP.baseUrl + '/api/cities',
+            success: function(data) {
                 $(".JS--autoCompleteCites").autocomplete({
-                    source: response.cities
+                    source: data.cities
                 })
-            }).fail(function () {
+            }
         });
     }
 

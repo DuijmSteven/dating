@@ -18,8 +18,14 @@
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title pull-left"> (Total: <strong>{!! $bots->total() !!}</strong>)</h3>
-                    <a href="{!! route('admin.bots.create.get') !!}" class="btn btn-success pull-right"><i
-                            class="fa fa-fw fa-plus"></i>New Bot</a>
+
+                    @if($authenticatedUser->isAdmin())
+                        <a href="{!! route('admin.bots.create.get') !!}" class="btn btn-success pull-right"><i
+                                class="fa fa-fw fa-plus"></i>New Bot</a>
+                    @elseif($authenticatedUser->isEditor())
+                        <a href="{!! route('editors.bots.create.get') !!}" class="btn btn-success pull-right"><i
+                                class="fa fa-fw fa-plus"></i>New Bot</a>
+                    @endif
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body table-responsive no-padding">
@@ -55,8 +61,9 @@
                                         <br>
                                         <strong>{!! @trans('user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($bot->meta->dob) !!}
                                         <br>
+                                        <strong>Country code:</strong> {!! $bot->meta->country !!} <br>
 
-                                        @foreach(\UserConstants::selectableFields('bot') as $fieldName => $a)
+                                    @foreach(\UserConstants::selectableFields('bot') as $fieldName => $a)
                                             @if(isset($bot->meta->{$fieldName}))
                                                 <strong>{!! ucfirst(str_replace('_', ' ', $fieldName)) !!}:
                                                 </strong> {!! @trans('user_constants.' . $fieldName . '.' . $bot->meta->{$fieldName}) !!}

@@ -6,6 +6,7 @@ use App\Helpers\ApplicationConstants\PaginationConstants;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Role;
 use App\Services\GeocoderService;
+use App\Services\UserLocationService;
 use App\User;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Collection;
@@ -30,6 +31,10 @@ class UserSearchManager
      * @var UserManager
      */
     private UserManager $userManager;
+    /**
+     * @var UserLocationService
+     */
+    private UserLocationService $userLocationService;
 
     /**
      * UserSearchManager constructor.
@@ -37,10 +42,12 @@ class UserSearchManager
      */
     public function __construct(
         User $user,
-        UserManager $userManager
+        UserManager $userManager,
+        UserLocationService $userLocationService
     ) {
         $this->user = $user;
         $this->userManager = $userManager;
+        $this->userLocationService = $userLocationService;
     }
 
     /**
@@ -115,10 +122,7 @@ class UserSearchManager
             }
 
             if (isset($parameters['city_name'])) {
-                $client = new Client();
-                $geocoder = new GeocoderService($client);
-
-                $coordinates = $geocoder->getCoordinatesForAddress($parameters['city_name']);
+                $coordinates = $this->userLocationService->getCoordinatesForCity($parameters['city_name']);
 
                 $lat = $coordinates['lat'];
                 $lng = $coordinates['lng'];
@@ -176,6 +180,12 @@ class UserSearchManager
                     $query->where($field, $parameters[$field]);
                 });
             }
+        }
+
+        if (isset($parameters['country'])) {
+            $query = $query->whereHas('meta', function ($query) use ($parameters, $field) {
+                $query->where('country', $parameters['country']);
+            });
         }
 
         $query->where('users.id', '!=', \Auth::user()->getId());

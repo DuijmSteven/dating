@@ -52,6 +52,7 @@
                                         <br>
                                         <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $peasant->username !!} <br>
                                         <strong>{!! @trans('user_constants.email') !!}:</strong> {!! $peasant->email !!} <br>
+                                        <strong>Country code:</strong> {!! $peasant->meta->country !!} <br>
                                         <strong>Email verified:</strong> {!! \App\UserMeta::emailVerifiedDescriptionPerId()[$peasant->meta->getEmailVerified()] !!} <br>
 
                                         @php

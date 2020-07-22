@@ -79,8 +79,9 @@ Route::group([
 Route::get('{userId}/chat-translations', 'Api\ConversationController@getChatTranslations')
     ->name('cities.get');
 
-Route::get('cities/{countryCode}', 'Api\LocationController@getCities')
-    ->name('cities.get');
+Route::get('cities/{countryCode?}', 'Api\LocationController@getCities')
+    ->name('cities.get')
+    ->middleware('auth:api');
 
 Route::group([
     'prefix' => 'public-chat'

@@ -186,7 +186,22 @@
                             @endif
                         </div>
                     </div>
-                    <?php $counter = 0; ?>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="password">Country</label>
+                            <input type="text"
+                                   class="form-control"
+                                   name="country"
+                                   value="{!! $bot->meta->country !!}"
+                            >
+                            @if ($errors->has('country'))
+                                {!! $errors->first('country', '<small class="form-error">:message</small>') !!}
+                            @endif
+                        </div>
+                    </div>
+
+                  <?php $counter = 0; ?>
                     @foreach(\UserConstants::selectableFields() as $field => $possibleOptions)
                         <div class="col-sm-6">
                             <div class="form-group">

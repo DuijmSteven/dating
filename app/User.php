@@ -476,6 +476,15 @@ class User extends Authenticatable
         $this->locale = $locale;
     }
 
+    /**
+     * @return string
+     */
+    public function getApiToken(): string
+    {
+        return $this->api_token;
+    }
+
+
     public function setApiToken(string $apiToken)
     {
         $this->api_token = $apiToken;

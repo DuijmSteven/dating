@@ -22,13 +22,14 @@ class GeocoderService
     private Geocoder $geocoder;
 
     public function __construct(
-        Client $httpClient
+        Client $httpClient,
+        string $countryCode = 'nl'
     ) {
         $this->httpClient = $httpClient;
         $this->geocoder = new Geocoder($this->httpClient);
 
         $this->geocoder->setApiKey(config('geocoder.key'));
-        $this->geocoder->setCountry('nl');
+        $this->geocoder->setCountry($countryCode);
     }
 
     /**

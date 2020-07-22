@@ -9,6 +9,7 @@ use App\Mail\ProfileCompletion;
 use App\Mail\ProfileViewed;
 use App\RoleUser;
 use App\Services\GeocoderService;
+use App\Services\UserLocationService;
 use App\Session;
 use App\User;
 use App\UserAccount;
@@ -38,16 +39,24 @@ class UserManager
 
     /** @var StorageManager  */
     private $storageManager;
+    /**
+     * @var UserLocationService
+     */
+    private UserLocationService $userLocationService;
 
     /**
      * HandlesUserDbInteractions constructor.
      * @param User $user
      * @param StorageManager $storageManager
      */
-    public function __construct(User $user, StorageManager $storageManager)
-    {
+    public function __construct(
+        User $user,
+        StorageManager $storageManager,
+        UserLocationService $userLocationService
+    ) {
         $this->user = $user;
         $this->storageManager = $storageManager;
+        $this->userLocationService = $userLocationService;
     }
 
     /**
@@ -379,10 +388,7 @@ class UserManager
         }
 
         if (isset($userDataToPersist['user_meta']['city'])) {
-            $client = new Client();
-            $geocoder = new GeocoderService($client);
-
-            $coordinates = $geocoder->getCoordinatesForAddress($userDataToPersist['user_meta']['city']);
+            $coordinates = $this->userLocationService->getCoordinatesForCity($userDataToPersist['user_meta']['city']);
 
             $userDataToPersist['user_meta']['lat'] = $coordinates['lat'];
             $userDataToPersist['user_meta']['lng'] = $coordinates['lng'];

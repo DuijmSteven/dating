@@ -13,7 +13,7 @@
                     if (Session::get('searchParameters') && isset(Session::get('searchParameters')['city_name'])) {
                         $city = Session::get('searchParameters')['city_name'];
                     } else {
-                        $city = '';
+                        $city = 'Amsterdam (NL)';
                     }
                 }
             ?>

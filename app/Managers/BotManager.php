@@ -4,6 +4,7 @@ namespace App\Managers;
 
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Services\GeocoderService;
+use App\Services\UserLocationService;
 use App\User;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
@@ -21,16 +22,24 @@ class BotManager extends UserManager
 
     /** @var User $user */
     private $user;
+    /**
+     * @var UserLocationService
+     */
+    private UserLocationService $userLocationService;
 
     /**
      * BotManager constructor.
      * @param User $user
      * @param StorageManager $storageManager
      */
-    public function __construct(User $user, StorageManager $storageManager)
-    {
+    public function __construct(
+        User $user,
+        StorageManager $storageManager,
+        UserLocationService $userLocationService
+    ) {
         $this->user = $user;
-        parent::__construct($this->user, $storageManager);
+        parent::__construct($this->user, $storageManager, $userLocationService);
+        $this->userLocationService = $userLocationService;
     }
 
     /**
@@ -93,15 +102,14 @@ class BotManager extends UserManager
         $userDataToPersist['user'] = $usersTableData;
         $userDataToPersist['user_meta'] = $userMetaTableData;
 
+
+
         if (isset($userDataToPersist['user_meta']['dob'])) {
             $userDataToPersist['user_meta']['dob'] = Carbon::parse($userDataToPersist['user_meta']['dob'])->format('Y-m-d');
         }
 
         if (isset($userDataToPersist['user_meta']['city'])) {
-            $client = new Client();
-            $geocoder = new GeocoderService($client);
-
-            $coordinates = $geocoder->getCoordinatesForAddress($userDataToPersist['user_meta']['city']);
+            $coordinates = $this->userLocationService->getCoordinatesForCity($userDataToPersist['user_meta']['city']);
 
             $userDataToPersist['user_meta']['lat'] = $coordinates['lat'];
             $userDataToPersist['user_meta']['lng'] = $coordinates['lng'];

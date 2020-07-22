@@ -157,6 +157,19 @@
                         </div>
                     </div>
 
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <input type="text"
+                                   id="country"
+                                   autocomplete="off"
+                                   class="JS--Search__autoCompleteCites form-control"
+                                   name="country"
+                            >
+                            @include('helpers.forms.error_message', ['field' => 'country'])
+                        </div>
+                    </div>
+
                     <?php $counter = 0; ?>
                     @foreach(\UserConstants::selectableFields('peasant') as $field => $possibleFieldOptions)
                         <div class="col-sm-6">

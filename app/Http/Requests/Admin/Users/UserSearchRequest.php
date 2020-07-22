@@ -29,7 +29,8 @@ class UserSearchRequest extends Request
         return [
             'query' => 'max:50',
             'username' => 'max:50|string',
-            'city_name' => 'in:' . implode(',', UserConstants::$cities['nl']),
+            'city_name' => 'in:' . implode(',', array_merge(UserConstants::$cities['nl'], UserConstants::$cities['be'])),
+            'country' => 'string',
             //'radius' => 'required_with:city_name|integer',
             'gender' => 'in:'. implode(',', array_keys($userProfileFields['gender'])),
             'relationship_status' => 'in:'. implode(',', array_keys($userProfileFields['relationship_status'])),

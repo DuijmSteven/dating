@@ -49,4 +49,16 @@ class UserLocationService
             }
         }
     }
+
+    public function getCoordinatesForCity(string $city)
+    {
+        $explodedCity = explode(' (', $city);
+        $cityName = trim($explodedCity[0]);
+        $countryCode = explode(')', $explodedCity[1])[0];
+
+        $client = new Client();
+        $geocoder = new GeocoderService($client, $countryCode);
+
+        return $geocoder->getCoordinatesForAddress($cityName . ', ' . $countryCode);
+    }
 }

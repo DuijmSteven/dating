@@ -147,11 +147,17 @@ class RegisterController extends Controller
 //        $lat = $coordinates['lat'];
 //        $lng = $coordinates['lng'];
 
+        $countryCode = null;
+
+        if ($this->userLocationService->getUserIp() && $this->userLocationService->getLocationFromIp($this->userLocationService->getUserIp())) {
+            $countryCode = strtolower($this->userLocationService->getLocationFromIp($this->userLocationService->getUserIp()));
+        }
+
         try {
             /** @var UserMeta $userMetaInstance */
             $userMetaInstance = new UserMeta([
                 'user_id' => $createdUser->id,
-                'country' => 'nl',
+                'country' => $countryCode,
                 'gender' => UserConstants::selectableField('gender', 'peasant', 'array_flip')[$gender],
                 'looking_for_gender' => UserConstants::selectableField('gender', 'peasant', 'array_flip')[$lookingFor],
                 'email_verified' => 0

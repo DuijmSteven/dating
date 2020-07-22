@@ -74,6 +74,7 @@
         authenticatedUserIsAdmin: '{{ $authenticatedUser->isAdmin() }}',
         authenticatedUserRole: '{{ $authenticatedUser->roles[0]->name }}',
         authenticatedUserID: '{{ $authenticatedUser->getId() }}',
+        authenticatedUserApiToken: '{{ $authenticatedUser->getApiToken() }}',
     };
 </script>
 
