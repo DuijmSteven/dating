@@ -22,7 +22,9 @@
     >
         @if($article->image_filename)
             <div class="img-responsive">
-                <img class="Article__image" src="{!! \StorageHelper::articleImageUrl($article->id, $article->image_filename, false) !!}" alt="Article image">
+                <img class="Article__image"
+                     src="{!! \StorageHelper::articleImageUrl($article->id, $article->image_filename, false) !!}"
+                     alt="{!! $article->getTitle() !!}">
             </div>
         @endif
 
@@ -37,10 +39,10 @@
             "mainEntityOfPage": {
                 "@type": "WebPage"
             },
-            "headline": "<?= $article->getTitle(); ?>",
-            "image": "<?= \StorageHelper::articleImageUrl($article->id, $article->image_filename, false); ?>",
-            "datePublished": "<?= $article->created_at->toFormattedDateString(); ?>",
-            "dateModified": "<?= $article->updated_at->toFormattedDateString(); ?>",
+            "headline": "{!! $article->getTitle() !!}",
+            "image": "{!! \StorageHelper::articleImageUrl($article->id, $article->image_filename, false) !!}",
+            "datePublished": "{!! $article->created_at->toFormattedDateString() !!}",
+            "dateModified": "{!! $article->updated_at->toFormattedDateString() !!}",
             "author": {
                 "@type": "Person",
                 "name": "Altijdsex Author",
@@ -58,7 +60,7 @@
                 },
                 "url": "https://altijdsex.nl/"
             },
-            "description": "<?= Str::limit($article->getBody(), 400) ?>"
+            "description": "{!! Str::limit($article->getBody(), 400) !!}"
         }
 </script>
 
