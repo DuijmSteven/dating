@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Conversation;
 use App\Creditpack;
 use App\Expense;
 use App\Http\Controllers\Controller;
@@ -288,11 +289,10 @@ class StatisticsController extends Controller
                 'this_month' => $this->statisticsManager->topOperatorMessagersBetweenDates($startOfMonth, $endOfMonth, 25)
             ],
             'userTypeStatistics' => $this->statisticsManager->getUserTypeStatistics(),
-            'googleAdsUserTypeStatistics' => $this->statisticsManager->getGoogleAdsLvuStatistics(),
             'excludingXpartnersUserTypeStatistics' => $this->statisticsManager->getexcludingXpartnersLvuStatistics(),
         ];
 
-        return view('admin.statistics', array_merge(
+        return view('admin.statistics.general', array_merge(
             $viewData,
             [
                 'title' => 'Statistics - ' . \config('app.name'),
@@ -323,6 +323,188 @@ class StatisticsController extends Controller
                 ),
                 'xpartnersRevenueChart' => $this->chartsManager->createAffiliateRevenueChart(
                     UserAffiliateTracking::AFFILIATE_XPARTNERS
+                ),
+            ]
+        ));
+    }
+
+    public function googleAds()
+    {
+        $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
+
+        $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');
+        $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
+        $startOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->startOfDay()->setTimezone('UTC');
+        $endOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->endOfDay()->setTimezone('UTC');
+
+        $startOfWeek = Carbon::now('Europe/Amsterdam')->startOfWeek()->setTimezone('UTC');
+        $endOfWeek = Carbon::now('Europe/Amsterdam')->endOfWeek()->setTimezone('UTC');
+        $startOfMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->setTimezone('UTC');
+        $endOfMonth = Carbon::now('Europe/Amsterdam')->endOfMonth()->setTimezone('UTC');
+
+        $startOfPreviousMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->subMonth();
+        $endOfPreviousMonth = $startOfPreviousMonth->copy()->endOfMonth();
+
+        $startOfPreviousMonthUtc = $startOfPreviousMonth->setTimezone('UTC');
+        $endOfPreviousMonthUtc = $endOfPreviousMonth->setTimezone('UTC');
+
+        $startOfYear = Carbon::now('Europe/Amsterdam')->startOfYear()->setTimezone('UTC');
+
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+
+        $googleAdsLaunchDate = Carbon::createFromFormat('d-m-Y H:i:s', '11-06-2020 00:00:00');
+
+        $googleAdsExpensesAllTime = $this->statisticsManager->affiliateExpensesBetween(
+            Expense::PAYEE_GOOGLE,
+            Expense::TYPE_ADS,
+            $launchDate,
+            $endOfToday
+        );
+
+        $googleAdsRevenueAllTime = $this->statisticsManager->affiliateRevenueBetween(
+            UserAffiliateTracking::AFFILIATE_GOOGLE,
+            $launchDate,
+            $endOfToday
+        );
+
+        $googleAdsConversionsAllTimeCount = $this->statisticsManager->affiliateConversionsBetweenCount(
+            UserAffiliateTracking::AFFILIATE_GOOGLE,
+            $launchDate,
+            $endOfToday
+        );
+
+        $googleAdsLeadsAllTimeCount = User::whereHas('affiliateTracking', function ($query) {
+            $query->where('affiliate', UserAffiliateTracking::AFFILIATE_GOOGLE);
+        })->whereHas('roles', function ($query) {
+            $query->where('id', User::TYPE_PEASANT);
+        })
+            ->where('created_at', '>=', $launchDate)
+            ->count();
+
+        $viewData = [
+            'googleAdsConversionStatistics' => [
+                'conversionsToday' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfToday,
+                    $endOfToday
+                ),
+                'conversionsYesterday' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfYesterday,
+                    $endOfYesterday
+                ),
+                'conversionsCurrentWeek' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfWeek,
+                    $endOfWeek
+                ),
+                'conversionsCurrentMonth' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfMonth,
+                    $endOfMonth
+                ),
+                'conversionsPreviousMonth' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc
+                ),
+                'conversionsCurrentYear' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfYear,
+                    $endOfToday
+                ),
+                'allTimeConversionRate' => $googleAdsConversionsAllTimeCount / $googleAdsLeadsAllTimeCount * 100
+            ],
+            'peasantMessageStatistics' => [
+                'messagesSentToday' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfToday,
+                    $endOfToday,
+                    UserAffiliateTracking::AFFILIATE_GOOGLE
+                ),
+                'messagesSentYesterday' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfYesterday,
+                    $endOfYesterday,
+                    UserAffiliateTracking::AFFILIATE_GOOGLE
+                ),
+                'messagesSentCurrentWeek' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfWeek,
+                    $endOfWeek,
+                    UserAffiliateTracking::AFFILIATE_GOOGLE
+                ),
+                'messagesSentCurrentMonth' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfMonth,
+                    $endOfMonth,
+                    UserAffiliateTracking::AFFILIATE_GOOGLE
+                ),
+                'messagesSentPreviousMonth' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc,
+                    UserAffiliateTracking::AFFILIATE_GOOGLE
+                ),
+                'messagesSentCurrentYear' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfYear,
+                    $endOfToday,
+                    UserAffiliateTracking::AFFILIATE_GOOGLE
+                )
+            ],
+            'googleAdsRevenueStatistics' => [
+                'revenueToday' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfToday,
+                    $endOfToday
+                ),
+                'revenueYesterday' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfYesterday,
+                    $endOfYesterday
+                ),
+                'revenueCurrentWeek' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfWeek,
+                    $endOfWeek
+                ),
+                'revenueCurrentMonth' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfMonth,
+                    $endOfMonth
+                ),
+                'revenuePreviousMonth' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc
+                ),
+                'revenueCurrentYear' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfYear,
+                    $endOfToday
+                ),
+                'allTimeAdExpenses' => $googleAdsExpensesAllTime,
+                'allTimeNetRevenue' => $googleAdsRevenueAllTime - $googleAdsExpensesAllTime,
+            ],
+            'googleAdsUserTypeStatistics' => $this->statisticsManager->getGoogleAdsLvuStatistics(),
+        ];
+
+        return view('admin.statistics.google-ads', array_merge(
+            $viewData,
+            [
+                'title' => 'Statistics - ' . \config('app.name'),
+                'headingLarge' => 'Statistics',
+                'headingSmall' => 'Google Ads',
+                'salesTax' => self::SALES_TAX,
+                'googleAdsPeasantMessagesChart' => $this->chartsManager->createPeasantMessagesChart(
+                    null,
+                    $googleAdsLaunchDate,
+                    UserAffiliateTracking::AFFILIATE_GOOGLE
+                ),
+                'googleLeadsChart' => $this->chartsManager->createGoogleLeadsChart(),
+                'googleAdsRevenueChart' => $this->chartsManager->createAffiliateRevenueChart(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE
                 ),
             ]
         ));

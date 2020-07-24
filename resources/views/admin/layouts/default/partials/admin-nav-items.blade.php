@@ -5,11 +5,28 @@
     </a>
 </li>
 
-<li class="{!! \Request::route()->getName() == 'admin.statistics' ? 'active' : '' !!}">
-    <a href="{!! route('admin.statistics') !!}">
-        <i class="fa fa-dashboard"></i>
+<li class="treeview {!! \Str::contains(\Request::route()->getName(), 'admin.statistics') ? 'active' : '' !!}">
+    <a href="#">
+        <i class="fa fa-android"></i>
         <span>Statistics</span>
+        <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
     </a>
+    <ul class="treeview-menu">
+        <li class="{!! \Request::route()->getName() == 'admin.statistics.general' ? 'active' : '' !!}">
+            <a href="{!! route('admin.statistics.general') !!}">
+                <i class="fa fa-list"></i>
+                General
+            </a>
+        </li>
+        <li class="{!! \Request::route()->getName() == 'admin.statistics.google-ads' ? 'active' : '' !!}">
+            <a href="{!! route('admin.statistics.google-ads') !!}">
+                <i class="fa fa-google"></i>
+                Google ads
+            </a>
+        </li>
+    </ul>
 </li>
 
 <li class="treeview {!! \Str::contains(\Request::route()->getName(), 'admin.bots') ? 'active' : '' !!}">

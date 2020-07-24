@@ -309,39 +309,6 @@ class DashboardController extends Controller
                     $endOfToday
                 )
             ],
-            'googleAdsConversionStatistics' => [
-                'conversionsToday' => $this->statisticsManager->affiliateConversionsBetweenCount(
-                    UserAffiliateTracking::AFFILIATE_GOOGLE,
-                    $startOfToday,
-                    $endOfToday
-                ),
-                'conversionsYesterday' => $this->statisticsManager->affiliateConversionsBetweenCount(
-                    UserAffiliateTracking::AFFILIATE_GOOGLE,
-                    $startOfYesterday,
-                    $endOfYesterday
-                ),
-                'conversionsCurrentWeek' => $this->statisticsManager->affiliateConversionsBetweenCount(
-                    UserAffiliateTracking::AFFILIATE_GOOGLE,
-                    $startOfWeek,
-                    $endOfWeek
-                ),
-                'conversionsCurrentMonth' => $this->statisticsManager->affiliateConversionsBetweenCount(
-                    UserAffiliateTracking::AFFILIATE_GOOGLE,
-                    $startOfMonth,
-                    $endOfMonth
-                ),
-                'conversionsPreviousMonth' => $this->statisticsManager->affiliateConversionsBetweenCount(
-                    UserAffiliateTracking::AFFILIATE_GOOGLE,
-                    $startOfPreviousMonthUtc,
-                    $endOfPreviousMonthUtc
-                ),
-                'conversionsCurrentYear' => $this->statisticsManager->affiliateConversionsBetweenCount(
-                    UserAffiliateTracking::AFFILIATE_GOOGLE,
-                    $startOfYear,
-                    $endOfToday
-                ),
-                'allTimeConversionRate' => $googleAdsConversionsAllTimeCount / $googleAdsLeadsAllTimeCount * 100
-            ],
             'conversionStatistics' => [
                 'conversionsToday' => $this->statisticsManager->affiliateConversionsBetweenCount(
                     'any',
@@ -374,40 +341,6 @@ class DashboardController extends Controller
                     $endOfToday
                 ),
                 'allTimeConversionRate' => $conversionsAllTimeCount / $allUsersCount * 100
-            ],
-            'googleAdsRevenueStatistics' => [
-                'revenueToday' => $this->statisticsManager->affiliateRevenueBetween(
-                    UserAffiliateTracking::AFFILIATE_GOOGLE,
-                    $startOfToday,
-                    $endOfToday
-                ),
-                'revenueYesterday' => $this->statisticsManager->affiliateRevenueBetween(
-                    UserAffiliateTracking::AFFILIATE_GOOGLE,
-                    $startOfYesterday,
-                    $endOfYesterday
-                ),
-                'revenueCurrentWeek' => $this->statisticsManager->affiliateRevenueBetween(
-                    UserAffiliateTracking::AFFILIATE_GOOGLE,
-                    $startOfWeek,
-                    $endOfWeek
-                ),
-                'revenueCurrentMonth' => $this->statisticsManager->affiliateRevenueBetween(
-                    UserAffiliateTracking::AFFILIATE_GOOGLE,
-                    $startOfMonth,
-                    $endOfMonth
-                ),
-                'revenuePreviousMonth' => $this->statisticsManager->affiliateRevenueBetween(
-                    UserAffiliateTracking::AFFILIATE_GOOGLE,
-                    $startOfPreviousMonthUtc,
-                    $endOfPreviousMonthUtc
-                ),
-                'revenueCurrentYear' => $this->statisticsManager->affiliateRevenueBetween(
-                    UserAffiliateTracking::AFFILIATE_GOOGLE,
-                    $startOfYear,
-                    $endOfToday
-                ),
-                'allTimeAdExpenses' => $googleAdsExpensesAllTime,
-                'allTimeNetRevenue' => $googleAdsRevenueAllTime - $googleAdsExpensesAllTime,
             ],
             'topMessagerStatistics' => [
                 'today' => $this->statisticsManager->topMessagersBetweenDates($startOfToday, $endOfToday, 50),
@@ -450,11 +383,6 @@ class DashboardController extends Controller
                 ),
                 'netPeasantsAcquiredChart' => $this->chartsManager->createNetPeasantsAcquiredChart(
                     $googleAdsLaunchDate
-                ),
-//                'xpartnersConversionsChart' => $this->chartsManager->createXpartnersConversionsChart(),
-                'googleLeadsChart' => $this->chartsManager->createGoogleLeadsChart(),
-                'googleAdsRevenueChart' => $this->chartsManager->createAffiliateRevenueChart(
-                    UserAffiliateTracking::AFFILIATE_GOOGLE
                 ),
             ]
         ));

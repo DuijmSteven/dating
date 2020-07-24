@@ -136,54 +136,7 @@
             </div>
         </div>
 
-        <div class="col-xs-12 col-sm-6 col-md-4">
-            <div class="box box-widget DashboardWidget">
-                <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="bg-primary">
-                    <div class="widget-us DashboardWidget_header"
-                         style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
-                        <i class="fa fa-users DashboardWidget_header-icon"></i>
-                        <span
-                            class="DashboardWidget_header-title">Google Ads Revenue (without sales tax in parentheses)</span>
-                    </div>
-                    <!-- /.widget-user-image -->
-                </div>
-                <div class="box-footer no-padding">
-                    <ul class="nav nav-stacked">
-                        <li><a href="#">Today <span
-                                    class="DashboardWidget_count">&euro; {{ $googleAdsRevenueStatistics['revenueToday']/100 }} (<span
-                                        style="color: #08a05e; font-weight: 600">{{ number_format($googleAdsRevenueStatistics['revenueToday']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
-                        </li>
-                        <li><a href="#">Yesterday <span
-                                    class="DashboardWidget_count">&euro; {{ $googleAdsRevenueStatistics['revenueYesterday']/100 }} (<span
-                                        style="color: #08a05e; font-weight: 600">{{ number_format($googleAdsRevenueStatistics['revenueYesterday']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
-                        </li>
-                        <li><a href="#">Current week <span
-                                    class="DashboardWidget_count">&euro; {{ $googleAdsRevenueStatistics['revenueCurrentWeek']/100 }} (<span
-                                        style="color: #08a05e; font-weight: 600">{{ number_format($googleAdsRevenueStatistics['revenueCurrentWeek']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
-                        </li>
-                        <li><a href="#">Current month <span
-                                    class="DashboardWidget_count">&euro; {{ $googleAdsRevenueStatistics['revenueCurrentMonth']/100 }} (<span
-                                        style="color: #08a05e; font-weight: 600">{{ number_format($googleAdsRevenueStatistics['revenueCurrentMonth']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
-                        </li>
-                        <li><a href="#">Last month <span
-                                    class="DashboardWidget_count">&euro; {{ $googleAdsRevenueStatistics['revenuePreviousMonth']/100 }} (<span
-                                        style="color: #08a05e; font-weight: 600">{{ number_format($googleAdsRevenueStatistics['revenuePreviousMonth']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
-                        </li>
-                        <li><a href="#">Current year <span
-                                    class="DashboardWidget_count">&euro; {{ $googleAdsRevenueStatistics['revenueCurrentYear']/100 }} (<span
-                                        style="color: #08a05e; font-weight: 600">{{ number_format($googleAdsRevenueStatistics['revenueCurrentYear']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
-                        </li>
-                        <li><a href="#">All time ad expenses <span
-                                    class="DashboardWidget_count">&euro; {{ $googleAdsRevenueStatistics['allTimeAdExpenses']/100 }} </span></a>
-                        </li>
-                        <li><a href="#">All time net revenue <span
-                                    class="DashboardWidget_count">&euro; {{ $googleAdsRevenueStatistics['allTimeNetRevenue']/100 }} </span></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+
 
         <div class="col-xs-12 col-sm-6 col-md-4">
             <div class="box box-widget DashboardWidget">
@@ -227,44 +180,6 @@
             </div>
         </div>
 
-        <div class="col-xs-12 col-sm-6 col-md-4">
-            <div class="box box-widget DashboardWidget">
-                <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="bg-primary">
-                    <div class="widget-us DashboardWidget_header"
-                         style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
-                        <i class="fa fa-users DashboardWidget_header-icon"></i>
-                        <span class="DashboardWidget_header-title">Google Ads Conversions</span>
-                    </div>
-                    <!-- /.widget-user-image -->
-                </div>
-                <div class="box-footer no-padding">
-                    <ul class="nav nav-stacked">
-                        <li><a href="#">Today <span
-                                    class="DashboardWidget_count">{{ $googleAdsConversionStatistics['conversionsToday'] }} </span></a>
-                        </li>
-                        <li><a href="#">Yesterday <span
-                                    class="DashboardWidget_count">{{ $googleAdsConversionStatistics['conversionsYesterday'] }} </span></a>
-                        </li>
-                        <li><a href="#">Current week <span
-                                    class="DashboardWidget_count">{{ $googleAdsConversionStatistics['conversionsCurrentWeek'] }} </span></a>
-                        </li>
-                        <li><a href="#">Current month <span
-                                    class="DashboardWidget_count">{{ $googleAdsConversionStatistics['conversionsCurrentMonth'] }} </span></a>
-                        </li>
-                        <li><a href="#">Last month <span
-                                    class="DashboardWidget_count">{{ $googleAdsConversionStatistics['conversionsPreviousMonth'] }} </span></a>
-                        </li>
-                        <li><a href="#">Current year <span
-                                    class="DashboardWidget_count">{{ $googleAdsConversionStatistics['conversionsCurrentYear'] }} </span></a>
-                        </li>
-                        <li><a href="#">All time conversion rate <span
-                                    class="DashboardWidget_count">{{ number_format($googleAdsConversionStatistics['allTimeConversionRate'], 1) }}% </span></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
 
         <div class="col-xs-12 col-sm-6 col-md-4">
             <div class="box box-widget DashboardWidget">
@@ -545,15 +460,6 @@
     <div class="row">
         <div class="col-xs-12">
             <div style="width: 100%">
-                {!! $googleLeadsChart->container() !!}
-                {!! $googleLeadsChart->script() !!}
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-12">
-            <div style="width: 100%">
                 {!! $netPeasantsAcquiredChart->container() !!}
                 {!! $netPeasantsAcquiredChart->script() !!}
             </div>
@@ -568,35 +474,6 @@
             </div>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-xs-12">
-            <div style="width: 100%">
-                {!! $googleAdsPeasantMessagesChart->container() !!}
-                {!! $googleAdsPeasantMessagesChart->script() !!}
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-12">
-            <div style="width: 100%">
-                {!! $revenueChart->container() !!}
-                {!! $revenueChart->script() !!}
-            </div>
-        </div>
-    </div>
-
-    @if($googleAdsRevenueChart)
-        <div class="row">
-            <div class="col-xs-12">
-                <div style="width: 100%">
-                    {!! $googleAdsRevenueChart->container() !!}
-                    {!! $googleAdsRevenueChart->script() !!}
-                </div>
-            </div>
-        </div>
-    @endif
 
     {{--    <div class="row">--}}
     {{--        <div class="col-xs-12">--}}
