@@ -411,7 +411,7 @@ class StatisticsManager
         $revenueFromUsersUntilTwoMonthsAgo = $this->revenueBetween(
             Carbon::now()->subYears(10),
             $endOfToday,
-            $threeMonthsAgo,
+            $twoMonthsAgo,
             null,
             UserAffiliateTracking::AFFILIATE_XPARTNERS
         );
