@@ -624,7 +624,7 @@ class ConversationController extends Controller
             ->pluck('partner_id')
             ->toArray();
 
-        if (!in_array($sender->getId(), $recipientPartnerIds)) {
+        if (!in_array($sender->getId(), $recipientPartnerIds) && count($recipientPartnerIds) < 2) {
             $recipient->addOpenConversationPartner($sender, 1);
         }
 
@@ -759,7 +759,7 @@ class ConversationController extends Controller
 
             $recipientOpenConversationPartnersCount = count($recipientPartnerIds);
 
-            if (!in_array($sender->getId(), $recipientPartnerIds) && $recipientOpenConversationPartnersCount < 4) {
+            if (!in_array($sender->getId(), $recipientPartnerIds) && $recipientOpenConversationPartnersCount < 2) {
                 $recipient->addOpenConversationPartner($sender, 1);
             }
 
