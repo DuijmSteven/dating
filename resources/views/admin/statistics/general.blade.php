@@ -274,6 +274,8 @@
         @endforeach
 
         @foreach([
+                'today',
+                'this_week',
                 'this_month',
             ]
             as $topOperatorMessagersWidget
