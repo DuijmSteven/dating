@@ -411,7 +411,7 @@ class StatisticsManager
         $revenueFromUsersUntilTwoMonthsAgo = $this->revenueBetween(
             Carbon::now()->subYears(10),
             $endOfToday,
-            $threeMonthsAgo,
+            $twoMonthsAgo,
             null,
             UserAffiliateTracking::AFFILIATE_XPARTNERS
         );
@@ -608,17 +608,25 @@ class StatisticsManager
             ->count();
     }
 
-    public function messagesSentByUserTypeBetweenQueryBuilder(int $userType, $startDate, $endDate)
+    public function messagesSentByUserTypeBetweenQueryBuilder(int $userType, $startDate, $endDate, $affiliate = null)
     {
 
-        return DB::table('conversation_messages as cm')
+        $query = DB::table('conversation_messages as cm')
             ->leftJoin('users as u', 'u.id', 'cm.sender_id')
-            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
-            ->where('ru.role_id', $userType)
+            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id');
+
+        if ($affiliate) {
+            $query->leftJoin('user_affiliate_tracking as uat', 'u.id', 'uat.user_id')
+                ->where('uat.affiliate', $affiliate);
+        }
+
+        $query->where('ru.role_id', $userType)
             ->whereBetween('cm.created_at', [
                 $startDate,
                 $endDate
             ]);
+
+        return $query;
     }
 
     public function publicChatMessagesSentByUserTypeBetweenQueryBuilder(int $userType, $startDate, $endDate)
@@ -655,7 +663,7 @@ class StatisticsManager
 
     public function paidMessagesSentByUserTypeCountBetween(int $userType, $startDate, $endDate, $affiliate = null)
     {
-        $allMessagesCount = $this->messagesSentByUserTypeBetweenQueryBuilder($userType, $startDate, $endDate)
+        $allMessagesCount = $this->messagesSentByUserTypeBetweenQueryBuilder($userType, $startDate, $endDate, $affiliate)
             ->count();
 
         $query = \DB::table('conversation_messages as cm')

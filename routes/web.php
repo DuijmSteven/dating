@@ -223,8 +223,11 @@ Route::group([
     Route::get('dashboard', 'Admin\DashboardController@dashboard')
         ->name('admin.dashboard');
 
-    Route::get('statistics', 'Admin\StatisticsController@index')
-        ->name('admin.statistics');
+    Route::get('statistics/general', 'Admin\StatisticsController@index')
+        ->name('admin.statistics.general');
+
+    Route::get('statistics/google-ads', 'Admin\StatisticsController@googleAds')
+        ->name('admin.statistics.google-ads');
 
     Route::post('users/search', 'Admin\UserSearchController@search')
         ->name('admin.users.search.post');
