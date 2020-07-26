@@ -44,7 +44,7 @@ class BotUpdateRequest extends Request
             'hair_color' => 'in:'. implode(',', array_keys($userProfileFields['hair_color'])),
             'smoking_habits' => 'in:'. implode(',', array_keys($userProfileFields['drinking_habits'])),
             'drinking_habits' => 'in:'. implode(',', array_keys($userProfileFields['smoking_habits'])),
-            'city' => 'string|min:3|max:40',
+            'city' => 'in:' . implode(',', array_merge(UserConstants::$cities['nl'], UserConstants::$cities['be'])),
             'about_me' => 'string|max:1000',
             'looking_for' => 'string|max:1000'
         ];

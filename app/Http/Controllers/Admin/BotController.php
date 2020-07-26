@@ -197,7 +197,7 @@ class BotController extends Controller
     {
         $botCreateRequest->formatInput();
         $botData = $botCreateRequest->all();
-        $botData['city'] = strtolower($botData['city']);
+        $botData['city'] = trim(strtolower($botData['city']));
 
         try {
             $this->botManager->createBot($botData);
