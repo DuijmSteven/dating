@@ -127,25 +127,6 @@ class DashboardController extends Controller
 
         $googleAdsLaunchDate = Carbon::createFromFormat('d-m-Y H:i:s', '11-06-2020 00:00:00');
 
-        $googleAdsExpensesAllTime = $this->statisticsManager->affiliateExpensesBetween(
-            Expense::PAYEE_GOOGLE,
-            Expense::TYPE_ADS,
-            $launchDate,
-            $endOfToday
-        );
-
-        $googleAdsRevenueAllTime = $this->statisticsManager->affiliateRevenueBetween(
-            UserAffiliateTracking::AFFILIATE_GOOGLE,
-            $launchDate,
-            $endOfToday
-        );
-
-        $googleAdsConversionsAllTimeCount = $this->statisticsManager->affiliateConversionsBetweenCount(
-            UserAffiliateTracking::AFFILIATE_GOOGLE,
-            $launchDate,
-            $endOfToday
-        );
-
         $conversionsAllTimeCount = $this->statisticsManager->affiliateConversionsBetweenCount(
             'any',
             $launchDate,
@@ -155,14 +136,6 @@ class DashboardController extends Controller
         $allUsersCount = User::whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_PEASANT);
         })->count();
-
-        $googleAdsLeadsAllTimeCount = User::whereHas('affiliateTracking', function ($query) {
-           $query->where('affiliate', UserAffiliateTracking::AFFILIATE_GOOGLE);
-        })->whereHas('roles', function ($query) {
-            $query->where('id', User::TYPE_PEASANT);
-        })
-        ->where('created_at', '>=', $launchDate)
-        ->count();
 
         $viewData = [
             'onlineFemaleStraightBotsCount' => $onlineFemaleStraightBotsCount,
@@ -365,10 +338,10 @@ class DashboardController extends Controller
                 'headingLarge' => 'Dashboard',
                 'headingSmall' => '',
                 'salesTax' => self::SALES_TAX,
-//                'peasantMessagesChart' => $this->chartsManager->createPeasantMessagesChart(
-//                    null,
-//                    $googleAdsLaunchDate
-//                ),
+                'peasantMessagesChart' => $this->chartsManager->createPeasantMessagesChart(
+                    null,
+                    $googleAdsLaunchDate
+                ),
                 'revenueChart' => $this->chartsManager->createRevenueChart(
                     $googleAdsLaunchDate
                 ),
