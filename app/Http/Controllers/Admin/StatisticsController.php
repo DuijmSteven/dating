@@ -59,32 +59,6 @@ class StatisticsController extends Controller
         $googleAdsLaunchDate = Carbon::createFromFormat('d-m-Y H:i:s', '11-06-2020 00:00:00');
 
         $viewData = [
-            'peasantMessageStatistics' => [
-                'messagesSentToday' => $this->statisticsManager->paidMessagesSentCount(
-                    $startOfToday,
-                    $endOfToday
-                ),
-                'messagesSentYesterday' => $this->statisticsManager->paidMessagesSentCount(
-                    $startOfYesterday,
-                    $endOfYesterday
-                ),
-                'messagesSentCurrentWeek' => $this->statisticsManager->paidMessagesSentCount(
-                    $startOfWeek,
-                    $endOfWeek
-                ),
-                'messagesSentCurrentMonth' => $this->statisticsManager->paidMessagesSentCount(
-                    $startOfMonth,
-                    $endOfMonth
-                ),
-                'messagesSentPreviousMonth' => $this->statisticsManager->paidMessagesSentCount(
-                    $startOfPreviousMonthUtc,
-                    $endOfPreviousMonthUtc
-                ),
-                'messagesSentCurrentYear' => $this->statisticsManager->paidMessagesSentCount(
-                    $startOfYear,
-                    $endOfToday
-                )
-            ],
             'registrationStatistics' => [
                 'registrationsToday' => $this->statisticsManager->registrationsCountBetween(
                     $startOfToday,
@@ -504,6 +478,32 @@ class StatisticsController extends Controller
             ->count();
 
         $viewData = [
+            'peasantMessageStatistics' => [
+                'messagesSentToday' => $this->statisticsManager->paidMessagesSentCount(
+                    $startOfToday,
+                    $endOfToday
+                ),
+                'messagesSentYesterday' => $this->statisticsManager->paidMessagesSentCount(
+                    $startOfYesterday,
+                    $endOfYesterday
+                ),
+                'messagesSentCurrentWeek' => $this->statisticsManager->paidMessagesSentCount(
+                    $startOfWeek,
+                    $endOfWeek
+                ),
+                'messagesSentCurrentMonth' => $this->statisticsManager->paidMessagesSentCount(
+                    $startOfMonth,
+                    $endOfMonth
+                ),
+                'messagesSentPreviousMonth' => $this->statisticsManager->paidMessagesSentCount(
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc
+                ),
+                'messagesSentCurrentYear' => $this->statisticsManager->paidMessagesSentCount(
+                    $startOfYear,
+                    $endOfToday
+                )
+            ],
             'googleAdsConversionStatistics' => [
                 'conversionsToday' => $this->statisticsManager->affiliateConversionsBetweenCount(
                     UserAffiliateTracking::AFFILIATE_GOOGLE,

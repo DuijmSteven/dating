@@ -159,33 +159,27 @@ class DashboardController extends Controller
             'peasantMessageStatistics' => [
                 'messagesSentToday' => $this->statisticsManager->paidMessagesSentCount(
                     $startOfToday,
-                    $endOfToday,
-                    UserAffiliateTracking::AFFILIATE_GOOGLE
+                    $endOfToday
                 ),
                 'messagesSentYesterday' => $this->statisticsManager->paidMessagesSentCount(
                     $startOfYesterday,
-                    $endOfYesterday,
-                    UserAffiliateTracking::AFFILIATE_GOOGLE
+                    $endOfYesterday
                 ),
                 'messagesSentCurrentWeek' => $this->statisticsManager->paidMessagesSentCount(
                     $startOfWeek,
-                    $endOfWeek,
-                    UserAffiliateTracking::AFFILIATE_GOOGLE
+                    $endOfWeek
                 ),
                 'messagesSentCurrentMonth' => $this->statisticsManager->paidMessagesSentCount(
                     $startOfMonth,
-                    $endOfMonth,
-                    UserAffiliateTracking::AFFILIATE_GOOGLE
+                    $endOfMonth
                 ),
                 'messagesSentPreviousMonth' => $this->statisticsManager->paidMessagesSentCount(
                     $startOfPreviousMonthUtc,
-                    $endOfPreviousMonthUtc,
-                    UserAffiliateTracking::AFFILIATE_GOOGLE
+                    $endOfPreviousMonthUtc
                 ),
                 'messagesSentCurrentYear' => $this->statisticsManager->paidMessagesSentCount(
                     $startOfYear,
-                    $endOfToday,
-                    UserAffiliateTracking::AFFILIATE_GOOGLE
+                    $endOfToday
                 )
             ],
             'peasantMessagesPerHourStatistics' => [
