@@ -60,52 +60,30 @@ class StatisticsController extends Controller
 
         $viewData = [
             'peasantMessageStatistics' => [
-                'messagesSentToday' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
+                'messagesSentToday' => $this->statisticsManager->paidMessagesSentCount(
                     $startOfToday,
                     $endOfToday
                 ),
-                'messagesSentYesterday' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
+                'messagesSentYesterday' => $this->statisticsManager->paidMessagesSentCount(
                     $startOfYesterday,
                     $endOfYesterday
                 ),
-                'messagesSentCurrentWeek' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
+                'messagesSentCurrentWeek' => $this->statisticsManager->paidMessagesSentCount(
                     $startOfWeek,
                     $endOfWeek
                 ),
-                'messagesSentCurrentMonth' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
+                'messagesSentCurrentMonth' => $this->statisticsManager->paidMessagesSentCount(
                     $startOfMonth,
                     $endOfMonth
                 ),
-                'messagesSentPreviousMonth' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
+                'messagesSentPreviousMonth' => $this->statisticsManager->paidMessagesSentCount(
                     $startOfPreviousMonthUtc,
                     $endOfPreviousMonthUtc
                 ),
-                'messagesSentCurrentYear' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
+                'messagesSentCurrentYear' => $this->statisticsManager->paidMessagesSentCount(
                     $startOfYear,
                     $endOfToday
                 )
-            ],
-            'peasantMessagesPerHourStatistics' => [
-                'today' => $this->statisticsManager->messagesSentByUserTypePerHourToday(),
-                'yesterday' => number_format($this->statisticsManager->messagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfYesterday,
-                    $endOfYesterday
-                ) / 24, 0),
-                'currentWeek' => $this->statisticsManager->messagesSentByUserTypePerHourCurrentWeek(),
-                'currentMonth' => $this->statisticsManager->messagesSentByUserTypePerHourCurrentMonth(),
-                'previousMonth' => number_format($this->statisticsManager->messagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfPreviousMonthUtc,
-                    $endOfPreviousMonthUtc
-                ) / $endOfPreviousMonthUtc->diffInHours($startOfPreviousMonthUtc), 0),
-                'currentYear' => $this->statisticsManager->messagesSentByUserTypePerHourCurrentYear()
             ],
             'registrationStatistics' => [
                 'registrationsToday' => $this->statisticsManager->registrationsCountBetween(
@@ -558,44 +536,6 @@ class StatisticsController extends Controller
                     $endOfToday
                 ),
                 'allTimeConversionRate' => $googleAdsConversionsAllTimeCount / $googleAdsLeadsAllTimeCount * 100
-            ],
-            'peasantMessageStatistics' => [
-                'messagesSentToday' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfToday,
-                    $endOfToday,
-                    UserAffiliateTracking::AFFILIATE_GOOGLE
-                ),
-                'messagesSentYesterday' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfYesterday,
-                    $endOfYesterday,
-                    UserAffiliateTracking::AFFILIATE_GOOGLE
-                ),
-                'messagesSentCurrentWeek' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfWeek,
-                    $endOfWeek,
-                    UserAffiliateTracking::AFFILIATE_GOOGLE
-                ),
-                'messagesSentCurrentMonth' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfMonth,
-                    $endOfMonth,
-                    UserAffiliateTracking::AFFILIATE_GOOGLE
-                ),
-                'messagesSentPreviousMonth' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfPreviousMonthUtc,
-                    $endOfPreviousMonthUtc,
-                    UserAffiliateTracking::AFFILIATE_GOOGLE
-                ),
-                'messagesSentCurrentYear' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfYear,
-                    $endOfToday,
-                    UserAffiliateTracking::AFFILIATE_GOOGLE
-                )
             ],
             'googleAdsRevenueStatistics' => [
                 'revenueToday' => $this->statisticsManager->affiliateRevenueBetween(

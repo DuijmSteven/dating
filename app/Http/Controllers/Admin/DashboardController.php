@@ -155,7 +155,55 @@ class DashboardController extends Controller
             'stoppedConversationsCount' => $this->conversationManager->getConversationsByCycleStageCount([
                 Conversation::CYCLE_STAGE_STOPPED
             ]),
-            'messageRateLastHour' => $this->statisticsManager->messagesSentByUserTypeLastHour(),
+            'messageRateLastHour' => $this->statisticsManager->paidMessagesSentByUserTypeLastHour(),
+            'peasantMessageStatistics' => [
+                'messagesSentToday' => $this->statisticsManager->paidMessagesSentCount(
+                    $startOfToday,
+                    $endOfToday,
+                    UserAffiliateTracking::AFFILIATE_GOOGLE
+                ),
+                'messagesSentYesterday' => $this->statisticsManager->paidMessagesSentCount(
+                    $startOfYesterday,
+                    $endOfYesterday,
+                    UserAffiliateTracking::AFFILIATE_GOOGLE
+                ),
+                'messagesSentCurrentWeek' => $this->statisticsManager->paidMessagesSentCount(
+                    $startOfWeek,
+                    $endOfWeek,
+                    UserAffiliateTracking::AFFILIATE_GOOGLE
+                ),
+                'messagesSentCurrentMonth' => $this->statisticsManager->paidMessagesSentCount(
+                    $startOfMonth,
+                    $endOfMonth,
+                    UserAffiliateTracking::AFFILIATE_GOOGLE
+                ),
+                'messagesSentPreviousMonth' => $this->statisticsManager->paidMessagesSentCount(
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc,
+                    UserAffiliateTracking::AFFILIATE_GOOGLE
+                ),
+                'messagesSentCurrentYear' => $this->statisticsManager->paidMessagesSentCount(
+                    $startOfYear,
+                    $endOfToday,
+                    UserAffiliateTracking::AFFILIATE_GOOGLE
+                )
+            ],
+            'peasantMessagesPerHourStatistics' => [
+                'today' => $this->statisticsManager->messagesSentByUserTypePerHourToday(),
+                'yesterday' => number_format($this->statisticsManager->messagesSentByUserTypeCountBetween(
+                        User::TYPE_PEASANT,
+                        $startOfYesterday,
+                        $endOfYesterday
+                    ) / 24, 0),
+                'currentWeek' => $this->statisticsManager->messagesSentByUserTypePerHourCurrentWeek(),
+                'currentMonth' => $this->statisticsManager->messagesSentByUserTypePerHourCurrentMonth(),
+                'previousMonth' => number_format($this->statisticsManager->messagesSentByUserTypeCountBetween(
+                        User::TYPE_PEASANT,
+                        $startOfPreviousMonthUtc,
+                        $endOfPreviousMonthUtc
+                    ) / $endOfPreviousMonthUtc->diffInHours($startOfPreviousMonthUtc), 0),
+                'currentYear' => $this->statisticsManager->messagesSentByUserTypePerHourCurrentYear()
+            ],
             'revenueStatistics' => [
                 'revenueToday' => $this->statisticsManager->revenueBetween(
                     $startOfToday,

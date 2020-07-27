@@ -7,6 +7,7 @@ use App\Creditpack;
 use App\Expense;
 use App\Facades\Helpers\PaymentsHelper;
 use App\Payment;
+use App\Role;
 use App\User;
 use App\UserAffiliateTracking;
 use Carbon\Carbon;
@@ -660,45 +661,32 @@ class StatisticsManager
             ->count();
     }
 
-
-    public function paidMessagesSentByUserTypeCountBetween(int $userType, $startDate, $endDate, $affiliate = null)
+    public function paidMessagesSentCount($startDate, $endDate, $affiliate = null)
     {
-        $allMessagesCount = $this->messagesSentByUserTypeBetweenQueryBuilder($userType, $startDate, $endDate, $affiliate)
-            ->count();
-
-        $query = \DB::table('conversation_messages as cm')
-            ->select(\DB::raw('COUNT(DISTINCT(u.id)) AS uniqueMessagers'))
-            ->leftJoin('users as u', 'u.id', 'cm.sender_id')
-            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id');
-
-        if ($affiliate) {
-            $query->leftJoin('user_affiliate_tracking as uat', 'u.id', 'uat.user_id')
-                ->where('uat.affiliate', $affiliate);
-        }
-
-        $unpaidMessagesInPeriod = $query
-            ->where('ru.role_id', $userType)
-            ->whereBetween('u.created_at', [
-                $startDate,
-                $endDate
-            ])
+        $query = DB::table('conversation_messages as cm')
+            ->where('cm.paid', true)
             ->whereBetween('cm.created_at', [
                 $startDate,
                 $endDate
-            ])
-            ->get()[0]
-            ->uniqueMessagers;
+            ]);
 
-        return $allMessagesCount - $unpaidMessagesInPeriod;
+        if ($affiliate) {
+            $query
+                ->leftJoin('users as u', 'u.id', 'cm.sender_id')
+                ->leftJoin('user_affiliate_tracking as uat', 'u.id', 'uat.user_id')
+                ->where('uat.affiliate', $affiliate);
+        }
+
+        return $query
+            ->count();
     }
 
-    public function messagesSentByUserTypeLastHour()
+    public function paidMessagesSentByUserTypeLastHour()
     {
         $oneHourAgo = Carbon::now('Europe/Amsterdam')->subHours(1)->setTimezone('UTC');
         $now = Carbon::now('Europe/Amsterdam')->setTimezone('UTC');
 
-        $messagesLastHour = $this->messagesSentByUserTypeCountBetween(
-            User::TYPE_PEASANT,
+        $messagesLastHour = $this->paidMessagesSentCount(
             $oneHourAgo,
             $now
         );
@@ -715,8 +703,7 @@ class StatisticsManager
         $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');
         $now = Carbon::now('Europe/Amsterdam')->setTimezone('UTC');
 
-        $messagesTodayCount = $this->messagesSentByUserTypeCountBetween(
-            User::TYPE_PEASANT,
+        $messagesTodayCount = $this->paidMessagesSentCount(
             $startOfToday,
             $now
         );
@@ -737,8 +724,7 @@ class StatisticsManager
         $startOfMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->setTimezone('UTC');
         $endOfMonth = Carbon::now('Europe/Amsterdam')->endOfMonth()->setTimezone('UTC');
 
-        $messagesCurrentMonth = $this->messagesSentByUserTypeCountBetween(
-            User::TYPE_PEASANT,
+        $messagesCurrentMonth = $this->paidMessagesSentCount(
             $startOfMonth,
             $endOfMonth
         );
@@ -759,8 +745,7 @@ class StatisticsManager
         $startOfWeek = Carbon::now('Europe/Amsterdam')->startOfWeek()->setTimezone('UTC');
         $endOfWeek = Carbon::now('Europe/Amsterdam')->endOfWeek()->setTimezone('UTC');
 
-        $messagesCurrentWeek = $this->messagesSentByUserTypeCountBetween(
-            User::TYPE_PEASANT,
+        $messagesCurrentWeek = $this->paidMessagesSentCount(
             $startOfWeek,
             $endOfWeek
         );
@@ -782,8 +767,7 @@ class StatisticsManager
         $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
         $now = Carbon::now('Europe/Amsterdam')->setTimezone('UTC');
 
-        $messagesCurrentYear = $this->messagesSentByUserTypeCountBetween(
-            User::TYPE_PEASANT,
+        $messagesCurrentYear = $this->paidMessagesSentCount(
             $startOfYear,
             $endOfToday
         );

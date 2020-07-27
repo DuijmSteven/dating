@@ -9,61 +9,6 @@
                 <div class="bg-primary">
                     <div class="widget-us DashboardWidget_header"
                          style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
-                        <i class="fa fa-envelope DashboardWidget_header-icon"></i>
-                        <i class="fa fa-user DashboardWidget_header-icon"></i>
-                        <span class="DashboardWidget_header-title">Peasant Messages Sent (+ per hour)</span>
-                    </div>
-                    <!-- /.widget-user-image -->
-                </div>
-                <div class="box-footer no-padding">
-                    <ul class="nav nav-stacked">
-                        <li><a href="#">Today
-                                <span
-                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentToday'] !!}
-                                    ({{ $peasantMessagesPerHourStatistics['today'] }})
-                                </span></a>
-                        </li>
-                        <li><a href="#">Yesterday
-                                <span
-                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentYesterday'] !!}
-                                    ({{ $peasantMessagesPerHourStatistics['yesterday'] }})
-                                </span></a>
-                        </li>
-                        <li><a href="#">Current
-                                week <span
-                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentCurrentWeek'] !!}
-                                    ({{ $peasantMessagesPerHourStatistics['currentWeek'] }})
-                                </span></a>
-                        </li>
-                        <li><a href="#">Current
-                                month <span
-                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentCurrentMonth'] !!}
-                                    ({{ $peasantMessagesPerHourStatistics['currentMonth'] }})
-                                </span></a>
-                        </li>
-                        <li><a href="#">Last
-                                month <span
-                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentPreviousMonth'] !!}
-                                    ({{ $peasantMessagesPerHourStatistics['previousMonth'] }})
-                                </span></a>
-                        </li>
-                        <li><a href="#">Current
-                                year <span
-                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentCurrentYear'] !!}
-                                    ({{ $peasantMessagesPerHourStatistics['currentYear'] }})
-                                </span></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xs-12 col-sm-6 col-md-4">
-            <div class="box box-widget DashboardWidget">
-                <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="bg-primary">
-                    <div class="widget-us DashboardWidget_header"
-                         style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
                         <i class="fa fa-close DashboardWidget_header-icon"></i>
                         <span class="DashboardWidget_header-title">Net peasants acquired</span>
                     </div>
