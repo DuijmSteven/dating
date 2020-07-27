@@ -111,28 +111,46 @@
                     </div>
                     <!-- /.widget-user-image -->
                 </div>
-                <div class="box-footer no-padding">
-                    <ul class="nav nav-stacked">
-                        <li><a href="#">Today <span
-                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentToday'] !!} ({{ $peasantMessagesPerHourStatistics['today'] }})</span></a>
-                        </li>
-                        <li><a href="#">Yesterday <span
-                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentYesterday'] !!} ({{ $peasantMessagesPerHourStatistics['yesterday'] }})</span></a>
-                        </li>
-                        <li><a href="#">Current week <span
-                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentCurrentWeek'] !!} ({{ $peasantMessagesPerHourStatistics['currentWeek'] }})</span></a>
-                        </li>
-                        <li><a href="#">Current month <span
-                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentCurrentMonth'] !!} ({{ $peasantMessagesPerHourStatistics['currentMonth'] }})</span></a>
-                        </li>
-                        <li><a href="#">Last month <span
-                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentPreviousMonth'] !!} ({{ $peasantMessagesPerHourStatistics['previousMonth'] }})</span></a>
-                        </li>
-                        <li><a href="#">Current year <span
-                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentCurrentYear'] !!} ({{ $peasantMessagesPerHourStatistics['currentYear'] }})</span></a>
-                        </li>
-                    </ul>
-                </div>
+{{--                <div class="box-footer no-padding">--}}
+{{--                    <ul class="nav nav-stacked">--}}
+{{--                        <li><a href="#">Today--}}
+{{--                                <span--}}
+{{--                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentToday'] !!}--}}
+{{--                                    ({{ $peasantMessagesPerHourStatistics['today'] }})--}}
+{{--                                </span></a>--}}
+{{--                        </li>--}}
+{{--                        <li><a href="#">Yesterday--}}
+{{--                                <span--}}
+{{--                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentYesterday'] !!}--}}
+{{--                                    ({{ $peasantMessagesPerHourStatistics['yesterday'] }})--}}
+{{--                                </span></a>--}}
+{{--                        </li>--}}
+{{--                        <li><a href="#">Current--}}
+{{--                                week <span--}}
+{{--                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentCurrentWeek'] !!}--}}
+{{--                                    ({{ $peasantMessagesPerHourStatistics['currentWeek'] }})--}}
+{{--                                </span></a>--}}
+{{--                        </li>--}}
+{{--                        <li><a href="#">Current--}}
+{{--                                month <span--}}
+{{--                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentCurrentMonth'] !!}--}}
+{{--                                    ({{ $peasantMessagesPerHourStatistics['currentMonth'] }})--}}
+{{--                                </span></a>--}}
+{{--                        </li>--}}
+{{--                        <li><a href="#">Last--}}
+{{--                                month <span--}}
+{{--                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentPreviousMonth'] !!}--}}
+{{--                                    ({{ $peasantMessagesPerHourStatistics['previousMonth'] }})--}}
+{{--                                </span></a>--}}
+{{--                        </li>--}}
+{{--                        <li><a href="#">Current--}}
+{{--                                year <span--}}
+{{--                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentCurrentYear'] !!}--}}
+{{--                                    ({{ $peasantMessagesPerHourStatistics['currentYear'] }})--}}
+{{--                                </span></a>--}}
+{{--                        </li>--}}
+{{--                    </ul>--}}
+{{--                </div>--}}
             </div>
         </div>
 
@@ -410,14 +428,14 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-xs-12">
-            <div style="width: 100%">
-                {!! $peasantMessagesChart->container() !!}
-                {!! $peasantMessagesChart->script() !!}
-            </div>
-        </div>
-    </div>
+{{--    <div class="row">--}}
+{{--        <div class="col-xs-12">--}}
+{{--            <div style="width: 100%">--}}
+{{--                {!! $peasantMessagesChart->container() !!}--}}
+{{--                {!! $peasantMessagesChart->script() !!}--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
 
     <div class="row">
         <div class="col-xs-12">

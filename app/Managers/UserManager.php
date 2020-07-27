@@ -69,15 +69,15 @@ class UserManager
             $relations = array_unique(array_merge(
                     User::COMMON_RELATIONS,
                     User::ADMIN_RELATIONS,
-                    User::OPERATOR_RELATIONS,
-                    User::EDITOR_RELATIONS
+//                    User::OPERATOR_RELATIONS,
+//                    User::EDITOR_RELATIONS
                 )
             );
 
             $relationCounts = array_merge(
                 User::ADMIN_RELATION_COUNTS,
-                User::OPERATOR_RELATION_COUNTS,
-                User::EDITOR_RELATION_COUNTS
+//                User::OPERATOR_RELATION_COUNTS,
+//                User::EDITOR_RELATION_COUNTS
             );
         } elseif ($roleId === User::TYPE_EDITOR) {
             $relations = array_unique(array_merge(

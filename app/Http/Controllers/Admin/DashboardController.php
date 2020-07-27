@@ -209,54 +209,54 @@ class DashboardController extends Controller
                     $endOfToday
                 )
             ],
-            'peasantMessageStatistics' => [
-                'messagesSentToday' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfToday,
-                    $endOfToday
-                ),
-                'messagesSentYesterday' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfYesterday,
-                    $endOfYesterday
-                ),
-                'messagesSentCurrentWeek' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfWeek,
-                    $endOfWeek
-                ),
-                'messagesSentCurrentMonth' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfMonth,
-                    $endOfMonth
-                ),
-                'messagesSentPreviousMonth' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfPreviousMonthUtc,
-                    $endOfPreviousMonthUtc
-                ),
-                'messagesSentCurrentYear' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfYear,
-                    $endOfToday
-                )
-            ],
-            'peasantMessagesPerHourStatistics' => [
-                'today' => $this->statisticsManager->messagesSentByUserTypePerHourToday(),
-                'yesterday' => number_format($this->statisticsManager->messagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfYesterday,
-                    $endOfYesterday
-                ) / 24, 0),
-                'currentWeek' => $this->statisticsManager->messagesSentByUserTypePerHourCurrentWeek(),
-                'currentMonth' => $this->statisticsManager->messagesSentByUserTypePerHourCurrentMonth(),
-                'previousMonth' => number_format($this->statisticsManager->messagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfPreviousMonthUtc,
-                    $endOfPreviousMonthUtc
-                ) / $endOfPreviousMonthUtc->diffInHours($startOfPreviousMonthUtc), 0),
-                'currentYear' => $this->statisticsManager->messagesSentByUserTypePerHourCurrentYear()
-            ],
+//            'peasantMessageStatistics' => [
+//                'messagesSentToday' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
+//                    User::TYPE_PEASANT,
+//                    $startOfToday,
+//                    $endOfToday
+//                ),
+//                'messagesSentYesterday' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
+//                    User::TYPE_PEASANT,
+//                    $startOfYesterday,
+//                    $endOfYesterday
+//                ),
+//                'messagesSentCurrentWeek' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
+//                    User::TYPE_PEASANT,
+//                    $startOfWeek,
+//                    $endOfWeek
+//                ),
+//                'messagesSentCurrentMonth' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
+//                    User::TYPE_PEASANT,
+//                    $startOfMonth,
+//                    $endOfMonth
+//                ),
+//                'messagesSentPreviousMonth' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
+//                    User::TYPE_PEASANT,
+//                    $startOfPreviousMonthUtc,
+//                    $endOfPreviousMonthUtc
+//                ),
+//                'messagesSentCurrentYear' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
+//                    User::TYPE_PEASANT,
+//                    $startOfYear,
+//                    $endOfToday
+//                )
+//            ],
+//            'peasantMessagesPerHourStatistics' => [
+//                'today' => $this->statisticsManager->messagesSentByUserTypePerHourToday(),
+//                'yesterday' => number_format($this->statisticsManager->messagesSentByUserTypeCountBetween(
+//                    User::TYPE_PEASANT,
+//                    $startOfYesterday,
+//                    $endOfYesterday
+//                ) / 24, 0),
+//                'currentWeek' => $this->statisticsManager->messagesSentByUserTypePerHourCurrentWeek(),
+//                'currentMonth' => $this->statisticsManager->messagesSentByUserTypePerHourCurrentMonth(),
+//                'previousMonth' => number_format($this->statisticsManager->messagesSentByUserTypeCountBetween(
+//                    User::TYPE_PEASANT,
+//                    $startOfPreviousMonthUtc,
+//                    $endOfPreviousMonthUtc
+//                ) / $endOfPreviousMonthUtc->diffInHours($startOfPreviousMonthUtc), 0),
+//                'currentYear' => $this->statisticsManager->messagesSentByUserTypePerHourCurrentYear()
+//            ],
             'registrationStatistics' => [
                 'registrationsToday' => $this->statisticsManager->registrationsCountBetween(
                     $startOfToday,
@@ -365,15 +365,10 @@ class DashboardController extends Controller
                 'headingLarge' => 'Dashboard',
                 'headingSmall' => '',
                 'salesTax' => self::SALES_TAX,
-                'peasantMessagesChart' => $this->chartsManager->createPeasantMessagesChart(
-                    null,
-                    $googleAdsLaunchDate
-                ),
-                'googleAdsPeasantMessagesChart' => $this->chartsManager->createPeasantMessagesChart(
-                    null,
-                    $googleAdsLaunchDate,
-                    UserAffiliateTracking::AFFILIATE_GOOGLE
-                ),
+//                'peasantMessagesChart' => $this->chartsManager->createPeasantMessagesChart(
+//                    null,
+//                    $googleAdsLaunchDate
+//                ),
                 'revenueChart' => $this->chartsManager->createRevenueChart(
                     $googleAdsLaunchDate
                 ),
