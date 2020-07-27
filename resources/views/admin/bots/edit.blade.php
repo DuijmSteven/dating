@@ -191,7 +191,11 @@
                         <div class="form-group">
                             <label for="password">Country</label>
 
-                            <select name="country">
+                            <select
+                                class="form-control"
+                                id="country"
+                                name="country"
+                            >
                                 <option value=""></option>
                                 <option value="nl" {{ $bot->meta->country === 'nl' ? 'selected' : '' }}>Netherlands</option>
                                 <option value="be" {{ $bot->meta->country === 'be' ? 'selected' : '' }}>Belgium</option>
