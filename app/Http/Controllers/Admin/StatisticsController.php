@@ -36,6 +36,148 @@ class StatisticsController extends Controller
         $this->chartsManager = $chartsManager;
     }
 
+    public function mostUseful()
+    {
+        $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');
+        $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
+        $startOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->startOfDay()->setTimezone('UTC');
+        $endOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->endOfDay()->setTimezone('UTC');
+
+        $startOfWeek = Carbon::now('Europe/Amsterdam')->startOfWeek()->setTimezone('UTC');
+        $endOfWeek = Carbon::now('Europe/Amsterdam')->endOfWeek()->setTimezone('UTC');
+        $startOfMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->setTimezone('UTC');
+        $endOfMonth = Carbon::now('Europe/Amsterdam')->endOfMonth()->setTimezone('UTC');
+
+        $startOfPreviousMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->subMonth();
+        $endOfPreviousMonth = $startOfPreviousMonth->copy()->endOfMonth();
+
+        $startOfPreviousMonthUtc = $startOfPreviousMonth->setTimezone('UTC');
+        $endOfPreviousMonthUtc = $endOfPreviousMonth->setTimezone('UTC');
+
+        $startOfYear = Carbon::now('Europe/Amsterdam')->startOfYear()->setTimezone('UTC');
+
+        $googleAdsLaunchDate = Carbon::createFromFormat('d-m-Y H:i:s', '11-06-2020 00:00:00');
+
+        $viewData = [
+            'peasantMessageStatistics' => [
+                'messagesSentToday' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfToday,
+                    $endOfToday
+                ),
+                'messagesSentYesterday' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfYesterday,
+                    $endOfYesterday
+                ),
+                'messagesSentCurrentWeek' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfWeek,
+                    $endOfWeek
+                ),
+                'messagesSentCurrentMonth' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfMonth,
+                    $endOfMonth
+                ),
+                'messagesSentPreviousMonth' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc
+                ),
+                'messagesSentCurrentYear' => $this->statisticsManager->paidMessagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfYear,
+                    $endOfToday
+                )
+            ],
+            'peasantMessagesPerHourStatistics' => [
+                'today' => $this->statisticsManager->messagesSentByUserTypePerHourToday(),
+                'yesterday' => number_format($this->statisticsManager->messagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfYesterday,
+                    $endOfYesterday
+                ) / 24, 0),
+                'currentWeek' => $this->statisticsManager->messagesSentByUserTypePerHourCurrentWeek(),
+                'currentMonth' => $this->statisticsManager->messagesSentByUserTypePerHourCurrentMonth(),
+                'previousMonth' => number_format($this->statisticsManager->messagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc
+                ) / $endOfPreviousMonthUtc->diffInHours($startOfPreviousMonthUtc), 0),
+                'currentYear' => $this->statisticsManager->messagesSentByUserTypePerHourCurrentYear()
+            ],
+            'registrationStatistics' => [
+                'registrationsToday' => $this->statisticsManager->registrationsCountBetween(
+                    $startOfToday,
+                    $endOfToday
+                ),
+                'registrationsYesterday' => $this->statisticsManager->registrationsCountBetween(
+                    $startOfYesterday,
+                    $endOfYesterday
+                ),
+                'registrationsCurrentWeek' => $this->statisticsManager->registrationsCountBetween(
+                    $startOfWeek,
+                    $endOfWeek
+                ),
+                'registrationsCurrentMonth' => $this->statisticsManager->registrationsCountBetween(
+                    $startOfMonth,
+                    $endOfMonth
+                ),
+                'registrationsPreviousMonth' => $this->statisticsManager->registrationsCountBetween(
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc
+                ),
+                'registrationsCurrentYear' => $this->statisticsManager->registrationsCountBetween(
+                    $startOfYear,
+                    $endOfToday
+                )
+            ],
+            'peasantDeactivationStatistics' => [
+                'deactivationsToday' => $this->statisticsManager->peasantDeactivationsCountBetween(
+                    $startOfToday,
+                    $endOfToday
+                ),
+                'deactivationsYesterday' => $this->statisticsManager->peasantDeactivationsCountBetween(
+                    $startOfYesterday,
+                    $endOfYesterday
+                ),
+                'deactivationsCurrentWeek' => $this->statisticsManager->peasantDeactivationsCountBetween(
+                    $startOfWeek,
+                    $endOfWeek
+                ),
+                'deactivationsCurrentMonth' => $this->statisticsManager->peasantDeactivationsCountBetween(
+                    $startOfMonth,
+                    $endOfMonth
+                ),
+                'deactivationsPreviousMonth' => $this->statisticsManager->peasantDeactivationsCountBetween(
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc
+                ),
+                'deactivationsCurrentYear' => $this->statisticsManager->peasantDeactivationsCountBetween(
+                    $startOfYear,
+                    $endOfToday
+                )
+            ],
+        ];
+
+        return view('admin.statistics.most-useful', array_merge(
+            $viewData,
+            [
+                'title' => 'Dashboard - ' . \config('app.name'),
+                'headingLarge' => 'Dashboard',
+                'headingSmall' => '',
+                'salesTax' => self::SALES_TAX,
+                'revenueChart' => $this->chartsManager->createRevenueChart(
+                    $googleAdsLaunchDate
+                ),
+                'netPeasantsAcquiredChart' => $this->chartsManager->createNetPeasantsAcquiredChart(
+                    $googleAdsLaunchDate
+                ),
+            ]
+        ));
+    }
+
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Exception
@@ -301,31 +443,31 @@ class StatisticsController extends Controller
                 'headingLarge' => 'Statistics',
                 'headingSmall' => '',
                 'salesTax' => self::SALES_TAX,
-                'registrationsMonthlyChart' => $this->chartsManager->createRegistrationsMonthlyChart(),
-                'peasantMessagesMonthlyChart' => $this->chartsManager->createPeasantMessagesMonthlyChart(),
-                'paymentsChart' => $this->chartsManager->createPaymentsChart(
-                    $googleAdsLaunchDate
+                'averagePeasantMessagesPerHourChart' => $this->chartsManager->createAveragePeasantMessagesPerHourInPeriodChart(
+                    Carbon::now('Europe/Amsterdam')->subDays(10)->setTimezone('UTC'),
+                    Carbon::now('Europe/Amsterdam')->setTimezone('UTC')
                 ),
-                'paymentsMonthlyChart' => $this->chartsManager->createPaymentsMonthlyChart(),
-                'revenueMonthlyChart' => $this->chartsManager->createRevenueMonthlyChart(),
-                'deactivationsMonthlyChart' => $this->chartsManager->createDeactivationsMonthlyChart(),
-                'netPeasantsAcquiredMonthlyChart' => $this->chartsManager->createNetPeasantsAcquiredMonthlyChart(),
-                'rpuChart' => $this->chartsManager->createRpuChart(),
-                'revenueWithoutSalesTaxChart' => $this->chartsManager->createRevenueWithoutSalesTaxChart(),
-                'revenueWithoutSalesTaxMonthlyChart' => $this->chartsManager->createRevenueWithoutSalesTaxMonthlyChart(),
                 'registrationsChart' => $this->chartsManager->createRegistrationsChart(
                     $googleAdsLaunchDate
                 ),
                 'deactivationsChart' => $this->chartsManager->createDeactivationsChart(
                     $googleAdsLaunchDate
                 ),
-                'averagePeasantMessagesPerHourChart' => $this->chartsManager->createAveragePeasantMessagesPerHourInPeriodChart(
-                    Carbon::now('Europe/Amsterdam')->subDays(10)->setTimezone('UTC'),
-                    Carbon::now('Europe/Amsterdam')->setTimezone('UTC')
+                'registrationsMonthlyChart' => $this->chartsManager->createRegistrationsMonthlyChart(),
+                'deactivationsMonthlyChart' => $this->chartsManager->createDeactivationsMonthlyChart(),
+                'netPeasantsAcquiredMonthlyChart' => $this->chartsManager->createNetPeasantsAcquiredMonthlyChart(),
+                'peasantMessagesMonthlyChart' => $this->chartsManager->createPeasantMessagesMonthlyChart(),
+                'paymentsChart' => $this->chartsManager->createPaymentsChart(
+                    $googleAdsLaunchDate
                 ),
+                'paymentsMonthlyChart' => $this->chartsManager->createPaymentsMonthlyChart(),
+                'revenueMonthlyChart' => $this->chartsManager->createRevenueMonthlyChart(),
+                'revenueWithoutSalesTaxChart' => $this->chartsManager->createRevenueWithoutSalesTaxChart(),
+                'revenueWithoutSalesTaxMonthlyChart' => $this->chartsManager->createRevenueWithoutSalesTaxMonthlyChart(),
                 'xpartnersRevenueChart' => $this->chartsManager->createAffiliateRevenueChart(
                     UserAffiliateTracking::AFFILIATE_XPARTNERS
                 ),
+                'rpuChart' => $this->chartsManager->createRpuChart(),
             ]
         ));
     }

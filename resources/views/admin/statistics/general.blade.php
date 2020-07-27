@@ -472,130 +472,144 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-xs-12">
-            <div style="width: 100%">
-                {!! $averagePeasantMessagesPerHourChart->container() !!}
-                {!! $averagePeasantMessagesPerHourChart->script() !!}
+    @if($averagePeasantMessagesPerHourChart)
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="width: 100%">
+                    {!! $averagePeasantMessagesPerHourChart->container() !!}
+                    {!! $averagePeasantMessagesPerHourChart->script() !!}
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-12">
-            <div style="width: 100%">
-                {!! $registrationsChart->container() !!}
-                {!! $registrationsChart->script() !!}
+    @endif
+    @if($registrationsChart)
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="width: 100%">
+                    {!! $registrationsChart->container() !!}
+                    {!! $registrationsChart->script() !!}
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-12">
-            <div style="width: 100%">
-                {!! $deactivationsChart->container() !!}
-                {!! $deactivationsChart->script() !!}
+    @endif
+    @if($deactivationsChart)
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="width: 100%">
+                    {!! $deactivationsChart->container() !!}
+                    {!! $deactivationsChart->script() !!}
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-12">
-            <div style="width: 100%">
-                {!! $registrationsMonthlyChart->container() !!}
-                {!! $registrationsMonthlyChart->script() !!}
+    @endif
+    @if($registrationsMonthlyChart)
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="width: 100%">
+                    {!! $registrationsMonthlyChart->container() !!}
+                    {!! $registrationsMonthlyChart->script() !!}
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-12">
-            <div style="width: 100%">
-                {!! $deactivationsMonthlyChart->container() !!}
-                {!! $deactivationsMonthlyChart->script() !!}
+    @endif
+    @if($deactivationsMonthlyChart)
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="width: 100%">
+                    {!! $deactivationsMonthlyChart->container() !!}
+                    {!! $deactivationsMonthlyChart->script() !!}
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-12">
-            <div style="width: 100%">
-                {!! $netPeasantsAcquiredMonthlyChart->container() !!}
-                {!! $netPeasantsAcquiredMonthlyChart->script() !!}
+    @endif
+    @if($netPeasantsAcquiredMonthlyChart)
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="width: 100%">
+                    {!! $netPeasantsAcquiredMonthlyChart->container() !!}
+                    {!! $netPeasantsAcquiredMonthlyChart->script() !!}
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-12">
-            <div style="width: 100%">
-                {!! $peasantMessagesMonthlyChart->container() !!}
-                {!! $peasantMessagesMonthlyChart->script() !!}
+    @endif
+    @if($peasantMessagesMonthlyChart)
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="width: 100%">
+                    {!! $peasantMessagesMonthlyChart->container() !!}
+                    {!! $peasantMessagesMonthlyChart->script() !!}
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-12">
-            <div style="width: 100%">
-                {!! $paymentsChart->container() !!}
-                {!! $paymentsChart->script() !!}
+    @endif
+    @if($paymentsChart)
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="width: 100%">
+                    {!! $paymentsChart->container() !!}
+                    {!! $paymentsChart->script() !!}
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-12">
-            <div style="width: 100%">
-                {!! $paymentsMonthlyChart->container() !!}
-                {!! $paymentsMonthlyChart->script() !!}
+    @endif
+    @if($paymentsMonthlyChart)
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="width: 100%">
+                    {!! $paymentsMonthlyChart->container() !!}
+                    {!! $paymentsMonthlyChart->script() !!}
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-12">
-            <div style="width: 100%">
-                {!! $revenueMonthlyChart->container() !!}
-                {!! $revenueMonthlyChart->script() !!}
+    @endif
+    @if($revenueMonthlyChart)
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="width: 100%">
+                    {!! $revenueMonthlyChart->container() !!}
+                    {!! $revenueMonthlyChart->script() !!}
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-12">
-            <div style="width: 100%">
-                {!! $revenueWithoutSalesTaxChart->container() !!}
-                {!! $revenueWithoutSalesTaxChart->script() !!}
+    @endif
+    @if($revenueWithoutSalesTaxChart)
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="width: 100%">
+                    {!! $revenueWithoutSalesTaxChart->container() !!}
+                    {!! $revenueWithoutSalesTaxChart->script() !!}
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-12">
-            <div style="width: 100%">
-                {!! $revenueWithoutSalesTaxMonthlyChart->container() !!}
-                {!! $revenueWithoutSalesTaxMonthlyChart->script() !!}
+    @endif
+    @if($revenueWithoutSalesTaxMonthlyChart)
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="width: 100%">
+                    {!! $revenueWithoutSalesTaxMonthlyChart->container() !!}
+                    {!! $revenueWithoutSalesTaxMonthlyChart->script() !!}
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-12">
-            <div style="width: 100%">
-                {!! $xpartnersRevenueChart->container() !!}
-                {!! $xpartnersRevenueChart->script() !!}
+    @endif
+    @if($xpartnersRevenueChart)
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="width: 100%">
+                    {!! $xpartnersRevenueChart->container() !!}
+                    {!! $xpartnersRevenueChart->script() !!}
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-12">
-            <div style="width: 100%">
-                {!! $rpuChart->container() !!}
-                {!! $rpuChart->script() !!}
+    @endif
+    @if($rpuChart)
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="width: 100%">
+                    {!! $rpuChart->container() !!}
+                    {!! $rpuChart->script() !!}
+                </div>
             </div>
         </div>
-    </div>
-
+    @endif
 @endsection

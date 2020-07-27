@@ -14,6 +14,12 @@
                     </span>
     </a>
     <ul class="treeview-menu">
+        <li class="{!! \Request::route()->getName() == 'admin.statistics.most-useful' ? 'active' : '' !!}">
+            <a href="{!! route('admin.statistics.most-useful') !!}">
+                <i class="fa fa-list"></i>
+                Most useful
+            </a>
+        </li>
         <li class="{!! \Request::route()->getName() == 'admin.statistics.general' ? 'active' : '' !!}">
             <a href="{!! route('admin.statistics.general') !!}">
                 <i class="fa fa-list"></i>

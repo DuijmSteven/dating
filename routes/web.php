@@ -223,6 +223,9 @@ Route::group([
     Route::get('dashboard', 'Admin\DashboardController@dashboard')
         ->name('admin.dashboard');
 
+    Route::get('statistics/most-useful', 'Admin\StatisticsController@mostUseful')
+        ->name('admin.statistics.most-useful');
+
     Route::get('statistics/general', 'Admin\StatisticsController@index')
         ->name('admin.statistics.general');
 
