@@ -46,7 +46,7 @@ $(window).on('load', function () {
                 request.setRequestHeader("Authorization", 'Bearer ' + DP.authenticatedUserApiToken);
             },
             dataType: "json",
-            url: DP.baseUrl + '/api/cities',
+            url: DP.baseUrl + '/api/cities/',
             success: function(data) {
                 $(".JS--autoCompleteCites").autocomplete({
                     source: data.cities
