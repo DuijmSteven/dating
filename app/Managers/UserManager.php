@@ -387,11 +387,13 @@ class UserManager
             $userDataToPersist['user_meta']['dob'] = Carbon::parse($userDataToPersist['user_meta']['dob'])->format('Y-m-d');
         }
 
-        if (isset($userDataToPersist['user_meta']['city'])) {
+        if (isset($userDataToPersist['user_meta']['city']) && strlen($userDataToPersist['user_meta']['city']) > 0) {
             $coordinates = $this->userLocationService->getCoordinatesForCity($userDataToPersist['user_meta']['city']);
 
             $userDataToPersist['user_meta']['lat'] = $coordinates['lat'];
             $userDataToPersist['user_meta']['lng'] = $coordinates['lng'];
+        } else {
+            $userDataToPersist['user_meta']['city'] = null;
         }
 
         if (empty($peasantData['user_images'][0])) {
