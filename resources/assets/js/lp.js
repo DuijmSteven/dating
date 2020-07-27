@@ -256,7 +256,7 @@ $(window).on('load', function () {
     // });
 
     // Auto-completes Dutch cities in bot creation view text field
-    $.getJSON(DP.baseUrl + '/api/cities/nl')
+    $.getJSON(DP.baseUrl + '/api/cities/nl/')
         .done(function (response) {
             cityList = response.cities;
 
