@@ -190,11 +190,13 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="password">Country</label>
-                            <input type="text"
-                                   class="form-control"
-                                   name="country"
-                                   value="{!! $bot->meta->country !!}"
-                            >
+
+                            <select name="country">
+                                <option value=""></option>
+                                <option value="nl" {{ $bot->meta->country === 'nl' ? 'selected' : '' }}>Netherlands</option>
+                                <option value="be" {{ $bot->meta->country === 'be' ? 'selected' : '' }}>Belgium</option>
+                            </select>
+
                             @if ($errors->has('country'))
                                 {!! $errors->first('country', '<small class="form-error">:message</small>') !!}
                             @endif

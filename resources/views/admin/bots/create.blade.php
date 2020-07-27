@@ -100,11 +100,11 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="password">Country</label>
-                            <input type="text"
-                                   class="form-control"
-                                   name="country"
-                                   value="{!! old('country') !!}"
-                            >
+                            <select name="country">
+                                <option value=""></option>
+                                <option value="nl" {{ old('country') === 'nl' ? 'selected' : '' }}>Netherlands</option>
+                                <option value="be" {{ old('country') === 'be' ? 'selected' : '' }}>Belgium</option>
+                            </select>
                             @if ($errors->has('country'))
                                 {!! $errors->first('country', '<small class="form-error">:message</small>') !!}
                             @endif

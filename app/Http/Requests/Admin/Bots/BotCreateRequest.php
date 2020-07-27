@@ -46,6 +46,7 @@ class BotCreateRequest extends Request
             'smoking_habits' => 'in:'. implode(',', array_keys($userProfileFields['drinking_habits'])),
             'drinking_habits' => 'in:'. implode(',', array_keys($userProfileFields['smoking_habits'])),
             'city' => 'in:' . implode(',', array_merge(UserConstants::$cities['nl'], UserConstants::$cities['be'])),
+            'country' => 'required|in:be,nl',
             'about_me' => 'string|max:1000',
             'looking_for' => 'string|max:1000',
             'profile_image' => 'image|max:4000',
