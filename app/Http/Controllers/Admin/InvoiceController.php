@@ -72,7 +72,7 @@ class InvoiceController extends Controller
         $fromDate = $request->get('fromDate');
         $untilDate = $request->get('untilDate');
         $userId = $request->get('employeeId');
-        $invoiceSequenceNumber = $request->get('sequenceNumber');
+        $invoiceSequenceNumber = (int) $request->get('sequenceNumber');
 
         /** @var User $user */
         $user = User::find($userId);
