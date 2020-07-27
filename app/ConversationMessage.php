@@ -23,7 +23,8 @@ class ConversationMessage extends TimeZonedModel
         'recipient_id',
         'body',
         'has_attachment',
-        'type'
+        'type',
+        'paid'
     ];
 
     public static $allowedMessageTypes = [

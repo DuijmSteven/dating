@@ -57,6 +57,7 @@ class ConversationManager
 
         /** @var User $sender */
         $sender = User::with(['conversationsWithRepliesToday'])
+            ->withCount(['messages'])
             ->find($messageData['sender_id']);
 
         /** @var User $recipient */
@@ -191,6 +192,17 @@ class ConversationManager
 
         $conversation->save();
 
+        // determine paid property of message
+        $isPaidMessage = null;
+
+        if ($sender->isPeasant()) {
+            if ($sender->messages_count === 0) {
+                $isPaidMessage = false;
+            } else {
+                $isPaidMessage = true;
+            }
+        }
+
         try {
             $messageInstance = new ConversationMessage([
                 'conversation_id' => $conversation->getId(),
@@ -200,7 +212,8 @@ class ConversationManager
                 'body' => $messageData['message'],
                 'has_attachment' => $hasAttachment,
                 'operator_id' => isset($messageData['operator_id']) ? $messageData['operator_id'] : null,
-                'operator_message_type' => isset($operatorMessageType) ? $operatorMessageType : null
+                'operator_message_type' => isset($operatorMessageType) ? $operatorMessageType : null,
+                'paid' => $isPaidMessage
             ]);
 
             $messageInstance->save();
