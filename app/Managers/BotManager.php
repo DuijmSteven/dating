@@ -115,6 +115,8 @@ class BotManager extends UserManager
             $userDataToPersist['user_meta']['lng'] = $coordinates['lng'];
 
             $userDataToPersist['user_meta']['city'] = trim(ucfirst($userDataToPersist['user_meta']['city']));
+        } else {
+            $userDataToPersist['user_meta']['city'] = null;
         }
 
         if (empty($botData['user_images'][0])) {
