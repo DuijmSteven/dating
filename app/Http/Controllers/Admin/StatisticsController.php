@@ -481,27 +481,33 @@ class StatisticsController extends Controller
             'peasantMessageStatistics' => [
                 'messagesSentToday' => $this->statisticsManager->paidMessagesSentCount(
                     $startOfToday,
-                    $endOfToday
+                    $endOfToday,
+                    UserAffiliateTracking::AFFILIATE_GOOGLE
                 ),
                 'messagesSentYesterday' => $this->statisticsManager->paidMessagesSentCount(
                     $startOfYesterday,
-                    $endOfYesterday
+                    $endOfYesterday,
+                    UserAffiliateTracking::AFFILIATE_GOOGLE
                 ),
                 'messagesSentCurrentWeek' => $this->statisticsManager->paidMessagesSentCount(
                     $startOfWeek,
-                    $endOfWeek
+                    $endOfWeek,
+                    UserAffiliateTracking::AFFILIATE_GOOGLE
                 ),
                 'messagesSentCurrentMonth' => $this->statisticsManager->paidMessagesSentCount(
                     $startOfMonth,
-                    $endOfMonth
+                    $endOfMonth,
+                    UserAffiliateTracking::AFFILIATE_GOOGLE
                 ),
                 'messagesSentPreviousMonth' => $this->statisticsManager->paidMessagesSentCount(
                     $startOfPreviousMonthUtc,
-                    $endOfPreviousMonthUtc
+                    $endOfPreviousMonthUtc,
+                    UserAffiliateTracking::AFFILIATE_GOOGLE
                 ),
                 'messagesSentCurrentYear' => $this->statisticsManager->paidMessagesSentCount(
                     $startOfYear,
-                    $endOfToday
+                    $endOfToday,
+                    UserAffiliateTracking::AFFILIATE_GOOGLE
                 )
             ],
             'googleAdsConversionStatistics' => [

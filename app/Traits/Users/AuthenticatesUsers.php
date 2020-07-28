@@ -3,6 +3,7 @@
 namespace App\Traits\Users;
 
 use App\Events\LogSuccessfulLogin;
+use App\OpenConversationPartner;
 use App\User;
 use App\UserMeta;
 use Carbon\Carbon;
@@ -167,7 +168,9 @@ trait AuthenticatesUsers
      */
     public function logout(Request $request)
     {
-        $this->guard()->logout();
+        OpenConversationPartner::where('user_id', $request->user()->getId())->delete();
+
+        $this->guard()->logout();   
 
         $request->session()->invalidate();
 

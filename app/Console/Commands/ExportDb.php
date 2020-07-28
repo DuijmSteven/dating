@@ -39,6 +39,8 @@ class ExportDb extends Command
      */
     public function handle()
     {
+        \Log::debug('Starting export of production DB...');
+
         set_time_limit(0);
 
         // define target file
@@ -78,6 +80,8 @@ class ExportDb extends Command
                 }
             }
             else {
+                \Log::error('Export of production DB failed');
+
                 throw new ProcessFailedException($process);
             }
 
@@ -85,6 +89,9 @@ class ExportDb extends Command
         }
         catch (\Exception $e)
         {
+            \Log::error('Export of production DB failed');
+            \Log::error($e->getMessage());
+
             $this->info($e->getMessage());
         }
     }

@@ -381,23 +381,27 @@
 
     </div>
 
-    <div class="row">
-        <div class="col-xs-12">
-            <div style="width: 100%">
-                {!! $peasantMessagesChart->container() !!}
-                {!! $peasantMessagesChart->script() !!}
+    @if($peasantMessagesChart)
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="width: 100%">
+                    {!! $peasantMessagesChart->container() !!}
+                    {!! $peasantMessagesChart->script() !!}
+                </div>
             </div>
         </div>
-    </div>
+    @endif
 
-    <div class="row">
-        <div class="col-xs-12">
-            <div style="width: 100%">
-                {!! $revenueChart->container() !!}
-                {!! $revenueChart->script() !!}
+    @if($revenueChart)
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="width: 100%">
+                    {!! $revenueChart->container() !!}
+                    {!! $revenueChart->script() !!}
+                </div>
             </div>
         </div>
-    </div>
+    @endif
 
     {{--    <div class="row">--}}
     {{--        <div class="col-xs-12">--}}

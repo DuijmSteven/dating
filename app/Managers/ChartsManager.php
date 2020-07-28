@@ -40,7 +40,8 @@ class ChartsManager
             ->select(\DB::raw('DATE(CONVERT_TZ(cm.created_at, \'UTC\', \'Europe/Amsterdam\')) as creationDate, COUNT(cm.id) AS messagesCount'))
             ->leftJoin('users as u', 'u.id', 'cm.sender_id')
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
-            ->where('cm.created_at', '>=', $since);
+            ->where('cm.created_at', '>=', $since)
+            ->where('cm.paid', true);
 
         if ($affiliate) {
             $query->leftJoin('user_affiliate_tracking as uat', 'u.id', 'uat.user_id')
@@ -128,6 +129,7 @@ class ChartsManager
             )
             ->leftJoin('users as u', 'u.id', 'cm.sender_id')
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('cm.paid', true)
             ->where('cm.created_at', '>=', '2020-05-01 00:00:00');
 
 
@@ -204,6 +206,7 @@ class ChartsManager
             )
             ->leftJoin('users as u', 'u.id', 'cm.sender_id')
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
+            ->where('cm.paid', true)
             ->whereBetween('cm.created_at', [
                 $startDate,
                 $endDate

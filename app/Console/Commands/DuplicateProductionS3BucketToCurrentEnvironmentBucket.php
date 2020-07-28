@@ -22,6 +22,8 @@ class DuplicateProductionS3BucketToCurrentEnvironmentBucket extends Command
      */
     protected $description = 'Copies content of altijdsex production s3 bucket to staging.altijdsex staging s3 bucket';
 
+    public $timeout = 0;
+
     /**
      * Create a new command instance.
      *
@@ -39,7 +41,7 @@ class DuplicateProductionS3BucketToCurrentEnvironmentBucket extends Command
      */
     public function handle()
     {
-        set_time_limit(500);
+        ini_set('max_execution_time', 500);
 
         $bucketName = config('filesystems.disks.cloud.bucket');
 
