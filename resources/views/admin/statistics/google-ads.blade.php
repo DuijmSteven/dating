@@ -59,28 +59,36 @@
                 <div class="box-footer no-padding">
                     <ul class="nav nav-stacked">
                         <li><a href="#">Today <span
-                                    class="DashboardWidget_count">&euro; {{ $googleAdsRevenueStatistics['revenueToday']/100 }} (<span
+                                    class="DashboardWidget_count">&euro; {{ number_format($googleAdsRevenueStatistics['revenueToday']/100, 2) }} (<span
                                         style="color: #08a05e; font-weight: 600">{{ number_format($googleAdsRevenueStatistics['revenueToday']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
                         </li>
                         <li><a href="#">Yesterday <span
-                                    class="DashboardWidget_count">&euro; {{ $googleAdsRevenueStatistics['revenueYesterday']/100 }} (<span
+                                    class="DashboardWidget_count">&euro; {{ number_format($googleAdsRevenueStatistics['revenueYesterday']/100, 2) }} (<span
                                         style="color: #08a05e; font-weight: 600">{{ number_format($googleAdsRevenueStatistics['revenueYesterday']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
                         </li>
                         <li><a href="#">Current week <span
-                                    class="DashboardWidget_count">&euro; {{ $googleAdsRevenueStatistics['revenueCurrentWeek']/100 }} (<span
+                                    class="DashboardWidget_count">&euro; {{ number_format($googleAdsRevenueStatistics['revenueCurrentWeek']/100, 2) }} (<span
                                         style="color: #08a05e; font-weight: 600">{{ number_format($googleAdsRevenueStatistics['revenueCurrentWeek']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
                         </li>
                         <li><a href="#">Current month <span
-                                    class="DashboardWidget_count">&euro; {{ $googleAdsRevenueStatistics['revenueCurrentMonth']/100 }} (<span
+                                    class="DashboardWidget_count">&euro; {{ number_format($googleAdsRevenueStatistics['revenueCurrentMonth']/100, 2) }} (<span
                                         style="color: #08a05e; font-weight: 600">{{ number_format($googleAdsRevenueStatistics['revenueCurrentMonth']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
                         </li>
                         <li><a href="#">Last month <span
-                                    class="DashboardWidget_count">&euro; {{ $googleAdsRevenueStatistics['revenuePreviousMonth']/100 }} (<span
+                                    class="DashboardWidget_count">&euro; {{ number_format($googleAdsRevenueStatistics['revenuePreviousMonth']/100, 2) }} (<span
                                         style="color: #08a05e; font-weight: 600">{{ number_format($googleAdsRevenueStatistics['revenuePreviousMonth']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
                         </li>
                         <li><a href="#">Current year <span
-                                    class="DashboardWidget_count">&euro; {{ $googleAdsRevenueStatistics['revenueCurrentYear']/100 }} (<span
+                                    class="DashboardWidget_count">&euro; {{ number_format($googleAdsRevenueStatistics['revenueCurrentYear']/100, 2) }} (<span
                                         style="color: #08a05e; font-weight: 600">{{ number_format($googleAdsRevenueStatistics['revenueCurrentYear']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
+                        </li>
+                        <li><a href="#">Average last 7 days <span
+                                    class="DashboardWidget_count">&euro; {{ number_format($googleAdsRevenueStatistics['averageRevenueLastSevenDays']/100, 2) }} (<span
+                                        style="color: #08a05e; font-weight: 600">{{ number_format($googleAdsRevenueStatistics['averageRevenueLastSevenDays']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
+                        </li>
+                        <li><a href="#">Average last 30 days <span
+                                    class="DashboardWidget_count">&euro; {{ number_format($googleAdsRevenueStatistics['averageRevenueLastThirtyDays']/100, 2) }} (<span
+                                        style="color: #08a05e; font-weight: 600">{{ number_format($googleAdsRevenueStatistics['averageRevenueLastThirtyDays']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
                         </li>
                         <li><a href="#">All time ad expenses <span
                                     class="DashboardWidget_count">&euro; {{ $googleAdsRevenueStatistics['allTimeAdExpenses']/100 }} </span></a>

@@ -9,6 +9,7 @@ use App\EmailType;
 use App\Http\Controllers\Controller;
 use App\Mail\MessageReceived;
 use App\Managers\UserManager;
+use App\OpenConversationPartner;
 use App\PastMassMessage;
 use App\Payment;
 use App\User;
@@ -281,7 +282,16 @@ class MassMessageController extends Controller
 
                 $messageInstance->save();
 
-                $user->addOpenConversationPartner($bot, 1);
+                $recipientPartnerIds = OpenConversationPartner::where('user_id', $user->getId())
+                    ->get()
+                    ->pluck('partner_id')
+                    ->toArray();
+
+                $recipientOpenConversationPartnersCount = count($recipientPartnerIds);
+
+                if (!in_array($bot->getId(), $recipientPartnerIds) && $recipientOpenConversationPartnersCount < 2) {
+                    $user->addOpenConversationPartner($bot, 1);
+                }
 
                 $recipientEmailTypeIds = $user->emailTypes->pluck('id')->toArray();
 

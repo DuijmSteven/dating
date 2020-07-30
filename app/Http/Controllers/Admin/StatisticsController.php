@@ -433,6 +433,9 @@ class StatisticsController extends Controller
         $startOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->startOfDay()->setTimezone('UTC');
         $endOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->endOfDay()->setTimezone('UTC');
 
+        $startOfSevenDaysAgo = Carbon::now('Europe/Amsterdam')->subDays(7)->startOfDay()->setTimezone('UTC');
+        $startOfThirtyDaysAgo = Carbon::now('Europe/Amsterdam')->subDays(30)->startOfDay()->setTimezone('UTC');
+
         $startOfWeek = Carbon::now('Europe/Amsterdam')->startOfWeek()->setTimezone('UTC');
         $endOfWeek = Carbon::now('Europe/Amsterdam')->endOfWeek()->setTimezone('UTC');
         $startOfMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->setTimezone('UTC');
@@ -574,6 +577,16 @@ class StatisticsController extends Controller
                     $startOfYear,
                     $endOfToday
                 ),
+                'averageRevenueLastSevenDays' => $this->statisticsManager->affiliateRevenueBetween(
+                        UserAffiliateTracking::AFFILIATE_GOOGLE,
+                        $startOfSevenDaysAgo,
+                        $endOfYesterday
+                    ) / 7,
+                'averageRevenueLastThirtyDays' => $this->statisticsManager->affiliateRevenueBetween(
+                        UserAffiliateTracking::AFFILIATE_GOOGLE,
+                        $startOfThirtyDaysAgo,
+                        $endOfYesterday
+                    ) / 30,
                 'allTimeAdExpenses' => $googleAdsExpensesAllTime,
                 'allTimeNetRevenue' => $googleAdsRevenueAllTime - $googleAdsExpensesAllTime,
             ],

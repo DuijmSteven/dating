@@ -106,7 +106,7 @@ if ($('#app').length > 0) {
                 );
             },
             addChat: function (currentUserId, userBId, state = '1', persist = false) {
-                if (this.conversationPartners.length > 3) {
+                if (this.conversationPartners.length > 2) {
                     return false;
                 }
 

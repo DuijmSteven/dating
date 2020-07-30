@@ -191,6 +191,14 @@
                                     class="DashboardWidget_count">&euro; {{ $revenueStatistics['revenueCurrentYear']/100 }} (<span
                                         style="color: #08a05e; font-weight: 600">{{ number_format($revenueStatistics['revenueCurrentYear']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
                         </li>
+                        <li><a href="#">Average last 7 days <span
+                                    class="DashboardWidget_count">&euro; {{ $revenueStatistics['averageRevenueLastSevenDays']/100 }} (<span
+                                        style="color: #08a05e; font-weight: 600">{{ number_format($revenueStatistics['averageRevenueLastSevenDays']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
+                        </li>
+                        <li><a href="#">Average last 30 days <span
+                                    class="DashboardWidget_count">&euro; {{ $revenueStatistics['averageRevenueLastThirtyDays']/100 }} (<span
+                                        style="color: #08a05e; font-weight: 600">{{ number_format($revenueStatistics['averageRevenueLastThirtyDays']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
+                        </li>
                     </ul>
                 </div>
             </div>

@@ -106,6 +106,9 @@ class DashboardController extends Controller
         $startOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->startOfDay()->setTimezone('UTC');
         $endOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->endOfDay()->setTimezone('UTC');
 
+        $startOfSevenDaysAgo = Carbon::now('Europe/Amsterdam')->subDays(7)->startOfDay()->setTimezone('UTC');
+        $startOfThirtyDaysAgo = Carbon::now('Europe/Amsterdam')->subDays(30)->startOfDay()->setTimezone('UTC');
+
         $startOfWeek = Carbon::now('Europe/Amsterdam')->startOfWeek()->setTimezone('UTC');
         $endOfWeek = Carbon::now('Europe/Amsterdam')->endOfWeek()->setTimezone('UTC');
         $startOfMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->setTimezone('UTC');
@@ -222,7 +225,15 @@ class DashboardController extends Controller
                 'revenueCurrentYear' => $this->statisticsManager->revenueBetween(
                     $startOfYear,
                     $endOfToday
-                )
+                ),
+                'averageRevenueLastSevenDays' => $this->statisticsManager->revenueBetween(
+                    $startOfSevenDaysAgo,
+                    $endOfYesterday
+                ) / 7,
+                'averageRevenueLastThirtyDays' => $this->statisticsManager->revenueBetween(
+                    $startOfThirtyDaysAgo,
+                    $endOfYesterday
+                ) / 30,
             ],
             'conversionStatistics' => [
                 'conversionsToday' => $this->statisticsManager->affiliateConversionsBetweenCount(
