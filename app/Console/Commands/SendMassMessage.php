@@ -224,7 +224,6 @@ class SendMassMessage extends Command
                 );
 
                 if (
-                    false &&
                     $recipientHasMessageNotificationsEnabled &&
                     !in_array($user->getId(), $onlineUserIds)
                 ) {
