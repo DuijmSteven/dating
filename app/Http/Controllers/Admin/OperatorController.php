@@ -9,6 +9,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Kim\Activity\Activity;
 
 /**
@@ -192,6 +193,7 @@ class OperatorController extends Controller
         $operatorData = $operatorCreateRequest->all();
         $operatorData['city'] = strtolower($operatorData['city']);
         $operatorData['user']['role'] = User::TYPE_OPERATOR;
+        $operatorData['user']['api_token'] = Str::random(60);
 
         try {
             $this->userManager->createUser($operatorData);

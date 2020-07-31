@@ -357,9 +357,9 @@ class UserManager
      * @return array
      * @throws \Spatie\Geocoder\Exceptions\CouldNotGeocode
      */
-    private function buildUserArrayToPersist(array $peasantData, string $action)
+    private function buildUserArrayToPersist(array $userData, string $action)
     {
-        $usersTableData = Arr::where($peasantData, function ($value, $key) {
+        $usersTableData = Arr::where($userData, function ($value, $key) {
             return in_array(
                 $key,
                 array_merge(
@@ -369,7 +369,7 @@ class UserManager
             );
         });
 
-        $userMetaTableData = Arr::where($peasantData, function ($value, $key) {
+        $userMetaTableData = Arr::where($userData, function ($value, $key) {
             return in_array(
                 $key,
                 array_merge(
@@ -396,29 +396,29 @@ class UserManager
             $userDataToPersist['user_meta']['city'] = null;
         }
 
-        if (empty($peasantData['user_images'][0])) {
+        if (empty($userData['user_images'][0])) {
             $userDataToPersist['user_images'] = [];
         } else {
-            $userDataToPersist['user_images'] = $peasantData['user_images'];
+            $userDataToPersist['user_images'] = $userData['user_images'];
         }
 
-        if (!isset($peasantData['profile_image'])) {
+        if (!isset($userData['profile_image'])) {
             $userDataToPersist['profile_image'] = null;
         } else {
-            $userDataToPersist['profile_image'] = $peasantData['profile_image'];
+            $userDataToPersist['profile_image'] = $userData['profile_image'];
         }
 
         if ($action == 'create') {
             $userDataToPersist['user']['password'] = Hash::make($userDataToPersist['user']['password']);
 
-            if (isset($peasantData['user']['role'])) {
-                $userDataToPersist['user']['role'] = $peasantData['user']['role'];
+            if (isset($userData['user']['role'])) {
+                $userDataToPersist['user']['role'] = $userData['user']['role'];
             }
         }
 
         if ($action == 'update') {
-            if (isset($peasantData['email_notifications'])) {
-                $userDataToPersist['email_notifications'] = $peasantData['email_notifications'];
+            if (isset($userData['email_notifications'])) {
+                $userDataToPersist['email_notifications'] = $userData['email_notifications'];
             } else {
                 $userDataToPersist['email_notifications'] = [];
             }

@@ -135,6 +135,9 @@
                         <li><a href="#">All time conversion rate <span
                                     class="DashboardWidget_count">{{ number_format($googleAdsConversionStatistics['allTimeConversionRate'], 1) }}% </span></a>
                         </li>
+                        <li><a href="#">All time cost per conversion <span
+                                    class="DashboardWidget_count">&euro;{{ number_format($googleAdsConversionStatistics['allTimeCostPerConversion'] / 100, 2) }} </span></a>
+                        </li>
                     </ul>
                 </div>
             </div>

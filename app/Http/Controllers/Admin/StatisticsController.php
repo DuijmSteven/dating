@@ -480,6 +480,12 @@ class StatisticsController extends Controller
             ->where('created_at', '>=', $launchDate)
             ->count();
 
+        $googleAdsConversionsAllTime = $this->statisticsManager->affiliateConversionsBetweenCount(
+            UserAffiliateTracking::AFFILIATE_GOOGLE,
+            $googleAdsLaunchDate,
+            $endOfToday
+        );
+
         $viewData = [
             'peasantMessageStatistics' => [
                 'messagesSentToday' => $this->statisticsManager->paidMessagesSentCount(
@@ -544,7 +550,9 @@ class StatisticsController extends Controller
                     $startOfYear,
                     $endOfToday
                 ),
-                'allTimeConversionRate' => $googleAdsConversionsAllTimeCount / $googleAdsLeadsAllTimeCount * 100
+                'conversionsAllTime' => $googleAdsConversionsAllTime,
+                'allTimeConversionRate' => $googleAdsConversionsAllTimeCount / $googleAdsLeadsAllTimeCount * 100,
+                'allTimeCostPerConversion' => $googleAdsExpensesAllTime / $googleAdsConversionsAllTime
             ],
             'googleAdsRevenueStatistics' => [
                 'revenueToday' => $this->statisticsManager->affiliateRevenueBetween(
