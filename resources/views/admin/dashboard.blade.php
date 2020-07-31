@@ -196,7 +196,9 @@
                                         style="color: #08a05e; font-weight: 600">{{ number_format($revenueStatistics['averageRevenueLastSevenDays']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
                         </li>
                         <li><a href="#">Average last 30 days <span
-                                    class="DashboardWidget_count">&euro; {{ number_format($revenueStatistics['averageRevenueLastThirtyDays']/100, 2) }} (<span
+                                    class="DashboardWidget_count">&euro; {{ number_format($revenueStatistics['averageRevenueLastThirtyDays']/100, 2
+
+                                    ) }} (<span
                                         style="color: #08a05e; font-weight: 600">{{ number_format($revenueStatistics['averageRevenueLastThirtyDays']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
                         </li>
                     </ul>

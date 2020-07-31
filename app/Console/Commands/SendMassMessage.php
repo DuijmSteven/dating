@@ -7,17 +7,22 @@ use App\ConversationMessage;
 use App\EmailType;
 use App\Mail\MessageReceived;
 use App\Managers\UserManager;
+use App\OpenConversationPartner;
 use App\PastMassMessage;
+use App\Payment;
 use App\User;
 use App\UserMeta;
 use App\UserView;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 use Kim\Activity\Activity;
 
 class SendMassMessage extends Command
 {
+    use InteractsWithQueue;
+
     /**
      * The name and signature of the console command.
      *
@@ -56,10 +61,22 @@ class SendMassMessage extends Command
      */
     public function handle()
     {
+        if ($this->attempts() > 1) {
+            \Log::debug('Send mass message job attempted to execute a second time. Cancelling...');
+            $this->fail();
+            return false;
+        }
+
         $messageBody = $this->argument('body');
         $limitMessage = $this->argument('limitation');
 
         $onlineUserIds = Activity::users(5)->pluck('user_id')->toArray();
+
+        $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');
+        $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
+        $startOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->startOfDay()->setTimezone('UTC');
+        $endOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->endOfDay()->setTimezone('UTC');
+        $startOfFourDaysAgo = Carbon::now('Europe/Amsterdam')->subDays(4)->startOfDay()->setTimezone('UTC');
 
         $usersQuery = User::with(['meta'])
             ->whereHas('roles', function ($query) {
@@ -71,38 +88,81 @@ class SendMassMessage extends Command
                 $query->where('looking_for_gender', User::GENDER_FEMALE);
             });
 
+        if ($limitMessage === 'unlimited') {
+            // temporary solution
+            $usersQuery->where('exclude_from_mass_messages', '=', false);
+        }
+
         if ($limitMessage === 'limited_with_pic') {
+            $usersQuery->where('exclude_from_mass_messages', '=', false);
+
             $usersQuery->where(function ($query) {
                 $query->whereHas('meta', function ($query) {
                     $query->where('dob', '!=', null);
-                    $query->orWhere('city', '!=',  null);
+                    $query->orWhere('city', '!=', null);
                 })
                     ->orWhereHas('images');
             });
         } else if ($limitMessage === 'limited_no_pic') {
+            $usersQuery->where('exclude_from_mass_messages', '=', false);
+
             $usersQuery
                 ->whereDoesntHave('images')
                 ->where(function ($query) {
                     $query->whereHas('meta', function ($query) {
                         $query->where('dob', '=', null);
-                        $query->where('city', '=',  null);
-                        $query->where('eye_color', '=',  null);
-                        $query->where('hair_color', '=',  null);
+                        $query->where('city', '=', null);
+                        $query->where('eye_color', '=', null);
+                        $query->where('hair_color', '=', null);
                     });
                 });
+        } else if ($limitMessage === 'limited_have_payed') {
+
+            // temporary solution
+            $usersQuery->where('exclude_from_mass_messages', '=', false);
+
+            $usersQuery
+                ->whereHas('payments', function ($query) {
+                    $query->where('status', Payment::STATUS_COMPLETED);
+                });
+        } else if ($limitMessage === 'limited_have_payed_and_no_images') {
+
+            // temporary solution
+            $usersQuery->where('exclude_from_mass_messages', '=', false);
+
+            $usersQuery
+                ->whereHas('payments', function ($query) {
+                    $query->where('status', Payment::STATUS_COMPLETED);
+                })
+                ->whereDoesntHave('images');
+        } else if ($limitMessage === 'limited_today') {
+            $usersQuery
+                ->whereBetween('created_at', [$startOfToday, $endOfToday]);
+        } else if ($limitMessage === 'limited_yesterday') {
+            $usersQuery
+                ->whereBetween('created_at', [$startOfYesterday, $endOfYesterday]);
+        } else if ($limitMessage === 'limited_yesterday_up_to_four_days_ago') {
+            $usersQuery
+                ->whereBetween('created_at', [$startOfFourDaysAgo, $endOfYesterday]);
         }
 
         $users = $usersQuery->get();
 
+        $emailDelay = 0;
+        $loopCount = 0;
         $errorsCount = 0;
+        $unmailableCount = 0;
 
         /** @var User $user */
         foreach ($users as $user) {
+            if ($loopCount % 5 === 0) {
+                $emailDelay++;
+            }
+
             try {
                 \DB::beginTransaction();
 
-                $bot = User::with(['emailTypes'])
-                    ->where('active', true)
+                $bot = User::where('active', true)
                     ->whereHas('meta', function ($query) use ($user) {
                         $query->where('looking_for_gender', $user->meta->gender);
                         $query->where('gender', $user->meta->looking_for_gender);
@@ -145,7 +205,16 @@ class SendMassMessage extends Command
 
                 $messageInstance->save();
 
-                $user->addOpenConversationPartner($bot, 1);
+                $recipientPartnerIds = OpenConversationPartner::where('user_id', $user->getId())
+                    ->get()
+                    ->pluck('partner_id')
+                    ->toArray();
+
+                $recipientOpenConversationPartnersCount = count($recipientPartnerIds);
+
+                if (!in_array($bot->getId(), $recipientPartnerIds) && $recipientOpenConversationPartnersCount < 2) {
+                    $user->addOpenConversationPartner($bot, 1);
+                }
 
                 $recipientEmailTypeIds = $user->emailTypes->pluck('id')->toArray();
 
@@ -155,27 +224,34 @@ class SendMassMessage extends Command
                 );
 
                 if (
+                    false &&
                     $recipientHasMessageNotificationsEnabled &&
-                    !in_array($user->getId(), $onlineUserIds) &&
-                    $user->isMailable
+                    !in_array($user->getId(), $onlineUserIds)
                 ) {
-                    if (config('app.env') === 'production') {
-                        $messageReceivedEmail = (new MessageReceived(
-                            $bot,
-                            $user,
-                            $messageBody,
-                            false
-                        ))->onQueue('emails');
+                    if ($user->isMailable) {
+                        if (config('app.env') === 'production') {
+                            $messageReceivedEmail =
+                                (new MessageReceived(
+                                    $bot,
+                                    $user,
+                                    $messageBody,
+                                    false
+                                ))
+                                    ->delay($emailDelay)
+                                    ->onQueue('emails');
 
-                        Mail::to($user)
-                            ->queue($messageReceivedEmail);
+                            Mail::to($user)
+                                ->queue($messageReceivedEmail);
+                        }
+
+                        $user->emailTypeInstances()->attach(EmailType::MESSAGE_RECEIVED, [
+                            'email' => $user->getEmail(),
+                            'email_type_id' => EmailType::MESSAGE_RECEIVED,
+                            'actor_id' => $bot->getId()
+                        ]);
+                    } else {
+                        $unmailableCount++;
                     }
-
-                    $user->emailTypeInstances()->attach(EmailType::MESSAGE_RECEIVED, [
-                        'email' => $user->getEmail(),
-                        'email_type_id' => EmailType::MESSAGE_RECEIVED,
-                        'actor_id' => $bot->getId()
-                    ]);
                 }
 
                 $this->userManager->storeProfileView(
@@ -192,6 +268,8 @@ class SendMassMessage extends Command
 
                 \Log::info(__CLASS__ . ' - ' . $exception->getMessage());
             }
+
+            $loopCount++;
         }
 
         $pastMassMessageInstance = new PastMassMessage();
@@ -200,10 +278,10 @@ class SendMassMessage extends Command
         $pastMassMessageInstance->save();
 
         if ($errorsCount) {
-            \Log::debug(($users->count() - $errorsCount) . ' messages were sent and ' . $errorsCount . ' messages were not sent');
+            \Log::debug(($users->count() - $errorsCount) . ' messages were sent and ' . $errorsCount . ' messages were not sent due to errors, ' . $unmailableCount . ' not sent due to the emails being un-mailable. ' . $unmailableCount . ' emails were not sent to un-mailable accounts.');
 
         } else {
-            \Log::debug($users->count() . ' messages were sent successfully');
+            \Log::debug($users->count() . ' messages were sent successfully. ' . $unmailableCount . ' emails were not sent to un-mailable accounts');
         }
     }
 }
