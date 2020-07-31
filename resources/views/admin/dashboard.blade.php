@@ -93,6 +93,36 @@
                     <div class="widget-us DashboardWidget_header"
                          style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
                         <i class="fa fa-users DashboardWidget_header-icon"></i>
+                        <span class="DashboardWidget_header-title"><b>{{ $unspentCreditsOfUsersActiveInLastThirtyDays }} unspent credits (30 days)</b></span>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="box box-widget DashboardWidget">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="bg-aqua">
+                    <div class="widget-us DashboardWidget_header"
+                         style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
+                        <i class="fa fa-users DashboardWidget_header-icon"></i>
+                        <span class="DashboardWidget_header-title"><b>{{ $unspentCreditsOfUsersActiveInLastTenDays }} unspent credits (10 days)</b></span>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="box box-widget DashboardWidget">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="bg-aqua">
+                    <div class="widget-us DashboardWidget_header"
+                         style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
+                        <i class="fa fa-users DashboardWidget_header-icon"></i>
+                        <span class="DashboardWidget_header-title"><b>{{ $unspentCreditsOfUsersActiveInLastThreeDays }} unspent credits (3 days)</b></span>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="box box-widget DashboardWidget">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="bg-aqua">
+                    <div class="widget-us DashboardWidget_header"
+                         style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">
+                        <i class="fa fa-users DashboardWidget_header-icon"></i>
                         <span class="DashboardWidget_header-title"><b>{{ $messageRateLastHour }} peasant messages per hour</b></span>
                     </div>
                 </div>
@@ -196,9 +226,7 @@
                                         style="color: #08a05e; font-weight: 600">{{ number_format($revenueStatistics['averageRevenueLastSevenDays']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
                         </li>
                         <li><a href="#">Average last 30 days <span
-                                    class="DashboardWidget_count">&euro; {{ number_format($revenueStatistics['averageRevenueLastThirtyDays']/100, 2
-
-                                    ) }} (<span
+                                    class="DashboardWidget_count">&euro; {{ number_format($revenueStatistics['averageRevenueLastThirtyDays']/100, 2) }} (<span
                                         style="color: #08a05e; font-weight: 600">{{ number_format($revenueStatistics['averageRevenueLastThirtyDays']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
                         </li>
                     </ul>

@@ -151,6 +151,9 @@ class DashboardController extends Controller
 //                $startOfToday,
 //                $endOfToday
 //            ),
+            'unspentCreditsOfUsersActiveInLastThirtyDays' => $this->statisticsManager->unspentCredits(30),
+            'unspentCreditsOfUsersActiveInLastTenDays' => $this->statisticsManager->unspentCredits(10),
+            'unspentCreditsOfUsersActiveInLastThreeDays' => $this->statisticsManager->unspentCredits(3),
             'availableConversationsCount' => $this->conversationManager->getConversationsByCycleStageCount([
                 Conversation::CYCLE_STAGE_NEW,
                 Conversation::CYCLE_STAGE_UNREPLIED

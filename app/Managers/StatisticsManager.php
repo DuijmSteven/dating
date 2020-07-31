@@ -9,7 +9,9 @@ use App\Facades\Helpers\PaymentsHelper;
 use App\Payment;
 use App\Role;
 use App\User;
+use App\UserAccount;
 use App\UserAffiliateTracking;
+use App\UserMeta;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -50,6 +52,27 @@ class StatisticsManager
 
         return $query
             ->sum('amount');
+    }
+
+    public function unspentCredits($onlyUsersThatMessagedWithinLatestNumberOfDays = null)
+    {
+        $query = UserAccount
+            ::whereHas('peasant', function ($query) {
+                $query->where('active', true);
+            })
+            ->whereHas('peasant.payments', function ($query) {
+                $query->where('status', Payment::STATUS_COMPLETED);
+            });
+
+
+        if ($onlyUsersThatMessagedWithinLatestNumberOfDays) {
+            $query->whereHas('peasant.messages', function ($query) use ($onlyUsersThatMessagedWithinLatestNumberOfDays) {
+                $query->where('created_at', '>=', Carbon::now()->subDays($onlyUsersThatMessagedWithinLatestNumberOfDays));
+            });
+        }
+
+        return $query
+            ->sum('credits');
     }
 
     public function affiliateRevenueBetween(string $affiliate, $startDate, $endDate)
