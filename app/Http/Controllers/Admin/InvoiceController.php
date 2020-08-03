@@ -135,7 +135,7 @@ class InvoiceController extends Controller
             ->format('d-m-Y');
 
         $item = (new InvoiceItem())
-            ->title('Content diensten ' . $formattedFromDate . ' tot ' . $formattedUntilDate)
+            ->title('Content diensten ' . $formattedFromDate . ' tot en met ' . $formattedUntilDate)
             ->pricePerUnit(($costOfStopped + $costOfNormal) / 100);
 
         $invoice = Invoice::make()
