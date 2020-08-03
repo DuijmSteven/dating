@@ -1339,6 +1339,9 @@ class User extends Authenticatable
         $startOfLastWeekUtc = $startOfLastWeek->setTimezone('UTC');
         $endOfLastWeekUtc = $endOfLastWeek->setTimezone('UTC');
 
+
+        dd($startOfLastWeekUtc, $endOfLastWeekUtc);
+
         return $this->hasMany(ConversationMessage::class, 'operator_id')
             ->where('created_at', '>=', $startOfLastWeekUtc)
             ->where('created_at', '<=', $endOfLastWeekUtc)

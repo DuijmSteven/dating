@@ -79,11 +79,13 @@ class InvoiceController extends Controller
 
         $fromDate = (new Carbon($fromDate))
             ->tz('Europe/Amsterdam')
-            ->format('Y-m-d H:i:s');
+            ->startOfDay()
+            ->setTimezone('UTC');
 
         $untilDate = (new Carbon($untilDate))
             ->tz('Europe/Amsterdam')
-            ->format('Y-m-d H:i:s');
+            ->endOfDay()
+            ->setTimezone('UTC');
 
         $normalMessagesCount = ConversationMessage
             ::where('operator_id', $userId)
@@ -116,6 +118,8 @@ class InvoiceController extends Controller
         }
 
         $costOfNormal = $costOfEachNormalMessageInCents * $normalMessagesCount;
+
+        //dd($normalMessagesCount, $stoppedMessagesCount, $costOfEachNormalMessageInCents);
 
         $customer = new Buyer([
             'name' => substr($user->getFirstName(), 0, 1) . '. ' . $user->getLastName(),
