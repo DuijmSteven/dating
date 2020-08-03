@@ -1339,9 +1339,6 @@ class User extends Authenticatable
         $startOfLastWeekUtc = $startOfLastWeek->setTimezone('UTC');
         $endOfLastWeekUtc = $endOfLastWeek->setTimezone('UTC');
 
-
-        dd($startOfLastWeekUtc, $endOfLastWeekUtc);
-
         return $this->hasMany(ConversationMessage::class, 'operator_id')
             ->where('created_at', '>=', $startOfLastWeekUtc)
             ->where('created_at', '<=', $endOfLastWeekUtc)
@@ -1499,7 +1496,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(BotMessage::class, 'bot_id');
     }
-    
+
     public function getExcludeFromMassMessages()
     {
         return $this->exclude_from_mass_messages;
