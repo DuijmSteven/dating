@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\User;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Spatie\Geocoder\Geocoder;
@@ -29,7 +30,7 @@ class UserLocationService
         return $ip;
     }
 
-    public function getLocationFromIp($ip)
+    public function getCountryCodeFromIp($ip)
     {
         $client = new Client();
         try {
@@ -50,11 +51,56 @@ class UserLocationService
         }
     }
 
+    public function getLocationFromIp($ip)
+    {
+        $client = new Client();
+        try {
+            $response = $client->request(
+                'GET',
+                'http://api.ipstack.com/' . $ip . '?access_key=b56f13e4f12b980317694de933fd340d',
+                [
+                    'timeout' => 4
+                ]
+            );
+            $response = json_decode($response->getBody(), true);
+            return $response;
+        } catch (RequestException $e) {
+            \Log::error('Cannot get IP - ' . Psr7\str($e->getRequest()));
+            if ($e->hasResponse()) {
+                \Log::error('Cannot get IP - ' . Psr7\str($e->getResponse()));
+            }
+        }
+    }
+
     public function getCoordinatesForCity(string $city)
     {
         $explodedCity = explode(' (', $city);
         $cityName = trim($explodedCity[0]);
         $countryCode = explode(')', $explodedCity[1])[0];
+
+        $client = new Client();
+        $geocoder = new GeocoderService($client, $countryCode);
+
+        return $geocoder->getCoordinatesForAddress($cityName . ', ' . $countryCode);
+    }
+
+    public function getCoordinatesForUser(User $user)
+    {
+
+        if ($user->meta->city) {
+            $explodedCity = explode(' (', $user->meta->city);
+            $cityName = trim($explodedCity[0]);
+            $countryCode = explode(')', $explodedCity[1])[0];
+        } else {
+            $location = $this->getLocationFromIp($this->getUserIp());
+            $cityName = $location['city'];
+            $countryCode = $location['country_code'];
+        }
+
+        if (!$cityName || !$countryCode) {
+            $cityName = 'Amsterdam';
+            $countryCode = 'nl';
+        }
 
         $client = new Client();
         $geocoder = new GeocoderService($client, $countryCode);

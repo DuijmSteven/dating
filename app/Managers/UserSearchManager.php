@@ -143,7 +143,6 @@ class UserSearchManager
                 $query = $query->whereHas(
                     'meta',
                     function ($query) use (
-                        $parameters,
                         $latMin,
                         $latMax,
                         $lngMin,

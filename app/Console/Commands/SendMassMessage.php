@@ -159,15 +159,60 @@ class SendMassMessage extends Command
                 $emailDelay++;
             }
 
+            $radiusSearch = false;
+
+            // determine location for radius search
+            if ($user->meta->country === 'be') {
+                $radiusSearch = true;
+
+                $lat = 51.030916;
+                $lng = 4.622086;
+
+                $latInRadians = deg2rad($lat);
+                $lngInRadians = deg2rad($lng);
+
+                $angularRadius = 150 / 6371;
+
+                $latMin = rad2deg($latInRadians - $angularRadius);
+                $latMax = rad2deg($latInRadians + $angularRadius);
+
+                $deltaLng = asin(sin($angularRadius) / cos($latInRadians));
+
+                $lngMin = rad2deg($lngInRadians - $deltaLng);
+                $lngMax = rad2deg($lngInRadians + $deltaLng);
+            }
+
             try {
                 \DB::beginTransaction();
 
-                $bot = User::where('active', true)
+                $query = User::where('active', true);
+
+                if ($radiusSearch) {
+                    $query->join('user_meta as um', 'users.id', '=', 'um.user_id')
+                        ->select('users.*');
+                }
+
+                $query
                     ->whereHas('meta', function ($query) use ($user) {
                         $query->where('looking_for_gender', $user->meta->gender);
                         $query->where('gender', $user->meta->looking_for_gender);
-                    })
-                    ->whereHas('roles', function ($query) {
+                    });
+
+                if ($radiusSearch) {
+                    $query->whereHas('meta', function ($query) use (
+                        $latMin,
+                        $latMax,
+                        $lngMin,
+                        $lngMax
+                    ) {
+                        $query->where('lat', '>=', $latMin)
+                            ->where('lat', '<=', $latMax)
+                            ->where('lng', '>=', $lngMin)
+                            ->where('lng', '<=', $lngMax);
+                    });
+                }
+
+                $query->whereHas('roles', function ($query) {
                         $query->where('id', User::TYPE_BOT);
                     })
                     ->whereDoesntHave('conversationsAsUserA', function ($query) use ($user) {
@@ -176,8 +221,9 @@ class SendMassMessage extends Command
                     ->whereDoesntHave('conversationsAsUserB', function ($query) use ($user) {
                         $query->where('user_a_id', $user->getId());
                     })
-                    ->orderBy(\DB::raw('RAND()'))
-                    ->first();
+                    ->orderBy(\DB::raw('RAND()'));
+
+                $bot = $query->first();
 
                 if (!($bot instanceof User)) {
                     continue;

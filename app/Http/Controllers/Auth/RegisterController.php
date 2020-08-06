@@ -149,8 +149,8 @@ class RegisterController extends Controller
 
         $countryCode = null;
 
-        if ($this->userLocationService->getUserIp() && $this->userLocationService->getLocationFromIp($this->userLocationService->getUserIp())) {
-            $countryCode = strtolower($this->userLocationService->getLocationFromIp($this->userLocationService->getUserIp()));
+        if ($this->userLocationService->getUserIp() && $this->userLocationService->getCountryCodeFromIp($this->userLocationService->getUserIp())) {
+            $countryCode = strtolower($this->userLocationService->getCountryCodeFromIp($this->userLocationService->getUserIp()));
         }
 
         try {
@@ -202,7 +202,7 @@ class RegisterController extends Controller
                     $createdUser->id,
                     $request->input('affiliate'),
                     $request->input('clickId'),
-                    $this->userLocationService->getLocationFromIp($this->userLocationService->getUserIp()),
+                    $this->userLocationService->getCountryCodeFromIp($this->userLocationService->getUserIp()),
                     $mediaId,
                     $publisher
                 );
@@ -215,7 +215,7 @@ class RegisterController extends Controller
                 $createdUser->id,
                 $request->input('affiliate'),
                 null,
-                $this->userLocationService->getLocationFromIp($this->userLocationService->getUserIp()),
+                $this->userLocationService->getCountryCodeFromIp($this->userLocationService->getUserIp()),
                 null,
                 UserAffiliateTracking::PUBLISHER_DATECENTRALE
             );

@@ -331,6 +331,12 @@
         display: inline-block;
     }
 
+    @media (max-width: 768px) {
+        .quote p {
+            max-width: 255px;
+        }
+    }
+
     .dateOfBirthGroup .input-group-addon {
         text-align: center;
         width: 40px;
@@ -730,6 +736,11 @@
             <a href="{{ route($localeRouteName, ['locale' => 'nl']) }}">
                 <div class="flagImageWrapper">
                     <img class="flagImage" src="{{ asset('img/flags/nl.svg') }}" alt="">
+                </div>
+            </a> |
+            <a href="{{ route($localeRouteName, ['locale' => 'be']) }}">
+                <div class="flagImageWrapper">
+                    <img class="flagImage" src="{{ asset('img/flags/be.svg') }}" alt="">
                 </div>
             </a> |
             <a href="{{ route($localeRouteName, ['locale' => 'en']) }}">
@@ -1136,6 +1147,11 @@
                 <a href="{{ route($localeRouteName, ['locale' => 'nl']) }}">
                     <div class="flagImageWrapper">
                         <img class="flagImage" src="{{ asset('img/flags/nl.svg') }}" alt="">
+                    </div>
+                </a> |
+                <a href="{{ route($localeRouteName, ['locale' => 'be']) }}">
+                    <div class="flagImageWrapper">
+                        <img class="flagImage" src="{{ asset('img/flags/be.svg') }}" alt="">
                     </div>
                 </a> |
                 <a href="{{ route($localeRouteName, ['locale' => 'en']) }}">
