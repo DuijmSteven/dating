@@ -117,7 +117,7 @@ class PeasantManager extends UserManager
 
             $userDataToPersist['user_meta']['lat'] = $coordinates['lat'];
             $userDataToPersist['user_meta']['lng'] = $coordinates['lng'];
-            $userDataToPersist['user']['country'] = UserLocationService::getCountryCodeFromCityString($userDataToPersist['user_meta']['city']);
+            $userDataToPersist['user_meta']['country'] = UserLocationService::getCountryCodeFromCityString($userDataToPersist['user_meta']['city']);
         }
 
         if (empty($peasantData['user_images'][0])) {
