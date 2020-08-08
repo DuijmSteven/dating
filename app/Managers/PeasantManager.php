@@ -80,6 +80,10 @@ class PeasantManager extends UserManager
      */
     private function buildPeasantArrayToPersist(array $peasantData, string $action)
     {
+        if (isset($peasantData['city']) && $peasantData['city']) {
+            $peasantData['city'] = strtolower($peasantData['city']);
+        }
+
         $usersTableData = Arr::where($peasantData, function ($value, $key) {
             return in_array(
                 $key,
