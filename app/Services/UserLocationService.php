@@ -74,14 +74,25 @@ class UserLocationService
 
     public function getCoordinatesForCity(string $city)
     {
-        $explodedCity = explode(' (', $city);
-        $cityName = trim($explodedCity[0]);
-        $countryCode = explode(')', $explodedCity[1])[0];
+        $cityName = self::getCityNameFromCityString($city);
+        $countryCode = self::getCountryCodeFromCityString($city);
 
         $client = new Client();
         $geocoder = new GeocoderService($client, $countryCode);
 
         return $geocoder->getCoordinatesForAddress($cityName . ', ' . $countryCode);
+    }
+
+    public static function getCountryCodeFromCityString(string $city)
+    {
+        $explodedCity = explode(' (', $city);
+        return explode(')', $explodedCity[1])[0];
+    }
+
+    public static function getCityNameFromCityString(string $city)
+    {
+        $explodedCity = explode(' (', $city);
+        return trim($explodedCity[0]);
     }
 
     public function getCoordinatesForUser(User $user)
