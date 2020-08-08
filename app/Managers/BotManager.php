@@ -113,6 +113,7 @@ class BotManager extends UserManager
 
             $userDataToPersist['user_meta']['lat'] = $coordinates['lat'];
             $userDataToPersist['user_meta']['lng'] = $coordinates['lng'];
+            $userDataToPersist['user_meta']['country'] = UserLocationService::getCountryCodeFromCityString($userDataToPersist['user_meta']['city']);
 
             $userDataToPersist['user_meta']['city'] = trim(ucfirst($userDataToPersist['user_meta']['city']));
         } else {
