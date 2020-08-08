@@ -171,7 +171,7 @@ class SendMassMessage extends Command
                 $latInRadians = deg2rad($lat);
                 $lngInRadians = deg2rad($lng);
 
-                $angularRadius = 150 / 6371;
+                $angularRadius = 110 / 6371;
 
                 $latMin = rad2deg($latInRadians - $angularRadius);
                 $latMax = rad2deg($latInRadians + $angularRadius);
