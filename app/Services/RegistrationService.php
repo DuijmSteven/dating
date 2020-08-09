@@ -98,6 +98,7 @@ class RegistrationService
 
                 $viewData['clickId'] = $glcid;
                 $viewData['affiliate'] = UserAffiliateTracking::AFFILIATE_GOOGLE;
+                $viewData['country'] = $request->input('country');
             }
         }
         return $viewData;
