@@ -199,6 +199,8 @@ class RegisterController extends Controller
                     } elseif ($request->input('country') === 'be') {
                         $publisher = UserAffiliateTracking::PUBLISHER_GOOGLE_BE;
                     } else {
+                        \Log::debug('Country parameter: ' . $request->input('country'));
+
                         \Log::debug('Google ads registration with null country');
 
                         $publisher = null;
