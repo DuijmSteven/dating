@@ -40,6 +40,8 @@ class UserAffiliateTracking extends TimeZonedModel
             self::PUBLISHER_GEILE_SEX_FILMS => 'geilesexfilms',
             self::PUBLISHER_GENOTSPLEKJE => 'genotsplekje',
             self::PUBLISHER_DATECENTRALE => 'datecentrale.nl',
+            self::PUBLISHER_GOOGLE_NL => 'Google ads NL',
+            self::PUBLISHER_GOOGLE_BE => 'Google ads BE',
         ];
     }
 
