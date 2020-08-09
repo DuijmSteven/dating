@@ -75,14 +75,13 @@ class StatisticsManager
             ->sum('credits');
     }
 
-    public function affiliateRevenueBetween(string $affiliate, $startDate, $endDate, $countryCode = null)
+    public function affiliateRevenueBetween(string $affiliate, $startDate, $endDate, $publisher = null)
     {
-        return Payment::whereHas('peasant.affiliateTracking', function ($query) use ($affiliate, $countryCode) {
+        return Payment::whereHas('peasant.affiliateTracking', function ($query) use ($affiliate, $publisher) {
             $query->where('affiliate', $affiliate);
 
-            if ($countryCode) {
-                $query->where('country_code', $countryCode);
-                $query->where('created_at', '>=', '2020-08-08 22:00:00');
+            if ($publisher) {
+                $query->where('publisher', $publisher);
             }
         })
             ->whereBetween('created_at',
