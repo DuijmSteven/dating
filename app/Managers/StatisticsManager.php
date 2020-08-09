@@ -75,10 +75,15 @@ class StatisticsManager
             ->sum('credits');
     }
 
-    public function affiliateRevenueBetween(string $affiliate, $startDate, $endDate)
+    public function affiliateRevenueBetween(string $affiliate, $startDate, $endDate, $countryCode = null)
     {
-        return Payment::whereHas('peasant.affiliateTracking', function ($query) use ($affiliate) {
+        return Payment::whereHas('peasant.affiliateTracking', function ($query) use ($affiliate, $countryCode) {
             $query->where('affiliate', $affiliate);
+
+            if ($countryCode) {
+                $query->where('country_code', $countryCode);
+                $query->where('created_at', '>=', '2020-08-08 22:00:00');
+            }
         })
             ->whereBetween('created_at',
                 [
@@ -572,7 +577,7 @@ class StatisticsManager
             ->get();
     }
 
-    public function affiliateConversionsBetweenQueryBuilder(string $affiliate, $startDate, $endDate)
+    public function affiliateConversionsBetweenQueryBuilder(string $affiliate, $startDate, $endDate, $countryCode = null)
     {
         $query = User::whereDoesntHave('payments', function ($query) use ($startDate) {
             $query->where(
@@ -592,8 +597,13 @@ class StatisticsManager
         });
 
         if ($affiliate !== 'any') {
-            $query->whereHas('affiliateTracking', function ($query) use ($affiliate) {
+            $query->whereHas('affiliateTracking', function ($query) use ($affiliate, $countryCode) {
                 $query->where('affiliate', $affiliate);
+
+                if ($countryCode) {
+                    $query->where('country_code', $countryCode);
+                    $query->where('created_at', '>=', '2020-08-08 22:00:00');
+                }
             });
         }
 
@@ -603,9 +613,9 @@ class StatisticsManager
         return $query;
     }
 
-    public function affiliateConversionsBetweenCount(string $affiliate, $startDate, $endDate)
+    public function affiliateConversionsBetweenCount(string $affiliate, $startDate, $endDate, $countryCode = null)
     {
-        return $this->affiliateConversionsBetweenQueryBuilder($affiliate, $startDate, $endDate)
+        return $this->affiliateConversionsBetweenQueryBuilder($affiliate, $startDate, $endDate, $countryCode)
             ->count('id');
     }
 

@@ -554,6 +554,45 @@ class StatisticsController extends Controller
                 'allTimeConversionRate' => $googleAdsConversionsAllTimeCount / $googleAdsLeadsAllTimeCount * 100,
                 'allTimeCostPerConversion' => $googleAdsExpensesAllTime / $googleAdsConversionsAllTime
             ],
+            'googleAdsBelgiumConversionStatistics' => [
+                'conversionsToday' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfToday,
+                    $endOfToday,
+                    'be'
+                ),
+                'conversionsYesterday' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfYesterday,
+                    $endOfYesterday,
+                    'be'
+                ),
+                'conversionsCurrentWeek' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfWeek,
+                    $endOfWeek,
+                    'be'
+                ),
+                'conversionsCurrentMonth' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfMonth,
+                    $endOfMonth,
+                    'be'
+                ),
+                'conversionsPreviousMonth' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc,
+                    'be'
+                ),
+                'conversionsCurrentYear' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfYear,
+                    $endOfToday,
+                    'be'
+                ),
+                'conversionsAllTime' => $googleAdsConversionsAllTime,
+            ],
             'googleAdsRevenueStatistics' => [
                 'revenueToday' => $this->statisticsManager->affiliateRevenueBetween(
                     UserAffiliateTracking::AFFILIATE_GOOGLE,
@@ -597,6 +636,56 @@ class StatisticsController extends Controller
                     ) / 30,
                 'allTimeAdExpenses' => $googleAdsExpensesAllTime,
                 'allTimeNetRevenue' => $googleAdsRevenueAllTime - $googleAdsExpensesAllTime,
+            ],
+            'googleAdsBelgiumRevenueStatistics' => [
+                'revenueToday' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfToday,
+                    $endOfToday,
+                    'be'
+                ),
+                'revenueYesterday' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfYesterday,
+                    $endOfYesterday,
+                    'be'
+                ),
+                'revenueCurrentWeek' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfWeek,
+                    $endOfWeek,
+                    'be'
+                ),
+                'revenueCurrentMonth' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfMonth,
+                    $endOfMonth,
+                    'be'
+                ),
+                'revenuePreviousMonth' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc,
+                    'be'
+                ),
+                'revenueCurrentYear' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfYear,
+                    $endOfToday,
+                    'be'
+                ),
+                'averageRevenueLastSevenDays' => $this->statisticsManager->affiliateRevenueBetween(
+                        UserAffiliateTracking::AFFILIATE_GOOGLE,
+                        $startOfSevenDaysAgo,
+                        $endOfYesterday,
+                        'be'
+                    ) / 7,
+                'averageRevenueLastThirtyDays' => $this->statisticsManager->affiliateRevenueBetween(
+                        UserAffiliateTracking::AFFILIATE_GOOGLE,
+                        $startOfThirtyDaysAgo,
+                        $endOfYesterday,
+                        'be'
+                    ) / 30
             ],
             'googleAdsUserTypeStatistics' => $this->statisticsManager->getGoogleAdsLvuStatistics(),
         ];
