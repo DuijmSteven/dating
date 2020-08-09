@@ -48,7 +48,7 @@ class CheckRecentStartedPayments extends Command
      */
     public function handle()
     {
-        \Log::debug('Executing payments:check-recent-started');
+        \Log::debug('Executing payments:check-recent-started...');
 
         $recentStartedPayments = Payment::with(['peasant', 'creditpack', 'peasant.account'])
             ->where('status', Payment::STATUS_STARTED)
@@ -85,5 +85,7 @@ class CheckRecentStartedPayments extends Command
             }
 
         }
+
+        \Log::debug('Executing payments:check-recent-started is done.');
     }
 }
