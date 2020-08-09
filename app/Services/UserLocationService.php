@@ -42,7 +42,7 @@ class UserLocationService
                 ]
             );
             $response = json_decode($response->getBody(), true);
-            return $response['country_code'];
+            return strtolower($response['country_code']);
         } catch (RequestException $e) {
             \Log::error('Cannot get IP - ' . Psr7\str($e->getRequest()));
             if ($e->hasResponse()) {
