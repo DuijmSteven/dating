@@ -19,6 +19,8 @@ class UserAffiliateTracking extends TimeZonedModel
     const PUBLISHER_GEILE_SEX_FILMS = 6;
     const PUBLISHER_GENOTSPLEKJE = 7;
     const PUBLISHER_DATECENTRALE = 8;
+    const PUBLISHER_GOOGLE_NL= 9;
+    const PUBLISHER_GOOGLE_BE= 10;
 
     const LEAD_STATUS_UNVALIDATED = 0;
     const LEAD_STATUS_VALIDATED = 1;

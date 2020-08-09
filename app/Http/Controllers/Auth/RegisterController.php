@@ -193,8 +193,20 @@ class RegisterController extends Controller
             if (in_array($mediaId, array_keys(UserAffiliateTracking::publisherPerMediaId()))) {
                 $publisher = UserAffiliateTracking::publisherPerMediaId()[$mediaId];
             } else {
-                $publisher = null;
-                \Log::debug('Media ID ' . $mediaId . ' does not have a publisher set');
+                if ($request->input('affiliate') === UserAffiliateTracking::AFFILIATE_GOOGLE) {
+                    if ($request->input('country') === 'nl') {
+                        $publisher = UserAffiliateTracking::PUBLISHER_GOOGLE_NL;
+                    } elseif ($request->input('country') === 'nl') {
+                        $publisher = UserAffiliateTracking::PUBLISHER_GOOGLE_BE;
+                    } else {
+                        \Log::debug('Google ads registrations with null country');
+
+                        $publisher = null;
+                    }
+                } else {
+                    $publisher = null;
+                    \Log::debug('Media ID ' . $mediaId . ' does not have a publisher set');
+                }
             }
 
             try {
