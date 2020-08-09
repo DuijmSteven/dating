@@ -577,7 +577,7 @@ class StatisticsManager
             ->get();
     }
 
-    public function affiliateConversionsBetweenQueryBuilder(string $affiliate, $startDate, $endDate, $countryCode = null)
+    public function affiliateConversionsBetweenQueryBuilder(string $affiliate, $startDate, $endDate, $publisher = null)
     {
         $query = User::whereDoesntHave('payments', function ($query) use ($startDate) {
             $query->where(
@@ -597,12 +597,11 @@ class StatisticsManager
         });
 
         if ($affiliate !== 'any') {
-            $query->whereHas('affiliateTracking', function ($query) use ($affiliate, $countryCode) {
+            $query->whereHas('affiliateTracking', function ($query) use ($affiliate, $publisher) {
                 $query->where('affiliate', $affiliate);
 
-                if ($countryCode) {
-                    $query->where('country_code', $countryCode);
-                    $query->where('created_at', '>=', '2020-08-08 22:00:00');
+                if ($publisher) {
+                    $query->where('publisher', $publisher);
                 }
             });
         }
@@ -613,9 +612,9 @@ class StatisticsManager
         return $query;
     }
 
-    public function affiliateConversionsBetweenCount(string $affiliate, $startDate, $endDate, $countryCode = null)
+    public function affiliateConversionsBetweenCount(string $affiliate, $startDate, $endDate, $publisher = null)
     {
-        return $this->affiliateConversionsBetweenQueryBuilder($affiliate, $startDate, $endDate, $countryCode)
+        return $this->affiliateConversionsBetweenQueryBuilder($affiliate, $startDate, $endDate, $publisher)
             ->count('id');
     }
 
