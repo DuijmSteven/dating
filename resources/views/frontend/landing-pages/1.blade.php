@@ -1076,8 +1076,18 @@
         <h3 style="margin-bottom: 40px">{!! @trans('lp1.online_sex_dating') !!}</h3>
         <div class="mt-5">
             <p>
+                {!! @trans('lp1.second_welcome')
+         !!}
+            </p>
+        </div>
+    </div>
+
+    <div class="container text-center secondWelcome" style="margin-bottom: 10rem;">
+        <h3 style="margin-bottom: 40px">{!! @trans('lp1.search_for_date') !!}</h3>
+        <div class="mt-5">
+            <p>
                 {!! @trans(
-                 'lp1.second_welcome',
+                 'lp1.search_for_date_text',
                  [
                      'articlesRoute' => route('articles.overview'),
                  ]

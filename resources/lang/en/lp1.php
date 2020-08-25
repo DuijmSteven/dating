@@ -19,12 +19,8 @@ return [
         'password_confirmation' => 'Password confirmation',
         'register_now' => 'Register Now!',
         'register' => 'Register',
-        'register_info' => "Het gebruik van deze website is niet geschikt voor personen jonger dan 18 jaar. Je verklaart 18
-            jaar of ouder te zijn wanneer je deze website gebruikt. Als je nog geen 18 jaar oud bent, dan
-            dien je deze website direct te verlaten. Wanneer je je registreert op deze website, door op
-            “Registreer Nu!” te klikken, ga je akkoord met het <a target='_blank' href=\":privacyRoute\">Privacy-
-                en Cookiebeleid</a> en de
-            <a target='_blank' href=\":tacRoute\">Algemene Voorwaarden</a>.",
+        'register_info' => "Wanneer je op “Registreer nu gratis!” klikt, ga je akkoord met het <a target='_blank' href=\":privacyRoute\">Privacy-
+                en Cookiebeleid</a> en de <a target='_blank' href=\":tacRoute\">Algemene Voorwaarden</a> en bevestig je dat je 18 jaar of ouder bent",
         'have_an_account' => 'Have an account?',
         'not_have_an_account' => 'Don\'t have an account?',
         'login' => 'Login',
@@ -56,8 +52,10 @@ return [
     'forgot_password' => 'Forgot Password?',
     'reset_password' => 'Reset Password',
     'online_sex_dating' => 'ONLINE SEX DATING',
+    'search_for_date' => 'EEN DATE ZOEKEN',
     'free_credits_usp' => '1 free credit!',
     'top_quote' => 'The best chat I have used on a dating site!',
     'captcha_failed_message' => 'It looks like you might be a robot. If this is a false positive please contact support',
-    'second_welcome' => "Online op zoek gaan naar sekscontact kan in het begin heel spannend zijn. Je staat op het punt om een spannend avontuur aan te gaan met één of meerdere sekscontacten. Het is daarom verstandig om je goed voor te bereiden op online sex dating. Denk goed na over waar je een seks date wilt hebben. Hou je van spanning en openbare gelegenheden? Dan zou een (verlaten) parkeerplaats, een bos of natuurgebied perfect aansluiten. Iets meer spanning kun je natuurlijk vinden in drukkere gelegenheden, zoals het openbaar vervoer wellicht, een restaurant of kledingzaak.<br><br> Als je liever op veilig speelt dan kun je ook gewoon thuis een sex afspraak regelen, of bij je date thuis. Misschien wil je voor de veiligheid op een neutrale plek afspreken, een hotel kan dan uitkomst bieden. Er zijn tegenwoordig ook mogelijkheden om voor slechts enkele uren een hotelkamer te huren. Je kunt dan ergens afspreken met je sekscontact en na de snelle seks date weer naar huis gaan, alsof er niets is gebeurd! Online sex dating ligt aan de basis van je geile date, sekscontacten en seksrelaties. <br><br>Wil je je inlezen voor je van start gaat om je kans op succes op sekscontact te vergroten? Lees dan onze handige <a target='_blank' href=\":articlesRoute\">artikelen</a> voor je van start gaat."
+    'second_welcome' => "Online op zoek gaan naar sekscontact kan in het begin heel spannend zijn. Je staat op het punt om een spannend avontuur aan te gaan met één of meerdere sekscontacten. Het is daarom verstandig om je goed voor te bereiden op online sex dating. Denk goed na over waar je een seks date wilt hebben. Hou je van spanning en openbare gelegenheden? Dan zou een (verlaten) parkeerplaats, een bos of natuurgebied perfect aansluiten. Iets meer spanning kun je natuurlijk vinden in drukkere gelegenheden, zoals het openbaar vervoer wellicht, een restaurant of kledingzaak. <br><br> Als je liever op veilig speelt dan kun je ook gewoon thuis een sex afspraak regelen, of bij je date thuis. Misschien wil je voor de veiligheid op een neutrale plek afspreken, een hotel kan dan uitkomst bieden. Er zijn tegenwoordig ook mogelijkheden om voor slechts enkele uren een hotelkamer te huren. Je kunt dan ergens afspreken met je sekscontact en na de snelle seks date weer naar huis gaan, alsof er niets is gebeurd! Online sex dating ligt aan de basis van je geile date, sekscontacten en seksrelaties.<br>",
+    'search_for_date_text' => "Vind een vrouw (of man) en wordt gelukkig, is wat velen denken. Een vrouw vinden echter, of man, is natuurlijk niet zo eenvoudig. Want je wilt de persoon vinden die bij jou past. Gebruik hiervoor de eenvoudig zoekfunctie en begin met anoniem geil chatten. Jonge of oude vrouwen zoeken is binnen één muisklik gedaan, nadat je een account hebt aangemaakt. Chat geil, contact vrouwen, zoek date en kom erachter welke persoon voor jou (wellicht) de ware is.<br><br>Wil je je inlezen voor je van start gaat om je kans op succes op sekscontact te vergroten? Lees dan onze handige <a target='_blank' href=\":articlesRoute\">artikelen</a> voor je van start gaat. Mannen dating verschilt wezenlijk van vrouwen dating, goed om jezelf te verdiepen in een succesvolle aanpak!",
 ];
