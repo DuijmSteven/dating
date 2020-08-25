@@ -29,7 +29,7 @@ return [
         'not_have_an_account' => 'Don\'t have an account?',
         'login' => 'Login',
     ],
-    'welcome' => 'Welcome!',
+    'welcome' => 'Direct Sex Chat!',
     'welcome_text' => 'Welcome to the leading dating site: Altijdsex.nl! Are you looking for a sexdate? An sexy conversation? Or simply e sexbuddy? On Altijdsex.nl you will run into endless opportunities. Make a free account and come into contact with others now!',
     'usps' => [
         'free_access' => [
