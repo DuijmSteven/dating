@@ -36,7 +36,7 @@ class UserLocationService
         try {
             $response = $client->request(
                 'GET',
-                'http://api.ipstack.com/' . $ip . '?access_key=72a304d5560547d8825a48a9a48b13c8',
+                'http://api.ipstack.com/' . $ip . '?access_key=b56f13e4f12b980317694de933fd340d',
                 [
                     'timeout' => 4
                 ]
@@ -57,7 +57,7 @@ class UserLocationService
         try {
             $response = $client->request(
                 'GET',
-                'http://api.ipstack.com/' . $ip . '?access_key=72a304d5560547d8825a48a9a48b13c8',
+                'http://api.ipstack.com/' . $ip . '?access_key=b56f13e4f12b980317694de933fd340d',
                 [
                     'timeout' => 4
                 ]
