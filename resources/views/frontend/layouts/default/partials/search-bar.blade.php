@@ -14,9 +14,9 @@
                         $city = Session::get('searchParameters')['city_name'];
                     } else {
                         if ($authenticatedUser->meta->country === 'nl') {
-                            $city = 'Amsterdam (NL)';
+                            $city = 'Amsterdam (nl)';
                         } else {
-                            $city = 'Brussel (BE)';
+                            $city = 'Brussel (be)';
                         }
 
                     }
