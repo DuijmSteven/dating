@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>De beste datingsite voor sex dating | Altijdsex.nl</title>
+    <title>Een Date Zoeken en Geil Chatten | Altijdsex.nl</title>
+    <meta name="description" content="Anoniem geil chatten met single vrouwen met interesse in mannen dating, vind een vrouw voor sex chat, sekscontact of zoek date met een seksbuddy.">
 
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
     <meta name="viewport" content="width=device-width"/>
@@ -258,6 +259,20 @@
     </div> <!--  big container -->
 
     <div class="footer">
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="text-center">
+                <h3>Contact vrouwen</h3>
+                <p style="font-size: 18px; font-weight: 300; text-align: justify;">Online chatten begint op een datingsite, zo ook het contact met vrouwen. Sex chat en online chatten, in het bijzonder anoniem geil chatten, zijn bijzonder goede manieren om je toekomstige bedpartner beter te leren kennen. Het fijne is dat je nog weinig van jezelf bloot hoeft te geven, maar wel kunt uitvinden of iemand bij je past. Sekscontact gaat vaak verder dan gewoon kennismaken, aangezien je toch enige verbinding wilt hebben met degene waar je na de sex chat mee het bed in duikt.</p>
+                <h3>Vreemdgaan</h3>
+                <p style="font-size: 18px; font-weight: 300; text-align: justify;">Vind een vrouw om vreemd mee te gaan, klinkt makkelijker dan het is. Hoe doe je dat eigenlijk en hoeveel vrouwen zoeken mannen voor dezelfde redenen? Vrouw zoekt man komt net zo vaak voor als man zoekt vrouw óók als het om vreemdgaan gaat. Belangrijk is dat dit geheel discreet gebeurd, vandaar dat de aanmelding geheel anoniem verloopt en er geen persoonlijke gegevens worden vastgelegd. Dit zodat jij in alle rust kan chatten met Nederlanders!</p>
+                <h3>Vrouw vinden</h3>
+                <p style="font-size: 18px; font-weight: 300; text-align: justify; margin-bottom: 30px">Na het gratis registreren kun je eenvoudig op zoek gaan naar sekscontact met vrouwen online. Of je nu een oudere vrouw zoekt, singles of gebonden mensen. Na inschrijving kun je met je gratis credit direct sekscontact leggen en online chatten op deze datingsite voor sekscontacten!</p>
+            </div>
+        </div>
     </div>
 </div>
 
