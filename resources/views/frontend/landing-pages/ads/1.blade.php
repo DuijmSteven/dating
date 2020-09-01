@@ -274,6 +274,11 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-sm-12 text-center" style="margin-bottom: 30px">
+            <a style="color: #337ab7" href="{{ route('tac.show') }}">{{ @trans('footer.tac') }}</a> - <a  style="color: #337ab7" href="{{ route('contact.get') }}">{{ @trans('footer.contact') }}</a>
+        </div>
+    </div>
 </div>
 
 </body>
