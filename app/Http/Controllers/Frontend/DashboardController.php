@@ -87,10 +87,15 @@ class DashboardController extends FrontendController
 
     private function homeUsers($createdUntilDaysAgo, $radius = 70)
     {
-        $userCoordinates = $this->userLocationService->getCoordinatesForUser($this->authenticatedUser);
+        if ($this->authenticatedUser->meta->lat && $this->authenticatedUser->meta->lng) {
+            $lat = $this->authenticatedUser->meta->lat;
+            $lng = $this->authenticatedUser->meta->lng;
+        } else {
+            $userCoordinates = $this->userLocationService->getCoordinatesForUser($this->authenticatedUser);
 
-        $lat = $userCoordinates['lat'];
-        $lng = $userCoordinates['lng'];
+            $lat = $userCoordinates['lat'];
+            $lng = $userCoordinates['lng'];
+        }
 
         $latInRadians = deg2rad($lat);
         $lngInRadians = deg2rad($lng);
