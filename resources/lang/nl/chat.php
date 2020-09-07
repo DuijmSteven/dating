@@ -11,7 +11,7 @@ return [
     'yes' => 'Ja',
     'no' => 'Nee',
     'your_message' => 'Jouw bericht',
-    'public_chat' => 'Publieke chat',
+    'public_chat' => 'Recente activiteit',
     'post_new_message' => 'Plaats bericht',
     'delete_conversation' => 'Verwijder gesprek',
     'delete_conversation_confirm' => 'Weet je zeker dat je dit gesprek wilt verwijderen?',

@@ -11,7 +11,7 @@ return [
     'yes' => 'Yes',
     'no' => 'No',
     'your_message' => 'Your message',
-    'public_chat' => 'Public chat',
+    'public_chat' => 'Recent activity',
     'post_new_message' => 'Post message',
     'delete_conversation' => 'Delete conversation',
     'delete_conversation_confirm' => 'Are you sure you want to delete this conversation?',

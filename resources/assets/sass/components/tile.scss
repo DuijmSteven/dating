@@ -19,7 +19,7 @@
 
     @media (max-width: $screen-sm-max) {
         &--withToggle {
-            .Tile__body {
+            .Tile__body:not(.Online-users__body) {
                 display: none;
             }
         }

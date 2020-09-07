@@ -1,6 +1,6 @@
 <template>
     <div class="Tile PublicChat">
-        <div class="labelNew">Nieuwe functie!</div>
+<!--        <div class="labelNew">Nieuwe functie!</div>-->
 
         <div class="Tile__heading PublicChat__heading">
             <span class="material-icons">
