@@ -12,19 +12,24 @@ use Illuminate\Http\Request;
 class LandingPageController extends FrontendController
 {
     private RegistrationService $registrationService;
+    private App\Services\UserLocationService $userLocationService;
 
     /**
      * LandingPageController constructor.
      * @param RegistrationService $registrationService
      */
     public function __construct(
-      App\Services\RegistrationService $registrationService
-    ) {
+        App\Services\RegistrationService $registrationService,
+        App\Services\UserLocationService $userLocationService
+    )
+    {
         $this->registrationService = $registrationService;
         parent::__construct();
+        $this->userLocationService = $userLocationService;
     }
 
-    public function showRegister(Request $request)
+    public
+    function showRegister(Request $request)
     {
         $this->setLocale($request);
         $users = $this->getUsers();
@@ -47,7 +52,8 @@ class LandingPageController extends FrontendController
         );
     }
 
-    public function showLogin(Request $request)
+    public
+    function showLogin(Request $request)
     {
         $this->setLocale($request);
         $users = $this->getUsers();
@@ -69,7 +75,8 @@ class LandingPageController extends FrontendController
     /**
      * @return array
      */
-    private function getTestimonials(): array
+    private
+    function getTestimonials(): array
     {
         $testimonials = [
             [
@@ -115,23 +122,33 @@ class LandingPageController extends FrontendController
     /**
      * @return User[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Query\Builder[]|\Illuminate\Support\Collection
      */
-    private function getUsers()
+    private
+    function getUsers()
     {
+        $countryCode = strtolower($this->userLocationService->getCountryCodeFromIp($this->userLocationService->getUserIp()));
+
+        if (!in_array($countryCode, ['nl', 'be'])) {
+            $countryCode = 'nl';
+        }
+
         $users = User::with(['roles', 'meta'])->whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_BOT);
         })
-            ->whereHas('meta', function ($query) {
-                $query->where('gender', 2);
+            ->whereHas('meta', function ($query) use ($countryCode) {
+                $query->where('gender', User::GENDER_FEMALE);
+                $query->where('country', $countryCode);
             })
             ->whereHas('profileImage')
             ->inRandomOrder()->take(12)->get();
+
         return $users;
     }
 
     /**
      * @param Request $request
      */
-    private function setLocale(Request $request): void
+    private
+    function setLocale(Request $request): void
     {
         $locale = 'nl';
 

@@ -196,6 +196,10 @@ class SendMassMessage extends Command
                     ->whereHas('meta', function ($query) use ($user) {
                         $query->where('looking_for_gender', $user->meta->gender);
                         $query->where('gender', $user->meta->looking_for_gender);
+
+                        if ($user->meta->country === 'nl') {
+                            $query->where('country', 'nl');
+                        }
                     });
 
                 if ($radiusSearch) {

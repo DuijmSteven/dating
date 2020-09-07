@@ -738,11 +738,11 @@
                     <img class="flagImage" src="{{ asset('img/flags/nl.svg') }}" alt="">
                 </div>
             </a> |
-            <a href="{{ route($localeRouteName, ['locale' => 'be']) }}">
-                <div class="flagImageWrapper">
-                    <img class="flagImage" src="{{ asset('img/flags/be.svg') }}" alt="">
-                </div>
-            </a> |
+{{--            <a href="{{ route($localeRouteName, ['locale' => 'be']) }}">--}}
+{{--                <div class="flagImageWrapper">--}}
+{{--                    <img class="flagImage" src="{{ asset('img/flags/be.svg') }}" alt="">--}}
+{{--                </div>--}}
+{{--            </a> |--}}
             <a href="{{ route($localeRouteName, ['locale' => 'en']) }}">
                 <div class="flagImageWrapper">
                     <img class="flagImage" src="{{ asset('img/flags/uk.svg') }}" alt="">
@@ -1160,11 +1160,11 @@
                         <img class="flagImage" src="{{ asset('img/flags/nl.svg') }}" alt="">
                     </div>
                 </a> |
-                <a href="{{ route($localeRouteName, ['locale' => 'be']) }}">
-                    <div class="flagImageWrapper">
-                        <img class="flagImage" src="{{ asset('img/flags/be.svg') }}" alt="">
-                    </div>
-                </a> |
+{{--                <a href="{{ route($localeRouteName, ['locale' => 'be']) }}">--}}
+{{--                    <div class="flagImageWrapper">--}}
+{{--                        <img class="flagImage" src="{{ asset('img/flags/be.svg') }}" alt="">--}}
+{{--                    </div>--}}
+{{--                </a> |--}}
                 <a href="{{ route($localeRouteName, ['locale' => 'en']) }}">
                     <div class="flagImageWrapper">
                         <img class="flagImage" src="{{ asset('img/flags/uk.svg') }}" alt="">
