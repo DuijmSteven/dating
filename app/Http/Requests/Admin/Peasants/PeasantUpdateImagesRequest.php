@@ -24,13 +24,13 @@ class PeasantUpdateImagesRequest extends Request
     public function rules()
     {
         $rules = [
-            'profile_image' => 'required_without:user_images|image|max:4000',
+            'profile_image' => 'required_without:user_images|image|max:10000',
         ];
 
         if (!is_null($this->files->get('user_images'))) {
             $imageCount = count($this->files->get('user_images')) - 1;
             foreach (range(0, $imageCount) as $index) {
-                $rules['required_without:profile_image|user_images.' . $index] = 'image|max:4000';
+                $rules['required_without:profile_image|user_images.' . $index] = 'image|max:10000';
             }
         }
         return $rules;

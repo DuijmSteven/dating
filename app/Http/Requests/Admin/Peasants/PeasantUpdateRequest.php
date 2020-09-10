@@ -42,14 +42,14 @@ class PeasantUpdateRequest extends Request
             'drinking_habits' => 'in:'. implode(',', array_keys($userProfileFields['smoking_habits'])),
             'city' => 'in:' . implode(',', array_merge(UserConstants::$cities['nl'], UserConstants::$cities['be'])),
             'about_me' => 'string|max:1000',
-            'profile_image' => 'mimes:jpeg,png,jpg|max:4000',
+            'profile_image' => 'mimes:jpeg,png,jpg|max:10000',
         ];
 
         if (!is_null($this->files->get('user_images'))) {
 
             $imageCount = count($this->files->get('user_images')) - 1;
             foreach (range(0, $imageCount) as $index) {
-                $rules['user_images.' . $index] = 'mimes:jpeg,png,jpg|max:4000';
+                $rules['user_images.' . $index] = 'mimes:jpeg,png,jpg|max:10000';
             }
         }
         return $rules;

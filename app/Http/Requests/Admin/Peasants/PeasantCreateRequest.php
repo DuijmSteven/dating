@@ -44,12 +44,12 @@ class PeasantCreateRequest extends Request
             'city' => 'in:' . implode(',', UserConstants::$cities['nl']),
             'about_me' => 'string|max:1000',
             'looking_for' => 'string|max:1000',
-            'profile_image' => 'image|max:4000',
+            'profile_image' => 'image|max:10000',
         ];
 
         $imageCount = count($this->input('user_images')) - 1;
         foreach (range(0, $imageCount) as $index) {
-            $rules['user_images.' . $index] = 'image|max:4000';
+            $rules['user_images.' . $index] = 'image|max:10000';
         }
 
         return $rules;
