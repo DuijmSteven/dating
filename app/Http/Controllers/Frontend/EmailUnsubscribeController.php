@@ -8,27 +8,6 @@ use Illuminate\Support\Facades\Hash;
 
 class EmailUnsubscribeController extends FrontendController
 {
-    /*public function index($email = null, $token = null)
-    {
-        $email = urldecode($email);
-        $token = base64_decode($token);
-        if(Hash::check($email, $token)) {
-            return view(
-                'frontend.unsubscribe',
-                [
-                    'email' => $email,
-                    'token' => $token
-                ]
-            );
-        } else {
-            return view('frontend.unsubscribe',
-                [
-                    'error' => true
-                ]
-            );
-        }
-    }*/
-
     public function index(User $user)
     {
         return view(
