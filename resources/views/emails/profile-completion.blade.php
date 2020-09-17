@@ -61,7 +61,7 @@
     </p>
 
     <p style="text-align: center; font-size: 16px; margin-top: 30px;">{{ @trans('unsubscribe.link_text') }}
-        <a href="{{ URL::signedRoute('unsubscribe', ['user' => $user->id]) }}">
+        <a href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('unsubscribe', ['user' => $user->id]); @endphp">
             {{ @trans('unsubscribe.link_click') }}
         </a>
     </p>
