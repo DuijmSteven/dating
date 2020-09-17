@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
         'operator' => \App\Middleware\User\VerifyOperator::class,
         'anonymous_domain' => \App\Middleware\User\VerifyAnonymousDomain::class,
         'not_anonymous_domain' => \App\Middleware\User\VerifyNotAnonymousDomain::class,
+        'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
     ];
 }
