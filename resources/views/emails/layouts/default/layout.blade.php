@@ -249,6 +249,12 @@
         </tr>
         <!-- Email Header : END -->
 
+        <tr>
+            <td>
+                @yield('unsubscribe')
+            </td>
+        </tr>
+
         <!-- 1 Column Text + Button : BEGIN -->
         <tr>
             <td style="background-color: #ffffff; border-radius: 4px;">
