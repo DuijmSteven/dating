@@ -78,6 +78,18 @@ class SendMassMessage extends Command
         $endOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->endOfDay()->setTimezone('UTC');
         $startOfFourDaysAgo = Carbon::now('Europe/Amsterdam')->subDays(4)->startOfDay()->setTimezone('UTC');
 
+        $endOf5DaysAgo = Carbon::now('Europe/Amsterdam')->subDays(5)->endOfDay()->setTimezone('UTC');
+        $startOf9DaysAgo = Carbon::now('Europe/Amsterdam')->subDays(9)->startOfDay()->setTimezone('UTC');
+
+        $endOf10DaysAgo = Carbon::now('Europe/Amsterdam')->subDays(10)->endOfDay()->setTimezone('UTC');
+        $startOf19DaysAgo = Carbon::now('Europe/Amsterdam')->subDays(19)->startOfDay()->setTimezone('UTC');
+
+        $endOf20DaysAgo = Carbon::now('Europe/Amsterdam')->subDays(20)->endOfDay()->setTimezone('UTC');
+        $startOf29DaysAgo = Carbon::now('Europe/Amsterdam')->subDays(29)->startOfDay()->setTimezone('UTC');
+
+        $endOf30DaysAgo = Carbon::now('Europe/Amsterdam')->subDays(30)->endOfDay()->setTimezone('UTC');
+        $startOf39DaysAgo = Carbon::now('Europe/Amsterdam')->subDays(39)->startOfDay()->setTimezone('UTC');
+
         $usersQuery = User::with(['meta'])
             ->whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_PEASANT);
@@ -144,6 +156,18 @@ class SendMassMessage extends Command
         } else if ($limitMessage === 'limited_yesterday_up_to_four_days_ago') {
             $usersQuery
                 ->whereBetween('created_at', [$startOfFourDaysAgo, $endOfYesterday]);
+        } else if ($limitMessage === 'limited_5_up_to_9_days_ago') {
+            $usersQuery
+                ->whereBetween('created_at', [$startOf9DaysAgo, $endOf5DaysAgo]);
+        } else if ($limitMessage === 'limited_10_up_to_19_days_ago') {
+            $usersQuery
+                ->whereBetween('created_at', [$startOf19DaysAgo, $endOf10DaysAgo]);
+        } else if ($limitMessage === 'limited_20_up_to_29_days_ago') {
+            $usersQuery
+                ->whereBetween('created_at', [$startOf29DaysAgo, $endOf20DaysAgo]);
+        } else if ($limitMessage === 'limited_30_up_to_39_days_ago') {
+            $usersQuery
+                ->whereBetween('created_at', [$startOf39DaysAgo, $endOf30DaysAgo]);
         }
 
         $users = $usersQuery->get();
@@ -323,6 +347,7 @@ class SendMassMessage extends Command
 
         $pastMassMessageInstance = new PastMassMessage();
         $pastMassMessageInstance->setBody($messageBody);
+        $pastMassMessageInstance->setDescription($limitMessage);
         $pastMassMessageInstance->setUserCount($users->count() - $errorsCount);
         $pastMassMessageInstance->save();
 

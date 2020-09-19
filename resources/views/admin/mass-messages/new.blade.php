@@ -80,7 +80,35 @@
                             <div class="form-check">
                                 <label class="form-check-label" for="limit_message8">
                                     <input class="form-check-input" type="radio" name="limit_message" id="limit_message8" value="limited_yesterday_up_to_four_days_ago">
-                                    ({{ $userCounts['haveYesterdayUpToFourDaysAgo'] }})  Registrations from yesterday up to 4 days ago
+                                    ({{ $userCounts['registeredYesterdayUpToFourDaysAgo'] }})  Registrations from yesterday up to 4 days ago
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label" for="limit_message8">
+                                    <input class="form-check-input" type="radio" name="limit_message" id="limit_message8" value="limited_5_up_to_9_days_ago">
+                                    ({{ $userCounts['registered5UpTo9DaysAgo'] }})  Registrations from 5 up to 9 days ago
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label" for="limit_message8">
+                                    <input class="form-check-input" type="radio" name="limit_message" id="limit_message8" value="limited_10_up_to_19_days_ago">
+                                    ({{ $userCounts['registered10UpTo19DaysAgo'] }})  Registrations from 10 up to 19 days ago
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label" for="limit_message8">
+                                    <input class="form-check-input" type="radio" name="limit_message" id="limit_message8" value="limited_20_up_to_29_days_ago">
+                                    ({{ $userCounts['registered20UpTo29DaysAgo'] }})  Registrations from 20 up to 29 days ago
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label" for="limit_message8">
+                                    <input class="form-check-input" type="radio" name="limit_message" id="limit_message8" value="limited_30_up_to_39_days_ago">
+                                    ({{ $userCounts['registered30UpTo39DaysAgo'] }})  Registrations from 30 up to 39 days ago
                                 </label>
                             </div>
                         </div>
@@ -103,6 +131,7 @@
                 <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Description</th>
                     <th>Body</th>
                     <th>Sent to # of peasants</th>
                     <th class="no-wrap">Created at</th>
@@ -112,6 +141,7 @@
                 @foreach($pastMassMessages as $message)
                     <tr>
                         <td>{{ $message->getId() }}</td>
+                        <td>{{ $message->getDescription() }}</td>
                         <td>{{ $message->getBody() }}</td>
                         <td>{{ $message->getUserCount() }}</td>
                         <td>
