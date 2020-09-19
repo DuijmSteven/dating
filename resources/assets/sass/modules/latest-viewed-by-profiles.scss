@@ -9,8 +9,9 @@
 
     &__sendMessage {
         position: absolute;
-        right: 10px;
-        bottom: 10px;
+        right: 0;
+        bottom: 0;
+        padding: 10px;
         cursor: pointer;
 
         .material-icons {
