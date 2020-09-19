@@ -87,7 +87,7 @@
                             <span class="userDropdown__username">{{ $authenticatedUser->username }}</span>
                             <span class="caret"></span>
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu main-dropdown">
                             <li>
                                 <a href="{!! route('users.edit-profile.get', ['userId' => $authenticatedUser->getUsername()]) !!}">{{ @trans('navbar.edit_profile') }}</a>
                             </li>
