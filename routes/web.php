@@ -165,10 +165,8 @@ Route::group([
     'prefix' => 'autologin',
     'middleware' => ['not_anonymous_domain']
 ], function () {
-    Route::get('/{user}', function (\App\User $user) {
-        Auth::login($user);
-        return redirect()->home();
-    })->name('autologin')->middleware('signed');
+    Route::get('/{user}', 'Frontend\AutologinController@login')
+        ->name('autologin')->middleware('signed');
 });
 
 /* Conversations routes */
