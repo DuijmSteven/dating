@@ -5,7 +5,6 @@ namespace App\Services;
 use App\User;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
-use Spatie\Geocoder\Geocoder;
 
 /**
  * Class UserLocationService
@@ -44,9 +43,9 @@ class UserLocationService
             $response = json_decode($response->getBody(), true);
             return strtolower($response['country_code']);
         } catch (RequestException $e) {
-            \Log::error('Cannot get IP - ' . Psr7\str($e->getRequest()));
+            \Log::error('Cannot get IP - ' . \Psr7\str($e->getRequest()));
             if ($e->hasResponse()) {
-                \Log::error('Cannot get IP - ' . Psr7\str($e->getResponse()));
+                \Log::error('Cannot get IP - ' . \Psr7\str($e->getResponse()));
             }
         }
     }
@@ -65,9 +64,9 @@ class UserLocationService
             $response = json_decode($response->getBody(), true);
             return $response;
         } catch (RequestException $e) {
-            \Log::error('Cannot get IP - ' . Psr7\str($e->getRequest()));
+            \Log::error('Cannot get IP - ' . \Psr7\str($e->getRequest()));
             if ($e->hasResponse()) {
-                \Log::error('Cannot get IP - ' . Psr7\str($e->getResponse()));
+                \Log::error('Cannot get IP - ' . \Psr7\str($e->getResponse()));
             }
         }
     }

@@ -3,22 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use Activity;
-use App\Conversation;
-use App\ConversationMessage;
-use App\EmailType;
 use App\Http\Controllers\Controller;
-use App\Mail\MessageReceived;
 use App\Managers\UserManager;
-use App\OpenConversationPartner;
 use App\PastMassMessage;
 use App\Payment;
 use App\User;
-use App\UserMeta;
-use App\UserView;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Mail;
 
 class MassMessageController extends Controller
 {
@@ -53,7 +45,12 @@ class MassMessageController extends Controller
         $havePayedAndDontHaveImagesUsersQuery = clone $unlimitedUsersQuery;
         $registeredTodayUsersQuery = clone $unlimitedUsersQuery;
         $registeredYesterdayUsersQuery = clone $unlimitedUsersQuery;
-        $registeredYesterdayUpToFourDaysAgoUsersQuery = clone $unlimitedUsersQuery;
+        $registeredYesterdayUpTo4DaysAgoUsersQuery = clone $unlimitedUsersQuery;
+
+        $registered5UpTo9DaysAgoUsersQuery = clone $unlimitedUsersQuery;
+        $registered10UpTo19DaysAgoUsersQuery = clone $unlimitedUsersQuery;
+        $registered20UpTo29DaysAgoUsersQuery = clone $unlimitedUsersQuery;
+        $registered30UpTo39DaysAgoUsersQuery = clone $unlimitedUsersQuery;
 
         $withPicUsersQuery
             ->where('exclude_from_mass_messages', '=', false)
@@ -104,6 +101,18 @@ class MassMessageController extends Controller
         $endOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->endOfDay()->setTimezone('UTC');
         $startOfFourDaysAgo = Carbon::now('Europe/Amsterdam')->subDays(4)->startOfDay()->setTimezone('UTC');
 
+        $endOf5DaysAgo = Carbon::now('Europe/Amsterdam')->subDays(5)->endOfDay()->setTimezone('UTC');
+        $startOf9DaysAgo = Carbon::now('Europe/Amsterdam')->subDays(9)->startOfDay()->setTimezone('UTC');
+
+        $endOf10DaysAgo = Carbon::now('Europe/Amsterdam')->subDays(10)->endOfDay()->setTimezone('UTC');
+        $startOf19DaysAgo = Carbon::now('Europe/Amsterdam')->subDays(19)->startOfDay()->setTimezone('UTC');
+
+        $endOf20DaysAgo = Carbon::now('Europe/Amsterdam')->subDays(20)->endOfDay()->setTimezone('UTC');
+        $startOf29DaysAgo = Carbon::now('Europe/Amsterdam')->subDays(29)->startOfDay()->setTimezone('UTC');
+
+        $endOf30DaysAgo = Carbon::now('Europe/Amsterdam')->subDays(30)->endOfDay()->setTimezone('UTC');
+        $startOf39DaysAgo = Carbon::now('Europe/Amsterdam')->subDays(39)->startOfDay()->setTimezone('UTC');
+
         $registeredTodayUsersQuery
             ->whereBetween('created_at', [$startOfToday, $endOfToday]);
 
@@ -114,10 +123,30 @@ class MassMessageController extends Controller
 
         $registeredYesterdayCount = $registeredYesterdayUsersQuery->count();
 
-        $registeredYesterdayUpToFourDaysAgoUsersQuery
+        $registeredYesterdayUpTo4DaysAgoUsersQuery
             ->whereBetween('created_at', [$startOfFourDaysAgo, $endOfYesterday]);
 
-        $registeredYesterdayUpToFourDaysAgoCount = $registeredYesterdayUpToFourDaysAgoUsersQuery->count();
+        $registeredYesterdayUpToFourDaysAgoCount = $registeredYesterdayUpTo4DaysAgoUsersQuery->count();
+
+        $registered5UpTo9DaysAgoUsersQuery
+            ->whereBetween('created_at', [$startOf9DaysAgo, $endOf5DaysAgo]);
+
+        $registered5UpTo9DaysAgoCount = $registered5UpTo9DaysAgoUsersQuery->count();
+
+        $registered10UpTo19DaysAgoUsersQuery
+            ->whereBetween('created_at', [$startOf19DaysAgo, $endOf10DaysAgo]);
+
+        $registered10UpTo19DaysAgoCount = $registered10UpTo19DaysAgoUsersQuery->count();
+
+        $registered20UpTo29DaysAgoUsersQuery
+            ->whereBetween('created_at', [$startOf29DaysAgo, $endOf20DaysAgo]);
+
+        $registered20UpTo29DaysAgoCount = $registered20UpTo29DaysAgoUsersQuery->count();
+
+        $registered30UpTo39DaysAgoUsersQuery
+            ->whereBetween('created_at', [$startOf39DaysAgo, $endOf30DaysAgo]);
+
+        $registered30UpTo39DaysAgoCount = $registered30UpTo39DaysAgoUsersQuery->count();
 
         return view(
             'admin.mass-messages.new',
@@ -135,7 +164,11 @@ class MassMessageController extends Controller
                     'havePayedAndDontHaveImages' => $havePayedAndDontHaveImagesCount,
                     'registeredToday' => $registeredTodayCount,
                     'registeredYesterday' => $registeredYesterdayCount,
-                    'haveYesterdayUpToFourDaysAgo' => $registeredYesterdayUpToFourDaysAgoCount,
+                    'registeredYesterdayUpToFourDaysAgo' => $registeredYesterdayUpToFourDaysAgoCount,
+                    'registered5UpTo9DaysAgo' => $registered5UpTo9DaysAgoCount,
+                    'registered10UpTo19DaysAgo' => $registered10UpTo19DaysAgoCount,
+                    'registered20UpTo29DaysAgo' => $registered20UpTo29DaysAgoCount,
+                    'registered30UpTo39DaysAgo' => $registered30UpTo39DaysAgoCount,
                 ]
             ]
         );

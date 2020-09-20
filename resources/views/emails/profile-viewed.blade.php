@@ -57,12 +57,12 @@
     </div>
 
     <p style="margin-bottom: 0">
-        Bekijk zijn/haar volledige profiel door op onderstaande button te klikken. Je kunt dan ook direct een bericht versturen als je in contact wilt komen met deze persoon!
+        Ga direct naar Altijdsex.nl door op onderstaande button te klikken. Je kunt dan ook direct een bericht versturen als je in contact wilt komen met deze persoon!
     </p>
 
     <div style="text-align: center">
         <div style="display: inline-block; padding: 7px 20px; background-color: #ce5338; color: #fff; border: 1px solid #ce5338; border-radius: 4px; margin: 20px 0; cursor: pointer">
-            <a style="color: #fff" href="{{ route('users.show', ['username' => $messageSender->username]) }}">{{ $messageSender->username }}</a>
+            <a style="color: #fff" href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('direct-login', ['user' => $user->id]); @endphp">Ga direct naar Altijdsex.nl</a>
         </div>
     </div>
 

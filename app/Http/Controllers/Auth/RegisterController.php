@@ -252,8 +252,8 @@ class RegisterController extends Controller
 
         try {
             $createdUser->emailTypes()->attach(EmailType::MESSAGE_RECEIVED);
-            $createdUser->emailTypes()->attach(EmailType::PROFILE_VIEWED);
             $createdUser->emailTypes()->attach(EmailType::GENERAL);
+            // $createdUser->emailTypes()->attach(EmailType::PROFILE_VIEWED);
         } catch (\Exception $exception) {
             DB::rollBack();
             throw $exception;

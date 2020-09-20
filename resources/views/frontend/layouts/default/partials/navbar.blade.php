@@ -11,9 +11,9 @@
     <div class="container">
         @if(isset($city) && isset($radius))
             <h3 class="searchResultsHeader JS--searchResultsHeader">{!! trans('user_search.search_results_heading', ['city' => $city]) !!}</h3>
-        @endif
+    @endif
 
-        <!-- Brand and toggle get grouped for better mobile display -->
+    <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                     data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -58,6 +58,10 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 @if (isset($authenticatedUser))
+                    <li class="showMobile {!! str_contains(\Request::route()->getName(), 'home') ? 'active' : '' !!}"><a
+                            href="{{ route('home') }}" style="display: flex"><span class="material-icons" style="margin-right: 5px">home</span>{{ @trans('navbar.home') }}</a>
+                    </li>
+
                     <li class="userCredits">
                         <div>
                             <a href="{{ route('credits.show') }}">
@@ -67,7 +71,7 @@
 
                         <div class="vertical-separator"></div>
                     </li>
-                    <li class="dropdown userDropdown">
+                    <li class="dropdown userDropdown open">
                         <a href="#"
                            class="dropdown-toggle"
                            data-toggle="dropdown"
@@ -83,15 +87,19 @@
                             <span class="userDropdown__username">{{ $authenticatedUser->username }}</span>
                             <span class="caret"></span>
                         </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{!! route('users.edit-profile.get', ['userId' => $authenticatedUser->getUsername()]) !!}">{{ @trans('navbar.edit_profile') }}</a></li>
+                        <ul class="dropdown-menu main-dropdown">
+                            <li>
+                                <a href="{!! route('users.edit-profile.get', ['userId' => $authenticatedUser->getUsername()]) !!}">{{ @trans('navbar.edit_profile') }}</a>
+                            </li>
                             <li><a href="{{ route('credits.show') }}">{{ @trans('navbar.credits') }}</a></li>
 
                             <li class="dropdown-submenu languagesSubmenu">
-                                <a class="JS--showLanguagesSubmenu" tabindex="-1" href="#">{{ @trans('navbar.language') }} <span class="caret"></span></a>
+                                <a class="JS--showLanguagesSubmenu" tabindex="-1"
+                                   href="#">{{ @trans('navbar.language') }} <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a class="languagesSubmenu__item" href="{{ route('users.set-locale', ['locale' => 'en']) }}">
+                                        <a class="languagesSubmenu__item"
+                                           href="{{ route('users.set-locale', ['locale' => 'en']) }}">
                                             <div class="flagImageWrapper">
                                                 <img class="flagImage" src="{{ asset('img/flags/uk.svg') }}" alt="">
                                             </div>
@@ -99,7 +107,8 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="languagesSubmenu__item" href="{{ route('users.set-locale', ['locale' => 'nl']) }}">
+                                        <a class="languagesSubmenu__item"
+                                           href="{{ route('users.set-locale', ['locale' => 'nl']) }}">
                                             <div class="flagImageWrapper">
                                                 <img class="flagImage" src="{{ asset('img/flags/nl.svg') }}" alt="">
                                             </div>
@@ -135,7 +144,8 @@
                         <div class="vertical-separator"></div>
                     </li>
 
-                    <li class="{!! str_contains(\Request::route()->getName(), 'home') ? 'active' : '' !!}"><a
+                    <li class="showDesktop {!! str_contains(\Request::route()->getName(), 'home') ? 'active' : '' !!}">
+                        <a
                             href="{{ route('home') }}">{{ @trans('navbar.home') }}</a>
                     </li>
 

@@ -26,6 +26,16 @@ class PastMassMessage extends TimeZonedModel
         $this->body = $body;
     }
 
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description)
+    {
+        $this->description = $description;
+    }
+
     public function getUserCount()
     {
         return $this->user_count;

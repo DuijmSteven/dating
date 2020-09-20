@@ -8,6 +8,7 @@ use App\Services\UserLocationService;
 use App\User;
 use Carbon\Carbon;
 use Hash;
+use Illuminate\Support\Facades\Auth;
 use Stevebauman\Location\Facades\Location;
 
 /**
@@ -26,13 +27,19 @@ class DashboardController extends FrontendController
      */
     public function __construct(
         UserLocationService $userLocationService
-    )
-    {
+    ) {
         parent::__construct();
         $this->userLocationService = $userLocationService;
     }
 
-    public function index()
+    public function directLogin(User $user)
+    {
+        Auth::login($user);
+
+        return redirect()->route('home');
+    }
+
+    public function index(User $user = null)
     {
         if (!$this->authenticatedUser->getActive()) {
             $this->authenticatedUser->setActive(true);
