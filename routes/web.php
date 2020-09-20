@@ -164,15 +164,6 @@ Route::group([
         ->name('unsubscribe.post')->middleware('signed');
 });
 
-/* Unsubscribe routes */
-Route::group([
-    'prefix' => 'autologin',
-    'middleware' => ['not_anonymous_domain']
-], function () {
-    Route::get('/{user}', 'Frontend\AutologinController@login')
-        ->name('autologin')->middleware('signed');
-});
-
 /* Conversations routes */
 Route::group([
     'prefix' => 'conversations',
