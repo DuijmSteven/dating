@@ -167,7 +167,6 @@ Route::group([
 ], function () {
     Route::get('/{user}', function (\App\User $user) {
         Auth::login($user);
-
         return redirect()->home();
     })->name('autologin')->middleware('signed');
 });
