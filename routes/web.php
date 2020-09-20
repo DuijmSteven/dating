@@ -59,6 +59,10 @@ Route::group([
         ->name('home')
         ->middleware(['auth', 'not_editor', 'not_operator']);
 
+    Route::get('direct-login/{user}', 'Frontend\DashboardController@directLogin')
+        ->name('direct-login')
+        ->middleware('signed');
+
     Route::get('/lps/{id}', 'Frontend\AdsLandingPagesController@showLP')
         ->middleware('guest');
 

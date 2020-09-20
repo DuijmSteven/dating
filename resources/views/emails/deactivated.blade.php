@@ -23,6 +23,12 @@
     <p>
         We vinden het jammer om jou te zien gaan! Wanneer u besluit uw profiel opnieuw te gebruiken, wordt dit automatisch geactiveerd zodra u zich aanmeldt!</p>
 
+    <div style="text-align: center">
+        <div style="display: inline-block; padding: 7px 20px; background-color: #ce5338; color: #fff; border: 1px solid #ce5338; border-radius: 4px; margin: 20px 0; cursor: pointer">
+            <a style="color: #fff" href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('direct-login', ['user' => $user->id]); @endphp">Ga direct naar Altijdsex.nl</a>
+        </div>
+    </div>
+
     <p style="font-family: sans-serif; font-weight: normal; margin: 0; Margin-bottom: 15px;">
         Met vriendelijke groet,<br>
         Team Altijdsex.nl
