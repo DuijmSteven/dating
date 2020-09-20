@@ -202,6 +202,7 @@ class UserManager
         );
 
         $viewerUser = null;
+
         if ($profileViewedEmailEnabled && $viewed->isPeasant()) {
 
             if (!($viewer instanceof User)) {
@@ -224,8 +225,10 @@ class UserManager
             }
 
             if ($viewerUser instanceof User) {
+
                 if (
-                    config('app.env') === 'production' &&
+                    config('app.env') === 'production' ||
+                    config('app.env') === 'local' &&
                     $viewed->isMailable
                 ) {
                     $profileViewedEmail = (new ProfileViewed(

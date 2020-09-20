@@ -32,14 +32,18 @@ class DashboardController extends FrontendController
         $this->userLocationService = $userLocationService;
     }
 
-    public function directLogin(User $user)
+    public function directLogin(User $user, $routeName = 'home', $routeParamName = null, $routeParam = null)
     {
         Auth::login($user);
 
-        return redirect()->route('home');
+        if ($routeParamName) {
+            return redirect()->route($routeName, [$routeParamName => $routeParam]);
+        }
+
+        return redirect()->route($routeName);
     }
 
-    public function index(User $user = null)
+    public function index()
     {
         if (!$this->authenticatedUser->getActive()) {
             $this->authenticatedUser->setActive(true);

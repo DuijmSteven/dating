@@ -71,7 +71,7 @@
 
                         <div class="vertical-separator"></div>
                     </li>
-                    <li class="dropdown userDropdown open">
+                    <li class="dropdown userDropdown">
                         <a href="#"
                            class="dropdown-toggle"
                            data-toggle="dropdown"

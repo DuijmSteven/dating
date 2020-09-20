@@ -85,7 +85,7 @@
 
     <div style="text-align: center">
         <div style="display: inline-block; padding: 7px 20px; background-color: #ce5338; color: #fff; border: 1px solid #ce5338; border-radius: 4px; margin: 20px 0; cursor: pointer">
-            <a style="color: #fff" href="{{ route('landing-page.show-login') }}">Ga direct naar Altijdsex.nl</a>
+            <a style="color: #fff" href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('direct-login', ['user' => $messageRecipient->id, 'routeName' => 'users.show', 'routeParamName' => 'username', 'routeParam' => $messageSender->username]); @endphp">Ga direct naar Altijdsex.nl</a>
         </div>
     </div>
 

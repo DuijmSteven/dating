@@ -144,7 +144,7 @@
         methods: {
             profileImageUrl(userId, $filename, $gender, $thumbnail = true) {
                 if (!$filename) {
-                    if ($gender === 'male') {
+                    if ($gender === 1) {
                         return DP.malePlaceholderImageUrl;
                     } else {
                         return DP.femalePlaceholderImageUrl;

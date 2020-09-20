@@ -59,7 +59,7 @@ Route::group([
         ->name('home')
         ->middleware(['auth', 'not_editor', 'not_operator']);
 
-    Route::get('direct-login/{user}', 'Frontend\DashboardController@directLogin')
+    Route::get('direct-login/{user}/{routeName?}/{routeParamName?}/{routeParam?}', 'Frontend\DashboardController@directLogin')
         ->name('direct-login')
         ->middleware('signed');
 
