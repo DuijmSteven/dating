@@ -154,12 +154,22 @@ Route::group([
     'prefix' => 'unsubscribe',
     'middleware' => ['not_anonymous_domain']
 ], function () {
-    /*Route::get('/{email?}/{token?}', 'Frontend\EmailUnsubscribeController@index')
-        ->name('unsubscribe.index');*/
     Route::get('/{user}', 'Frontend\EmailUnsubscribeController@index')
         ->name('unsubscribe')->middleware('signed');
     Route::post('/{user}', 'Frontend\EmailUnsubscribeController@unsubscribe')
         ->name('unsubscribe.post')->middleware('signed');
+});
+
+/* Unsubscribe routes */
+Route::group([
+    'prefix' => 'autologin',
+    'middleware' => ['not_anonymous_domain']
+], function () {
+    Route::get('/{user}', function (\App\User $user) {
+        Auth::login($user);
+
+        return redirect()->home();
+    })->name('autologin')->middleware('signed');
 });
 
 /* Conversations routes */
