@@ -101,7 +101,8 @@ class User extends Authenticatable
         'messagesLastMonth',
         'conversationsAsUserA',
         'conversationsAsUserB',
-        'payments'
+        'payments',
+        'botMessagesReceived'
     ];
 
     const BOT_RELATIONS = [
@@ -163,6 +164,30 @@ class User extends Authenticatable
     {
         return $this->meta->getEmailVerified() === UserMeta::EMAIL_VERIFIED_DELIVERABLE ||
         $this->meta->getEmailVerified() === UserMeta::EMAIL_VERIFIED_RISKY;
+    }
+
+    // checks if user is new and viewing profiles for the first time, in order to create automated profile view and maybe message from the bot he is viewing
+    public function getIsFullyImpressionableAttribute()
+    {
+        $registeredRecently = $this->getCreatedAt()->diffInMinutes(Carbon::now()) < 5;
+        $conversationsCount = $this->conversations_as_user_b_count;
+
+        return $registeredRecently && $conversationsCount < 2;
+    }
+
+    public function getShouldBeBotMessagedAttribute()
+    {
+        $conversationsCount = $this->conversations_as_user_b_count;
+
+        return $conversationsCount < 2;
+    }
+
+    public function getIsPartlyImpressionableAttribute()
+    {
+        $registeredRecently = $this->getCreatedAt()->diffInMinutes(Carbon::now()) >= 5 && $this->getCreatedAt()->diffInDays(Carbon::now() <= 2);
+        $conversationsCount = $this->conversations_as_user_b_count;
+
+        return $registeredRecently && $conversationsCount < 4;
     }
 
     public function messagedVsMessagesPercentage()
@@ -543,7 +568,7 @@ class User extends Authenticatable
         return $this->deactivated_at;
     }
 
-    public function getLastOnlineAt()
+    public function getLastOnlineAt(): ?Carbon
     {
         return $this->last_online_at;
     }
@@ -692,6 +717,12 @@ class User extends Authenticatable
     public function removeEmailType($typeId)
     {
         $this->emailTypes()->detach($typeId);   // remove friend
+    }
+
+    public function botMessagesReceived()
+    {
+        return $this->belongsToMany(BotMessage::class, 'user_bot_message', 'bot_message_id', 'user_id')
+            ->withTimestamps();
     }
 
     public function openConversationPartners()

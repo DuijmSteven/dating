@@ -190,6 +190,11 @@ class ConversationManager
             $conversation->setReplyableAt(null);
         }
 
+        if (isset($messageData['created_at'])) {
+            $conversation->setCreatedAt($messageData['created_at']);
+            $conversation->setUpdatedAt($messageData['created_at']);
+        }
+
         $conversation->save();
 
         // determine paid property of message
@@ -216,7 +221,13 @@ class ConversationManager
                 'paid' => $isPaidMessage
             ]);
 
+            if (isset($messageData['created_at'])) {
+                $messageInstance->setCreatedAt($messageData['created_at']);
+                $messageInstance->setUpdatedAt($messageData['created_at']);
+            }
+
             $messageInstance->save();
+
         } catch (\Exception $exception) {
             \Log::info(__CLASS__ . ' - ' . $exception->getMessage());
             throw $exception;
@@ -740,8 +751,8 @@ class ConversationManager
             'conversations.new_activity_for_user_b as conversation_new_activity_for_user_b',
             'conversations.user_a_id as conversation_user_a_id',
             'conversations.user_b_id as conversation_user_b_id',
-            'conversations.created_at as conversation_created_at',
-            'conversations.updated_at as conversation_updated_at',
+            \DB::raw('DATE_FORMAT(CONVERT_TZ(conversations.created_at, \'UTC\', \'Europe/Amsterdam\'), \'%Y-%m-%d %H:%i:%s\') as conversation_created_at'),
+            \DB::raw('DATE_FORMAT(CONVERT_TZ(conversations.updated_at, \'UTC\', \'Europe/Amsterdam\'), \'%Y-%m-%d %H:%i:%s\') as conversation_updated_at'),
             'last_message.id as last_message_id',
             'last_message.created_at as last_message_created_at',
             'last_message.body as last_message_body',
@@ -797,6 +808,7 @@ class ConversationManager
                 $query->where('conversations.user_a_id', $userId)
                     ->orWhere('conversations.user_b_id', $userId);
             })
+            ->where('conversations.created_at', '<=', Carbon::now())
             ->orderBy('last_message_created_at', 'desc')
             ->get();
 

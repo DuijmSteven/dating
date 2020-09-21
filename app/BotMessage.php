@@ -24,6 +24,7 @@ class BotMessage extends TimeZonedModel
         return [
             self::USAGE_TYPE_NORMAL_CHAT => 'Normal chat',
             self::USAGE_TYPE_PUBLIC_CHAT => 'Public chat',
+            self::USAGE_TYPE_INITIAL_CONTACT => 'Initial contact',
         ];
     }
 
@@ -78,5 +79,11 @@ class BotMessage extends TimeZonedModel
     public function bot()
     {
         return $this->belongsTo(User::class, 'bot_id');
+    }
+
+    public function peasants()
+    {
+        return $this->belongsToMany(User::class, 'user_bot_message', 'user_id', 'bot_message_id')
+            ->withTimestamps();
     }
 }

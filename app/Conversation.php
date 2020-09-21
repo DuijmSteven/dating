@@ -13,6 +13,8 @@ class Conversation extends TimeZonedModel
 {
     use SoftDeletes;
 
+    public $timestamps = true;
+
     const CYCLE_STAGE_NEW = 0;
     const CYCLE_STAGE_UNREPLIED = 1;
     const CYCLE_STAGE_STOPPED = 2;
@@ -182,5 +184,15 @@ class Conversation extends TimeZonedModel
     public function setDeletedAt(?Carbon $deletedAt)
     {
         $this->deleted_at = $deletedAt;
+    }
+
+    public function setCreatedAt($createdAt)
+    {
+        $this->created_at = $createdAt;
+    }
+
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updated_at = $updatedAt;
     }
 }

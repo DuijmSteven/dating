@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\BotMessage;
 use App\EmailType;
 use App\Http\Requests\Admin\Peasants\PeasantUpdateRequest;
 use App\Mail\Deactivated;
+use App\Managers\ConversationManager;
 use App\Managers\PeasantManager;
 use App\Managers\UserManager;
 use App\Milestone;
@@ -15,6 +17,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Kim\Activity\Activity;
 
 /**
  * Class UserController
@@ -32,16 +35,26 @@ class UserController extends FrontendController
     private $peasantManager;
 
     /**
+     * @var ConversationManager
+     */
+    private ConversationManager $conversationManager;
+
+    /**
      * UserController constructor.
      * @param User $user
      * @param UserManager $userManager
      */
-    public function __construct(User $user, UserManager $userManager, PeasantManager $peasantManager)
-    {
+    public function __construct(
+        User $user,
+        UserManager $userManager,
+        PeasantManager $peasantManager,
+        ConversationManager $conversationManager
+    ) {
         parent::__construct();
         $this->user = $user;
         $this->userManager = $userManager;
         $this->peasantManager = $peasantManager;
+        $this->conversationManager = $conversationManager;
     }
 
     /**
@@ -85,8 +98,110 @@ class UserController extends FrontendController
         if (!($user instanceof User)) {
             redirect(route('home'));
         }
-
         if ($this->authenticatedUser->isPeasant()) {
+            if ($user->isBot()) {
+                $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
+
+                if (
+                    $this->authenticatedUser->isFullyImpressionable
+                ) {
+                    if (in_array($user->getId(), $onlineIds)) {
+                        if (rand(1, 2) === 1) {
+                            $secondsUntilProfileView = rand(30, 100);
+
+                            $this->userManager->storeProfileView(
+                                $user,
+                                $this->authenticatedUser,
+                                UserView::TYPE_AUTOMATED,
+                                Carbon::now()->addSeconds($secondsUntilProfileView)
+                            );
+
+                            // send automated initial bot message to user if he has not received one
+                            if (
+                                $this->authenticatedUser->bot_messages_received_count === 0 &&
+                                $this->authenticatedUser->messaged_count === 0 &&
+                                rand(1, 2) === 1
+                            ) {
+                                $botMessage = BotMessage
+                                    ::where('usage_type', BotMessage::USAGE_TYPE_INITIAL_CONTACT)
+                                    ->where('status', BotMessage::STATUS_ACTIVE)
+                                    ->orderByRaw('RAND()')
+                                    ->first();
+
+                                $botMessageBody = $botMessage->body;
+
+                                $messageData = [
+                                    'sender_id' => $user->getId(),
+                                    'recipient_id' => $this->authenticatedUser->getId(),
+                                    'message' => $botMessageBody,
+                                    'created_at' => Carbon::now()->addSeconds($secondsUntilProfileView + 30)
+                                ];
+
+                                $this->authenticatedUser->botMessagesReceived()->attach($botMessage);
+
+                                $this->conversationManager->createMessage($messageData);
+                            }
+                        }
+                    } else {
+                        if (rand(1, 4) === 1) {
+                            $minutesUntilProfileView = rand(10, 1000);
+
+                            $this->userManager->storeProfileView(
+                                $user,
+                                $this->authenticatedUser,
+                                UserView::TYPE_AUTOMATED,
+                                Carbon::now()->addMinutes($minutesUntilProfileView)
+                            );
+                        }
+                    }
+                } else {
+                    if (in_array($user->getId(), $onlineIds)) {
+                        if (rand(1, 4) === 1) {
+                            $secondsUntilProfileView = rand(50, 300);
+
+                            $this->userManager->storeProfileView(
+                                $user,
+                                $this->authenticatedUser,
+                                UserView::TYPE_AUTOMATED,
+                                Carbon::now()->addSeconds($secondsUntilProfileView)
+                            );
+
+                            if (
+                                $this->authenticatedUser->bot_messages_received_count === 0 &&
+                                $this->authenticatedUser->messaged_count === 0 &&
+                                rand(1, 3) === 1
+                            ) {
+                                $botMessage = BotMessage
+                                    ::where('type', BotMessage::USAGE_TYPE_INITIAL_CONTACT)
+                                    ->orderByRaw('RAND()')
+                                    ->first()
+                                    ->body;
+
+                                $messageData = [
+                                    'sender_id' => $user->getId(),
+                                    'recipient_id' => $this->authenticatedUser->getId(),
+                                    'message' => $botMessage,
+                                    'created_at' => Carbon::now()->addSeconds($secondsUntilProfileView + 30)
+                                ];
+
+                                $this->conversationManager->createMessage($messageData);
+                            }
+                        }
+                    } else {
+                        if (rand(1, 5) === 1) {
+                            $minutesUntilProfileView = rand(10, 1000);
+
+                            $this->userManager->storeProfileView(
+                                $user,
+                                $this->authenticatedUser,
+                                UserView::TYPE_AUTOMATED,
+                                Carbon::now()->addMinutes($minutesUntilProfileView)
+                            );
+                        }
+                    }
+                }
+            }
+
             if (
                 $user->isPeasant() &&
                 $user->isMailable
