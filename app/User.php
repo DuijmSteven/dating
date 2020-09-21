@@ -171,7 +171,7 @@ class User extends Authenticatable
         $registeredRecently = $this->getCreatedAt()->diffInMinutes(Carbon::now()) < 5;
         $conversationsCount = $this->conversations_as_user_b_count;
 
-        return $registeredRecently && $conversationsCount < 2;
+        return $registeredRecently && $conversationsCount < 20;
     }
 
     public function getIsPartlyImpressionableAttribute()

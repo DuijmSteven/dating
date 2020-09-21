@@ -106,7 +106,7 @@ class UserController extends FrontendController
                         }
                     } else {
                         if (rand(1, 5) === 1) {
-                            $minutesUntilProfileView = rand(1, 1000);
+                            $minutesUntilProfileView = rand(10, 1000);
 
                             $this->userManager->storeProfileView(
                                 $user,
@@ -118,7 +118,7 @@ class UserController extends FrontendController
                     }
                 } else {
                     if (in_array($user->getId(), $onlineIds)) {
-                        if (rand(1, 5) === 1) {
+                        if (rand(1, 6) === 1) {
                             $secondsUntilProfileView = rand(50, 300);
 
                             $this->userManager->storeProfileView(
