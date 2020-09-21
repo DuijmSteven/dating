@@ -53,6 +53,7 @@ class DuplicateProductionS3BucketToCurrentEnvironmentBucket extends Command
 
             // run the cli job
             $emptyCurrentEnvBucket = new Process('/usr/local/bin/aws s3 rm s3://' . $bucketName . ' --recursive');
+            $emptyCurrentEnvBucket->setTimeout(500);
             $emptyCurrentEnvBucket->run();
 
             if ($emptyCurrentEnvBucket->isSuccessful()) {
