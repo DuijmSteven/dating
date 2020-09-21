@@ -721,7 +721,7 @@ class User extends Authenticatable
 
     public function botMessagesReceived()
     {
-        return $this->belongsToMany(BotMessage::class, 'user_bot_message', 'bot_message_id', 'user_id')
+        return $this->belongsToMany(BotMessage::class, 'user_bot_message', 'user_id', 'bot_message_id')
             ->withTimestamps();
     }
 

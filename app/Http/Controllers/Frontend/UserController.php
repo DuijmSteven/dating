@@ -11,6 +11,7 @@ use App\Managers\PeasantManager;
 use App\Managers\UserManager;
 use App\Milestone;
 use App\User;
+use App\UserBotMessage;
 use App\UserView;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -140,6 +141,10 @@ class UserController extends FrontendController
                                     'message' => $botMessageBody,
                                     'created_at' => Carbon::now()->addSeconds($secondsUntilProfileView + 30)
                                 ];
+
+                                $userBotMessage = new UserBotMessage();
+                                $userBotMessage->setBotMessageId($botMessage->id);
+                                $userBotMessage->setUserId($this->authenticatedUser->getId());
 
                                 $this->authenticatedUser->botMessagesReceived()->attach($botMessage);
                                 $this->conversationManager->createMessage($messageData);
