@@ -158,8 +158,6 @@ Route::group([
     'prefix' => 'unsubscribe',
     'middleware' => ['not_anonymous_domain']
 ], function () {
-    /*Route::get('/{email?}/{token?}', 'Frontend\EmailUnsubscribeController@index')
-        ->name('unsubscribe.index');*/
     Route::get('/{user}', 'Frontend\EmailUnsubscribeController@index')
         ->name('unsubscribe')->middleware('signed');
     Route::post('/{user}', 'Frontend\EmailUnsubscribeController@unsubscribe')

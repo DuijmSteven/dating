@@ -2,7 +2,7 @@
     <div class="Tile__heading Online-users__heading JS--Tile__toggle">
         <span class="onlineCircle blinking"></span>
 
-        {{ trans('online_users.online_users') }}
+        <span class="Online-users__headingText">{{ trans('online_users.online_users') }}</span>
 
         {{--        @include('frontend.components.tile-toggle')--}}
 

@@ -101,7 +101,8 @@ class User extends Authenticatable
         'messagesLastMonth',
         'conversationsAsUserA',
         'conversationsAsUserB',
-        'payments'
+        'payments',
+        'botMessagesReceived'
     ];
 
     const BOT_RELATIONS = [
@@ -168,10 +169,17 @@ class User extends Authenticatable
     // checks if user is new and viewing profiles for the first time, in order to create automated profile view and maybe message from the bot he is viewing
     public function getIsFullyImpressionableAttribute()
     {
-        $registeredRecently = $this->getCreatedAt()->diffInMinutes(Carbon::now()) < 5;
+        $registeredRecently = $this->getCreatedAt()->diffInMinutes(Carbon::now()) < 7;
         $conversationsCount = $this->conversations_as_user_b_count;
 
-        return $registeredRecently && $conversationsCount < 20;
+        return $registeredRecently && $conversationsCount < 2;
+    }
+
+    public function getShouldBeBotMessagedAttribute()
+    {
+        $conversationsCount = $this->conversations_as_user_b_count;
+
+        return $conversationsCount < 2;
     }
 
     public function getIsPartlyImpressionableAttribute()
@@ -709,6 +717,12 @@ class User extends Authenticatable
     public function removeEmailType($typeId)
     {
         $this->emailTypes()->detach($typeId);   // remove friend
+    }
+
+    public function botMessagesReceived()
+    {
+        return $this->belongsToMany(BotMessage::class, 'user_bot_message', 'bot_message_id', 'user_id')
+            ->withTimestamps();
     }
 
     public function openConversationPartners()

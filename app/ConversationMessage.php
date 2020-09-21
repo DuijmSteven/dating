@@ -11,6 +11,8 @@ class ConversationMessage extends TimeZonedModel
 {
     use SoftDeletes;
 
+    public $timestamps = true;
+
     const OPERATOR_MESSAGE_TYPE_STOPPED = 1;
 
     public $table = 'conversation_messages';
@@ -137,5 +139,15 @@ class ConversationMessage extends TimeZonedModel
     public function setConversationId(int $conversationId)
     {
         $this->conversation_id = $conversationId;
+    }
+
+    public function setCreatedAt($createdAt)
+    {
+        $this->created_at = $createdAt;
+    }
+
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updated_at = $updatedAt;
     }
 }

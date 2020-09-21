@@ -53,6 +53,7 @@ class DuplicateProductionS3BucketToCurrentEnvironmentBucket extends Command
 
             // run the cli job
             $emptyCurrentEnvBucket = new Process('/usr/local/bin/aws s3 rm s3://' . $bucketName . ' --recursive');
+            $emptyCurrentEnvBucket->setTimeout(500);
             $emptyCurrentEnvBucket->run();
 
             if ($emptyCurrentEnvBucket->isSuccessful()) {
@@ -63,6 +64,7 @@ class DuplicateProductionS3BucketToCurrentEnvironmentBucket extends Command
                 \Log::debug('Starting to copy files from s3://altijdsex to s3://' . $bucketName . '...');
 
                 $copyProductionBucketToCurrentEnvBucket = new Process('/usr/local/bin/aws s3 sync s3://altijdsex s3://' . $bucketName . '');
+                $copyProductionBucketToCurrentEnvBucket->setTimeout(500);
                 $copyProductionBucketToCurrentEnvBucket->run();
 
                 if ($copyProductionBucketToCurrentEnvBucket->isSuccessful()) {

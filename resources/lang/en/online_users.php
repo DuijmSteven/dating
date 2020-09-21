@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'online_users' => 'Online users',
+    'online_users' => 'Some online users',
 ];
