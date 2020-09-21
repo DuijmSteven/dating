@@ -25,7 +25,7 @@
             <div class="Tile__body UserSummary__body">
                 <div class="UserSummary__user-image">
 
-                    <a href="{{ route('users.show', ['username' => $messageSender->getUsername()])  }}">
+                    <a href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('direct-login', ['user' => $messageRecipient->getId(), 'routeName' => 'users.show', 'routeParamName' => 'username', 'routeParam' => $messageSender->username]); @endphp">
                         <img
                             class="UserSummary__profileImage JS--galleryImage"
                             src="{{ \StorageHelper::profileImageUrl($messageSender) }}"
@@ -37,7 +37,7 @@
             <div class="Tile__footer UserSummary__footer">
                 <div class="UserSummary__footer__upperPart">
                     <div class="UserSummary__userInfo">
-                        <a href="{{ route('users.show', ['username' => $messageSender->getUsername()])  }}"
+                        <a href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('direct-login', ['user' => $messageRecipient->getId(), 'routeName' => 'users.show', 'routeParamName' => 'username', 'routeParam' => $messageSender->username]); @endphp"
                            class="UserSummary__userInfo__primary">
                             {{ $messageSender->username }}
                         </a>
@@ -62,7 +62,7 @@
 
     <div style="text-align: center">
         <div style="display: inline-block; padding: 7px 20px; background-color: #ce5338; color: #fff; border: 1px solid #ce5338; border-radius: 4px; margin: 20px 0; cursor: pointer">
-            <a style="color: #fff" href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('direct-login', ['user' => $messageRecipient->getId(), 'routeName' => 'users.show', 'routeParamName' => 'username', 'routeParam' => $messageSender->username]); @endphp">Ga direct naar Altijdsex.nl</a>
+            <a style="color: #fff" href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('direct-login', ['user' => $messageRecipient->getId(), 'routeName' => 'users.show', 'routeParamName' => 'username', 'routeParam' => $messageSender->username]); @endphp">Bekijk het profiel</a>
         </div>
     </div>
 
