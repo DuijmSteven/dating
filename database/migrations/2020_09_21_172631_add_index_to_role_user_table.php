@@ -14,7 +14,12 @@ class AddIndexToRoleUserTable extends Migration
     public function up()
     {
         Schema::table('role_user', function (Blueprint $table) {
-            //
+            $table->index([
+                'user_id',
+            ]);
+            $table->index([
+                'role_id',
+            ]);
         });
     }
 
@@ -26,7 +31,12 @@ class AddIndexToRoleUserTable extends Migration
     public function down()
     {
         Schema::table('role_user', function (Blueprint $table) {
-            //
+            $table->dropIndex([
+                'user_id',
+            ]);
+            $table->dropIndex([
+                'role_id',
+            ]);
         });
     }
 }
