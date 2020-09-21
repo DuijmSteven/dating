@@ -185,11 +185,21 @@ class UserManager
         DB::commit();
     }
 
-    public function storeProfileView(User $viewer, User $viewed, int $type = null) {
+    public function storeProfileView(
+        User $viewer,
+        User $viewed,
+        int $type = null,
+        Carbon $createdAt = null
+    ) {
         $userViewInstance = new UserView();
         $userViewInstance->setViewerId($viewer->getId());
         $userViewInstance->setViewedId($viewed->getId());
         $userViewInstance->setType($type);
+
+        if ($createdAt) {
+            $userViewInstance->setCreatedAt($createdAt);
+        }
+
         $userViewInstance->save();
     }
 
