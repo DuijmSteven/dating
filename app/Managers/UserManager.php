@@ -100,12 +100,12 @@ class UserManager
         } elseif ($roleId === User::TYPE_PEASANT) {
             $relations = array_unique(array_merge(
                     User::COMMON_RELATIONS,
-                    User::PEASANT_RELATIONS
+                    User::PEASANT_FRONTEND_RELATIONS
                 )
             );
 
             $relationCounts = array_merge(
-                User::PEASANT_RELATION_COUNTS
+                User::PEASANT_FRONTEND_RELATION_COUNTS
             );
         } elseif ($roleId === User::TYPE_BOT) {
             $relations = array_unique(array_merge(

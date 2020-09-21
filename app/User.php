@@ -82,6 +82,14 @@ class User extends Authenticatable
         'affiliateTracking',
     ];
 
+    const PEASANT_FRONTEND_RELATIONS = [
+
+    ];
+
+    const PEASANT_FRONTEND_RELATION_COUNTS = [
+
+    ];
+
     const PEASANT_RELATION_COUNTS = [
         'messaged',
         'messagedToday',
