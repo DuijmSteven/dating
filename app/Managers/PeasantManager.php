@@ -68,7 +68,9 @@ class PeasantManager extends UserManager
      */
     public function updatePeasant(array $peasantData, int $peasantId)
     {
-        $peasantData = $this->buildPeasantArrayToPersist($peasantData, 'update');
+        $peasant = User::find($peasantId);
+
+        $peasantData = $this->buildPeasantArrayToPersist($peasantData, 'update', $peasant);
         $this->updateUser($peasantData, $peasantId);
     }
 
@@ -78,7 +80,7 @@ class PeasantManager extends UserManager
      * @return array
      * @throws \Spatie\Geocoder\Exceptions\CouldNotGeocode
      */
-    private function buildPeasantArrayToPersist(array $peasantData, string $action)
+    private function buildPeasantArrayToPersist(array $peasantData, string $action, User $peasant)
     {
         if (isset($peasantData['city']) && $peasantData['city']) {
             $peasantData['city'] = strtolower($peasantData['city']);
@@ -100,13 +102,18 @@ class PeasantManager extends UserManager
                 array_merge(
                     array_keys(UserConstants::selectableFields('peasant')),
                     UserConstants::textFields('peasant', 'public'),
-                    UserConstants::textInputs('peasant', 'all')
+                    UserConstants::textInputs('peasant', 'all'),
+                    ['email']
                 )
             );
         });
 
         $userDataToPersist['user'] = $usersTableData;
         $userDataToPersist['user_meta'] = $userMetaTableData;
+
+        if (isset($userDataToPersist['user_meta']['email']) && $userDataToPersist['user_meta']['email'] != $peasant->getEmail()) {
+            $userDataToPersist['user_meta']['email_verified'] = 0;
+        }
 
         if (isset($userDataToPersist['user_meta']['dob'])) {
             $userDataToPersist['user_meta']['dob'] = Carbon::parse($userDataToPersist['user_meta']['dob'])->format('Y-m-d');

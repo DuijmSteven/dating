@@ -60,7 +60,6 @@ class UserMeta extends Model
         'looking_for',
         'logins_count',
         'email_verified',
-        'email_verification_status',
         'created_at',
         'updated_at'
     ];
