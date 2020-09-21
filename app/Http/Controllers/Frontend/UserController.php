@@ -120,7 +120,11 @@ class UserController extends FrontendController
                             if (
                                 $this->authenticatedUser->bot_messages_received_count === 0 &&
                                 $this->authenticatedUser->messaged_count === 0 &&
-                                rand(1, 2) === 1
+                                !$this->conversationManager->userHasConversationWithUser(
+                                    $this->authenticatedUser->getId(),
+                                    $user->getId()
+                                ) &&
+                                rand(1, 100) <= 75
                             ) {
                                 $botMessage = BotMessage
                                     ::where('usage_type', BotMessage::USAGE_TYPE_INITIAL_CONTACT)
@@ -138,7 +142,6 @@ class UserController extends FrontendController
                                 ];
 
                                 $this->authenticatedUser->botMessagesReceived()->attach($botMessage);
-
                                 $this->conversationManager->createMessage($messageData);
                             }
                         }
@@ -169,7 +172,11 @@ class UserController extends FrontendController
                             if (
                                 $this->authenticatedUser->bot_messages_received_count === 0 &&
                                 $this->authenticatedUser->messaged_count === 0 &&
-                                rand(1, 3) === 1
+                                !$this->conversationManager->userHasConversationWithUser(
+                                    $this->authenticatedUser->getId(),
+                                    $user->getId()
+                                ) &&
+                                rand(1, 100) <= 75
                             ) {
                                 $botMessage = BotMessage
                                     ::where('type', BotMessage::USAGE_TYPE_INITIAL_CONTACT)
@@ -184,6 +191,7 @@ class UserController extends FrontendController
                                     'created_at' => Carbon::now()->addSeconds($secondsUntilProfileView + 30)
                                 ];
 
+                                $this->authenticatedUser->botMessagesReceived()->attach($botMessage);
                                 $this->conversationManager->createMessage($messageData);
                             }
                         }

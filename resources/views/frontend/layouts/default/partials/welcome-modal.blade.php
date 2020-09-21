@@ -55,7 +55,7 @@
                             </span>
                             <span>Verkeerd e-mailadres ingevuld?</span>
                         </div>
-                        <a href="{{ route('users.edit-profile.get', ['username' => $authenticatedUser->username]) }}">E-mailadres aanpassen!</a>
+                        <a href="{{ route('users.edit-profile.get', ['username' => $authenticatedUser->username]) }}">E-mailadres aanpassen om e-mails over nieuwe berichten te ontvangen!</a>
                     </div>
 
                     <div class="well" style="font-weight: 500;margin-bottom: 0">

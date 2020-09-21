@@ -169,7 +169,7 @@ class User extends Authenticatable
     // checks if user is new and viewing profiles for the first time, in order to create automated profile view and maybe message from the bot he is viewing
     public function getIsFullyImpressionableAttribute()
     {
-        $registeredRecently = $this->getCreatedAt()->diffInMinutes(Carbon::now()) < 5;
+        $registeredRecently = $this->getCreatedAt()->diffInMinutes(Carbon::now()) < 7;
         $conversationsCount = $this->conversations_as_user_b_count;
 
         return $registeredRecently && $conversationsCount < 2;

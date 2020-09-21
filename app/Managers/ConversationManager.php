@@ -46,6 +46,19 @@ class ConversationManager
         $this->conversationMessage = $conversationMessage;
     }
 
+    public function userHasConversationWithUser($userAId, $userBId)
+    {
+        return Conversation
+            ::where('user_a_id', $userAId)
+            ->where('user_b_id', $userBId)
+            ->orWhere(function ($query) use ($userAId, $userBId) {
+                $query->where('user_a_id', $userBId);
+                $query->where('user_b_id', $userAId);
+            })
+            ->withTrashed()
+            ->first();
+    }
+
     /**
      * @param array $messageData
      * @return ConversationMessage
