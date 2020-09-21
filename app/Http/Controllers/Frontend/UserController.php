@@ -106,7 +106,7 @@ class UserController extends FrontendController
                     $this->authenticatedUser->isFullyImpressionable
                 ) {
                     if (in_array($user->getId(), $onlineIds)) {
-                        if (rand(1, 100) <= 35) {
+                        if (rand(1, 100) <= 40) {
                             $secondsUntilProfileView = rand(30, 100);
 
                             $this->userManager->storeProfileView(
