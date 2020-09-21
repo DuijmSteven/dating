@@ -15,7 +15,7 @@
                     <hr class="heading-undeline">
 
                     <p>
-                        Er is een email verstuurd naar <span class="user-email">{{ $authenticatedUser->email }}</span>. Als je geen email ontvangt, check je spambox!
+                        Er is een e-mail verstuurd naar <span class="user-email">{{ $authenticatedUser->email }}</span>. Als je geen email hebt ontvangen, check je spambox!
                     </p>
 
                     <div class="email-warning">
@@ -23,9 +23,9 @@
                             <span class="material-icons">
                                 warning
                             </span>
-                            <span>Verkeerde email adres ingevuld?</span>
+                            <span>Verkeerd e-mailadres ingevuld?</span>
                         </div>
-                         <a href="{{ route('users.edit-profile.get', ['username' => $authenticatedUser->username]) }}">Email aanpassen!</a>
+                         <a href="{{ route('users.edit-profile.get', ['username' => $authenticatedUser->username]) }}">E-mailadres aanpassen!</a>
                     </div>
 
                     <div class="well" style="font-weight: 500;margin-bottom: 0">
@@ -45,7 +45,7 @@
                     <hr class="heading-undeline">
 
                     <p>
-                        Er is een email verstuurd naar <span class="user-email">{{ $authenticatedUser->email }}</span>. Als je geen email ontvangt, check je spambox!
+                        Er is een e-mail verstuurd naar <span class="user-email">{{ $authenticatedUser->email }}</span>. Als je geen email hebt ontvangen, check je spambox!
                     </p>
 
                     <div class="email-warning">
@@ -53,9 +53,9 @@
                             <span class="material-icons">
                                 warning
                             </span>
-                            <span>Verkeerde email adres ingevuld?</span>
+                            <span>Verkeerd e-mailadres ingevuld?</span>
                         </div>
-                        <a href="{{ route('users.edit-profile.get', ['username' => $authenticatedUser->username]) }}">Email aanpassen!</a>
+                        <a href="{{ route('users.edit-profile.get', ['username' => $authenticatedUser->username]) }}">E-mailadres aanpassen!</a>
                     </div>
 
                     <div class="well" style="font-weight: 500;margin-bottom: 0">
@@ -66,7 +66,7 @@
 
                     <br>
 
-                    We hopen dat je veel plezier beleeft aan het gebruik van onze moderne chat vorzien van <strong>live
+                    We hopen dat je veel plezier beleeft aan het gebruik van onze moderne chat voorzien van <strong>live
                         updates en meldingen</strong>, zodat je binnenkort je volgende sexy date(s) kunt ontmoeten.
                 </div>
             </div>

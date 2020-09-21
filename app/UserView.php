@@ -2,12 +2,15 @@
 
 namespace App;
 
+use Carbon\Carbon;
+
 class UserView extends TimeZonedModel
 {
     const TYPE_SCHEDULED = 1;
     const TYPE_BOT_MESSAGE = 2;
     const TYPE_PEASANT = 3;
     const TYPE_OPERATOR_MESSAGE = 4;
+    const TYPE_AUTOMATED = 5;
 
     public $table = 'user_views';
 
@@ -54,5 +57,9 @@ class UserView extends TimeZonedModel
         $this->viewed_id = $viewedId;
     }
 
+    public function setCreatedAt($createdAt)
+    {
+        $this->created_at = $createdAt;
+    }
 
 }

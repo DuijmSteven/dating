@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Kim\Activity\Activity;
 
 /**
  * Class UserController
@@ -85,8 +86,63 @@ class UserController extends FrontendController
         if (!($user instanceof User)) {
             redirect(route('home'));
         }
-
         if ($this->authenticatedUser->isPeasant()) {
+            if ($user->isBot()) {
+                $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
+
+                if (
+                    $this->authenticatedUser->isFullyImpressionable
+                ) {
+                    if (in_array($user->getId(), $onlineIds)) {
+                        if (rand(1, 2) === 1) {
+                            $secondsUntilProfileView = rand(30, 100);
+
+                            $this->userManager->storeProfileView(
+                                $user,
+                                $this->authenticatedUser,
+                                UserView::TYPE_AUTOMATED,
+                                Carbon::now()->addSeconds($secondsUntilProfileView)
+                            );
+                        }
+                    } else {
+                        if (rand(1, 5) === 1) {
+                            $minutesUntilProfileView = rand(1, 1000);
+
+                            $this->userManager->storeProfileView(
+                                $user,
+                                $this->authenticatedUser,
+                                UserView::TYPE_AUTOMATED,
+                                Carbon::now()->addMinutes($minutesUntilProfileView)
+                            );
+                        }
+                    }
+                } else {
+                    if (in_array($user->getId(), $onlineIds)) {
+                        if (rand(1, 5) === 1) {
+                            $secondsUntilProfileView = rand(50, 300);
+
+                            $this->userManager->storeProfileView(
+                                $user,
+                                $this->authenticatedUser,
+                                UserView::TYPE_AUTOMATED,
+                                Carbon::now()->addSeconds($secondsUntilProfileView)
+                            );
+                        }
+                    } else {
+                        if (rand(1, 8) === 1) {
+                            $minutesUntilProfileView = rand(10, 1000);
+
+                            $this->userManager->storeProfileView(
+                                $user,
+                                $this->authenticatedUser,
+                                UserView::TYPE_AUTOMATED,
+                                Carbon::now()->addMinutes($minutesUntilProfileView)
+                            );
+                        }
+                    }
+                }
+            }
+
             if (
                 $user->isPeasant() &&
                 $user->isMailable

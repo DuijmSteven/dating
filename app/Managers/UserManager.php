@@ -8,7 +8,6 @@ use App\Helpers\ApplicationConstants\UserConstants;
 use App\Mail\ProfileCompletion;
 use App\Mail\ProfileViewed;
 use App\RoleUser;
-use App\Services\GeocoderService;
 use App\Services\UserLocationService;
 use App\Session;
 use App\User;
@@ -18,7 +17,6 @@ use App\UserImage;
 use App\UserMeta;
 use App\UserView;
 use Carbon\Carbon;
-use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
@@ -185,11 +183,21 @@ class UserManager
         DB::commit();
     }
 
-    public function storeProfileView(User $viewer, User $viewed, int $type = null) {
+    public function storeProfileView(
+        User $viewer,
+        User $viewed,
+        int $type = null,
+        Carbon $createdAt = null
+    ) {
         $userViewInstance = new UserView();
         $userViewInstance->setViewerId($viewer->getId());
         $userViewInstance->setViewedId($viewed->getId());
         $userViewInstance->setType($type);
+
+        if ($createdAt) {
+            $userViewInstance->setCreatedAt($createdAt);
+        }
+
         $userViewInstance->save();
     }
 

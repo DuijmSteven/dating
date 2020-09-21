@@ -165,6 +165,23 @@ class User extends Authenticatable
         $this->meta->getEmailVerified() === UserMeta::EMAIL_VERIFIED_RISKY;
     }
 
+    // checks if user is new and viewing profiles for the first time, in order to create automated profile view and maybe message from the bot he is viewing
+    public function getIsFullyImpressionableAttribute()
+    {
+        $registeredRecently = $this->getCreatedAt()->diffInMinutes(Carbon::now()) < 5;
+        $conversationsCount = $this->conversations_as_user_b_count;
+
+        return $registeredRecently && $conversationsCount < 2;
+    }
+
+    public function getIsPartlyImpressionableAttribute()
+    {
+        $registeredRecently = $this->getCreatedAt()->diffInMinutes(Carbon::now()) >= 5 && $this->getCreatedAt()->diffInDays(Carbon::now() <= 2);
+        $conversationsCount = $this->conversations_as_user_b_count;
+
+        return $registeredRecently && $conversationsCount < 4;
+    }
+
     public function messagedVsMessagesPercentage()
     {
         if ($this->messages_count > 0) {
@@ -543,7 +560,7 @@ class User extends Authenticatable
         return $this->deactivated_at;
     }
 
-    public function getLastOnlineAt()
+    public function getLastOnlineAt(): ?Carbon
     {
         return $this->last_online_at;
     }

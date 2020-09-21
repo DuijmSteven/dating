@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\User;
 use App\UserView;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class LatestViewedModuleService
@@ -32,6 +33,7 @@ class LatestViewedModuleService
             })
             ->select(DB::raw('*, max(created_at) as created_at'))
             ->where('viewed_id', $userId)
+            ->where('created_at', '<=', Carbon::now())
             ->orderBy('created_at', 'desc')
             ->groupBy(['viewer_id'])
             ->take($limit)

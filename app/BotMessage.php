@@ -9,6 +9,7 @@ class BotMessage extends TimeZonedModel
 
     const USAGE_TYPE_NORMAL_CHAT = 1;
     const USAGE_TYPE_PUBLIC_CHAT = 2;
+    const USAGE_TYPE_INITIAL_CONTACT= 3;
 
     public $table = 'bot_messages';
 
