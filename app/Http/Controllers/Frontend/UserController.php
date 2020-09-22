@@ -107,8 +107,8 @@ class UserController extends FrontendController
                     $this->authenticatedUser->isFullyImpressionable
                 ) {
                     if (in_array($user->getId(), $onlineIds)) {
-                        if (rand(1, 100) <= 40) {
-                            $secondsUntilProfileView = rand(30, 100);
+                        if (rand(1, 100) <= 50) {
+                            $secondsUntilProfileView = rand(15, 80);
 
                             $this->userManager->storeProfileView(
                                 $user,
@@ -125,7 +125,7 @@ class UserController extends FrontendController
                                     $this->authenticatedUser->getId(),
                                     $user->getId()
                                 ) &&
-                                rand(1, 100) <= 75
+                                rand(1, 100) <= 80
                             ) {
                                 $botMessage = BotMessage
                                     ::where('usage_type', BotMessage::USAGE_TYPE_INITIAL_CONTACT)
