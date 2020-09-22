@@ -11,12 +11,13 @@ use App\Managers\PeasantManager;
 use App\Managers\UserManager;
 use App\Milestone;
 use App\User;
+use App\UserBotMessage;
 use App\UserView;
-use App\UserViews;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Kim\Activity\Activity;
 
 /**
@@ -93,11 +94,24 @@ class UserController extends FrontendController
      */
     public function show(string $username)
     {
+        $referer = request()->headers->get('referer');
+
+        if (!Str::contains($referer, config('app.url'))) {
+            session()->flash('backUrl', route('home'));
+        } else {
+            if ($referer != request()->url()) {
+                session()->flash('backUrl', $referer);
+            } else {
+                session()->flash('backUrl', session()->get('backUrl'));
+            }
+        }
+
         $user = User::with('emailTypeInstances', 'emailTypes', 'roles')->where('username', $username)->first();
 
         if (!($user instanceof User)) {
             redirect(route('home'));
         }
+
         if ($this->authenticatedUser->isPeasant()) {
             if ($user->isBot()) {
                 $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
@@ -107,7 +121,7 @@ class UserController extends FrontendController
                 ) {
                     if (in_array($user->getId(), $onlineIds)) {
                         if (rand(1, 100) <= 40) {
-                            $secondsUntilProfileView = rand(30, 100);
+                            $secondsUntilProfileView = rand(15, 80);
 
                             $this->userManager->storeProfileView(
                                 $user,
@@ -124,7 +138,7 @@ class UserController extends FrontendController
                                     $this->authenticatedUser->getId(),
                                     $user->getId()
                                 ) &&
-                                rand(1, 100) <= 75
+                                rand(1, 100) <= 80
                             ) {
                                 $botMessage = BotMessage
                                     ::where('usage_type', BotMessage::USAGE_TYPE_INITIAL_CONTACT)
@@ -141,12 +155,16 @@ class UserController extends FrontendController
                                     'created_at' => Carbon::now()->addSeconds($secondsUntilProfileView + 30)
                                 ];
 
+                                $userBotMessage = new UserBotMessage();
+                                $userBotMessage->setBotMessageId($botMessage->id);
+                                $userBotMessage->setUserId($this->authenticatedUser->getId());
+
                                 $this->authenticatedUser->botMessagesReceived()->attach($botMessage);
                                 $this->conversationManager->createMessage($messageData);
                             }
                         }
                     } else {
-                        if (rand(1, 4) === 1) {
+                        if (rand(1, 100) <= 20) {
                             $minutesUntilProfileView = rand(10, 1000);
 
                             $this->userManager->storeProfileView(
@@ -249,7 +267,8 @@ class UserController extends FrontendController
             array_merge(
                 $viewData,
                 [
-                    'title' => $this->buildTitleWith(trans('view_titles.single_profile') . ' - '. $user->username)
+                    'title' => $this->buildTitleWith(trans('view_titles.single_profile') . ' - '. $user->username),
+                    'backUrl' => session()->get('backUrl')
                 ]
             )
         );

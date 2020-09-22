@@ -70,9 +70,10 @@ class ConversationController extends Controller
             'userB.meta',
             'userB.profileImage'
         ])
-            ->withTrashed()
-            ->orderBy('created_at', 'desc')
-            ->paginate(20);
+        ->withCount(['messages'])
+        ->withTrashed()
+        ->orderBy('created_at', 'desc')
+        ->paginate(20);
 
         return view(
             'admin.conversations.overview',
@@ -102,11 +103,12 @@ class ConversationController extends Controller
             'userB.meta',
             'userB.profileImage'
         ])
-            ->where('user_a_id', $peasantId)
-            ->orWhere('user_b_id', $peasantId)
-            ->withTrashed()
-            ->orderBy('created_at', 'desc')
-            ->paginate(20);
+        ->withCount(['messages'])
+        ->where('user_a_id', $peasantId)
+        ->orWhere('user_b_id', $peasantId)
+        ->withTrashed()
+        ->orderBy('created_at', 'desc')
+        ->paginate(20);
 
         /** @var User $peasant */
         $peasant = User::find($peasantId);
@@ -246,6 +248,7 @@ class ConversationController extends Controller
         $conversation = Conversation::with([
             'userA',
             'userB',
+            'messages.operator',
             'messages' => function ($query) use ($messagesAfterDate, $messagesBeforeDate) {
                 $earliestDate = Carbon::now()->subDays(10);
                 $latestDate = Carbon::now();

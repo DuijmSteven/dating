@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Carbon\Carbon;
+
 class UserView extends TimeZonedModel
 {
     const TYPE_SCHEDULED = 1;

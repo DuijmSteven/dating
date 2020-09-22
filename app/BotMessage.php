@@ -84,7 +84,7 @@ class BotMessage extends TimeZonedModel
 
     public function peasants()
     {
-        return $this->belongsToMany(User::class, 'user_bot_message', 'user_id', 'bot_message_id')
+        return $this->belongsToMany(User::class, 'user_bot_message', 'bot_message_id', 'user_id')
             ->withTimestamps();
     }
 }

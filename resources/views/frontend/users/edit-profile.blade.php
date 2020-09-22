@@ -176,9 +176,11 @@
                                        class="form-control"
                                        id="email"
                                        name="email"
-                                       disabled
                                        value="{!! $user->email !!}"
                                 >
+                                @if ($errors->has('email'))
+                                    {!! $errors->first('email', '<small class="form-error">:message</small>') !!}
+                                @endif
                             </div>
                         </div>
 

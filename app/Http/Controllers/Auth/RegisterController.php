@@ -100,9 +100,11 @@ class RegisterController extends Controller
             throw new \Exception('no captcha');
         }
 
+        $userIp = $this->userLocationService->getUserIp();
+
         $response = (new ReCaptcha(config('app.recaptcha_secret')))
             ->setExpectedAction('register')
-            ->verify($captcha, $this->userLocationService->getUserIp());
+            ->verify($captcha, $userIp);
 
         if (!$response->isSuccess()) {
             \Log::info('Failed recaptcha attempt from username: ' . $request->get('username') . ' and email: ' . $request->get('email'));
@@ -149,8 +151,11 @@ class RegisterController extends Controller
 
         $countryCode = null;
 
-        if ($this->userLocationService->getUserIp() && $this->userLocationService->getCountryCodeFromIp($this->userLocationService->getUserIp())) {
-            $countryCode = strtolower($this->userLocationService->getCountryCodeFromIp($this->userLocationService->getUserIp()));
+
+        $countryCode = $this->userLocationService->getCountryCodeFromIp($userIp);
+
+        if ($userIp && $countryCode) {
+            $countryCode = strtolower($countryCode);
         }
 
         try {
@@ -216,7 +221,7 @@ class RegisterController extends Controller
                     $createdUser->id,
                     $request->input('affiliate'),
                     $request->input('clickId'),
-                    $this->userLocationService->getCountryCodeFromIp($this->userLocationService->getUserIp()),
+                    $countryCode,
                     $mediaId,
                     $publisher
                 );
@@ -229,7 +234,7 @@ class RegisterController extends Controller
                 $createdUser->id,
                 $request->input('affiliate'),
                 null,
-                $this->userLocationService->getCountryCodeFromIp($this->userLocationService->getUserIp()),
+                $countryCode,
                 null,
                 UserAffiliateTracking::PUBLISHER_DATECENTRALE
             );

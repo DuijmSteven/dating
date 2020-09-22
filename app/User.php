@@ -82,6 +82,15 @@ class User extends Authenticatable
         'affiliateTracking',
     ];
 
+    const PEASANT_FRONTEND_RELATIONS = [
+
+    ];
+
+    const PEASANT_FRONTEND_RELATION_COUNTS = [
+        'botMessagesReceived',
+        'messaged'
+    ];
+
     const PEASANT_RELATION_COUNTS = [
         'messaged',
         'messagedToday',
@@ -734,7 +743,7 @@ class User extends Authenticatable
 
     public function botMessagesReceived()
     {
-        return $this->belongsToMany(BotMessage::class, 'user_bot_message', 'bot_message_id', 'user_id')
+        return $this->belongsToMany(BotMessage::class, 'user_bot_message', 'user_id', 'bot_message_id')
             ->withTimestamps();
     }
 
