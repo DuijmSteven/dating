@@ -142,9 +142,9 @@
                                     @endif
 
                                     @if($user->isBot() && $authenticatedUser->isAdmin())
-                                        @if($message->operator)
-                                            <hr>
+                                        <hr>
 
+                                        @if($message->operator)
                                             Operator: {{ $message->operator->getUsername() }} (ID: {{ $message->operator->getId() }})
                                         @else
                                             The operator that sent this message does not exist anymore
