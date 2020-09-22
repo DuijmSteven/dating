@@ -74,7 +74,7 @@ class CreateDiscountForInactiveUsersAndMailThem extends Command
                 $emailDelay++;
             }
 
-            if (config('app.env') === 'production') {
+            if (config('app.env') === 'staging') {
                 $email =
                     (new PleaseComeBack(
                         $peasant
