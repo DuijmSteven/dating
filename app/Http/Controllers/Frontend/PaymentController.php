@@ -120,7 +120,7 @@ class PaymentController extends FrontendController
             $price = (1 - $this->authenticatedUser->getDiscountPercentage() / 100) * $price;
         }
 
-        $transactionTotal = number_format($price, 2, '.', '');
+        $transactionTotal = number_format($price / 100, 2, '.', '');
 
         //get payment status from db
         $paymentStatus = Payment::where('user_id', $this->authenticatedUser->getId())
