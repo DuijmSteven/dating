@@ -27,7 +27,7 @@
     <p>
         <b>Creditpack</b>: {{ $creditPack->name }} <br>
         <b>Aantal credits</b>: {{ $creditPack->credits }} <br>
-        <b>Prijs</b>: {{ $transactionTotal }} <br>
+        <b>Prijs</b>: &euro;{{ $transactionTotal }} <br>
     </p>
 
     <p>
