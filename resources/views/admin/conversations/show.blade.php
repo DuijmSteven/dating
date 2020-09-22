@@ -141,7 +141,7 @@
                                         @endif
                                     @endif
 
-                                    @if($user->isBot() && $authenticatedUser->isAdmin())
+                                    @if($user->isBot() && $authenticatedUser->isAdmin() && $message->operator)
                                         <hr>
 
                                         Operator: {{ $message->operator->getUsername() }} (ID: {{ $message->operator->getId() }})
