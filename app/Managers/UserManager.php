@@ -102,7 +102,7 @@ class UserManager
             if (Str::contains(request()->url(), 'admin')) {
                 $relations = array_unique(array_merge(
                         User::COMMON_RELATIONS,
-                        User::PEASANT_FRONTEND_RELATIONS
+                        User::PEASANT_RELATIONS
                     )
                 );
 

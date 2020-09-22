@@ -23,10 +23,12 @@ class CreditsBought extends Mailable implements ShouldQueue
      */
     public function __construct(
         User $user,
-        Creditpack $creditPack
+        Creditpack $creditPack,
+        $transactionTotal
     ) {
         $this->user = $user;
         $this->creditPack = $creditPack;
+        $this->transactionTotal = $transactionTotal;
     }
 
     /**

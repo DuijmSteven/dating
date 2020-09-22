@@ -113,7 +113,14 @@ class PaymentController extends FrontendController
         $paymentMethod = session('paymentMethod');
         $creditPackId = session('creditPackId');
         $creditPack = Creditpack::find($creditPackId);
-        $transactionTotal = number_format((float) $creditPack->price/100, 2, '.', '');
+
+        $price = (float) $creditPack->price;
+
+        if ($this->authenticatedUser->getDiscountPercentage()) {
+            $price = (1 - $this->authenticatedUser->getDiscountPercentage() / 100) * $price;
+        }
+
+        $transactionTotal = number_format($price, 2, '.', '');
 
         //get payment status from db
         $paymentStatus = Payment::where('user_id', $this->authenticatedUser->getId())
@@ -198,8 +205,12 @@ class PaymentController extends FrontendController
      * @param $transactionId
      * @param  string  $transactionTotal
      */
-    public function successfulPayment($user, $creditPack, $transactionId, string $transactionTotal): void
-    {
+    public function successfulPayment(
+        $user,
+        $creditPack,
+        $transactionId,
+        string $transactionTotal
+    ): void {
         if ($user->isMailable) {
             $creditsBoughtEmail = (new CreditsBought($user, $creditPack))
                 ->onQueue('emails');
