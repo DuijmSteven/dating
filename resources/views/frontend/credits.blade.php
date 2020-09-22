@@ -7,7 +7,7 @@
             <div>
                 <div class="row">
                     @foreach($creditpacks as $creditpack)
-                        @if($creditpack->id !== 4 || $authenticatedUser->isAdmin())
+                        @if($creditpack->id !== 4 || $authenticatedUser->isAdmin() || config(''))
                             <div class="col-xs-12 col-md-3">
                                 <div data-creditpack-id="{{ $creditpack->id }}"
                                      class="block block-pricing {{ $loop->iteration == 2 ? 'block-raised' : '' }} JS--creditpack"
@@ -17,8 +17,25 @@
                                         <h1 class="block-caption"><b class="package-credits">{{ $creditpack->credits }}</b> {{ trans('credits.credits') }}
                                         </h1>
                                         <ul>
-                                            <li><small>€</small><span class="JS--price">{{ number_format($creditpack->price / 100, 2, ',', '.') }}</span></li>
-                                            <li><b>&euro;{{ number_format($creditpack->price/$creditpack->credits / 100, 2, ',', '.') }}</b> {{ trans('credits.per_message') }}
+                                            <li>
+                                                <small>€</small>
+                                                <span class="{{ !$authenticatedUser->getDiscountPercentage() ? 'JS--price' : 'normalPrice' }}">
+                                                    {{ number_format($creditpack->price / 100, 2, ',', '.') }}
+                                                </span>
+
+                                                @if($authenticatedUser->getDiscountPercentage())
+                                                    <span class="JS--price discountPrice">{{ number_format((1 - $authenticatedUser->getDiscountPercentage() / 100) * $creditpack->price / 100, 2, ',', '.') }}</span>
+                                                @endif
+                                            </li>
+                                            <li>
+                                                <b>
+                                                    &euro;
+                                                    <span class="{{ !$authenticatedUser->getDiscountPercentage() ? '' : 'normalPrice' }}">{{ number_format($creditpack->price/$creditpack->credits / 100, 2, ',', '.') }}</span>
+
+                                                    @if($authenticatedUser->getDiscountPercentage())
+                                                        <span class="discountPrice">{{ number_format((1 - $authenticatedUser->getDiscountPercentage() / 100)*$creditpack->price/$creditpack->credits / 100, 2, ',', '.') }}</span>
+                                                    @endif
+                                                </b> {{ trans('credits.per_message') }}
                                             </li>
                                         </ul>
 
@@ -49,6 +66,7 @@
         <div class="row pricing-10">
             <form method="post" action="{{ route('credits.store') }}">
                 {{ csrf_field() }}
+
                 <div class="col-xs-12 col-md-12">
                     <h4 class="JS--paymentMethods__title"><span class="step">Stap 2</span><span class="stepTitle">{{ trans('credits.select') }}</span></h4>
                     <ul class="list-group mb-3 JS--paymentMethods paymentMethodsList">

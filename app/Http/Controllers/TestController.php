@@ -115,6 +115,15 @@ class TestController extends Controller
         ]);
     }
 
+    public function showPleaseComeBackEmail()
+    {
+        $user = User::find(233);
+
+        return view('emails.please-come-back', [
+            'user' => $user
+        ]);
+    }
+
     public function showProfileCompletionEmail()
     {
         $user = User::find(1);

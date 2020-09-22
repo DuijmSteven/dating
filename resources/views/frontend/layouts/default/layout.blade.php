@@ -13,6 +13,16 @@
     @include('frontend.layouts.default.partials.header')
 
     <div class="container" style="position: relative; padding-top: 80px">
+        @if($authenticatedUser && $authenticatedUser->getDiscountPercentage())
+            <div class="row">
+                <div class="col-xs-12">
+                    <a href="{{ route('credits.show') }}" class="DiscountHeader">
+                        Tijdelik <span class="DiscountHeader__stress"> {{ $authenticatedUser->getDiscountPercentage() }}% korting </span> op je volgende aankoop, {{ ucfirst($authenticatedUser->getUsername()) }}!
+                    </a>
+                </div>
+            </div>
+        @endif
+
         @if(
             isset($authenticatedUser) &&
             ($authenticatedUser->profileRatioFilled < 0.3 || !$authenticatedUser->profileImage) &&

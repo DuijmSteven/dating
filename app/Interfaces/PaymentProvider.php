@@ -35,7 +35,8 @@ interface PaymentProvider
         int $transactionId,
         int $amount,
         string $description,
-        int $creditpackId
+        int $creditpackId,
+        int $discountPercentage
     );
 
     /**

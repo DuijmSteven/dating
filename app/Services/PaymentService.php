@@ -68,7 +68,8 @@ class PaymentService implements PaymentProvider
         int $transactionId,
         int $amount,
         string $description = null,
-        int $creditpackId = null
+        int $creditpackId = null,
+        int $discountPercentage = null
     ) {
         $user = Auth::user();
 
@@ -79,6 +80,7 @@ class PaymentService implements PaymentProvider
         $payment->setStatus(Payment::STATUS_STARTED);
         $payment->setAmount($amount);
         $payment->setTransactionId($transactionId);
+        $payment->setDiscountPercentage($discountPercentage);
 
         $user->payments()->save($payment);
     }

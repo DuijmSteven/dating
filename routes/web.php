@@ -763,6 +763,9 @@ Route::group([
         Route::get('show-welcome', 'TestController@showWelcomeEmail')
             ->name('test.email.welcome.show');
 
+        Route::get('show-please-come-back', 'TestController@showPleaseComeBackEmail')
+            ->name('test.email.please-come-back.show');
+
         Route::get('show-credits-bought', 'TestController@showCreditsBoughtEmail')
             ->name('test.email.credits-bought.show');
 

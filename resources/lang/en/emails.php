@@ -9,6 +9,7 @@ return [
         'reset_password' => 'Reset password',
         'profile_viewed' => 'Profile Viewed',
         'profile_completion' => 'Improve your profile!',
+        'please_come_back' => 'We\'ve missed you? In the mood for an adventure'
     ],
     'reset_password' => [
         'reason' => 'You are receiving this email because we received a password reset request for your account.',

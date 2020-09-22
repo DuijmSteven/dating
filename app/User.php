@@ -421,6 +421,19 @@ class User extends Authenticatable
         $this->username = $username;
     }
 
+    public function getDiscountPercentage()
+    {
+        return $this->discount_percentage;
+    }
+
+    /**
+     * @param int $discountPercentage
+     */
+    public function setDiscountPercentage(int $discountPercentage)
+    {
+        $this->discount_percentage = $discountPercentage;
+    }
+
     /**
      * @return mixed
      */

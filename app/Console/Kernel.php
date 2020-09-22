@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Console\Commands\CheckRecentStartedPayments;
 use App\Console\Commands\CheckXpartnersLeadsWIthPendingEligibilityStatus;
+use App\Console\Commands\CreateDiscountForInactiveUsersAndMailThem;
 use App\Console\Commands\ExportDb;
 use App\Console\Commands\SendMassMessage;
 use App\Console\Commands\SendProfileCompletionEmails;
@@ -33,7 +34,8 @@ class Kernel extends ConsoleKernel
         SendMassMessage::class,
         CheckXpartnersLeadsWIthPendingEligibilityStatus::class,
         ValidateEligibleXpartnersLeads::class,
-        VerifyPendingEmails::class
+        VerifyPendingEmails::class,
+        CreateDiscountForInactiveUsersAndMailThem::class
     ];
 
     /**

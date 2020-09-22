@@ -74,7 +74,13 @@ class PaymentController extends FrontendController
 
         $description = $creditPack->getDescription();
 
-        $amountWithDecimals = number_format((float) $creditPack->price, 2, '.', '');
+        $price = (float) $creditPack->price;
+
+        if ($this->authenticatedUser->getDiscountPercentage()) {
+            $price = (1 - $this->authenticatedUser->getDiscountPercentage() / 100) * $price;
+        }
+
+        $amountWithDecimals = number_format($price, 2, '.', '');
 
         $transaction = $this->paymentProvider->initiatePayment($bank, $paymentMethod, $amountWithDecimals, $description);
 
@@ -84,7 +90,8 @@ class PaymentController extends FrontendController
             $transaction['transaction_id'],
             $amountWithDecimals,
             $description,
-            $creditPackId
+            $creditPackId,
+            $this->authenticatedUser->getDiscountPercentage()
         );
 
         session([
@@ -116,6 +123,9 @@ class PaymentController extends FrontendController
 
         //check if payment is already completed (user refreshed the thank-you page or visited it again in general)
         if($paymentStatus == Payment::STATUS_COMPLETED) {
+            $this->authenticatedUser->setDiscountPercentage(null);
+            $this->authenticatedUser->save();
+
             return redirect()->route('home');
         } else {
             $check = $this->paymentProvider->paymentCheck(
@@ -126,6 +136,9 @@ class PaymentController extends FrontendController
             );
 
             if($check['status']) {
+                $this->authenticatedUser->setDiscountPercentage(null);
+                $this->authenticatedUser->save();
+
                 $this->successfulPayment($this->authenticatedUser, $creditPack, $transactionId, $transactionTotal);
             }
 
