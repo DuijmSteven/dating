@@ -45,25 +45,23 @@ class CreateDiscountForInactiveUsersAndMailThem extends Command
      */
     public function handle()
     {
-//        $inactiveMailablePeasants = User
-//            ::whereHas('roles', function ($query) {
-//                $query->where('id', Role::ROLE_PEASANT);
-//            })
-//            ->whereHas('meta', function ($query) {
-//                $query->where('email_verified', UserMeta::EMAIL_VERIFIED_DELIVERABLE)
-//                    ->orWhere('email_verified', UserMeta::EMAIL_VERIFIED_RISKY);
-//            })
-//            ->where(function ($query) {
-//                $query->where('active', false)
-//                    ->orWhere(function ($query) {
-//                        $query
-//                            ->whereDoesntHave('messages', function ($query) {
-//                                $query->where('created_at', '>=', Carbon::now()->subMonths(4));
-//                            });
-//                    });
-//            })->get();
-
-        $inactiveMailablePeasants = User::whereIn('id', [233, 7746, 310])->get();
+        $inactiveMailablePeasants = User
+            ::whereHas('roles', function ($query) {
+                $query->where('id', Role::ROLE_PEASANT);
+            })
+            ->whereHas('meta', function ($query) {
+                $query->where('email_verified', UserMeta::EMAIL_VERIFIED_DELIVERABLE)
+                    ->orWhere('email_verified', UserMeta::EMAIL_VERIFIED_RISKY);
+            })
+            ->where(function ($query) {
+                $query->where('active', false)
+                    ->orWhere(function ($query) {
+                        $query
+                            ->whereDoesntHave('messages', function ($query) {
+                                $query->where('created_at', '>=', Carbon::now()->subMonths(1));
+                            });
+                    });
+            })->get();
 
         $emailDelay = 0;
         $loopCount = 0;
@@ -74,7 +72,7 @@ class CreateDiscountForInactiveUsersAndMailThem extends Command
                 $emailDelay++;
             }
 
-            if (config('app.env') === 'staging') {
+            if (config('app.env') === 'production') {
                 $email =
                     (new PleaseComeBack(
                         $peasant
