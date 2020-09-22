@@ -438,7 +438,7 @@ class User extends Authenticatable
     /**
      * @param int $discountPercentage
      */
-    public function setDiscountPercentage(int $discountPercentage)
+    public function setDiscountPercentage(?int $discountPercentage)
     {
         $this->discount_percentage = $discountPercentage;
     }
