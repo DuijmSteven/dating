@@ -7,7 +7,7 @@
             <div>
                 <div class="row">
                     @foreach($creditpacks as $creditpack)
-                        @if($creditpack->id !== 4 || $authenticatedUser->isAdmin() || config(''))
+                        @if($creditpack->id !== 4 || $authenticatedUser->isAdmin() || config('app.env') === 'staging')
                             <div class="col-xs-12 col-md-3">
                                 <div data-creditpack-id="{{ $creditpack->id }}"
                                      class="block block-pricing {{ $loop->iteration == 2 ? 'block-raised' : '' }} JS--creditpack"
