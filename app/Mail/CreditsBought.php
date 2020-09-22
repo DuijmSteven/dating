@@ -15,6 +15,7 @@ class CreditsBought extends Mailable implements ShouldQueue
 
     public $user;
     public $creditPack;
+    public $transactionTotal;
 
     /**
      * Create a new message instance.
