@@ -21,13 +21,13 @@
         <a href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('direct-login', ['user' => $user->id, 'routeName' => 'credits.show', null, null]); @endphp">Altijdsex.nl</a>
         en een aantal gewillige leden hebben aangegeven je te missen! Zoek je nog anonieme, vrijblijvende sensuele contacten? Kom dan gerust terug naar
         <a href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('direct-login', ['user' => $user->id, 'routeName' => 'credits.show', null, null]); @endphp">Altijdsex.nl</a>
-        en profiteer van <b>10% korting</b>.
+        en profiteer van <b>15% korting</b>.
     </p>
 
     <p style="margin-bottom: 0">
         Elke dag weer zijn er duizenden vrouwen die zich met dezelfde intenties inschrijven op
         <a href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('direct-login', ['user' => $user->id, 'routeName' => 'credits.show', null, null]); @endphp">Altijdsex.nl</a>.
-        Daar zal vast en zeker ook wel een gelijkgestemde voor jou tussen zitten, toch? Speciaal om jouw kansen te vergroten bieden we je momenteel <b>10% korting</b> op je volgende aankoop.
+        Daar zal vast en zeker ook wel een gelijkgestemde voor jou tussen zitten, toch? Speciaal om jouw kansen te vergroten bieden we je momenteel <b>15% korting</b> op je volgende aankoop.
     </p>
 
     <div style="text-align: center">
