@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Kim\Activity\Activity;
 
 /**
@@ -93,6 +94,18 @@ class UserController extends FrontendController
      */
     public function show(string $username)
     {
+        $referer = request()->headers->get('referer');
+
+        if (!Str::contains($referer, config('app.url'))) {
+            session()->flash('backUrl', route('home'));
+        } else {
+            if ($referer != request()->url()) {
+                session()->flash('backUrl', $referer);
+            } else {
+                session()->flash('backUrl', session()->get('backUrl'));
+            }
+        }
+
         $user = User::with('emailTypeInstances', 'emailTypes', 'roles')->where('username', $username)->first();
 
         if (!($user instanceof User)) {
@@ -254,7 +267,8 @@ class UserController extends FrontendController
             array_merge(
                 $viewData,
                 [
-                    'title' => $this->buildTitleWith(trans('view_titles.single_profile') . ' - '. $user->username)
+                    'title' => $this->buildTitleWith(trans('view_titles.single_profile') . ' - '. $user->username),
+                    'backUrl' => session()->get('backUrl')
                 ]
             )
         );
