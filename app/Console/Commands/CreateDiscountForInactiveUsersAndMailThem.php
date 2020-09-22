@@ -63,7 +63,7 @@ class CreateDiscountForInactiveUsersAndMailThem extends Command
 //                    });
 //            })->get();
 
-        $inactiveMailablePeasants = User::whereIn('id', [233, 7746, 310]);
+        $inactiveMailablePeasants = User::whereIn('id', [233, 7746, 310])->get();
 
         $emailDelay = 0;
         $loopCount = 0;
