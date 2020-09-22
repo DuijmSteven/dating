@@ -87,7 +87,8 @@ class User extends Authenticatable
     ];
 
     const PEASANT_FRONTEND_RELATION_COUNTS = [
-
+        'botMessagesReceived',
+        'messaged'
     ];
 
     const PEASANT_RELATION_COUNTS = [

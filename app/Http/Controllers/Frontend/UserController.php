@@ -130,6 +130,8 @@ class UserController extends FrontendController
                                 Carbon::now()->addSeconds($secondsUntilProfileView)
                             );
 
+
+
                             // send automated initial bot message to user if he has not received one
                             if (
                                 $this->authenticatedUser->bot_messages_received_count === 0 &&
