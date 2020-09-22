@@ -28,6 +28,8 @@ class CreateDiscountForInactiveUsersAndMailThem extends Command
      */
     protected $description = 'Sets a discount percentage in the DB for users that are inactive and emails them';
 
+    public $timeout = 0;
+
     /**
      * Create a new command instance.
      *
