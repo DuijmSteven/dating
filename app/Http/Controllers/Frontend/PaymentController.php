@@ -212,7 +212,7 @@ class PaymentController extends FrontendController
         string $transactionTotal
     ): void {
         if ($user->isMailable) {
-            $creditsBoughtEmail = (new CreditsBought($user, $creditPack))
+            $creditsBoughtEmail = (new CreditsBought($user, $creditPack, $transactionTotal))
                 ->onQueue('emails');
             Mail::to($user)
                 ->queue($creditsBoughtEmail);
