@@ -141,10 +141,14 @@
                                         @endif
                                     @endif
 
-                                    @if($user->isBot() && $authenticatedUser->isAdmin() && $message->operator)
-                                        <hr>
+                                    @if($user->isBot() && $authenticatedUser->isAdmin())
+                                        @if($message->operator)
+                                            <hr>
 
-                                        Operator: {{ $message->operator->getUsername() }} (ID: {{ $message->operator->getId() }})
+                                            Operator: {{ $message->operator->getUsername() }} (ID: {{ $message->operator->getId() }})
+                                        @else
+                                            The operator that sent this message does not exist anymore
+                                        @endif
                                     @endif
                                 </div>
                                 <!-- /.direct-chat-text -->
