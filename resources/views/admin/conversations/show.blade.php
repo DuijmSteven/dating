@@ -140,6 +140,12 @@
                                             @endif
                                         @endif
                                     @endif
+
+                                    @if($user->isBot() && $authenticatedUser->isAdmin())
+                                        <hr>
+
+                                        Operator: {{ $message->operator->getUsername() }} (ID: {{ $message->operator->getId() }})
+                                    @endif
                                 </div>
                                 <!-- /.direct-chat-text -->
                             </div>

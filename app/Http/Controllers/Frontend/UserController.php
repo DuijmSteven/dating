@@ -120,7 +120,7 @@ class UserController extends FrontendController
                     $this->authenticatedUser->isFullyImpressionable
                 ) {
                     if (in_array($user->getId(), $onlineIds)) {
-                        if (rand(1, 100) <= 50) {
+                        if (rand(1, 100) <= 40) {
                             $secondsUntilProfileView = rand(15, 80);
 
                             $this->userManager->storeProfileView(
@@ -129,8 +129,6 @@ class UserController extends FrontendController
                                 UserView::TYPE_AUTOMATED,
                                 Carbon::now()->addSeconds($secondsUntilProfileView)
                             );
-
-
 
                             // send automated initial bot message to user if he has not received one
                             if (

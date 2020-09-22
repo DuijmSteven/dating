@@ -105,7 +105,7 @@
                                     <td>{{ $conversation->getCreatedAt()->format('d-m-Y H:i:s') }}</td>
                                     <td class="action-buttons">
                                         @if($userA && $userB)
-                                            <a href="{!! route('operator-platform.conversations.show', [$conversation->getId()]) !!}" class="btn btn-default">View</a>
+                                            <a href="{!! route('operator-platform.conversations.show', [$conversation->getId()]) !!}" class="btn btn-default">View (<b>{{ $conversation->messages_count }}</b> messages)</a>
                                         @endif
 
                                         @if($conversation->getReplyableAt())

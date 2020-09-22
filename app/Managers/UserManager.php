@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Kim\Activity\Activity;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -98,15 +99,27 @@ class UserManager
                 User::OPERATOR_RELATION_COUNTS
             );
         } elseif ($roleId === User::TYPE_PEASANT) {
-            $relations = array_unique(array_merge(
-                    User::COMMON_RELATIONS,
-                    User::PEASANT_FRONTEND_RELATIONS
-                )
-            );
+            if (Str::contains(request()->url(), 'admin')) {
+                $relations = array_unique(array_merge(
+                        User::COMMON_RELATIONS,
+                        User::PEASANT_FRONTEND_RELATIONS
+                    )
+                );
 
-            $relationCounts = array_merge(
-                User::PEASANT_FRONTEND_RELATION_COUNTS
-            );
+                $relationCounts = array_merge(
+                    User::PEASANT_RELATION_COUNTS
+                );
+            } else {
+                $relations = array_unique(array_merge(
+                        User::COMMON_RELATIONS,
+                        User::PEASANT_FRONTEND_RELATIONS
+                    )
+                );
+
+                $relationCounts = array_merge(
+                    User::PEASANT_FRONTEND_RELATION_COUNTS
+                );
+            }
         } elseif ($roleId === User::TYPE_BOT) {
             $relations = array_unique(array_merge(
                     User::COMMON_RELATIONS,

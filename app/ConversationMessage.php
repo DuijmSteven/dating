@@ -61,6 +61,11 @@ class ConversationMessage extends TimeZonedModel
         return $this->belongsTo('App\User', 'sender_id', 'id')->with(['meta', 'roles', 'images']);
     }
 
+    public function operator()
+    {
+        return $this->belongsTo('App\User', 'operator_id', 'id');
+    }
+
     public function recipient()
     {
         return $this->belongsTo('App\User', 'recipient_id', 'id')->with(['meta', 'roles', 'images']);
