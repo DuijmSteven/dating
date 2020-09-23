@@ -49,7 +49,7 @@
 
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" method="POST" action="{!! route('admin.peasants.update', ['id' => $peasant->id]) !!}"
+        <form role="form" method="POST" action="{!! route('admin.peasants.update', ['userId' => $peasant->id]) !!}"
               enctype="multipart/form-data">
             {!! csrf_field() !!}
             {!! method_field('PUT') !!}

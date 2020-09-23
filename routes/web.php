@@ -380,7 +380,7 @@ Route::group([
 
         Route::get('edit/{peasantId}', 'Admin\PeasantController@edit')
             ->name('admin.peasants.edit.get');
-        Route::put('edit/{id}', 'Admin\PeasantController@update')
+        Route::put('edit/{userId}', 'Admin\PeasantController@update')
             ->name('admin.peasants.update');
 
         Route::get('{peasantId}/message-as-bot/{onlyOnlineBots}', 'Admin\PeasantController@messagePeasantAsBot')

@@ -462,7 +462,7 @@ class PeasantController extends Controller
         $peasantData = $peasantUpdateRequest->all();
 
         try {
-            $this->peasantManager->updatePeasant($peasantData, $peasantUpdateRequest->route('id'));
+            $this->peasantManager->updatePeasant($peasantData, $peasantUpdateRequest->route('userId'));
 
             $alerts[] = [
                 'type' => 'success',
