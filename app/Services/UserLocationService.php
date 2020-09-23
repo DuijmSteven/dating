@@ -43,9 +43,9 @@ class UserLocationService
             $response = json_decode($response->getBody(), true);
             return strtolower($response['country_code']);
         } catch (RequestException $e) {
-            \Log::error('Cannot get IP - ' . \Psr7\str($e->getRequest()));
             if ($e->hasResponse()) {
-                \Log::error('Cannot get IP - ' . \Psr7\str($e->getResponse()));
+                \Log::error('Cannot get IP - ...');
+
             }
         }
     }
@@ -64,9 +64,11 @@ class UserLocationService
             $response = json_decode($response->getBody(), true);
             return $response;
         } catch (RequestException $e) {
-            \Log::error('Cannot get IP - ' . \Psr7\str($e->getRequest()));
+            \Log::error('Cannot get IP - ...');
+
             if ($e->hasResponse()) {
-                \Log::error('Cannot get IP - ' . \Psr7\str($e->getResponse()));
+                \Log::error('Cannot get IP - ...');
+                //\Log::error('Cannot get IP - ' . \Psr7\str($e->getResponse()));
             }
         }
     }

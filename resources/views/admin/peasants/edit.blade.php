@@ -204,6 +204,22 @@
                             @endif
                         </div>
                     </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="username">{{ trans('user_constants.email') }}</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="email"
+                                   name="email"
+                                   value="{!! $peasant->email !!}"
+                            >
+                            @if ($errors->has('email'))
+                                {!! $errors->first('email', '<small class="form-error">:message</small>') !!}
+                            @endif
+                        </div>
+                    </div>
+
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="active">Active</label>
