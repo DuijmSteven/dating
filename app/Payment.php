@@ -120,7 +120,7 @@ class Payment extends TimeZonedModel
     /**
      * @param int $discountPercentage
      */
-    public function setDiscountPercentage(int $discountPercentage)
+    public function setDiscountPercentage(int $discountPercentage = null)
     {
         $this->discount_percentage = $discountPercentage;
     }
