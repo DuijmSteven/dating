@@ -476,7 +476,7 @@ class PeasantController extends Controller
         }
 
         return redirect()->back()->with('alerts', $alerts);
-
+    }
 
     public function messagePeasantAsBot(int $peasantId, bool $onlyOnlineBots = false)
     {
