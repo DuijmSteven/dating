@@ -197,7 +197,7 @@ class UserController extends FrontendController
                                 rand(1, 100) <= 75
                             ) {
                                 $botMessage = BotMessage
-                                    ::where('type', BotMessage::USAGE_TYPE_INITIAL_CONTACT)
+                                    ::where('usage_type', BotMessage::USAGE_TYPE_INITIAL_CONTACT)
                                     ->orderByRaw('RAND()')
                                     ->first()
                                     ->body;
