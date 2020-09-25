@@ -184,6 +184,9 @@ class PublicChatItemController extends Controller
 //            })
             ->whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_BOT);
+            })
+            ->whereHas('meta', function ($query) {
+                $query->where('gender', User::GENDER_FEMALE);
             });
 
         $publicChatMessagesQueryBuilder = PublicChatItem
