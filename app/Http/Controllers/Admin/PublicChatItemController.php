@@ -170,18 +170,18 @@ class PublicChatItemController extends Controller
 
         $botsQueryBuilder = User::with(['meta', 'roles', 'profileImage', 'publicChatMessages', 'uniqueViews'])
             ->withCount(['publicChatMessages'])
-            ->whereDoesntHave('conversationsAsUserA', function ($query) {
-                $query->has('messages', '>', 20);
-                $query->whereHas('messages', function ($query) {
-                    $query->where('created_at', '>=', Carbon::now()->subDays(6));
-                });
-            })
-            ->whereDoesntHave('conversationsAsUserB', function ($query) {
-                $query->has('messages', '>', 20);
-                $query->whereHas('messages', function ($query) {
-                    $query->where('created_at', '>=', Carbon::now()->subDays(6));
-                });
-            })
+//            ->whereDoesntHave('conversationsAsUserA', function ($query) {
+//                $query->has('messages', '>', 20);
+//                $query->whereHas('messages', function ($query) {
+//                    $query->where('created_at', '>=', Carbon::now()->subDays(6));
+//                });
+//            })
+//            ->whereDoesntHave('conversationsAsUserB', function ($query) {
+//                $query->has('messages', '>', 20);
+//                $query->whereHas('messages', function ($query) {
+//                    $query->where('created_at', '>=', Carbon::now()->subDays(6));
+//                });
+//            })
             ->whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_BOT);
             });
