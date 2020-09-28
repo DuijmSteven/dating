@@ -432,6 +432,10 @@ class UserManager
             $userDataToPersist['profile_image'] = $userData['profile_image'];
         }
 
+        if (isset($userData['api_token'])) {
+            $userDataToPersist['user']['api_token'] = $userData['user']['api_token'];
+        }
+
         if ($action == 'create') {
             $userDataToPersist['user']['password'] = Hash::make($userDataToPersist['user']['password']);
 
