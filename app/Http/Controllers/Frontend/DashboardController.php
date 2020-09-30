@@ -142,6 +142,9 @@ class DashboardController extends FrontendController
                     ->where('lng', '>=', $lngMin)
                     ->where('lng', '<=', $lngMax);
             })
+            ->whereDoesntHave('meta', function ($query) {
+                $query->where('too_slutty_for_ads', true);
+            })
             ->where('users.active', true)
             ->where('users.created_at', '>=',
                 Carbon::now('Europe/Amsterdam')->subDays($createdUntilDaysAgo)->setTimezone('UTC')

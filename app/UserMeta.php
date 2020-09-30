@@ -61,6 +61,7 @@ class UserMeta extends Model
         'logins_count',
         'email_verified',
         'registration_lp_id',
+        'too_slutty_for_ads',
         'created_at',
         'updated_at'
     ];
@@ -151,6 +152,16 @@ class UserMeta extends Model
     public function setEmailVerified(int $emailVerified)
     {
         $this->email_verified = $emailVerified;
+    }
+
+    public function getTooSluttyForAds()
+    {
+        return $this->too_slutty_for_ads;
+    }
+
+    public function setTooSluttyForAds(int $tooSluttyForAds)
+    {
+        $this->too_slutty_for_ads = $tooSluttyForAds;
     }
 
     public function getGender()

@@ -134,12 +134,17 @@ class LandingPageController extends FrontendController
         $users = User::with(['roles', 'meta'])->whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_BOT);
         })
-            ->whereHas('meta', function ($query) use ($countryCode) {
-                $query->where('gender', User::GENDER_FEMALE);
-                $query->where('country', $countryCode);
-            })
-            ->whereHas('profileImage')
-            ->inRandomOrder()->take(12)->get();
+        ->whereHas('meta', function ($query) use ($countryCode) {
+            $query->where('gender', User::GENDER_FEMALE);
+            $query->where('country', $countryCode);
+        })
+        ->whereDoesntHave('meta', function ($query) {
+            $query->where('too_slutty_for_ads', true);
+        })
+        ->whereHas('profileImage')
+        ->inRandomOrder()
+        ->take(12)
+        ->get();
 
         return $users;
     }

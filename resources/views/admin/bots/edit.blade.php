@@ -149,6 +149,25 @@
                         @endif
                     </div>
 
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="too_slutty_for_ads">Too slutty for ads</label>
+
+                            <select
+                                class="form-control"
+                                id="too_slutty_for_ads"
+                                name="too_slutty_for_ads"
+                            >
+                                <option value="0" {{ $bot->meta->getTooSluttyForAds() == 0 ? 'selected' : '' }}>No</option>
+                                <option value="1" {{ $bot->meta->getTooSluttyForAds() == 1 ? 'selected' : '' }}>Yes</option>
+                            </select>
+
+                            @if ($errors->has('too_slutty_for_ads'))
+                                {!! $errors->first('too_slutty_for_ads', '<small class="form-error">:message</small>') !!}
+                            @endif
+                        </div>
+                    </div>
+
                     <div class="col-xs-12">
                         <hr/>
                     </div>
@@ -189,7 +208,7 @@
 
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="password">Country</label>
+                            <label for="country">Country</label>
 
                             <select
                                 class="form-control"

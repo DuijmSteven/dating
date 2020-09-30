@@ -35,6 +35,7 @@ class BotCreateRequest extends Request
             'username' => 'min:5|max:50|string|required|unique:users',
             'password' => 'required|min:8',
             'active' => 'required|boolean',
+            'too_slutty_for_ads' => 'required|boolean',
             'dob' => 'required|date_format:d-m-Y|before:' . Carbon::now('Europe/Amsterdam')->subYears(18)->format('d-m-Y') . '|after:' . Carbon::now('Europe/Amsterdam')->subYears(100)->format('d-m-Y'),
             'gender' => 'required|in:'. implode(',', array_keys($userProfileFields['gender'])),
             'looking_for_gender' => 'required|in:'. implode(',', array_keys($userProfileFields['looking_for_gender'])),

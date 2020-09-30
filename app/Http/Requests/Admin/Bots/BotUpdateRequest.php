@@ -34,6 +34,7 @@ class BotUpdateRequest extends Request
         $rules = [
             'username' => 'min:5|max:50|string|required|unique:users,username,' . trim($this->route('id') . ',id'),
             'active' => 'boolean',
+            'too_slutty_for_ads' => 'boolean',
             'dob' => 'date_format:d-m-Y|before:' . Carbon::now('Europe/Amsterdam')->subYears(18)->format('d-m-Y') . '|after:' . Carbon::now('Europe/Amsterdam')->subYears(100)->format('d-m-Y'),
             'gender' => 'in:'. implode(',', array_keys($userProfileFields['gender'])),
             'looking_for_gender' => 'in:'. implode(',', array_keys($userProfileFields['looking_for_gender'])),

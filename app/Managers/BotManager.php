@@ -102,7 +102,9 @@ class BotManager extends UserManager
         $userDataToPersist['user'] = $usersTableData;
         $userDataToPersist['user_meta'] = $userMetaTableData;
 
-
+        if (isset($botData['too_slutty_for_ads'])) {
+            $userDataToPersist['user_meta']['too_slutty_for_ads'] = $botData['too_slutty_for_ads'];
+        }
 
         if (isset($userDataToPersist['user_meta']['dob'])) {
             $userDataToPersist['user_meta']['dob'] = Carbon::parse($userDataToPersist['user_meta']['dob'])->format('Y-m-d');

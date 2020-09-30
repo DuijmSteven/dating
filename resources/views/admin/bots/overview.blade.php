@@ -57,6 +57,8 @@
                                             </a>
                                         <br>
 
+                                        <strong>Too slutty for ads:</strong> {!! $bot->meta->getTooSluttyForAds() ? 'true' : 'false'!!} <br>
+
                                         <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $bot->username !!}
                                         <br>
                                         <strong>{!! @trans('user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($bot->meta->dob) !!}
