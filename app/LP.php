@@ -8,6 +8,8 @@ namespace App;
  */
 class LP extends TimeZonedModel
 {
+    public $table = 'lps';
+
     const FIRST_FULL_LP = 1;
     const ADS_LP_1 = 2;
     const ADS_LP_2 = 3;
