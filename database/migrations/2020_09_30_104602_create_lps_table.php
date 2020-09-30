@@ -20,21 +20,6 @@ class CreateLpsTable extends Migration
             $table->string('description')->nullable();
             $table->timestamps();
         });
-
-        Role::insert([
-            [
-                'title' => 'First full LP',
-                'description' => 'The first full LP we created that has the most content'
-            ],
-            [
-                'title' => 'First Ads LP',
-                'description' => 'First Ads LP that has the 2 steps'
-            ],
-            [
-                'title' => 'Second Ads LP',
-                'description' => 'Second Ads LP'
-            ]
-        ]);
     }
 
     /**
