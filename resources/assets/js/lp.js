@@ -1,3 +1,5 @@
+import $ from "jquery";
+
 require('./bootstrap');
 require('bootstrap-datepicker');
 require('jquery-ui/ui/widgets/autocomplete');
@@ -41,23 +43,30 @@ window.addEventListener('load', function () {
 $(window).on('load', function () {
     require('./global_helpers');
 
-    $('.JS--register-button').click(function(event) {
-        grecaptcha.execute(DP.recaptchaKey, {action: 'register'}).then(function(token) {
-            document.getElementById('g-recaptcha-response').value = token;
+    // $('.JS--register-button').click(function(event) {
+    //     grecaptcha.execute(DP.recaptchaKey, {action: 'register'}).then(function(token) {
+    //         document.getElementById('g-recaptcha-response').value = token;
+    //
+    //         $('#JS--registrationForm').submit();
+    //     });
+    // });
 
-            $('#JS--registrationForm').submit();
+    // setTimeout(() => {
+    //     // Create a new ClientJS object
+    //     var client = new ClientJS();
+    //
+    //     // Get the client's fingerprint id
+    //     var fingerprint = client.getFingerprint();
+    //
+    //     $('#userFingerprintInput').val(fingerprint)
+    // }, 100);
+
+    if ($('input[type="submit"]').length > 0 || $('button[type="submit"]').length > 0) {
+        $('form').submit(function () {
+            $('input[type=submit]', this).attr('disabled', 'disabled');
+            $('button[type="submit"]', this).attr('disabled', 'disabled');
         });
-    });
-
-    setTimeout(() => {
-        // Create a new ClientJS object
-        var client = new ClientJS();
-
-        // Get the client's fingerprint id
-        var fingerprint = client.getFingerprint();
-
-        $('#userFingerprintInput').val(fingerprint)
-    }, 100);
+    }
 
     $('.scrollToRegistration').click(() => {
         $('html, body').animate({scrollTop:0}, 500, 'swing');
@@ -265,6 +274,18 @@ $(window).on('load', function () {
                 minLength: 2
             })
         }).fail(function () {
+    });
+
+    $('#JS--registrationForm').click(() => {
+        setTimeout(() => {
+            let excessOfForm = calculateExcessOfForm() + 60;
+
+            if (!(excessOfForm > 60)) {
+                excessOfForm = 60;
+            }
+
+            $('.JS--currentMembers').css('margin-top', excessOfForm);
+        }, 200);
     });
 
         // const $searchRadiusInput = $('.JS--radiusSearchInput');

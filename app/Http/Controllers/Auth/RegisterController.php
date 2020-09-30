@@ -88,6 +88,8 @@ class RegisterController extends Controller
      */
     public function register(RegisterRequest $request)
     {
+        \Log::info(1);
+
         if (isset($_POST['g-recaptcha-response'])) {
             $captcha = $_POST['g-recaptcha-response'];
         } else {
@@ -114,18 +116,6 @@ class RegisterController extends Controller
         if ($response->getScore() < 0.6) {
             \Log::info('Recaptcha attempt with small score from username: ' . $request->get('username') . ' and email: ' . $request->get('email'));
             return redirect()->back()->with('recaptchaFailed', true);
-        }
-
-        $fingerprint = $request->get('user_fingerprint');
-
-        if ($fingerprint) {
-            $existingFingerprints = UserFingerprint::all()->pluck('fingerprint')->toArray();
-
-            /*if (in_array(request()->ip(), $existingFingerprints)) {
-                throw ValidationException::withMessages(['fingerprintExists' => 'Het ziet uit als je al een account heb! Als dat niet waar is neem contact op met de helpdesk.']);
-            }*/
-        } else {
-            \Log::debug('No fingerprint on registration of user with username:' . $request->get('username'));
         }
 
         $genderLookingForGender = explode("-", $request->all()['lookingFor']);
@@ -165,7 +155,8 @@ class RegisterController extends Controller
                 'country' => $countryCode,
                 'gender' => UserConstants::selectableField('gender', 'peasant', 'array_flip')[$gender],
                 'looking_for_gender' => UserConstants::selectableField('gender', 'peasant', 'array_flip')[$lookingFor],
-                'email_verified' => 0
+                'email_verified' => 0,
+                'registration_lp_id' => (int) $request->get('registration_lp')
                 //'dob' =>  new Carbon($request->all()['dob']),
 //                'lat' => $lat,
 //                'lng' => $lng,
@@ -181,12 +172,6 @@ class RegisterController extends Controller
 //                $emailValidationResult
 //            );
 
-            if ($fingerprint) {
-                $userFingerprintInstance = new \App\UserFingerprint();
-                $userFingerprintInstance->setUserId($createdUser->id);
-                $userFingerprintInstance->setFingerprint($fingerprint);
-                $userFingerprintInstance->save();
-            }
         } catch (\Exception $exception) {
             DB::rollBack();
             throw $exception;
@@ -316,7 +301,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'username' => 'required|max:15',
-            'email' => 'required|email|max:255|unique:users',
+            //'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:8|confirmed',
         ]);
     }
@@ -329,6 +314,8 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        \Log::info($data);
+
         return User::create([
             'username' => $data['username'],
             'email' => $data['email'],

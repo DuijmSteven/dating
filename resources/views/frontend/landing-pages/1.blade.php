@@ -6,6 +6,16 @@
 <link href="https://fonts.googleapis.com/css?family=Comfortaa&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
 
+<link rel="stylesheet" type="text/css"
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"/>
+
+@if($formType === 'register')
+    <link href="/lps/t1/assets/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/lps/t1/assets/css/material-bootstrap-wizard.css?v=12" rel="stylesheet"/>
+@endif
+
+
 @if(config('app.env') === 'local')
     <script src="https://www.google.com/recaptcha/api.js?render=6Lcb0N8UAAAAADUTgOIB9jcrz2xM60BPNjeK3qWL"></script>
 
@@ -43,7 +53,7 @@
 </script>
 <style>
     body {
-        font-size: 1.9rem;
+        /*font-size: 1.9rem;*/
         font-weight: 300;
     }
 
@@ -155,6 +165,10 @@
         float: right;
         margin-top: 3rem;
         right: 5%;
+    }
+
+    body {
+        background-color: #fff !important;
     }
 
     .btn-secondary {
@@ -363,6 +377,10 @@
         box-shadow: 0 2px 2px 0 rgba(153, 153, 153, 0.14), 0 3px 1px -2px rgba(153, 153, 153, 0.2), 0 1px 5px 0 rgba(153, 153, 153, 0.12);
     }
 
+    .btn.btn-lg, .btn-group-lg .btn {
+        padding: 18px 15px;
+    }
+
     .btn.btn-white:focus,
     .btn.btn-white:active,
     .btn.btn-white:hover {
@@ -406,6 +424,11 @@
 
     .language-selection a .flagImage {
         width: 40px;
+    }
+
+    .form-group .help-block {
+        left: 0;
+        right: auto;
     }
 
     .roundImage {
@@ -479,6 +502,21 @@
             z-index: 1000;
             right: 0;
             height: fit-content;
+        }
+
+        .form-wrapper.registration {
+            width: 95%;
+        }
+
+        .wizard-card .wizard-header {
+            padding-top: 5px;
+            padding-bottom: 20px;
+        }
+    }
+
+    @media screen and (max-width: 767px) {
+        .form-wrapper form input.btn {
+            padding-top: 16px;
         }
     }
 
@@ -554,7 +592,7 @@
         }
 
         .currentMembers.withRegistrationForm {
-            margin-top: 650px;
+            margin-top: 500px;
         }
     }
 
@@ -756,17 +794,18 @@
         <div class="container" style="position:relative; height: 100%">
             <h1 style="text-transform: none">{{ @trans('lp1.heading') }}</h1>
 
-            <div class="JS--form-wrapper form-wrapper">
-                <div class="form-box">
-                    @if($formType === 'register')
-                        <form class="test--RegistrationForm" method="POST" action="{{ route('register.post') }}"
-                              id="JS--registrationForm"
-                        >
+            @if($formType === 'register')
+                <div class="JS--form-wrapper form-wrapper registration">
+
+                <div class="wizard-container">
+                    <div class="card wizard-card" data-color="red" id="wizard">
+                        <form id="JS--registrationForm" action="{{ route('register.post') }}" method="POST"
+                              autocomplete="off">
                             {{ csrf_field() }}
 
                             <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
                             <input type="hidden" name="action" value="validate_captcha">
-                            <input id="userFingerprintInput" type="hidden" name="user_fingerprint" value="">
+                            <input type="hidden" name="registration_lp" value="{{ \App\LP::FIRST_FULL_LP }}">
 
                             @if(isset($mediaId))
                                 <input type="hidden" name="mediaId" value="{{ $mediaId }}">
@@ -780,121 +819,155 @@
                                 <input type="hidden" name="affiliate" value="{{ \App\UserAffiliateTracking::AFFILIATE_DATECENTRALE }}">
                             @endif
 
-                            @if(session()->has('recaptchaFailed') && session()->get('recaptchaFailed'))
-                                <div class="captchaFailed">
-                                    {{ @trans('lp1.captcha_failed_message') }}
-                                </div>
+                            <div class="wizard-header">
+                                <h3 class="wizard-title">
+                                    LET OP: Je kunt hier bekenden tegenkomen!
+                                </h3>
+                                <h5>Tijdelijk gratis inschrijving, verloopt over: <span id="time"
+                                                                                        style="color: #f44336; font-weight: bold">05:00</span>
+                                </h5>
 
-                            @endif
-
-                            @if ($errors->first('fingerprintExists'))
-                                <div class="captchaFailed">
-                                    Het ziet uit als je al een account heb! Als dat niet waar is neem contact op met de helpdesk.
-                                </div>
-                            @endif
-
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label for="lookingFor">{{ @trans('lp1.form.i_am') }}:</label>
-                                    <select class="form-control" id="lookingFor" name="lookingFor">
-                                        <option value="male-female" {{ old('lookingFor') === 'male-female' ? 'selected' : '' }}>{{ @trans('lp1.form.man_looking_for_woman') }}</option>
-                                        <option value="female-male" {{ old('lookingFor') === 'female-male' ? 'selected' : '' }}>{{ @trans('lp1.form.woman_looking_for_man') }}</option>
-                                        {{--                                <option value="female-female">{{ @trans('lp1.form.woman_looking_for_woman') }}</option>--}}
-                                        {{--                                <option value="male-male">{{ @trans('lp1.form.man_looking_for_man') }}</option>--}}
-                                    </select>
-                                </div>
+                                @if(session()->has('recaptchaFailed') && session()->get('recaptchaFailed'))
+                                    <div class="captchaFailed">
+                                        {{ @trans('lp1.captcha_failed_message') }}
+                                    </div>
+                                @endif
                             </div>
-                            <div class="form-row">
-                                <div class="form-group enhancedFormGroup JS--enhancedFormGroup col-md-12 {{ $errors->has('email') ? ' has-error' : '' }}">
-                                    <label class="formLabelSmall" for="email">{!! @trans('lp1.form.email') !!}</label>
-                                    <input type="email"
-                                           class="form-control"
-                                           id="email"
-                                           name="email"
-                                           value="{{ old('email') }}"
-                                           required
-                                    >
-                                    @if ($errors->has('email'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('email') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group enhancedFormGroup JS--enhancedFormGroup col-md-12 {{ $errors->has('username') ? ' has-error' : '' }}">
-                                    <label for="name">{{ @trans('lp1.form.username') }}</label>
-                                    <input type="text"
-                                           class="form-control"
-                                           id="username"
-                                           name="username"
-                                           value="{{ old('username') }}"
-                                           required
-                                           autofocus
-                                    >
-                                    @if ($errors->has('username'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('username') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group enhancedFormGroup JS--enhancedFormGroup col-md-12 {{ $errors->has('password') ? ' has-error' : '' }}">
-                                    <label for="password">{{ @trans('lp1.form.password') }}</label>
-                                    <input type="text" class="form-control" id="password" name="password"
-                                           required
-                                    >
-                                    @if ($errors->has('password'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('password') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col-sm-12 submit">
-                                    <button type="button"
-                                            class="JS--register-button btn btn-register-login btn-lg btn-block">{{ @trans('lp1.form.register_now') }}</button>
-                                </div>
-
-                                <div class="col-xs-12">
-                                    <p class="mt-3" style="font-size: 1.3rem; text-align: justify">
-                                        {!! @trans(
-                                                'lp1.form.register_info',
-                                                [
-                                                    'privacyRoute' => route('privacy.show'),
-                                                    'tacRoute' => route('tac.show'),
-                                                ]
-                                            )
-                                        !!}
-                                    </p>
-                                </div>
+                            <div class="wizard-navigation">
+                                <ul>
+                                    <li><a href="#captain" data-toggle="tab">Ik ben Op zoek</a></li>
+                                    <li><a id="JS--registerButton" href="#details" data-toggle="tab">Registreren</a></li>
+                                </ul>
                             </div>
 
-                            <div class="form-row">
-                                <div class="col-sm-10">
-                                    <h4 class="mt-3">{{ @trans('lp1.form.have_an_account') }}</h4>
+                            <div class="tab-content">
+                                <div class="tab-pane" id="captain">
+                                    <div class="row">
+                                        <div class="col-sm-12 sexSelectionContainer">
+                                            <div class="col-xs-6">
+                                                <h4 class="info-text">{{ @trans('lp1.form.man_looking_for_woman') }}</h4>
+                                                <div class="choice active" data-toggle="wizard-radio">
+                                                    <input type="radio" name="lookingFor" value="male-female"
+                                                           checked="checked">
+                                                    <div class="icon">
+                                                        <img src="/lps/t1/assets/img/woman-2.jpg"
+                                                             style="border-radius: 50%"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <h4 class="info-text">{{ @trans('lp1.form.woman_looking_for_man') }}</h4>
+                                                <div class="choice" data-toggle="wizard-radio">
+                                                    <input type="radio" name="lookingFor" value="female-male">
+                                                    <div class="icon">
+                                                        <img src="/lps/t1/assets/img/man-2.jpg"
+                                                             style="border-radius: 50%"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="details">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <h4 class="info-text">Maak GRATIS een account.</h4>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">email</i>
+                                            </span>
+                                                <div
+                                                    class="form-group label-floating {{ $errors->has('email') ? ' has-error' : '' }}">
+                                                    <label
+                                                        class="control-label">{!! @trans('lp1.form.email_short') !!}</label>
+                                                    <input name="email"
+                                                           type="text"
+                                                           id="email"
+                                                           class="form-control"
+                                                           value="{{ old('email') }}">
+                                                    @if ($errors->has('email'))
+                                                        <span class="help-block">
+                                                    <strong>{{ $errors->first('email') }}</strong>
+                                                </span>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">label</i>
+                                            </span>
+                                                <div
+                                                    class="form-group label-floating {{ $errors->has('username') ? ' has-error' : '' }}"
+                                                >
+                                                    <label
+                                                        class="control-label">{{ @trans('lp1.form.username') }}</label>
+                                                    <input name="username"
+                                                           type="text"
+                                                           class="form-control"
+                                                           value="{{ old('username') }}">
+                                                    @if ($errors->has('username'))
+                                                        <span class="help-block">
+                                                    <strong>{{ $errors->first('username') }}</strong>
+                                                </span>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">lock_outline</i>
+                                            </span>
+                                                <div
+                                                    class="form-group label-floating {{ $errors->has('password') ? ' has-error' : '' }}"
+                                                >
+                                                    <label
+                                                        class="control-label">{{ @trans('lp1.form.password') }}</label>
+                                                    <input name="password"
+                                                           type="text"
+                                                           class="form-control">
+                                                    @if ($errors->has('password'))
+                                                        <span class="help-block">
+                                                    <strong>{{ $errors->first('password') }}</strong>
+                                                </span>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-row">
-                                <div class="col-sm-12 submit">
-                                    <a href="{{ route('landing-page.show-login') }}" type="button"
-                                            class="btn btn-block btn-lg btn-secondary loginButton"
-                                    >
-                                        {{ @trans('lp1.form.login') }}
-                                    </a>
+                            <div class="wizard-footer">
+                                <div class="pull-right">
+                                    <input type='button' class='btn btn-next btn-fill btn-danger btn-wd' name='next'
+                                           value='Volgende'/>
+                                    <input type='button'
+                                           class='btn btn-finish btn-fill btn-danger btn-wd JS--register-button'
+                                           name='finish' value='Gratis Inschrijven'/>
                                 </div>
-                            </div>
+                                <div class="pull-left">
+                                    <input type='button' class='btn btn-previous btn-fill btn-default btn-wd'
+                                           name='previous' value='<'/>
 
-
-                            <div class="freeCreditsUsp">
-                                <span>{{ trans('lp1.free_credits_usp') }}</span>
+                                    <div class="footer-checkbox">
+                                        <div class="col-sm-12 text-center">
+                                            <div>Heb je al een account?</div>
+                                            <a href="{{ route('landing-page.show-login') }}" class="btn btn-sm">Login</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
                             </div>
                         </form>
-                    @endif
+                    </div>
+                </div> <!-- wizard container -->
+                </div>
+            @endif
 
-                    @if($formType === 'login')
+            @if($formType === 'login')
+                <div class="JS--form-wrapper form-wrapper">
+                    <div class="form-box">
                         <form
                             method="POST"
                             action="{{ route('login.post') }}"
@@ -972,14 +1045,13 @@
                                 </div>
                             </div>
                         </form>
-                    @endif
+                    </div>
                 </div>
-
+            @endif
 {{--                <div class="topQuote">--}}
 {{--                    <span class="quoteMark">"</span><span class="quoteText">{{ trans('lp1.top_quote') }}</span><span class="quoteMark">"</span>--}}
 {{--                    <div class="signature">- Tom, 41</div>--}}
 {{--                </div>--}}
-            </div>
         </div>
 
     </div>
@@ -1046,7 +1118,7 @@
                                  alt="">
                         </div>
                         <div class="text-center">
-                            <blockquotZe class="quote">
+                            <blockquote class="quote">
                                 <p class="q">
                                     <q>{{ $testimonial['quote'] }}</q>
                                 </p>
@@ -1056,7 +1128,7 @@
                                         - {{ $testimonial['names'] }}
                                     </cite>
                                 </p>
-                            </blockquotZe>
+                            </blockquote>
                         </div>
                     </div>
                 @endforeach
@@ -1206,10 +1278,43 @@
         recaptchaSecret: '{{ config('app.recaptcha_secret') }}',
     };
 
+    function startTimer(duration, display) {
+        var timer = duration, minutes, seconds;
+        setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.textContent = minutes + ":" + seconds;
+
+            if (--timer < 0) {
+                timer = 0;
+            }
+        }, 1000);
+    }
+
+    window.onload = function () {
+        var fiveMinutes = 60 * 5,
+            display = document.querySelector('#time');
+        startTimer(fiveMinutes, display);
+    };
+
 </script>
 <script src="{{ mix('js/lp.js') }}"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+{{--<script src="/lps/t1/assets/js/jquery-2.2.4.min.js" type="text/javascript"></script>--}}
+{{--<script src="/lps/t1/assets/js/bootstrap.min.js" type="text/javascript"></script>--}}
+<script src="/lps/t1/assets/js/jquery.bootstrap.js" type="text/javascript"></script>
+
+<!--  Plugin for the Wizard -->
+<script src="/lps/t1/assets/js/material-bootstrap-wizard.js?v=11"></script>
+
+<script src="/lps/t1/assets/js/jquery.validate.min.js"></script>
+<script src="/lps/t1/assets/js/jquery.validate.min.js"></script>
+<script src="{{ mix('js/lps/ads/lp1.js') }}"></script>
+{{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"--}}
+{{--        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"--}}
+{{--        crossorigin="anonymous"></script>--}}
 <script>$('.carousel').carousel()</script>
 </body>

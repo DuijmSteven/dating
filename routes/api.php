@@ -80,8 +80,7 @@ Route::get('{userId}/chat-translations', 'Api\ConversationController@getChatTran
     ->name('cities.get');
 
 Route::get('cities/{countryCode?}', 'Api\LocationController@getCities')
-    ->name('cities.get')
-    ->middleware('auth:api');
+    ->name('cities.get');
 
 Route::group([
     'prefix' => 'public-chat'

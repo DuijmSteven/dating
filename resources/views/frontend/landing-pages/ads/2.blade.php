@@ -91,9 +91,9 @@
                             <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
                             <input type="hidden" name="action" value="validate_captcha">
 
-                            <input id="userFingerprintInput" type="hidden" name="user_fingerprint" value="">
+                            <input type="hidden" name="registration_lp" value="{{ \App\LP::ADS_LP_2 }}">
 
-                            @if(isset($mediaId))
+                        @if(isset($mediaId))
                                 <input type="hidden" name="mediaId" value="{{ $mediaId }}">
                             @endif
 

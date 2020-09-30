@@ -60,6 +60,7 @@ class UserMeta extends Model
         'looking_for',
         'logins_count',
         'email_verified',
+        'registration_lp_id',
         'created_at',
         'updated_at'
     ];
@@ -70,6 +71,11 @@ class UserMeta extends Model
     public function user()
     {
         return $this->belongsTo('App\User', 'user_id', 'id');
+    }
+
+    public function registrationLp()
+    {
+        return $this->hasOne(LP::class, 'registration_lp_id', 'id');
     }
 
     public function getLookingForGender()
