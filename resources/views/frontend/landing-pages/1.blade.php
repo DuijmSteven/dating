@@ -487,6 +487,19 @@
         z-index: 1000;
     }
 
+    .wizard-card[data-color="red"] .moving-tab {
+        background-color: #e4543a !important;
+    }
+
+    .btn.btn-danger {
+        background-color: #e4543a !important;
+    }
+
+    .wizard-card[data-color="red"] .choice:hover .icon, .wizard-card[data-color="red"] .choice.active .icon {
+        border-color: #e4543a !important;
+        color: #e4543a !important;
+    }
+
     @media screen and (max-width: 1000px) {
         .form-wrapper {
             width: 365px;
@@ -699,7 +712,7 @@
         }
     }
 
-    .form-wrapper form input {
+    .form-wrapper form input.enlarged {
         padding: 30px 20px;
         font-size: 20px;
     }
@@ -981,7 +994,7 @@
                             <div class="form-row">
                                 <div class="enhancedFormGroup JS--enhancedFormGroup form-group col-md-12 {{ $errors->has('identity') || $errors->has('username') || $errors->has('email') ? ' has-error' : '' }}">
                                     <label for="login-identity">{{ @trans('lp1.form.identity') }}</label>
-                                    <input type="text" class="form-control" id="login-identity" name="identity"
+                                    <input type="text" class="form-control enlarged" id="login-identity" name="identity"
                                            value="{{ old('identity') }}"
                                            required autofocus
                                     >
@@ -1001,7 +1014,7 @@
                             <div class="form-row">
                                 <div class="enhancedFormGroup JS--enhancedFormGroup form-group col-md-12 {{ $errors->has('password') ? ' has-error' : '' }}">
                                     <label for="login-password">{{ @trans('lp1.form.password') }}</label>
-                                    <input type="password" class="form-control" id="login-password" name="password"
+                                    <input type="password" class="form-control enlarged" id="login-password" name="password"
                                            required
                                     >
                                     @if ($errors->has('password'))

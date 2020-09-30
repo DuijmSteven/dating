@@ -57,6 +57,22 @@
             });
         </script>
     @endif
+
+
+    <style>
+        .wizard-card[data-color="red"] .moving-tab {
+            background-color: #e4543a !important;
+        }
+
+        .btn.btn-danger {
+            background-color: #e4543a !important;
+        }
+
+        .wizard-card[data-color="red"] .choice:hover .icon, .wizard-card[data-color="red"] .choice.active .icon {
+            border-color: #e4543a !important;
+            color: #e4543a !important;
+        }
+    </style>
 </head>
 
 <body class="adsLp2">
