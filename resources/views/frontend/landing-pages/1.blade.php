@@ -480,7 +480,7 @@
     }
 
     .form-wrapper {
-        width: 400px;
+        width: 455px;
         position: absolute;
         right: 15px;
         bottom: -20px;
@@ -489,7 +489,7 @@
 
     @media screen and (max-width: 1000px) {
         .form-wrapper {
-            width: 300px;
+            width: 365px;
             height: fit-content;
         }
     }
