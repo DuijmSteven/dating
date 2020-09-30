@@ -19,6 +19,10 @@ class RegistrationService
      */
     public function checkAffiliateRequestDataAndSetRegistrationViewData(Request $request, array $viewData): array
     {
+        if ($request->input('keyword')) {
+            $viewData['registration_keyword'] = $request->input('keyword');
+        }
+
         if (
             (
                 $request->input('affiliate') &&

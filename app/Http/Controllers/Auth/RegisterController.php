@@ -156,7 +156,8 @@ class RegisterController extends Controller
                 'gender' => UserConstants::selectableField('gender', 'peasant', 'array_flip')[$gender],
                 'looking_for_gender' => UserConstants::selectableField('gender', 'peasant', 'array_flip')[$lookingFor],
                 'email_verified' => 0,
-                'registration_lp_id' => (int) $request->get('registration_lp')
+                'registration_lp_id' => (int) $request->get('registration_lp'),
+                'registration_keyword' => $request->get('registration_keyword')
                 //'dob' =>  new Carbon($request->all()['dob']),
 //                'lat' => $lat,
 //                'lng' => $lng,

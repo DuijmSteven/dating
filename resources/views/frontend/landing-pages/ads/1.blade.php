@@ -105,22 +105,9 @@
                               autocomplete="off">
                             {{ csrf_field() }}
 
-                            <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
-                            <input type="hidden" name="action" value="validate_captcha">
-
                             <input type="hidden" name="registration_lp" value="{{ \App\LP::ADS_LP_1 }}">
 
-                        @if(isset($mediaId))
-                                <input type="hidden" name="mediaId" value="{{ $mediaId }}">
-                            @endif
-
-                            @if(isset($clickId))
-                                <input type="hidden" name="clickId" value="{{ $clickId }}">
-                                <input type="hidden" name="affiliate" value="{{ $affiliate }}">
-                                <input type="hidden" name="country" value="{{ $country }}">
-                            @elseif(isset($affiliate) && $affiliate === \App\UserAffiliateTracking::AFFILIATE_DATECENTRALE)
-                                <input type="hidden" name="affiliate" value="{{ \App\UserAffiliateTracking::AFFILIATE_DATECENTRALE }}">
-                            @endif
+                            @include('frontend.landing-pages.common-registration-form-part')
 
                             <div class="wizard-header">
                                 <h3 class="wizard-title">

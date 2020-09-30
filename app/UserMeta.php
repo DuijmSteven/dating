@@ -164,6 +164,16 @@ class UserMeta extends Model
         $this->too_slutty_for_ads = $tooSluttyForAds;
     }
 
+    public function getRegistrationKeyword()
+    {
+        return $this->registration_keyword;
+    }
+
+    public function setRegistrationKeyword(string $registrationKeyword)
+    {
+        $this->registration_keyword = $registrationKeyword;
+    }
+
     public function getGender()
     {
         return $this->gender;
