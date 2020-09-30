@@ -9,7 +9,7 @@
     position: relative;
     z-index: 5;
     padding: 30px 0;
-    background: #312c2c;
+    background: darken($mainColor, 5%);
     color: $white;
 
     &__logo {

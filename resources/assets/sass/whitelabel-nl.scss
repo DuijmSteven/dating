@@ -42,6 +42,7 @@
 @import "components/scroll-top-button";
 @import "components/low-profile-completion";
 @import "components/public-chat";
+@import "components/discount-header";
 
 // Modules
 @import "modules/online-users";
@@ -55,6 +56,7 @@
 @import "views/edit-profile";
 @import "views/credits";
 @import "views/contact";
+@import "views/welcome-modal";
 
 @import "vue-apps/private-chat/main";
 
@@ -151,7 +153,7 @@ img.very-blurred {
 }
 
 .searchResultsHeaderCity {
-  color: #ff8677;
+  color: lighten($secondaryColor, 10%);
 }
 
 @media screen and (max-width: $screen-xs-max) {

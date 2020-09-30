@@ -75,7 +75,7 @@ $tileBgColor: $white;
 $tileHeading: (
         'padding': 15,
         'fontSize': 18,
-        'fontColor': #ce5338,
+        'fontColor': $secondaryColor,
         'textAlign': center,
         'borderWidth': 2
 );
@@ -263,7 +263,7 @@ $privateChatItem: (
 );
 
 $privateChatManager: (
-        'headBackGroundColor': $tertiaryColor,
+        'headBackGroundColor': darken($mainColor, 4%),
         'headColor': $white,
         'headHeight': 50,
         'headHeightMobileMaximized': 45

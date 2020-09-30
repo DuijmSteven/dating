@@ -19,7 +19,7 @@
     &__head {
         position: relative;
         cursor: pointer;
-        border-radius: 2px 2px 0 0;
+        border-radius: $borderRadius + px $borderRadius + px 0 0;
         text-align: center;
 
         display: flex;
@@ -27,10 +27,9 @@
 
         height: map_get($privateChatManager, 'headHeight') + px;
 
-        background-color: map_get($privateChatManager, 'headBackGroundColor');
         color: map_get($privateChatManager, 'headColor');
 
-        background: lighten(#312c2c, 5%);
+        background-color: map_get($privateChatManager, 'headBackGroundColor');
 
         &__title {
             display: flex;

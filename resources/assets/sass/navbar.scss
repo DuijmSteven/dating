@@ -217,11 +217,11 @@
                         font-size: 16px;
 
                         @media (min-width: $screen-md-min) {
-                            background-color: #493d3d;
+                            background-color: $navbarBgColor;
                         }
 
                         &:hover {
-                            background-color: lighten(#493d3d, 2%);
+                            background-color: darken($navbarBgColor, 2%);
                             color: #fff;
                         }
 
@@ -232,7 +232,7 @@
                 @media (min-width: $screen-md-min) {
                     &.open {
                         > a {
-                            background-color: darken(#493d3d, 2%);
+                            background-color: darken($navbarBgColor, 2%);
                             color: $white;
                         }
                     }
@@ -472,13 +472,13 @@
         align-items: center;
         font-weight: 500;
         font-size: 2rem;
-        background-color: #ad5845;
+        background-color: darken($secondaryColor, 6%);
         border-radius: 6px;
         color: $white;
         text-decoration: none;
 
         &:hover {
-            background-color: darken(#ad5845, 4%);
+            background-color: darken($secondaryColor, 8%);
         }
 
         @media (max-width: $screen-md-max) {

@@ -1,7 +1,7 @@
 // colors
 $slate: #4f5d75;
 $slateLight: #617493;
-$dark: #114d4e;
+$dark: #312c2c;
 $tomato: #ef4f2b;
 $tomatoLight: #ee796d;
 $salmon: #f3a69e;
@@ -26,7 +26,7 @@ $yellowLight: #f9ce89;
 
 // brand colors
 $mainColor: $dark;
-$secondaryColor: #ce5338;
+$secondaryColor: $topaz;
 $tertiaryColor: $slate;
 $fourthColor: #e27e67;
 $textColor: $black;
@@ -44,7 +44,7 @@ $roundImageDimensions: (
 );
 
 // layout tweaks
-$borderRadius: 5;
+$borderRadius: 10;
 $borderWidth: 1;
 
 // font tweaks
@@ -75,7 +75,7 @@ $tileBgColor: $white;
 $tileHeading: (
         'padding': 15,
         'fontSize': 18,
-        'fontColor': #ce5338,
+        'fontColor': $secondaryColor,
         'textAlign': center,
         'borderWidth': 2
 );
@@ -84,7 +84,8 @@ $tileBody: (
         'padding': 35
 );
 
-$tileBodyArticles: (
+$tileBodyArticles: (        'headBackGroundColor': darken($mainColor, 4%),
+
         'padding': 35
 );
 
@@ -263,7 +264,7 @@ $privateChatItem: (
 );
 
 $privateChatManager: (
-        'headBackGroundColor': $tertiaryColor,
+        'headBackGroundColor': darken($mainColor, 4%),
         'headColor': $white,
         'headHeight': 50,
         'headHeightMobileMaximized': 57

@@ -27,6 +27,14 @@ Table of Contents End
 //}
 
 .credits-page-content {
+    .list-group-item:last-child {
+        border-radius: $borderRadius + px !important;
+    }
+
+    .list-group-item:first-child {
+        border-radius: $borderRadius + px !important;
+    }
+
     .step {
         margin-right: 15px;
         color: $secondaryColor;
@@ -239,7 +247,7 @@ Table of Contents End
             position: relative;
 
             &:not(.table-rose):hover {
-                background: #fce8e4;
+                background: lighten($secondaryColor, 55%);
             }
         }
 
@@ -409,7 +417,7 @@ Table of Contents End
 
     .block .table-rose {
         /*background: linear-gradient(60deg, #ec407a, #c2185b);*/
-        background: linear-gradient(60deg, #ce6047, #ce4f32);
+        background: linear-gradient(60deg, $secondaryColor, $secondaryColor);
         border-radius: 6px;
         box-shadow: 0 14px 26px -12px rgba(233, 30, 99, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(233, 30, 99, 0.2);
     }
@@ -425,7 +433,7 @@ Table of Contents End
     .btn,
     .navbar > li > a.btn {
         border: none;
-        border-radius: 3px;
+        border-radius: $borderRadius + px;
         position: relative;
         padding: 12px 30px;
         margin: 10px 1px;
@@ -438,7 +446,7 @@ Table of Contents End
     }
 
     .btn.btn-round {
-        border-radius: 30px;
+        border-radius: $borderRadius + px;
     }
 
     .nav-tabs {
@@ -461,8 +469,8 @@ Table of Contents End
     /* btn-rose */
     .btn.btn-rose {
         color: #FFFFFF;
-        background-color: #9e4737;
-        border-color: #9e4737;
+        background-color: darken($secondaryColor, 10%);
+        border-color: darken($secondaryColor, 13%);
         //box-shadow: 0 2px 2px 0 rgba(233, 30, 99, 0.14), 0 3px 1px -2px rgba(233, 30, 99, 0.2), 0 1px 5px 0 rgba(233, 30, 99, 0.12);
     }
 
@@ -476,7 +484,7 @@ Table of Contents End
     /* btn-primary */
     .btn.btn-primary {
         color: #FFFFFF;
-        background-color: #9e4737;
+        background-color: darken($secondaryColor, 10%);
         //border-color: #ce5439;
         //box-shadow: 0 2px 2px 0 rgba(156, 39, 176, 0.14), 0 3px 1px -2px rgba(156, 39, 176, 0.2), 0 1px 5px 0 rgba(156, 39, 176, 0.12);
     }
@@ -484,7 +492,7 @@ Table of Contents End
     .btn.btn-primary:focus,
     .btn.btn-primary:active,
     .btn.btn-primary:hover {
-        background-color: lighten(#9e4737, 4%);
+        background-color: darken($secondaryColor, 6%);
         //box-shadow: 0 14px 26px -12px rgba(156, 39, 176, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(156, 39, 176, 0.2);
     }
 
@@ -615,11 +623,11 @@ Table of Contents End
     }
 
     .block-caption {
-        color: #ea7961;
+        color: darken($secondaryColor, 15%);
     }
 
     .paymentMethodsListItem.selected {
-        background-color: #ce5439;
+        background: linear-gradient(60deg, $secondaryColor, $secondaryColor);
         color: #fff;
     }
 
