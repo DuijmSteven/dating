@@ -12,8 +12,8 @@ stages:
   - deploy_staging
   - deploy_production
 
-deploy_staging:
-  stage: deploy_staging
+deploy_staging_altijdsex_nl:
+  stage: deploy_staging_altijdsex_nl
   environment:
     name: staging
   script:
@@ -32,8 +32,28 @@ deploy_staging:
   only:
     - staging
 
-deploy_production:
-  stage: deploy_production
+deploy_staging_liefdesdate_nl:
+  stage: deploy_staging_liefdesdate_nl
+  environment:
+    name: staging
+  script:
+    - ssh opalampo@134.209.87.252 "cd /var/www/dating &&
+      git fetch &&
+      git checkout staging &&
+      git pull origin staging &&
+      composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader &&
+      php artisan migrate --force &&
+      php artisan config:cache &&
+      php artisan route:cache &&
+      php artisan view:cache &&
+      php artisan optimize &&
+      php artisan queue:restart &&
+      exit"
+  only:
+    - staging
+
+deploy_production_altijdsex_nl:
+  stage: deploy_production_altijdsex_nl
   environment:
     name: production
   script:

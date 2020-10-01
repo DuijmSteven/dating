@@ -6,7 +6,7 @@
 @endif
 
 @if(isset($registrationKeyword))
-    <input type="hidden" name="registration_keyword" value="{{ $registrationKeyword }}">
+    <input type="hidden" name="registrationKeyword" value="{{ $registrationKeyword }}">
 @endif
 
 @if(isset($clickId))
