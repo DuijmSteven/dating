@@ -24,7 +24,7 @@
 
     <script>
         grecaptcha.ready(function() {
-            grecaptcha.execute('6Ldx0N8UAAAAABj1wlIcdnxtgCxrprg3DPMsDtkj\n', {action: 'homepage'}).then(function(token) {
+            grecaptcha.execute('6Ldx0N8UAAAAABj1wlIcdnxtgCxrprg3DPMsDtkj', {action: 'homepage'}).then(function(token) {
             });
         });
     </script>
@@ -33,7 +33,7 @@
 
     <script>
         grecaptcha.ready(function() {
-            grecaptcha.execute('6Le9gtIZAAAAAD0V29NclSJdawf-8A8F5wBAdWot\n', {action: 'homepage'}).then(function(token) {
+            grecaptcha.execute('6Le9gtIZAAAAAD0V29NclSJdawf-8A8F5wBAdWot', {action: 'homepage'}).then(function(token) {
             });
         });
     </script>
