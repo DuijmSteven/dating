@@ -88,8 +88,6 @@ class RegisterController extends Controller
      */
     public function register(RegisterRequest $request)
     {
-        \Log::info(1);
-
         if (isset($_POST['g-recaptcha-response'])) {
             $captcha = $_POST['g-recaptcha-response'];
         } else {
@@ -157,7 +155,7 @@ class RegisterController extends Controller
                 'looking_for_gender' => UserConstants::selectableField('gender', 'peasant', 'array_flip')[$lookingFor],
                 'email_verified' => 0,
                 'registration_lp_id' => (int) $request->get('registration_lp'),
-                'registration_keyword' => $request->get('registration_keyword')
+                'registration_keyword' => $request->get('registrationKeyword')
                 //'dob' =>  new Carbon($request->all()['dob']),
 //                'lat' => $lat,
 //                'lng' => $lng,

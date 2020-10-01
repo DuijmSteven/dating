@@ -61,6 +61,7 @@ class UserMeta extends Model
         'logins_count',
         'email_verified',
         'registration_lp_id',
+        'registration_keyword',
         'too_slutty_for_ads',
         'created_at',
         'updated_at'
