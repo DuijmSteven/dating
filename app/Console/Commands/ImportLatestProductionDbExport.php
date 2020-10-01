@@ -86,6 +86,7 @@ class ImportLatestProductionDbExport extends Command
                 config('database.connections.mysql.database')
             ));
 
+            $dropDbprocess->setTimeout(500);
             $dropDbprocess->run();
 
             if ($dropDbprocess->isSuccessful()) {
@@ -102,6 +103,7 @@ class ImportLatestProductionDbExport extends Command
                 config('database.connections.mysql.database')
             ));
 
+            $createDbProcess->setTimeout(500);
             $createDbProcess->run();
 
             if ($createDbProcess->isSuccessful()) {
@@ -119,6 +121,7 @@ class ImportLatestProductionDbExport extends Command
                 $tempLocation
             ));
 
+            $importProductionDbProcess->setTimeout(500);
             $importProductionDbProcess->run();
 
             if ($importProductionDbProcess->isSuccessful()) {
