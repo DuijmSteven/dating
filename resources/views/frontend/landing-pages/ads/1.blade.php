@@ -44,8 +44,17 @@
         <script src="https://www.google.com/recaptcha/api.js?render=6Ldx0N8UAAAAABj1wlIcdnxtgCxrprg3DPMsDtkj"></script>
 
         <script>
-            grecaptcha.ready(function () {
-                grecaptcha.execute('6Ldx0N8UAAAAABj1wlIcdnxtgCxrprg3DPMsDtkj\n', {action: 'homepage'}).then(function (token) {
+            grecaptcha.ready(function() {
+                grecaptcha.execute('6Ldx0N8UAAAAABj1wlIcdnxtgCxrprg3DPMsDtkj\n', {action: 'homepage'}).then(function(token) {
+                });
+            });
+        </script>
+    @elseif(config('app.name') == 'Whitelabel.nl' && config('app.env') === 'staging')
+        <script src="https://www.google.com/recaptcha/api.js?render=6Le9gtIZAAAAAD0V29NclSJdawf-8A8F5wBAdWot"></script>
+
+        <script>
+            grecaptcha.ready(function() {
+                grecaptcha.execute('6Le9gtIZAAAAAD0V29NclSJdawf-8A8F5wBAdWot\n', {action: 'homepage'}).then(function(token) {
                 });
             });
         </script>

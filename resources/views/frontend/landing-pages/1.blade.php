@@ -28,6 +28,15 @@
             });
         });
     </script>
+@elseif(config('app.name') == 'Whitelabel.nl' && config('app.env') === 'staging')
+    <script src="https://www.google.com/recaptcha/api.js?render=6Le9gtIZAAAAAD0V29NclSJdawf-8A8F5wBAdWot"></script>
+
+    <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('6Le9gtIZAAAAAD0V29NclSJdawf-8A8F5wBAdWot\n', {action: 'homepage'}).then(function(token) {
+            });
+        });
+    </script>
 @else
     <script src="https://www.google.com/recaptcha/api.js?render=6LdHptgUAAAAACP5lA0778MuyBsjs6oEnQcWo0T1"></script>
 
