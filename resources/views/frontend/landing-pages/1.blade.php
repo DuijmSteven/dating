@@ -19,7 +19,7 @@
 @if(config('app.env') === 'local')
     <script src="https://www.google.com/recaptcha/api.js?render=6Lcb0N8UAAAAADUTgOIB9jcrz2xM60BPNjeK3qWL"></script>
 
-@elseif(config('app.env') === 'staging')
+@elseif(config('app.name') == 'Altijdsex.nl' && config('app.env') === 'staging')
     <script src="https://www.google.com/recaptcha/api.js?render=6Ldx0N8UAAAAABj1wlIcdnxtgCxrprg3DPMsDtkj"></script>
 
     <script>
