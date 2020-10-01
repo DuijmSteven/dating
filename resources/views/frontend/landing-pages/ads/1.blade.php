@@ -29,8 +29,10 @@
 @endif
 
 <!--     Fonts and icons     -->
-    <link rel="stylesheet" type="text/css"
-          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"/>
 
     <!-- CSS Files -->
@@ -70,6 +72,13 @@
     @endif
 
     <style>
+        body {
+            /*font-size: 1.9rem;*/
+            font-weight: 300;
+
+            font-family: 'Fira Sans', sans-serif;
+        }
+
         .wizard-card[data-color="red"] .moving-tab {
             background-color: #e4543a !important;
         }

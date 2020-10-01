@@ -6,8 +6,8 @@
 <link href="https://fonts.googleapis.com/css?family=Comfortaa&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
 
-<link rel="stylesheet" type="text/css"
-      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"/>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"/>
 
 @if($formType === 'register')
@@ -64,6 +64,8 @@
     body {
         /*font-size: 1.9rem;*/
         font-weight: 300;
+
+        font-family: 'Fira Sans', sans-serif;
     }
 
     p {
@@ -97,7 +99,7 @@
     }
 
     .welcome-container h3, .recent-container h3, .testimonials-container h3, .secondWelcome h3 {
-        font-family: comfortaa, sans-serif;
+        //font-family: comfortaa, sans-serif;
         font-size: 3.125rem;
         text-transform: uppercase;
         color: #2e3142;
@@ -1306,9 +1308,13 @@
     }
 
     window.onload = function () {
-        var fiveMinutes = 60 * 5,
-            display = document.querySelector('#time');
-        startTimer(fiveMinutes, display);
+        var display = document.querySelector('#time');
+
+        if (display) {
+            var fiveMinutes = 60 * 5;
+            startTimer(fiveMinutes, display);
+        }
+
     };
 
 </script>
