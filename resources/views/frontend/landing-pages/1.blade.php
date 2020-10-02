@@ -99,7 +99,7 @@
     }
 
     .welcome-container h3, .recent-container h3, .testimonials-container h3, .secondWelcome h3 {
-        //font-family: comfortaa, sans-serif;
+        font-family: comfortaa, sans-serif;
         font-size: 3.125rem;
         text-transform: uppercase;
         color: #2e3142;

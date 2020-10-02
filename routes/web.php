@@ -247,6 +247,9 @@ Route::group([
     Route::get('statistics/google-ads', 'Admin\StatisticsController@googleAds')
         ->name('admin.statistics.google-ads');
 
+    Route::get('statistics/google-ads/keywords', 'Admin\StatisticsController@googleAdsKeywords')
+        ->name('admin.statistics.google-ads.keywords');
+
     Route::post('users/search', 'Admin\UserSearchController@search')
         ->name('admin.users.search.post');
     Route::get('users/search-results', 'Admin\UserSearchController@getSearchResults')

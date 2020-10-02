@@ -152,24 +152,32 @@
                                             <strong>Publisher</strong> {{ $peasant->affiliateTracking->getPublisher() ? \App\UserAffiliateTracking::publisherDescriptionPerId()[$peasant->affiliateTracking->getPublisher()] : 'Not available' }}<br>
                                             <strong>Click ID</strong> {{ $peasant->affiliateTracking->getClickId() }}<br>
 
-                                            <strong>Lead eligibility</strong>
-                                                <span>
-                                                    {{ \App\UserAffiliateTracking::eligibilityDescriptionPerId()[$peasant->affiliateTracking->getLeadEligibility()] }}
-                                                </span>
-                                            <br>
+{{--                                            <strong>Lead eligibility</strong>--}}
+{{--                                                <span>--}}
+{{--                                                    {{ \App\UserAffiliateTracking::eligibilityDescriptionPerId()[$peasant->affiliateTracking->getLeadEligibility()] }}--}}
+{{--                                                </span>--}}
+{{--                                            <br>--}}
 
-                                            <strong>Lead validation status</strong>
-                                                <span>
-                                                    {{ \App\UserAffiliateTracking::statusDescriptionPerId()[$peasant->affiliateTracking->getLeadStatus()] }}
-                                                </span>
-                                            <br>
+{{--                                            <strong>Lead validation status</strong>--}}
+{{--                                                <span>--}}
+{{--                                                    {{ \App\UserAffiliateTracking::statusDescriptionPerId()[$peasant->affiliateTracking->getLeadStatus()] }}--}}
+{{--                                                </span>--}}
+{{--                                            <br>--}}
 
-                                        @if($peasant->affiliateTracking->getMediaId())
+                                            @if($peasant->affiliateTracking->getMediaId())
                                                 <strong>Media ID</strong> {{ $peasant->affiliateTracking->getMediaId() }}
                                             @endif
                                             <br>
                                         </div>
                                     @endif
+
+                                    @if($peasant->meta->getRegistrationKeyword())
+                                        <div class="innerTableWidgetHeading"><strong>Lead data</strong></div>
+                                        <div class="innerTableWidgetBody">
+                                            <strong>Ad keyword</strong> {{ $peasant->meta->getRegistrationKeyword() }}<br>
+                                    </div>
+                                    @endif
+
                                 </td>
                                 <td class="no-wrap">
                                     <h5 class="statsHeading"><strong>Messages received</strong></h5>

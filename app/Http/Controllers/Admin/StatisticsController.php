@@ -12,6 +12,7 @@ use App\Payment;
 use App\User;
 use App\UserAffiliateTracking;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Kim\Activity\Activity;
 
 class StatisticsController extends Controller
@@ -708,5 +709,37 @@ class StatisticsController extends Controller
                 ),
             ]
         ));
+    }
+
+    public function googleAdsKeywords()
+    {
+        $leadsPerKeyword = DB
+            ::table('user_meta')
+            ->select('registration_keyword as keyword', DB::raw('count(*) as count'))
+            ->where('registration_keyword', '!=', null)
+            ->groupBy(['keyword'])
+            ->orderBy('count', 'desc')
+            ->get();
+
+        $conversionsPerKeyword = DB
+            ::table('user_meta')
+            ->join('payments', 'user_meta.user_id', '=', 'payments.user_id')
+            ->select('registration_keyword as keyword', DB::raw('count(*) as count'))
+            ->where('payments.status', '=', Payment::STATUS_COMPLETED)
+            ->where('registration_keyword', '!=', null)
+            ->groupBy(['keyword'])
+            ->orderBy('count', 'desc')
+            ->get();
+
+        return view(
+            'admin.statistics.google-ads-keywords',
+            [
+                'title' => 'Statistics - ' . \config('app.name'),
+                'headingLarge' => 'Statistics',
+                'headingSmall' => 'Google Ads Keywords',
+                'leadsPerKeyword' => $leadsPerKeyword,
+                'conversionsPerKeyword' => $conversionsPerKeyword,
+            ]
+        );
     }
 }
