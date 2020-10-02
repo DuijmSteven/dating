@@ -55,6 +55,12 @@
     top: 0;
 }
 
+.navbar {
+    @media (max-width: $screen-sm-max) {
+        min-height: $navbarHeightSmallScreens + px;
+    }
+}
+
 .navbar-default {
     border: $navbarBorderWidth + px solid $navbarBgColor;
     border-radius: 0;
@@ -327,10 +333,10 @@
     padding-top: ($navbarHeight - $logoHeight - 2 * $navbarBorderWidth) / 2 + px;
     padding-bottom: ($navbarHeight - $logoHeight - 2 * $navbarBorderWidth) / 2 + px;
 
-    @media screen and (min-width: $screen-md-min) {
-        padding-top: 6px;
-        padding-bottom: 6px;
-    }
+    //@media screen and (min-width: $screen-md-min) {
+    //    padding-top: 6px;
+    //    padding-bottom: 6px;
+    //}
 
     > img {
         height: $logoHeight + px;
@@ -463,10 +469,14 @@
     .buyCreditsButton {
         position: absolute;
         left: 340px;
-        top: 10px;
+        top: ($navbarHeight - $buyCreditsButtonHeight) / 2 + px;
+
+        @media (max-width: $screen-sm-max) {
+            top: ($navbarHeightSmallScreens - $buyCreditsButtonHeight) / 2 + px;
+        }
 
         width: 150px;
-        height: 31px;
+        height: $buyCreditsButtonHeight + px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -526,11 +536,18 @@
         align-content: center;
         justify-content: center;
         left: 600px;
-        top: 10px;
+        top: ($navbarHeight - $searchToggleButtonHeight) / 2 + px;
+
+        @media (max-width: $screen-sm-max) {
+            top: ($navbarHeightSmallScreens - $buyCreditsButtonHeight) / 2 + px;
+        }
+
         font-size: 2rem;
         text-align: center;
+
         width: 131px;
-        height: 31px;
+        height: $searchToggleButtonHeight + px;
+
         border-radius: 6px;
 
         background-color: $secondaryColor;

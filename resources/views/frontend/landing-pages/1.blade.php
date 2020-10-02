@@ -145,7 +145,7 @@
 
     form .submit {
         margin: 0 auto;
-    }
+    }kernel
 
     .text-muted {
         color: #b6b6b6;
@@ -183,16 +183,16 @@
     }
 
     .btn-secondary {
-        background-color: #82554b !important;
-        border-color: #82554b !important;
+        background-color: #3c3e39 !important;
+        border-color: #3c3e39 !important;
         color: #fff;
     }
 
     .btn-secondary:hover,
     .btn-secondary:focus,
     .btn-secondary:active {
-        background-color: #98695f !important;
-        border-color: #82554b !important;
+        background-color: #3e3a39 !important;
+        border-color: #3e3a39 !important;
         color: #fff;
     }
 
@@ -778,6 +778,30 @@
         padding: 10px;
     }
 
+    .wizard-card .tab-content {
+        padding-bottom: 0;
+    }
+
+    @media (max-width: 767px) {
+        .tab-pane.first {
+            padding-bottom: 20px;
+        }
+    }
+
+    .tab-pane.second {
+        margin-bottom: 0 !important;
+    }
+
+    .wizard-card .tab-content {
+        min-height: 328px;
+    }
+
+    @media screen and (max-width: 767px) {
+        .wizard-card .tab-content {
+            min-height: 160px;
+        }
+    }
+
 </style>
 <body class="landingPage">
 <header>
@@ -853,7 +877,7 @@
                             </div>
 
                             <div class="tab-content">
-                                <div class="tab-pane" id="captain">
+                                <div class="tab-pane first" id="captain">
                                     <div class="row">
                                         <div class="col-sm-12 sexSelectionContainer">
                                             <div class="col-xs-6">
@@ -880,7 +904,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane" id="details">
+                                <div class="tab-pane second" id="details">
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <h4 class="info-text">Maak GRATIS een account.</h4>
@@ -946,6 +970,26 @@
                                                 </div>
                                             </div>
 
+                                        </div>
+
+                                        <div class="col-xs-12">
+                                            <p class="mt-3" style="font-size: 1.3rem; text-align: justify; margin-bottom: 0; margin-top: 5px">
+                                                {!! @trans(
+                                                        'lp1.form.register_info',
+                                                        [
+                                                            'privacyRoute' => route('privacy.show'),
+                                                            'tacRoute' => route('tac.show'),
+                                                        ]
+                                                    )
+                                                !!}
+                                            </p>
+
+                                            <div style="margin-top: 10px; text-align: left; white-space: nowrap; overflow: hidden;">
+                                                <img src="{{ asset('img/safe.jpg') }}" style="width: 31px">
+                                                <p style="font-size: 1.3rem; display: inline-block">
+                                                    Uw persoonlijke data wordt absoluut vertrouwlijk behandeld.
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

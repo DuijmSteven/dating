@@ -12,7 +12,12 @@
     left: 0;
 
     position: fixed;
-    top: 51px;
+    top: $navbarHeight + px;
+
+    @media (max-width: $screen-sm-max) {
+        top: $navbarHeightSmallScreens + px;
+    }
+
     z-index: 400;
 
     form {

@@ -12,7 +12,7 @@
 <div id="app">
     @include('frontend.layouts.default.partials.header')
 
-    <div class="container" style="position: relative; padding-top: 80px">
+    <div class="container mainContainer">
         @if($authenticatedUser && $authenticatedUser->getDiscountPercentage())
             <div class="row">
                 <div class="col-xs-12">

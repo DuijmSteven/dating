@@ -23,11 +23,12 @@ $lightBlueDull: #8eb4cb;
 $squash: #f39c12;
 $squashLight: #f7b54e;
 $yellowLight: #f9ce89;
+$solvingTheMoneyProblem: #579D91;
 
 // brand colors
-$mainColor: $dark;
-$secondaryColor: $topaz;
-$tertiaryColor: $slate;
+$mainColor: #344B47;
+$secondaryColor: $solvingTheMoneyProblem;
+$tertiaryColor: #FFBEFF;
 $fourthColor: #e27e67;
 $textColor: $black;
 
@@ -58,7 +59,9 @@ $fontSize: (
 $navbarLinkColor: $sugar;
 $navbarBgColor: $dark;
 
-$navbarHeight: 50;
+$navbarHeight: 70;
+$navbarHeightSmallScreens: 60;
+
 $navbarBorderWidth: 1;
 $navbarLineHeight: 22;
 
@@ -66,6 +69,10 @@ $logoHeight: round($navbarHeight * 0.55);
 $userMenuImageContainerDimension: 31;
 $userMenuImageDimension: 31;
 $userMenuImageTop: ($navbarHeight - $userMenuImageContainerDimension)/2;
+
+$buyCreditsButtonHeight: 31;
+
+$searchToggleButtonHeight: 31;
 
 //Footer
 $footerLinkTextColor: $lightBlueDull;

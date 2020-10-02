@@ -247,7 +247,7 @@ Table of Contents End
             position: relative;
 
             &:not(.table-rose):hover {
-                background: lighten($secondaryColor, 55%);
+                background: lighten($secondaryColor, 40%);
             }
         }
 

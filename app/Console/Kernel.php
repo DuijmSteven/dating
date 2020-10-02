@@ -49,7 +49,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('bots:set-random-online')->everyTenMinutes();
 
         if (config('app.env') === 'production') {
-            $schedule->command(SendProfileViewedEmails::class)->everyMinute();
+            // $schedule->command(SendProfileViewedEmails::class)->everyMinute();
             $schedule->command(SendProfileCompletionEmails::class)->dailyAt("19:00");
             $schedule->command(ExportDb::class)->dailyAt("05:30");
             $schedule->command(CheckRecentStartedPayments::class)->everyMinute();

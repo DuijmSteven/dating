@@ -59,6 +59,8 @@ $navbarLinkColor: $sugar;
 $navbarBgColor: $dark;
 
 $navbarHeight: 50;
+$navbarHeightSmallScreens: 60;
+
 $navbarBorderWidth: 1;
 $navbarLineHeight: 22;
 
@@ -66,6 +68,10 @@ $logoHeight: round($navbarHeight * 0.55);
 $userMenuImageContainerDimension: 31;
 $userMenuImageDimension: 31;
 $userMenuImageTop: ($navbarHeight - $userMenuImageContainerDimension)/2;
+
+$buyCreditsButtonHeight: 31;
+
+$searchToggleButtonHeight: 31;
 
 //Footer
 $footerLinkTextColor: $lightBlueDull;

@@ -27,6 +27,14 @@ img {
     vertical-align: initial;
 }
 
+.mainContainer {
+    padding-top: ($navbarHeight + 30) + px;
+
+    @media (max-width: $screen-sm-max) {
+        padding-top: ($navbarHeightSmallScreens + 30) + px;
+    }
+}
+
 .form-control {
     font-size: 17px;
 }
