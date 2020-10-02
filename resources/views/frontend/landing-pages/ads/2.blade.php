@@ -78,6 +78,11 @@
             font-family: 'Fira Sans', sans-serif;
         }
 
+        .logo-container {
+            position: relative;
+            z-index: 100;
+        }
+
         .wizard-card[data-color="red"] .moving-tab {
             background-color: #e4543a !important;
         }

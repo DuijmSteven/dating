@@ -19,8 +19,23 @@ class RegistrationService
      */
     public function checkAffiliateRequestDataAndSetRegistrationViewData(Request $request, array $viewData): array
     {
-        if ($request->input('keyword')) {
-            $viewData['registrationKeyword'] = $request->input('keyword');
+        if ($request->input('keyword') || Cookie::has('registrationKeyword')) {
+
+            if (!Cookie::has('registrationKeyword')) {
+                Cookie::queue(
+                    'registrationKeyword',
+                    $request->input('keyword'),
+                    100000
+                );
+            }
+
+            if ($request->input('keyword')) {
+                $registrationKeyword = $request->input('keyword');
+            } else {
+                $registrationKeyword = Cookie::get('registrationKeyword');
+            }
+
+            $viewData['registrationKeyword'] = $registrationKeyword;
         }
 
         if (

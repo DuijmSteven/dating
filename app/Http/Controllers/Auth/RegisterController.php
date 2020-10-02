@@ -69,6 +69,7 @@ class RegisterController extends Controller
      * RegisterController constructor.
      * @param AffiliateManager $affiliateManager
      * @param UserLocationService $userLocationService
+     * @param EmailVerificationService $emailVerificationService
      */
     public function __construct(
         AffiliateManager $affiliateManager,
