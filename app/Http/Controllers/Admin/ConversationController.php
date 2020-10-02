@@ -369,6 +369,7 @@ class ConversationController extends Controller
             'userANotes' => $userANotes,
             'userBNotes' => $userBNotes,
             'lockedAt' => $conversation->getLockedAt()->tz('Europe/Amsterdam'),
+            'now' => Carbon::now()->tz('Europe/Amsterdam'),
             'hasCountdown' => true,
             'userAttachments' => $userAttachments
         ];

@@ -94,14 +94,19 @@ $(window).on('load', function () {
 
     if ($('.JS--showConversation').length > 0 && $('.JS--operatorCountdown').length > 0) {
         var lockedDate = new Date($('.JS--showConversation').data('locked-at'));
+        var nowDate = new Date($('.JS--showConversation').data('now'));
 
         var countdownTime = (new Date($('.JS--showConversation').data('locked-at'))).setMinutes(lockedDate.getMinutes() + 6);
+        var nowTime = (new Date($('.JS--showConversation').data('now'))).setMinutes(nowDate.getMinutes());
 
         var redirect = false;
+
+        var timeLeft = countdownTime - nowTime;
+
         // start the countdown timer
         var x = setInterval(function () {
-            var now = new Date().getTime();
-            var timeLeft = countdownTime - now;
+            //var now = new Date().getTime();
+            timeLeft = timeLeft - 1000;
 
             var minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
             var seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);

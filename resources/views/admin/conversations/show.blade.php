@@ -11,6 +11,7 @@
         class="row JS--showConversation showConversation"
         data-conversation-id="{{ $conversation->getId() }}"
         {!! isset($lockedAt) ? "data-locked-at='" . $lockedAt . "'" : "" !!}
+        {!! isset($lockedAt) ? "data-now='" . $now . "'" : "" !!}
     >
         @if(isset($hasCountdown) && $hasCountdown)
             <div class="operatorCountdown JS--operatorCountdown"></div>
