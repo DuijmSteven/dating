@@ -126,6 +126,10 @@ class DashboardController extends FrontendController
             ->whereHas('profileImage')
             ->whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_BOT);
+
+                if ($this->authenticatedUser->meta->looking_for_gender === User::GENDER_MALE) {
+                    $query->orWhere('id', User::TYPE_PEASANT);
+                }
             })
             ->whereHas('meta', function ($query) use (
                 $latMin,
