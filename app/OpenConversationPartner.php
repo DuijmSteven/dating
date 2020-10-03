@@ -13,4 +13,19 @@ class OpenConversationPartner extends Model
         'partner_id',
         'state'
     ];
+
+    public function setUserId(int $userId)
+    {
+        $this->user_id = $userId;
+    }
+
+    public function setPartnerId(int $partnerId)
+    {
+        $this->partner_id = $partnerId;
+    }
+
+    public function setState(bool $state)
+    {
+        $this->state = $state;
+    }
 }

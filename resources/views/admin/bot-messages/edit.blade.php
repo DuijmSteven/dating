@@ -40,6 +40,7 @@
                             >
                                 <option value="{{ \App\BotMessage::USAGE_TYPE_NORMAL_CHAT }}" {!! ($botMessage->getUsageType() === \App\BotMessage::USAGE_TYPE_NORMAL_CHAT) ? 'selected' : '' !!}>Normal chat</option>
                                 <option value="{{ \App\BotMessage::USAGE_TYPE_PUBLIC_CHAT }}" {!! ($botMessage->getUsageType() === \App\BotMessage::USAGE_TYPE_PUBLIC_CHAT) ? 'selected' : '' !!}>Public chat</option>
+                                <option value="{{ \App\BotMessage::USAGE_TYPE_INITIAL_CONTACT }}" {!! ($botMessage->getUsageType() === \App\BotMessage::USAGE_TYPE_INITIAL_CONTACT) ? 'selected' : '' !!}>Initial contact</option>
                             </select>
                             @if ($errors->has('usage_type'))
                                 {!! $errors->first('usage_type', '<small class="form-error">:message</small>') !!}

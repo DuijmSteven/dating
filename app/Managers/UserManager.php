@@ -702,7 +702,6 @@ class UserManager
     ) {
         $botMessageIdsPeasantHasReceived = $peasant->botMessagesReceived->pluck('id')->toArray();
 
-
         $botMessage = BotMessage
             ::where('usage_type', BotMessage::USAGE_TYPE_INITIAL_CONTACT)
             ->whereNotIn('id', $botMessageIdsPeasantHasReceived)
@@ -710,20 +709,22 @@ class UserManager
             ->orderByRaw('RAND()')
             ->first();
 
-        $botMessageBody = $botMessage->body;
+        if ($botMessage) {
+            $botMessageBody = $botMessage->body;
 
-        $messageData = [
-            'sender_id' => $bot->getId(),
-            'recipient_id' => $peasant->getId(),
-            'message' => $botMessageBody,
-            'created_at' => Carbon::now()->addSeconds($secondsAheadToScheduleMessage)
-        ];
+            $messageData = [
+                'sender_id' => $bot->getId(),
+                'recipient_id' => $peasant->getId(),
+                'message' => $botMessageBody,
+                'created_at' => Carbon::now()->addSeconds($secondsAheadToScheduleMessage)
+            ];
 
-        $userBotMessage = new UserBotMessage();
-        $userBotMessage->setBotMessageId($botMessage->id);
-        $userBotMessage->setUserId($peasant->getId());
+            $userBotMessage = new UserBotMessage();
+            $userBotMessage->setBotMessageId($botMessage->id);
+            $userBotMessage->setUserId($peasant->getId());
 
-        $peasant->botMessagesReceived()->attach($botMessage);
-        $this->conversationManager->createMessage($messageData);
+            $peasant->botMessagesReceived()->attach($botMessage);
+            $this->conversationManager->createMessage($messageData);
+        }
     }
 }

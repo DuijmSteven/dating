@@ -23,7 +23,7 @@ class BotMessageController extends Controller
      */
     public function index()
     {
-        $botMessages = BotMessage::with(['bot'])->orderBy('created_at', 'desc')->paginate(40);
+        $botMessages = BotMessage::with(['bot'])->orderBy('usage_type', 'asc')->paginate(40);
 
         return view(
             'admin.bot-messages.overview',

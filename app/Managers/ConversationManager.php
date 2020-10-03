@@ -6,6 +6,7 @@ use App\Conversation;
 use App\ConversationMessage;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\MessageAttachment;
+use App\OpenConversationPartner;
 use App\Services\OnlineUsersService;
 use App\Services\ProbabilityService;
 use App\User;
@@ -214,6 +215,12 @@ class ConversationManager
         }
 
         $conversation->save();
+
+        $openConversationPartner = new OpenConversationPartner();
+        $openConversationPartner->setUserId($recipient->getId());
+        $openConversationPartner->setPartnerId($sender->getId());
+        $openConversationPartner->setState(true);
+        $openConversationPartner->save();
 
         // determine paid property of message
         $isPaidMessage = null;

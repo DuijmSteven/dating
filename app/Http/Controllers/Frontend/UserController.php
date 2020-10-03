@@ -132,17 +132,17 @@ class UserController extends FrontendController
                     if (in_array($user->getId(), $onlineIds)) {
                         $chanceToReceiveProfileView = 100;
                         $chanceToReceiveBotMessage = 100;
-                        $secondsUntilProfileView = rand(10, 15);
+                        $secondsUntilProfileView = rand(15, 30);
                     } else {
                         $chanceToReceiveProfileView = 70;
                         $chanceToReceiveBotMessage = 90;
-                        $secondsUntilProfileView = rand(10, 15);
+                        $secondsUntilProfileView = rand(15, 30);
                     }
                 } elseif ($this->authenticatedUser->couldBeBotMessaged) {
                     if (in_array($user->getId(), $onlineIds)) {
                         $chanceToReceiveProfileView = 80;
                         $chanceToReceiveBotMessage = 40;
-                        $secondsUntilProfileView = rand(10, 30);
+                        $secondsUntilProfileView = rand(30, 50);
                     } else {
                         $chanceToReceiveProfileView = 80;
                         $chanceToReceiveBotMessage = 40;
@@ -152,7 +152,7 @@ class UserController extends FrontendController
                     if (in_array($user->getId(), $onlineIds)) {
                         $chanceToReceiveProfileView = 70;
                         $chanceToReceiveBotMessage = 0;
-                        $secondsUntilProfileView = rand(10, 60);
+                        $secondsUntilProfileView = rand(30, 60);
                     } else {
                         $chanceToReceiveProfileView = 70;
                         $chanceToReceiveBotMessage = 0;
@@ -183,10 +183,26 @@ class UserController extends FrontendController
                         ) &&
                         rand(1, 100) <= $chanceToReceiveBotMessage
                     ) {
+                        $secondsUntilMessage = $secondsUntilProfileView + 20;
+
+                        $latestBotMessageReceived = UserBotMessage
+                            ::where('user_id', $this->authenticatedUser->getId())
+                            ->orderBy('created_at', 'desc')
+                            ->first();
+
+                        if ($latestBotMessageReceived instanceof UserBotMessage) {
+                            /** @var Carbon $latestBotMessageCreatedAt */
+                            $latestBotMessageCreatedAt = $latestBotMessageReceived->created_at;
+
+                            if ($latestBotMessageCreatedAt->diffInMinutes(Carbon::now()) <= 4) {
+                                $secondsUntilMessage += 150;
+                            }
+                        }
+
                         $this->userManager->createBotMessageForPeasant(
                             $this->authenticatedUser,
                             $user,
-                            $secondsUntilProfileView + 20
+                            $secondsUntilMessage
                         );
                     }
                 }

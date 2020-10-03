@@ -2,7 +2,9 @@
 
 namespace App;
 
-class UserBotMessage extends TimeZonedModel
+use Illuminate\Database\Eloquent\Model;
+
+class UserBotMessage extends Model
 {
     public $table = 'user_bot_message';
 
