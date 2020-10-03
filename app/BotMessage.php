@@ -39,7 +39,7 @@ class BotMessage extends TimeZonedModel
         return $this->bot_id;
     }
 
-    public function setBotId(string $botId)
+    public function setBotId(?string $botId)
     {
         $this->bot_id = $botId;
     }
