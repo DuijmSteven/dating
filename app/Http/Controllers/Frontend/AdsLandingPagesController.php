@@ -17,10 +17,11 @@ class AdsLandingPagesController extends FrontendController
      * @param RegistrationService $registrationService
      */
     public function __construct(
-        App\Services\RegistrationService $registrationService
+        App\Services\RegistrationService $registrationService,
+        App\Services\OnlineUsersService $onlineUsersService
     ) {
         $this->registrationService = $registrationService;
-        parent::__construct();
+        parent::__construct($onlineUsersService);
     }
 
     public function showLP(Request $request, $id)
