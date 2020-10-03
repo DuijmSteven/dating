@@ -20,11 +20,12 @@ class LandingPageController extends FrontendController
      */
     public function __construct(
         App\Services\RegistrationService $registrationService,
-        App\Services\UserLocationService $userLocationService
+        App\Services\UserLocationService $userLocationService,
+        App\Services\OnlineUsersService $onlineUsersService
     )
     {
         $this->registrationService = $registrationService;
-        parent::__construct();
+        parent::__construct($onlineUsersService);
         $this->userLocationService = $userLocationService;
     }
 
