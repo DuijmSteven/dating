@@ -10,6 +10,7 @@ use App\Managers\UserManager;
 use App\OpenConversationPartner;
 use App\PastMassMessage;
 use App\Payment;
+use App\Services\OnlineUsersService;
 use App\User;
 use App\UserMeta;
 use App\UserView;
@@ -41,6 +42,10 @@ class SendMassMessage extends Command
      * @var UserManager
      */
     private UserManager $userManager;
+    /**
+     * @var OnlineUsersService
+     */
+    private OnlineUsersService $onlineUsersService;
 
     /**
      * Create a new command instance.
@@ -48,10 +53,12 @@ class SendMassMessage extends Command
      * @return void
      */
     public function __construct(
-      UserManager $userManager
+        UserManager $userManager,
+        OnlineUsersService $onlineUsersService
     ) {
         parent::__construct();
         $this->userManager = $userManager;
+        $this->onlineUsersService = $onlineUsersService;
     }
 
     /**
@@ -70,7 +77,7 @@ class SendMassMessage extends Command
         $messageBody = $this->argument('body');
         $limitMessage = $this->argument('limitation');
 
-        $onlineUserIds = Activity::users(5)->pluck('user_id')->toArray();
+        $onlineUserIds = $this->onlineUsersService->getOnlineUserIds(3);
 
         $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');
         $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');

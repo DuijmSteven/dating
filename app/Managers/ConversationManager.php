@@ -6,12 +6,11 @@ use App\Conversation;
 use App\ConversationMessage;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\MessageAttachment;
+use App\Services\OnlineUsersService;
 use App\Services\ProbabilityService;
 use App\User;
 use Carbon\Carbon;
-use Cassandra\Type\UserType;
 use Illuminate\Support\Facades\DB;
-use Kim\Activity\Activity;
 
 /**
  * Class ConversationManager
@@ -31,6 +30,10 @@ class ConversationManager
      * @var ConversationMessage
      */
     private $conversationMessage;
+    /**
+     * @var OnlineUsersService
+     */
+    private OnlineUsersService $onlineUsersService;
 
     /**
      * ConversationManager constructor.
@@ -39,11 +42,13 @@ class ConversationManager
     public function __construct(
         Conversation $conversation,
         ConversationMessage $conversationMessage,
-        StorageManager $storageManager
+        StorageManager $storageManager,
+        OnlineUsersService $onlineUsersService
     ) {
         $this->conversation = $conversation;
         $this->storageManager = $storageManager;
         $this->conversationMessage = $conversationMessage;
+        $this->onlineUsersService = $onlineUsersService;
     }
 
     public function userHasConversationWithUser($userAId, $userBId)
@@ -85,7 +90,7 @@ class ConversationManager
             throw $exception;
         }
 
-        $onlineIds = Activity::users(5)->pluck('user_id')->toArray();
+        $onlineIds = $this->onlineUsersService->getOnlineUserIds(3);
 
         $onlineBotIds = User::whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_BOT);

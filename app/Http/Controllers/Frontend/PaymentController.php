@@ -9,6 +9,7 @@ use App\Mail\UserBoughtCredits;
 use App\Mail\Welcome;
 use App\Managers\AffiliateManager;
 use App\Payment;
+use App\Services\OnlineUsersService;
 use App\User;
 use App\UserAffiliateTracking;
 use GuzzleHttp\Client;
@@ -41,11 +42,12 @@ class PaymentController extends FrontendController
      */
     public function __construct(
         PaymentManager $paymentManager,
-        PaymentProvider $paymentProvider
+        PaymentProvider $paymentProvider,
+        OnlineUsersService $onlineUsersService
     ) {
         $this->paymentManager = $paymentManager;
         $this->paymentProvider = $paymentProvider;
-        parent::__construct();
+        parent::__construct($onlineUsersService);
     }
 
     /**

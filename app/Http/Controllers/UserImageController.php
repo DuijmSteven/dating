@@ -6,6 +6,7 @@ use App\Http\Requests\Admin\Peasants\PeasantUpdateImagesRequest;
 use App\Managers\PeasantManager;
 use App\Managers\StorageManager;
 use App\Managers\UserImageManager;
+use App\Services\OnlineUsersService;
 use App\User;
 use App\UserImage;
 use Illuminate\Support\Facades\DB;
@@ -32,9 +33,10 @@ class UserImageController extends Controller
     public function __construct(
         UserImageManager $userImageManager,
         StorageManager $storageManager,
-        PeasantManager $peasantManager
+        PeasantManager $peasantManager,
+        OnlineUsersService $onlineUsersService
     ) {
-        parent::__construct();
+        parent::__construct($onlineUsersService);
         $this->userImageManager = $userImageManager;
         $this->storageManager = $storageManager;
         $this->peasantManager = $peasantManager;

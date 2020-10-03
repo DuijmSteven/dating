@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Managers\UserManager;
 use App\PastMassMessage;
 use App\Payment;
+use App\Services\OnlineUsersService;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -19,9 +20,11 @@ class MassMessageController extends Controller
      */
     private UserManager $userManager;
 
-    public function __construct(UserManager $userManager)
-    {
-        parent::__construct();
+    public function __construct(
+        UserManager $userManager,
+        OnlineUsersService $onlineUsersService
+    ) {
+        parent::__construct($onlineUsersService);
         $this->userManager = $userManager;
     }
 

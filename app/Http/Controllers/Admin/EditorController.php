@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\Articles\ArticleCreateRequest;
 use App\Http\Requests\Admin\Articles\ArticleUpdateRequest;
 use App\Managers\ArticleManager;
 use App\Managers\UserManager;
+use App\Services\OnlineUsersService;
 use App\User;
 use Carbon\Carbon;
 use DB;
@@ -26,15 +27,21 @@ class EditorController extends Controller
      * @var UserManager
      */
     private UserManager $userManager;
+    /**
+     * @var OnlineUsersService
+     */
+    private OnlineUsersService $onlineUsersService;
 
     /**
      * OperatorController constructor.
      */
     public function __construct(
-        UserManager $userManager
+        UserManager $userManager,
+        OnlineUsersService $onlineUsersService
     ) {
-        parent::__construct();
+        parent::__construct($onlineUsersService);
         $this->userManager = $userManager;
+        $this->onlineUsersService = $onlineUsersService;
     }
 
     /**
@@ -125,7 +132,7 @@ class EditorController extends Controller
 
     public function showOnline()
     {
-        $onlineIds = Activity::users(1)->pluck('user_id')->toArray();
+        $onlineIds = $this->onlineUsersService->getOnlineUserIds(1);
 
         $editors = User::with(
             User::COMMON_RELATIONS

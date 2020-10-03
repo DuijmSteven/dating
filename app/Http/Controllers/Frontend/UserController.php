@@ -10,6 +10,7 @@ use App\Managers\ConversationManager;
 use App\Managers\PeasantManager;
 use App\Managers\UserManager;
 use App\Milestone;
+use App\Services\OnlineUsersService;
 use App\User;
 use App\UserBotMessage;
 use App\UserView;
@@ -39,6 +40,10 @@ class UserController extends FrontendController
      * @var ConversationManager
      */
     private ConversationManager $conversationManager;
+    /**
+     * @var OnlineUsersService
+     */
+    private OnlineUsersService $onlineUsersService;
 
     /**
      * UserController constructor.
@@ -49,13 +54,15 @@ class UserController extends FrontendController
         User $user,
         UserManager $userManager,
         PeasantManager $peasantManager,
-        ConversationManager $conversationManager
+        ConversationManager $conversationManager,
+        OnlineUsersService  $onlineUsersService
     ) {
-        parent::__construct();
+        parent::__construct($onlineUsersService);
         $this->user = $user;
         $this->userManager = $userManager;
         $this->peasantManager = $peasantManager;
         $this->conversationManager = $conversationManager;
+        $this->onlineUsersService = $onlineUsersService;
     }
 
     /**
@@ -114,7 +121,7 @@ class UserController extends FrontendController
 
         if ($this->authenticatedUser->isPeasant()) {
             if ($user->isBot()) {
-                $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
+                $onlineIds = $this->onlineUsersService->getOnlineUserIds();
 
                 if (
                     $this->authenticatedUser->isFullyImpressionable

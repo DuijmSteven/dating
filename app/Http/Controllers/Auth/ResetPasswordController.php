@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Services\OnlineUsersService;
 use App\Traits\Users\ResetsPasswords;
 
 /**
@@ -36,9 +37,10 @@ class ResetPasswordController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        parent::__construct();
+    public function __construct(
+        OnlineUsersService $onlineUsersService
+    ) {
+        parent::__construct($onlineUsersService);
         $this->middleware('guest');
     }
 }

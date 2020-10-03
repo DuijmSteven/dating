@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Managers\ChartsManager;
 use App\Managers\StatisticsManager;
 use App\Payment;
+use App\Services\OnlineUsersService;
 use App\User;
 use App\UserAffiliateTracking;
 use Carbon\Carbon;
@@ -26,15 +27,20 @@ class StatisticsController extends Controller
      * @var ChartsManager
      */
     private ChartsManager $chartsManager;
+    /**
+     * @var OnlineUsersService
+     */
+    private OnlineUsersService $onlineUsersService;
 
     public function __construct(
         StatisticsManager $statisticsManager,
-        ChartsManager $chartsManager
-    )
-    {
-        parent::__construct();
+        ChartsManager $chartsManager,
+        OnlineUsersService $onlineUsersService
+    ) {
+        parent::__construct($onlineUsersService);
         $this->statisticsManager = $statisticsManager;
         $this->chartsManager = $chartsManager;
+        $this->onlineUsersService = $onlineUsersService;
     }
 
     public function mostUseful()
@@ -427,7 +433,7 @@ class StatisticsController extends Controller
 
     public function googleAds()
     {
-        $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
+        $onlineIds = $this->onlineUsersService->getOnlineUserIds();
 
         $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');
         $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');

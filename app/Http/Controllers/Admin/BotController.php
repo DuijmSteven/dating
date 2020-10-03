@@ -6,6 +6,7 @@ use App\Http\Requests\Admin\Bots\BotCreateRequest;
 use App\Http\Requests\Admin\Bots\BotUpdateRequest;
 use App\Managers\BotManager;
 use App\Managers\UserManager;
+use App\Services\OnlineUsersService;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -26,6 +27,10 @@ class BotController extends Controller
      * @var UserManager
      */
     private UserManager $userManager;
+    /**
+     * @var OnlineUsersService
+     */
+    private OnlineUsersService $onlineUsersService;
 
     /**
      * BotController constructor.
@@ -33,11 +38,13 @@ class BotController extends Controller
      */
     public function __construct(
         BotManager $botManager,
-        UserManager $userManager
+        UserManager $userManager,
+        OnlineUsersService $onlineUsersService
     ) {
         $this->botManager = $botManager;
-        parent::__construct();
+        parent::__construct($onlineUsersService);
         $this->userManager = $userManager;
+        $this->onlineUsersService = $onlineUsersService;
     }
 
     /**
@@ -107,7 +114,7 @@ class BotController extends Controller
 
     public function messagePeasantWithBot(int $botId, bool $onlyOnlinePeasants = false)
     {
-        $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
+        $onlineIds = $this->onlineUsersService->getOnlineUserIds();
 
         $onlinePeasantIds = User::whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_PEASANT);
@@ -141,7 +148,7 @@ class BotController extends Controller
 
     public function showOnline()
     {
-        $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
+        $onlineIds = $this->onlineUsersService->getOnlineUserIds();
 
         $bots = User::with(
             array_unique(array_merge(

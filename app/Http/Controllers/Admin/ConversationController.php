@@ -15,6 +15,7 @@ use App\Managers\ConversationManager;
 use App\Managers\StorageManager;
 use App\MessageAttachment;
 use App\OpenConversationPartner;
+use App\Services\OnlineUsersService;
 use App\Services\ProbabilityService;
 use App\User;
 use App\UserImage;
@@ -40,6 +41,10 @@ class ConversationController extends Controller
      * @var StorageManager
      */
     private StorageManager $storageManager;
+    /**
+     * @var OnlineUsersService
+     */
+    private OnlineUsersService $onlineUsersService;
 
     /**
      * ConversationController constructor.
@@ -47,11 +52,13 @@ class ConversationController extends Controller
      */
     public function __construct(
         ConversationManager $conversationManager,
-        StorageManager $storageManager
+        StorageManager $storageManager,
+        OnlineUsersService $onlineUsersService
     ) {
         $this->conversationManager = $conversationManager;
-        parent::__construct();
+        parent::__construct($onlineUsersService);
         $this->storageManager = $storageManager;
+        $this->onlineUsersService = $onlineUsersService;
     }
 
     /**
@@ -643,7 +650,7 @@ class ConversationController extends Controller
             $recipientHasMessageNotificationsEnabled &&
             $recipient->isMailable
         ) {
-            $onlineUserIds = Activity::users(5)->pluck('user_id')->toArray();
+            $onlineUserIds = $this->onlineUsersService->getOnlineUserIds(3);
 
             if (!in_array($recipient->getId(), $onlineUserIds)) {
                 if (config('app.env') === 'production') {
@@ -778,7 +785,7 @@ class ConversationController extends Controller
                 $recipientHasMessageNotificationsEnabled &&
                 $recipient->isMailable
             ) {
-                $onlineUserIds = Activity::users(5)->pluck('user_id')->toArray();
+                $onlineUserIds = $this->onlineUsersService->getOnlineUserIds(3);
 
                 if (!in_array($recipient->getId(), $onlineUserIds)) {
                     if (config('app.env') === 'production') {

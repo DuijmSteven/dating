@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 
 use App\Managers\AffiliateManager;
+use App\Services\OnlineUsersService;
 use App\Services\UserLocationService;
 use App\User;
 use App\UserFingerprint;
@@ -84,8 +85,10 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct() {
-        parent::__construct();
+    public function __construct(
+        OnlineUsersService $onlineUsersService
+    ) {
+        parent::__construct($onlineUsersService);
         $this->middleware('guest', ['except' => 'logout']);
     }
 }

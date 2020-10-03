@@ -5,12 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Operators\OperatorCreateRequest;
 use App\Managers\UserManager;
+use App\Services\OnlineUsersService;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Kim\Activity\Activity;
 
 /**
  * Class OperatorController
@@ -22,15 +22,21 @@ class OperatorController extends Controller
      * @var UserManager
      */
     private UserManager $userManager;
+    /**
+     * @var OnlineUsersService
+     */
+    private OnlineUsersService $onlineUsersService;
 
     /**
      * OperatorController constructor.
      */
     public function __construct(
-        UserManager $userManager
+        UserManager $userManager,
+        OnlineUsersService $onlineUsersService
     ) {
-        parent::__construct();
+        parent::__construct($onlineUsersService);
         $this->userManager = $userManager;
+        $this->onlineUsersService = $onlineUsersService;
     }
 
     /**
@@ -72,7 +78,7 @@ class OperatorController extends Controller
 
     public function showOnline()
     {
-        $onlineIds = Activity::users(7)->pluck('user_id')->toArray();
+        $onlineIds = $this->onlineUsersService->getOnlineUserIds(7);
 
         $operators = User::with(
             array_unique(array_merge(

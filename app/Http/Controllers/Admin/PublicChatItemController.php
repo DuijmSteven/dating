@@ -6,6 +6,7 @@ use App\ConversationMessage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreatePublicChatItemRequest;
 use App\PublicChatItem;
+use App\Services\OnlineUsersService;
 use App\User;
 use App\UserAccount;
 use Carbon\Carbon;
@@ -19,9 +20,16 @@ use Kim\Activity\Activity;
  */
 class PublicChatItemController extends Controller
 {
+    /**
+     * @var OnlineUsersService
+     */
+    private OnlineUsersService $onlineUsersService;
+
     public function __construct(
+        OnlineUsersService $onlineUsersService
     ) {
-        parent::__construct();
+        parent::__construct($onlineUsersService);
+        $this->onlineUsersService = $onlineUsersService;
     }
 
     /**
@@ -160,7 +168,7 @@ class PublicChatItemController extends Controller
 
     public function showSendAsBot()
     {
-        $onlineIds = Activity::users(10)->pluck('user_id')->toArray();
+        $onlineIds = $this->onlineUsersService->getOnlineUserIds();
 
         $onlineBotIds = User::whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_BOT);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Operators;
 
 use App\Conversation;
 use App\Managers\ConversationManager;
+use App\Services\OnlineUsersService;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -18,10 +19,12 @@ class DashboardController extends \App\Http\Controllers\Controller
     /**
      * @param ConversationManager $conversationManager
      */
-    public function __construct(ConversationManager $conversationManager)
-    {
+    public function __construct(
+        ConversationManager $conversationManager,
+        OnlineUsersService $onlineUsersService
+    ) {
         $this->conversationManager = $conversationManager;
-        parent::__construct();
+        parent::__construct($onlineUsersService);
     }
 
     /**

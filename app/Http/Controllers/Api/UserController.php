@@ -7,6 +7,7 @@ use App\Http\Requests\Request;
 use App\Managers\UserManager;
 use App\Milestone;
 use App\MilestoneUser;
+use App\Services\OnlineUsersService;
 use App\User;
 use Illuminate\Http\JsonResponse;
 use Kim\Activity\Activity;
@@ -19,14 +20,21 @@ class UserController
 {
     /** @var UserManager */
     private $userManager;
+    /**
+     * @var OnlineUsersService
+     */
+    private OnlineUsersService $onlineUsersService;
 
     /**
      * UserController constructor.
      * @param UserManager $userManager
      */
-    public function __construct(UserManager $userManager)
-    {
+    public function __construct(
+        UserManager $userManager,
+        OnlineUsersService $onlineUsersService
+    ) {
         $this->userManager = $userManager;
+        $this->onlineUsersService = $onlineUsersService;
     }
 
     /**
@@ -67,7 +75,9 @@ class UserController
      */
     public function getOnlineUserIds()
     {
-        return JsonResponse::create(Activity::users(10)->pluck('user_id')->toArray());
+        $onlineIds = $this->onlineUsersService->getOnlineUserIds();
+
+        return JsonResponse::create($onlineIds);
     }
 
     /**
