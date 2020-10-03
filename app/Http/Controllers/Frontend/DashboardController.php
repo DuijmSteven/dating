@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Activity;
 use App\Http\Requests\Request;
+use App\Services\OnlineUsersService;
 use App\Services\UserLocationService;
 use App\User;
 use Carbon\Carbon;
@@ -26,9 +27,10 @@ class DashboardController extends FrontendController
      * HomeController constructor.
      */
     public function __construct(
-        UserLocationService $userLocationService
+        UserLocationService $userLocationService,
+        OnlineUsersService $onlineUsersService
     ) {
-        parent::__construct();
+        parent::__construct($onlineUsersService);
         $this->userLocationService = $userLocationService;
     }
 
