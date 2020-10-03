@@ -10,21 +10,21 @@ use App\UserView;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
-class SendProfileViewedEmails extends Command
+class SetProfileViews extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'users:emails:send-profile-viewed';
+    protected $signature = 'users:emails:set-profile-views';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Sends profile viewed notification emails to users';
+    protected $description = 'Set automated profile views from bots to users';
     /**
      * @var UserManager
      */
@@ -62,30 +62,19 @@ class SendProfileViewedEmails extends Command
             ->whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_PEASANT);
             })
-            ->whereHas('emailTypes', function ($query) {
-                $query->where('id', EmailType::PROFILE_VIEWED);
-            })
-            ->whereDoesntHave('emailTypeInstances', function ($query) use ($timeNow) {
-                $query->where('email_type_id', EmailType::PROFILE_VIEWED);
-                $query->where('created_at', '>=', Carbon::now('Europe/Amsterdam')->subHours(3)->toDateTimeString());
+            ->whereDoesntHave('views', function ($query) use ($timeNow) {
+                $query->where('created_at', '>=', Carbon::now('Europe/Amsterdam')->subHours(2)->toDateTimeString());
             })
             ->where('active', true)
             ->get();
 
-            $emailDelay = 0;
-            $loopCount = 0;
-
             /** @var User $user */
             foreach ($users as $user) {
-                if ($loopCount % 5 === 0) {
-                    $emailDelay++;
-                }
-
                 try {
                     $number = rand(1, 1000);
 
                     if ($number === 1) {
-                        $viewerBot = $this->userManager->setProfileViewedEmail($user, null, $emailDelay);
+                        $viewerBot = $this->userManager->pickBotToProfileViewPeasant($user);
 
                         $this->userManager->storeProfileView(
                             $viewerBot,
@@ -97,8 +86,6 @@ class SendProfileViewedEmails extends Command
                     \Log::error(__CLASS__ . ' - ' . $exception->getMessage());
                     continue;
                 }
-
-                $loopCount++;
             }
         }
     }

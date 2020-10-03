@@ -229,32 +229,14 @@ class UserController extends FrontendController
             }
 
             if (
-                $user->isPeasant() &&
-                $user->isMailable
+                $user->isPeasant()
             ) {
-                $timeNow = Carbon::now('Europe/Amsterdam'); // Current time
-
-                $hasRecentProfileViewedEmails = $user
-                    ->emailTypeInstances()->where('id', EmailType::PROFILE_VIEWED)
-                    ->where('created_at', '>=', Carbon::today('Europe/Amsterdam')
-                        ->setTime($timeNow->hour - 2, 00, 00)
-                        ->toDateTimeString()
-                    )
-                    ->get();
-
-                if (!count($hasRecentProfileViewedEmails)) {
-                    $this->userManager->setProfileViewedEmail(
-                        $user,
-                        $this->authenticatedUser
-                    );
-                }
+                $this->userManager->storeProfileView(
+                    $this->authenticatedUser,
+                    $user,
+                    UserView::TYPE_PEASANT
+                );
             }
-
-            $this->userManager->storeProfileView(
-                $this->authenticatedUser,
-                $user,
-                UserView::TYPE_PEASANT
-            );
         }
 
         $viewData = [
@@ -307,14 +289,13 @@ class UserController extends FrontendController
             'user' => $this->authenticatedUser,
             'pageHeading' => 'Edit profile',
             'carbonNow' => Carbon::now(),
-            'availableEmailTypes' => EmailType::where('editable', true)->get(),
+            'availableEmailTypes' => EmailType::where('editable', true)->where('active', true)->get(),
             'userEmailTypeIds' => $this->authenticatedUser->emailTypes()
                 ->where('editable', 1)
+                ->where('active', true)
                 ->pluck('id')
                 ->toArray()
         ];
-
-        $emailTypes = $this->authenticatedUser->emailTypes;
 
         return view(
             'frontend.users.edit-profile',

@@ -8,7 +8,7 @@ use App\Console\Commands\CreateDiscountForInactiveUsersAndMailThem;
 use App\Console\Commands\ExportDb;
 use App\Console\Commands\SendMassMessage;
 use App\Console\Commands\SendProfileCompletionEmails;
-use App\Console\Commands\SendProfileViewedEmails;
+use App\Console\Commands\SetProfileViews;
 use App\Console\Commands\UpdateCurrentEnvDbAndAws;
 use App\Console\Commands\ValidateEligibleXpartnersLeads;
 use App\Console\Commands\VerifyPendingEmails;
@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
         Commands\SetRandomBotsOnline::class,
         Commands\ExportDb::class,
         Commands\ImportLatestProductionDbExport::class,
-        Commands\SendProfileViewedEmails::class,
+        Commands\SetProfileViews::class,
         Commands\DuplicateProductionS3BucketToCurrentEnvironmentBucket::class,
         Commands\UpdateCurrentEnvDbAndAws::class,
         Commands\SendProfileCompletionEmails::class,
@@ -48,8 +48,9 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('bots:set-random-online')->everyTenMinutes();
 
+        $schedule->command(SetProfileViews::class)->everyMinute();
+
         if (config('app.env') === 'production') {
-            // $schedule->command(SendProfileViewedEmails::class)->everyMinute();
             $schedule->command(SendProfileCompletionEmails::class)->dailyAt("19:00");
             $schedule->command(ExportDb::class)->dailyAt("05:30");
             $schedule->command(CheckRecentStartedPayments::class)->everyMinute();

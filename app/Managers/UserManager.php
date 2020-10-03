@@ -214,6 +214,22 @@ class UserManager
         $userViewInstance->save();
     }
 
+    public function pickBotToProfileViewPeasant(User $peasant)
+    {
+        $bot = User::where('active', true)
+            ->whereHas('meta', function ($query) use ($peasant) {
+                $query->where('looking_for_gender', $peasant->meta->gender);
+                $query->where('gender', $peasant->meta->looking_for_gender);
+            })
+            ->whereHas('roles', function ($query) {
+                $query->where('id', User::TYPE_BOT);
+            })
+            ->orderBy(\DB::raw('RAND()'))
+            ->first();
+
+        return $bot;
+    }
+
     public function setProfileViewedEmail(User $viewed, User $viewer = null, $delay = 0) {
         $userEmailTypeIds = $viewed->emailTypes()->get()->pluck('id')->toArray();
 
@@ -225,18 +241,8 @@ class UserManager
         $viewerUser = null;
 
         if ($profileViewedEmailEnabled && $viewed->isPeasant()) {
-
             if (!($viewer instanceof User)) {
-                $bot = User::where('active', true)
-                    ->whereHas('meta', function ($query) use ($viewed) {
-                        $query->where('looking_for_gender', $viewed->meta->gender);
-                        $query->where('gender', $viewed->meta->looking_for_gender);
-                    })
-                    ->whereHas('roles', function ($query) {
-                        $query->where('id', User::TYPE_BOT);
-                    })
-                    ->orderBy(\DB::raw('RAND()'))
-                    ->first();
+                $bot = $this->pickBotToProfileViewPeasant($viewed);
 
                 if ($bot instanceof User) {
                     $viewerUser = $bot;
