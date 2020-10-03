@@ -11,6 +11,7 @@ use App\Managers\PeasantManager;
 use App\Managers\UserManager;
 use App\Milestone;
 use App\Services\OnlineUsersService;
+use App\Session;
 use App\User;
 use App\UserBotMessage;
 use App\UserView;
@@ -123,127 +124,79 @@ class UserController extends FrontendController
             if ($user->isBot()) {
                 $onlineIds = $this->onlineUsersService->getOnlineUserIds();
 
-                if (
-                    $this->authenticatedUser->isFullyImpressionable
-                ) {
+                $chanceToReceiveProfileView = 0;
+                $chanceToReceiveBotMessage = 0;
+                $secondsUntilProfileView = 10;
+
+                if ($this->authenticatedUser->hasToReceiveBotMessage) {
                     if (in_array($user->getId(), $onlineIds)) {
-                        if (rand(1, 100) <= 40) {
-                            $secondsUntilProfileView = rand(15, 80);
-
-                            $this->userManager->storeProfileView(
-                                $user,
-                                $this->authenticatedUser,
-                                UserView::TYPE_AUTOMATED,
-                                Carbon::now()->addSeconds($secondsUntilProfileView)
-                            );
-
-                            // send automated initial bot message to user if he has not received one
-                            if (
-                                $this->authenticatedUser->bot_messages_received_count === 0 &&
-                                $this->authenticatedUser->messaged_count === 0 &&
-                                !$this->conversationManager->userHasConversationWithUser(
-                                    $this->authenticatedUser->getId(),
-                                    $user->getId()
-                                ) &&
-                                rand(1, 100) <= 80
-                            ) {
-                                $botMessage = BotMessage
-                                    ::where('usage_type', BotMessage::USAGE_TYPE_INITIAL_CONTACT)
-                                    ->where('status', BotMessage::STATUS_ACTIVE)
-                                    ->orderByRaw('RAND()')
-                                    ->first();
-
-                                $botMessageBody = $botMessage->body;
-
-                                $messageData = [
-                                    'sender_id' => $user->getId(),
-                                    'recipient_id' => $this->authenticatedUser->getId(),
-                                    'message' => $botMessageBody,
-                                    'created_at' => Carbon::now()->addSeconds($secondsUntilProfileView + 30)
-                                ];
-
-                                $userBotMessage = new UserBotMessage();
-                                $userBotMessage->setBotMessageId($botMessage->id);
-                                $userBotMessage->setUserId($this->authenticatedUser->getId());
-
-                                $this->authenticatedUser->botMessagesReceived()->attach($botMessage);
-                                $this->conversationManager->createMessage($messageData);
-                            }
-                        }
+                        $chanceToReceiveProfileView = 100;
+                        $chanceToReceiveBotMessage = 100;
+                        $secondsUntilProfileView = rand(10, 15);
                     } else {
-                        if (rand(1, 100) <= 20) {
-                            $minutesUntilProfileView = rand(10, 1000);
-
-                            $this->userManager->storeProfileView(
-                                $user,
-                                $this->authenticatedUser,
-                                UserView::TYPE_AUTOMATED,
-                                Carbon::now()->addMinutes($minutesUntilProfileView)
-                            );
-                        }
+                        $chanceToReceiveProfileView = 70;
+                        $chanceToReceiveBotMessage = 90;
+                        $secondsUntilProfileView = rand(10, 15);
                     }
-                } else {
+                } elseif ($this->authenticatedUser->couldBeBotMessaged) {
                     if (in_array($user->getId(), $onlineIds)) {
-                        if (rand(1, 100) <= 20) {
-                            $secondsUntilProfileView = rand(50, 300);
-
-                            $this->userManager->storeProfileView(
-                                $user,
-                                $this->authenticatedUser,
-                                UserView::TYPE_AUTOMATED,
-                                Carbon::now()->addSeconds($secondsUntilProfileView)
-                            );
-
-                            if (
-                                $this->authenticatedUser->bot_messages_received_count === 0 &&
-                                $this->authenticatedUser->messaged_count === 0 &&
-                                !$this->conversationManager->userHasConversationWithUser(
-                                    $this->authenticatedUser->getId(),
-                                    $user->getId()
-                                ) &&
-                                rand(1, 100) <= 75
-                            ) {
-                                $botMessage = BotMessage
-                                    ::where('usage_type', BotMessage::USAGE_TYPE_INITIAL_CONTACT)
-                                    ->orderByRaw('RAND()')
-                                    ->first()
-                                    ->body;
-
-                                $messageData = [
-                                    'sender_id' => $user->getId(),
-                                    'recipient_id' => $this->authenticatedUser->getId(),
-                                    'message' => $botMessage,
-                                    'created_at' => Carbon::now()->addSeconds($secondsUntilProfileView + 30)
-                                ];
-
-                                $this->authenticatedUser->botMessagesReceived()->attach($botMessage);
-                                $this->conversationManager->createMessage($messageData);
-                            }
-                        }
+                        $chanceToReceiveProfileView = 80;
+                        $chanceToReceiveBotMessage = 40;
+                        $secondsUntilProfileView = rand(10, 30);
                     } else {
-                        if (rand(1, 100) <= 20) {
-                            $minutesUntilProfileView = rand(10, 1000);
+                        $chanceToReceiveProfileView = 80;
+                        $chanceToReceiveBotMessage = 40;
+                        $secondsUntilProfileView = rand(200, 400);
+                    }
+                } elseif ($this->authenticatedUser->shouldNotBeBotMessaged) {
+                    if (in_array($user->getId(), $onlineIds)) {
+                        $chanceToReceiveProfileView = 70;
+                        $chanceToReceiveBotMessage = 0;
+                        $secondsUntilProfileView = rand(10, 60);
+                    } else {
+                        $chanceToReceiveProfileView = 70;
+                        $chanceToReceiveBotMessage = 0;
+                        $secondsUntilProfileView = rand(200, 400);
+                    }
+                }
 
-                            $this->userManager->storeProfileView(
-                                $user,
-                                $this->authenticatedUser,
-                                UserView::TYPE_AUTOMATED,
-                                Carbon::now()->addMinutes($minutesUntilProfileView)
-                            );
-                        }
+                if (rand(1, 100) <= $chanceToReceiveProfileView) {
+                    Session::create([
+                        'id' => md5(uniqid(rand(), true)),
+                        'user_id' => $user->id,
+                        'payload' => base64_encode('test'),
+                        'last_activity' => Carbon::now()->addSeconds($secondsUntilProfileView)->getTimestamp()
+                    ]);
+
+                    $this->userManager->storeProfileView(
+                        $user,
+                        $this->authenticatedUser,
+                        UserView::TYPE_AUTOMATED,
+                        Carbon::now()->addSeconds($secondsUntilProfileView)
+                    );
+
+                    // send automated initial bot message to user if he has not received one
+                    if (
+                        !$this->conversationManager->userHasConversationWithUser(
+                            $this->authenticatedUser->getId(),
+                            $user->getId()
+                        ) &&
+                        rand(1, 100) <= $chanceToReceiveBotMessage
+                    ) {
+                        $this->userManager->createBotMessageForPeasant(
+                            $this->authenticatedUser,
+                            $user,
+                            $secondsUntilProfileView + 20
+                        );
                     }
                 }
             }
 
-            if (
-                $user->isPeasant()
-            ) {
-                $this->userManager->storeProfileView(
-                    $this->authenticatedUser,
-                    $user,
-                    UserView::TYPE_PEASANT
-                );
-            }
+            $this->userManager->storeProfileView(
+                $this->authenticatedUser,
+                $user,
+                UserView::TYPE_PEASANT
+            );
         }
 
         $viewData = [

@@ -10,8 +10,8 @@ use App\Services\OnlineUsersService;
 use App\User;
 use App\UserImage;
 use Illuminate\Support\Facades\DB;
-use Redirect;
-use URL;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\URL;
 
 class UserImageController extends Controller
 {

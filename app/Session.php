@@ -10,6 +10,13 @@ class Session extends Model
 
     public $timestamps = false;
 
+    public $fillable = [
+        'id',
+        'user_id',
+        'payload',
+        'last_activity'
+    ];
+
     /**
      * @return mixed
      */

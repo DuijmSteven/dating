@@ -31,13 +31,15 @@ class PeasantManager extends UserManager
     public function __construct(
         User $user,
         StorageManager $storageManager,
-        UserLocationService $userLocationService
+        UserLocationService $userLocationService,
+        ConversationManager $conversationManager
     ) {
         $this->user = $user;
         parent::__construct(
             $this->user,
             $storageManager,
-            $userLocationService
+            $userLocationService,
+            $conversationManager
         );
 
         $this->userLocationService = $userLocationService;
@@ -111,7 +113,10 @@ class PeasantManager extends UserManager
         $userDataToPersist['user'] = $usersTableData;
         $userDataToPersist['user_meta'] = $userMetaTableData;
 
-        if (isset($userDataToPersist['user_meta']['email']) && $userDataToPersist['user_meta']['email'] != $peasant->getEmail()) {
+        if (
+            isset($userDataToPersist['user_meta']['email']) &&
+            $userDataToPersist['user_meta']['email'] != $peasant->getEmail()
+        ) {
             $userDataToPersist['user_meta']['email_verified'] = 0;
         }
 

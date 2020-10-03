@@ -3,6 +3,7 @@
 
 namespace App\Managers;
 
+use App\BotMessage;
 use App\EmailType;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Mail\ProfileCompletion;
@@ -12,6 +13,7 @@ use App\Services\UserLocationService;
 use App\Session;
 use App\User;
 use App\UserAccount;
+use App\UserBotMessage;
 use App\UserEmailTypeInstance;
 use App\UserImage;
 use App\UserMeta;
@@ -42,6 +44,10 @@ class UserManager
      * @var UserLocationService
      */
     private UserLocationService $userLocationService;
+    /**
+     * @var ConversationManager
+     */
+    private ConversationManager $conversationManager;
 
     /**
      * HandlesUserDbInteractions constructor.
@@ -51,11 +57,13 @@ class UserManager
     public function __construct(
         User $user,
         StorageManager $storageManager,
-        UserLocationService $userLocationService
+        UserLocationService $userLocationService,
+        ConversationManager $conversationManager
     ) {
         $this->user = $user;
         $this->storageManager = $storageManager;
         $this->userLocationService = $userLocationService;
+        $this->conversationManager = $conversationManager;
     }
 
     /**
@@ -685,5 +693,37 @@ class UserManager
         }
 
         return $user;
+    }
+
+    public function createBotMessageForPeasant(
+        User $peasant,
+        User $bot,
+        int $secondsAheadToScheduleMessage
+    ) {
+        $botMessageIdsPeasantHasReceived = $peasant->botMessagesReceived->pluck('id')->toArray();
+
+
+        $botMessage = BotMessage
+            ::where('usage_type', BotMessage::USAGE_TYPE_INITIAL_CONTACT)
+            ->whereNotIn('id', $botMessageIdsPeasantHasReceived)
+            ->where('status', BotMessage::STATUS_ACTIVE)
+            ->orderByRaw('RAND()')
+            ->first();
+
+        $botMessageBody = $botMessage->body;
+
+        $messageData = [
+            'sender_id' => $bot->getId(),
+            'recipient_id' => $peasant->getId(),
+            'message' => $botMessageBody,
+            'created_at' => Carbon::now()->addSeconds($secondsAheadToScheduleMessage)
+        ];
+
+        $userBotMessage = new UserBotMessage();
+        $userBotMessage->setBotMessageId($botMessage->id);
+        $userBotMessage->setUserId($peasant->getId());
+
+        $peasant->botMessagesReceived()->attach($botMessage);
+        $this->conversationManager->createMessage($messageData);
     }
 }

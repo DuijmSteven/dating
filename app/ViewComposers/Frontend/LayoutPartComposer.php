@@ -2,11 +2,15 @@
 
 namespace App\ViewComposers\Frontend;
 
+use App\Conversation;
+use App\ConversationMessage;
+use App\Managers\ConversationManager;
 use App\Managers\StorageManager;
 use App\Managers\UserManager;
 use App\Module;
 use App\ModuleInstance;
 use App\Services\LatestViewedModuleService;
+use App\Services\OnlineUsersService;
 use App\Services\UserLocationService;
 use App\User;
 use App\View;
@@ -53,7 +57,19 @@ class LayoutPartComposer
         foreach ($modules as $name) {
             switch ($name) {
                 case 'online-users':
-                    $onlineUsers = (new UserManager(new User(), new StorageManager(), new UserLocationService()))->latestOnline(10, 12);
+                    $onlineUsers = (
+                        new UserManager(
+                            new User(),
+                            new StorageManager(),
+                            new UserLocationService(),
+                            new ConversationManager(
+                                new Conversation(),
+                                new ConversationMessage(),
+                                new StorageManager(),
+                                new OnlineUsersService()
+                            )
+                        )
+                    )->latestOnline(10, 12);
 
                     $viewData = [
                         'onlineUsers' => $onlineUsers
