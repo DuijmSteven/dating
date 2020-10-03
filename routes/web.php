@@ -264,6 +264,9 @@ Route::group([
         Route::delete('{id}', 'Admin\BotController@destroy')
             ->name('admin.bots.destroy');
 
+        Route::get('{id}/set-too-slutty-for-ads/{tooSlutty}', 'Admin\BotController@setTooSluttyForAds')
+            ->name('admin.bots.set-too-slutty-for-ads');
+
         Route::get('on-map', 'Admin\BotController@showOnMap')
             ->name('admin.bots.map.show');
 

@@ -170,6 +170,14 @@
                                         <a href="{!! route('admin.bots.message-with-bot.get', ['botId' => $bot->getId(), 'onlyOnlinePeasants' => '1']) !!}"
                                            class="btn btn-default">Message online peasant with bot</a>
 
+                                        @if(!$bot->meta->getTooSluttyForAds())
+                                            <a href="{!! route('admin.bots.set-too-slutty-for-ads', ['id' =>  $bot->getId(), 'tooSlutty' => '1']) !!}"
+                                               class="btn btn-default">Set too slutty for ads</a>
+                                        @else
+                                            <a href="{!! route('admin.bots.set-too-slutty-for-ads', ['id' =>  $bot->getId(), 'tooSlutty' => '0']) !!}"
+                                               class="btn btn-default">Set NOT too slutty for ads</a>
+                                        @endif
+
                                         <form method="POST"
                                               action="{!! route('admin.users.destroy', ['userId' => $bot->id]) !!}">
                                             {!! csrf_field() !!}

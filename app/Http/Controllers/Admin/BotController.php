@@ -8,6 +8,7 @@ use App\Managers\BotManager;
 use App\Managers\UserManager;
 use App\Services\OnlineUsersService;
 use App\User;
+use App\UserMeta;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -336,6 +337,29 @@ class BotController extends Controller
             $alerts[] = [
                 'type' => 'error',
                 'message' => 'The bot was not deleted due to an exception.'
+            ];
+
+            return redirect()->route('admin.bots.retrieve')->with('alerts', $alerts);
+        }
+    }
+
+    public function setTooSluttyForAds(int $id, bool $tooSlutty = true)
+    {
+        try {
+            UserMeta
+                ::where('user_id', $id)
+                ->update(['too_slutty_for_ads' => $tooSlutty]);
+
+            $alerts[] = [
+                'type' => 'success',
+                'message' => 'The bot was set as "too slutty for ads" successfully'
+            ];
+
+            return redirect()->route('admin.bots.retrieve')->with('alerts', $alerts);
+        } catch (\Exception $exception) {
+            $alerts[] = [
+                'type' => 'error',
+                'message' => $exception->getMessage()
             ];
 
             return redirect()->route('admin.bots.retrieve')->with('alerts', $alerts);
