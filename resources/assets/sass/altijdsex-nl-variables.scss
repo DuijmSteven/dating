@@ -59,12 +59,12 @@ $navbarLinkColor: $sugar;
 $navbarBgColor: $dark;
 
 $navbarHeight: 50;
-$navbarHeightSmallScreens: 60;
+$navbarHeightSmallScreens: 50;
 
 $navbarBorderWidth: 1;
 $navbarLineHeight: 22;
 
-$logoHeight: round($navbarHeight * 0.55);
+$logoHeight: 36;
 $userMenuImageContainerDimension: 31;
 $userMenuImageDimension: 31;
 $userMenuImageTop: ($navbarHeight - $userMenuImageContainerDimension)/2;

@@ -28,7 +28,11 @@
                 !$isAnonymousDomain
             )
                 <a class="navbar-brand" href="{!! route('home') !!}">
-                    <img src="{!! asset('img/site_logos/Altijdsex_LogoSmall_Pos@1x.png') !!}"
+                    <img class="logoImage" src="{!! asset('img/site_logos/Altijdsex_LogoSmall_Pos@1x.png') !!}"
+                         alt="Logo"
+                    >
+
+                    <img class="logoImageSmall" src="{!! asset('img/site_logos/Altijdsex_LogoMark_Padded@1x.png') !!}"
                          alt="Logo"
                     >
                 </a>

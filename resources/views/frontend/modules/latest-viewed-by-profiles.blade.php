@@ -6,7 +6,20 @@
 
         {{ trans('viewed_by_users.viewed_by_users') }}
 
-        @include('frontend.components.tile-toggle')
+{{--        @include('frontend.components.tile-toggle')--}}
+
+        <div class="Tile__toggle JS--Tile__toggleExpand hidden">
+            <span class="material-icons">
+                expand_more
+            </span>
+        </div>
+
+        <div class="Tile__toggle JS--Tile__toggleCollapse">
+            <span class="material-icons">
+                expand_less
+            </span>
+        </div>
+
     </div>
     <div class="Tile__body LatestViewedBy__body JS--Tile__body">
         @forelse($latestViewedBy as $view)

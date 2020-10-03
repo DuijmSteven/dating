@@ -75,7 +75,7 @@
     right: 0;
 
     .navbar-toggle {
-        margin-top: 8px;
+        margin-top: ($navbarHeightSmallScreens - 34 - 2) / 2 + px;
 
         &:focus,
         &:hover {
@@ -87,27 +87,6 @@
         font-weight: 500;
         font-size: 20px;
         color: #ffc3b5;
-    }
-
-    .userCreditsText {
-        @media screen and (max-width: $screen-xs-max) {
-            display: none;
-        }
-    }
-
-    .userCredits__smallScreens {
-        display: none;
-        position: absolute;
-        left: 534px;
-        top: 10px;
-
-        @media screen and (max-width: $screen-sm-max) {
-            display: block;
-        }
-
-        @media screen and (max-width: $screen-xs-max) {
-            left: 197px;
-        }
     }
 
     .navbar-nav {
@@ -331,7 +310,7 @@
     display: inline-block;
     height: auto;
     padding-top: ($navbarHeight - $logoHeight - 2 * $navbarBorderWidth) / 2 + px;
-    padding-bottom: ($navbarHeight - $logoHeight - 2 * $navbarBorderWidth) / 2 + px;
+    padding-bottom: 0;
 
     //@media screen and (min-width: $screen-md-min) {
     //    padding-top: 6px;
@@ -469,10 +448,10 @@
     .buyCreditsButton {
         position: absolute;
         left: 340px;
-        top: ($navbarHeight - $buyCreditsButtonHeight) / 2 + px;
+        top: ($navbarHeight - $buyCreditsButtonHeight - 2) / 2 + px;
 
         @media (max-width: $screen-sm-max) {
-            top: ($navbarHeightSmallScreens - $buyCreditsButtonHeight) / 2 + px;
+            top: ($navbarHeightSmallScreens - $buyCreditsButtonHeight - 2) / 2 + px;
         }
 
         width: 150px;
@@ -527,6 +506,33 @@
         //}
     }
 
+    .logoImage {
+        display: inline-block;
+
+        @media (max-width: 530px) {
+            display: none;
+        }
+    }
+
+    .logoImageSmall {
+        display: none;
+
+        @media (max-width: 530px) {
+            display: inline-block;
+        }
+    }
+
+    .navbar-brand {
+        @media (max-width: 530px) {
+            img {
+                height: 38px;
+            }
+
+            //padding-top: 11px;
+            padding-bottom: 0;
+        }
+    }
+
     .searchToggleButton {
         position: absolute;
         cursor: pointer;
@@ -536,10 +542,10 @@
         align-content: center;
         justify-content: center;
         left: 600px;
-        top: ($navbarHeight - $searchToggleButtonHeight) / 2 + px;
+        top: ($navbarHeight - $searchToggleButtonHeight - 2) / 2 + px;
 
         @media (max-width: $screen-sm-max) {
-            top: ($navbarHeightSmallScreens - $buyCreditsButtonHeight) / 2 + px;
+            top: ($navbarHeightSmallScreens - $buyCreditsButtonHeight - 2) / 2 + px;
         }
 
         font-size: 2rem;
@@ -563,17 +569,33 @@
         }
 
         @media (max-width: $screen-xs-max) {
-            left: 138px;
-
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            top: 5px;
-
-            .searchToggleButtonText {
-                display: none;
-            }
+            left: 200px;
         }
+
+        @media screen and (max-width: 600px) {
+            left: 150px;
+        }
+
+        @media screen and (max-width: 530px) {
+            font-size: 1.6rem;
+            left: 120px;
+            width: 100px;
+        }
+
+        @media screen and (max-width: 400px) {
+            left: 63px;
+        }
+
+        //@media (max-width: 400px) {
+        //    width: 40px;
+        //    height: 40px;
+        //    border-radius: 50%;
+        //    top: 5px;
+        //
+        //    .searchToggleButtonText {
+        //        display: none;
+        //    }
+        //}
 
         &:hover {
             background-color: darken($secondaryColor, 3%);
@@ -596,22 +618,59 @@
             top: 3px;
             width: 14px;
 
-            @media (max-width: $screen-xs-max) {
-                top: 7px;
-                width: 21px;
-            }
+            //@media (max-width: 400px) {
+            //    top: 7px;
+            //    width: 21px;
+            //}
         }
     }
+
+    .userCredits__smallScreens {
+        display: none;
+        position: absolute;
+        left: 534px;
+        height: $navbarHeight + px;
+        line-height: $navbarHeight + px;
+
+        @media screen and (max-width: $screen-sm-max) {
+            display: block;
+        }
+
+        @media screen and (max-width: $screen-xs-max) {
+            left: 400px;
+        }
+
+        @media screen and (max-width: 600px) {
+            left: 330px;
+        }
+
+        @media screen and (max-width: 530px) {
+            .userCreditsNumber {
+                font-size: 1.4rem;
+            }
+
+            //top: 15px;
+            left: 260px;
+        }
+
+        @media screen and (max-width: 400px) {
+            left: 180px;
+        }
+
+        //@media screen and (max-width: 400px) {
+        //    left: 255px;
+        //}
+    }
+
+    //.userCreditsText {
+    //    @media screen and (max-width: 400px) {
+    //        display: none;
+    //    }
+    //}
 
     @media (max-width: $screen-sm-max) {
         .searchBarContainer {
             display: none
-        }
-    }
-
-    @media (max-width: $screen-xs-max) {
-        span.searchToggleButtonText {
-            display: none;
         }
     }
 }
