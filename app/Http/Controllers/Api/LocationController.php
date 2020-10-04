@@ -18,7 +18,7 @@ class LocationController extends Controller
     public function getCities(Request $request, $countryCode = null)
     {
         if ($countryCode) {
-            if (!\Cache::has('cities-' . $countryCode)) {
+            if (\Cache::has('cities-' . $countryCode)) {
                 $cities = \UserConstants::getCities($countryCode);
                 \Cache::put('cities-' . $countryCode, $cities, 1000);
             }
@@ -33,7 +33,7 @@ class LocationController extends Controller
                 $userCountryCode = $request->user()->meta->country;
             }
 
-            if (!\Cache::has('cities-all-' . $userCountryCode)) {
+            if (\Cache::has('cities-all-' . $userCountryCode)) {
                 $cities = \UserConstants::getCities($countryCode, $userCountryCode);
                 \Cache::put('cities-all-' . $userCountryCode, $cities, 1000);
             }

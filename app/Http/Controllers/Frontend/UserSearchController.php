@@ -124,7 +124,7 @@ class UserSearchController extends FrontendController
         $searchParameters['radius'] = 80;
 
         if (!isset($searchParameters['city_name'])) {
-            $searchParameters['city_name'] = 'Amsterdam (NL)';
+            $searchParameters['city_name'] = 'Amsterdam';
         }
 
         $users = $this->userSearchManager->searchUsers(

@@ -5,6 +5,7 @@ namespace App\Http\Requests\Admin\Peasants;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Http\Requests\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class PeasantUpdateRequest extends Request
 {
@@ -27,6 +28,14 @@ class PeasantUpdateRequest extends Request
     {
         $userProfileFields = UserConstants::selectableFields('peasant');
 
+        $userCountryCode = Auth::user()->meta->country;
+
+        if (!in_array($userCountryCode, ['nl', 'be'])) {
+            $countryCode = 'nl';
+        } else {
+            $countryCode = Auth::user()->meta->country;
+        }
+
         $rules = [
             //'username' => 'min:5|max:50|string|unique:users,username,' . trim($this->route('userId') . ',id'),
             'active' => 'boolean',
@@ -41,7 +50,7 @@ class PeasantUpdateRequest extends Request
             'hair_color' => 'in:'. implode(',', array_keys($userProfileFields['hair_color'])),
             'smoking_habits' => 'in:'. implode(',', array_keys($userProfileFields['drinking_habits'])),
             'drinking_habits' => 'in:'. implode(',', array_keys($userProfileFields['smoking_habits'])),
-            'city' => 'in:' . implode(',', array_merge(UserConstants::$cities['nl'], UserConstants::$cities['be'])),
+            'city' => 'in:' . implode(',', UserConstants::$cities[$countryCode]),
             'about_me' => 'string|max:1000',
             'profile_image' => 'mimes:jpeg,png,jpg|max:10000',
         ];

@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Helpers\ApplicationConstants\UserConstants;
 use App\User;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class UserLocationService
@@ -75,13 +77,18 @@ class UserLocationService
 
     public function getCoordinatesForCity(string $city)
     {
-        $cityName = self::getCityNameFromCityString($city);
-        $countryCode = self::getCountryCodeFromCityString($city);
+        $userCountryCode = Auth::user()->meta->country;
+
+        if (!in_array($userCountryCode, ['nl', 'be'])) {
+            $countryCode = 'nl';
+        } else {
+            $countryCode = Auth::user()->meta->country;
+        }
 
         $client = new Client();
         $geocoder = new GeocoderService($client, $countryCode);
 
-        return $geocoder->getCoordinatesForAddress($cityName . ', ' . $countryCode);
+        return $geocoder->getCoordinatesForAddress($city);
     }
 
     public static function getCountryCodeFromCityString(string $city)

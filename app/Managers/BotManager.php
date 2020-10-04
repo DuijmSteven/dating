@@ -35,10 +35,11 @@ class BotManager extends UserManager
     public function __construct(
         User $user,
         StorageManager $storageManager,
-        UserLocationService $userLocationService
+        UserLocationService $userLocationService,
+        ConversationManager $conversationManager
     ) {
         $this->user = $user;
-        parent::__construct($this->user, $storageManager, $userLocationService);
+        parent::__construct($this->user, $storageManager, $userLocationService, $conversationManager);
         $this->userLocationService = $userLocationService;
     }
 
@@ -115,7 +116,6 @@ class BotManager extends UserManager
 
             $userDataToPersist['user_meta']['lat'] = $coordinates['lat'];
             $userDataToPersist['user_meta']['lng'] = $coordinates['lng'];
-            $userDataToPersist['user_meta']['country'] = UserLocationService::getCountryCodeFromCityString($userDataToPersist['user_meta']['city']);
 
             $userDataToPersist['user_meta']['city'] = trim(ucfirst($userDataToPersist['user_meta']['city']));
         } else {

@@ -4,6 +4,7 @@ namespace App\Http\Requests\UserRequests;
 
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class UserSearchRequest
@@ -30,10 +31,18 @@ class UserSearchRequest extends Request
     {
         $userProfileFields = UserConstants::selectableFields('peasant', 'public');
 
+        $userCountryCode = Auth::user()->meta->country;
+
+        if (!in_array($userCountryCode, ['nl', 'be'])) {
+            $countryCode = 'nl';
+        } else {
+            $countryCode = Auth::user()->meta->country;
+        }
+
         return [
             'query' => 'max:50',
             'username' => 'max:50|string',
-            'city_name' => 'required|in:' . implode(',', array_merge(UserConstants::$cities['nl'], UserConstants::$cities['be'])),
+            'city_name' => 'required|in:' . implode(',', UserConstants::$cities[$countryCode]),
             //'radius' => 'required_with:city_name|integer',
             'gender' => 'in:'. implode(',', array_keys($userProfileFields['gender'])),
             'relationship_status' => 'in:'. implode(',', array_keys($userProfileFields['relationship_status'])),

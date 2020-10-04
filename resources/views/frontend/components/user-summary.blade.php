@@ -49,9 +49,9 @@
                 </a>
                 <div class="UserSummary__userInfo__additional">
                     @if(isset($user->meta->city) && $user->meta->dob)
-                        {!! $user->meta->city . ' <span>&centerdot;</span> ' !!}
+                        {!! ucfirst($user->meta->city) . ' <span>&centerdot;</span> ' !!}
                     @elseif ($user->meta->city)
-                        {{ $user->meta->city }}
+                        {{ ucfirst($user->meta->city) }}
                     @endif
 
                     {!! $user->meta->dob ? $user->meta->dob->diffInYears($carbonNow) . ' Jaar' : '' !!}
