@@ -138,10 +138,9 @@ class RegisterController extends Controller
 //        $lat = $coordinates['lat'];
 //        $lng = $coordinates['lng'];
 
-        $countryCode = null;
+        $countryCode = 'nl';
 
-
-        $countryCode = $this->userLocationService->getCountryCodeFromIp($userIp);
+        // $countryCode = $this->userLocationService->getCountryCodeFromIp($userIp);
 
         if ($userIp && $countryCode) {
             $countryCode = strtolower($countryCode);
