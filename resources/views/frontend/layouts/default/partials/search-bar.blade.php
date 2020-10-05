@@ -18,6 +18,7 @@
                         } else {
                             $city = 'Brussel';
                         }
+
                     }
                 }
             ?>
