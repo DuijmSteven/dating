@@ -93,13 +93,30 @@
                         </a>
                         <ul class="dropdown-menu main-dropdown">
                             <li>
-                                <a href="{!! route('users.edit-profile.get', ['userId' => $authenticatedUser->getUsername()]) !!}">{{ @trans('navbar.edit_profile') }}</a>
+                                <a href="{!! route('users.edit-profile.get', ['userId' => $authenticatedUser->getUsername()]) !!}">
+                                    <span class="material-icons">
+                                        edit
+                                    </span>
+                                    {{ @trans('navbar.edit_profile') }}
+                                </a>
                             </li>
-                            <li><a href="{{ route('credits.show') }}">{{ @trans('navbar.credits') }}</a></li>
+                            <li>
+                                <a class="buyCreditsNavLink" href="{{ route('credits.show') }}">
+                                    <span class="material-icons">
+                                        payment
+                                    </span>
+                                    {{ @trans('navbar.credits') }}
+                                </a>
+                            </li>
 
                             <li class="dropdown-submenu languagesSubmenu">
                                 <a class="JS--showLanguagesSubmenu" tabindex="-1"
-                                   href="#">{{ @trans('navbar.language') }} <span class="caret"></span></a>
+                                   href="#">
+                                    <span class="material-icons">
+                                        language
+                                    </span>
+                                    {{ @trans('navbar.language') }} <span class="caret"></span>
+                                </a>
                                 <ul class="dropdown-menu">
                                     <li>
                                         <a class="languagesSubmenu__item"
@@ -134,7 +151,12 @@
                             <li>
                                 <a href="{!!  route('logout.post') !!}"
                                    onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">{{ @trans('navbar.logout') }}
+                                    document.getElementById('logout-form').submit();"
+                                >
+                                    <span class="material-icons">
+                                        time_to_leave
+                                    </span>
+                                    {{ @trans('navbar.logout') }}
                                 </a>
 
                                 <form id="logout-form" action="{!!  route('logout.post') !!}" method="POST"

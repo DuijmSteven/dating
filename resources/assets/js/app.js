@@ -385,20 +385,37 @@ $(window).on('load', function () {
 
     if ($('.JS--searchToggleButton').length > 0) {
         $('.JS--searchToggleButton').click(() => {
-            $('.JS--SearchBar').removeClass('hidden');
-            $('.JS--searchToggleButton').toggleClass('pressed');
-            Cookies.set('searchBarState', 'open');
+            if (!$('.JS--SearchBar').hasClass('closedByButtonClick')) {
+                $('.JS--SearchBar').removeClass('hidden');
+
+                $('.JS--searchToggleButton').toggleClass('pressed');
+                Cookies.set('searchBarState', 'open');
+            }
         });
 
         $(document).on("mousedown", function (e) {
-            var container = $(".JS--SearchBar");
-            var autocompleteCities = $(".ui-autocomplete");
+            if (!$('.JS--SearchBar').hasClass('hidden')) {
+                var container = $(".JS--SearchBar");
+                var autocompleteCities = $(".ui-autocomplete");
 
-            // if the target of the click isn't the container nor a descendant of the container
-            if ((!container.is(e.target) && container.has(e.target).length === 0) && (!autocompleteCities.is(e.target) && autocompleteCities.has(e.target).length === 0)) {
-                container.addClass('hidden');
-                $('.JS--searchToggleButton').removeClass('pressed');
-                Cookies.set('searchBarState', 'hidden');
+                // if the target of the click isn't the container nor a descendant of the container
+                if (
+                    ($(e.target).hasClass('JS--searchToggleButton') || $(e.target).parents('.JS--searchToggleButton').length) ||
+                    (
+                        (!container.is(e.target) && container.has(e.target).length === 0) &&
+                        (!autocompleteCities.is(e.target) && autocompleteCities.has(e.target).length === 0)
+                    )
+                ) {
+                    container.addClass('hidden');
+                    $('.JS--searchToggleButton').removeClass('pressed');
+                    Cookies.set('searchBarState', 'hidden');
+
+                    container.addClass('closedByButtonClick');
+
+                    setTimeout(function () {
+                        container.removeClass('closedByButtonClick');
+                    }, 300);
+                }
             }
         });
 

@@ -30,7 +30,7 @@
 
     .flagImageWrapper {
         position: relative;
-        margin-right: 10px;
+        margin-right: 18px;
 
         width: 24px;
         height: 24px;
@@ -59,6 +59,8 @@
     @media (max-width: $screen-sm-max) {
         min-height: $navbarHeightSmallScreens + px;
     }
+
+    margin-bottom: 0;
 }
 
 .navbar-default {
@@ -196,6 +198,8 @@
                     }
 
                     a {
+                        display: flex;
+                        align-items: center;
                         padding-top: 5px;
                         padding-bottom: 5px;
                         color: $navbarLinkColor;
@@ -210,7 +214,14 @@
                             color: #fff;
                         }
 
+                        &.buyCreditsNavLink {
+                            font-weight: 600;
+                            color: $secondaryColor;
+                        }
 
+                        .material-icons {
+                            width: 40px;
+                        }
                     }
                 }
 
