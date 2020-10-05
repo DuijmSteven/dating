@@ -54,7 +54,7 @@ class ImportLatestProductionDbExport extends Command
         try {
 
             $s3Prod = \Storage::disk('cloud_prod');
-            $allFiles = $s3Prod->allFiles('/mysql/');
+            $allFiles = $s3Prod->allFiles('/mysql/' . config('app.name'));
 
             $fileToUse = null;
 

@@ -45,7 +45,7 @@ class ExportDb extends Command
 
         // define target file
         $tempLocation     = '/tmp/' . config('database.connections.mysql.database') . '_' . date("Y-m-d_Hi") . '.sql';
-        $targetFilePath   = '/mysql/' . config('database.connections.mysql.database') . '_' . date("Y-m-d_Hi") . '.sql';
+        $targetFilePath   = '/mysql/' . config('app.name') . '/' . config('database.connections.mysql.database') . '_' . date("Y-m-d_Hi") . '.sql';
 
         $process = new Process(sprintf(
             'mysqldump -u %s -p%s %s > %s',
