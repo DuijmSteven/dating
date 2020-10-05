@@ -1,7 +1,7 @@
-<div class="SearchBar JS--SearchBar hidden {{ count($errors) ? 'with-errors' : '' }}">
+<div class="SearchBar JS--SearchBar {{ count($errors) ? 'with-errors' : '' }}">
     <form method="POST" action="{{ route('users.search.form.get') }}" id="JS--SearchBarForm">
         @csrf
-        <div class="form-group city {{ $errors->has('city_name') ? ' has-error' : '' }}">
+        <div class="form-group city shorterInMobile {{ $errors->has('city_name') ? ' has-error' : '' }}">
             <label for="city_name">{!! @trans('user_constants.city') !!}</label>
 
             <?php
@@ -87,12 +87,12 @@
             ?>
 
             <label for="with_profile_image">{!! @trans('user_constants.with_profile_image') !!}</label>
-            <div>
+            <div class="profileImageLabelContainer">
                 <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-primary {{ $withProfileImage ? 'active' : '' }}">
+                    <label class="SearchBar__profileImageLabel btn btn-primary {{ $withProfileImage ? 'active' : '' }}">
                         <input name="with_profile_image" value="1" type="radio" {{ $withProfileImage ? 'checked' : '' }}> {{ trans('search.yes') }}
                     </label>
-                    <label class="btn btn-primary {{ !$withProfileImage ? 'active' : '' }}">
+                    <label class="SearchBar__profileImageLabel btn btn-primary {{ !$withProfileImage ? 'active' : '' }}">
                         <input name="with_profile_image" value="0" type="radio" {{ !$withProfileImage ? 'checked' : '' }}> {{ trans('search.no') }}
                     </label>
                 </div>

@@ -49,11 +49,36 @@
         margin-left:  -450px;
     }
 
+    @media (max-width: $screen-sm-max) {
+        .profileImageLabelContainer {
+            display: inline-block;
+            left: 5px;
+            position: relative;
+        }
+    }
+
     .form-group {
         margin-bottom: 0;
 
+        .form-control {
+            @media (max-width: $screen-sm-max) {
+                display: inline-block;
+                width: 67%;
+            }
+        }
+
         label {
             color: $navbarLinkColor;
+
+            display: inline-block;
+
+            @media (max-width: $screen-sm-max) {
+                font-size: 1.5rem;
+
+                &:not(.SearchBar__profileImageLabel) {
+                    width: 30%;
+                }
+            }
         }
 
         width: 100%;
@@ -64,10 +89,23 @@
             &.has-error {
                 padding-bottom: 30px;
             }
+
+            &.shorterInMobile {
+                height: 32px;
+            }
         }
 
 
         &.withProfileImage {
+            @media (max-width: $screen-sm-max) {
+                display: flex;
+                align-items: center;
+
+                label {
+                    line-height: 15px;
+                }
+            }
+
             .btn-primary {
                 background-color: #69595c;
                 border-color: #775e63;
@@ -75,6 +113,8 @@
                 font-weight: 500;
                 outline: 0;
                 height: 36px;
+                display: flex;
+                align-items: center;
 
                 &:focus {
                     outline: 0;
@@ -122,7 +162,7 @@
                 position: absolute;
                 right: 10px;
                 bottom: 9px;
-                padding-right: 0px;
+                padding-right: 0;
 
                 button {
                     width: 70px;
@@ -148,6 +188,14 @@
                 &:hover {
                     background-color: lighten($secondaryColor, 5%);
                 }
+
+                @media (max-width: $screen-sm-max) {
+                    padding: 5px 20px;
+                }
+            }
+
+            @media (max-width: $screen-sm-max) {
+                margin-bottom: 0;
             }
 
             .material-icons {
