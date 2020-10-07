@@ -4,12 +4,12 @@
 
     <div class="Tile Tile__privacy">
         <div class="Tile__heading">
-            <h4>{{ trans('tac.tac') }} Altijdsex.nl</h4>
+            <h4>{{ trans('tac.tac') }} {{ ucfirst(config('app.name')) }}</h4>
         </div>
         <div
                 class="Tile__body"
         >
-            {!! \GrahamCampbell\Markdown\Facades\Markdown::convertToHtml($tac->getContent()) !!}
+            {!! $tacContent !!}
         </div>
     </div>
 

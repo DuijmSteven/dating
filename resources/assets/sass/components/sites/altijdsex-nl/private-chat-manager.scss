@@ -1,0 +1,433 @@
+.PrivateChatManager {
+    position: fixed;
+    z-index: 100;
+    bottom: 0;
+    right: 50px;
+
+    width: 370px;
+
+    box-shadow: 0 0 24px rgba(0, 0, 0, 0.2);
+
+    &__body {
+        &__empty {
+            background-color: white;
+            padding: 15px 15px;
+            font-size: 1.6rem;
+        }
+    }
+
+    &__head {
+        position: relative;
+        cursor: pointer;
+        border-radius: $borderRadius + px $borderRadius + px 0 0;
+        text-align: center;
+
+        display: flex;
+        flex-direction: row;
+
+        height: map_get($privateChatManager, 'headHeight') + px;
+
+        color: map_get($privateChatManager, 'headColor');
+
+        background-color: map_get($privateChatManager, 'headBackGroundColor');
+
+        &__title {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            flex: 3;
+            padding-left: 15px;
+
+            &__text {
+                position: relative;
+            }
+        }
+
+        &__actionIcons {
+            flex: 1;
+        }
+
+        &__newMessages {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            right: -25px;
+            bottom: 6px;
+            color: #ff5b49;
+
+            .material-icons {
+                font-size: 1.7rem;
+            }
+
+            &.mobile {
+                right: -6px;
+                bottom: initial;
+                top: -6px;
+                background-color: #2c2c2c;
+                padding: 5px;
+                border-radius: 50%;
+
+                .material-icons {
+                    font-size: 1.5rem;
+                }
+            }
+        }
+    }
+
+    &__toggle {
+        position: relative;
+        top: 5px;
+        left: 8px;
+
+        &__icon--minimize.material-icons {
+            display: none;
+        }
+
+        .material-icons {
+            &:hover {
+                color: #bbb !important;
+            }
+        }
+    }
+
+    &__item {
+        position: relative;
+
+        &.isNewOrHasNewMessage {
+            .PrivateChatManager__item__newMessagesIcon {
+                display: inline-block !important;
+            }
+        }
+
+        &__deleteIcon {
+            display: none !important;
+            position: absolute;
+            top: 27px;
+            right: 36px;
+            background-color: #fff;
+            border-radius: 50%;
+            color: #ff5b49;
+            font-size: 24px;
+
+            @media (max-width: $screen-md-max) {
+                display: inline-block !important;
+                border: 1px solid #ddd;
+            }
+
+            &:hover {
+                box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+                color: #ff2718;
+            }
+
+            &:active {
+                box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+                color: #ff5b49;
+            }
+        }
+
+        &__newMessagesIcon {
+            display: none !important;
+            position: absolute;
+            right: 10px;
+            bottom: 5px;
+            font-size: 20px !important;
+            color: #ff5b49;
+        }
+
+        &:first-child {
+            .PrivateChatManager__item__right {
+                border-top: 0;
+            }
+        }
+
+        .PrivateChatManager__item__right {
+            border-top: 1px solid #eee;
+        }
+
+        &:hover {
+            background-color: #efefef;
+
+            .PrivateChatManager__item__deleteIcon {
+                display: inline-block !important;
+            }
+        }
+
+        display: flex;
+        flex-direction: row;
+
+        cursor: pointer;
+        background-color: #fff;
+
+        &__left {
+            padding: 0 10px;
+            flex: 1;
+            text-align: center;
+            max-width: 65px;
+        }
+
+        &__profilePicture {
+            @include roundImage;
+
+            position: absolute;
+            left: 2px;
+            top: 7px;
+            width: 40px;
+            height: 40px;
+
+            &__secondWrapper {
+                position: relative;
+                width: fit-content;
+                margin: 0 auto;
+
+                &__onlineCircle {
+                    position: absolute;
+                    background-color: #33e23c;
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+                    right: 1px;
+                    bottom: 6px;
+                }
+            }
+
+            &__wrapper {
+                position: relative;
+                width: 45px;
+                height: 45px;
+            }
+        }
+
+        &__right {
+            max-width: 280px;
+            display: flex;
+            flex-direction: column;
+            flex: 5;
+
+            margin-right: 15px;
+            padding: 5px 0;
+
+            &__topPart {
+                display: flex;
+                align-items: flex-end;
+                flex: 1;
+            }
+        }
+
+        &__userName {
+            position: relative;
+            display: inline-block;
+            width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        &__date {
+            display: inline-block;
+            width: 160px;
+            text-align: right;
+            font-size: 12px;
+            line-height: 24px;
+
+            @media (max-width: $screen-sm-max) {
+                padding-right: 28px;
+            }
+        }
+
+        &__lastMessage {
+            flex: 1;
+            color: darken($secondaryColor, 10%);
+            font-size: 1.4rem;
+            line-height: 19px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-right: 30px;
+            max-width: 190px;
+            position: relative;
+
+            .attachmentIcon {
+                position: absolute;
+                right: 0;
+                top: -2px;
+                font-size: 21px;
+                color: #777;
+            }
+        }
+    }
+
+    &.maximized {
+        .PrivateChatManager__body {
+            display: block;
+        }
+    }
+
+    &__body {
+        display: none;
+        max-height: 600px;
+        overflow-y: scroll;
+    }
+}
+
+.scrollbar {
+    background-color: #F5F5F5;
+    float: left;
+    height: 300px;
+    margin-bottom: 25px;
+    margin-left: 22px;
+    margin-top: 40px;
+    width: 65px;
+    overflow-y: scroll;
+}
+
+@media (max-width: $screen-xs-max) {
+    .PrivateChatManager {
+        width: auto;
+
+        &.minimized {
+            .PrivateChatManager {
+                &__toggle {
+                    top: 0;
+                    left: 0;
+                    padding: 15px;
+                }
+            }
+
+            .PrivateChatManager {
+                &__head {
+                    &__title {
+                        display: none;
+                        padding-left: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $screen-md-max) {
+    .PrivateChatManager {
+        &.maximized {
+            width: auto;
+        }
+
+        //&.minimized {
+        //    .PrivateChatManager {
+        //        &__toggle {
+        //            top: 0;
+        //            left: 0;
+        //            padding: 15px;
+        //        }
+        //    }
+        //
+        //    .PrivateChatManager {
+        //        &__head {
+        //            &__title {
+        //                display: none;
+        //                padding-left: 0;
+        //            }
+        //        }
+        //    }
+        //}
+
+        &__item {
+            &__deleteIcon {
+                font-size: 21px !important;
+            }
+        }
+
+        &.maximized {
+            top: 40%;
+            left: 0;
+            right: 0;
+
+            .PrivateChatManager {
+                &__head {
+                    height: map_get($privateChatManager, 'headHeightMobileMaximized') + px;
+                }
+
+                &__body {
+                    max-height: initial;
+                    background-color: #fff;
+                    height: -webkit-calc(100% - #{map_get($privateChatManager, 'headHeightMobileMaximized') + px});
+                    height: -moz-calc(100% - #{map_get($privateChatManager, 'headHeightMobileMaximized') + px});
+                    height: calc(100% - #{map_get($privateChatManager, 'headHeightMobileMaximized') + px});
+                }
+            }
+        }
+
+        //&__toggle {
+        //    top: 13px;
+        //    left: 12px;
+        //}
+
+        &.maximized {
+            .PrivateChatManager__toggle {
+                text-align: right;
+                padding-right: 10px;
+                padding-top: 2px;
+                top: 0;
+                left: 0;
+
+                &__icon--minimize.material-icons {
+                    display: inline-block;
+                }
+
+                &__icon--message.material-icons {
+                    display: none;
+                }
+
+                .PrivateChatManager__head__newMessages.mobile {
+                    display: none;
+                }
+            }
+        }
+
+        &__item {
+            &__right {
+                max-width: initial;
+                flex: 10;
+                margin-right: 0;
+                padding-right: 93px;
+
+                @media (max-width: $screen-md-max) {
+                    padding-right: 10px;
+                }
+            }
+
+            &__date {
+                width: 100%;
+            }
+        }
+    }
+}
+
+@media (min-width: $screen-sm-min) {
+    .PrivateChatManager {
+        &__head {
+            &__title {
+                &--desktop {
+                    display: inline-block;
+                }
+            }
+        }
+
+        &__toggle {
+            &__icon--minimize.material-icons {
+                display: inline-block;
+            }
+
+            &__icon--message.material-icons {
+                display: none;
+            }
+
+            .PrivateChatManager__head__newMessages.mobile {
+                display: none;
+            }
+        }
+    }
+}

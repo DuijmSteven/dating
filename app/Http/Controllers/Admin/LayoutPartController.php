@@ -24,7 +24,7 @@ class LayoutPartController extends Controller
         return view(
             'admin.layout-parts.overview',
             [
-                'title' => 'Layout Parts Overview - ' . \config('app.name'),
+                'title' => 'Layout Parts Overview - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Layout Parts',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
@@ -64,7 +64,7 @@ class LayoutPartController extends Controller
         return view(
             'admin.layout-parts.create',
             [
-                'title' => 'Create layout Part - ' . \config('app.name'),
+                'title' => 'Create layout Part - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Layout Part',
                 'headingSmall' => 'Create'
             ]
@@ -80,7 +80,7 @@ class LayoutPartController extends Controller
         return view(
             'admin.layout-parts.edit',
             [
-                'title' => 'Edit Layout Part - ' . \config('app.name'),
+                'title' => 'Edit Layout Part - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Modules',
                 'headingSmall' => 'Edit',
                 'module' => LayoutPart::find($moduleId)

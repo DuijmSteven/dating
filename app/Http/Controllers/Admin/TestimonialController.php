@@ -24,7 +24,7 @@ class TestimonialController extends Controller
         return view(
             'admin.testimonials.overview',
             [
-                'title' => 'Testimonials Overview - ' . \config('app.name'),
+                'title' => 'Testimonials Overview - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Testimonials',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
@@ -64,7 +64,7 @@ class TestimonialController extends Controller
         return view(
             'admin.testimonials.create',
             [
-                'title' => 'Create testimonial - ' . \config('app.name'),
+                'title' => 'Create testimonial - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Testimonials',
                 'headingSmall' => 'Create'
             ]
@@ -80,7 +80,7 @@ class TestimonialController extends Controller
         return view(
             'admin.testimonials.edit',
             [
-                'title' => 'Edit testimonial - ' . \config('app.name'),
+                'title' => 'Edit testimonial - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Testimonials',
                 'headingSmall' => 'Edit',
                 'testimonial' => Testimonial::with('users')->find($testimonialId)

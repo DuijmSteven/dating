@@ -2,6 +2,7 @@
 
 return [
     'select_package' => 'Select a package',
+    'select_package_backup' => 'Choose',
     'credits' => 'credits',
     'per_message' => 'per message',
     'select' => 'Select payment method',
@@ -10,10 +11,16 @@ return [
     'age' => 'Age',
     'package' => 'Package',
     'they_are_waiting' => 'They are waiting...',
+    'they_are_waiting_backup' => 'They are waiting...',
     'more_info' => 'More info',
     'to_checkout' => 'Continue to checkout',
+    'to_checkout_backup' => 'Continue to checkout',
     'cart' => 'Cart',
+    'cart_backup' => 'Cart',
     'total' => 'Total',
+    'total_backup' => 'Total',
     'most_popular' => 'Most popular!',
+    'most_popular_backup' => 'Most popular!',
     'best_value' => 'Best value!',
+    'best_value_backup' => 'Best deal!',
 ];

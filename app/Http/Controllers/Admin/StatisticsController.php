@@ -123,7 +123,7 @@ class StatisticsController extends Controller
         return view('admin.statistics.most-useful', array_merge(
             $viewData,
             [
-                'title' => 'Dashboard - ' . \config('app.name'),
+                'title' => 'Dashboard - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Dashboard',
                 'headingSmall' => '',
                 'salesTax' => self::SALES_TAX,
@@ -398,7 +398,7 @@ class StatisticsController extends Controller
         return view('admin.statistics.general', array_merge(
             $viewData,
             [
-                'title' => 'Statistics - ' . \config('app.name'),
+                'title' => 'Statistics - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Statistics',
                 'headingSmall' => '',
                 'salesTax' => self::SALES_TAX,
@@ -700,7 +700,7 @@ class StatisticsController extends Controller
         return view('admin.statistics.google-ads', array_merge(
             $viewData,
             [
-                'title' => 'Statistics - ' . \config('app.name'),
+                'title' => 'Statistics - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Statistics',
                 'headingSmall' => 'Google Ads',
                 'salesTax' => self::SALES_TAX,
@@ -740,7 +740,7 @@ class StatisticsController extends Controller
         return view(
             'admin.statistics.google-ads-keywords',
             [
-                'title' => 'Statistics - ' . \config('app.name'),
+                'title' => 'Statistics - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Statistics',
                 'headingSmall' => 'Google Ads Keywords',
                 'leadsPerKeyword' => $leadsPerKeyword,

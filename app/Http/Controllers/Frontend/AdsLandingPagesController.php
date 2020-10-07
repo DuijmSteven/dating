@@ -26,14 +26,14 @@ class AdsLandingPagesController extends FrontendController
 
     public function showLP(Request $request, $id)
     {
-        if(view()->exists('frontend.landing-pages.ads.' . $id)) {
+        if(view()->exists('frontend.landing-pages.ads.' . str_replace('.', '-', config('app.name')) . '.' . $id)) {
 
             $viewData = [];
 
             $viewData = $this->registrationService->checkAffiliateRequestDataAndSetRegistrationViewData($request, $viewData);
 
             return view(
-                'frontend.landing-pages.ads.' . $id,
+                'frontend.landing-pages.ads.' . str_replace('.', '-', config('app.name')) . '.' . $id,
                 $viewData
             );
         } else {

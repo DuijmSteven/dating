@@ -53,7 +53,7 @@
         )
             <div class="col-xs-12 text-center Footer__logo-container">
                 <div class="Footer__logo">
-                    <img src="{!! asset('img/site_logos/Altijdsex_LogoBig_Neg.svg') !!}" alt="{{ config('app.name') }}">
+                    <img src="{!! asset('img/site_logos/' . config('app.directory_name') . '/Altijdsex_LogoBig_Neg.svg') !!}" alt="{{ ucfirst(\config('app.name')) }}">
                 </div>
                 <div class="col-md-12 copyright">
                     <h5>{{ @trans('footer.copyright', ['currentYear' => $carbonNow->year]) }}</h5>

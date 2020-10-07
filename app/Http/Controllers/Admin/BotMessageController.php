@@ -28,7 +28,7 @@ class BotMessageController extends Controller
         return view(
             'admin.bot-messages.overview',
             [
-                'title' => 'Bot Messages Overview - ' . \config('app.name'),
+                'title' => 'Bot Messages Overview - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Bot Messages',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
@@ -52,7 +52,7 @@ class BotMessageController extends Controller
         return view(
             'admin.bot-messages.overview',
             [
-                'title' => 'Bot Messages of bot ID: ' . $botId . ' - ' . \config('app.name'),
+                'title' => 'Bot Messages of bot ID: ' . $botId . ' - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Bot Messages of ' . $bot->getUsername() . '(ID: ' . $bot->getId() . ')',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
@@ -102,7 +102,7 @@ class BotMessageController extends Controller
         return view(
             'admin.bot-messages.create',
             [
-                'title' => 'Create bot message - ' . \config('app.name'),
+                'title' => 'Create bot message - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Bot Messages',
                 'headingSmall' => 'Create',
                 'bots' => $bots
@@ -129,7 +129,7 @@ class BotMessageController extends Controller
         return view(
             'admin.bot-messages.edit',
             [
-                'title' => 'Edit bot message - ' . \config('app.name'),
+                'title' => 'Edit bot message - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Bot Messages',
                 'headingSmall' => 'Edit',
                 'botMessage' => BotMessage::find($botMessageId),

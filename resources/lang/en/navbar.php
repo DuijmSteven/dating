@@ -5,6 +5,7 @@ return [
     'credits' => 'Buy Credits!',
     'logout' => 'Logout',
     'home' => 'Home',
+    'newsfeed' => 'Newsfeed',
     'login' => 'Login',
     'register' => 'Register',
     'language' => 'Language',

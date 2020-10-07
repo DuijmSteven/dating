@@ -21,7 +21,8 @@ class LatestViewedModuleService
             ->orderBy('created_at', 'desc')
             ->groupBy(['viewed_id'])
             ->take($limit)
-            ->get();
+            ->get()
+            ->pluck('viewed');
     }
 
     public static function latestUsersThatHaveViewed(int $userId, int $limit = 20)
@@ -37,6 +38,7 @@ class LatestViewedModuleService
             ->orderBy('created_at', 'desc')
             ->groupBy(['viewer_id'])
             ->take($limit)
-            ->get();
+            ->get()
+            ->pluck('viewer');
     }
 }

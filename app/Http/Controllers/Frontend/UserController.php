@@ -221,7 +221,7 @@ class UserController extends FrontendController
         ];
 
         return view(
-            'frontend.users.profile',
+            'frontend.users.sites.' . config('app.directory_name') . '.profile',
             array_merge(
                 $viewData,
                 [

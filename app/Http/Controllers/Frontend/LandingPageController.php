@@ -37,18 +37,18 @@ class LandingPageController extends FrontendController
         $testimonials = $this->getTestimonials();
 
         $viewData = [
-            'title' => 'De beste datingsite voor sex dating | ' . config('app.name'),
+            'title' => 'De beste datingsite voor sex dating | ' . ucfirst(\config('app.name')),
             'users' => $users,
             'carbonNow' => Carbon::now(),
             'testimonials' => $testimonials,
             'formType' => 'register',
-            'canonical' => 'https://altijdsex.nl/'
+            'canonical' => 'https://' . config('app.name') . '/'
         ];
 
         $viewData = $this->registrationService->checkAffiliateRequestDataAndSetRegistrationViewData($request, $viewData);
 
         return view(
-            'frontend.landing-pages.1',
+            'frontend.landing-pages.' . str_replace('.', '-', config('app.name')) . '.1',
             $viewData
         );
     }
@@ -61,14 +61,14 @@ class LandingPageController extends FrontendController
         $testimonials = $this->getTestimonials();
 
         return view(
-            'frontend.landing-pages.1',
+            'frontend.landing-pages.' . str_replace('.', '-', config('app.name')) . '.1',
             [
-                'title' => 'De beste datingsite voor sex dating | ' . config('app.name'),
+                'title' => 'De beste datingsite voor sex dating | ' . ucfirst(\config('app.name')),
                 'users' => $users,
                 'carbonNow' => Carbon::now(),
                 'testimonials' => $testimonials,
                 'formType' => 'login',
-                'canonical' => 'https://altijdsex.nl/'
+                'canonical' => 'https://' . config('app.name') . '/'
             ]
         );
     }

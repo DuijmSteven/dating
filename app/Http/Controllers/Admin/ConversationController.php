@@ -85,7 +85,7 @@ class ConversationController extends Controller
         return view(
             'admin.conversations.overview',
             [
-                'title' => 'Conversations Overview - ' . \config('app.name'),
+                'title' => 'Conversations Overview - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Conversations',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now('Europe/Amsterdam'),
@@ -123,7 +123,7 @@ class ConversationController extends Controller
         return view(
             'admin.conversations.overview',
             [
-                'title' => 'Conversations of peasant ID: ' . $peasant->getId() . ' - ' . \config('app.name'),
+                'title' => 'Conversations of peasant ID: ' . $peasant->getId() . ' - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Conversations of peasant',
                 'headingSmall' => $peasant->getUsername() . ' - (ID: ' . $peasant->getId() . ')',
                 'carbonNow' => Carbon::now('Europe/Amsterdam'),
@@ -156,7 +156,7 @@ class ConversationController extends Controller
         return view(
             'admin.conversations.overview',
             [
-                'title' => 'Conversations of bot ID: ' . $bot->getId() . ' - ' . \config('app.name'),
+                'title' => 'Conversations of bot ID: ' . $bot->getId() . ' - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Conversations of bot',
                 'headingSmall' => $bot->getUsername() . ' - (ID: ' . $bot->getId() . ')',
                 'carbonNow' => Carbon::now('Europe/Amsterdam'),
@@ -197,7 +197,7 @@ class ConversationController extends Controller
         return view(
             'admin.conversations.overview',
             [
-                'title' => 'Conversations with operator ID: ' . $operator->getId() . ' - ' . \config('app.name'),
+                'title' => 'Conversations with operator ID: ' . $operator->getId() . ' - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Conversations with operator',
                 'headingSmall' => $operator->getUsername() . ' - (ID: ' . $operator->getId() . ')',
                 'carbonNow' => Carbon::now('Europe/Amsterdam'),
@@ -364,7 +364,7 @@ class ConversationController extends Controller
         [$userANotes, $userBNotes] = $this->getParticipantNotes($conversation);
 
         $viewData = [
-            'title' => 'Conversation (id: ' . $conversationId . ') - ' . \config('app.name'),
+            'title' => 'Conversation (id: ' . $conversationId . ') - ' . ucfirst(\config('app.name')),
             'headingLarge' => 'Conversation (ID: ' . $conversationId . ')',
             'headingSmall' => $conversation->userA->username .
                 ' (id: ' . $conversation->userA->id . ') - ' .
@@ -433,7 +433,7 @@ class ConversationController extends Controller
         return view(
             'admin.conversations.show',
             [
-                'title' => 'New conversation - ' . \config('app.name'),
+                'title' => 'New conversation - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'New conversation',
                 'headingSmall' => $conversation->userA->username .
                     ' (id: ' . $conversation->userA->id . ') - ' .

@@ -4,3 +4,10 @@
     border-radius: 50%;
     object-fit: cover;
 }
+
+@mixin roundedImage {
+    width: 11rem;
+    height: 11rem;
+    border-radius: 6px;
+    object-fit: cover;
+}

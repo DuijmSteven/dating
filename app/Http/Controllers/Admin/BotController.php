@@ -105,7 +105,7 @@ class BotController extends Controller
 
         return view('admin.bots.map',
             [
-                'title' => 'Bots on Map - ' . \config('app.name'),
+                'title' => 'Bots on Map - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Bots',
                 'headingSmall' => 'On Map',
                 'bots' => $bots
@@ -135,7 +135,7 @@ class BotController extends Controller
         return view(
             'admin.bots.message-with-bot',
             [
-                'title' => 'Message Peasant With Bot- ' . \config('app.name'),
+                'title' => 'Message Peasant With Bot- ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Bots',
                 'headingSmall' => 'Message peasant with bot',
                 'carbonNow' => Carbon::now(),
@@ -170,7 +170,7 @@ class BotController extends Controller
         return view(
             'admin.bots.overview',
             [
-                'title' => 'Online bots - ' . \config('app.name'),
+                'title' => 'Online bots - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Bots',
                 'headingSmall' => 'Online',
                 'carbonNow' => Carbon::now(),
@@ -188,7 +188,7 @@ class BotController extends Controller
         return view(
             'admin.bots.create',
             [
-                'title' => 'Create Bot - ' . \config('app.name'),
+                'title' => 'Create Bot - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Bot',
                 'headingSmall' => 'Create',
                 'carbonNow' => Carbon::now(),
@@ -284,7 +284,7 @@ class BotController extends Controller
         return view(
             'admin.bots.edit',
             [
-                'title' => 'Edit Bot - '. $bot['username'] . '(ID: '. $bot['id'] .') - ' . \config('app.name'),
+                'title' => 'Edit Bot - '. $bot['username'] . '(ID: '. $bot['id'] .') - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Bot',
                 'headingSmall' => 'Edit',
                 'carbonNow' => Carbon::now(),

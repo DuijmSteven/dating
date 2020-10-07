@@ -24,7 +24,7 @@ class ViewController extends Controller
         return view(
             'admin.views.overview',
             [
-                'title' => 'Views Overview - ' . \config('app.name'),
+                'title' => 'Views Overview - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Views',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
@@ -41,7 +41,7 @@ class ViewController extends Controller
         return view(
             'admin.views.create',
             [
-                'title' => 'Create view - ' . \config('app.name'),
+                'title' => 'Create view - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Views',
                 'headingSmall' => 'Create'
             ]
@@ -137,7 +137,7 @@ class ViewController extends Controller
             return view(
                 'admin.views.update',
                 [
-                    'title' => 'Create view - ' . \config('app.name'),
+                    'title' => 'Create view - ' . ucfirst(\config('app.name')),
                     'headingLarge' => 'Views',
                     'headingSmall' => 'Edit',
                     'view' => $view,

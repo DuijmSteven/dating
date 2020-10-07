@@ -88,8 +88,8 @@ class DashboardController extends FrontendController
             $users = $this->homeUsers(150, 150);
         }
 
-        return view('frontend.home', [
-            'title' => config('app.name') . ' - Dashboard',
+        return view('frontend.sites.' . config('app.directory_name') . '.home', [
+            'title' => ucfirst(\config('app.name')) . ' - Dashboard',
             'users' => $users,
             'carbonNow' => Carbon::now(),
         ]);

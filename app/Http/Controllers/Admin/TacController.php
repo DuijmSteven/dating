@@ -29,7 +29,7 @@ class TacController extends Controller
         return view(
             'admin.tacs.overview',
             [
-                'title' => 'Tac Overview - ' . \config('app.name'),
+                'title' => 'Tac Overview - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Tac',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
@@ -70,7 +70,7 @@ class TacController extends Controller
         return view(
             'admin.tacs.edit',
             [
-                'title' => 'Edit tac - ' . \config('app.name'),
+                'title' => 'Edit tac - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Tacs',
                 'headingSmall' => 'Edit',
                 'tac' => Tac::find($tacId)
@@ -134,7 +134,7 @@ class TacController extends Controller
         return view(
             'admin.tacs.create',
             [
-                'title' => 'Create tac - ' . \config('app.name'),
+                'title' => 'Create tac - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Tacs',
                 'headingSmall' => 'Create'
             ]

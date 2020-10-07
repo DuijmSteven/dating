@@ -25,6 +25,10 @@
         }
     }
 
+    &.firstTile {
+        border-radius: 0 0 $borderRadius + px $borderRadius + px;
+    }
+
     &__toggle {
         position: absolute;
         right: 13px;

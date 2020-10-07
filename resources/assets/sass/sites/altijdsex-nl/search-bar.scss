@@ -1,0 +1,227 @@
+.SearchBar {
+    //position: absolute;
+    background-color: $navbarBgColor;
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
+    border-top: 0;
+    border-radius: 0 0 5px 5px;
+    padding: 10px;
+
+    background: linear-gradient(90deg, $navbarBgColor 13%, $navbarBgColor 100%);
+
+    width: 100%;
+    left: 0;
+
+    position: fixed;
+    top: $navbarHeight + px;
+
+    @media (max-width: $screen-sm-max) {
+        top: $navbarHeightSmallScreens + px;
+    }
+
+    z-index: 400;
+
+    form {
+        margin: 0;
+    }
+
+    &.with-errors {
+        @media (min-width: $screen-md-min) {
+            padding-bottom: 30px;
+        }
+
+        @media (max-width: $screen-sm-max) {
+            .form-group.has-error.shorterInMobile {
+                height: 65px;
+            }
+        }
+    }
+
+    .has-error .form-control {
+        color: lighten($secondaryColor, 15%);
+    }
+
+    .help-block {
+        position: absolute;
+        color: lighten($secondaryColor, 15%);
+    }
+
+    @media (min-width: $screen-sm-min) {
+        width: 500px;
+        left: 50%;
+        margin-left:  -250px;
+    }
+
+    @media (min-width: $screen-md-min) {
+        width: 900px;
+        left: 50%;
+        margin-left:  -450px;
+    }
+
+    @media (max-width: $screen-sm-max) {
+        .profileImageLabelContainer {
+            display: inline-block;
+            left: 5px;
+            position: relative;
+        }
+    }
+
+    .form-group {
+        margin-bottom: 0;
+
+        .form-control {
+            @media (max-width: $screen-sm-max) {
+                display: inline-block;
+                width: 67%;
+            }
+        }
+
+        label {
+            color: $navbarLinkColor;
+
+            display: inline-block;
+
+            @media (max-width: $screen-sm-max) {
+                font-size: 1.5rem;
+
+                &:not(.SearchBar__profileImageLabel) {
+                    width: 30%;
+                }
+            }
+        }
+
+        width: 100%;
+
+        @media (max-width: $screen-sm-max) {
+            margin-bottom: 10px;
+
+            &.has-error {
+                padding-bottom: 30px;
+            }
+
+            &.shorterInMobile {
+                height: 32px;
+            }
+        }
+
+
+        &.withProfileImage {
+            @media (max-width: $screen-sm-max) {
+                display: flex;
+                align-items: center;
+
+                label {
+                    line-height: 15px;
+                }
+            }
+
+            .btn-primary {
+                background-color: #69595c;
+                border-color: #775e63;
+                color: #ccc;
+                font-weight: 500;
+                outline: 0;
+                height: 36px;
+                display: flex;
+                align-items: center;
+
+                &:focus {
+                    outline: 0;
+                }
+
+                &:hover {
+                    outline: 0;
+                    background-color: lighten($secondaryColor, 6%);
+                    border-color: #a98a90;
+                    color: #fff;
+                }
+
+                &.active {
+                    color: #fff;
+                    outline: 0;
+                    background-color: lighten($secondaryColor, 4%);
+                    border-color: #a98a90;
+                }
+            }
+        }
+
+        @media (min-width: $screen-md-min) {
+            padding-right: 20px;
+
+            &.city {
+                width: 25%;
+            }
+
+            &.radius,
+            &.age,
+            &.bodyType {
+                width: 15%;
+            }
+
+            &.height {
+                width: 20%;
+            }
+
+            &.withProfileImage {
+                width: 25%;
+            }
+
+            &.submit {
+                width: 70px;
+                position: absolute;
+                right: 10px;
+                bottom: 9px;
+                padding-right: 0;
+
+                button {
+                    width: 70px;
+                    height: 36px;
+                    text-align: center;
+                    padding: 0;
+                }
+
+                .material-icons {
+                    position: relative;
+                    font-size: 20px;
+                    color: #fff;
+                }
+            }
+        }
+
+
+        &.submit {
+            button {
+                text-align: center;
+                background-color: lighten($secondaryColor, 10%);
+
+                &:hover {
+                    background-color: lighten($secondaryColor, 5%);
+                }
+
+                @media (max-width: $screen-sm-max) {
+                    padding: 5px 20px;
+                }
+            }
+
+            @media (max-width: $screen-sm-max) {
+                margin-bottom: 0;
+            }
+
+            .material-icons {
+                position: relative;
+                font-size: 20px;
+                color: #fff;
+            }
+        }
+    }
+
+    form {
+        display: flex;
+
+        flex-direction: column;
+
+        @media (min-width: $screen-md-min) {
+            flex-direction: row;
+            align-items: center;
+        }
+    }
+}

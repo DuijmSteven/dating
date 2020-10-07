@@ -150,7 +150,7 @@ class EditorController extends Controller
         return view(
             'admin.editors.overview',
             [
-                'title' => 'Online editors - ' . \config('app.name'),
+                'title' => 'Online editors - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Editors',
                 'headingSmall' => 'Online',
                 'carbonNow' => Carbon::now(),
@@ -176,7 +176,7 @@ class EditorController extends Controller
         return view(
             'admin.editors.edit',
             [
-                'title' => 'Edit Editor - '. $editor['username'] . '(ID: '. $editor['id'] .') - ' . \config('app.name'),
+                'title' => 'Edit Editor - '. $editor['username'] . '(ID: '. $editor['id'] .') - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Editor ' . $editor['username'] . '(ID: '. $editor['id'] .')',
                 'headingSmall' => 'Edit',
                 'carbonNow' => Carbon::now(),

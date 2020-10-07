@@ -20,9 +20,9 @@
 @import "~jquery-ui/themes/base/datepicker";
 @import "~jquery-ui/themes/base/autocomplete";
 
-@import "scaffolding";
-@import "navbar";
-@import "search-bar";
+@import "sites/altijdsex-nl/scaffolding";
+@import "sites/altijdsex-nl/navbar";
+@import "sites/altijdsex-nl/search-bar";
 @import "forms";
 @import "pagination";
 @import "footer";
@@ -32,29 +32,27 @@
 @import "components/button";
 @import "components/activity";
 @import "components/alert";
-@import "components/user-summary";
-@import "components/user-profile";
-@import "components/private-chat-manager";
-@import "components/private-chat-item";
+@import "components/sites/altijdsex-nl/user-summary";
+@import "components/sites/altijdsex-nl/user-profile";
+@import "components/sites/altijdsex-nl/private-chat-manager";
+@import "components/sites/altijdsex-nl/private-chat-item";
 @import "components/image-modal";
 @import "components/spinner";
 @import "components/confirm-dialog";
 @import "components/scroll-top-button";
 @import "components/low-profile-completion";
-@import "components/public-chat";
+@import "components/sites/altijdsex-nl/public-chat";
 @import "components/discount-header";
 
 // Modules
-@import "modules/online-users";
 @import "modules/user-account";
-@import "modules/latest-viewed-profiles";
-@import "modules/latest-viewed-by-profiles";
+@import "modules/sites/altijdsex-nl/module-profiles";
 
 // Views
 @import "views/articles";
 @import "views/faq";
 @import "views/edit-profile";
-@import "views/credits";
+@import "views/sites/altijdsex-nl/credits";
 @import "views/contact";
 @import "views/welcome-modal";
 
@@ -153,7 +151,7 @@ img.very-blurred {
 }
 
 .searchResultsHeaderCity {
-  color: #ff8677;
+  color: lighten($secondaryColor, 10%);
 }
 
 @media screen and (max-width: $screen-xs-max) {

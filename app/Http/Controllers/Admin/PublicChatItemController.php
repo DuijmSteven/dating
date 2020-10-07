@@ -49,7 +49,7 @@ class PublicChatItemController extends Controller
         return view(
             'admin.public-chat-items.overview',
             [
-                'title' => 'Public chat items Overview - ' . \config('app.name'),
+                'title' => 'Public chat items Overview - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Public chat items',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now('Europe/Amsterdam'),
@@ -79,7 +79,7 @@ class PublicChatItemController extends Controller
         return view(
             'admin.public-chat-items.overview',
             [
-                'title' => 'Public chat items of peasant ID: ' . $peasant->getId() . ' - ' . \config('app.name'),
+                'title' => 'Public chat items of peasant ID: ' . $peasant->getId() . ' - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Public chat items of peasant',
                 'headingSmall' => $peasant->getUsername() . ' - (ID: ' . $peasant->getId() . ')',
                 'carbonNow' => Carbon::now('Europe/Amsterdam'),
@@ -105,7 +105,7 @@ class PublicChatItemController extends Controller
         return view(
             'admin.public-chat-items.overview',
             [
-                'title' => 'Public chat items of bot ID: ' . $bot->getId() . ' - ' . \config('app.name'),
+                'title' => 'Public chat items of bot ID: ' . $bot->getId() . ' - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Public chat items of bot',
                 'headingSmall' => $bot->getUsername() . ' - (ID: ' . $bot->getId() . ')',
                 'carbonNow' => Carbon::now('Europe/Amsterdam'),
@@ -131,7 +131,7 @@ class PublicChatItemController extends Controller
         return view(
             'admin.public-chat-items.overview',
             [
-                'title' => 'Public chat items of operator ID: ' . $bot->getId() . ' - ' . \config('app.name'),
+                'title' => 'Public chat items of operator ID: ' . $bot->getId() . ' - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Public chat items of operator',
                 'headingSmall' => $bot->getUsername() . ' - (ID: ' . $bot->getId() . ')',
                 'carbonNow' => Carbon::now('Europe/Amsterdam'),

@@ -15,7 +15,7 @@ trait SendsPasswordResetEmails
         return view(
             'auth.passwords.email',
             [
-                'title' => trans('reset_password.reset_password') . ' | ' . config('app.name')
+                'title' => trans('reset_password.reset_password') . ' | ' . ucfirst(\config('app.name'))
             ]
         );
     }

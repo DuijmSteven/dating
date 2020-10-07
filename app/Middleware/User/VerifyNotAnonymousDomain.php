@@ -19,9 +19,9 @@ class VerifyNotAnonymousDomain
     public function handle($request, Closure $next)
     {
         if (
-            config('app.name') === 'Altijdsex.nl' &&
+            ucfirst(\config('app.name')) === 'Altijdsex.nl' &&
             config('app.env') !== 'local' &&
-            !Str::contains(request()->getHttpHost(), 'altijdsex') &&
+            !Str::contains(request()->getHttpHost(), config('app.pure_name')) &&
             (is_null(\Auth::user()) || \Auth::user()->roles()->get()[0]->id !== User::TYPE_ADMIN)
         ) {
             if (config('app.env') === 'production') {

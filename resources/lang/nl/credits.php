@@ -2,6 +2,7 @@
 
 return [
     'select_package' => 'Selecteer pakket',
+    'select_package_backup' => 'Selecteer',
     'credits' => 'credits',
     'per_message' => 'per bericht',
     'select' => 'Selecteer betaalmethode',
@@ -10,10 +11,16 @@ return [
     'age' => 'Leeftijd',
     'package' => 'Pakket',
     'they_are_waiting' => 'Zij zijn aan het wachten...',
+    'they_are_waiting_backup' => 'Zij zijn aan het wachten...',
     'more_info' => 'Meer informatie',
     'to_checkout' => 'Ga door met afrekenen',
+    'to_checkout_backup' => 'Verder met afrekenen',
     'cart' => 'Besteloverzicht',
+    'cart_backup' => 'Overzicht',
     'total' => 'Totaalbedrag',
+    'total_backup' => 'Totaal te betalen',
     'most_popular' => 'Meest Gekozen!',
+    'most_popular_backup' => 'Meest Populair!',
     'best_value' => 'Voordeligste pakket!',
+    'best_value_backup' => 'Voordeligste!',
 ];

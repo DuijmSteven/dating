@@ -69,20 +69,21 @@ class LayoutPartComposer
                                 new OnlineUsersService()
                             )
                         )
-                    )->latestOnline(10, 12);
+                    )
+                    ->latestOnline(10, 12);
 
                     $viewData = [
-                        'onlineUsers' => $onlineUsers
+                        'users' => $onlineUsers
                     ];
                     break;
                 case 'latest-viewed-profiles':
                     $viewData = [
-                        'latestViewed' => LatestViewedModuleService::latestUsersViewed(\Auth::user()->getId(), 6)
+                        'users' => LatestViewedModuleService::latestUsersViewed(\Auth::user()->getId(), 6)
                     ];
                     break;
                 case 'latest-viewed-by-profiles':
                     $viewData = [
-                        'latestViewedBy' => LatestViewedModuleService::latestUsersThatHaveViewed(\Auth::user()->getId(), 6)
+                        'users' => LatestViewedModuleService::latestUsersThatHaveViewed(\Auth::user()->getId(), 6)
                     ];
                     break;
                 default:

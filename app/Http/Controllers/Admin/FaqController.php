@@ -31,7 +31,7 @@ class FaqController extends Controller
         return view(
             'admin.faqs.overview',
             [
-                'title' => 'Faq Overview - ' . \config('app.name'),
+                'title' => 'Faq Overview - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Faq',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
@@ -71,7 +71,7 @@ class FaqController extends Controller
         return view(
             'admin.faqs.create',
             [
-                'title' => 'Create faq - ' . \config('app.name'),
+                'title' => 'Create faq - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Faqs',
                 'headingSmall' => 'Create'
             ]
@@ -87,7 +87,7 @@ class FaqController extends Controller
         return view(
             'admin.faqs.edit',
             [
-                'title' => 'Edit faq - ' . \config('app.name'),
+                'title' => 'Edit faq - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Faqs',
                 'headingSmall' => 'Edit',
                 'faq' => Faq::find($faqId)

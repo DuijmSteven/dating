@@ -6,6 +6,11 @@
 //
 // Style guide: Components.Activity
 .Activity {
+    &__sectionTitle {
+        margin-bottom: 0;
+        border-radius: $borderRadius + px $borderRadius + px 0 0;
+    }
+
     &__heading {
         display: -webkit-flex;
         display: flex;

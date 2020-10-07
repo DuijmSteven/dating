@@ -27,7 +27,7 @@ class CreditsController extends FrontendController
             ->where('id', '!=', $this->authenticatedUser->getId())
             ->inRandomOrder()->take(6)->get();
 
-        return view('frontend.credits',
+        return view('frontend.sites.' . config('app.directory_name') . '.credits',
             [
                 'title' => $this->buildTitleWith(trans('view_titles.credits')),
                 'users' => $users,

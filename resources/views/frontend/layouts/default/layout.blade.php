@@ -13,6 +13,14 @@
     @include('frontend.layouts.default.partials.header')
 
     <div class="container mainContainer">
+        @if(
+            isset($authenticatedUser) &&
+            $authenticatedUser != null &&
+            \Request::route()->getName() !== 'payments.check'
+        )
+            @include('frontend.layouts.default.partials.sites.' . config('app.directory_name') . '.search-bar')
+        @endif
+
         @if($authenticatedUser && $authenticatedUser->getDiscountPercentage())
             <div class="row">
                 <div class="col-xs-12">
@@ -72,9 +80,6 @@
                 :user="{{ $authenticatedUser }}"
             >
             </private-chat-manager>
-
-            @include('frontend.layouts.default.partials.search-bar')
-
         @endif
 
     </div>
@@ -119,10 +124,12 @@
         locale: '{{ app()->getLocale() }}',
         postChatItemRoute: '{{ route('public-chat-items.post') }}',
         csrfToken: '{{ csrf_token() }}',
-        publicChatItemPeasantType: '{{ \App\PublicChatItem::TYPE_PEASANT }}'
+        publicChatItemPeasantType: '{{ \App\PublicChatItem::TYPE_PEASANT }}',
+        appDirectoryName: '{{ config('app.directory_name') }}'
     };
 </script>
-<script src="{{ mix('js/app.js') }}"></script>
+
+<script src="{{ mix('js/' . config('app.directory_name') . '/app.js') }}"></script>
 
 @toastr_js
 @toastr_render

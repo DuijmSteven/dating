@@ -151,7 +151,7 @@ class TestController extends Controller
         return view(
             'emails.layouts.default.layout',
             [
-                'title' => config('app.name'),
+                'title' => ucfirst(\config('app.name')),
             ]
         );
     }

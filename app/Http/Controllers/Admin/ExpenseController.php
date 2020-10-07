@@ -25,7 +25,7 @@ class ExpenseController extends Controller
         return view(
             'admin.expenses.overview',
             [
-                'title' => 'Expenses Overview - ' . \config('app.name'),
+                'title' => 'Expenses Overview - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Expenses',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
@@ -65,7 +65,7 @@ class ExpenseController extends Controller
         return view(
             'admin.expenses.create',
             [
-                'title' => 'Create expense - ' . \config('app.name'),
+                'title' => 'Create expense - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Expenses',
                 'headingSmall' => 'Create'
             ]
@@ -81,7 +81,7 @@ class ExpenseController extends Controller
         return view(
             'admin.expenses.edit',
             [
-                'title' => 'Edit expense - ' . \config('app.name'),
+                'title' => 'Edit expense - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Expenses',
                 'headingSmall' => 'Edit',
                 'expense' => Expense::find($expenseId)

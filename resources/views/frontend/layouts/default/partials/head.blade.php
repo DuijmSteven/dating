@@ -20,11 +20,7 @@
         <meta name="robots" content="noindex, nofollow">
     @endif
 
-    @if(config('app.name') === 'Altijdsex.nl')
-        <link rel="stylesheet" href="{{ mix('css/altijdsex-nl/app.css') }}">
-    @elseif(config('app.name') === 'Whitelabel.nl')
-        <link rel="stylesheet" href="{{ mix('css/whitelabel-nl/app.css') }}">
-    @endif
+    <link rel="stylesheet" href="{{ mix('css/' . config('app.directory_name') . '/app.css') }}">
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">

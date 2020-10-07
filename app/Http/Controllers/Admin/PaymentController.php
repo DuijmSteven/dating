@@ -36,7 +36,7 @@ class PaymentController extends Controller
         return view(
             'admin.payments.overview',
             [
-                'title' => 'Payments Overview - ' . config('app.name'),
+                'title' => 'Payments Overview - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Payments',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
@@ -69,7 +69,7 @@ class PaymentController extends Controller
         return view(
             'admin.payments.overview',
             [
-                'title' => 'Payments Overview - ' . config('app.name'),
+                'title' => 'Payments Overview - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Payments of ' . $peasant->getUsername() . ' (ID: ' . $peasant->getId() . ')',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),

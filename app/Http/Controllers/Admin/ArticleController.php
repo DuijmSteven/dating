@@ -49,7 +49,7 @@ class ArticleController extends Controller
         return view(
             'admin.articles.overview',
             [
-                'title' => 'Articles Overview - ' . \config('app.name'),
+                'title' => 'Articles Overview - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Articles',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
@@ -89,7 +89,7 @@ class ArticleController extends Controller
         return view(
             'admin.articles.create',
             [
-                'title' => 'Create article - ' . \config('app.name'),
+                'title' => 'Create article - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Articles',
                 'headingSmall' => 'Create'
             ]
@@ -105,7 +105,7 @@ class ArticleController extends Controller
         return view(
             'admin.articles.edit',
             [
-                'title' => 'Edit article - ' . \config('app.name'),
+                'title' => 'Edit article - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Articles',
                 'headingSmall' => 'Edit',
                 'article' => Article::find($articleId)

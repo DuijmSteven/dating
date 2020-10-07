@@ -33,7 +33,7 @@ class InvoiceController extends Controller
 //        return view(
 //            'admin.articles.overview',
 //            [
-//                'title' => 'Articles Overview - ' . \config('app.name'),
+//                'title' => 'Articles Overview - ' . ucfirst(\config('app.name')),
 //                'headingLarge' => 'Articles',
 //                'headingSmall' => 'Overview',
 //                'carbonNow' => Carbon::now(),
@@ -59,7 +59,7 @@ class InvoiceController extends Controller
         return view(
             'admin.invoices.create',
             [
-                'title' => 'Create invoice - ' . \config('app.name'),
+                'title' => 'Create invoice - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Invoices',
                 'headingSmall' => 'Create',
                 'employees' => $employees

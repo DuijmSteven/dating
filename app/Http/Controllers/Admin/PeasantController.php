@@ -95,7 +95,7 @@ class PeasantController extends Controller
         return view(
             'admin.peasants.overview',
             [
-                'title' => 'Peasant Overview - ' . \config('app.name'),
+                'title' => 'Peasant Overview - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Peasant',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
@@ -122,7 +122,7 @@ class PeasantController extends Controller
         return view(
             'admin.peasants.overview',
             [
-                'title' => 'Peasants created until date - ' . \config('app.name'),
+                'title' => 'Peasants created until date - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Peasants created until date',
                 'headingSmall' => $date,
                 'carbonNow' => Carbon::now(),
@@ -152,7 +152,7 @@ class PeasantController extends Controller
         return view(
             'admin.peasants.overview',
             [
-                'title' => 'Conversions Overview - ' . \config('app.name'),
+                'title' => 'Conversions Overview - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Conversions',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
@@ -189,7 +189,7 @@ class PeasantController extends Controller
         return view(
             'admin.peasants.fingerprints',
             [
-                'title' => 'Duplicate Fingeprints Overview - ' . \config('app.name'),
+                'title' => 'Duplicate Fingeprints Overview - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Duplicate Fingeprints',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
@@ -227,7 +227,7 @@ class PeasantController extends Controller
         return view(
             'admin.peasants.overview',
             [
-                'title' => 'Peasant Overview - ' . \config('app.name'),
+                'title' => 'Peasant Overview - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Peasant',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
@@ -284,7 +284,7 @@ class PeasantController extends Controller
         return view(
             'admin.peasants.overview',
             [
-                'title' => 'Deactivations - ' . \config('app.name'),
+                'title' => 'Deactivations - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Peasant',
                 'headingSmall' => 'Deactivations',
                 'carbonNow' => Carbon::now(),
@@ -303,7 +303,7 @@ class PeasantController extends Controller
         return view(
             'admin.peasants.overview',
             [
-                'title' => 'Peasant Overview - ' . \config('app.name'),
+                'title' => 'Peasant Overview - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Peasant',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
@@ -334,7 +334,7 @@ class PeasantController extends Controller
 
         return view('admin.peasants.map',
             [
-                'title' => 'Peasants on Map - ' . \config('app.name'),
+                'title' => 'Peasants on Map - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Peasants',
                 'headingSmall' => 'On Map',
                 'peasants' => $peasants
@@ -367,7 +367,7 @@ class PeasantController extends Controller
         return view(
             'admin.peasants.overview',
             [
-                'title' => 'Online peasants - ' . \config('app.name'),
+                'title' => 'Online peasants - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Peasants',
                 'headingSmall' => 'Online',
                 'carbonNow' => Carbon::now(),
@@ -385,7 +385,7 @@ class PeasantController extends Controller
         return view(
             'admin.peasants.create',
             [
-                'title' => 'Create Peasant - ' . \config('app.name'),
+                'title' => 'Create Peasant - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Peasant',
                 'headingSmall' => 'Create',
                 'carbonNow' => Carbon::now(),
@@ -442,7 +442,7 @@ class PeasantController extends Controller
         return view(
             'admin.peasants.edit',
             [
-                'title' => 'Edit Peasant - ' . $peasant['username'] . '(ID: ' . $peasant['id'] . ') - ' . \config('app.name'),
+                'title' => 'Edit Peasant - ' . $peasant['username'] . '(ID: ' . $peasant['id'] . ') - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Peasant',
                 'headingSmall' => 'Edit',
                 'availableEmailTypes' => EmailType::where('editable', 1)->get(),
@@ -506,7 +506,7 @@ class PeasantController extends Controller
         return view(
             'admin.peasants.message-as-bot',
             [
-                'title' => 'Message Peasant as Bot- ' . \config('app.name'),
+                'title' => 'Message Peasant as Bot- ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Peasants',
                 'headingSmall' => 'Message peasant as bot',
                 'carbonNow' => Carbon::now(),

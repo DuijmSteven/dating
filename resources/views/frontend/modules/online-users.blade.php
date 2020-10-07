@@ -1,8 +1,8 @@
-<div class="Tile Online-users JS--Tile Tile--withToggle">
+<div class="Tile Online-users ModuleProfiles JS--Tile Tile--withToggle">
     <div class="Tile__heading Online-users__heading JS--Tile__toggle">
         <span class="onlineCircle blinking"></span>
 
-        <span class="Online-users__headingText">{{ trans('online_users.online_users') }}</span>
+        <span class="Online-users__headingText">{{ trans('online_users.online_users_backup') }}</span>
 
         {{--        @include('frontend.components.tile-toggle')--}}
 
@@ -18,30 +18,7 @@
             </span>
         </div>
     </div>
-    <div class="Tile__body Online-users__body JS--Tile__body">
-        @forelse($onlineUsers as $user)
-            <div class="Online-users__bodyWrapper {{ $loop->index > 7 ? 'hidden-xs' : '' }}">
-                <a href="{!! route('users.show', ['username' => $user->getUsername()]) !!}" class="Online-users__item">
-                    <span class="Online-users__profile-image">
-                        <img src="{!! \StorageHelper::profileImageUrl($user, true) !!}" alt="">
-                    </span>
-
-                    <span class="Online-users__username">
-                        {{ $user->username }}{{ $user->meta->dob ? ', ' : '' }}
-                        {{ $user->meta->dob ? $user->meta->dob->diffInYears(\Carbon\Carbon::now('Europe/Amsterdam')) : '' }}
-                    </span>
-                </a>
-
-                <div class="Online-users__sendMessage"
-                     v-on:click="addChat({!! $authenticatedUser->getId() !!}, {!! $user->getId() !!}, '1', true)"
-                >
-                    <i class="material-icons material-icon Online-users__sendMessage__icon">textsms</i>
-                </div>
-            </div>
-        @empty
-            <p>
-                {{ trans('online_users.no_online_users') }}
-            </p>
-        @endforelse
+    <div class="Tile__body Online-users__body ModuleProfiles__body JS--Tile__body">
+        @include('frontend.modules.partials.sites.' . config('app.directory_name') . '.profiles', ['users' => $users])
     </div>
 </div>

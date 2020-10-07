@@ -297,7 +297,7 @@ class DashboardController extends Controller
         return view('admin.dashboard', array_merge(
             $viewData,
             [
-                'title' => 'Dashboard - ' . \config('app.name'),
+                'title' => 'Dashboard - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Dashboard',
                 'headingSmall' => '',
                 'salesTax' => self::SALES_TAX,

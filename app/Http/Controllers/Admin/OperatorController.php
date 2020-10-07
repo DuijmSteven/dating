@@ -100,7 +100,7 @@ class OperatorController extends Controller
         return view(
             'admin.operators.overview',
             [
-                'title' => 'Online operators - ' . \config('app.name'),
+                'title' => 'Online operators - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Operators',
                 'headingSmall' => 'Online',
                 'carbonNow' => Carbon::now(),
@@ -163,7 +163,7 @@ class OperatorController extends Controller
         return view(
             'admin.operators.edit',
             [
-                'title' => 'Edit Peasant - '. $operator['username'] . '(ID: '. $operator['id'] .') - ' . \config('app.name'),
+                'title' => 'Edit Peasant - '. $operator['username'] . '(ID: '. $operator['id'] .') - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Operator ' . $operator['username'] . '(ID: '. $operator['id'] .')',
                 'headingSmall' => 'Edit',
                 'carbonNow' => Carbon::now(),
@@ -180,7 +180,7 @@ class OperatorController extends Controller
         return view(
             'admin.operators.create',
             [
-                'title' => 'Create Operator - ' . \config('app.name'),
+                'title' => 'Create Operator - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Operator',
                 'headingSmall' => 'Create',
                 'carbonNow' => Carbon::now(),

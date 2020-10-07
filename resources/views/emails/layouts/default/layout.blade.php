@@ -244,7 +244,7 @@
         <!-- Email Header : BEGIN -->
         <tr>
             <td style="padding: 20px 0; text-align: center">
-                <img src="{!! asset('img/site_logos/Altijdsex_LogoSmall_Pos@1x_email.png') !!}" width="200" height="50" alt="Altijdsex.nl logo" border="0" style="height: auto; font-family: sans-serif; font-size: 15px; line-height: 15px; color: #555555;">
+                <img src="{!! asset('img/site_logos/' . config('app.directory_name') . '/Altijdsex_LogoSmall_Pos@1x_email.png') !!}" width="200" height="50" alt="Altijdsex.nl logo" border="0" style="height: auto; font-family: sans-serif; font-size: 15px; line-height: 15px; color: #555555;">
             </td>
         </tr>
         <!-- Email Header : END -->
