@@ -12,17 +12,17 @@
         <a href="{!! route('users.show', ['username' => $user->getUsername()]) !!}" class="ModuleProfiles__item">
             <img class="ModuleProfiles__profile-image" src="{!! \StorageHelper::profileImageUrl($user, true) !!}" alt="">
 
-            <div class="ModuleProfiles__sendMessage"
-                 v-on:click="addChat({!! $authenticatedUser->getId() !!}, {!! $user->getId() !!}, '1', true)"
-            >
-                <i class="material-icons material-icon ModuleProfiles__sendMessage__icon">forward_to_inbox</i>
-                <span class="ModuleProfiles__sendMessage__text">Bericht</span>
-            </div >
-
             @if(in_array($user->getId(), $onlineUserIds))
                 <div class="onlineCircle"></div>
             @endif
         </a>
+
+        <div class="ModuleProfiles__sendMessage"
+             v-on:click="addChat({!! $authenticatedUser->getId() !!}, {!! $user->getId() !!}, '1', true)"
+        >
+            <i class="material-icons material-icon ModuleProfiles__sendMessage__icon">forward_to_inbox</i>
+            <span class="ModuleProfiles__sendMessage__text">Bericht</span>
+        </div >
     </div>
 
 {{--    <div class="ModuleProfiles__bodyWrapper">--}}
