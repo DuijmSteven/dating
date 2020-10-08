@@ -32,7 +32,7 @@ img {
     padding-top: ($navbarHeight + $extraPaddingTopMainContent + 30) + px;
 
     @media (max-width: $screen-sm-max) {
-        padding-top: ($navbarHeightSmallScreens + 30) + px;
+        padding-top: ($navbarHeightSmallScreens + 15) + px;
     }
 }
 
