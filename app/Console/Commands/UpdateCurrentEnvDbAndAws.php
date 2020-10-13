@@ -19,7 +19,7 @@ class UpdateCurrentEnvDbAndAws extends Command
      *ExportDb
      * @var string
      */
-    protected $description = 'Copy AWS production bucket to the staging bucket and import latest production DB export';
+    protected $description = 'Copy AWS production bucket to the current env bucket and import latest production DB export';
 
     /**
      * Create a new command instance.

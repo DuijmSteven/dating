@@ -20,7 +20,7 @@ class DuplicateProductionS3BucketToCurrentEnvironmentBucket extends Command
      *
      * @var string
      */
-    protected $description = 'Copies content of altijdsex production s3 bucket to staging.altijdsex staging s3 bucket';
+    protected $description = 'Copies content of production s3 bucket to current env s3 bucket';
 
     public $timeout = 0;
 
@@ -64,7 +64,7 @@ class DuplicateProductionS3BucketToCurrentEnvironmentBucket extends Command
                 \Log::debug('Starting to copy files from s3://altijdsex to s3://' . $bucketName . '...');
 
                 $copyProductionBucketToCurrentEnvBucket = new Process('/usr/local/bin/aws s3 sync s3://altijdsex s3://' . $bucketName . '');
-                $copyProductionBucketToCurrentEnvBucket->setTimeout(500);
+                $copyProductionBucketToCurrentEnvBucket->setTimeout(1000);
                 $copyProductionBucketToCurrentEnvBucket->run();
 
                 if ($copyProductionBucketToCurrentEnvBucket->isSuccessful()) {
