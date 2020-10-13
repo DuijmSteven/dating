@@ -276,7 +276,7 @@ class DashboardController extends Controller
                     $startOfYear,
                     $endOfToday
                 ),
-                'allTimeConversionRate' => $conversionsAllTimeCount / $allUsersCount * 100
+                'allTimeConversionRate' => $allUsersCount > 0 ? $conversionsAllTimeCount / $allUsersCount * 100 : 0
             ],
             'topMessagerStatistics' => [
                 'today' => $this->statisticsManager->topMessagersBetweenDates($startOfToday, $endOfToday, 50),

@@ -39,6 +39,7 @@ class ExportDb extends Command
      */
     public function handle()
     {
+        $this->info('Starting export of production DB...');
         \Log::debug('Starting export of production DB...');
 
         set_time_limit(0);
@@ -57,7 +58,7 @@ class ExportDb extends Command
 
         // run the cli job
         $process = new Process('mysqldump -u' . config('database.connections.mysql.username') . ' -p' .config('database.connections.mysql.password') . ' ' . config('database.connections.mysql.database') . ' > ' . $tempLocation);
-        $process->setTimeout(500);
+        $process->setTimeout(1000);
         $process->run();
 
         try {
@@ -79,9 +80,12 @@ class ExportDb extends Command
                         $this->info("File: {$file} deleted.");
                     }
                 }
+
+                $this->info('Finished exporting DB...');
             }
             else {
                 \Log::error('Export of production DB failed');
+                $this->error('Export of production DB failed');
 
                 throw new ProcessFailedException($process);
             }
@@ -91,9 +95,8 @@ class ExportDb extends Command
         catch (\Exception $e)
         {
             \Log::error('Export of production DB failed');
+            $this->error('Export of production DB failed');
             \Log::error($e->getMessage());
-
-            $this->info($e->getMessage());
         }
     }
 }

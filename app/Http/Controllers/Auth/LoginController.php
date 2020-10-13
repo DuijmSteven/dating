@@ -3,15 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-
-use App\Managers\AffiliateManager;
 use App\Services\OnlineUsersService;
-use App\Services\UserLocationService;
-use App\User;
-use App\UserFingerprint;
-use App\UserIp;
-use Illuminate\Http\Request;
 use App\Traits\Users\AuthenticatesUsers;
+use App\User;
+use Illuminate\Http\Request;
 
 /**
  * Class LoginController
@@ -62,21 +57,6 @@ class LoginController extends Controller
 
         if ($user->isOperator()) {
             return redirect()->route('operator-platform.dashboard');
-        }
-
-        $fingerprint = $request->get('user_fingerprint');
-
-        if ($fingerprint) {
-            $existingFingerprints = UserFingerprint::all()->pluck('fingerprint')->toArray();
-
-            if (!in_array($fingerprint, $existingFingerprints)) {
-                $userFingerprintInstance = new \App\UserFingerprint();
-                $userFingerprintInstance->setUserId($user->id);
-                $userFingerprintInstance->setFingerprint($fingerprint);
-                $userFingerprintInstance->save();
-            }
-        } else {
-            \Log::debug('No fingerprint on login of user with ID: ' . $user->id);
         }
     }
 
