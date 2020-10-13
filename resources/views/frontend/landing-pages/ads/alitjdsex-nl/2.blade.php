@@ -37,38 +37,7 @@
     <link href="/lps/t1/assets/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="/lps/t1/assets/css/material-bootstrap-wizard.css?v=13" rel="stylesheet"/>
 
-    @if(config('app.env') === 'local')
-        <script src="https://www.google.com/recaptcha/api.js?render=6Lcb0N8UAAAAADUTgOIB9jcrz2xM60BPNjeK3qWL"></script>
-
-    @elseif(ucfirst(\config('app.name')) == 'Altijdsex.nl' && config('app.env') === 'staging')
-        <script src="https://www.google.com/recaptcha/api.js?render=6Ldx0N8UAAAAABj1wlIcdnxtgCxrprg3DPMsDtkj"></script>
-
-        <script>
-            grecaptcha.ready(function() {
-                grecaptcha.execute('6Ldx0N8UAAAAABj1wlIcdnxtgCxrprg3DPMsDtkj', {action: 'homepage'}).then(function(token) {
-                });
-            });
-        </script>
-    @elseif(ucfirst(\config('app.name')) == 'Liefdesdate.nl' && config('app.env') === 'staging')
-        <script src="https://www.google.com/recaptcha/api.js?render=6Le9gtIZAAAAAD0V29NclSJdawf-8A8F5wBAdWot"></script>
-
-        <script>
-            grecaptcha.ready(function() {
-                grecaptcha.execute('6Le9gtIZAAAAAD0V29NclSJdawf-8A8F5wBAdWot', {action: 'homepage'}).then(function(token) {
-                });
-            });
-        </script>
-    @else
-        <script src="https://www.google.com/recaptcha/api.js?render=6LdHptgUAAAAACP5lA0778MuyBsjs6oEnQcWo0T1"></script>
-
-        <script>
-            grecaptcha.ready(function () {
-                grecaptcha.execute('6LdHptgUAAAAACP5lA0778MuyBsjs6oEnQcWo0T1', {action: 'homepage'}).then(function (token) {
-                });
-            });
-        </script>
-    @endif
-
+    @include('frontend.landing-pages.common-google-captcha-part')
 
     <style>
         body {

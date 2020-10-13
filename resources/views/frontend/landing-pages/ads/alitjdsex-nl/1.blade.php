@@ -4,11 +4,12 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <title>Een Date Zoeken en Geil Chatten | Altijdsex.nl</title>
-    <meta name="description" content="Anoniem geil chatten met single vrouwen met interesse in mannen dating, vind een vrouw voor sex chat, sekscontact of zoek date met een seksbuddy.">
+    <meta name="description"
+          content="Anoniem geil chatten met single vrouwen met interesse in mannen dating, vind een vrouw voor sex chat, sekscontact of zoek date met een seksbuddy.">
 
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
     <meta name="viewport" content="width=device-width"/>
-    <link rel="canonical" href="https://altijdsex.nl/lps/1" />
+    <link rel="canonical" href="https://altijdsex.nl/lps/1"/>
 
 @if(App::environment('production'))
     <!-- Google Tag Manager -->
@@ -31,7 +32,9 @@
 <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=swap"
+        rel="stylesheet">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"/>
 
@@ -39,37 +42,7 @@
     <link href="/lps/t1/assets/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="/lps/t1/assets/css/material-bootstrap-wizard.css?v=12" rel="stylesheet"/>
 
-    @if(config('app.env') === 'local')
-        <script src="https://www.google.com/recaptcha/api.js?render=6Lcb0N8UAAAAADUTgOIB9jcrz2xM60BPNjeK3qWL"></script>
-
-    @elseif(ucfirst(\config('app.name')) == 'Altijdsex.nl' && config('app.env') === 'staging')
-        <script src="https://www.google.com/recaptcha/api.js?render=6Ldx0N8UAAAAABj1wlIcdnxtgCxrprg3DPMsDtkj"></script>
-
-        <script>
-            grecaptcha.ready(function() {
-                grecaptcha.execute('6Ldx0N8UAAAAABj1wlIcdnxtgCxrprg3DPMsDtkj', {action: 'homepage'}).then(function(token) {
-                });
-            });
-        </script>
-    @elseif(ucfirst(\config('app.name')) == 'Liefdesdate.nl' && config('app.env') === 'staging')
-        <script src="https://www.google.com/recaptcha/api.js?render=6Le9gtIZAAAAAD0V29NclSJdawf-8A8F5wBAdWot"></script>
-
-        <script>
-            grecaptcha.ready(function() {
-                grecaptcha.execute('6Le9gtIZAAAAAD0V29NclSJdawf-8A8F5wBAdWot', {action: 'homepage'}).then(function(token) {
-                });
-            });
-        </script>
-    @else
-        <script src="https://www.google.com/recaptcha/api.js?render=6LdHptgUAAAAACP5lA0778MuyBsjs6oEnQcWo0T1"></script>
-
-        <script>
-            grecaptcha.ready(function () {
-                grecaptcha.execute('6LdHptgUAAAAACP5lA0778MuyBsjs6oEnQcWo0T1', {action: 'homepage'}).then(function (token) {
-                });
-            });
-        </script>
-    @endif
+    @include('frontend.landing-pages.common-google-captcha-part')
 
     <style>
         body {
@@ -136,7 +109,9 @@
     <a href="#">
         <div class="logo-container text-center">
             <div class="logo">
-                <img src="{!! asset('img/site_logos/' . config('app.directory_name') . '/Altijdsex_Logo_Small_Pos.png') !!}" width="200px">
+                <img
+                    src="{!! asset('img/site_logos/' . config('app.directory_name') . '/Altijdsex_Logo_Small_Pos.png') !!}"
+                    width="200px">
             </div>
         </div>
     </a>
@@ -172,7 +147,8 @@
 
                                 @if ($errors->first('fingerprintExists'))
                                     <div class="captchaFailed">
-                                        Het ziet uit als je al een account heb! Als dat niet waar is neem contact op met de helpdesk.
+                                        Het ziet uit als je al een account heb! Als dat niet waar is neem contact op met
+                                        de helpdesk.
                                     </div>
                                 @endif
                             </div>
@@ -279,7 +255,8 @@
                                         </div>
 
                                         <div class="col-xs-12">
-                                            <p class="mt-3" style="font-size: 1.3rem; text-align: justify; margin-bottom: 0; margin-top: 5px">
+                                            <p class="mt-3"
+                                               style="font-size: 1.3rem; text-align: justify; margin-bottom: 0; margin-top: 5px">
                                                 {!! @trans(
                                                         'lp1.form.register_info',
                                                         [
@@ -290,7 +267,8 @@
                                                 !!}
                                             </p>
 
-                                            <div style="margin-top: 10px; text-align: left; white-space: nowrap; overflow: hidden;">
+                                            <div
+                                                style="margin-top: 10px; text-align: left; white-space: nowrap; overflow: hidden;">
                                                 <img src="{{ asset('img/safe.jpg') }}" style="width: 31px">
                                                 <p style="font-size: 1.3rem; display: inline-block">
                                                     Uw persoonlijke data wordt absoluut vertrouwlijk behandeld.
@@ -336,17 +314,31 @@
         <div class="col-sm-12">
             <div class="text-center">
                 <h3>Contact vrouwen</h3>
-                <p style="font-size: 18px; font-weight: 300; text-align: justify;">Online chatten begint op een datingsite, zo ook het contact met vrouwen. Sex chat en online chatten, in het bijzonder anoniem geil chatten, zijn bijzonder goede manieren om je toekomstige bedpartner beter te leren kennen. Het fijne is dat je nog weinig van jezelf bloot hoeft te geven, maar wel kunt uitvinden of iemand bij je past. Sekscontact gaat vaak verder dan gewoon kennismaken, aangezien je toch enige verbinding wilt hebben met degene waar je na de sex chat mee het bed in duikt.</p>
+                <p style="font-size: 18px; font-weight: 300; text-align: justify;">Online chatten begint op een
+                    datingsite, zo ook het contact met vrouwen. Sex chat en online chatten, in het bijzonder anoniem
+                    geil chatten, zijn bijzonder goede manieren om je toekomstige bedpartner beter te leren kennen. Het
+                    fijne is dat je nog weinig van jezelf bloot hoeft te geven, maar wel kunt uitvinden of iemand bij je
+                    past. Sekscontact gaat vaak verder dan gewoon kennismaken, aangezien je toch enige verbinding wilt
+                    hebben met degene waar je na de sex chat mee het bed in duikt.</p>
                 <h3>Vreemdgaan</h3>
-                <p style="font-size: 18px; font-weight: 300; text-align: justify;">Vind een vrouw om vreemd mee te gaan, klinkt makkelijker dan het is. Hoe doe je dat eigenlijk en hoeveel vrouwen zoeken mannen voor dezelfde redenen? Vrouw zoekt man komt net zo vaak voor als man zoekt vrouw óók als het om vreemdgaan gaat. Belangrijk is dat dit geheel discreet gebeurd, vandaar dat de aanmelding geheel anoniem verloopt en er geen persoonlijke gegevens worden vastgelegd. Dit zodat jij in alle rust kan chatten met Nederlanders!</p>
+                <p style="font-size: 18px; font-weight: 300; text-align: justify;">Vind een vrouw om vreemd mee te gaan,
+                    klinkt makkelijker dan het is. Hoe doe je dat eigenlijk en hoeveel vrouwen zoeken mannen voor
+                    dezelfde redenen? Vrouw zoekt man komt net zo vaak voor als man zoekt vrouw óók als het om
+                    vreemdgaan gaat. Belangrijk is dat dit geheel discreet gebeurd, vandaar dat de aanmelding geheel
+                    anoniem verloopt en er geen persoonlijke gegevens worden vastgelegd. Dit zodat jij in alle rust kan
+                    chatten met Nederlanders!</p>
                 <h3>Vrouw vinden</h3>
-                <p style="font-size: 18px; font-weight: 300; text-align: justify; margin-bottom: 30px">Na het gratis registreren kun je eenvoudig op zoek gaan naar sekscontact met vrouwen online. Of je nu een oudere vrouw zoekt, singles of gebonden mensen. Na inschrijving kun je met je gratis credit direct sekscontact leggen en online chatten op deze datingsite voor sekscontacten!</p>
+                <p style="font-size: 18px; font-weight: 300; text-align: justify; margin-bottom: 30px">Na het gratis
+                    registreren kun je eenvoudig op zoek gaan naar sekscontact met vrouwen online. Of je nu een oudere
+                    vrouw zoekt, singles of gebonden mensen. Na inschrijving kun je met je gratis credit direct
+                    sekscontact leggen en online chatten op deze datingsite voor sekscontacten!</p>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-sm-12 text-center" style="margin-bottom: 30px">
-            <a style="color: #337ab7" href="{{ route('tac.show') }}">{{ @trans('footer.tac') }}</a> - <a  style="color: #337ab7" href="{{ route('contact.get') }}">{{ @trans('footer.contact') }}</a>
+            <a style="color: #337ab7" href="{{ route('tac.show') }}">{{ @trans('footer.tac') }}</a> - <a
+                style="color: #337ab7" href="{{ route('contact.get') }}">{{ @trans('footer.contact') }}</a>
         </div>
     </div>
 </div>

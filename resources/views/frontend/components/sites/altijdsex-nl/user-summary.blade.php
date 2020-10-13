@@ -71,7 +71,7 @@
                  v-on:click="addChat({!! $authenticatedUser->getId() !!}, {!! $user->getId() !!}, '1', true)"
             >
                 <span class="UserSummary__sendMessage__text">Bericht</span>
-                <i class="material-icons material-icon UserSummary__sendMessage__icon">forward_to_inbox</i>
+                <i class="material-icons material-icon UserSummary__sendMessage__icon">textsms</i>
             </div >
 
             @if(!isset($showOtherImages))

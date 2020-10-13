@@ -32,28 +32,7 @@
           rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">
 
-    @if(config('app.env') === 'local')
-        <script src="https://www.google.com/recaptcha/api.js?render=6Lcb0N8UAAAAADUTgOIB9jcrz2xM60BPNjeK3qWL"></script>
-
-    @elseif(config('app.env') === 'staging')
-        <script src="https://www.google.com/recaptcha/api.js?render=6Ldx0N8UAAAAABj1wlIcdnxtgCxrprg3DPMsDtkj"></script>
-
-        <script>
-            grecaptcha.ready(function () {
-                grecaptcha.execute('6Ldx0N8UAAAAABj1wlIcdnxtgCxrprg3DPMsDtkj\n', {action: 'homepage'}).then(function (token) {
-                });
-            });
-        </script>
-    @else
-        <script src="https://www.google.com/recaptcha/api.js?render=6LdHptgUAAAAACP5lA0778MuyBsjs6oEnQcWo0T1"></script>
-
-        <script>
-            grecaptcha.ready(function () {
-                grecaptcha.execute('6LdHptgUAAAAACP5lA0778MuyBsjs6oEnQcWo0T1', {action: 'homepage'}).then(function (token) {
-                });
-            });
-        </script>
-    @endif
+    @include('frontend.landing-pages.common-google-captcha-part')
 
     <style>
         body {
