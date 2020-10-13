@@ -50,7 +50,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command(SetProfileViews::class)->everyMinute();
 
-        if (config('app.env') === 'production') {
+        if (config('app.env') === 'production' && config('app.pure_name' === 'altijdsex')) {
             $schedule->command(SendProfileCompletionEmails::class)->dailyAt("19:00");
             $schedule->command(ExportDb::class)->dailyAt("05:30");
             $schedule->command(CheckRecentStartedPayments::class)->everyMinute();
