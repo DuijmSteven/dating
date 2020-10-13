@@ -13,6 +13,7 @@ stages:
   - deploy_staging_altijdsex_nl
   - deploy_staging_liefdesdate_nl
   - deploy_production_altijdsex_nl
+  - deploy_production_liefdesdate_nl
 
 deploy_staging_altijdsex_nl:
   stage: deploy_staging_altijdsex_nl
@@ -60,6 +61,26 @@ deploy_production_altijdsex_nl:
     name: production
   script:
     - ssh opalampo@178.62.249.225 "cd /var/www/dating &&
+      git fetch &&
+      git checkout master &&
+      git pull origin master &&
+      composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader &&
+      php artisan migrate --force &&
+      php artisan config:cache &&
+      php artisan route:cache &&
+      php artisan view:cache &&
+      php artisan optimize &&
+      php artisan queue:restart &&
+      exit"
+  only:
+    - master
+
+deploy_production_liefdesdate_nl:
+  stage: deploy_production_liefdesdate_nl
+  environment:
+    name: production
+  script:
+    - ssh opalampo@188.166.93.182 "cd /var/www/dating &&
       git fetch &&
       git checkout master &&
       git pull origin master &&
