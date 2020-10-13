@@ -28,11 +28,11 @@
                 !$isAnonymousDomain
             )
                 <a class="navbar-brand" href="{!! route('home') !!}">
-                    <img class="logoImage" src="{!! asset('img/site_logos/' . config('app.directory_name') . '/Altijdsex_LogoSmall_Pos@1x.png') !!}"
+                    <img class="logoImage" src="{!! asset('img/site_logos/' . config('app.directory_name') . '/main_logo.png') !!}"
                          alt="Logo"
                     >
 
-                    <img class="logoImageSmall" src="{!! asset('img/site_logos/' . config('app.directory_name') . '/Altijdsex_LogoMark_Padded@1x.png') !!}"
+                    <img class="logoImageSmall" src="{!! asset('img/site_logos/' . config('app.directory_name') . '/mobile_logo.png') !!}"
                          alt="Logo"
                     >
                 </a>

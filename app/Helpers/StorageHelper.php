@@ -104,7 +104,7 @@ class StorageHelper
         }
 
         if (is_null($filename)) {
-            return asset(self::$genderAvatarsDir . $gender . '.png');
+            return asset(self::$genderAvatarsDir . 'sites/' . config('app.directory_name') . '/' . $gender . '.png');
         }
         return self::userImageUrl($userId, $filename);
     }
@@ -192,6 +192,6 @@ class StorageHelper
      */
     private static function getGenderImageUrl(User $user): string
     {
-        return asset(self::$genderAvatarsDir . \UserConstants::selectableField('gender')[$user->meta->gender] . '.jpg');
+        return asset(self::$genderAvatarsDir . 'sites/' . config('app.directory_name') . '/' . \UserConstants::selectableField('gender')[$user->meta->gender] . '.jpg');
     }
 }

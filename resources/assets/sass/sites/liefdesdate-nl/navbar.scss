@@ -160,7 +160,7 @@
                 font-weight: 200;
 
                 &:hover {
-                    color: darken($navbarLinkColor, 15%);
+                    color: $tertiaryColor;
                     cursor: pointer;
                 }
 
@@ -305,8 +305,8 @@
             position: absolute;
             left: 12px;
             top: ($navbarHeight - 33) / 2 + px;
-            width: 33px;
-            height: 33px;
+            width: 31px;
+            height: 32px;
         }
 
         .dropdown-toggle {

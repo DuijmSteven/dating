@@ -2,6 +2,12 @@
     position: relative;
     //overflow: visible;
 
+    &__textareaAndButtonContainer {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
     .labelNew {
         position: absolute;
         background-color: #de6873;
@@ -47,7 +53,9 @@
     }
 
     &__textarea.form-control {
-        height: 42px;
+        overflow: hidden;
+        height: 38px;
+        margin-right: 10px;
     }
 
     &__timeAgo {
@@ -164,9 +172,5 @@
         background-color: $mainColor;
         margin-top: 7px;
         display: inline-block;
-    }
-
-    &__submitButton {
-        margin-top: 10px;
     }
 }
