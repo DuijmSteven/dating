@@ -215,7 +215,6 @@
                                 id="country"
                                 name="country"
                             >
-                                <option value=""></option>
                                 <option value="nl" {{ $bot->meta->country === 'nl' ? 'selected' : '' }}>Netherlands</option>
                                 <option value="be" {{ $bot->meta->country === 'be' ? 'selected' : '' }}>Belgium</option>
                             </select>

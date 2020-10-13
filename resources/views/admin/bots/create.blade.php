@@ -124,7 +124,6 @@
                                 id="country"
                                 name="country"
                             >
-                                <option value=""></option>
                                 <option value="nl" {{ old('country') === 'nl' ? 'selected' : '' }}>Netherlands</option>
                                 <option value="be" {{ old('country') === 'be' ? 'selected' : '' }}>Belgium</option>
                             </select>

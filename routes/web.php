@@ -301,7 +301,7 @@ Route::group([
         Route::get('edit/{operatorId}', 'Admin\OperatorController@edit')
             ->name('admin.operators.edit.get');
 
-        Route::put('edit/{id}', 'Admin\PeasantController@update')
+        Route::put('edit/{userId}', 'Admin\PeasantController@update')
             ->name('admin.operators.update');
 
         Route::get('/online', 'Admin\OperatorController@showOnline')
