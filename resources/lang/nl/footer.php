@@ -11,5 +11,5 @@ return [
     'legal' => 'Voorwaarden',
     'tac' => 'Algemene Voorwaarden',
     'privacy' => 'Privacy- en Cookiebeleid',
-    'copyright' => 'Copyright © :currentYear altijdsex.nl',
+    'copyright' => 'Copyright © :currentYear :siteName',
 ];

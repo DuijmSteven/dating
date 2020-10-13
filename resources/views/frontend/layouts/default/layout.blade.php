@@ -102,7 +102,7 @@
     !isset($isAnonymousDomain) ||
     !$isAnonymousDomain
 )
-    @include('frontend.layouts.default.partials.footer')
+    @include('frontend.layouts.default.partials.sites.' . config('app.directory_name') .  '.footer')
 @endif
 
 <script>
