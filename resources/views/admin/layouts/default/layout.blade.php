@@ -13,7 +13,13 @@
             !($authenticatedUser->isOperator() || $authenticatedUser->isEditor())
         )
             <a href="{!! route('admin.dashboard') !!}" class="logo">
-                <img class="site-logo" src="{!! asset('img/site_logos/' . config('app.directory_name') . '/Altijdsex_LogoSmall_Pos@1x.png') !!}">
+                @if(config('app.pure_name') === 'altijdsex')
+                    <img class="site-logo" src="{!! asset('img/site_logos/' . config('app.directory_name') . '/Altijdsex_LogoSmall_Pos@1x.png') !!}">
+                @elseif(config('app.pure_name') === 'liefdesdate')
+                    <img class="site-logo" src="{!! asset('img/site_logos/' . config('app.directory_name') . '/main_logo.png') !!}">
+                @elseif(config('app.pure_name') === 'operator-platform')
+                    Devely
+                @endif
             </a>
         @endif
 
