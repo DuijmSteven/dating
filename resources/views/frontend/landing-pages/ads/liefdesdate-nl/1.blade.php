@@ -137,7 +137,7 @@
 
                         <div class="text-center my-auto d-none d-md-block pt-2 pb-2">
                             <div class="logo">
-                                <img src="{!! asset('img/site_logos/' . config('app.directory_name') . '/Altijdsex_Logo_Small_Pos.png') !!}">
+                                <img src="{!! asset('img/site_logos/' . config('app.directory_name') . '/main_logo.png') !!}">
                             </div>
                         </div>
 
