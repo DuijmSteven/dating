@@ -24,11 +24,6 @@ class DuplicateProductionS3BucketToCurrentEnvironmentBucket extends Command
 
     public $timeout = 0;
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         parent::__construct();
@@ -41,43 +36,49 @@ class DuplicateProductionS3BucketToCurrentEnvironmentBucket extends Command
      */
     public function handle()
     {
+        if (config('app.env') === 'production') {
+            $this->warn('This command cannot be run in production');
+            \Log::debug('This command (' . $this->signature . ') cannot be run in production');
+        }
+
         ini_set('max_execution_time', 500);
 
-        $bucketName = config('filesystems.disks.cloud.bucket');
+        $localBucket = config('filesystems.disks.cloud.bucket');
+        $productionBucket = config('filesystems.disks.cloud.production_bucket');
 
-        $this->info('Bucket name: ' . $bucketName);
+        $this->info('Bucket name: ' . $localBucket);
 
         try {
-            $this->info('Starting to empty s3://' . $bucketName . '...');
-            \Log::debug('Starting to empty s3://' . $bucketName . '...');
+            $this->info('Starting to empty s3://' . $localBucket . '...');
+            \Log::debug('Starting to empty s3://' . $localBucket . '...');
 
             // run the cli job
-            $emptyCurrentEnvBucket = new Process('/usr/local/bin/aws s3 rm s3://' . $bucketName . ' --recursive');
+            $emptyCurrentEnvBucket = new Process('/usr/local/bin/aws s3 rm s3://' . $localBucket . ' --recursive');
             $emptyCurrentEnvBucket->setTimeout(500);
             $emptyCurrentEnvBucket->run();
 
             if ($emptyCurrentEnvBucket->isSuccessful()) {
-                $this->info('Finished emptying s3://' . $bucketName . '.');
-                \Log::debug('Finished emptying s3://' . $bucketName . '.');
+                $this->info('Finished emptying s3://' . $localBucket . '.');
+                \Log::debug('Finished emptying s3://' . $localBucket . '.');
 
-                $this->info('Starting to copy files from s3://altijdsex to s3://' . $bucketName . '...');
-                \Log::debug('Starting to copy files from s3://altijdsex to s3://' . $bucketName . '...');
+                $this->info('Starting to copy files from s3://' . $productionBucket . ' to s3://' . $localBucket . '...');
+                \Log::debug('Starting to copy files from s3://' . $productionBucket . ' to s3://' . $localBucket . '...');
 
-                $copyProductionBucketToCurrentEnvBucket = new Process('/usr/local/bin/aws s3 sync s3://altijdsex s3://' . $bucketName . '');
+                $copyProductionBucketToCurrentEnvBucket = new Process('/usr/local/bin/aws s3 sync s3://' . $productionBucket . '  s3://' . $localBucket . '');
                 $copyProductionBucketToCurrentEnvBucket->setTimeout(1000);
                 $copyProductionBucketToCurrentEnvBucket->run();
 
                 if ($copyProductionBucketToCurrentEnvBucket->isSuccessful()) {
-                    $this->info('Finished copying files from s3://altijdsex to s3://' . $bucketName . '.');
-                    \Log::debug('Finished copying files from s3://altijdsex to s3://' . $bucketName . '.');
+                    $this->info('Finished copying files from s3://' . $productionBucket . ' to s3://' . $localBucket . '.');
+                    \Log::debug('Finished copying files from s3://' . $productionBucket . ' to s3://' . $localBucket . '.');
                 } else {
-                    $this->info('There was an error copying files from s3://altijdsex to s3://' . $bucketName . '.');
-                    \Log::debug('There was an error copying files from s3://altijdsex to s3://' . $bucketName . '.');
+                    $this->info('There was an error copying files from s3://' . $productionBucket . ' to s3://' . $localBucket . '.');
+                    \Log::debug('There was an error copying files from s3://' . $productionBucket . ' to s3://' . $localBucket . '.');
                 }
             }
             else {
-                $this->info('There was an error copying files from s3://altijdsex to s3://' . $bucketName . '.');
-                \Log::debug('There was an error copying files from s3://altijdsex to s3://' . $bucketName . '.');
+                $this->info('There was an error copying files from s3://' . $productionBucket . ' to s3://' . $localBucket . '.');
+                \Log::debug('There was an error copying files from s3://' . $productionBucket . ' to s3://' . $localBucket . '.');
                 \Log::debug($emptyCurrentEnvBucket->getErrorOutput());
                 \Log::debug($emptyCurrentEnvBucket->getExitCodeText());
                 \Log::debug($emptyCurrentEnvBucket->getOutput());

@@ -60,6 +60,7 @@ return [
             'secret' => env('S3_SECRET'),
             'region' => env('S3_REGION'),
             'bucket' => env('S3_BUCKET'),
+            'production_bucket' => env('S3_BUCKET_PRODUCTION'),
         ],
 
         'cloud_prod' => [
