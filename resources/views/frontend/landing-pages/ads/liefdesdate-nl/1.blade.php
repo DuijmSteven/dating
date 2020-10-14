@@ -100,7 +100,7 @@
             <div class="row mt-1 mb-1 text-center">
                 <div class="col my-auto">
                     <div class="logo">
-                        <img src="{!! asset('img/site_logos/' . config('app.directory_name') . '/Altijdsex_Logo_Small_Pos.png') !!}">
+                        <img src="{!! asset('img/site_logos/' . config('app.directory_name') . '/main_logo.png') !!}">
                     </div>
                 </div>
             </div>
