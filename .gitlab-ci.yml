@@ -14,7 +14,6 @@ stages:
   - deploy_staging_liefdesdate_nl
   - deploy_production_altijdsex_nl
   - deploy_production_liefdesdate_nl
-  - deploy_production_operator_platform
 
 deploy_staging_altijdsex_nl:
   stage: deploy_staging_altijdsex_nl
