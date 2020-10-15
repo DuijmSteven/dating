@@ -32,6 +32,13 @@ Route::group([
         ->name('users.get-user-credits');
 });
 
+Route::group([
+    'prefix' => 'users'
+], function () {
+    Route::get('/{roleId}/{page}', 'Api\UserController@getUsers')
+        ->name('users.get-online-ids');
+});
+
 
 Route::group([
     'prefix' => 'conversation-messages'

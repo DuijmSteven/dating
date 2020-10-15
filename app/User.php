@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Helpers\StorageHelper;
 use App\Managers\ConversationManager;
 use App\Notifications\MailResetPasswordNotification;
 use Carbon\Carbon;
@@ -284,12 +285,12 @@ class User extends Authenticatable
 
     public function getProfileImageUrlAttribute()
     {
-        return \StorageHelper::profileImageUrl($this);
+        return StorageHelper::profileImageUrl($this);
     }
 
     public function getProfileImageUrlThumbAttribute()
     {
-        return \StorageHelper::profileImageUrl($this, true);
+        return StorageHelper::profileImageUrl($this, true);
     }
 
     public function isPayingUser(): bool

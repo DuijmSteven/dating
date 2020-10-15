@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Request;
 use App\Managers\UserManager;
 use App\Milestone;
@@ -10,7 +9,7 @@ use App\MilestoneUser;
 use App\Services\OnlineUsersService;
 use App\User;
 use Illuminate\Http\JsonResponse;
-use Kim\Activity\Activity;
+use Illuminate\Support\Collection;
 
 /**
  * Class UserController
@@ -44,6 +43,34 @@ class UserController
     public function getCurrentUser(Request $request)
     {
         return $request->user();
+    }
+
+    public function getUsers(int $roleId, int $page = 1)
+    {
+        try {
+            /** @var Collection $bots */
+            $queryBuilder = User::with(
+                array_unique(array_merge(
+                    User::COMMON_RELATIONS,
+                    User::BOT_RELATIONS
+                ))
+            )
+            ->withCount(
+                User::BOT_RELATION_COUNTS
+            )
+            ->whereHas('roles', function ($query) {
+                $query->where('id', User::TYPE_BOT);
+            });
+
+            $bots = $queryBuilder
+                ->orderBy('created_at', 'desc')
+                ->paginate(20);
+
+        } catch (\Exception $exception) {
+            return JsonResponse::create($exception->getMessage(), 404);
+        }
+
+        return JsonResponse::create($bots);
     }
 
     /**
