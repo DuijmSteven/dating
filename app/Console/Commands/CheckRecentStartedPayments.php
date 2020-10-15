@@ -70,7 +70,19 @@ class CheckRecentStartedPayments extends Command
             if($check['status']) {
                 \Log::debug('Payment (ID: ' . $payment->getId() . ') of user ' . $payment->peasant->getUsername() . ' (ID: ' . $payment->peasant->getId() . ') was found to have remained on status started and was changed to status completed');
 
-                $creditsBoughtEmail = (new CreditsBought($payment->peasant, $payment->creditpack))
+                $price = (float) $payment->creditpack->price;
+                $peasant = $payment->peasant;
+
+                $peasant->setDiscountPercentage(null);
+                $peasant->save();
+
+                if ($peasant->getDiscountPercentage()) {
+                    $price = (1 - $peasant->getDiscountPercentage() / 100) * $price;
+                }
+
+                $transactionTotal = number_format($price / 100, 2, '.', '');
+
+                $creditsBoughtEmail = (new CreditsBought($payment->peasant, $payment->creditpack, $transactionTotal))
                     ->onQueue('emails');
 
                 Mail::to($payment->peasant)
