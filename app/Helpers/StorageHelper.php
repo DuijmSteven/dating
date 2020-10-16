@@ -44,11 +44,6 @@ class StorageHelper
 
         $filePath = self::userImagesPath($user->id) . $user->profileImage->filename;
 
-        // this is commented out because it was having a huge impart on performace
-//        if (!Storage::disk('cloud')->exists($filePath)) {
-//            return self::getGenderImageUrl($user);
-//        }
-
         if ($thumb) {
             $explodedFilename = explode('.', $filePath);
 

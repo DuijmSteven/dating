@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\Request;
 use App\Managers\UserManager;
 use App\Milestone;
 use App\MilestoneUser;
+use App\Role;
 use App\Services\OnlineUsersService;
 use App\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 
 /**
@@ -45,7 +47,7 @@ class UserController
         return $request->user();
     }
 
-    public function getUsers(int $roleId, int $page = 1)
+    public function getUsers(Request $request, int $roleId, int $page = 1)
     {
         try {
             /** @var Collection $bots */
@@ -58,8 +60,12 @@ class UserController
             ->withCount(
                 User::BOT_RELATION_COUNTS
             )
-            ->whereHas('roles', function ($query) {
-                $query->where('id', User::TYPE_BOT);
+            ->whereHas('roles', function ($query) use ($roleId) {
+                $query->where('id', $roleId);
+            });
+
+            Paginator::currentPageResolver(function () use ($page) {
+                return $page;
             });
 
             $bots = $queryBuilder
@@ -77,10 +83,10 @@ class UserController
      * @param int $userId
      * @return JsonResponse
      */
-    public function getUserById(int $userId)
+    public function getUserById(int $userId, int $roleId = Role::ROLE_BOT)
     {
         try {
-            $user = $this->userManager->getUserById($userId);
+            $user = $this->userManager->getUserById($userId, $roleId);
         } catch (\Exception $exception) {
             return JsonResponse::create($exception->getMessage(), 404);
         }

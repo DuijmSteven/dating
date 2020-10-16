@@ -22,7 +22,7 @@ Route::group([
     Route::get('online/ids', 'Api\UserController@getOnlineUserIds')
         ->name('users.get-online-ids');
 
-    Route::get('{userId}', 'Api\UserController@getUserById')
+    Route::get('{userId}/{roleId}', 'Api\UserController@getUserById')
         ->name('users.get-by-id');
 
     Route::get('{userId}/credits', 'Api\UserController@getUserCredits')
@@ -36,7 +36,8 @@ Route::group([
     'prefix' => 'users'
 ], function () {
     Route::get('/{roleId}/{page}', 'Api\UserController@getUsers')
-        ->name('users.get-online-ids');
+        ->name('users.get-online-ids')
+        ->middleware('auth:api');
 });
 
 

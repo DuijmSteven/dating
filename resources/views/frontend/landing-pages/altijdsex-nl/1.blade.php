@@ -1089,7 +1089,7 @@
                 <div class="col-xs-6 col-lg-2 col-md-4 col-sm-6 mb-4 {{ $loop->index > 5 ? 'hidden-xs' : '' }}">
                     <a href="#" class="scrollToRegistration">
                         <img
-                            src="{{ \StorageHelper::profileImageUrl($user, true) }}"
+                            src="{{ $user->profileImageUrl }}"
                             class="roundImage"
                             alt="profile-image"
                         >

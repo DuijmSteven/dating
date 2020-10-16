@@ -8,6 +8,7 @@ use App\EmailType;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Mail\ProfileCompletion;
 use App\Mail\ProfileViewed;
+use App\Role;
 use App\RoleUser;
 use App\Services\UserLocationService;
 use App\Session;
@@ -684,9 +685,34 @@ class UserManager
      * @return User|User[]|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|Model|null
      * @throws \Exception
      */
-    public function getUserById(int $userId) {
+    public function getUserById(int $userId, int $roleId = Role::ROLE_BOT)
+    {
+        if ($roleId === Role::ROLE_BOT) {
+            $additionalRelations = User::BOT_RELATIONS;
+            $additionalRelationCounts = User::BOT_RELATION_COUNTS;
+        } elseif ($roleId === Role::ROLE_PEASANT) {
+            $additionalRelations = User::PEASANT_RELATIONS;
+            $additionalRelationCounts = User::PEASANT_RELATION_COUNTS;
+        } elseif ($roleId === Role::ROLE_EDITOR) {
+            $additionalRelations = User::EDITOR_RELATIONS;
+            $additionalRelationCounts = User::EDITOR_RELATION_COUNTS;
+        } elseif ($roleId === Role::ROLE_ADMIN) {
+            $additionalRelations = User::ADMIN_RELATIONS;
+            $additionalRelationCounts = User::ADMIN_RELATION_COUNTS;
+        } elseif ($roleId === Role::ROLE_OPERATOR) {
+            $additionalRelations = User::OPERATOR_RELATIONS;
+            $additionalRelationCounts = User::OPERATOR_RELATION_COUNTS;
+        }
 
-        $user =  User::with('profileImage', 'images', 'meta')->find($userId);
+        $user =  User::with(
+            array_unique(array_merge(
+                User::COMMON_RELATIONS,
+                $additionalRelations
+            ))
+        )
+        ->withCount(
+            $additionalRelationCounts
+        )->find($userId);
 
         if (!($user instanceof User)) {
             throw new \Exception('This user does not exist in the system');
