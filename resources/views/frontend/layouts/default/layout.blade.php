@@ -3,7 +3,7 @@
 @include('frontend.layouts.default.partials.head')
 
 <body>
-@if(App::environment('production'))
+@if(config('app.env') === 'production' && config('app.name') === 'altijdsex.nl')
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MJG2S4N"
                       height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
