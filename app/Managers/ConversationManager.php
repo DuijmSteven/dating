@@ -724,6 +724,7 @@ class ConversationManager
     {
         $conversation = $this->conversation
             ->with(['messages' => function($query) use ($offset, $limit) {
+                $query->where('created_at', '<=', Carbon::now());
                 $query->orderBy('created_at', 'desc');
 
                 if ($offset) {
