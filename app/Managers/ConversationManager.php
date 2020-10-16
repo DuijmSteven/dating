@@ -70,7 +70,7 @@ class ConversationManager
      * @return ConversationMessage
      * @throws \Exception
      */
-    public function createMessage(array $messageData)
+    public function createMessage(array $messageData, int $secondsAheadToScheduleMessage = null)
     {
         $hasAttachment = isset($messageData['attachment']);
 
@@ -222,6 +222,8 @@ class ConversationManager
         $openConversationPartner->setUserId($recipient->getId());
         $openConversationPartner->setPartnerId($sender->getId());
         $openConversationPartner->setState(true);
+        $openConversationPartner->created_at = Carbon::now()->addSeconds($secondsAheadToScheduleMessage);
+        $openConversationPartner->updated_at = Carbon::now()->addSeconds($secondsAheadToScheduleMessage);
         $openConversationPartner->save();
 
         // determine paid property of message

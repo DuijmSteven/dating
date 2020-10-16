@@ -762,7 +762,7 @@ class UserManager
             $userBotMessage->setUserId($peasant->getId());
 
             $peasant->botMessagesReceived()->attach($botMessage);
-            $this->conversationManager->createMessage($messageData);
+            $this->conversationManager->createMessage($messageData, $secondsAheadToScheduleMessage);
         }
     }
 }

@@ -250,6 +250,7 @@ class ConversationController
     {
         try {
             $partners = OpenConversationPartner::where('user_id', $userId)
+                ->where('created_at', '<=', Carbon::now())
                 ->orderBy('created_at', 'asc')
                 ->get();
 
