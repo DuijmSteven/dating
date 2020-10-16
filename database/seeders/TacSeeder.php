@@ -1,22 +1,25 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Faker\Generator as Faker;
 
 /**
- * Class ArticlesSeeder
+ * Class TacSeeder
  */
-class BotCategoriesSeeder extends Seeder
+class TacSeeder extends Seeder
 {
     /**
-     * ArticlesSeeder constructor.
+     * TacSeeder constructor.
      * @param Faker $faker
      */
     public function __construct(Faker $faker) {
         $this->faker = $faker;
     }
+
     /**
      * Run the database seeds.
      *
@@ -27,14 +30,16 @@ class BotCategoriesSeeder extends Seeder
         Model::unguard();
         //disable foreign key check for this connection before running seeders
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        DB::table('bot_categories')->truncate();
+        DB::table('tacs')->truncate();
 
-        $botCategories =
-            \App\Helpers\ApplicationConstants\UserConstants::selectableFields('bot', 'private')['category'];
-        foreach ($botCategories as $categoryId => $categoryName) {
-            \App\BotCategory::create([
-                'id' => $categoryId,
-                'name' => $categoryName
+        $languages = [
+            'en',
+            'nl'
+        ];
+
+        foreach ($languages as $language) {
+            factory(App\Tac::class)->create([
+                'language' => $language
             ]);
         }
 

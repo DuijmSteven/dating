@@ -6,8 +6,8 @@
                     <a href="#" class="modalImage">
                         <img
                             class="UserSummary__profileImage JS--galleryImage"
-                            src="{{ \StorageHelper::profileImageUrl($user) }}"
-                            data-src="{{ \StorageHelper::profileImageUrl($user) }}"
+                            src="{{ $user->profileImageUrl }}"
+                            data-src="{{ $user->profileImageUrl }}"
                             alt="user image"
                         >
                     </a>
@@ -15,7 +15,7 @@
                     <div class="UserSummary__profileImageWrapper">
                         <img
                             class="UserSummary__profileImage"
-                            src="{{ \StorageHelper::profileImageUrl($user) }}"
+                            src="{{ $user->profileImageUrl }}"
                             alt="user image"
                         >
                     </div>
@@ -24,7 +24,7 @@
                 <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}">
                     <img
                         class="UserSummary__profileImage JS--galleryImage"
-                        src="{{ \StorageHelper::profileImageUrl($user) }}"
+                        src="{{ $user->profileImageUrl }}"
                         alt="user image"
                     >
                 </a>

@@ -190,7 +190,6 @@ return [
         /*
          * Plugins
          */
-        Kim\Activity\ActivityServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         GrahamCampbell\Markdown\MarkdownServiceProvider::class,
         TPWeb\TargetPay\TargetPayServiceProvider::class,
@@ -263,7 +262,6 @@ return [
         'StorageHelper'   => App\Facades\Helpers\StorageHelper::class,
 
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
-        'Activity' => Kim\Activity\ActivityFacade::class,
         'ChromePhp' => App\Helpers\ccampbell\ChromePhp\ChromePhp::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,

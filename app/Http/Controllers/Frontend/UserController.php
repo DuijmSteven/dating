@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\BotMessage;
 use App\EmailType;
 use App\Http\Requests\Admin\Peasants\PeasantUpdateRequest;
 use App\Mail\Deactivated;
@@ -10,8 +9,7 @@ use App\Managers\ConversationManager;
 use App\Managers\PeasantManager;
 use App\Managers\UserManager;
 use App\Milestone;
-use App\Services\OnlineUsersService;
-use App\Session;
+use App\Services\UserActivityService;
 use App\User;
 use App\UserBotMessage;
 use App\UserView;
@@ -41,10 +39,6 @@ class UserController extends FrontendController
      * @var ConversationManager
      */
     private ConversationManager $conversationManager;
-    /**
-     * @var OnlineUsersService
-     */
-    private OnlineUsersService $onlineUsersService;
 
     /**
      * UserController constructor.
@@ -56,14 +50,14 @@ class UserController extends FrontendController
         UserManager $userManager,
         PeasantManager $peasantManager,
         ConversationManager $conversationManager,
-        OnlineUsersService  $onlineUsersService
+        UserActivityService $userActivityService
     ) {
-        parent::__construct($onlineUsersService);
+        parent::__construct($userActivityService);
         $this->user = $user;
         $this->userManager = $userManager;
         $this->peasantManager = $peasantManager;
         $this->conversationManager = $conversationManager;
-        $this->onlineUsersService = $onlineUsersService;
+        $this->userActivityService = $userActivityService;
     }
 
     /**
@@ -122,7 +116,7 @@ class UserController extends FrontendController
 
         if ($this->authenticatedUser->isPeasant()) {
             if ($user->isBot()) {
-                $onlineIds = $this->onlineUsersService->getOnlineUserIds();
+                $onlineIds = $this->userActivityService->getOnlineUserIds();
 
                 $chanceToReceiveProfileView = 0;
                 $chanceToReceiveBotMessage = 0;
@@ -161,12 +155,11 @@ class UserController extends FrontendController
                 }
 
                 if (rand(1, 100) <= $chanceToReceiveProfileView) {
-                    Session::create([
-                        'id' => md5(uniqid(rand(), true)),
-                        'user_id' => $user->id,
-                        'payload' => base64_encode('test'),
-                        'last_activity' => Carbon::now()->addSeconds($secondsUntilProfileView)->getTimestamp()
-                    ]);
+                    $user->setLastOnlineAt(
+                        Carbon::now('Europe/Amsterdam')->addSeconds($secondsUntilProfileView)->setTimezone('UTC')
+                    );
+
+                    $user->save();
 
                     $this->userManager->storeProfileView(
                         $user,

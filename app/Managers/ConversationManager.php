@@ -6,8 +6,8 @@ use App\Conversation;
 use App\ConversationMessage;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\MessageAttachment;
+use App\Services\UserActivityService;
 use App\OpenConversationPartner;
-use App\Services\OnlineUsersService;
 use App\Services\ProbabilityService;
 use App\User;
 use Carbon\Carbon;
@@ -32,9 +32,9 @@ class ConversationManager
      */
     private $conversationMessage;
     /**
-     * @var OnlineUsersService
+     * @var UserActivityService
      */
-    private OnlineUsersService $onlineUsersService;
+    private UserActivityService $userActivityService;
 
     /**
      * ConversationManager constructor.
@@ -44,12 +44,12 @@ class ConversationManager
         Conversation $conversation,
         ConversationMessage $conversationMessage,
         StorageManager $storageManager,
-        OnlineUsersService $onlineUsersService
+        UserActivityService $userActivityService
     ) {
         $this->conversation = $conversation;
         $this->storageManager = $storageManager;
         $this->conversationMessage = $conversationMessage;
-        $this->onlineUsersService = $onlineUsersService;
+        $this->userActivityService = $userActivityService;
     }
 
     public function userHasConversationWithUser($userAId, $userBId)
@@ -91,7 +91,9 @@ class ConversationManager
             throw $exception;
         }
 
-        $onlineIds = $this->onlineUsersService->getOnlineUserIds(3);
+        $onlineIds = $this->userActivityService->getOnlineUserIds(
+            $this->userActivityService::PEASANT_MAILING_ONLINE_TIMEFRAME_IN_MINUTES
+        );
 
         $onlineBotIds = User::whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_BOT);

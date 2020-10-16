@@ -11,9 +11,8 @@ use App\Managers\ChartsManager;
 use App\Managers\PeasantManager;
 use App\Managers\StatisticsManager;
 use App\Managers\UserManager;
-use App\Services\OnlineUsersService;
+use App\Services\UserActivityService;
 use App\User;
-use App\UserFingerprint;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -42,10 +41,6 @@ class PeasantController extends Controller
      * @var AffiliateManager
      */
     private AffiliateManager $affiliateManager;
-    /**
-     * @var OnlineUsersService
-     */
-    private OnlineUsersService $onlineUsersService;
 
     /**
      * PeasantController constructor.
@@ -59,15 +54,14 @@ class PeasantController extends Controller
         ChartsManager $chartsManager,
         StatisticsManager $statisticsManager,
         AffiliateManager $affiliateManager,
-        OnlineUsersService $onlineUsersService
+        UserActivityService $userActivityService
     ) {
+        parent::__construct($userActivityService);
         $this->peasantManager = $peasantManager;
-        parent::__construct($onlineUsersService);
         $this->userManager = $userManager;
         $this->chartsManager = $chartsManager;
         $this->statisticsManager = $statisticsManager;
         $this->affiliateManager = $affiliateManager;
-        $this->onlineUsersService = $onlineUsersService;
     }
 
     /**
@@ -145,7 +139,7 @@ class PeasantController extends Controller
             $launchDate,
             $endOfToday
         )
-            ->paginate(20);
+        ->paginate(20);
 
         $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
 
@@ -344,7 +338,9 @@ class PeasantController extends Controller
 
     public function showOnline()
     {
-        $onlineIds = $this->onlineUsersService->getOnlineUserIds();
+        $onlineIds = $this->userActivityService->getOnlineUserIds(
+            $this->userActivityService::GENERAL_ONLINE_TIMEFRAME_IN_MINUTES
+        );
 
         $peasants = User::with(
             array_unique(array_merge(
@@ -486,7 +482,9 @@ class PeasantController extends Controller
 
     public function messagePeasantAsBot(int $peasantId, bool $onlyOnlineBots = false)
     {
-        $onlineIds = $this->onlineUsersService->getOnlineUserIds();
+        $onlineIds = $this->userActivityService->getOnlineUserIds(
+            $this->userActivityService::GENERAL_ONLINE_TIMEFRAME_IN_MINUTES
+        );
 
         $onlineBotIds = User::whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_BOT);

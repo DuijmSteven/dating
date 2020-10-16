@@ -27,7 +27,7 @@ class StorageManager
             try {
                 $fileNameRoot = md5(microtime()
                     . $uploadedFile->getClientOriginalName()
-                    . $uploadedFile->getClientSize());
+                    . $uploadedFile->getSize());
 
                 $fileNameMain = $fileNameRoot
                     . '.' . $uploadedFile->extension();

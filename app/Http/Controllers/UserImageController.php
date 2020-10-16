@@ -6,7 +6,7 @@ use App\Http\Requests\Admin\Peasants\PeasantUpdateImagesRequest;
 use App\Managers\PeasantManager;
 use App\Managers\StorageManager;
 use App\Managers\UserImageManager;
-use App\Services\OnlineUsersService;
+use App\Services\UserActivityService;
 use App\User;
 use App\UserImage;
 use Illuminate\Support\Facades\DB;
@@ -34,9 +34,9 @@ class UserImageController extends Controller
         UserImageManager $userImageManager,
         StorageManager $storageManager,
         PeasantManager $peasantManager,
-        OnlineUsersService $onlineUsersService
+        UserActivityService $userActivityService
     ) {
-        parent::__construct($onlineUsersService);
+        parent::__construct($userActivityService);
         $this->userImageManager = $userImageManager;
         $this->storageManager = $storageManager;
         $this->peasantManager = $peasantManager;

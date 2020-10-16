@@ -9,16 +9,13 @@ use App\Mail\MessageReceived;
 use App\Managers\UserManager;
 use App\OpenConversationPartner;
 use App\PastMassMessage;
-use App\Payment;
-use App\Services\OnlineUsersService;
+use App\Services\UserActivityService;
 use App\User;
-use App\UserMeta;
 use App\UserView;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
-use Kim\Activity\Activity;
 
 class SendMassMessage extends Command
 {
@@ -42,10 +39,11 @@ class SendMassMessage extends Command
      * @var UserManager
      */
     private UserManager $userManager;
+
     /**
-     * @var OnlineUsersService
+     * @var UserActivityService
      */
-    private OnlineUsersService $onlineUsersService;
+    private UserActivityService $userActivityService;
 
     /**
      * Create a new command instance.
@@ -54,11 +52,11 @@ class SendMassMessage extends Command
      */
     public function __construct(
         UserManager $userManager,
-        OnlineUsersService $onlineUsersService
+        UserActivityService $userActivityService
     ) {
         parent::__construct();
         $this->userManager = $userManager;
-        $this->onlineUsersService = $onlineUsersService;
+        $this->userActivityService = $userActivityService;
     }
 
     /**
@@ -77,7 +75,9 @@ class SendMassMessage extends Command
         $messageBody = $this->argument('body');
         $limitMessage = $this->argument('limitation');
 
-        $onlineUserIds = $this->onlineUsersService->getOnlineUserIds(3);
+        $onlineIds = $this->userActivityService->getOnlineUserIds(
+            $this->userActivityService::PEASANT_MAILING_ONLINE_TIMEFRAME_IN_MINUTES
+        );
 
         $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');
         $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
@@ -306,7 +306,7 @@ class SendMassMessage extends Command
 
                 if (
                     $recipientHasMessageNotificationsEnabled &&
-                    !in_array($user->getId(), $onlineUserIds)
+                    !in_array($user->getId(), $onlineIds)
                 ) {
                     if ($user->isMailable) {
                         if (config('app.env') === 'production') {

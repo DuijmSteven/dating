@@ -6,6 +6,7 @@ use App\Helpers\ApplicationConstants\UserConstants;
 use App\Http\Requests\UserRequests\UserSearchRequest;
 use App\Managers\UserSearchManager;
 use App\Services\OnlineUsersService;
+use App\Services\UserActivityService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
@@ -29,11 +30,10 @@ class UserSearchController extends FrontendController
      */
     public function __construct(
         UserSearchManager $userSearchManager,
-        OnlineUsersService $onlineUsersService
+        UserActivityService $userActivityService
     ) {
         $this->userSearchManager = $userSearchManager;
-        parent::__construct($onlineUsersService);
-        $this->onlineUsersService = $onlineUsersService;
+        parent::__construct($userActivityService);
     }
 
     /**

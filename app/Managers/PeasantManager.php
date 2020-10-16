@@ -3,11 +3,10 @@
 namespace App\Managers;
 
 use App\Helpers\ApplicationConstants\UserConstants;
-use App\Services\GeocoderService;
+use App\Services\UserActivityService;
 use App\Services\UserLocationService;
 use App\User;
 use Carbon\Carbon;
-use GuzzleHttp\Client;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 
@@ -32,6 +31,7 @@ class PeasantManager extends UserManager
         User $user,
         StorageManager $storageManager,
         UserLocationService $userLocationService,
+        UserActivityService $userActivityService,
         ConversationManager $conversationManager
     ) {
         $this->user = $user;
@@ -39,6 +39,7 @@ class PeasantManager extends UserManager
             $this->user,
             $storageManager,
             $userLocationService,
+            $userActivityService,
             $conversationManager
         );
 
@@ -82,7 +83,7 @@ class PeasantManager extends UserManager
      * @return array
      * @throws \Spatie\Geocoder\Exceptions\CouldNotGeocode
      */
-    private function buildPeasantArrayToPersist(array $peasantData, string $action, User $peasant)
+    private function buildPeasantArrayToPersist(array $peasantData, string $action = 'create', User $peasant = null)
     {
         if (isset($peasantData['city']) && $peasantData['city']) {
             $peasantData['city'] = strtolower($peasantData['city']);
@@ -114,6 +115,7 @@ class PeasantManager extends UserManager
         $userDataToPersist['user_meta'] = $userMetaTableData;
 
         if (
+            $peasant &&
             isset($userDataToPersist['user_meta']['email']) &&
             $userDataToPersist['user_meta']['email'] != $peasant->getEmail()
         ) {

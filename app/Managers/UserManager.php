@@ -10,8 +10,8 @@ use App\Mail\ProfileCompletion;
 use App\Mail\ProfileViewed;
 use App\Role;
 use App\RoleUser;
+use App\Services\UserActivityService;
 use App\Services\UserLocationService;
-use App\Session;
 use App\User;
 use App\UserAccount;
 use App\UserBotMessage;
@@ -27,7 +27,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-use Kim\Activity\Activity;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -39,7 +38,7 @@ class UserManager
     /** @var User */
     private $user;
 
-    /** @var StorageManager  */
+    /** @var StorageManager */
     private $storageManager;
     /**
      * @var UserLocationService
@@ -51,18 +50,27 @@ class UserManager
     private ConversationManager $conversationManager;
 
     /**
+     * @var UserActivityService
+     */
+    private UserActivityService $userActivityService;
+
+    /**
      * HandlesUserDbInteractions constructor.
      * @param User $user
      * @param StorageManager $storageManager
+     * @param UserLocationService $userLocationService
+     * @param UserActivityService $userActivityService
      */
     public function __construct(
         User $user,
         StorageManager $storageManager,
         UserLocationService $userLocationService,
+        UserActivityService $userActivityService,
         ConversationManager $conversationManager
     ) {
         $this->user = $user;
         $this->storageManager = $storageManager;
+        $this->userActivityService = $userActivityService;
         $this->userLocationService = $userLocationService;
         $this->conversationManager = $conversationManager;
     }
@@ -558,7 +566,7 @@ class UserManager
     /**
      * @param $botAmount
      */
-    public function setRandomBotsOnline(int $botAmount, $gender = User::GENDER_FEMALE) : void
+    public function setRandomBotsOnline(int $botAmount, $gender = User::GENDER_FEMALE): void
     {
         $randomUsers = $this->user->with(['roles', 'meta'])
             ->whereHas('roles', function ($query) {
@@ -573,19 +581,20 @@ class UserManager
             ->take($botAmount)
             ->get();
 
-        // This method is nly used in dev env so it is ok to do this
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        Model::unguard();
-
         foreach ($randomUsers as $user) {
-            Session::create([
-                'id' => md5(uniqid(rand(), true)),
-                'user_id' => $user->id,
-                'payload' => base64_encode('test'),
-                'last_activity' => time()
-            ]);
+            $user->setLastOnlineAt(
+                Carbon::now('Europe/Amsterdam')->setTimezone('UTC')
+            );
+
+            $user->save();
+
+//            Session::create([
+//                'id' => md5(uniqid(rand(), true)),
+//                'user_id' => $user->id,
+//                'payload' => base64_encode('test'),
+//                'last_activity' => time()
+//            ]);
         }
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
     /**
@@ -594,12 +603,12 @@ class UserManager
      *
      * @param int $minutes
      * @param string $gender
-     * @internal param $
      * @return \Illuminate\Database\Eloquent\Collection|static[]
+     * @internal param $
      */
     public function latestOnline(int $minutes, $limit = 20)
     {
-        $latestIds = Activity::users($minutes)->pluck('user_id')->toArray();
+        $latestIds = $this->userActivityService->getOnlineUserIds($minutes);
 
         $query = User::with('meta', 'profileImage')
             ->whereIn('id', $latestIds)
@@ -624,7 +633,7 @@ class UserManager
     public function deleteUser(int $userId)
     {
         $user = $this->user->with(['images'])->findOrFail($userId);
-        
+
         DB::beginTransaction();
         try {
             $user->delete();
@@ -685,9 +694,12 @@ class UserManager
      * @return User|User[]|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|Model|null
      * @throws \Exception
      */
-    public function getUserById(int $userId, int $roleId = Role::ROLE_BOT)
+    public function getUserById(int $userId, ?int $roleId = null)
     {
-        if ($roleId === Role::ROLE_BOT) {
+        if (null === $roleId) {
+            $additionalRelations = [];
+            $additionalRelationCounts = [];
+        } elseif ($roleId === Role::ROLE_BOT) {
             $additionalRelations = User::BOT_RELATIONS;
             $additionalRelationCounts = User::BOT_RELATION_COUNTS;
         } elseif ($roleId === Role::ROLE_PEASANT) {

@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Carbon\Carbon;
+use Http\Adapter\Guzzle7\Client;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -25,6 +27,8 @@ class AppServiceProvider extends ServiceProvider
         }
 
         Carbon::setLocale('nl');
+
+        Paginator::useBootstrap();
     }
 
     /**
@@ -41,8 +45,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind('App\Interfaces\PaymentProvider', 'App\Services\PaymentService');
 
         $this->app->bind('mailgun.client', function() {
-            return \Http\Adapter\Guzzle6\Client::createWithConfig([
-            ]);
+            return Client::createWithConfig([]);
         });
     }
 }

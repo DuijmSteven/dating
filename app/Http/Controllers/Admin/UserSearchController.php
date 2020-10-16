@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\Users\UserSearchRequest;
 use App\Managers\ChartsManager;
 use App\Managers\UserSearchManager;
 use App\Services\OnlineUsersService;
+use App\Services\UserActivityService;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -29,10 +30,10 @@ class UserSearchController extends Controller
     public function __construct(
         UserSearchManager $userSearchManager,
         ChartsManager $chartsManager,
-        OnlineUsersService $onlineUsersService
+        UserActivityService $userActivityService
     ) {
+        parent::__construct($userActivityService);
         $this->userSearchManager = $userSearchManager;
-        parent::__construct($onlineUsersService);
         $this->chartsManager = $chartsManager;
     }
 

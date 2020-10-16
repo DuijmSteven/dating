@@ -1,9 +1,22 @@
 <?php
 
+use App\Activity;
+use App\Article;
+use App\Creditpack;
+use App\Faq;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Helpers\PaymentsHelper;
 use App\LayoutPart;
 use App\Module;
+use App\ModuleInstance;
+use App\Payment;
+use App\Role;
+use App\Tac;
+use App\Testimonial;
+use App\TestimonialUser;
+use App\User;
+use App\UserAccount;
+use App\UserMeta;
 use Faker\Generator as FakerGenerator;
 use Faker\Provider as FakerProvider;
 
@@ -18,7 +31,7 @@ use Faker\Provider as FakerProvider;
 |
 */
 
-$factory->define(App\User::class, function (FakerGenerator $faker) {
+$factory->define(User::class, function (FakerGenerator $faker) {
     static $password;
 
     return [
@@ -32,7 +45,7 @@ $factory->define(App\User::class, function (FakerGenerator $faker) {
     ];
 });
 
-$factory->define(App\UserMeta::class, function (FakerGenerator $faker) {
+$factory->define(UserMeta::class, function (FakerGenerator $faker) {
     $faker->addProvider(new FakerProvider\nl_NL\Address($faker));
 
     $selectableProfileFields = UserConstants::selectableFields();
@@ -55,7 +68,7 @@ $factory->define(App\UserMeta::class, function (FakerGenerator $faker) {
     ];
 });
 
-$factory->define(App\Article::class, function (FakerGenerator $faker) {
+$factory->define(Article::class, function (FakerGenerator $faker) {
     return [
         'title' => $faker->sentence(6, true),
         'body' => $faker->realText($maxNbChars = 10000, $indexSize = 2),
@@ -64,7 +77,7 @@ $factory->define(App\Article::class, function (FakerGenerator $faker) {
     ];
 });
 
-$factory->define(App\Payment::class, function (FakerGenerator $faker) {
+$factory->define(Payment::class, function (FakerGenerator $faker) {
     $statusesCount = count(PaymentsHelper::$statuses);
     $paymentMethodsCount = count(PaymentsHelper::$methods);
     $creditpacks = \App\Creditpack::all()->toArray();
@@ -82,7 +95,7 @@ $factory->define(App\Payment::class, function (FakerGenerator $faker) {
     ];
 });
 
-$factory->define(App\Creditpack::class, function (FakerGenerator $faker) {
+$factory->define(Creditpack::class, function (FakerGenerator $faker) {
     return [
         'name' => 'random',
         'credits' => 2,
@@ -92,21 +105,21 @@ $factory->define(App\Creditpack::class, function (FakerGenerator $faker) {
     ];
 });
 
-$factory->define(App\UserAccount::class, function () {
+$factory->define(UserAccount::class, function () {
     return [
         'user_id' => 1,
         'credits' => rand(0, 100)
     ];
 });
 
-$factory->define(App\Role::class, function () {
+$factory->define(Role::class, function () {
     $roleNames = \App\Role::all()->pluck('name');
     return [
         'name' => $roleNames[rand(0, count($roleNames) - 1)],
     ];
 });
 
-$factory->define(App\ModuleInstance::class, function () {
+$factory->define(ModuleInstance::class, function () {
     $moduleIds = Module::all()->pluck('id')->toArray();
     $layoutPartIds = LayoutPart::all()->pluck('id')->toArray();
 
@@ -117,7 +130,7 @@ $factory->define(App\ModuleInstance::class, function () {
     ];
 });
 
-$factory->define(App\Activity::class, function (FakerGenerator $faker) {
+$factory->define(Activity::class, function (FakerGenerator $faker) {
     $faker->addProvider(new FakerProvider\Image($faker));
     $faker->addProvider(new FakerProvider\Lorem($faker));
     return [
@@ -130,7 +143,7 @@ $factory->define(App\Activity::class, function (FakerGenerator $faker) {
     ];
 });
 
-$factory->define(App\Testimonial::class, function (FakerGenerator $faker) {
+$factory->define(Testimonial::class, function (FakerGenerator $faker) {
     return [
         'title' => rand(0, 1) ? $faker->sentence(6, true) : null,
         'body' => $faker->realText($maxNbChars = 300, $indexSize = 1),
@@ -140,7 +153,7 @@ $factory->define(App\Testimonial::class, function (FakerGenerator $faker) {
 });
 
 
-$factory->define(App\TestimonialUser::class, function (FakerGenerator $faker) {
+$factory->define(TestimonialUser::class, function (FakerGenerator $faker) {
     return [
         'name' => $faker->name,
         'testimonial_id' => 1,
@@ -151,7 +164,7 @@ $factory->define(App\TestimonialUser::class, function (FakerGenerator $faker) {
     ];
 });
 
-$factory->define(App\Faq::class, function (FakerGenerator $faker) {
+$factory->define(Faq::class, function (FakerGenerator $faker) {
     $sections = [
         'One',
         'Two',
@@ -168,7 +181,7 @@ $factory->define(App\Faq::class, function (FakerGenerator $faker) {
     ];
 });
 
-$factory->define(App\Tac::class, function (FakerGenerator $faker) {
+$factory->define(Tac::class, function (FakerGenerator $faker) {
     $languages = [
         'en',
         'nl'

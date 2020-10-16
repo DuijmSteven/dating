@@ -19,7 +19,7 @@
                 >
                     @foreach($bots as $bot)
                         <li data-bot-id="{!! $bot->getId() !!}"
-                            data-bot-profile-image="{!! \StorageHelper::profileImageUrl($bot) !!}"
+                            data-bot-profile-image="{!! $bot->profileImageUrl !!}"
                             data-bot-username="{!! $bot->username !!}"
                             data-bot-age="{!! $bot->meta->dob ? $bot->meta->dob->diffInYears($carbonNow) : 'Not set'!!}"
                             data-bot-status="{!! ucfirst(str_replace('_', ' ', $bot->meta->relationship_status ? \UserConstants::selectableField('relationship_status', $bot->roles[0]->name)[$bot->meta->relationship_status] : 'Nog niet ingevuld')) !!}"
@@ -33,7 +33,7 @@
                             data-bot-about-me="{!! $bot->meta->about_me !!}"
                         >
                             <img style="width: 50px"
-                                 src="{!! \StorageHelper::profileImageUrl($bot, true) !!}"
+                                 src="{!! $bot->profileImageUrlThumb !!}"
                                  alt="bot image">
                             (ID :<a
                                 href="{{ route('admin.bots.edit.get', ['botId' => $bot->getId()]) }}">{!! $bot->getId() !!}</a>)
@@ -191,7 +191,7 @@
                                         href="{{ route('admin.peasants.edit.get', ['peasantId' => $item->sender->getId()]) }}"
                                     >
                                         <img
-                                            src="{!! \StorageHelper::profileImageUrl($item->sender) !!}"
+                                            src="{!! $item->sender->profileImageUrl !!}"
                                             alt="" class="PublicChat__profilePicture"/>
                                     </a>
                                 </div>

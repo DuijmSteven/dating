@@ -301,7 +301,7 @@
 
                             @foreach($topOperatorMessagerStatistics[$topOperatorMessagersWidget] as $operator)
                                 <li class="{{ $count >= $amountOfListItemsVisible ? 'hidden defaultHidden' : '' }}">
-                                    <a href="{{ route('admin.operators.edit.get', ['peasantId' => $operator->getId()]) }}">
+                                    <a href="{{ route('admin.operators.edit.get', ['operatorId' => $operator->getId()]) }}">
                                         {{ $operator->getUsername() }} (ID: {{ $operator->getId() }})
                                         <span
                                             class="DashboardWidget_count">{{ $operator->messagesAsOperator->count() }}</span>

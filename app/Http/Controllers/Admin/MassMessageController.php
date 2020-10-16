@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Managers\UserManager;
 use App\PastMassMessage;
 use App\Payment;
-use App\Services\OnlineUsersService;
+use App\Services\UserActivityService;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -22,9 +22,9 @@ class MassMessageController extends Controller
 
     public function __construct(
         UserManager $userManager,
-        OnlineUsersService $onlineUsersService
+        UserActivityService $userActivityService
     ) {
-        parent::__construct($onlineUsersService);
+        parent::__construct($userActivityService);
         $this->userManager = $userManager;
     }
 
@@ -180,6 +180,15 @@ class MassMessageController extends Controller
     public function send(Request $request)
     {
         try {
+            Artisan::queue(
+                'mass-message:send',
+                [
+                    'body' => $request->get('body'),
+                    'limitation' => $request->get('limit_message')
+                ],
+            )
+            ->onQueue('general');
+
             $alerts[] = [
                 'type' => 'success',
                 'message' => 'The process has been sent to the queue. Check back in a few seconds to see if the sending of the mass message is entered in the list of past messages.'
@@ -191,14 +200,6 @@ class MassMessageController extends Controller
             ];
         }
 
-        Artisan::queue(
-            'mass-message:send',
-            [
-                'body' => $request->get('body'),
-                'limitation' => $request->get('limit_message')
-            ],
-        )
-            ->onQueue('general');
 
         return redirect()->back()->with('alerts', $alerts);
 

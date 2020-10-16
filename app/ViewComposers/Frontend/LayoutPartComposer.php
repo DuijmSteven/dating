@@ -12,6 +12,7 @@ use App\ModuleInstance;
 use App\Services\LatestViewedModuleService;
 use App\Services\OnlineUsersService;
 use App\Services\UserLocationService;
+use App\Services\UserActivityService;
 use App\User;
 use App\View;
 use Faker\Generator;
@@ -25,6 +26,7 @@ class LayoutPartComposer
 {
     /** @var UserManager */
     private $userManager;
+
     /**
      * @var LatestViewedModuleService
      */
@@ -62,11 +64,12 @@ class LayoutPartComposer
                             new User(),
                             new StorageManager(),
                             new UserLocationService(),
+                            new UserActivityService(),
                             new ConversationManager(
                                 new Conversation(),
                                 new ConversationMessage(),
                                 new StorageManager(),
-                                new OnlineUsersService()
+                                new UserActivityService()
                             )
                         )
                     )

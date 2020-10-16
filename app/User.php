@@ -285,6 +285,10 @@ class User extends Authenticatable
 
     public function getProfileImageUrlAttribute()
     {
+        if (config('app.env') === 'local') {
+            //return null;
+        }
+
         return StorageHelper::profileImageUrl($this);
     }
 

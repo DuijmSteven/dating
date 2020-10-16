@@ -15,8 +15,8 @@ use App\Managers\ConversationManager;
 use App\Managers\StorageManager;
 use App\MessageAttachment;
 use App\OpenConversationPartner;
-use App\Services\OnlineUsersService;
 use App\Services\ProbabilityService;
+use App\Services\UserActivityService;
 use App\User;
 use App\UserImage;
 use App\UserView;
@@ -26,7 +26,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Kim\Activity\Activity;
 
 /**
  * Class ConversationController
@@ -41,10 +40,6 @@ class ConversationController extends Controller
      * @var StorageManager
      */
     private StorageManager $storageManager;
-    /**
-     * @var OnlineUsersService
-     */
-    private OnlineUsersService $onlineUsersService;
 
     /**
      * ConversationController constructor.
@@ -53,12 +48,11 @@ class ConversationController extends Controller
     public function __construct(
         ConversationManager $conversationManager,
         StorageManager $storageManager,
-        OnlineUsersService $onlineUsersService
+        UserActivityService $userActivityService
     ) {
+        parent::__construct($userActivityService);
         $this->conversationManager = $conversationManager;
-        parent::__construct($onlineUsersService);
         $this->storageManager = $storageManager;
-        $this->onlineUsersService = $onlineUsersService;
     }
 
     /**
@@ -472,7 +466,7 @@ class ConversationController extends Controller
                 );
         }
 
-        return redirect()->route('operator-platform.conversations.show', [$conversation->getId()]);
+        return redirect()->route('operator-platform.conversations.show', ['conversationId' => $conversation->getId()]);
     }
 
     /**
@@ -572,6 +566,14 @@ class ConversationController extends Controller
             $conversation->setReplyableAt(null);
         }
 
+        if ($sender->isBot()) {
+            $sender->setLastOnlineAt(
+                Carbon::now('Europe/Amsterdam')->setTimezone('UTC')
+            );
+
+            $sender->save();
+        }
+
         $body = $request->get('body') ?? null;
 
         /** @var UserImage $image */
@@ -646,13 +648,12 @@ class ConversationController extends Controller
             $recipientEmailTypeIds
         );
 
-        if (
-            $recipientHasMessageNotificationsEnabled &&
-            $recipient->isMailable
-        ) {
-            $onlineUserIds = $this->onlineUsersService->getOnlineUserIds(3);
+        if ($recipientHasMessageNotificationsEnabled) {
+            $onlineIds = $this->userActivityService->getOnlineUserIds(
+                $this->userActivityService::PEASANT_MAILING_ONLINE_TIMEFRAME_IN_MINUTES
+            );
 
-            if (!in_array($recipient->getId(), $onlineUserIds)) {
+            if (!in_array($recipient->getId(), $onlineIds)) {
                 if (config('app.env') === 'production') {
                     $hasAttachment = true;
                     $message = $body ? $body : null;
@@ -781,13 +782,12 @@ class ConversationController extends Controller
                 $recipientEmailTypeIds
             );
 
-            if (
-                $recipientHasMessageNotificationsEnabled &&
-                $recipient->isMailable
-            ) {
-                $onlineUserIds = $this->onlineUsersService->getOnlineUserIds(3);
+            if ($recipientHasMessageNotificationsEnabled) {
+                $onlineIds = $this->userActivityService->getOnlineUserIds(
+                    $this->userActivityService::PEASANT_MAILING_ONLINE_TIMEFRAME_IN_MINUTES
+                );
 
-                if (!in_array($recipient->getId(), $onlineUserIds)) {
+                if (!in_array($recipient->getId(), $onlineIds)) {
                     if (config('app.env') === 'production') {
                         $hasAttachment = isset($messageData['attachment']) && $messageData['attachment'] ? true : false;
                         $message = isset($messageData['message']) && $messageData['message'] ? $messageData['message'] : null;
@@ -813,12 +813,12 @@ class ConversationController extends Controller
 
             $sender = User::find($messageData['sender_id']);
 
-            if ($sender->roles()->get()[0]->id === User::TYPE_BOT) {
-                $activity = new Activity;
-                $activity->id = bcrypt((int) time() . $messageData['sender_id'] . $messageData['recipient_id']);
-                $activity->last_activity = time();
-                $activity->user_id = $sender->getId();
-                $activity->save();
+            if ($sender->isBot()) {
+                $sender->setLastOnlineAt(
+                    Carbon::now('Europe/Amsterdam')->setTimezone('UTC')
+                );
+
+                $sender->save();
 
                 if (!is_object($conversation->messages)) {
                     \Log::error('Sender ID: ' . $sender->getId());

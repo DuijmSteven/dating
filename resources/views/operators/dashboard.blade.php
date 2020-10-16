@@ -66,7 +66,7 @@
                                                 @endphp
 
                                                 <img class="profileImage" src="{!! \StorageHelper::profileImageUrl($conversation->userA, true) !!}" />
-                                                <a href="{!! route('admin.' . \UserConstants::selectableField('role')[$conversation->userA->roles[0]->id] . 's.edit.get', ['id' => $conversation->userA->getId()]) !!}">
+                                                <a href="{!! route('admin.' . \UserConstants::selectableField('role')[$conversation->userA->roles[0]->id] . 's.edit.get', [$conversation->userA->roles[0]->name . 'Id' => $conversation->userA->getId()]) !!}">
                                                     {!! $conversation->userA->username !!} (ID: {!! $conversation->userA->getId() !!}) - <strong>Credits</strong>: <span class="highlightAsDisk {{ $highlightTypeClass }}">{{ $conversation->userA->account->getCredits() }}</span>
                                                 </a>
                                             </div>
@@ -77,7 +77,7 @@
                                         <div class="convo-tile_text">
                                             <div class="username">
                                                 <img class="profileImage" src="{!! \StorageHelper::profileImageUrl($conversation->userB, true) !!}" />
-                                                <a href="{!! route('admin.' . \UserConstants::selectableField('role')[$conversation->userB->roles[0]->id] . 's.edit.get', ['id' => $conversation->userB->getId()]) !!}">
+                                                <a href="{!! route('admin.' . \UserConstants::selectableField('role')[$conversation->userB->roles[0]->id] . 's.edit.get', [$conversation->userB->roles[0]->name . 'Id' => $conversation->userB->getId()]) !!}">
                                                     {!! $conversation->userB->username !!} (ID: {!! $conversation->userB->getId() !!})
                                                 </a>
                                             </div>

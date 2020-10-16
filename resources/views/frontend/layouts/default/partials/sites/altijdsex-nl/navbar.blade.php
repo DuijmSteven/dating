@@ -93,7 +93,7 @@
                         </a>
                         <ul class="dropdown-menu main-dropdown">
                             <li>
-                                <a href="{!! route('users.edit-profile.get', ['userId' => $authenticatedUser->getUsername()]) !!}">
+                                <a href="{!! route('users.edit-profile.get', ['username' => $authenticatedUser->getUsername()]) !!}">
                                     <span class="material-icons">
                                         edit
                                     </span>

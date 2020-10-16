@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\ConversationMessage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreatePublicChatItemRequest;
 use App\PublicChatItem;
-use App\Services\OnlineUsersService;
+use App\Services\UserActivityService;
 use App\User;
-use App\UserAccount;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Kim\Activity\Activity;
 
 /**
  * Class PublicChatItemController
@@ -20,16 +17,10 @@ use Kim\Activity\Activity;
  */
 class PublicChatItemController extends Controller
 {
-    /**
-     * @var OnlineUsersService
-     */
-    private OnlineUsersService $onlineUsersService;
-
     public function __construct(
-        OnlineUsersService $onlineUsersService
+        UserActivityService $userActivityService
     ) {
-        parent::__construct($onlineUsersService);
-        $this->onlineUsersService = $onlineUsersService;
+        parent::__construct($userActivityService);
     }
 
     /**
@@ -168,7 +159,9 @@ class PublicChatItemController extends Controller
 
     public function showSendAsBot()
     {
-        $onlineIds = $this->onlineUsersService->getOnlineUserIds();
+        $onlineIds = $this->userActivityService->getOnlineUserIds(
+            $this->userActivityService::GENERAL_ONLINE_TIMEFRAME_IN_MINUTES
+        );
 
         $onlineBotIds = User::whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_BOT);
@@ -217,6 +210,12 @@ class PublicChatItemController extends Controller
         $publicChatMessagesQueryBuilder->skip(0);
         $publicChatMessagesQueryBuilder->take(100);
 
+        $sortedBots = $botsQueryBuilder->get()->sortByDesc(function ($bot) {
+            return $bot->uniqueViews->count();
+        });
+
+        //dd($sortedBots[0]->profileImage);
+
         return view(
             'admin.public-chat-items.send-as-bot',
             [
@@ -224,9 +223,7 @@ class PublicChatItemController extends Controller
                 'headingLarge' => 'Peasants',
                 'headingSmall' => 'Post in public chat as bot',
                 'carbonNow' => Carbon::now(),
-                'bots' => $botsQueryBuilder->get()->sortByDesc(function ($bot) {
-                    return $bot->uniqueViews->count();
-                }),
+                'bots' => $sortedBots,
                 'onlineBotIds' => $onlineBotIds,
                 'publicChatItems' =>  $publicChatMessagesQueryBuilder->get()
             ]

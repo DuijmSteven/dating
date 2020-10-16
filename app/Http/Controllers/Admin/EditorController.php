@@ -8,14 +8,13 @@ use App\Http\Requests\Admin\Articles\ArticleCreateRequest;
 use App\Http\Requests\Admin\Articles\ArticleUpdateRequest;
 use App\Managers\ArticleManager;
 use App\Managers\UserManager;
-use App\Services\OnlineUsersService;
+use App\Services\UserActivityService;
 use App\User;
 use Carbon\Carbon;
 use DB;
 use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Kim\Activity\Activity;
 
 /**
  * Class EditorController
@@ -27,21 +26,16 @@ class EditorController extends Controller
      * @var UserManager
      */
     private UserManager $userManager;
-    /**
-     * @var OnlineUsersService
-     */
-    private OnlineUsersService $onlineUsersService;
 
     /**
      * OperatorController constructor.
      */
     public function __construct(
         UserManager $userManager,
-        OnlineUsersService $onlineUsersService
+        UserActivityService $userActivityService
     ) {
-        parent::__construct($onlineUsersService);
+        parent::__construct($userActivityService);
         $this->userManager = $userManager;
-        $this->onlineUsersService = $onlineUsersService;
     }
 
     /**
@@ -132,7 +126,9 @@ class EditorController extends Controller
 
     public function showOnline()
     {
-        $onlineIds = $this->onlineUsersService->getOnlineUserIds(1);
+        $onlineIds = $this->userActivityService->getOnlineUserIds(
+            $this->userActivityService::GENERAL_ONLINE_TIMEFRAME_IN_MINUTES
+        );
 
         $editors = User::with(
             User::COMMON_RELATIONS

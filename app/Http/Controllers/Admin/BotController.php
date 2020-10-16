@@ -6,14 +6,13 @@ use App\Http\Requests\Admin\Bots\BotCreateRequest;
 use App\Http\Requests\Admin\Bots\BotUpdateRequest;
 use App\Managers\BotManager;
 use App\Managers\UserManager;
-use App\Services\OnlineUsersService;
+use App\Services\UserActivityService;
 use App\User;
 use App\UserMeta;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Collection;
-use Kim\Activity\Activity;
 
 /**
  * Class BotController
@@ -28,10 +27,6 @@ class BotController extends Controller
      * @var UserManager
      */
     private UserManager $userManager;
-    /**
-     * @var OnlineUsersService
-     */
-    private OnlineUsersService $onlineUsersService;
 
     /**
      * BotController constructor.
@@ -40,12 +35,12 @@ class BotController extends Controller
     public function __construct(
         BotManager $botManager,
         UserManager $userManager,
-        OnlineUsersService $onlineUsersService
+        UserActivityService $userActivityService
     ) {
         $this->botManager = $botManager;
-        parent::__construct($onlineUsersService);
+        parent::__construct($userActivityService);
         $this->userManager = $userManager;
-        $this->onlineUsersService = $onlineUsersService;
+        $this->userActivityService = $userActivityService;
     }
 
     /**
@@ -115,7 +110,9 @@ class BotController extends Controller
 
     public function messagePeasantWithBot(int $botId, bool $onlyOnlinePeasants = false)
     {
-        $onlineIds = $this->onlineUsersService->getOnlineUserIds();
+        $onlineIds = $this->userActivityService->getOnlineUserIds(
+            $this->userActivityService::GENERAL_ONLINE_TIMEFRAME_IN_MINUTES
+        );
 
         $onlinePeasantIds = User::whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_PEASANT);
@@ -149,7 +146,9 @@ class BotController extends Controller
 
     public function showOnline()
     {
-        $onlineIds = $this->onlineUsersService->getOnlineUserIds();
+        $onlineIds = $this->userActivityService->getOnlineUserIds(
+            $this->userActivityService::GENERAL_ONLINE_TIMEFRAME_IN_MINUTES
+        );
 
         $bots = User::with(
             array_unique(array_merge(

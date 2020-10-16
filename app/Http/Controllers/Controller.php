@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Managers\UserManager;
-use App\Services\OnlineUsersService;
+use App\Services\UserActivityService;
 use App\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -21,21 +21,22 @@ class Controller extends BaseController
     /** @var User|null */
     protected $authenticatedUser;
     protected $onlineUserIds;
-    /**
-     * @var OnlineUsersService
-     */
-    private OnlineUsersService $onlineUsersService;
+    protected $userActivityService;
 
     /**
      * Controller constructor.
      */
     public function __construct(
-        OnlineUsersService $onlineUsersService
+        UserActivityService $userActivityService
     ) {
-        $this->middleware(function ($request, $next) {
+        $this->userActivityService = $userActivityService;
+
+        $this->middleware(function ($request, $next) use ($userActivityService) {
             $this->authenticatedUser = UserManager::getAndFormatAuthenticatedUser();
 
-            $onlineIds = $this->onlineUsersService->getOnlineUserIds();
+            $onlineIds = $userActivityService->getOnlineUserIds(
+                $userActivityService::GENERAL_ONLINE_TIMEFRAME_IN_MINUTES
+            );
 
             $this->onlineUserIds = $onlineIds;
 
@@ -44,6 +45,5 @@ class Controller extends BaseController
 
             return $next($request);
         });
-        $this->onlineUsersService = $onlineUsersService;
     }
 }

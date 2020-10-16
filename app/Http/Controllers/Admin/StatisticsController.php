@@ -2,19 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Conversation;
-use App\Creditpack;
 use App\Expense;
 use App\Http\Controllers\Controller;
 use App\Managers\ChartsManager;
 use App\Managers\StatisticsManager;
 use App\Payment;
-use App\Services\OnlineUsersService;
+use App\Services\UserActivityService;
 use App\User;
 use App\UserAffiliateTracking;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use Kim\Activity\Activity;
 
 class StatisticsController extends Controller
 {
@@ -27,20 +24,15 @@ class StatisticsController extends Controller
      * @var ChartsManager
      */
     private ChartsManager $chartsManager;
-    /**
-     * @var OnlineUsersService
-     */
-    private OnlineUsersService $onlineUsersService;
 
     public function __construct(
         StatisticsManager $statisticsManager,
         ChartsManager $chartsManager,
-        OnlineUsersService $onlineUsersService
+        UserActivityService $userActivityService
     ) {
-        parent::__construct($onlineUsersService);
+        parent::__construct($userActivityService);
         $this->statisticsManager = $statisticsManager;
         $this->chartsManager = $chartsManager;
-        $this->onlineUsersService = $onlineUsersService;
     }
 
     public function mostUseful()
@@ -433,8 +425,6 @@ class StatisticsController extends Controller
 
     public function googleAds()
     {
-        $onlineIds = $this->onlineUsersService->getOnlineUserIds();
-
         $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');
         $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
         $startOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->startOfDay()->setTimezone('UTC');

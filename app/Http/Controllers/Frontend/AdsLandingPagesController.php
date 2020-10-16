@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Frontend;
 use App;
 use App\Services\RegistrationService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cookie;
 
 class AdsLandingPagesController extends FrontendController
 {
@@ -17,11 +16,11 @@ class AdsLandingPagesController extends FrontendController
      * @param RegistrationService $registrationService
      */
     public function __construct(
-        App\Services\RegistrationService $registrationService,
-        App\Services\OnlineUsersService $onlineUsersService
+        RegistrationService $registrationService,
+        App\Services\UserActivityService $userActivityService
     ) {
         $this->registrationService = $registrationService;
-        parent::__construct($onlineUsersService);
+        parent::__construct($userActivityService);
     }
 
     public function showLP(Request $request, $id)

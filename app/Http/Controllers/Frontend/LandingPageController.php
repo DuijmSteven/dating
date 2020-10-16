@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Frontend;
 
-
 use App;
 use App\Services\RegistrationService;
+use App\Services\UserActivityService;
+use App\Services\UserLocationService;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -12,20 +13,19 @@ use Illuminate\Http\Request;
 class LandingPageController extends FrontendController
 {
     private RegistrationService $registrationService;
-    private App\Services\UserLocationService $userLocationService;
+    private UserLocationService $userLocationService;
 
     /**
      * LandingPageController constructor.
      * @param RegistrationService $registrationService
      */
     public function __construct(
-        App\Services\RegistrationService $registrationService,
-        App\Services\UserLocationService $userLocationService,
-        App\Services\OnlineUsersService $onlineUsersService
-    )
-    {
+        RegistrationService $registrationService,
+        UserLocationService $userLocationService,
+        UserActivityService $userActivityService
+    ) {
         $this->registrationService = $registrationService;
-        parent::__construct($onlineUsersService);
+        parent::__construct($userActivityService);
         $this->userLocationService = $userLocationService;
     }
 

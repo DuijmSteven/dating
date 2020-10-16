@@ -54,7 +54,7 @@
                                 </td>
                                 <td>
                                     @if($message->sender)
-                                        <a href="{{ route('operator-platform.conversations.show', ['id' => $message->sender->getId()]) }}">
+                                        <a href="{{ route('operator-platform.conversations.show', ['conversationId' => $message->sender->getId()]) }}">
                                             <img style="height: 80px; width: 80px; object-fit: cover"
                                                  src="{{ \App\Helpers\StorageHelper::profileImageUrl($message->sender, true) }}"
                                                  alt="Sender profile image"><br>
@@ -70,7 +70,7 @@
 
                                                 $routeName = 'admin.' . $userRoleName . 's.edit.get';
                                             @endphp
-                                            <a href="{{ route($routeName,['id' => $message->sender->getId()]) }}">
+                                            <a href="{{ route($routeName,[$userRoleName . 'Id' => $message->sender->getId()]) }}">
                                                 {{ $message->sender->getId() }}
                                             </a>
                                         @else
@@ -98,7 +98,7 @@
                                 </td>
                                 <td>
                                     @if($message->recipient)
-                                        <a href="{{ route('operator-platform.conversations.show', ['id' => $message->recipient->getId()]) }}">
+                                        <a href="{{ route('operator-platform.conversations.show', ['conversationId' => $message->recipient->getId()]) }}">
                                             <img style="height: 80px; width: 80px; object-fit: cover"
                                                  src="{{ \App\Helpers\StorageHelper::profileImageUrl($message->recipient) }}"
                                                  alt="Recipient profile image"><br>
@@ -114,7 +114,7 @@
 
                                                 $routeName = 'admin.' . $userRoleName . 's.edit.get';
                                             @endphp
-                                            <a href="{{ route($routeName,['id' => $message->recipient->getId()]) }}">
+                                            <a href="{{ route($routeName,[$userRoleName . 'Id' => $message->recipient->getId()]) }}">
                                                 {{ $message->recipient->getId() }}
                                             </a>
                                         @else

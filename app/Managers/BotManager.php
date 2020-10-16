@@ -3,11 +3,10 @@
 namespace App\Managers;
 
 use App\Helpers\ApplicationConstants\UserConstants;
-use App\Services\GeocoderService;
+use App\Services\UserActivityService;
 use App\Services\UserLocationService;
 use App\User;
 use Carbon\Carbon;
-use GuzzleHttp\Client;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 
@@ -22,6 +21,11 @@ class BotManager extends UserManager
 
     /** @var User $user */
     private $user;
+
+    /**
+     * @var UserActivityService
+     */
+    private UserActivityService $userActivityService;
     /**
      * @var UserLocationService
      */
@@ -36,10 +40,19 @@ class BotManager extends UserManager
         User $user,
         StorageManager $storageManager,
         UserLocationService $userLocationService,
+        UserActivityService $userActivityService,
         ConversationManager $conversationManager
     ) {
         $this->user = $user;
-        parent::__construct($this->user, $storageManager, $userLocationService, $conversationManager);
+        parent::__construct(
+            $this->user,
+            $storageManager,
+            $userLocationService,
+            $userActivityService,
+            $conversationManager
+        );
+
+        $this->userActivityService = $userActivityService;
         $this->userLocationService = $userLocationService;
     }
 

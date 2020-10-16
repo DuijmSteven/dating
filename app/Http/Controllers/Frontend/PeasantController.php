@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Managers\PeasantManager;
-use App\Services\OnlineUsersService;
+use App\Services\UserActivityService;
 use Illuminate\Http\Request;
 
 /**
@@ -22,10 +22,10 @@ class PeasantController extends FrontendController
      */
     public function __construct(
         PeasantManager $peasantManager,
-        OnlineUsersService $onlineUsersService
+        UserActivityService $userActivityService
     ) {
         $this->peasantManager = $peasantManager;
-        parent::__construct($onlineUsersService);
+        parent::__construct($userActivityService);
     }
 
     /**

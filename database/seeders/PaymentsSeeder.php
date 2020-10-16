@@ -1,23 +1,25 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Faker\Generator as Faker;
+use App\User;
 
 /**
- * Class FaqSeeder
+ * Class PaymentsSeeder
  */
-class FaqSeeder extends Seeder
+class PaymentsSeeder extends Seeder
 {
     /**
-     * FaqSeeder constructor.
+     * PaymentsSeeder constructor.
      * @param Faker $faker
      */
     public function __construct(Faker $faker) {
         $this->faker = $faker;
     }
-
     /**
      * Run the database seeds.
      *
@@ -28,15 +30,22 @@ class FaqSeeder extends Seeder
         Model::unguard();
         //disable foreign key check for this connection before running seeders
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        DB::table('faqs')->truncate();
+        DB::table('payments')->truncate();
 
-        $faqAmount = 50;
+        $peasants = User::with('roles')->whereHas('roles', function ($query) {
+            $query->where('name', '=', 'peasant');
+        })->where('account_type', '!=', 1)->get();
 
-        factory(App\Faq::class, $faqAmount)->create();
+        foreach ($peasants as $peasant) {
+            if (rand(0, 1)) {
+                factory(App\Payment::class)->create([
+                    'user_id' => $peasant->id
+                ]);
+            }
+        }
 
         // supposed to only apply to a single connection and reset it's self
         // but I like to explicitly undo what I've done for clarity
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-
     }
 }

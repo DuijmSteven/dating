@@ -22,21 +22,21 @@ Route::group([
     Route::get('online/ids', 'Api\UserController@getOnlineUserIds')
         ->name('users.get-online-ids');
 
-    Route::get('{userId}/{roleId}', 'Api\UserController@getUserById')
-        ->name('users.get-by-id');
-
     Route::get('{userId}/credits', 'Api\UserController@getUserCredits')
         ->name('users.get-user-credits');
 
+    Route::get('{userId}/{roleId?}', 'Api\UserController@getUserById')
+        ->name('users.get-by-id');
+
     Route::get('{userId}/milestones/accepted-welcome-message', 'Api\UserController@acceptedWelcomeMessageMilestone')
-        ->name('users.get-user-credits');
+        ->name('users.milestones.award.accepted-welcome-message');
 });
 
 Route::group([
     'prefix' => 'users'
 ], function () {
-    Route::get('/{roleId}/{page}', 'Api\UserController@getUsers')
-        ->name('users.get-online-ids')
+    Route::get('/{roleId}/{page}', 'Api\UserController@getUsersPaginated')
+        ->name('users.get-paginated')
         ->middleware('auth:api');
 });
 
@@ -85,7 +85,7 @@ Route::group([
 });
 
 Route::get('{userId}/chat-translations', 'Api\ConversationController@getChatTranslations')
-    ->name('cities.get');
+    ->name('chat-translations.get');
 
 Route::get('cities/{countryCode?}', 'Api\LocationController@getCities')
     ->name('cities.get');

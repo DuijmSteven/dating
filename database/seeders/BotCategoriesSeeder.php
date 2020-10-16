@@ -1,17 +1,19 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Faker\Generator as Faker;
 
 /**
- * Class ActivitySeeder
+ * Class ArticlesSeeder
  */
-class ActivitySeeder extends Seeder
+class BotCategoriesSeeder extends Seeder
 {
     /**
-     * ActivitySeeder constructor.
+     * ArticlesSeeder constructor.
      * @param Faker $faker
      */
     public function __construct(Faker $faker) {
@@ -27,19 +29,14 @@ class ActivitySeeder extends Seeder
         Model::unguard();
         //disable foreign key check for this connection before running seeders
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        DB::table('activity')->truncate();
+        DB::table('bot_categories')->truncate();
 
-        $activityAmount = 20;
-
-        $users = \App\User::whereHas('roles', function ($query) {
-            $query->where('name', 'bot');
-        })
-        ->take($activityAmount)
-        ->get();
-
-        foreach ($users as $user) {
-            factory(App\Activity::class)->create([
-                'user_id' => $user->id,
+        $botCategories =
+            \App\Helpers\ApplicationConstants\UserConstants::selectableFields('bot', 'private')['category'];
+        foreach ($botCategories as $categoryId => $categoryName) {
+            \App\BotCategory::create([
+                'id' => $categoryId,
+                'name' => $categoryName
             ]);
         }
 

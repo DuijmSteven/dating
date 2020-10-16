@@ -6,7 +6,7 @@ use App\Managers\UserManager;
 use App\Milestone;
 use App\MilestoneUser;
 use App\Role;
-use App\Services\OnlineUsersService;
+use App\Services\UserActivityService;
 use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -21,10 +21,11 @@ class UserController
 {
     /** @var UserManager */
     private $userManager;
+
     /**
-     * @var OnlineUsersService
+     * @var UserActivityService
      */
-    private OnlineUsersService $onlineUsersService;
+    private UserActivityService $userActivityService;
 
     /**
      * UserController constructor.
@@ -32,10 +33,10 @@ class UserController
      */
     public function __construct(
         UserManager $userManager,
-        OnlineUsersService $onlineUsersService
+        UserActivityService $userActivityService
     ) {
         $this->userManager = $userManager;
-        $this->onlineUsersService = $onlineUsersService;
+        $this->userActivityService = $userActivityService;
     }
 
     /**
@@ -47,7 +48,7 @@ class UserController
         return $request->user();
     }
 
-    public function getUsers(Request $request, int $roleId, int $page = 1)
+    public function getUsersPaginated(Request $request, int $roleId, int $page = 1)
     {
         try {
             /** @var Collection $bots */
@@ -83,7 +84,7 @@ class UserController
      * @param int $userId
      * @return JsonResponse
      */
-    public function getUserById(int $userId, int $roleId = Role::ROLE_BOT)
+    public function getUserById(int $userId, ?int $roleId = null)
     {
         try {
             $user = $this->userManager->getUserById($userId, $roleId);
@@ -108,9 +109,11 @@ class UserController
      */
     public function getOnlineUserIds()
     {
-        $onlineIds = $this->onlineUsersService->getOnlineUserIds();
-
-        return JsonResponse::create($onlineIds);
+        return JsonResponse::create(
+            $this->userActivityService->getOnlineUserIds(
+                $this->userActivityService::GENERAL_ONLINE_TIMEFRAME_IN_MINUTES
+            )
+        );
     }
 
     /**

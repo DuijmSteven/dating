@@ -45,7 +45,7 @@
                                     </td>
                                     <td>
                                         @if($userA)
-                                            <a href="{{ route('operator-platform.conversations.show', ['id' => $conversation->id]) }}">
+                                            <a href="{{ route('operator-platform.conversations.show', ['conversationId' => $conversation->id]) }}">
                                                 <img width="80"
                                                      src="{{ \App\Helpers\StorageHelper::profileImageUrl($userA) }}"
                                                      alt="User A profile image"><br>
@@ -60,7 +60,7 @@
 
                                                     $routeName = 'admin.' . $userRoleName . 's.edit.get';
                                                 @endphp
-                                                <a href="{{ route($routeName,['id' => $userA->id]) }}">
+                                                <a href="{{ route($routeName,[$userRoleName . 'Id' => $userA->id]) }}">
                                                     {{ $userA->id }}
                                                 </a> <br>
                                             <b>Username</b>: {{ $userA->username }} <br>
@@ -73,7 +73,7 @@
                                     </td>
                                     <td>
                                         @if($userB)
-                                            <a href="{{ route('operator-platform.conversations.show', ['id' => $conversation->id]) }}">
+                                            <a href="{{ route('operator-platform.conversations.show', ['conversationId' => $conversation->id]) }}">
                                                 <img width="80"
                                                      src="{{ \App\Helpers\StorageHelper::profileImageUrl($userB) }}"
                                                      alt="User B profile image"><br>
@@ -88,7 +88,7 @@
                                                    $userRoleName = \UserConstants::selectableField('role')[$userB->roles[0]->id];
                                                    $routeName = 'admin.' . $userRoleName . 's.edit.get';
                                                 @endphp
-                                                <a href="{{ route($routeName,['id' => $userB->id]) }}">
+                                                <a href="{{ route($routeName,[$userRoleName . 'Id' => $userB->id]) }}">
                                                     {{ $userB->id }}
                                                 </a> <br>
                                             <b>Username</b>: {{ $userB->username }} <br>
@@ -105,11 +105,11 @@
                                     <td>{{ $conversation->getCreatedAt()->format('d-m-Y H:i:s') }}</td>
                                     <td class="action-buttons">
                                         @if($userA && $userB)
-                                            <a href="{!! route('operator-platform.conversations.show', [$conversation->getId()]) !!}" class="btn btn-default">View (<b>{{ $conversation->messages_count }}</b> messages)</a>
+                                            <a href="{!! route('operator-platform.conversations.show', ['conversationId' => $conversation->getId()]) !!}" class="btn btn-default">View (<b>{{ $conversation->messages_count }}</b> messages)</a>
                                         @endif
 
                                         @if($conversation->getReplyableAt())
-                                            <a href="{!! route('admin.conversations.set-unreplyable', [$conversation->getId()]) !!}" class="btn btn-default">Make unreplyable</a>
+                                            <a href="{!! route('admin.conversations.set-unreplyable', ['conversationId' => $conversation->getId()]) !!}" class="btn btn-default">Make unreplyable</a>
                                         @endif
 
                                         <form method="POST" action="{{ route('admin.conversations.destroy', ['conversationId' => $conversation->getId()]) }}">

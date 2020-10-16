@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Managers\FlirtManager;
+use App\Services\UserActivityService;
 
 
 /**
@@ -17,10 +18,12 @@ class FlirtController extends FrontendController
      * FlirtController constructor.
      * @param FlirtManager $flirtManager
      */
-    public function __construct(FlirtManager $flirtManager)
-    {
+    public function __construct(
+        FlirtManager $flirtManager,
+        UserActivityService $userActivityService
+    ) {
         $this->flirtManager = $flirtManager;
-        parent::__construct();
+        parent::__construct($userActivityService);
     }
 
     /**

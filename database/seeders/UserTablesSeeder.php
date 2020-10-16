@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\EmailTypeUser;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\RoleUser;
