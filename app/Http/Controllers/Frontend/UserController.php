@@ -9,6 +9,7 @@ use App\Managers\ConversationManager;
 use App\Managers\PeasantManager;
 use App\Managers\UserManager;
 use App\Milestone;
+use App\Services\ProbabilityService;
 use App\Services\UserActivityService;
 use App\User;
 use App\UserBotMessage;
@@ -154,7 +155,7 @@ class UserController extends FrontendController
                     }
                 }
 
-                if (rand(1, 100) <= $chanceToReceiveProfileView) {
+                if (ProbabilityService::getTrueAPercentageOfTheTime($chanceToReceiveProfileView)) {
                     $user->setLastOnlineAt(
                         Carbon::now('Europe/Amsterdam')->addSeconds($secondsUntilProfileView)->setTimezone('UTC')
                     );
@@ -174,7 +175,7 @@ class UserController extends FrontendController
                             $this->authenticatedUser->getId(),
                             $user->getId()
                         ) &&
-                        rand(1, 100) <= $chanceToReceiveBotMessage
+                        ProbabilityService::getTrueAPercentageOfTheTime($chanceToReceiveBotMessage)
                     ) {
                         $secondsUntilMessage = $secondsUntilProfileView + 20;
 
