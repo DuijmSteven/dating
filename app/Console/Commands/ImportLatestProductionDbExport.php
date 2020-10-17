@@ -79,7 +79,7 @@ class ImportLatestProductionDbExport extends Command
 
             file_put_contents($tempLocation, $s3FileContents);
 
-            $dropDbprocess = new Process(sprintf(
+            $dropDbprocess = Process::fromShellCommandline(sprintf(
                 'mysqladmin -u%s -p%s drop --force %s',
                 config('database.connections.mysql.username'),
                 config('database.connections.mysql.password'),
@@ -96,7 +96,7 @@ class ImportLatestProductionDbExport extends Command
                 $this->warn('The DB was not dropped');
             }
 
-            $createDbProcess = new Process(sprintf(
+            $createDbProcess = Process::fromShellCommandline(sprintf(
                 'mysqladmin -u%s -p%s create %s',
                 config('database.connections.mysql.username'),
                 config('database.connections.mysql.password'),
@@ -113,7 +113,7 @@ class ImportLatestProductionDbExport extends Command
                 $this->warn('The DB was not created');
             }
 
-            $importProductionDbProcess = new Process(sprintf(
+            $importProductionDbProcess = Process::fromShellCommandline(sprintf(
                 'mysql -u %s -p%s %s < %s',
                 config('database.connections.mysql.username'),
                 config('database.connections.mysql.password'),
