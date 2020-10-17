@@ -57,7 +57,7 @@ class ExportDb extends Command
         )]);
 
         // run the cli job
-        $process = new Process(['mysqldump -u' . config('database.connections.mysql.username') . ' -p' .config('database.connections.mysql.password') . ' ' . config('database.connections.mysql.database') . ' > ' . $tempLocation]);
+        //$process = new Process(['mysqldump -u' . config('database.connections.mysql.username') . ' -p' .config('database.connections.mysql.password') . ' ' . config('database.connections.mysql.database') . ' > ' . $tempLocation]);
         $process->setTimeout(1000);
         $process->run();
 
