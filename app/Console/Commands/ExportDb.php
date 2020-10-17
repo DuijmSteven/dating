@@ -49,7 +49,7 @@ class ExportDb extends Command
         $targetFilePath   = '/mysql/' . config('database.connections.mysql.database') . '_' . date("Y-m-d_Hi") . '.sql';
 
         $process = new Process([sprintf(
-            'mysqldump -u %s -p%s %s > %s',
+            'mysqldump -u %s -p%s %s> %s',
             config('database.connections.mysql.username'),
             config('database.connections.mysql.password'),
             config('database.connections.mysql.database'),
