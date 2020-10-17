@@ -254,11 +254,13 @@ class PublicChatItemController extends Controller
             $publicChatItem->setPublishedAt($publishedAtInUtc);
             $publicChatItem->save();
 
-            $activity = new Activity;
-            $activity->id = bcrypt((int) time() . $messageData['sender_id']);
-            $activity->last_activity = time();
-            $activity->user_id = $messageData['sender_id'];
-            $activity->save();
+            $bot = User::findOrFail($messageData['sender_id']);
+
+            $bot->setLastOnlineAt(
+                Carbon::now('Europe/Amsterdam')->setTimezone('UTC')
+            );
+
+            $bot->save();
 
             DB::commit();
 
