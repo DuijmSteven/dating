@@ -74,7 +74,7 @@ class CreateDiscountForInactiveUsersAndMailThem extends Command
         $emailDelay = 0;
         $loopCount = 0;
 
-        $inactiveMailablePeasants = User::where('id', 233);
+        $inactiveMailablePeasants = User::find(233);
 
         /** @var User $peasant */
         foreach ($inactiveMailablePeasants as $peasant) {
