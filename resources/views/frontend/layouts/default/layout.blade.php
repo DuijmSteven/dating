@@ -25,7 +25,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <a href="{{ route('credits.show') }}" class="DiscountHeader">
-                        Tijdelik <span class="DiscountHeader__stress"> {{ $authenticatedUser->getDiscountPercentage() }}% korting </span> op je volgende aankoop, {{ ucfirst($authenticatedUser->getUsername()) }}!
+                        Tijdelijk <span class="DiscountHeader__stress"> {{ $authenticatedUser->getDiscountPercentage() }}% korting </span> op je volgende aankoop, {{ ucfirst($authenticatedUser->getUsername()) }}!
                     </a>
                 </div>
             </div>
