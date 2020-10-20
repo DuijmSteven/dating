@@ -26,10 +26,9 @@
 
     <div class="credits-page-content">
         <div class="pricing-3">
-            <div>
-                <div class="row">
+            <div class="allPacksContainer">
                     @foreach($creditpacks as $creditpack)
-                        <div class="col-xs-12 col-md-3">
+                        <div class="packContainer">
                             <div data-creditpack-id="{{ $creditpack->id }}"
                                  class="block block-pricing {{ $loop->iteration == 2 ? 'block-raised' : '' }} JS--creditpack"
                             >
@@ -71,7 +70,6 @@
                             </div>
                         </div>
                     @endforeach
-                </div>
             </div>
         </div>
 
