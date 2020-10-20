@@ -49,27 +49,29 @@ class CreateDiscountForInactiveUsersAndMailThem extends Command
     {
         $daysInactive = $this->argument('daysInactive');
 
-        $inactiveMailablePeasants = User
-            ::whereHas('roles', function ($query) {
-                $query->where('id', Role::ROLE_PEASANT);
-            })
-            ->whereHas('meta', function ($query) {
-                $query->where('email_verified', UserMeta::EMAIL_VERIFIED_DELIVERABLE)
-                    ->orWhere('email_verified', UserMeta::EMAIL_VERIFIED_RISKY);
-            })
-            ->where(function ($query) use ($daysInactive) {
-                $query
-                    ->where('active', false)
-                    ->orWhere(function ($query) use ($daysInactive) {
-                        $query
-                            ->whereDoesntHave('messages', function ($query) use ($daysInactive) {
-                                $query->where('created_at', '>=', Carbon::now()->subDays($daysInactive));
-                            });
-                    });
-            })->get();
+//        $inactiveMailablePeasants = User
+//            ::whereHas('roles', function ($query) {
+//                $query->where('id', Role::ROLE_PEASANT);
+//            })
+//            ->whereHas('meta', function ($query) {
+//                $query->where('email_verified', UserMeta::EMAIL_VERIFIED_DELIVERABLE)
+//                    ->orWhere('email_verified', UserMeta::EMAIL_VERIFIED_RISKY);
+//            })
+//            ->where(function ($query) use ($daysInactive) {
+//                $query
+//                    ->where('active', false)
+//                    ->orWhere(function ($query) use ($daysInactive) {
+//                        $query
+//                            ->whereDoesntHave('messages', function ($query) use ($daysInactive) {
+//                                $query->where('created_at', '>=', Carbon::now()->subDays($daysInactive));
+//                            });
+//                    });
+//            })->get();
 
         $emailDelay = 0;
         $loopCount = 0;
+
+        $inactiveMailablePeasants = User::where('id', 233);
 
         /** @var User $peasant */
         foreach ($inactiveMailablePeasants as $peasant) {
