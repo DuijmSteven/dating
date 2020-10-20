@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Creditpack;
 use App\EmailType;
 use App\Mail\MessageReceived;
 use App\Mail\PleaseComeBack;
@@ -49,6 +50,8 @@ class CreateDiscountForInactiveUsersAndMailThem extends Command
     {
         $daysInactive = $this->argument('daysInactive');
 
+        $creditpack = Creditpack::where('name', '!=', 'test')->orderBy('id')->get();
+
 //        $inactiveMailablePeasants = User
 //            ::whereHas('roles', function ($query) {
 //                $query->where('id', Role::ROLE_PEASANT);
@@ -82,7 +85,8 @@ class CreateDiscountForInactiveUsersAndMailThem extends Command
             if (config('app.env') === 'production') {
                 $email =
                     (new PleaseComeBack(
-                        $peasant
+                        $peasant,
+                        $creditpack
                     ))
                     ->delay($emailDelay)
                     ->onQueue('emails');
