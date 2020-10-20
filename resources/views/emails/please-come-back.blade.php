@@ -24,6 +24,12 @@
         en profiteer van <b>15% korting</b>.
     </p>
 
+    <div style="text-align: center">
+        <div style="display: inline-block; padding: 7px 20px; background-color: #ce5338; color: #fff; border: 1px solid #ce5338; border-radius: 4px; margin: 20px 0; cursor: pointer">
+            <a style="color: #fff" href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('direct-login', ['user' => $user->id, 'routeName' => 'credits.show', null, null]); @endphp">Direct naar credits pagina!</a>
+        </div>
+    </div>
+
     <p style="margin-bottom: 0">
         Elke dag weer zijn er duizenden vrouwen die zich met dezelfde intenties inschrijven op
         <a href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('direct-login', ['user' => $user->id, 'routeName' => 'credits.show', null, null]); @endphp">Altijdsex.nl</a>.
