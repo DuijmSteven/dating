@@ -16,8 +16,6 @@ mix
     .js('resources/assets/js/sites/liefdesdate-nl/app.js', 'public/js/liefdesdate-nl/app.js')
     .sass('resources/assets/sass/altijdsex-nl.scss', 'public/css/altijdsex-nl/app.css')
     .sass('resources/assets/sass/liefdesdate-nl.scss', 'public/css/liefdesdate-nl/app.css')
-    .sass('resources/assets/sass/views/sites/altijdsex-nl/credits.scss', 'public/css/altijdsex-nl/credits.css')
-    .sass('resources/assets/sass/views/sites/liefdesdate-nl/credits.scss', 'public/css/liefdesdate-nl/credits.css')
     .sourceMaps()
     .version();
 
