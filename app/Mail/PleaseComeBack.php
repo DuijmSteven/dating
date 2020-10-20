@@ -4,9 +4,10 @@ namespace App\Mail;
 
 use App\User;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Collection;
 
 class PleaseComeBack extends Mailable implements ShouldQueue
 {
@@ -15,13 +16,21 @@ class PleaseComeBack extends Mailable implements ShouldQueue
     public $user;
 
     /**
+     * @var Collection
+     */
+    public Collection $creditpacks;
+
+    /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user)
-    {
+    public function __construct(
+        User $user,
+        Collection $creditpacks
+    ) {
         $this->user = $user;
+        $this->creditpacks = $creditpacks;
     }
 
     /**

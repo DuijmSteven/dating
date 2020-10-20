@@ -1,5 +1,29 @@
 @extends('emails.layouts.default.layout')
 
+<style>
+    .credits-page-content {
+        margin-top: 20px;
+    }
+
+    .credits-page-content .block-pricing .block-caption {
+        margin-top: 10px !important;
+    }
+
+    .credits-page-content .btn {
+        width: 100%;
+        padding: 10px 0 !important;
+        font-size: 10px !important;
+    }
+
+    .credits-page-content .block-pricing .block-caption {
+        font-size: 24px;
+    }
+
+    .block-pricing .table:not(.table-rose):hover {
+        background: initial !important;
+    }
+</style>
+
 @section('unsubscribe')
     <p style="line-height: 15px; text-align: center; font-size: 12px; color: #aaa; font-family: sans-serif;">{{ @trans('unsubscribe.link_text') }}
         <a style="color: #aaa; text-decoration: underline;" href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('unsubscribe', ['user' => $user->id]); @endphp">
@@ -23,6 +47,60 @@
         <a href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('direct-login', ['user' => $user->id, 'routeName' => 'credits.show', null, null]); @endphp">Altijdsex.nl</a>
         en profiteer van <b>15% korting</b>.
     </p>
+
+    <div class="credits-page-content">
+        <div class="pricing-3">
+            <div>
+                <div class="row">
+                    @foreach($creditpacks as $creditpack)
+                        <div class="col-xs-12 col-md-3">
+                            <div data-creditpack-id="{{ $creditpack->id }}"
+                                 class="block block-pricing {{ $loop->iteration == 2 ? 'block-raised' : '' }} JS--creditpack"
+                            >
+                                <div class="table {{ $loop->iteration == 2 ? 'table-rose' : '' }}">
+                                    <h6 class="category">{{ $creditpack->name }}</h6>
+                                    <h1 class="block-caption"><b class="package-credits">{{ $creditpack->credits }}</b> {{ trans('credits.credits') }}
+                                    </h1>
+                                    <ul style="margin-bottom: 0">
+                                        <li>
+                                            <small>€</small>
+                                            <span class="{{ !$user->getDiscountPercentage() ? 'JS--price' : 'normalPrice' }}">
+                                                {{ number_format($creditpack->price / 100, 2, ',', '.') }}
+                                            </span>
+
+                                            @if($user->getDiscountPercentage())
+                                                <span class="JS--price discountPrice">{{ number_format((1 - $user->getDiscountPercentage() / 100) * $creditpack->price / 100, 2, ',', '.') }}</span>
+                                            @endif
+                                        </li>
+{{--                                        <li>--}}
+{{--                                            <b>--}}
+{{--                                                &euro;--}}
+{{--                                                <span class="{{ !$user->getDiscountPercentage() ? '' : 'normalPrice' }}">{{ number_format($creditpack->price/$creditpack->credits / 100, 2, ',', '.') }}</span>--}}
+
+{{--                                                @if($user->getDiscountPercentage())--}}
+{{--                                                    <span class="discountPrice">{{ number_format((1 - $user->getDiscountPercentage() / 100)*$creditpack->price/$creditpack->credits / 100, 2, ',', '.') }}</span>--}}
+{{--                                                @endif--}}
+{{--                                            </b> {{ trans('credits.per_message') }}--}}
+{{--                                        </li>--}}
+                                    </ul>
+
+                                    <a
+                                        href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('direct-login', ['user' => $user->id, 'routeName' => 'credits.show', null, null]); @endphp"
+                                        class="btn {{ $loop->iteration == 2 ? 'btn-white' : 'btn-rose' }} btn-round JS--prevent-default__click"
+                                    >
+                                        {{ trans('credits.select_package') }}
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 
     <p style="margin-bottom: 0">
         Elke dag weer zijn er duizenden vrouwen die zich met dezelfde intenties inschrijven op

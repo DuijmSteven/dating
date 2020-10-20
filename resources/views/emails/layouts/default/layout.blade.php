@@ -8,6 +8,8 @@
     <meta name="format-detection" content="telephone=no,address=no,email=no,date=no,url=no"> <!-- Tell iOS not to automatically link certain text strings. -->
     <title></title> <!-- The title tag shows in email notifications, like Android 4.4. -->
 
+    <link rel="stylesheet" href="{{ mix('css/' . config('app.directory_name') . '/credits.css') }}">
+
     <!-- Web Font / @font-face : BEGIN -->
     <!-- NOTE: If web fonts are not required, lines 10 - 27 can be safely removed. -->
 

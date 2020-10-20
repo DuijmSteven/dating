@@ -19,7 +19,7 @@ class CreateDiscountForInactiveUsersAndMailThem extends Command
      *
      * @var string
      */
-    protected $signature = 'send-discount:inactive-peasants';
+    protected $signature = 'send-discount:inactive-peasants {daysInactive}';
 
     /**
      * The console command description.
@@ -47,6 +47,8 @@ class CreateDiscountForInactiveUsersAndMailThem extends Command
      */
     public function handle()
     {
+        $daysInactive = $this->argument('daysInactive');
+
         $inactiveMailablePeasants = User
             ::whereHas('roles', function ($query) {
                 $query->where('id', Role::ROLE_PEASANT);
@@ -55,12 +57,13 @@ class CreateDiscountForInactiveUsersAndMailThem extends Command
                 $query->where('email_verified', UserMeta::EMAIL_VERIFIED_DELIVERABLE)
                     ->orWhere('email_verified', UserMeta::EMAIL_VERIFIED_RISKY);
             })
-            ->where(function ($query) {
-                $query->where('active', false)
-                    ->orWhere(function ($query) {
+            ->where(function ($query) use ($daysInactive) {
+                $query
+                    ->where('active', false)
+                    ->orWhere(function ($query) use ($daysInactive) {
                         $query
-                            ->whereDoesntHave('messages', function ($query) {
-                                $query->where('created_at', '>=', Carbon::now()->subMonths(1));
+                            ->whereDoesntHave('messages', function ($query) use ($daysInactive) {
+                                $query->where('created_at', '>=', Carbon::now()->subDays($daysInactive));
                             });
                     });
             })->get();

@@ -120,7 +120,8 @@ class TestController extends Controller
         $user = User::find(233);
 
         return view('emails.please-come-back', [
-            'user' => $user
+            'user' => $user,
+            'creditpacks' => Creditpack::where('name', '!=', 'test')->orderBy('id')->get()
         ]);
     }
 

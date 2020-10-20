@@ -26,6 +26,10 @@ Table of Contents End
 //    color: #3C4857;
 //}
 
+@import "../../../variables";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+@import "../../../altijdsex-nl-variables";
+
 .credits-page-content {
     .paymentMethodsList {
         .list-group-item:last-child {
