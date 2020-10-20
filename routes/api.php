@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,12 +12,16 @@ use Illuminate\Http\Request;
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('user', 'Api\UserController@getCurrentUser')
     ->middleware('auth:api');
 
 Route::group([
     'prefix' => 'users'
 ], function () {
+    Route::post('token', 'Auth\LoginController@sanctumToken');
+
     Route::get('online/ids', 'Api\UserController@getOnlineUserIds')
         ->name('users.get-online-ids');
 

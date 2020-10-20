@@ -47,6 +47,15 @@
             </div>
         @endif
 
+        @if($peasantPaymentsChart)
+            <div style="margin-bottom: 20px; padding: 10px 10px 0">
+                <div style="width: 100%">
+                    {!! $peasantPaymentsChart->container() !!}
+                    {!! $peasantPaymentsChart->script() !!}
+                </div>
+            </div>
+    @endif
+
         <!-- /.box-header -->
         <!-- form start -->
         <form role="form" method="POST" action="{!! route('admin.peasants.update', ['userId' => $peasant->id]) !!}"

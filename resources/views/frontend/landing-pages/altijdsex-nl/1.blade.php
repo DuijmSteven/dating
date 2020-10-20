@@ -772,6 +772,14 @@
         }
     }
 
+    .navbar-brand img {
+        height: 100%;
+    }
+
+    .navbar-brand {
+        height: 70px;
+    }
+
 </style>
 <body class="landingPage">
 <header>

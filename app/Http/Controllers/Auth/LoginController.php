@@ -6,7 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Services\UserActivityService;
 use App\Traits\Users\AuthenticatesUsers;
 use App\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 
 /**
  * Class LoginController
@@ -58,6 +62,31 @@ class LoginController extends Controller
         if ($user->isOperator()) {
             return redirect()->route('operator-platform.dashboard');
         }
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function sanctumToken(Request $request)
+    {
+        $this->validateLogin($request);
+
+        $user = User::where('email', $request->identity)->first();
+
+        if (! $user) {
+            $user = User::where('username', $request->identity)->first();
+        }
+
+        if (! $user || ! Hash::check($request->password, $user->password)) {
+            return response()->json('The provided credentials are incorrect.', 401);
+        }
+
+        $plainTextToken = $user->createToken($request->identity)->plainTextToken;
+
+        Log::info($plainTextToken);
+
+        return response()->json($plainTextToken);
     }
 
     /**

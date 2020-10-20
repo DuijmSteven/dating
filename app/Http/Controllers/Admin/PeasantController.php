@@ -448,6 +448,7 @@ class PeasantController extends Controller
                 'carbonNow' => Carbon::now(),
                 'peasant' => $peasant,
                 'peasantMessagesChart' => $this->chartsManager->createPeasantMessagesChart($peasant->getId(), $launchDate),
+                'peasantPaymentsChart' => $this->chartsManager->createPaymentsChart($launchDate, $peasant->getId()),
                 'peasantMessagesMonthlyChart' => $this->chartsManager->createPeasantMessagesMonthlyChart($peasant->getId()),
             ]
         );

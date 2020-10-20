@@ -274,7 +274,7 @@ class ChartsManager
      * @return PaymentsChart|null
      * @throws \Exception
      */
-    public function createPaymentsChart($since)
+    public function createPaymentsChart($since, int $peasantId = null)
     {
         $query = \DB::table('payments as p')
             ->select(\DB::raw('DATE(CONVERT_TZ(p.created_at, \'UTC\', \'Europe/Amsterdam\')) as creationDate, COUNT(p.id) AS paymentsCount'))
@@ -282,8 +282,13 @@ class ChartsManager
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('p.status', Payment::STATUS_COMPLETED)
-            ->where('p.created_at', '>=', $since)
-            ->groupBy('creationDate')
+            ->where('p.created_at', '>=', $since);
+
+        if ($peasantId) {
+            $query->where('u.id', $peasantId);
+        }
+
+        $query->groupBy('creationDate')
             ->orderBy('creationDate', 'ASC');
 
         $results = $query->get();
