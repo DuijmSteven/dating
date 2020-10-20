@@ -24,58 +24,6 @@
         en profiteer van <b>15% korting</b>.
     </p>
 
-    <div class="credits-page-content">
-        <div class="pricing-3">
-            <div class="allPacksContainer">
-                    @foreach($creditpacks as $creditpack)
-                        <div class="packContainer">
-                            <div data-creditpack-id="{{ $creditpack->id }}"
-                                 class="block block-pricing {{ $loop->iteration == 2 ? 'block-raised' : '' }} JS--creditpack"
-                            >
-                                <div class="table {{ $loop->iteration == 2 ? 'table-rose' : '' }}">
-                                    <h6 class="category">{{ $creditpack->name }}</h6>
-                                    <h1 class="block-caption"><b class="package-credits">{{ $creditpack->credits }}</b> {{ trans('credits.credits') }}
-                                    </h1>
-                                    <ul style="margin-bottom: 0">
-                                        <li>
-                                            <small>€</small>
-                                            <span class="{{ !$user->getDiscountPercentage() ? 'JS--price' : 'normalPrice' }}">
-                                                {{ number_format($creditpack->price / 100, 2, ',', '.') }}
-                                            </span>
-
-                                            @if($user->getDiscountPercentage())
-                                                <span class="JS--price discountPrice">{{ number_format((1 - $user->getDiscountPercentage() / 100) * $creditpack->price / 100, 2, ',', '.') }}</span>
-                                            @endif
-                                        </li>
-{{--                                        <li>--}}
-{{--                                            <b>--}}
-{{--                                                &euro;--}}
-{{--                                                <span class="{{ !$user->getDiscountPercentage() ? '' : 'normalPrice' }}">{{ number_format($creditpack->price/$creditpack->credits / 100, 2, ',', '.') }}</span>--}}
-
-{{--                                                @if($user->getDiscountPercentage())--}}
-{{--                                                    <span class="discountPrice">{{ number_format((1 - $user->getDiscountPercentage() / 100)*$creditpack->price/$creditpack->credits / 100, 2, ',', '.') }}</span>--}}
-{{--                                                @endif--}}
-{{--                                            </b> {{ trans('credits.per_message') }}--}}
-{{--                                        </li>--}}
-                                    </ul>
-
-                                    <a
-                                        href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('direct-login', ['user' => $user->id, 'routeName' => 'credits.show', null, null]); @endphp"
-                                        class="btn {{ $loop->iteration == 2 ? 'btn-white' : 'btn-rose' }} btn-round JS--prevent-default__click"
-                                    >
-                                        {{ trans('credits.select_package') }}
-                                    </a>
-
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-            </div>
-        </div>
-
-    </div>
-
-
     <p style="margin-bottom: 0">
         Elke dag weer zijn er duizenden vrouwen die zich met dezelfde intenties inschrijven op
         <a href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('direct-login', ['user' => $user->id, 'routeName' => 'credits.show', null, null]); @endphp">Altijdsex.nl</a>.
