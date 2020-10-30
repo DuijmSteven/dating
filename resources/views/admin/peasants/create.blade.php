@@ -12,7 +12,7 @@
         <form role="form" method="POST" action="{!! route('admin.peasants.store') !!}" enctype="multipart/form-data">
             {!! csrf_field() !!}
             <input type="hidden" value="peasant" name="role">
-            <input type="hidden" type="text" value="nl" name="country">
+            <input type="hidden" value="nl" name="country">
             <div class="box-body">
                 <div class="row">
                     <div class="col-sm-6">

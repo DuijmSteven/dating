@@ -32,7 +32,7 @@ class BotCreateRequest extends Request
         $userProfileFields = UserConstants::selectableFields('bot');
 
         $rules = [
-            'username' => 'min:5|max:50|string|required|unique:users',
+            'username' => 'without_spaces|min:5|max:50|string|required|unique:users',
             'password' => 'required|min:8',
             'active' => 'required|boolean',
             'too_slutty_for_ads' => 'required|boolean',

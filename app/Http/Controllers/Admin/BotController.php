@@ -222,18 +222,7 @@ class BotController extends Controller
             ];
         }
 
-        return redirect()->back()->with('alerts', $alerts);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return redirect()->back()->withInput()->with('alerts', $alerts);
     }
 
     /**
@@ -314,7 +303,7 @@ class BotController extends Controller
                 'message' => 'The bot was not updated due to an exception.'
             ];
         }
-        return redirect()->back()->with('alerts', $alerts);
+        return redirect()->back()->withInput()->with('alerts', $alerts);
     }
 
     /**

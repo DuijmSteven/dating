@@ -67,6 +67,7 @@ class BotManager extends UserManager
      */
     public function createBot(array $botData)
     {
+        $this->emptyToNull($botData);
         $botData = $this->buildBotArrayToPersist($botData, 'create');
         $botData['user']['created_by_id'] = \Auth::user()->getId();
 
@@ -80,6 +81,7 @@ class BotManager extends UserManager
      */
     public function updateBot(array $botData, int $botId)
     {
+        $this->emptyToNull($botData);
         $botData = $this->buildBotArrayToPersist($botData, 'update');
         $this->updateUser($botData, $botId);
     }

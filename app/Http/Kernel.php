@@ -2,9 +2,31 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\EncryptCookies;
+use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Http\Middleware\VerifyCsrfToken;
 use App\Middleware\User\SetLastOnlineAt;
 use App\Middleware\User\SetLocale;
+use App\Middleware\User\VerifyAdmin;
+use App\Middleware\User\VerifyAnonymousDomain;
+use App\Middleware\User\VerifyEditor;
+use App\Middleware\User\VerifyIsCurrentUser;
+use App\Middleware\User\VerifyNotAnonymousDomain;
+use App\Middleware\User\VerifyNotEditor;
+use App\Middleware\User\VerifyNotOperator;
+use App\Middleware\User\VerifyOperator;
+use Fruitcake\Cors\HandleCors;
+use Illuminate\Auth\Middleware\Authenticate;
+use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
+use Illuminate\Auth\Middleware\Authorize;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode;
+use Illuminate\Routing\Middleware\SubstituteBindings;
+use Illuminate\Routing\Middleware\ThrottleRequests;
+use Illuminate\Routing\Middleware\ValidateSignature;
+use Illuminate\Session\Middleware\StartSession;
+use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class Kernel extends HttpKernel
 {
@@ -16,7 +38,8 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
-        \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
+        CheckForMaintenanceMode::class,
+        HandleCors::class
     ];
 
     /**
@@ -26,12 +49,12 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
-            \App\Http\Middleware\EncryptCookies::class,
-            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-            \Illuminate\Session\Middleware\StartSession::class,
-            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            \App\Http\Middleware\VerifyCsrfToken::class,
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            EncryptCookies::class,
+            AddQueuedCookiesToResponse::class,
+            StartSession::class,
+            ShareErrorsFromSession::class,
+            VerifyCsrfToken::class,
+            SubstituteBindings::class,
             SetLocale::class,
             SetLastOnlineAt::class
         ],
@@ -51,20 +74,23 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        'can' => \Illuminate\Auth\Middleware\Authorize::class,
-        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'admin' => \App\Middleware\User\VerifyAdmin::class,
-        'editor' => \App\Middleware\User\VerifyEditor::class,
-        'not_editor' => \App\Middleware\User\VerifyNotEditor::class,
-        'not_operator' => \App\Middleware\User\VerifyNotOperator::class,
-        'current_user' => \App\Middleware\User\VerifyIsCurrentUser::class,
-        'operator' => \App\Middleware\User\VerifyOperator::class,
-        'anonymous_domain' => \App\Middleware\User\VerifyAnonymousDomain::class,
-        'not_anonymous_domain' => \App\Middleware\User\VerifyNotAnonymousDomain::class,
-        'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
+        'auth' => Authenticate::class,
+        'auth.basic' => AuthenticateWithBasicAuth::class,
+        'bindings' => SubstituteBindings::class,
+        'can' => Authorize::class,
+        'guest' => RedirectIfAuthenticated::class,
+        'throttle' => ThrottleRequests::class,
+        'admin' => VerifyAdmin::class,
+        'editor' => VerifyEditor::class,
+        'not_editor' => VerifyNotEditor::class,
+        'not_operator' => VerifyNotOperator::class,
+        'current_user' => VerifyIsCurrentUser::class,
+        'operator' => VerifyOperator::class,
+        'anonymous_domain' => VerifyAnonymousDomain::class,
+        'not_anonymous_domain' => VerifyNotAnonymousDomain::class,
+        'signed' => ValidateSignature::class,
+        'api_admin' => \App\Middleware\Api\VerifyAdmin::class,
+        'api_operator' => \App\Middleware\Api\VerifyOperator::class,
+        'api_editor' => \App\Middleware\Api\VerifyEditor::class,
     ];
 }

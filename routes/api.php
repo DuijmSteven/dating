@@ -17,19 +17,21 @@ use Illuminate\Support\Facades\Route;
 Route::get('user', 'Api\UserController@getCurrentUser')
     ->middleware('auth:api');
 
-Route::group([
-    'prefix' => 'users'
-], function () {
-    Route::post('token', 'Auth\LoginController@sanctumToken');
 
-    Route::get('online/ids', 'Api\UserController@getOnlineUserIds')
-        ->name('users.get-online-ids');
+Route::group([
+    'prefix' => 'users',
+    'middleware' => ['auth:sanctum']
+], function () {
+    Route::get('paginated/{roleId}/{page}', 'Api\UserController@getUsersPaginated')
+        ->name('users.get-paginated');
+
 
     Route::get('{userId}/credits', 'Api\UserController@getUserCredits')
         ->name('users.get-user-credits');
 
     Route::get('{userId}/{roleId?}', 'Api\UserController@getUserById')
-        ->name('users.get-by-id');
+        ->name('users.get-by-id')
+        ->middleware('auth:sanctum');
 
     Route::get('{userId}/milestones/accepted-welcome-message', 'Api\UserController@acceptedWelcomeMessageMilestone')
         ->name('users.milestones.award.accepted-welcome-message');
@@ -38,11 +40,26 @@ Route::group([
 Route::group([
     'prefix' => 'users'
 ], function () {
-    Route::get('/{roleId}/{page}', 'Api\UserController@getUsersPaginated')
-        ->name('users.get-paginated')
-        ->middleware('auth:api');
+    Route::post('token', 'Auth\LoginController@sanctumToken');
+
+    Route::get('online/ids', 'Api\UserController@getOnlineUserIds')
+        ->name('users.get-online-ids');
 });
 
+Route::group([
+    'prefix' => 'bots',
+    'middleware' => ['auth:sanctum']
+], function () {
+    Route::post('create', 'Api\BotController@create');
+    Route::put('{botId}/update', 'Api\BotController@update');
+});
+
+Route::group([
+    'prefix' => 'users',
+    'middleware' => ['auth:sanctum']
+], function () {
+    Route::delete('{id}/destroy', 'Api\UserController@destroy');
+});
 
 Route::group([
     'prefix' => 'conversation-messages'

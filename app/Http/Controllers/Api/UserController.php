@@ -49,7 +49,7 @@ class UserController
         return $request->user();
     }
 
-    public function getUsersPaginated(Request $request, int $roleId, int $page = 1)
+    public function getUsersPaginated(int $roleId, int $page = 1)
     {
         try {
             /** @var Collection $bots */
@@ -75,10 +75,10 @@ class UserController
                 ->paginate(20);
 
         } catch (\Exception $exception) {
-            return JsonResponse::create($exception->getMessage(), 404);
+            return response()->json($exception->getMessage(), 404);
         }
 
-        return JsonResponse::create($bots);
+        return response()->json($bots, 200);
     }
 
     /**
@@ -90,10 +90,10 @@ class UserController
         try {
             $user = $this->userManager->getUserById($userId, $roleId);
         } catch (\Exception $exception) {
-            return JsonResponse::create($exception->getMessage(), 404);
+            return response()->json($exception->getMessage(), 404);
         }
 
-        return JsonResponse::create($user);
+        return response()->json($user);
     }
 
     /**
@@ -136,4 +136,27 @@ class UserController
         return JsonResponse::create('success');
     }
 
+
+    public function destroy(Request $request, int $id)
+    {
+        /** @var User $requestingUser */
+        $requestingUser = $request->user();
+
+        /** @var User $bot */
+        $bot = User::with('createdByOperator')->find($id);
+
+        if (
+            !$requestingUser->isAdmin() &&
+            $bot->createdByOperator->getId() !== $requestingUser->getId()
+        ) {
+            return response()->json('You cannot delete profiles that you have not created', 401);
+        }
+
+        try {
+            $this->userManager->deleteUser($id);
+            return response()->json();
+        } catch (\Exception $exception) {
+            return response()->json($exception->getMessage(), 500);
+        }
+    }
 }

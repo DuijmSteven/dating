@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::post('login', 'Auth\LoginController@login')
     ->name('login.post')
     ->middleware(['guest']);

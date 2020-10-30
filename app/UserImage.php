@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Helpers\StorageHelper;
 use Illuminate\Database\Eloquent\Model;
 
 class UserImage extends Model
@@ -20,12 +21,28 @@ class UserImage extends Model
         'profile'
     ];
 
-    /**
-     * Get the user that owns the meta.
-     */
+    protected $appends = [
+        'url',
+        'urlThumb'
+    ];
+
+    public function getUrlAttribute()
+    {
+        if (config('app.env') === 'local') {
+            //return null;
+        }
+
+        return StorageHelper::userImageUrl($this->user_id, $this->getFilename());
+    }
+
+    public function getUrlThumbAttribute()
+    {
+        return StorageHelper::userImageUrl($this->user_id, $this->getFilename(), true);
+    }
+
     public function user()
     {
-        return $this->belongsTo('App\User', 'users', 'id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function getFilename()

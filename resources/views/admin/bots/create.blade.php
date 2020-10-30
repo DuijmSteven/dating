@@ -13,7 +13,7 @@
             {!! csrf_field() !!}
             <input type="hidden" value="bot" name="role">
             <input type="hidden" value="" name="email">
-            <input type="hidden" type="text" value="nl" name="country">
+            <input type="hidden" value="nl" name="country">
             <div class="box-body">
                 <div class="row">
                     <div class="col-sm-6">
@@ -213,6 +213,7 @@
                             @endif
                         </div>
                     </div>
+                </div>
             </div>
             <!-- /.box-body -->
             <div class="box-footer text-right">

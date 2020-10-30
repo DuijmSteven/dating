@@ -120,6 +120,7 @@ class User extends Authenticatable
         'views',
         'uniqueViews',
         'images',
+        'imagesNotProfile',
         'createdByOperator'
     ];
 

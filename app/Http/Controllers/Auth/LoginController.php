@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Role;
 use App\Services\UserActivityService;
 use App\Traits\Users\AuthenticatesUsers;
 use App\User;
@@ -70,23 +71,54 @@ class LoginController extends Controller
      */
     public function sanctumToken(Request $request)
     {
+        $identityIsUsername = true;
+
         $this->validateLogin($request);
 
-        $user = User::where('email', $request->identity)->first();
+        $user = User
+            ::where('username', $request->identity)
+            ->first();
 
         if (! $user) {
-            $user = User::where('username', $request->identity)->first();
+            $identityIsUsername = false;
+            $user = User::where('email', $request->identity)->first();
         }
 
         if (! $user || ! Hash::check($request->password, $user->password)) {
             return response()->json('The provided credentials are incorrect.', 401);
         }
 
+        $userRoleId = $user->roles[0]->id;
+
+        $relations = User::COMMON_RELATIONS;
+        $relationCounts = [];
+
+        if ($userRoleId === Role::ROLE_OPERATOR) {
+            $relations = array_merge($relations, User::OPERATOR_RELATIONS);
+            $relationCounts = array_merge($relationCounts, User::OPERATOR_RELATION_COUNTS);
+        } elseif ($userRoleId === Role::ROLE_EDITOR) {
+            $relations = array_merge($relations, User::EDITOR_RELATIONS);
+            $relationCounts = array_merge($relationCounts, User::EDITOR_RELATION_COUNTS);
+        }
+
+        $user = User
+            ::with($relations)
+            ->withCount($relationCounts)
+            ->where(
+                $identityIsUsername ? 'username' : 'email',
+                $request->identity
+            )
+            ->first();
+
         $plainTextToken = $user->createToken($request->identity)->plainTextToken;
 
-        Log::info($plainTextToken);
+        $response = [
+            'token' => $plainTextToken,
+            'role' => $user->roles[0]->id,
+            'user' => $user
+        ];
 
-        return response()->json($plainTextToken);
+        return response()->json($response);
     }
 
     /**

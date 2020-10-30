@@ -76,6 +76,20 @@ class UserManager
     }
 
     /**
+     * @param array $array
+     * @return array
+     */
+    protected function emptyToNull(array &$array)
+    {
+        foreach ($array as $key => $value) {
+            if ($value == '') {
+                $array[$key] = null;
+            }
+        }
+        return $array;
+    }
+
+    /**
      * @param User $user
      * @return array
      */

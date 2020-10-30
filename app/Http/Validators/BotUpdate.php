@@ -1,38 +1,24 @@
 <?php
 
-namespace App\Http\Requests\Admin\Bots;
+namespace App\Http\Validators;
 
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Http\Requests\Request;
 use Carbon\Carbon;
 
-/**
- * Class BotUpdateRequest
- * @package App\Http\Requests\Admin\Bots
- */
-class BotUpdateRequest extends Request
+class BotUpdate extends Request
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
      * @return array
      */
-    public function rules()
+    public static function rules($botId, $files)
     {
         $userProfileFields = UserConstants::selectableFields('bot');
 
         $rules = [
-            'username' => 'without_spaces|min:5|max:50|string|required|unique:users,username,' . trim($this->route('id') . ',id'),
+            'username' => 'without_spaces|min:5|max:50|string|required|unique:users,username,' . $botId . ',id',
             'active' => 'boolean',
             'too_slutty_for_ads' => 'boolean',
             'dob' => 'date_format:d-m-Y|before:' . Carbon::now('Europe/Amsterdam')->subYears(18)->format('d-m-Y') . '|after:' . Carbon::now('Europe/Amsterdam')->subYears(100)->format('d-m-Y'),
@@ -51,9 +37,8 @@ class BotUpdateRequest extends Request
             'looking_for' => 'string|max:1000'
         ];
 
-        if (!is_null($this->files->get('user_images'))) {
-
-            $imageCount = count($this->files->get('user_images')) - 1;
+        if (!is_null($files->get('user_images'))) {
+            $imageCount = count($files->get('user_images')) - 1;
             foreach (range(0, $imageCount) as $index) {
                 $rules['user_images.' . $index] = 'image|max:4000';
             }

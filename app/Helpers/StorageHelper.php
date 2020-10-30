@@ -113,14 +113,6 @@ class StorageHelper
     {
         $filePath = self::userImagesPath($userId) . $filename;
 
-        // this is commented out because it was having a huge impart on performace
-
-//        if (!Storage::disk('cloud')->exists($filePath)) {
-//            \Log::error('Image does not exist on s3 bucket. User Id: ' . $userId. ', Filename: ' . $filename);
-//
-//            return '';
-//        }
-
         if ($thumb) {
             $explodedFilename = explode('.', $filePath);
 

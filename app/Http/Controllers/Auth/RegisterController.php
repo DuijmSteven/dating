@@ -1,4 +1,4 @@
-<?php  ?><?php
+<?php
 
 namespace App\Http\Controllers\Auth;
 
@@ -15,7 +15,6 @@ use App\Traits\Users\RegistersUsers;
 use App\User;
 use App\UserAccount;
 use App\UserAffiliateTracking;
-use App\UserFingerprint;
 use App\UserMeta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
