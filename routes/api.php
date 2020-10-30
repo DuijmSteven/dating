@@ -19,6 +19,22 @@ Route::get('user', 'Api\UserController@getCurrentUser')
 
 
 Route::group([
+    'prefix' => 'users'
+], function () {
+    Route::post('token', 'Auth\LoginController@sanctumToken');
+
+    Route::get('online/ids', 'Api\UserController@getOnlineUserIds')
+        ->name('users.get-online-ids');
+});
+
+
+// TODO add this to auth routes
+Route::get('users/{userId}/credits', 'Api\UserController@getUserCredits')
+    ->name('users.get-user-credits');
+Route::get('users/{userId}/{roleId?}', 'Api\UserController@getUserById')
+    ->name('users.get-by-id');
+
+Route::group([
     'prefix' => 'users',
     'middleware' => ['auth:sanctum']
 ], function () {
@@ -26,24 +42,14 @@ Route::group([
         ->name('users.get-paginated');
 
 
-    Route::get('{userId}/credits', 'Api\UserController@getUserCredits')
-        ->name('users.get-user-credits');
+//    Route::get('{userId}/credits', 'Api\UserController@getUserCredits')
+//        ->name('users.get-user-credits');
 
-    Route::get('{userId}/{roleId?}', 'Api\UserController@getUserById')
-        ->name('users.get-by-id')
-        ->middleware('auth:sanctum');
+//    Route::get('{userId}/{roleId?}', 'Api\UserController@getUserById')
+//        ->name('users.get-by-id');
 
     Route::get('{userId}/milestones/accepted-welcome-message', 'Api\UserController@acceptedWelcomeMessageMilestone')
         ->name('users.milestones.award.accepted-welcome-message');
-});
-
-Route::group([
-    'prefix' => 'users'
-], function () {
-    Route::post('token', 'Auth\LoginController@sanctumToken');
-
-    Route::get('online/ids', 'Api\UserController@getOnlineUserIds')
-        ->name('users.get-online-ids');
 });
 
 Route::group([

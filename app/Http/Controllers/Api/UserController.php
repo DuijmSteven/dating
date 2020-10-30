@@ -5,19 +5,13 @@ namespace App\Http\Controllers\Api;
 use App\Managers\UserManager;
 use App\Milestone;
 use App\MilestoneUser;
-use App\Role;
 use App\Services\UserActivityService;
 use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 
-/**
- * Class UserController
- * @package App\Http\Controllers
- */
 class UserController
 {
     /** @var UserManager */
