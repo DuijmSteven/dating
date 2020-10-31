@@ -55,6 +55,7 @@ require('clientjs');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+require('../../vue/vue-js-app');
 require('../../vue/custom');
 
 Vue.component('private-chat-manager', require('../../vue/components/sites/' + DP.appDirectoryName + '/PrivateChatManager.vue'));
@@ -64,7 +65,6 @@ Vue.component('chat-form', require('../../vue/components/sites/' + DP.appDirecto
 Vue.component('credits-count', require('../../vue/components/sites/' + DP.appDirectoryName + '/CreditsCount.vue'));
 Vue.component('public-chat', require('../../vue/components/sites/' + DP.appDirectoryName + '/PublicChat.vue'));
 
-require('../../vue/vue-js-app');
 
 /**
  * Other Javascript

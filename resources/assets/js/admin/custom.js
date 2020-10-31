@@ -42,9 +42,6 @@ $(window).on('load', function () {
         // Auto-completes Dutch cities in bot creation view text field
 
         $.ajax({
-            beforeSend: function(request) {
-                request.setRequestHeader("Authorization", 'Bearer ' + DP.authenticatedUserApiToken);
-            },
             dataType: "json",
             url: DP.baseUrl + '/api/cities/',
             success: function(data) {

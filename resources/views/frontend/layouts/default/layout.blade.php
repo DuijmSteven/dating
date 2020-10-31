@@ -125,7 +125,8 @@
         postChatItemRoute: '{{ route('public-chat-items.post') }}',
         csrfToken: '{{ csrf_token() }}',
         publicChatItemPeasantType: '{{ \App\PublicChatItem::TYPE_PEASANT }}',
-        appDirectoryName: '{{ config('app.directory_name') }}'
+        appDirectoryName: '{{ config('app.directory_name') }}',
+        sanctumToken: '{{ \Illuminate\Support\Facades\Cache::get('sanctum_token') }}'
     };
 </script>
 

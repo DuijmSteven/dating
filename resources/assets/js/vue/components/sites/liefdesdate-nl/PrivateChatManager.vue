@@ -114,6 +114,8 @@
 </template>
 
 <script>
+import { requestConfig } from '../../../common-imports';
+
     export default {
         props: [
             'user',
@@ -195,7 +197,10 @@
             deleteConversation: function (conversationId) {
                 this.$root.$emit('conversationDeleted', conversationId);
 
-                axios.delete('/api/conversations/' + conversationId).then(response => {
+                axios.delete(
+                    '/api/conversations/' + conversationId,
+                    requestConfig
+                ).then(response => {
                     this.fetchUserConversations();
 
                     this.eventHub.$emit('conversationDeleted', conversationId);
@@ -203,7 +208,10 @@
                 });
             },
             fetchConversationManagerStatus: function () {
-                axios.get('/api/conversations/conversation-manager-state/' + parseInt(DP.authenticatedUser.id)).then(
+                axios.get(
+                    '/api/conversations/conversation-manager-state/' + parseInt(DP.authenticatedUser.id),
+                    requestConfig
+                ).then(
                     response => {
                         this.conversationManagerState = response;
 
@@ -223,7 +231,10 @@
             fetchUserConversations: function (fetchStatus) {
                 this.fetchingUserConversations = true;
 
-                axios.get('/api/conversations/' + this.user.id).then(response => {
+                axios.get(
+                    '/api/conversations/' + this.user.id,
+                    requestConfig
+                ).then(response => {
                     this.conversations = response.data;
 
                     this.countConversationsWithNewMessages = 0;
@@ -296,7 +307,8 @@
                 axios.get(
                     '/api/conversations/conversation-manager-state/' +
                     parseInt(DP.authenticatedUser.id) + '/' +
-                    managerState
+                    managerState,
+                    requestConfig
                 ).then(
                     response => {}
                 );

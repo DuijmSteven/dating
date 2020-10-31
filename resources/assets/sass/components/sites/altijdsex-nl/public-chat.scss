@@ -47,6 +47,7 @@
 
     &__textarea.form-control {
         height: 42px;
+        line-height: 28px;
     }
 
     &__timeAgo {
@@ -138,7 +139,7 @@
     }
 
     &__panelFooter {
-        background-color: white;
+        background-color: #fff !important;
         border-top: 1px solid $input-border;
 
         .btn {

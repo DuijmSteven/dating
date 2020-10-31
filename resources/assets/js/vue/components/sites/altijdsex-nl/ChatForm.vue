@@ -67,6 +67,7 @@
 
 <script>
     import emojiData from '@zaichaopan/emoji-picker/data/emojis.json';
+    import { requestConfig } from '../../../common-imports';
 
     export default {
         props: [
@@ -160,7 +161,10 @@
                 this.$nextTick(() => textarea.focus());
             },
             getUserCredits: function () {
-                axios.get('/api/users/' + parseInt(DP.authenticatedUser.id) + '/credits').then(
+                axios.get(
+                    '/api/users/' + parseInt(DP.authenticatedUser.id) + '/credits',
+                    requestConfig
+                ).then(
                     response => {
                         this.userCredits = response.data;
                     }

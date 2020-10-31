@@ -6,6 +6,7 @@
 
 <script>
     import isUndefined from "admin-lte/bower_components/moment/src/lib/utils/is-undefined";
+    import { requestConfig } from '../../../common-imports';
 
     export default {
         data() {
@@ -28,7 +29,10 @@
 
         methods: {
             getUserCredits: function () {
-                axios.get('/api/users/' + parseInt(DP.authenticatedUser.id) + '/credits').then(
+                axios.get(
+                    '/api/users/' + parseInt(DP.authenticatedUser.id) + '/credits',
+                    requestConfig
+                ).then(
                     response => {
                         this.userCredits = response.data;
                         this.$root.$emit('userCreditsUpdated', {credits: this.userCredits});

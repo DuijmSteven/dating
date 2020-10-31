@@ -9,6 +9,7 @@ use App\Traits\Users\AuthenticatesUsers;
 use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
@@ -51,6 +52,9 @@ class LoginController extends Controller
             $user->setDeactivatedAt(null);
             $user->save();
         }
+
+        $plainTextToken = $user->createToken($request->identity)->plainTextToken;
+        Cache::put('sanctum_token', $plainTextToken);
 
         if ($user->isAdmin()) {
             return redirect()->route('admin.dashboard');

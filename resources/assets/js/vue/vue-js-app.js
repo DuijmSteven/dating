@@ -1,9 +1,9 @@
 import isUndefined from "admin-lte/bower_components/moment/src/lib/utils/is-undefined";
 import {isNull} from "lodash";
 
+import { requestConfig } from './common-imports';
 
 if ($('#app').length > 0) {
-
     const app = new Vue({
         el: '#app',
 
@@ -45,7 +45,10 @@ if ($('#app').length > 0) {
 
         methods: {
             getUserCredits: function () {
-                axios.get('/api/users/' + parseInt(DP.authenticatedUser.id) + '/credits').then(
+                axios.get(
+                    '/api/users/' + parseInt(DP.authenticatedUser.id) + '/credits',
+                    requestConfig
+                ).then(
                     response => {
                         this.userCredits = response.data;
                     }
@@ -54,7 +57,10 @@ if ($('#app').length > 0) {
             getOnlineUserIds: function () {
                 this.gettingOnlineIds = true;
 
-                axios.get('/api/users/online/ids').then(
+                axios.get(
+                    '/api/users/online/ids',
+                    requestConfig
+                ).then(
                     response => {
                         this.onlineUserIds = response.data;
                         this.gettingOnlineIds = false;
@@ -62,7 +68,10 @@ if ($('#app').length > 0) {
                 );
             },
             setConversationActivityForUser: function (conversation, value) {
-                axios.get('/api/conversations/set-conversation-activity-for-user/' + conversation.currentUserId + '/' + conversation.otherUserId + '/' + conversation.currentUserId + '/' + value).then(
+                axios.get(
+                    '/api/conversations/set-conversation-activity-for-user/' + conversation.currentUserId + '/' + conversation.otherUserId + '/' + conversation.currentUserId + '/' + value,
+                    requestConfig
+                ).then(
                     response => {
                     }
                 );
@@ -80,7 +89,10 @@ if ($('#app').length > 0) {
             getConversationPartners: function () {
                 this.gettingPartners = true;
 
-                axios.get('/api/conversations/conversation-partner-ids/' + parseInt(DP.authenticatedUser.id)).then(
+                axios.get(
+                    '/api/conversations/conversation-partner-ids/' + parseInt(DP.authenticatedUser.id),
+                        requestConfig
+                    ).then(
                     response => {
                         if (response.data && response.data.length > 0) {
                             this.currentConversationPartnersResponse = response;
@@ -132,7 +144,10 @@ if ($('#app').length > 0) {
                 }
             },
             fetchUserAndAddToPartners: function (userBId, state, persist = false) {
-                axios.get('/api/users/' + userBId).then(
+                axios.get(
+                    '/api/users/' + userBId,
+                    requestConfig
+                ).then(
                     response => {
                         let partnerData = response.data;
                         partnerData.chatState = state;
@@ -146,7 +161,8 @@ if ($('#app').length > 0) {
                                 '/' +
                                 parseInt(userBId) +
                                 '/' +
-                                state
+                                state,
+                                requestConfig
                             ).then(
                                 response => {
                                 }

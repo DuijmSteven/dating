@@ -15,7 +15,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('user', 'Api\UserController@getCurrentUser')
-    ->middleware('auth:api');
+    ->middleware('auth:sanctum');
 
 
 Route::group([
@@ -27,13 +27,6 @@ Route::group([
         ->name('users.get-online-ids');
 });
 
-
-// TODO add this to auth routes
-Route::get('users/{userId}/credits', 'Api\UserController@getUserCredits')
-    ->name('users.get-user-credits');
-Route::get('users/{userId}/{roleId?}', 'Api\UserController@getUserById')
-    ->name('users.get-by-id');
-
 Route::group([
     'prefix' => 'users',
     'middleware' => ['auth:sanctum']
@@ -41,12 +34,11 @@ Route::group([
     Route::get('paginated/{roleId}/{page}', 'Api\UserController@getUsersPaginated')
         ->name('users.get-paginated');
 
+    Route::get('{userId}/credits', 'Api\UserController@getUserCredits')
+        ->name('users.get-user-credits');
 
-//    Route::get('{userId}/credits', 'Api\UserController@getUserCredits')
-//        ->name('users.get-user-credits');
-
-//    Route::get('{userId}/{roleId?}', 'Api\UserController@getUserById')
-//        ->name('users.get-by-id');
+    Route::get('{userId}/{roleId?}', 'Api\UserController@getUserById')
+        ->name('users.get-by-id');
 
     Route::get('{userId}/milestones/accepted-welcome-message', 'Api\UserController@acceptedWelcomeMessageMilestone')
         ->name('users.milestones.award.accepted-welcome-message');
@@ -75,7 +67,8 @@ Route::group([
 });
 
 Route::group([
-    'prefix' => 'conversations'
+    'prefix' => 'conversations',
+    'middleware' => ['auth:sanctum']
 ], function () {
     Route::get('{conversationId}/get-locked-info', 'Api\ConversationController@getLockedInformation')
         ->name('conversations.get-locked-info');
@@ -117,11 +110,11 @@ Route::get('cities/{countryCode?}', 'Api\LocationController@getCities')
     ->name('cities.get');
 
 Route::group([
-    'prefix' => 'public-chat'
+    'prefix' => 'public-chat',
+    'middleware' => ['auth:sanctum']
 ], function () {
     Route::get('items/{forGender}/{forLookingForGender}/{offset}/{limit}', 'Api\PublicChatController@getPublicChatItems')
-        ->name('public-chat.get-items')
-        ->middleware(['auth:api']);
+        ->name('public-chat.get-items');
 
     Route::get('items-with-higher-id-than/{messageIdHigherThan}/{forGender}/{forLookingForGender}', 'Api\PublicChatController@getPublicChatItemsWithIdHigherThan')
         ->name('public-chat.get-items-with-higher-id');

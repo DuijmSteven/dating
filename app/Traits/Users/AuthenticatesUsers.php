@@ -11,6 +11,7 @@ use Illuminate\Auth\Events\Login;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
@@ -169,6 +170,8 @@ trait AuthenticatesUsers
     public function logout(Request $request)
     {
         OpenConversationPartner::where('user_id', $request->user()->getId())->delete();
+        Cache::forget('sanctum_token');
+        $request->user()->tokens()->delete();
 
         $this->guard()->logout();   
 

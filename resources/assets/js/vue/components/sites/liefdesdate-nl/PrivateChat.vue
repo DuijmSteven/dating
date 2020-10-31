@@ -154,6 +154,8 @@
 </template>
 
 <script>
+import { requestConfig } from '../../../common-imports';
+
     export default {
         props: [
             'user',
@@ -213,7 +215,10 @@
                     this.waitedAfterLoaderDisappeared = false;
                     this.fetchingOlderMessages = true;
 
-                    axios.get('/api/conversations/' + this.user.id + '/' + this.partner.id + '/' + this.offset + '/' + this.messagesPerRequest).then(response => {
+                    axios.get(
+                        '/api/conversations/' + this.user.id + '/' + this.partner.id + '/' + this.offset + '/' + this.messagesPerRequest,
+                        requestConfig
+                    ).then(response => {
                         this.conversation = response.data;
 
                         let messages = this.conversation.messages;
@@ -295,7 +300,10 @@
             checkForNewMessagesAndShowThem() {
                 this.checkingForNewAndShowing = true;
 
-                axios.get('/api/conversation-messages/' + this.user.id + '/' + this.partner.id + '/' + this.currentHighestMessageId).then(response => {
+                axios.get(
+                    '/api/conversation-messages/' + this.user.id + '/' + this.partner.id + '/' + this.currentHighestMessageId,
+                    requestConfig
+                ).then(response => {
                     let messages = response.data;
 
                     if (messages.length > 0) {
@@ -319,7 +327,10 @@
             },
 
             fetchMessagesAndPopulate() {
-                axios.get('/api/conversations/' + this.user.id + '/' + this.partner.id + '/' + this.offset + '/' + this.messagesPerRequest).then(response => {
+                axios.get(
+                    '/api/conversations/' + this.user.id + '/' + this.partner.id + '/' + this.offset + '/' + this.messagesPerRequest,
+                    requestConfig
+                ).then(response => {
                     this.conversation = response.data;
 
                     if (this.conversation.messages.length > 0) {
@@ -409,7 +420,10 @@
             setConversationActivityForUserFalse: function () {
                 if ($('#PrivateChatItem__head--' + this.index).hasClass('PrivateChatItem__head__notify')) {
                     $('#PrivateChatItem__head--' + this.index).removeClass('PrivateChatItem__head__notify');
-                    axios.get('/api/conversations/set-conversation-activity-for-user/' + this.user.id + '/' + this.partner.id + '/' + this.user.id + '/' + '0').then(
+                    axios.get(
+                        '/api/conversations/set-conversation-activity-for-user/' + this.user.id + '/' + this.partner.id + '/' + this.user.id + '/' + '0',
+                        requestConfig
+                    ).then(
                         response => {}
                     );
                 }
@@ -447,7 +461,8 @@
 
                 const config = {
                     headers: {
-                        'Content-Type': 'multipart/form-data'
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization': DP.sanctumToken
                     }
                 };
 
@@ -513,7 +528,8 @@
                     '/api/conversations/conversation-partner-ids/remove/' +
                     parseInt(DP.authenticatedUser.id) +
                     '/' +
-                    parseInt(partnerId)
+                    parseInt(partnerId),
+                    requestConfig
                 ).then(
                     response => {
                     }
@@ -547,7 +563,8 @@
                     '/' +
                     parseInt(this.partner.id) +
                     '/' +
-                    chatState
+                    chatState,
+                    requestConfig
                 ).then(
                     response => {
                     }
@@ -561,7 +578,8 @@
                         '/api/conversations/conversation-partner-ids/remove/' +
                         parseInt(DP.authenticatedUser.id) +
                         '/' +
-                        parseInt(this.partner.id)
+                        parseInt(this.partner.id),
+                        requestConfig
                     ).then(
                         response => {
                         }
@@ -570,10 +588,14 @@
                     axios.get(
                         '/api/conversations/conversation-manager-state/' +
                         parseInt(DP.authenticatedUser.id) + '/' +
-                        '0'
+                        '0',
+                        requestConfig
                     ).then(
                         response => {
-                            axios.get('/api/conversations/set-conversation-activity-for-user/' + this.user.id + '/' + this.partner.id + '/' + this.user.id + '/' + '0').then(
+                            axios.get(
+                                '/api/conversations/set-conversation-activity-for-user/' + this.user.id + '/' + this.partner.id + '/' + this.user.id + '/' + '0',
+                                requestConfig
+                            ).then(
                                 response => {
                                     window.location = this.creditsUrl;
                                 }

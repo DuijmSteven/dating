@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\PublicChatItem;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class PublicChatController
@@ -21,6 +23,7 @@ class PublicChatController extends Controller
      * @return JsonResponse
      */
     public function getPublicChatItems(
+        Request $request,
         int $forGender,
         int $forLookingForGender,
         int $offset = 0,
@@ -29,13 +32,13 @@ class PublicChatController extends Controller
         try {
             $query = PublicChatItem
                 ::with(['sender'])
-                ->where(function ($query) use ($forGender, $forLookingForGender) {
+                ->where(function ($query) use ($forGender, $forLookingForGender, $request) {
                     $query->whereHas('sender.meta', function ($query) use ($forGender, $forLookingForGender) {
                         $query->where('gender', $forLookingForGender);
                         $query->where('looking_for_gender', $forGender);
                     })
-                    ->orWhereHas('sender', function ($query) {
-                        $query->where('id', auth('api')->user()->getId());
+                    ->orWhereHas('sender', function ($query) use ($request) {
+                        $query->where('id', $request->user()->getId());
                     });
                 })
                 ->whereHas('sender', function ($query) {
@@ -54,9 +57,11 @@ class PublicChatController extends Controller
 
             $chatItems = $query->get();
 
-            return JsonResponse::create($chatItems);
+            Log::info('sdsd', $chatItems->toArray());
+
+            return response()->json($chatItems);
         } catch (\Exception $exception) {
-            return JsonResponse::create($exception->getMessage(), 500);
+            return response()->json($exception->getMessage(), 500);
         }
     }
 
@@ -67,6 +72,7 @@ class PublicChatController extends Controller
      * @return JsonResponse
      */
     public function getPublicChatItemsWithIdHigherThan(
+        Request $request,
         int $messageIdHigherThan,
         int $forGender,
         int $forLookingForGender
@@ -74,13 +80,13 @@ class PublicChatController extends Controller
         try {
             $query = PublicChatItem
                 ::with(['sender'])
-                ->where(function ($query) use ($forGender, $forLookingForGender) {
+                ->where(function ($query) use ($forGender, $forLookingForGender, $request) {
                     $query->whereHas('sender.meta', function ($query) use ($forGender, $forLookingForGender) {
                         $query->where('gender', $forLookingForGender);
                         $query->where('looking_for_gender', $forGender);
                     })
-                    ->orWhereHas('sender', function ($query) {
-                        $query->where('id', auth('api')->user()->getId());
+                    ->orWhereHas('sender', function ($query) use ($request) {
+                        $query->where('id', $request->user()->getId());
                     });
                 })
                 ->whereHas('sender', function ($query) {
@@ -92,9 +98,9 @@ class PublicChatController extends Controller
 
             $chatItems = $query->get();
 
-            return JsonResponse::create($chatItems);
+            return response()->json($chatItems);
         } catch (\Exception $exception) {
-            return JsonResponse::create($exception->getMessage(), 500);
+            return response()->json($exception->getMessage(), 500);
         }
     }
 
@@ -117,7 +123,7 @@ class PublicChatController extends Controller
 //
 //            if ($senderCredits < 1)
 //            {
-//                return JsonResponse::create('Not enough credits', 403);
+//                return response()->json('Not enough credits', 403);
 //            }
 //
 //            $publicChatItem = new PublicChatItem();
@@ -134,11 +140,11 @@ class PublicChatController extends Controller
 //
 //            DB::commit();
 //
-//            return JsonResponse::create(true);
+//            return response()->json(true);
 //        } catch (\Exception $exception) {
 //            DB::rollBack();
 //
-//            return JsonResponse::create($exception->getMessage(), 500);
+//            return response()->json($exception->getMessage(), 500);
 //        }
 //    }
 }

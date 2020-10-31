@@ -164,6 +164,8 @@
 </template>
 
 <script>
+import { requestConfig } from '../../../common-imports';
+
     export default {
         props: [],
 
@@ -234,15 +236,9 @@
 
                 this.checkingForNewAndShowing = true;
 
-                const config = {
-                    headers: {
-                        'Authorization': 'Bearer ' + DP.authenticatedUser.api_token
-                    }
-                }
-
                 axios.get(
                     '/api/public-chat/items-with-higher-id-than/' + this.currentHighestMessageId + '/' + DP.authenticatedUser.meta.gender + '/' + DP.authenticatedUser.meta.looking_for_gender,
-                    config
+                    requestConfig
                 ).then(response => {
                     let messages = response.data;
 
@@ -256,15 +252,9 @@
             },
 
             fetchMessagesAndPopulate() {
-                const config = {
-                    headers: {
-                        'Authorization': 'Bearer ' + DP.authenticatedUser.api_token
-                    }
-                }
-
                 axios.get(
                     '/api/public-chat/items/' + DP.authenticatedUser.meta.gender + '/' + DP.authenticatedUser.meta.looking_for_gender + '/0/20',
-                    config
+                    requestConfig
                 ).then(response => {
                     this.chatItems = response.data;
 
