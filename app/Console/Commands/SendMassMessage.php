@@ -9,6 +9,7 @@ use App\Mail\MessageReceived;
 use App\Managers\UserManager;
 use App\OpenConversationPartner;
 use App\PastMassMessage;
+use App\Payment;
 use App\Services\UserActivityService;
 use App\User;
 use App\UserView;

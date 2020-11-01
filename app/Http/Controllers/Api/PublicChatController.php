@@ -57,8 +57,6 @@ class PublicChatController extends Controller
 
             $chatItems = $query->get();
 
-            Log::info('sdsd', $chatItems->toArray());
-
             return response()->json($chatItems);
         } catch (\Exception $exception) {
             return response()->json($exception->getMessage(), 500);
