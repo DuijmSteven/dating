@@ -370,10 +370,7 @@ class ConversationManager
             ->whereHas('userB', function ($query) {
                 $query->where('active', true);
             })
-            ->with(['bareMessages' => function ($query) {
-                $query->orderBy('created_at', 'desc');
-                $query->first();
-            }])
+            ->with('latestMessage')
             ->where(function ($query) use ($cycleStages) {
                 $query->where('cycle_stage', $cycleStages[0]);
 

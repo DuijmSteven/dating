@@ -86,18 +86,18 @@
                                     </div>
                                     <div class="box-footer no-padding">
                                         <div class="text-summary text-center">
-                                            @if($conversation->messages[0]->attachment)
+                                            @if($conversation->latestMessage->attachment)
                                                 <i class="fa fa-fw fa-paperclip"></i>
                                             @endif
 
 
 
 
-                                            @if($conversation->messages[0]->body)
+                                            @if($conversation->latestMessage->body)
                                                 @if($authenticatedUser->isAdmin())
-                                                    {!! $conversation->messages[0]->body !!}
+                                                    {!! $conversation->latestMessage->body !!}
                                                 @else
-                                                    <em>"{!! \App\Helpers\FormattingHelper::stripPhonesAndEmails($conversation->messages[0]->body) !!}"</em>
+                                                    <em>"{!! \App\Helpers\FormattingHelper::stripPhonesAndEmails($conversation->latestMessage->body) !!}"</em>
                                                 @endif
                                             @endif
                                         </div>

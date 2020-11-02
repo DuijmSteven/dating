@@ -64,6 +64,11 @@ class Conversation extends TimeZonedModel
         return $this->hasMany('App\ConversationMessage');
     }
 
+    public function latestMessage()
+    {
+        return $this->hasOne(ConversationMessage::class)->latest();
+    }
+
     /**
      * @return mixed
      */

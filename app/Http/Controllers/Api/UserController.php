@@ -7,6 +7,7 @@ use App\Milestone;
 use App\MilestoneUser;
 use App\Services\UserActivityService;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
@@ -55,23 +56,14 @@ class UserController
             $requestingUser = $request->user();
 
             /** @var Collection $bots */
-            $queryBuilder = User::with(
-                array_unique(array_merge(
-                    User::COMMON_RELATIONS,
-                    User::BOT_RELATIONS
-                ))
-            )
-            ->withCount(
-                User::BOT_RELATION_COUNTS
-            )
-            ->whereHas('roles', function ($query) use ($roleId) {
-                $query->where('id', $roleId);
-            });
+            $queryBuilder = User
+                ::with(['meta', 'uniqueViews'])
+                ->whereHas('roles', function ($query) use ($roleId) {
+                    $query->where('id', $roleId);
+                });
 
             if ($requestingUser->isEditor()) {
-                $queryBuilder->whereHas('createdByOperator', function ($query) use ($requestingUser) {
-                    $query->where('id', $requestingUser->getId());
-                });
+                $queryBuilder->where('created_by_id', $requestingUser->getId());
             }
 
             Paginator::currentPageResolver(function () use ($page) {
@@ -86,7 +78,9 @@ class UserController
             return response()->json($exception->getMessage(), 404);
         }
 
-        return response()->json($bots, 200);
+        $jsonResponse = response()->json($bots, 200);
+
+        return $jsonResponse;
     }
 
     /**
