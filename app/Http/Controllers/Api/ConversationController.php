@@ -272,9 +272,9 @@ class ConversationController
      */
     public function getOperatorPlatformData()
     {
-        $timeStart = Carbon::now();
+        $timeReceived = Carbon::now();
+        \Log::info('received', [$timeReceived->toString()]);
 
-        \Log::info('received', [$timeStart->toString()]);
         try {
             $return = [
                 'newConversations' => $this->conversationManager->getConversationsByCycleStage(
@@ -294,11 +294,18 @@ class ConversationController
                 ),
             ];
 
-            $timeEnd = Carbon::now();
+            $timeRetrieved = Carbon::now();
 
-            \Log::info('returned', [$timeEnd->toString()]);
+            \Log::info('retrieved', [$timeRetrieved->toString()]);
+            $jsonResponse = response()->json($return);
 
-            return response()->json($return);
+            $timeReturned = Carbon::now();
+            \Log::info('returned', [$timeReturned->toString()]);
+
+            \Log::info('returned - retrieved', [$timeReturned->diff($timeRetrieved)]);
+
+
+            return $jsonResponse;
         } catch (\Exception $exception) {
             return response()->json($exception->getMessage(), 500);
         }
