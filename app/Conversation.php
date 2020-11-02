@@ -30,7 +30,6 @@ class Conversation extends TimeZonedModel
     ];
 
     protected $appends = [
-        'updatedAtHumanReadable',
         'originSite'
     ];
 
@@ -42,11 +41,6 @@ class Conversation extends TimeZonedModel
         'replyable_at',
         'cycle_stage'
     ];
-
-    public function getUpdatedAtHumanReadableAttribute()
-    {
-        return $this->updated_at->diffForHumans();
-    }
 
     public function getOriginSiteAttribute()
     {
@@ -63,6 +57,11 @@ class Conversation extends TimeZonedModel
             'recipient',
             'attachment'
         ]);
+    }
+
+    public function bareMessages()
+    {
+        return $this->hasMany('App\ConversationMessage');
     }
 
     /**
