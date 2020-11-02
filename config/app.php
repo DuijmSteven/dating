@@ -13,6 +13,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'altijdsex.nl'),
+    'site_id' => env('SITE_ID', 1),
     'pure_name' => env('APP_PURE_NAME', 'altijdsex'),
     'directory_name' => env('APP_DIRECTORY_NAME', 'altijdsex-nl'),
 

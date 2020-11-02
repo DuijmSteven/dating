@@ -29,7 +29,10 @@ class Conversation extends TimeZonedModel
         'replyable_at'
     ];
 
-    protected $appends = ['updatedAtHumanReadable'];
+    protected $appends = [
+        'updatedAtHumanReadable',
+        'originSite'
+    ];
 
     protected $fillable = [
         'user_a_id',
@@ -43,6 +46,11 @@ class Conversation extends TimeZonedModel
     public function getUpdatedAtHumanReadableAttribute()
     {
         return $this->updated_at->diffForHumans();
+    }
+
+    public function getOriginSiteAttribute()
+    {
+        return config('app.site_id');
     }
 
     /**

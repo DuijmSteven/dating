@@ -78,6 +78,9 @@ Route::group([
     'prefix' => 'conversations',
     'middleware' => ['auth:sanctum']
 ], function () {
+    Route::get('operator-platform-data', 'Api\ConversationController@getOperatorPlatformData')
+        ->middleware('operator');
+
     Route::get('{conversationId}/get-locked-info', 'Api\ConversationController@getLockedInformation')
         ->name('conversations.get-locked-info');
 

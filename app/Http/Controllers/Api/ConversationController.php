@@ -39,7 +39,7 @@ class ConversationController
             'locked_at' => $conversation->getLockedAt()
         ];
 
-        return JsonResponse::create($response, 200);
+        return response()->json($response, 200);
     }
 
     /**
@@ -50,7 +50,7 @@ class ConversationController
     public function getChatTranslations(int $userId) {
         $chatTranslations = File::getRequire(base_path() . '/resources/lang/' . User::find($userId)->getLocale() . '/chat.php');
 
-        return JsonResponse::create($chatTranslations, 200);
+        return response()->json($chatTranslations, 200);
     }
 
     /**
@@ -76,12 +76,12 @@ class ConversationController
                 );
 
             if (!($conversation instanceof Conversation)) {
-                return JsonResponse::create('No conversation exists between these users', 404);
+                return response()->json('No conversation exists between these users', 404);
             }
 
-            return JsonResponse::create($conversation);
+            return response()->json($conversation);
         } catch (\Exception $exception) {
-            return JsonResponse::create($exception->getMessage(), 500);
+            return response()->json($exception->getMessage(), 500);
         }
     }
 
@@ -104,9 +104,9 @@ class ConversationController
                     $messageIdHigherThan
                 );
 
-            return JsonResponse::create($messages);
+            return response()->json($messages);
         } catch (\Exception $exception) {
-            return JsonResponse::create($exception->getMessage(), 500);
+            return response()->json($exception->getMessage(), 500);
         }
     }
 
@@ -118,9 +118,9 @@ class ConversationController
         try {
             $conversationId = $this->conversationManager->getHighestConversationId();
 
-            return JsonResponse::create($conversationId);
+            return response()->json($conversationId);
         } catch (\Exception $exception) {
-            return JsonResponse::create($exception->getMessage(), 500);
+            return response()->json($exception->getMessage(), 500);
         }
     }
 
@@ -133,11 +133,11 @@ class ConversationController
         try {
             $conversations = $this->conversationManager->getConversationsByUserId($userId);
 
-            return JsonResponse::create($conversations);
+            return response()->json($conversations);
         } catch (\Exception $exception) {
             \Log::error($exception->getMessage());
 
-            return JsonResponse::create($exception->getMessage(), 500);
+            return response()->json($exception->getMessage(), 500);
         }
     }
 
@@ -154,7 +154,7 @@ class ConversationController
             $conversation = $this->conversationManager->retrieveConversation($userAId, $userBId);
 
             if (!($conversation instanceof Conversation)) {
-                return JsonResponse::create('No conversation exists between these users', 404);
+                return response()->json('No conversation exists between these users', 404);
             }
 
             if ($conversation->getUserAId() === $userId) {
@@ -167,9 +167,9 @@ class ConversationController
             $conversation->save();
             $conversation->timestamps = true;
 
-            return JsonResponse::create($conversation);
+            return response()->json($conversation);
         } catch (\Exception $exception) {
-            return JsonResponse::create($exception->getMessage(), 500);
+            return response()->json($exception->getMessage(), 500);
         }
     }
 
@@ -187,9 +187,9 @@ class ConversationController
             $user->setConversationManagerState($state);
             $user->save();
 
-            return JsonResponse::create($state, 200);
+            return response()->json($state, 200);
         } catch (\Exception $exception) {
-            return JsonResponse::create($exception->getMessage(), 500);
+            return response()->json($exception->getMessage(), 500);
         }
     }
 
@@ -207,9 +207,9 @@ class ConversationController
                 \Log::debug('User with ID: ' . $userId . ' does not exist.');
             }
 
-            return JsonResponse::create($user->getConversationManagerState(), 200);
+            return response()->json($user->getConversationManagerState(), 200);
         } catch (\Exception $exception) {
-            return JsonResponse::create($exception->getMessage(), 500);
+            return response()->json($exception->getMessage(), 500);
         }
     }
 
@@ -236,9 +236,9 @@ class ConversationController
                 $user->addOpenConversationPartner($partner, $state);
             }
 
-            return JsonResponse::create($user->openConversationPartners()->allRelatedIds(), 200);
+            return response()->json($user->openConversationPartners()->allRelatedIds(), 200);
         } catch (\Exception $exception) {
-            return JsonResponse::create($exception->getMessage(), 500);
+            return response()->json($exception->getMessage(), 500);
         }
     }
 
@@ -261,9 +261,36 @@ class ConversationController
                 array_push($return, $partner->partner_id . ':' . $partner->state);
             }
 
-            return JsonResponse::create($return);
+            return response()->json($return);
         } catch (\Exception $exception) {
-            return JsonResponse::create($exception->getMessage(), 500);
+            return response()->json($exception->getMessage(), 500);
+        }
+    }
+
+    public function getOperatorPlatformData()
+    {
+        try {
+            $return = [
+                'newConversations' => $this->conversationManager->getConversationsByCycleStage(
+                    [Conversation::CYCLE_STAGE_NEW],
+                    10,
+                    true
+                )->toArray(),
+                'unrepliedConversations' => $this->conversationManager->getConversationsByCycleStage(
+                    [Conversation::CYCLE_STAGE_UNREPLIED],
+                    10,
+                    true
+                )->toArray(),
+                'stoppedConversations' => $this->conversationManager->getConversationsByCycleStage(
+                    [Conversation::CYCLE_STAGE_STOPPED],
+                    10,
+                    true
+                )->toArray(),
+            ];
+
+            return response()->json($return);
+        } catch (\Exception $exception) {
+            return response()->json($exception->getMessage(), 500);
         }
     }
 
@@ -280,9 +307,9 @@ class ConversationController
 
             $user->removeOpenConversationPartner($partnerId);
 
-            return JsonResponse::create($user->openConversationPartners()->allRelatedIds(), 200);
+            return response()->json($user->openConversationPartners()->allRelatedIds(), 200);
         } catch (\Exception $exception) {
-            return JsonResponse::create($exception->getMessage(), 500);
+            return response()->json($exception->getMessage(), 500);
         }
     }
 
@@ -303,10 +330,10 @@ class ConversationController
                 throw new \Exception('The user attempting to delete the conversation is not a participant of the conversation');
             }*/
 
-            return JsonResponse::create(Conversation::destroy($conversationId), 200);
+            return response()->json(Conversation::destroy($conversationId), 200);
         } catch (\Exception $exception) {
             \Log::debug($exception->getMessage());
-            return JsonResponse::create($exception->getMessage(), 500);
+            return response()->json($exception->getMessage(), 500);
         }
     }
 }
