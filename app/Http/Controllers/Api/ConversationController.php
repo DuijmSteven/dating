@@ -275,17 +275,17 @@ class ConversationController
                     [Conversation::CYCLE_STAGE_NEW],
                     10,
                     true
-                )->toArray(),
+                ),
                 'unrepliedConversations' => $this->conversationManager->getConversationsByCycleStage(
                     [Conversation::CYCLE_STAGE_UNREPLIED],
                     10,
                     true
-                )->toArray(),
+                ),
                 'stoppedConversations' => $this->conversationManager->getConversationsByCycleStage(
                     [Conversation::CYCLE_STAGE_STOPPED],
                     10,
                     true
-                )->toArray(),
+                ),
             ];
 
             return response()->json($return);
