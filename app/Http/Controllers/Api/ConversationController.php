@@ -276,17 +276,17 @@ class ConversationController
             $return = [
                 'newConversations' => $this->conversationManager->getConversationsByCycleStage(
                     [Conversation::CYCLE_STAGE_NEW],
-                    1,
+                    10,
                     false
                 ),
                 'unrepliedConversations' => $this->conversationManager->getConversationsByCycleStage(
                     [Conversation::CYCLE_STAGE_UNREPLIED],
-                    1,
+                    10,
                     false
                 ),
                 'stoppedConversations' => $this->conversationManager->getConversationsByCycleStage(
                     [Conversation::CYCLE_STAGE_STOPPED],
-                    1,
+                    10,
                     false
                 ),
             ];
