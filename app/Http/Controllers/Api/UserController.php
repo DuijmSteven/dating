@@ -48,9 +48,12 @@ class UserController
      * @param int $page
      * @return JsonResponse
      */
-    public function getUsersPaginated(int $roleId, int $page = 1)
+    public function getUsersPaginated(Request $request, int $roleId, int $page = 1)
     {
         try {
+            /** @var User $requestingUser */
+            $requestingUser = $request->user();
+
             /** @var Collection $bots */
             $queryBuilder = User::with(
                 array_unique(array_merge(
@@ -64,6 +67,12 @@ class UserController
             ->whereHas('roles', function ($query) use ($roleId) {
                 $query->where('id', $roleId);
             });
+
+            if ($requestingUser->isEditor()) {
+                $queryBuilder->whereHas('createdByOperator', function ($query) use ($requestingUser) {
+                    $query->where('id', $requestingUser->getId());
+                });
+            }
 
             Paginator::currentPageResolver(function () use ($page) {
                 return $page;
