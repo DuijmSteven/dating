@@ -398,9 +398,9 @@ class ConversationManager
         }
 
         if ($limit) {
-            $conversations->take($limit);
+            $conversations->splice($limit);
         }
-
+        \Log::info($conversations->count());
         return $conversations;
     }
 

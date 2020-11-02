@@ -267,26 +267,36 @@ class ConversationController
         }
     }
 
+    /**
+     * @return JsonResponse
+     */
     public function getOperatorPlatformData()
     {
+        $timeStart = Carbon::now();
+
+        \Log::info('received', [$timeStart->toString()]);
         try {
             $return = [
                 'newConversations' => $this->conversationManager->getConversationsByCycleStage(
                     [Conversation::CYCLE_STAGE_NEW],
-                    10,
-                    true
+                    1,
+                    false
                 ),
                 'unrepliedConversations' => $this->conversationManager->getConversationsByCycleStage(
                     [Conversation::CYCLE_STAGE_UNREPLIED],
-                    10,
-                    true
+                    1,
+                    false
                 ),
                 'stoppedConversations' => $this->conversationManager->getConversationsByCycleStage(
                     [Conversation::CYCLE_STAGE_STOPPED],
-                    10,
-                    true
+                    1,
+                    false
                 ),
             ];
+
+            $timeEnd = Carbon::now();
+
+            \Log::info('returned', [$timeEnd->diff($timeStart)]);
 
             return response()->json($return);
         } catch (\Exception $exception) {
