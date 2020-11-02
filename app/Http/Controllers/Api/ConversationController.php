@@ -296,7 +296,7 @@ class ConversationController
 
             $timeEnd = Carbon::now();
 
-            \Log::info('returned', [$timeEnd->diff($timeStart)]);
+            \Log::info('returned', [$timeEnd->toString()]);
 
             return response()->json($return);
         } catch (\Exception $exception) {
