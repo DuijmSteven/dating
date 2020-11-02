@@ -400,7 +400,7 @@ class ConversationManager
         if ($limit) {
             $conversations->splice($limit);
         }
-        \Log::info($conversations->count());
+
         return $conversations;
     }
 
