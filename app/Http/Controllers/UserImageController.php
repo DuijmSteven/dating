@@ -87,21 +87,8 @@ class UserImageController extends Controller
      */
     public function destroy(int $imageId)
     {
-        DB::beginTransaction();
-
         try {
-            $image = UserImage::findOrFail($imageId);
-            $image->delete();
-        } catch (\Exception $exception) {
-            toastr()->error(trans('user_profile.feedback.profile_not_updated'));
-        }
-
-        try {
-            if ($this->storageManager->fileExists($image->filename, \StorageHelper::userImagesPath($image->user_id))) {
-                $this->storageManager->deleteUserImage($image->user_id, $image->filename);
-            }
-
-            DB::commit();
+            $this->userImageManager->deleteImage($imageId);
 
             toastr()->success(trans('user_profile.feedback.profile_updated'));
         } catch (\Exception $exception) {

@@ -43,6 +43,11 @@ class UserController
         return $request->user();
     }
 
+    /**
+     * @param int $roleId
+     * @param int $page
+     * @return JsonResponse
+     */
     public function getUsersPaginated(int $roleId, int $page = 1)
     {
         try {
@@ -130,7 +135,11 @@ class UserController
         return JsonResponse::create('success');
     }
 
-
+    /**
+     * @param Request $request
+     * @param int $id
+     * @return JsonResponse
+     */
     public function destroy(Request $request, int $id)
     {
         /** @var User $requestingUser */

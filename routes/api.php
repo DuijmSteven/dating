@@ -42,6 +42,21 @@ Route::group([
 
     Route::get('{userId}/milestones/accepted-welcome-message', 'Api\UserController@acceptedWelcomeMessageMilestone')
         ->name('users.milestones.award.accepted-welcome-message');
+
+    Route::delete('{id}/destroy', 'Api\UserController@destroy');
+
+    Route::group([
+        'prefix' => '{userId}',
+    ], function () {
+        Route::group([
+            'prefix' => 'images',
+            'middleware' => ['can_manipulate_user']
+        ], function () {
+            Route::delete('{imageId}/destroy', 'Api\UserImageController@destroy');
+            Route::get('{imageId}/set-profile', 'Api\UserImageController@setProfile');
+            Route::get('{imageId}/toggle-visibility', 'Api\UserImageController@toggleVisibility');
+        });
+    });
 });
 
 Route::group([
@@ -50,13 +65,6 @@ Route::group([
 ], function () {
     Route::post('create', 'Api\BotController@create');
     Route::put('{botId}/update', 'Api\BotController@update');
-});
-
-Route::group([
-    'prefix' => 'users',
-    'middleware' => ['auth:sanctum']
-], function () {
-    Route::delete('{id}/destroy', 'Api\UserController@destroy');
 });
 
 Route::group([

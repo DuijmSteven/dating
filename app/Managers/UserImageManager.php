@@ -3,11 +3,24 @@
 
 namespace App\Managers;
 
+use App\Facades\Helpers\StorageHelper;
 use App\UserImage;
 use Illuminate\Support\Facades\DB;
 
 class UserImageManager
 {
+    /**
+     * @var StorageManager
+     */
+    private StorageManager $storageManager;
+
+    public function __construct(
+        StorageManager $storageManager
+    )
+    {
+        $this->storageManager = $storageManager;
+    }
+
     public function setProfileImage(int $userId, int $imageId)
     {
         DB::beginTransaction();
@@ -42,5 +55,19 @@ class UserImageManager
         } catch (\Exception $exception) {
             throw $exception;
         }
+    }
+
+    public function deleteImage(int $imageId)
+    {
+        DB::beginTransaction();
+
+        $image = UserImage::findOrFail($imageId);
+        $image->delete();
+
+        if ($this->storageManager->fileExists($image->filename, StorageHelper::userImagesPath($image->user_id))) {
+            $this->storageManager->deleteUserImage($image->user_id, $image->filename);
+        }
+
+        DB::commit();
     }
 }
