@@ -814,8 +814,6 @@ class ConversationController
                 $conversation->save();
             }
 
-
-
             $conversation = $this->conversationManager->prepareConversationObject($conversation);
 
             [$userANotes, $userBNotes] = $this->conversationNoteManager->getParticipantNotes($conversation);

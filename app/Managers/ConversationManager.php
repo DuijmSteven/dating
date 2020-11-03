@@ -338,6 +338,7 @@ class ConversationManager
 
                 $query->where('created_at', '>=', $earliestDate);
                 $query->where('created_at', '<=', $latestDate);
+                $query->orderBy('created_at', 'asc');
             }
         ])
             ->withTrashed()
