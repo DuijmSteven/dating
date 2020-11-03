@@ -285,6 +285,65 @@ class ConversationManager
         return $messageInstance;
     }
 
+    public function getAttachments(int $conversationId, int $userType)
+    {
+        return MessageAttachment
+            ::with('conversationMessage')
+            ->whereHas('conversationMessage.sender.roles', function ($query) use ($userType) {
+                $query->where('id', $userType);
+            })
+            ->where('conversation_id', $conversationId)
+            ->get();
+    }
+
+    /**
+     * @param Conversation $conversation
+     * @return Conversation
+     */
+    public function prepareConversationObject(Conversation &$conversation)
+    {
+        $userA = $conversation->userA;
+        $userB = $conversation->userB;
+
+        if ($userB->roles[0]->id == 3) {
+            $conversation->userA = $userB;
+            $conversation->userB = $userA;
+        }
+
+        return $conversation;
+    }
+
+    public function getConversationForOperatorView(
+        int $conversationId,
+        $messagesAfterDate = null,
+        $messagesBeforeDate = null
+    ) {
+        return Conversation::with([
+            'userA',
+            'userB',
+            'userA.invisibleImages',
+            'userB.invisibleImages',
+            'messages.operator',
+            'messages' => function ($query) use ($messagesAfterDate, $messagesBeforeDate) {
+                $earliestDate = Carbon::now()->subDays(10);
+                $latestDate = Carbon::now();
+
+                if ($messagesAfterDate) {
+                    $earliestDate = Carbon::createFromFormat('d-m-Y', $messagesAfterDate)->format('Y-m-d');
+                }
+
+                if ($messagesBeforeDate) {
+                    $latestDate = Carbon::createFromFormat('d-m-Y', $messagesBeforeDate)->format('Y-m-d');
+                }
+
+                $query->where('created_at', '>=', $earliestDate);
+                $query->where('created_at', '<=', $latestDate);
+            }
+        ])
+            ->withTrashed()
+            ->find($conversationId);
+    }
+
     /**
      * @param string $age
      * @param string $lastMessageUserRoles

@@ -12,7 +12,6 @@ use App\Services\UserActivityService;
 use App\User;
 use App\UserAccount;
 use DB;
-use Illuminate\Http\JsonResponse;
 use Mail;
 
 /**
@@ -72,7 +71,7 @@ class ConversationController extends Controller
 
         if ($senderCredits < 1)
         {
-            return JsonResponse::create('Not enough credits', 403);
+            return response()->json('Not enough credits', 403);
         }
 
         try {
@@ -134,12 +133,9 @@ class ConversationController extends Controller
                 }
             }
 
-            $alerts[] = [
-                'type' => 'success',
-                'message' => 'The message was sent successfully'
-            ];
-
             DB::commit();
+
+            return response()->json('The message was sent successfully');
         } catch (\Exception $exception) {
             \Log::info(__CLASS__ . ' - ' . $exception->getMessage());
 

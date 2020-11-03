@@ -3,14 +3,35 @@
 namespace App\Http\Controllers\Api;
 
 use App\Conversation;
+use App\ConversationMessage;
+use App\EmailType;
+use App\Facades\Helpers\StorageHelper;
+use App\Http\Requests\Admin\Conversations\AddInvisibleImageToConversationRequest;
+use App\Http\Requests\Admin\Conversations\MessageCreateRequest;
+use App\Http\Validators\BotUpdate;
+use App\Mail\MessageReceived;
 use App\Managers\ConversationManager;
+use App\Managers\ConversationNoteManager;
+use App\Managers\StorageManager;
+use App\MessageAttachment;
 use App\OpenConversationPartner;
+use App\Services\ProbabilityService;
+use App\Services\UserActivityService;
 use App\User;
+use App\UserImage;
+use App\UserView;
 use Carbon\Carbon;
 use Config;
 use File;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 /**
  * Class ConversationController
@@ -19,14 +40,420 @@ use Illuminate\Support\Facades\Lang;
 class ConversationController
 {
     private $conversationManager;
+    /**
+     * @var ConversationNoteManager
+     */
+    private ConversationNoteManager $conversationNoteManager;
+    /**
+     * @var UserActivityService
+     */
+    private UserActivityService $userActivityService;
+    /**
+     * @var StorageManager
+     */
+    private StorageManager $storageManager;
 
     /**
      * ConversationController constructor.
      * @param ConversationManager $conversationManager
      */
-    public function __construct(ConversationManager $conversationManager)
-    {
+    public function __construct(
+        ConversationManager $conversationManager,
+        ConversationNoteManager $conversationNoteManager,
+        UserActivityService $userActivityService,
+        StorageManager $storageManager
+    ) {
         $this->conversationManager = $conversationManager;
+        $this->conversationNoteManager = $conversationNoteManager;
+        $this->userActivityService = $userActivityService;
+        $this->storageManager = $storageManager;
+    }
+
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), MessageCreateRequest::rules());
+
+        if ($validator->fails()) {
+            return response()->json($validator->getMessageBag(), 422);
+        }
+
+        $requestingUser = $request->user();
+
+        $messageData = $request->all();
+        $messageData['operator_id'] = $requestingUser->getId();
+
+        /** @var Conversation $conversation */
+        $conversation  = $this->conversationManager->retrieveConversation(
+            $messageData['sender_id'],
+            $messageData['recipient_id']
+        );
+
+        if (
+            (
+                $conversation &&
+                (
+                    null === $conversation->getReplyableAt() ||
+                    $conversation->getReplyableAt()->gt(Carbon::now()) ||
+                    $conversation->getCycleStage() === Conversation::CYCLE_STAGE_BALL_IN_PEASANTS_COURT
+                )
+            ) &&
+            !$requestingUser->isAdmin()
+        ) {
+            return response()->json(
+                'The conversation is not replyable',
+                403
+            );
+        }
+
+        try {
+            if (
+                $conversation instanceof Conversation &&
+                $conversation->getLockedByUserId() !== $requestingUser->getId() &&
+                !$requestingUser->isAdmin()
+            ) {
+                \Log::error('User ID: ' . $requestingUser->getId() .
+                    ' attempted to send message in conversation ID: ' . $conversation->getId() .
+                    ', but conversation is locked by user ID: ' . $conversation->getLockedByUserId()
+                );
+
+                return response()->json(
+                    'The conversation is locked by someone else',
+                    403
+                );
+            } elseif (
+                $conversation instanceof Conversation &&
+                $conversation->getLockedByUserId() === $requestingUser->getId() &&
+                $conversation->getLockedAt()->diffInMinutes(new Carbon()) > ConversationManager::CONVERSATION_LOCKING_TIME
+            ) {
+                return response()->json(
+                    'You had locked the conversation for too long',
+                    403
+                );
+            }
+
+            $this->conversationManager->createMessage($messageData);
+
+            /** @var User $recipient */
+            $recipient = User::find($messageData['recipient_id']);
+
+            /** @var User $sender */
+            $sender = User::find($messageData['sender_id']);
+
+            $recipientPartnerIds = OpenConversationPartner::where('user_id', $recipient->getId())
+                ->get()
+                ->pluck('partner_id')
+                ->toArray();
+
+            $recipientOpenConversationPartnersCount = count($recipientPartnerIds);
+
+            if (!in_array($sender->getId(), $recipientPartnerIds) && $recipientOpenConversationPartnersCount < 2) {
+                $recipient->addOpenConversationPartner($sender, 1);
+            }
+
+            $recipientEmailTypeIds = $recipient->emailTypes->pluck('id')->toArray();
+
+            $recipientHasMessageNotificationsEnabled = in_array(
+                EmailType::MESSAGE_RECEIVED,
+                $recipientEmailTypeIds
+            );
+
+            if ($recipientHasMessageNotificationsEnabled) {
+                $onlineIds = $this->userActivityService->getOnlineUserIds(
+                    $this->userActivityService::PEASANT_MAILING_ONLINE_TIMEFRAME_IN_MINUTES
+                );
+
+                if (!in_array($recipient->getId(), $onlineIds)) {
+                    if (config('app.env') === 'production') {
+                        $hasAttachment = isset($messageData['attachment']) && $messageData['attachment'] ? true : false;
+                        $message = isset($messageData['message']) && $messageData['message'] ? $messageData['message'] : null;
+
+                        $messageReceivedEmail = (new MessageReceived(
+                            $sender,
+                            $recipient,
+                            $message,
+                            $hasAttachment
+                        ))->onQueue('emails');
+
+                        Mail::to($recipient)
+                            ->queue($messageReceivedEmail);
+                    }
+
+                    $recipient->emailTypeInstances()->attach(EmailType::MESSAGE_RECEIVED, [
+                        'email' => $recipient->getEmail(),
+                        'email_type_id' => EmailType::MESSAGE_RECEIVED,
+                        'actor_id' => $sender->getId()
+                    ]);
+                }
+            }
+
+            $sender = User::find($messageData['sender_id']);
+
+            if ($sender->isBot()) {
+                $sender->setLastOnlineAt(
+                    Carbon::now('Europe/Amsterdam')->setTimezone('UTC')
+                );
+
+                $sender->save();
+
+                if (!is_object($conversation->messages)) {
+                    \Log::error('Sender ID: ' . $sender->getId());
+                    \Log::error('Message body: ' . $messageData['message']);
+                }
+
+                // Sometimes pretend that the bot viewed the user's profile. Always when it is the first time they chat
+                if ($conversation->messages->count() == 1 || rand(0, 1)) {
+                    $userViewInstance = new UserView();
+                    $userViewInstance->setViewerId($messageData['sender_id']);
+                    $userViewInstance->setViewedId($messageData['recipient_id']);
+                    $userViewInstance->setType(UserView::TYPE_OPERATOR_MESSAGE);
+                    $userViewInstance->save();
+                }
+            }
+        } catch (\Exception $exception) {
+            \Log::error($exception->getMessage());
+
+            if (Str::contains($exception->getMessage(), 'message') && $conversation) {
+                \Log::error('Convo problem convo ID:' . $conversation->getId());
+            }
+
+            return response()->json('The message was an error', 500);
+        }
+
+        if ($conversation instanceof Conversation) {
+            /** @var Conversation $conversation */
+            $conversation->setLockedByUserId(null);
+            $conversation->setLockedAt(null);
+            $conversation->save();
+        }
+
+        return response()->json('The message was sent successfully');
+    }
+
+    public function addInvisibleImage(AddInvisibleImageToConversationRequest $request)
+    {
+        $validator = Validator::make($request->all(), AddInvisibleImageToConversationRequest::rules());
+
+        if ($validator->fails()) {
+            return response()->json($validator->getMessageBag(), 422);
+        }
+
+
+        $requestingUser = $request->user();
+
+        /** @var integer $conversationId */
+        $conversationId = (int) $request->get('conversation_id');
+
+        DB::beginTransaction();
+
+        try {
+
+            /** @var User $sender */
+            $sender = User::findOrFail($request->get('sender_id'));
+
+            /** @var User $recipient */
+            $recipient = User::findOrFail($request->get('recipient_id'));
+
+            /** @var Conversation $conversation */
+            $conversation  = $this->conversationManager->createOrRetrieveConversation(
+                $sender,
+                $recipient
+            );
+
+            if (
+                (
+                    $conversation &&
+                    (
+                        null === $conversation->getReplyableAt() ||
+                        $conversation->getReplyableAt()->gt(Carbon::now()) ||
+                        $conversation->getCycleStage() === Conversation::CYCLE_STAGE_BALL_IN_PEASANTS_COURT
+                    )
+                ) &&
+                !$requestingUser->isAdmin()
+            ) {
+                return response()->json(
+                    'The conversation is not replyable',
+                    403
+                );
+            }
+
+            if (
+                $conversation instanceof Conversation &&
+                $conversation->getLockedByUserId() !== $requestingUser->getId() &&
+                !$requestingUser->isAdmin()
+            ) {
+                \Log::error('User ID: ' . $requestingUser->getId() .
+                    ' attempted to send invisible image in conversation ID: ' . $conversation->getId() .
+                    ', but conversation is locked by user ID: ' . $conversation->getLockedByUserId()
+                );
+
+                return response()->json(
+                    'The conversation is locked by someone else',
+                    403
+                );
+            } elseif (
+                $conversation->getLockedByUserId() === $requestingUser->getId() &&
+                $conversation->getLockedAt()->diffInMinutes(new Carbon()) > ConversationManager::CONVERSATION_LOCKING_TIME
+            ) {
+                return response()->json(
+                    'You had locked the conversation for too long',
+                    403
+                );
+            }
+
+            if ($conversation->messages->count() > 2) {
+                $conversation->setCycleStage(
+                    Conversation::CYCLE_STAGE_BALL_IN_PEASANTS_COURT
+                );
+
+                if (
+                    $conversation->messages[0]->sender->roles[0]->id === User::TYPE_PEASANT
+                ) {
+                    if (ProbabilityService::getTrueAPercentageOfTheTime(30)) {
+                        $conversation->setReplyableAt(null);
+                    } else {
+                        $conversation->setCycleStage(
+                            Conversation::CYCLE_STAGE_STOPPED
+                        );
+
+                        $conversation->setReplyableAt(Carbon::now()->addDays(ConversationManager::CONVERSATION_PRE_STOPPED_PERIOD_IN_DAYS));
+                    }
+                }
+
+                if (
+                    $conversation->messages[0]->sender->roles[0]->id === User::TYPE_BOT
+                ) {
+                    $operatorMessageType = ConversationMessage::OPERATOR_MESSAGE_TYPE_STOPPED;
+                }
+            } elseif ($sender->isBot()) {
+                $conversation->setReplyableAt(null);
+            }
+
+            if ($sender->isBot()) {
+                $sender->setLastOnlineAt(
+                    Carbon::now('Europe/Amsterdam')->setTimezone('UTC')
+                );
+
+                $sender->save();
+            }
+
+            $body = $request->get('body') ?? null;
+
+            /** @var UserImage $image */
+            $image = UserImage::find($request->get('image_id'));
+
+            $message = new ConversationMessage();
+            $message->setSenderId($sender->getId());
+            $message->setRecipientId($recipient->getId());
+            $message->setHasAttachment(true);
+            $message->setConversationId($conversation->id);
+            $message->setType('generic');
+            $message->setBody($body);
+            $message->save();
+            $message->setOperatorId($requestingUser->getId());
+            $message->setOperatorMessageType(isset($operatorMessageType) ? $operatorMessageType : null);
+
+            $fileExists = $this->storageManager->fileExists(
+                $image->getFilename(),
+                StorageHelper::userImagesPath($sender->getId()),
+                'cloud'
+            );
+
+            if (!$fileExists) {
+                throw new \Exception('File does not exist');
+            }
+
+            $existingFilepath = StorageHelper::userImagesPath($sender->getId()) . $image->getFilename();
+
+            $fileExtension = explode('.', $image->getFilename())[1];
+            $filenameWithoutExtension = explode('.', $image->getFilename())[0];
+
+            $thumbFilename = $filenameWithoutExtension . '_thumb';
+
+            $existingThumbFilepath = StorageHelper::userImagesPath($sender->getId()) . $thumbFilename . '.' . $fileExtension;
+
+            $messageAttachmentsPath = StorageHelper::messageAttachmentsPath($conversation->id);
+
+            $newFilenameWithoutExtension = md5(microtime() . $filenameWithoutExtension);
+            $newFilename = $newFilenameWithoutExtension . '.' . $fileExtension;
+            $newThumbFilename = $newFilenameWithoutExtension . '_thumb.' . $fileExtension;
+            $newFilepath = $messageAttachmentsPath . $newFilename;
+            $newThumbFilepath = $messageAttachmentsPath . $newThumbFilename;
+
+            $copy = Storage::disk('cloud')->copy(
+                $existingFilepath,
+                $newFilepath
+            );
+
+            Storage::disk('cloud')->copy(
+                $existingThumbFilepath,
+                $newThumbFilepath
+            );
+
+            $messageAttachment = new MessageAttachment();
+            $messageAttachment->setConversationId($conversation->id);
+            $messageAttachment->setFilename($newFilename);
+            $message->attachment()->save($messageAttachment);
+
+            $recipientPartnerIds = OpenConversationPartner::where('user_id', $recipient->getId())
+                ->get()
+                ->pluck('partner_id')
+                ->toArray();
+
+            if (!in_array($sender->getId(), $recipientPartnerIds) && count($recipientPartnerIds) < 2) {
+                $recipient->addOpenConversationPartner($sender, 1);
+            }
+
+            $recipientEmailTypeIds = $recipient->emailTypes->pluck('id')->toArray();
+
+            $recipientHasMessageNotificationsEnabled = in_array(
+                EmailType::MESSAGE_RECEIVED,
+                $recipientEmailTypeIds
+            );
+
+            if ($recipientHasMessageNotificationsEnabled) {
+                $onlineIds = $this->userActivityService->getOnlineUserIds(
+                    $this->userActivityService::PEASANT_MAILING_ONLINE_TIMEFRAME_IN_MINUTES
+                );
+
+                if (!in_array($recipient->getId(), $onlineIds)) {
+                    if (config('app.env') === 'production') {
+                        $hasAttachment = true;
+                        $message = $body ? $body : null;
+
+                        $messageReceivedEmail = (new MessageReceived(
+                            $sender,
+                            $recipient,
+                            $message,
+                            $hasAttachment
+                        ))->onQueue('emails');
+
+                        Mail::to($recipient)
+                            ->queue($messageReceivedEmail);
+                    }
+
+                    $recipient->emailTypeInstances()->attach(EmailType::MESSAGE_RECEIVED, [
+                        'email' => $recipient->getEmail(),
+                        'email_type_id' => EmailType::MESSAGE_RECEIVED,
+                        'actor_id' => $sender->getId()
+                    ]);
+                }
+            }
+
+            if ($conversation instanceof Conversation) {
+                /** @var Conversation $conversation */
+                $conversation->setLockedByUserId(null);
+                $conversation->setLockedAt(null);
+                $conversation->save();
+            }
+
+            DB::commit();
+
+            return response()->json('The message was sent successfully');
+        } catch (\Exception $exception) {
+            DB::rollBack();
+
+            return response()->json('The message was not sent due to an exception - ' . $exception->getMessage(), 500);
+        }
     }
 
     public function getLockedInformation($conversationId)
@@ -270,7 +697,7 @@ class ConversationController
     /**
      * @return JsonResponse
      */
-    public function getOperatorPlatformData()
+    public function getOperatorPlatformDashboardData()
     {
         try {
             $return = [
@@ -294,6 +721,128 @@ class ConversationController
             return response()->json($return);
         } catch (\Exception $exception) {
             return response()->json($exception->getMessage(), 500);
+        }
+    }
+
+
+    /**
+     * @return JsonResponse
+     */
+    public function lockAndGetData(
+        Request $request,
+        int $conversationId,
+        $messagesAfterDate = null,
+        $messagesBeforeDate = null
+    ) {
+        try {
+            /** @var User $requestingUser */
+            $requestingUser = $request->user();
+
+            /** @var Conversation $conversation */
+            $conversation = $this->conversationManager->getConversationForOperatorView(
+                $conversationId,
+                $messagesAfterDate,
+                $messagesBeforeDate
+            );
+
+            $idsOfLockedConvos = $requestingUser->lockedConversations->pluck('id')->toArray();
+
+            if (
+                !$requestingUser->isAdmin() &&
+                !in_array($conversation->getId(), $idsOfLockedConvos) &&
+                $requestingUser->lockedConversations->count() > 1
+            ) {
+                return response()->json(
+                    'You already have two conversations locked in your name',
+                    403
+                );
+            }
+
+            if (
+                (
+                    null === $conversation->getReplyableAt() ||
+                    $conversation->getReplyableAt()->gt(Carbon::now()) ||
+                    $conversation->getCycleStage() === Conversation::CYCLE_STAGE_BALL_IN_PEASANTS_COURT
+                ) &&
+                !$requestingUser->isAdmin()
+            ) {
+                return response()->json(
+                    'The conversation is not replyable',
+                    403
+                );
+            }
+
+            if ($conversation->getLockedByUserId()) {
+                if ($requestingUser->isAdmin()) {
+                    $lockedByUserId = $conversation->getLockedByUserId();
+                }
+
+                $minutesAgo = (new Carbon('now'))->subMinutes(ConversationManager::CONVERSATION_LOCKING_TIME);
+
+                if ($conversation->getLockedByUserId() === $requestingUser->getId()) {
+                    if ($conversation->getLockedAt() < $minutesAgo) {
+                        if (!$requestingUser->isAdmin()) {
+                            $conversation->setLockedByUserId(null);
+                            $conversation->setLockedAt(null);
+                            $conversation->save();
+
+                            return response()->json(
+                                'You had locked the conversation for too long',
+                                403
+                            );
+                        } else {
+                            $conversation->setLockedByUserId($requestingUser->getId());
+                            $conversation->setLockedAt(new Carbon('now'));
+                            $conversation->save();
+                        }
+                    }
+                } else {
+                    if ($conversation->getLockedAt() < $minutesAgo) {
+                        $conversation->setLockedByUserId($requestingUser->getId());
+                        $conversation->setLockedAt(new Carbon('now'));
+                        $conversation->save();
+                    } else {
+                        return response()->json(
+                            'The conversation is locked by someone else',
+                            403
+                        );
+                    }
+                }
+            } else {
+                $conversation->setLockedByUserId($requestingUser->getId());
+                $conversation->setLockedAt(new Carbon('now'));
+                $conversation->save();
+            }
+
+
+
+            $conversation = $this->conversationManager->prepareConversationObject($conversation);
+
+            [$userANotes, $userBNotes] = $this->conversationNoteManager->getParticipantNotes($conversation);
+
+            $userAttachments = $this->conversationManager->getAttachments(
+                $conversationId,
+                User::TYPE_PEASANT
+            );
+
+            $return = [
+                'conversation' => $conversation,
+                'userANotes' => $userANotes,
+                'userBNotes' => $userBNotes,
+                'lockedAt' => $conversation->getLockedAt()->tz('Europe/Amsterdam'),
+                'hasCountdown' => true,
+                'userAttachments' => $userAttachments,
+                'cratedAtDiffForHumans' => $conversation->getCreatedAt()->diffForHumans()
+            ];
+
+            if (isset($lockedByUserId) && $requestingUser->getId() !== $lockedByUserId) {
+                $return['lockedByUserId'] = $lockedByUserId;
+                $return['lockedByUser'] = User::find($lockedByUserId);
+            }
+
+            return response()->json($return);
+        } catch (\Exception $exception) {
+            return response()->json($exception->getTraceAsString(), 500);
         }
     }
 

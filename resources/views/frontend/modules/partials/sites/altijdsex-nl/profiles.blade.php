@@ -2,7 +2,7 @@
     <div class="ModuleProfiles__bodyWrapper">
         <a href="{!! route('users.show', ['username' => $user->getUsername()]) !!}" class="ModuleProfiles__item">
             <span class="ModuleProfiles__profile-image">
-                <img src="{!! \StorageHelper::profileImageUrl($user, true) !!}" alt="">
+                <img src="{!! $user->profileImageUrlThumb !!}" alt="">
 
                 @if(in_array($user->getId(), $onlineUserIds))
                     <div class="onlineCircle"></div>

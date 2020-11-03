@@ -772,6 +772,15 @@
         }
     }
 
+    .headerImage {
+        background-image: url('img/lp/datingsite-lp-bg.jpg');
+        position: relative;
+    }
+
+    .headerImage.imageDontShowLocal {
+        background-image: none;
+    }
+
 </style>
 <body class="landingPage">
 <header>
@@ -808,7 +817,7 @@
     </div>
 </header>
 <main>
-    <div class="vh-70 bg-image text-center JS--header" style="background-image: url('img/lp/datingsite-lp-bg.jpg'); position: relative">
+    <div class="vh-70 bg-image text-center JS--header headerImage {{ (!config('app.show_images') && config('app.env') === 'local') ? 'imageDontShowLocal' : '' }}">
         <div class="container" style="position:relative; height: 100%">
             <h1 style="text-transform: none">{{ @trans('lp1.heading') }}</h1>
 

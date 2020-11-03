@@ -78,7 +78,10 @@ Route::group([
     'prefix' => 'conversations',
     'middleware' => ['auth:sanctum']
 ], function () {
-    Route::get('operator-platform-data', 'Api\ConversationController@getOperatorPlatformData')
+    Route::get('operator-platform-dashboard-data', 'Api\ConversationController@getOperatorPlatformDashboardData')
+        ->middleware('operator');
+
+    Route::get('{conversationId}/lock/{messagesAfterDate?}/{messagesBeforeDate?}', 'Api\ConversationController@lockAndGetData')
         ->middleware('operator');
 
     Route::get('{conversationId}/get-locked-info', 'Api\ConversationController@getLockedInformation')
@@ -112,6 +115,17 @@ Route::group([
 
     Route::get('set-conversation-activity-for-user/{userAId}/{userBId}/{userId}/{value}', 'Api\ConversationController@setConversationActivityForUserId')
         ->name('conversations.set-conversation-activity-for-user-id');
+
+    Route::post('store', 'Api\ConversationController@store')
+        ->name('conversations.store');
+
+    Route::post('add-invisible-image', 'Api\ConversationController@addInvisibleImage')
+        ->name('conversations.add-invisible-image');
+
+    Route::get('notes/categories', 'Api\ConversationNoteController@getCategories');
+    Route::post('notes', 'Api\ConversationNoteController@create');
+    Route::delete('notes/{noteId}', 'Api\ConversationNoteController@destroy');
+
 });
 
 Route::get('{userId}/chat-translations', 'Api\ConversationController@getChatTranslations')

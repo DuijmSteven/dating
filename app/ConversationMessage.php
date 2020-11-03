@@ -38,11 +38,29 @@ class ConversationMessage extends TimeZonedModel
         'deleted_at'
     ];
 
-    protected $appends = ['createdAtHumanReadable'];
+
+    protected $appends = [
+        'createdAtHumanReadable',
+        'attachmentUrl'
+    ];
 
     public function getCreatedAtHumanReadableAttribute()
     {
         return Carbon::createFromTimeStamp(strtotime($this->getCreatedAt()))->diffForHumans();
+    }
+
+    public function getAttachmentUrlAttribute()
+    {
+        $url = null;
+
+        if ($this->attachment) {
+            $url = \StorageHelper::messageAttachmentUrl(
+                $this->conversation_id,
+                $this->attachment->filename
+            );
+        }
+
+        return $url;
     }
 
     /**

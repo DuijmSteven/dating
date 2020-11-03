@@ -30,7 +30,7 @@ class Conversation extends TimeZonedModel
     ];
 
     protected $appends = [
-        'originSite'
+        'originSiteId'
     ];
 
     protected $fillable = [
@@ -42,7 +42,7 @@ class Conversation extends TimeZonedModel
         'cycle_stage'
     ];
 
-    public function getOriginSiteAttribute()
+    public function getOriginSiteIdAttribute()
     {
         return config('app.site_id');
     }

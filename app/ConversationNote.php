@@ -23,4 +23,9 @@ class ConversationNote extends TimeZonedModel
     {
         return $this->belongsTo('App\NoteCategory', 'category_id', 'id');
     }
+
+    public function getUserId()
+    {
+        return $this->user_id;
+    }
 }

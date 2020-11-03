@@ -12,6 +12,7 @@ use App\Http\Requests\Admin\Conversations\AddInvisibleImageToConversationRequest
 use App\Http\Requests\Admin\Conversations\MessageCreateRequest;
 use App\Mail\MessageReceived;
 use App\Managers\ConversationManager;
+use App\Managers\ConversationNoteManager;
 use App\Managers\StorageManager;
 use App\MessageAttachment;
 use App\OpenConversationPartner;
@@ -40,6 +41,10 @@ class ConversationController extends Controller
      * @var StorageManager
      */
     private StorageManager $storageManager;
+    /**
+     * @var ConversationNoteManager
+     */
+    private ConversationNoteManager $conversationNoteManager;
 
     /**
      * ConversationController constructor.
@@ -48,11 +53,13 @@ class ConversationController extends Controller
     public function __construct(
         ConversationManager $conversationManager,
         StorageManager $storageManager,
-        UserActivityService $userActivityService
+        UserActivityService $userActivityService,
+        ConversationNoteManager $conversationNoteManager
     ) {
         parent::__construct($userActivityService);
         $this->conversationManager = $conversationManager;
         $this->storageManager = $storageManager;
+        $this->conversationNoteManager = $conversationNoteManager;
     }
 
     /**
@@ -246,35 +253,11 @@ class ConversationController extends Controller
     public function show(int $conversationId, $messagesAfterDate = null, $messagesBeforeDate = null)
     {
         /** @var Conversation $conversation */
-        $conversation = Conversation::with([
-            'userA',
-            'userB',
-            'messages.operator',
-            'messages' => function ($query) use ($messagesAfterDate, $messagesBeforeDate) {
-                $earliestDate = Carbon::now()->subDays(10);
-                $latestDate = Carbon::now();
-
-                if ($messagesAfterDate) {
-                    $earliestDate = Carbon::createFromFormat('d-m-Y', $messagesAfterDate)->format('Y-m-d');
-                }
-
-                if ($messagesBeforeDate) {
-                    $latestDate = Carbon::createFromFormat('d-m-Y', $messagesBeforeDate)->format('Y-m-d');
-                }
-
-                $query->where('created_at', '>=', $earliestDate);
-                $query->where('created_at', '<=', $latestDate);
-            }
-        ])
-        ->withTrashed()
-        ->find($conversationId);
-
-        $userAttachments = MessageAttachment
-            ::whereHas('conversationMessage.sender.roles', function ($query) {
-                $query->where('id', User::TYPE_PEASANT);
-            })
-            ->where('conversation_id', $conversationId)
-            ->get();
+        $conversation = $this->conversationManager->getConversationForOperatorView(
+            $conversationId,
+            $messagesAfterDate,
+            $messagesBeforeDate
+        );
 
         $idsOfLockedConvos = $this->authenticatedUser->lockedConversations->pluck('id')->toArray();
 
@@ -353,9 +336,14 @@ class ConversationController extends Controller
             $conversation->save();
         }
 
-        $conversation = $this->prepareConversationObject($conversation);
+        $conversation = $this->conversationManager->prepareConversationObject($conversation);
 
-        [$userANotes, $userBNotes] = $this->getParticipantNotes($conversation);
+        [$userANotes, $userBNotes] = $this->conversationNoteManager->getParticipantNotes($conversation);
+
+        $userAttachments = $this->conversationManager->getAttachments(
+            $conversationId,
+            User::TYPE_PEASANT
+        );
 
         $viewData = [
             'title' => 'Conversation (id: ' . $conversationId . ') - ' . ucfirst(\config('app.name')),
@@ -365,12 +353,12 @@ class ConversationController extends Controller
                 $conversation->userB->username .
                 ' (id:' . $conversation->userB->id . ')'  .
                 ' - Gestart op: ' . $conversation->getCreatedAt()->diffForHumans(),
+            'now' => Carbon::now()->tz('Europe/Amsterdam'),
             'carbonNow' => Carbon::now('Europe/Amsterdam'),
             'conversation' => $conversation,
             'userANotes' => $userANotes,
             'userBNotes' => $userBNotes,
             'lockedAt' => $conversation->getLockedAt()->tz('Europe/Amsterdam'),
-            'now' => Carbon::now()->tz('Europe/Amsterdam'),
             'hasCountdown' => true,
             'userAttachments' => $userAttachments
         ];
@@ -890,44 +878,6 @@ class ConversationController extends Controller
         }
 
         return redirect()->back()->with('alerts', $alerts);
-    }
-
-    /**
-     * @param Conversation $conversation
-     * @return Conversation
-     */
-    private function prepareConversationObject(Conversation &$conversation)
-    {
-        $userA = $conversation->userA;
-        $userB = $conversation->userB;
-
-        if ($userB->roles[0]->id == 3) {
-            $conversation->userA = $userB;
-            $conversation->userB = $userA;
-        }
-
-        return $conversation;
-    }
-
-    /**
-     * @param $conversation
-     * @return array
-     */
-    private function getParticipantNotes($conversation)
-    {
-        $userANotes = ConversationNote::where('user_id', $conversation->userA->id)
-            ->where('conversation_id', $conversation->id)
-            ->orderBy('category_id', 'desc')
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        $userBNotes = ConversationNote::where('user_id', $conversation->userB->id)
-            ->where('conversation_id', $conversation->id)
-            ->orderBy('category_id', 'desc')
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        return [$userANotes, $userBNotes];
     }
 
     /**

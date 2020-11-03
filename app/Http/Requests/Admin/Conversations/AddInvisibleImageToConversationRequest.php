@@ -21,7 +21,7 @@ class AddInvisibleImageToConversationRequest extends Request
      *
      * @return array
      */
-    public function rules()
+    public static function rules()
     {
         $rules = [
             'sender_id' => 'required|integer',

@@ -287,8 +287,8 @@ class User extends Authenticatable
 
     public function getProfileImageUrlAttribute()
     {
-        if (config('app.env') === 'local') {
-            //return null;
+        if (config('app.env') === 'local' && !config('app.show_images')) {
+            return null;
         }
 
         return StorageHelper::profileImageUrl($this);
@@ -296,6 +296,10 @@ class User extends Authenticatable
 
     public function getProfileImageUrlThumbAttribute()
     {
+        if (config('app.env') === 'local' && !config('app.show_images')) {
+            return null;
+        }
+
         return StorageHelper::profileImageUrl($this, true);
     }
 

@@ -55,9 +55,18 @@ class UserController
             /** @var User $requestingUser */
             $requestingUser = $request->user();
 
-            /** @var Collection $bots */
+            $relations = ['meta', 'uniqueViews'];
+            $relationCounts = [];
+
+            if ($requestingUser->isAdmin()) {
+                $relations[] = 'createdByOperator';
+                $relationCounts = User::BOT_RELATION_COUNTS;
+            }
+
+                /** @var Collection $bots */
             $queryBuilder = User
-                ::with(['meta', 'uniqueViews'])
+                ::with($relations)
+                ->withCount($relationCounts)
                 ->whereHas('roles', function ($query) use ($roleId) {
                     $query->where('id', $roleId);
                 });

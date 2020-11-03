@@ -14,6 +14,18 @@ class MessageAttachment extends Model
         'conversation_id',
     ];
 
+    public $appends = [
+        'url'
+    ];
+
+    public function getUrlAttribute()
+    {
+        return \StorageHelper::messageAttachmentUrl(
+            $this->conversation_id,
+            $this->filename
+        );
+    }
+
     public function conversationMessage()
     {
         return $this->belongsTo('App\ConversationMessage', 'message_id', 'id');

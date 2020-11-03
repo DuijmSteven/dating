@@ -31,4 +31,27 @@ class ConversationNoteManager
 
         DB::commit();
     }
+
+    /**
+     * @param $conversation
+     * @return array
+     */
+    public function getParticipantNotes($conversation)
+    {
+        $userANotes = ConversationNote::with('noteCategory')
+            ->where('user_id', $conversation->userA->id)
+            ->where('conversation_id', $conversation->id)
+            ->orderBy('category_id', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $userBNotes = ConversationNote::with('noteCategory')
+            ->where('user_id', $conversation->userB->id)
+            ->where('conversation_id', $conversation->id)
+            ->orderBy('category_id', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return [$userANotes, $userBNotes];
+    }
 }

@@ -28,8 +28,8 @@ class UserImage extends Model
 
     public function getUrlAttribute()
     {
-        if (config('app.env') === 'local') {
-            //return null;
+        if (config('app.env') === 'local' && !config('app.show_images')) {
+            return null;
         }
 
         return StorageHelper::userImageUrl($this->user_id, $this->getFilename());
@@ -37,6 +37,10 @@ class UserImage extends Model
 
     public function getUrlThumbAttribute()
     {
+        if (config('app.env') === 'local' && !config('app.show_images')) {
+            return null;
+        }
+
         return StorageHelper::userImageUrl($this->user_id, $this->getFilename(), true);
     }
 

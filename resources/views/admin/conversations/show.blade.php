@@ -215,7 +215,14 @@
                 <!-- /.box-header -->
                 <div class="box-body">
                     <div class="conversation__invisibleImages">
-                        <?php $bot = $conversation->userA ?>
+                        @php
+                            if ($userARole === 'bot') {
+                                $bot = $conversation->userA;
+                            } else {
+                                $bot = $conversation->userB;
+                            }
+                        @endphp
+
                         @foreach($bot->invisibleImages as $invisibleImage)
                             <div class="col-xs-12 col-sm-4">
                                 <form role="form" method="POST"
@@ -231,7 +238,7 @@
                                               class="hidden"></textarea>
 
                                     <img style=""
-                                         src="{{ \App\Helpers\StorageHelper::userImageUrl($bot->getId(), $invisibleImage->filename) }}"
+                                         src="{{ $invisibleImage->url }}"
                                          alt="">
                                     <input class="selectInvisibleImage" type="radio" value="{!! $invisibleImage->id!!}"
                                            name="image_id">
@@ -261,10 +268,7 @@
                     </div>
                     <div class="box-body receivedUserImages">
                         @foreach($userAttachments as $attachment)
-                            <div class="receivedUserImage"><img height="100" src="{!! \StorageHelper::messageAttachmentUrl(
-                                                        $conversation->id,
-                                                        $attachment->filename
-                                                    ) !!}"
+                            <div class="receivedUserImage"><img height="100" src="{!! $attachment->url !!}"
                                      alt="">
 
                                 <p class="receivedUserImageInfo">
