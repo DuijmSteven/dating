@@ -110,12 +110,6 @@ Route::group([
     Route::get('{userId}', 'Api\ConversationController@getConversationsByUserId')
         ->name('conversations.get-user-conversations');
 
-    Route::delete('{conversationId}', 'Api\ConversationController@deleteConversationById')
-        ->name('conversations.delete-by-id');
-
-    Route::get('set-conversation-activity-for-user/{userAId}/{userBId}/{userId}/{value}', 'Api\ConversationController@setConversationActivityForUserId')
-        ->name('conversations.set-conversation-activity-for-user-id');
-
     Route::post('store', 'Api\ConversationController@store');
 
     Route::post('add-invisible-image', 'Api\ConversationController@addInvisibleImage')
@@ -124,6 +118,13 @@ Route::group([
     Route::get('notes/categories', 'Api\ConversationNoteController@getCategories');
     Route::post('notes', 'Api\ConversationNoteController@create');
     Route::delete('notes/{noteId}', 'Api\ConversationNoteController@destroy');
+
+    Route::delete('{conversationId}', 'Api\ConversationController@deleteConversationById')
+        ->name('conversations.delete-by-id');
+
+    Route::get('set-conversation-activity-for-user/{userAId}/{userBId}/{userId}/{value}', 'Api\ConversationController@setConversationActivityForUserId')
+        ->name('conversations.set-conversation-activity-for-user-id');
+
 
 });
 
