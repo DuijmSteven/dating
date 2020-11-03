@@ -116,8 +116,7 @@ Route::group([
     Route::get('set-conversation-activity-for-user/{userAId}/{userBId}/{userId}/{value}', 'Api\ConversationController@setConversationActivityForUserId')
         ->name('conversations.set-conversation-activity-for-user-id');
 
-    Route::post('store', 'Api\ConversationController@store')
-        ->name('conversations.store');
+    Route::post('store', 'Api\ConversationController@store');
 
     Route::post('add-invisible-image', 'Api\ConversationController@addInvisibleImage')
         ->name('conversations.add-invisible-image');
