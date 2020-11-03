@@ -102,11 +102,12 @@ Route::group([
     Route::get('conversation-manager-state/{userId}', 'Api\ConversationController@getConversationManagerState')
         ->name('conversations.get-conversation-manager-state');
 
-    Route::get('/get-highest-id', 'Api\ConversationController@getHighestConversationId')
+    Route::get('get-highest-id', 'Api\ConversationController@getHighestConversationId')
         ->name('conversations.get-highest-id');
 
     Route::get('{userAId}/{userBId}/{offset}/{limit}', 'Api\ConversationController@getConversationByParticipantIds')
         ->name('conversations.get-user-ids');
+
     Route::get('{userId}', 'Api\ConversationController@getConversationsByUserId')
         ->name('conversations.get-user-conversations');
 

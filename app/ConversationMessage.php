@@ -38,7 +38,6 @@ class ConversationMessage extends TimeZonedModel
         'deleted_at'
     ];
 
-
     protected $appends = [
         'createdAtHumanReadable',
         'attachmentUrl'

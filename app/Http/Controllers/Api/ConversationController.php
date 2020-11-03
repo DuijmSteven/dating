@@ -832,7 +832,7 @@ class ConversationController
                 'lockedAt' => $conversation->getLockedAt()->tz('Europe/Amsterdam'),
                 'hasCountdown' => true,
                 'userAttachments' => $userAttachments,
-                'cratedAtDiffForHumans' => $conversation->getCreatedAt()->diffForHumans()
+                'createdAtDiffForHumans' => $conversation->getCreatedAt()->diffForHumans()
             ];
 
             if (isset($lockedByUserId) && $requestingUser->getId() !== $lockedByUserId) {
@@ -842,6 +842,8 @@ class ConversationController
 
             return response()->json($return);
         } catch (\Exception $exception) {
+            throw $exception;
+            Log::error($exception->getMessage());
             return response()->json($exception->getTraceAsString(), 500);
         }
     }

@@ -65,7 +65,7 @@
                 </div>
             </div>
 
-            @if($conversation->id)
+            @if($conversation->id && $userARole === 'peasant')
                 {{-- Include Notes module for user B --}}
                 @include('admin.conversations.partials.notes', [
                     'moduleId' => 'A',
@@ -328,7 +328,7 @@
                 </div>
             </div>
 
-            @if($conversation->id)
+            @if($conversation->id && $userBRole === 'peasant')
                 {{-- Include Notes module for user B --}}
                 @include('admin.conversations.partials.notes', [
                     'moduleId' => 'B',

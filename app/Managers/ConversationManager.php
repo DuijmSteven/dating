@@ -305,7 +305,7 @@ class ConversationManager
         $userA = $conversation->userA;
         $userB = $conversation->userB;
 
-        if ($userB->roles[0]->id == 3) {
+        if ($userB->roles[0]->id == User::TYPE_BOT) {
             $conversation->userA = $userB;
             $conversation->userB = $userA;
         }
@@ -325,7 +325,7 @@ class ConversationManager
             'userB.invisibleImages',
             'messages.operator',
             'messages' => function ($query) use ($messagesAfterDate, $messagesBeforeDate) {
-                $earliestDate = Carbon::now()->subDays(10);
+                $earliestDate = Carbon::now()->subDays(30);
                 $latestDate = Carbon::now();
 
                 if ($messagesAfterDate) {
