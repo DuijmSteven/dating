@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('user', 'Api\UserController@getCurrentUser')
     ->middleware('auth:sanctum');
 
+Route::get('user-with-relations', 'Api\UserController@getCurrentUserWithRelations')
+    ->middleware('auth:sanctum');
+
 
 Route::group([
     'prefix' => 'users'

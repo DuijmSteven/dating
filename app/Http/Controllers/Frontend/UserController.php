@@ -125,21 +125,21 @@ class UserController extends FrontendController
                 if ($this->authenticatedUser->hasToReceiveBotMessage) {
                     if (in_array($user->getId(), $onlineIds)) {
                         $chanceToReceiveProfileView = 100;
-                        $chanceToReceiveBotMessage = 100;
+                        $chanceToReceiveBotMessage = 90;
                         $secondsUntilProfileView = rand(15, 30);
                     } else {
                         $chanceToReceiveProfileView = 70;
-                        $chanceToReceiveBotMessage = 90;
+                        $chanceToReceiveBotMessage = 80;
                         $secondsUntilProfileView = rand(15, 30);
                     }
                 } elseif ($this->authenticatedUser->couldBeBotMessaged) {
                     if (in_array($user->getId(), $onlineIds)) {
                         $chanceToReceiveProfileView = 80;
-                        $chanceToReceiveBotMessage = 40;
+                        $chanceToReceiveBotMessage = 30;
                         $secondsUntilProfileView = rand(30, 50);
                     } else {
                         $chanceToReceiveProfileView = 80;
-                        $chanceToReceiveBotMessage = 40;
+                        $chanceToReceiveBotMessage = 30;
                         $secondsUntilProfileView = rand(200, 400);
                     }
                 } elseif ($this->authenticatedUser->shouldNotBeBotMessaged) {

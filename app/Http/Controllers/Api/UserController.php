@@ -44,6 +44,31 @@ class UserController
         return $request->user();
     }
 
+    public function getCurrentUserWithRelations(Request $request)
+    {
+        /** @var User $user */
+        $user = $request->user();
+
+        $relations = User::COMMON_RELATIONS;
+        $relationCounts = [];
+
+        if ($user->isOperator()) {
+            $relations = array_merge($relations, User::OPERATOR_RELATIONS);
+            $relationCounts = array_merge($relationCounts, User::OPERATOR_RELATION_COUNTS);
+        } elseif ($user->isEditor()) {
+            $relations = array_merge($relations, User::EDITOR_RELATIONS);
+            $relationCounts = array_merge($relationCounts, User::EDITOR_RELATION_COUNTS);
+        }
+
+        $user = User
+            ::with($relations)
+            ->withCount($relationCounts)
+            ->where('id', $user->getId())
+            ->first();
+
+        return $user;
+    }
+
     /**
      * @param int $roleId
      * @param int $page
