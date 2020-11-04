@@ -65,8 +65,7 @@
                 </div>
             </div>
 
-            @if($conversation->id && $userARole === 'peasant')
-                {{-- Include Notes module for user B --}}
+            @if($conversation->id)
                 @include('admin.conversations.partials.notes', [
                     'moduleId' => 'A',
                     'userClassName' => 'userA',
@@ -74,7 +73,6 @@
                     'userId' => $conversation->userA->id
                 ])
             @endif
-
         </div>
         <div class="col-xs-12 col-sm-6 sm_min_pad0">
             <div class="box direct-chat direct-chat-primary">
@@ -216,11 +214,8 @@
                 <div class="box-body">
                     <div class="conversation__invisibleImages">
                         @php
-                            if ($userARole === 'bot') {
-                                $bot = $conversation->userA;
-                            } else {
-                                $bot = $conversation->userB;
-                            }
+                            $bot = $conversation->userA;
+                            $peasant = $conversation->userB;
                         @endphp
 
                         @foreach($bot->invisibleImages as $invisibleImage)
@@ -285,9 +280,9 @@
             <div class="box box-userB">
                 <div class="box-header with-border">
                     <h3 class="box-title">
-                        {!! $conversation->userB->username !!}
+                        {!! $peasant->username !!}
                         <span
-                            class="label label-userB">{!! \UserConstants::selectableField('role')[$conversation->userB->roles[0]->id] !!}</span>
+                            class="label label-userB">{!! \UserConstants::selectableField('role')[$peasant->roles[0]->id] !!}</span>
                     </h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
@@ -298,29 +293,29 @@
                 <div class="box-body">
                     <div style="text-align: center">
                         <img style="max-width: 200px"
-                             src="{!! \StorageHelper::profileImageUrl($conversation->userB) !!}"
+                             src="{!! \StorageHelper::profileImageUrl($peasant) !!}"
                              alt="user image"
                         >
                     </div>
 
                     @foreach(\UserConstants::selectableFields() as $fieldName => $a)
-                        @if(isset($conversation->userB->meta->{$fieldName}))
+                        @if(isset($peasant->meta->{$fieldName}))
                             <strong>{!! ucfirst(str_replace('_', ' ', $fieldName)) !!}:
-                            </strong> {!! @trans('user_constants.' . $fieldName . '.' . $conversation->userB->meta->{$fieldName}) !!}
+                            </strong> {!! @trans('user_constants.' . $fieldName . '.' . $peasant->meta->{$fieldName}) !!}
                             <br>
                         @endif
                     @endforeach
 
                     @foreach(array_merge(\UserConstants::textFields(), \UserConstants::textInputs()) as $fieldName)
-                        @if(isset($conversation->userB->meta->{$fieldName}) && $conversation->userB->meta->{$fieldName} != '')
+                        @if(isset($peasant->meta->{$fieldName}) && $peasant->meta->{$fieldName} != '')
                             @if($fieldName === 'dob')
                                 <strong>{!! @trans('user_constants.' . $fieldName) !!}:
-                                </strong> {!! $conversation->userB->meta->{$fieldName} !!}<br>
+                                </strong> {!! $peasant->meta->{$fieldName} !!}<br>
                                 <strong>{!! @trans('user_constants.age') !!}:
-                                </strong> {!! $conversation->userB->meta->{$fieldName}->diffInYears(\Carbon\Carbon::now('Europe/Amsterdam')) !!}<br>
+                                </strong> {!! $peasant->meta->{$fieldName}->diffInYears(\Carbon\Carbon::now('Europe/Amsterdam')) !!}<br>
                             @else
                                 <strong>{!! @trans('user_constants.' . $fieldName) !!}:
-                                </strong> {!! $conversation->userB->meta->{$fieldName} !!}<br>
+                                </strong> {!! $peasant->meta->{$fieldName} !!}<br>
                             @endif
 
                         @endif
@@ -328,13 +323,12 @@
                 </div>
             </div>
 
-            @if($conversation->id && $userBRole === 'peasant')
-                {{-- Include Notes module for user B --}}
+            @if($conversation->id)
                 @include('admin.conversations.partials.notes', [
                     'moduleId' => 'B',
                     'userClassName' => 'userB',
                     'notes' => $userBNotes,
-                    'userId' => $conversation->userB->id
+                    'userId' => $peasant->id
                 ])
             @endif
         </div>
