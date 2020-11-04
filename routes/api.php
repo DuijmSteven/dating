@@ -81,7 +81,7 @@ Route::group([
     Route::get('operator-platform-dashboard-data', 'Api\ConversationController@getOperatorPlatformDashboardData')
         ->middleware('operator');
 
-    Route::get('{conversationId}/lock/{messagesAfterDate?}/{messagesBeforeDate?}', 'Api\ConversationController@lockAndGetData')
+    Route::get('{conversationId}/lock/{limit?}', 'Api\ConversationController@lockAndGetData')
         ->middleware('operator');
 
     Route::get('{conversationId}/get-locked-info', 'Api\ConversationController@getLockedInformation')

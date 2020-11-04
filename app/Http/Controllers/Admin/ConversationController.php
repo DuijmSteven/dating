@@ -16,6 +16,7 @@ use App\Managers\ConversationNoteManager;
 use App\Managers\StorageManager;
 use App\MessageAttachment;
 use App\OpenConversationPartner;
+use App\Role;
 use App\Services\ProbabilityService;
 use App\Services\UserActivityService;
 use App\User;
@@ -336,7 +337,13 @@ class ConversationController extends Controller
             $conversation->save();
         }
 
-        $conversation = $this->conversationManager->prepareConversationObject($conversation);
+        $userA = $conversation->userA;
+        $userB = $conversation->userB;
+
+        if ($userB->isBot()) {
+            $conversation->userB = $userA;
+            $conversation->userA = $userB;
+        }
 
         [$userANotes, $userBNotes] = $this->conversationNoteManager->getParticipantNotes($conversation);
 

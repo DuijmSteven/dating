@@ -296,23 +296,6 @@ class ConversationManager
             ->get();
     }
 
-    /**
-     * @param Conversation $conversation
-     * @return Conversation
-     */
-    public function prepareConversationObject(Conversation &$conversation)
-    {
-        $userA = $conversation->userA;
-        $userB = $conversation->userB;
-
-        if ($userB->roles[0]->id == User::TYPE_BOT) {
-            $conversation->userA = $userB;
-            $conversation->userB = $userA;
-        }
-
-        return $conversation;
-    }
-
     public function getConversationForOperatorView(
         int $conversationId,
         $messagesAfterDate = null,
@@ -338,6 +321,25 @@ class ConversationManager
 
                 $query->where('created_at', '>=', $earliestDate);
                 $query->where('created_at', '<=', $latestDate);
+                $query->orderBy('created_at', 'asc');
+            }
+        ])
+            ->withTrashed()
+            ->find($conversationId);
+    }
+
+    public function getLeanConversationForOperatorView(
+        int $conversationId,
+        $limit = 10
+    ) {
+        return Conversation::with([
+            'userA',
+            'userB',
+            'userA.invisibleImages',
+            'userB.invisibleImages',
+            'messagesWithAttachment.operator',
+            'messagesWithAttachment' => function ($query) use ($limit) {
+                $query->take($limit);
                 $query->orderBy('created_at', 'asc');
             }
         ])

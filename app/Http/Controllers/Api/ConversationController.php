@@ -731,18 +731,16 @@ class ConversationController
     public function lockAndGetData(
         Request $request,
         int $conversationId,
-        $messagesAfterDate = null,
-        $messagesBeforeDate = null
+        $limit = 10
     ) {
         try {
             /** @var User $requestingUser */
             $requestingUser = $request->user();
 
             /** @var Conversation $conversation */
-            $conversation = $this->conversationManager->getConversationForOperatorView(
+            $conversation = $this->conversationManager->getLeanConversationForOperatorView(
                 $conversationId,
-                $messagesAfterDate,
-                $messagesBeforeDate
+                $limit
             );
 
             $idsOfLockedConvos = $requestingUser->lockedConversations->pluck('id')->toArray();
@@ -813,8 +811,6 @@ class ConversationController
                 $conversation->setLockedAt(new Carbon('now'));
                 $conversation->save();
             }
-
-            $conversation = $this->conversationManager->prepareConversationObject($conversation);
 
             [$userANotes, $userBNotes] = $this->conversationNoteManager->getParticipantNotes($conversation);
 

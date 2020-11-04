@@ -64,6 +64,13 @@ class Conversation extends TimeZonedModel
         return $this->hasMany('App\ConversationMessage');
     }
 
+    public function messagesWithAttachment()
+    {
+        return $this->hasMany('App\ConversationMessage')->with([
+            'attachment'
+        ]);
+    }
+
     public function latestMessage()
     {
         return $this->hasOne(ConversationMessage::class)->latest();
