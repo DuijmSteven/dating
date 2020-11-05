@@ -22,7 +22,7 @@
                                 <option value="4" {{ old('role_id') == 4 ? 'selected' : '' }}>Operator</option>
                                 <option value="5" {{ old('role_id') == 5 ? 'selected' : '' }}>Editor</option>
                             </select>
-                            @include('helpers.forms.error_message', ['field' => 'age'])
+                            @include('helpers.forms.error_message', ['field' => 'role_id'])
                         </div>
                     </div>
 

@@ -42,50 +42,10 @@ class UserSearchController extends Controller
         try {
             $userSearchRequest->formatInput();
             $searchParameters = $userSearchRequest->all();
-
-            if (isset($searchParameters['with_profile_image'])) {
-                Cookie::queue('searchWithProfileImageSet', $searchParameters['with_profile_image'], 60);
-            }
-
-            if (isset($searchParameters['age'])) {
-                $ageMax = 100;
-
-                $largestAgeLimit = (int)array_keys(UserConstants::$ageGroups)[sizeof(UserConstants::$ageGroups) - 1];
-
-                if ($searchParameters['age'] != $largestAgeLimit) {
-                    [$ageMin, $ageMax] = explode('-', $searchParameters['age']);
-                } else {
-                    $ageMin = $largestAgeLimit;
-                }
-
-                $date = new \DateTime;
-                // The "Min" and "Max" are reversed on purpose in their usages, since the resulting date
-                // from the minimum age would be more recent than the one resulting from the maximum age
-                $formattedMaxDate = $date->modify('-' . $ageMin . ' years')->format('Y-m-d H:i:s');
-
-                $date = new \DateTime;
-                $formattedMinDate = $date->modify('-' . $ageMax . ' years')->format('Y-m-d H:i:s');
-
-                $searchParameters['dob'] = [];
-                $searchParameters['dob']['min'] = $formattedMinDate;
-                $searchParameters['dob']['max'] = $formattedMaxDate;
-            }
-
-            if (isset($searchParameters['created_at_after'])) {
-                $searchParameters['created_at_after'] = (new Carbon($searchParameters['created_at_after']))
-                    ->tz('Europe/Amsterdam')
-                    ->format('Y-m-d H:i:s');
-            }
-
-            if (isset($searchParameters['created_at_before'])) {
-                $searchParameters['created_at_before'] = (new Carbon($searchParameters['created_at_before']))
-                    ->addDays(1)
-                    ->tz('Europe/Amsterdam')
-                    ->format('Y-m-d H:i:s');
-            }
+            $searchParametersFormatted = $this->userSearchManager->formatUserSearchArray($searchParameters);
 
             // flash parameters to session so the next request can access them
-            $userSearchRequest->session()->put('searchParameters', $searchParameters);
+            $userSearchRequest->session()->put('searchParameters', $searchParametersFormatted);
         } catch (\Exception $exception) {
             \Log::error($exception->getMessage() . $exception->getTraceAsString());
 

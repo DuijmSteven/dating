@@ -8,9 +8,11 @@ use App\Role;
 use App\Services\GeocoderService;
 use App\Services\UserLocationService;
 use App\User;
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -214,5 +216,51 @@ class UserSearchManager
         } else {
             return $query->paginate($perPage, ['*'], 'page', $page);
         }
+    }
+
+    public function formatUserSearchArray($array)
+    {
+        if (isset($array['with_profile_image'])) {
+            Cookie::queue('searchWithProfileImageSet', $array['with_profile_image'], 60);
+        }
+
+        if (isset($array['age'])) {
+            $ageMax = 100;
+
+            $largestAgeLimit = (int)array_keys(UserConstants::$ageGroups)[sizeof(UserConstants::$ageGroups) - 1];
+
+            if ($array['age'] != $largestAgeLimit) {
+                [$ageMin, $ageMax] = explode('-', $array['age']);
+            } else {
+                $ageMin = $largestAgeLimit;
+            }
+
+            $date = new \DateTime;
+            // The "Min" and "Max" are reversed on purpose in their usages, since the resulting date
+            // from the minimum age would be more recent than the one resulting from the maximum age
+            $formattedMaxDate = $date->modify('-' . $ageMin . ' years')->format('Y-m-d H:i:s');
+
+            $date = new \DateTime;
+            $formattedMinDate = $date->modify('-' . $ageMax . ' years')->format('Y-m-d H:i:s');
+
+            $array['dob'] = [];
+            $array['dob']['min'] = $formattedMinDate;
+            $array['dob']['max'] = $formattedMaxDate;
+        }
+
+        if (isset($array['created_at_after'])) {
+            $array['created_at_after'] = (new Carbon($array['created_at_after']))
+                ->tz('Europe/Amsterdam')
+                ->format('Y-m-d H:i:s');
+        }
+
+        if (isset($array['created_at_before'])) {
+            $array['created_at_before'] = (new Carbon($array['created_at_before']))
+                ->addDays(1)
+                ->tz('Europe/Amsterdam')
+                ->format('Y-m-d H:i:s');
+        }
+
+        return $array;
     }
 }

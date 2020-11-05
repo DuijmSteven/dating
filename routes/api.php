@@ -60,6 +60,9 @@ Route::group([
             Route::get('{imageId}/toggle-visibility', 'Api\UserImageController@toggleVisibility');
         });
     });
+
+    Route::post('search', 'Api\UserSearchController@postSearch');
+
 });
 
 Route::group([
