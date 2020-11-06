@@ -59,7 +59,7 @@ class PeasantManager extends UserManager
      */
     public function createPeasant(array $peasantData)
     {
-        FormattingHelper::emptyToNull($botData);
+        FormattingHelper::emptyToNull($peasantData);
         $peasantData = $this->buildPeasantArrayToPersist($peasantData, 'create');
         $peasantData['user']['created_by_id'] = \Auth::user()->getId();
 
@@ -73,7 +73,7 @@ class PeasantManager extends UserManager
      */
     public function updatePeasant(array $peasantData, int $peasantId)
     {
-        FormattingHelper::emptyToNull($botData);
+        FormattingHelper::emptyToNull($peasantData);
         $peasant = User::find($peasantId);
         $peasantData = $this->buildPeasantArrayToPersist($peasantData, 'update', $peasant);
         $this->updateUser($peasantData, $peasantId);

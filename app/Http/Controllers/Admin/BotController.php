@@ -202,7 +202,6 @@ class BotController extends Controller
      */
     public function store(BotCreateRequest $botCreateRequest)
     {
-        $botCreateRequest->formatInput();
         $botData = $botCreateRequest->all();
         $botData['city'] = trim(strtolower($botData['city']));
 
@@ -287,7 +286,6 @@ class BotController extends Controller
      */
     public function update(BotUpdateRequest $botUpdateRequest)
     {
-        $botUpdateRequest->formatInput();
         $botData = $botUpdateRequest->all();
 
         try {

@@ -460,7 +460,6 @@ class PeasantController extends Controller
      */
     public function update(PeasantUpdateRequest $peasantUpdateRequest)
     {
-        $peasantUpdateRequest->formatInput();
         $peasantData = $peasantUpdateRequest->all();
 
         try {
