@@ -4,6 +4,7 @@ namespace App\Managers;
 
 use App\Helpers\ApplicationConstants\PaginationConstants;
 use App\Helpers\ApplicationConstants\UserConstants;
+use App\Helpers\FormattingHelper;
 use App\Role;
 use App\Services\GeocoderService;
 use App\Services\UserLocationService;
@@ -220,6 +221,8 @@ class UserSearchManager
 
     public function formatUserSearchArray($array)
     {
+        FormattingHelper::emptyToNull($array);
+
         if (isset($array['with_profile_image'])) {
             Cookie::queue('searchWithProfileImageSet', $array['with_profile_image'], 60);
         }

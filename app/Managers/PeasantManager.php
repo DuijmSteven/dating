@@ -3,6 +3,7 @@
 namespace App\Managers;
 
 use App\Helpers\ApplicationConstants\UserConstants;
+use App\Helpers\FormattingHelper;
 use App\Services\UserActivityService;
 use App\Services\UserLocationService;
 use App\User;
@@ -58,7 +59,7 @@ class PeasantManager extends UserManager
      */
     public function createPeasant(array $peasantData)
     {
-        $this->emptyToNull($botData);
+        FormattingHelper::emptyToNull($botData);
         $peasantData = $this->buildPeasantArrayToPersist($peasantData, 'create');
         $peasantData['user']['created_by_id'] = \Auth::user()->getId();
 
@@ -72,7 +73,7 @@ class PeasantManager extends UserManager
      */
     public function updatePeasant(array $peasantData, int $peasantId)
     {
-        $this->emptyToNull($botData);
+        FormattingHelper::emptyToNull($botData);
         $peasant = User::find($peasantId);
         $peasantData = $this->buildPeasantArrayToPersist($peasantData, 'update', $peasant);
         $this->updateUser($peasantData, $peasantId);

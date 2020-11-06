@@ -22,4 +22,18 @@ class FormattingHelper
 
         return $stringWithoutDomainPhoneNumbersAndEmails;
     }
+
+    /**
+     * @param array $array
+     * @return array
+     */
+    public static function emptyToNull(array &$array)
+    {
+        foreach ($array as $key => $value) {
+            if ($value == '') {
+                $array[$key] = null;
+            }
+        }
+        return $array;
+    }
 }

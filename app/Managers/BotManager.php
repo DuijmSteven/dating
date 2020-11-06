@@ -9,6 +9,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
+use App\Helpers\FormattingHelper;
 
 /**
  * Class BotManager
@@ -67,7 +68,7 @@ class BotManager extends UserManager
      */
     public function createBot(array $botData)
     {
-        $this->emptyToNull($botData);
+        FormattingHelper::emptyToNull($botData);
         $botData = $this->buildBotArrayToPersist($botData, 'create');
         $botData['user']['created_by_id'] = \Auth::user()->getId();
 
@@ -81,7 +82,7 @@ class BotManager extends UserManager
      */
     public function updateBot(array $botData, int $botId)
     {
-        $this->emptyToNull($botData);
+        FormattingHelper::emptyToNull($botData);
         $botData = $this->buildBotArrayToPersist($botData, 'update');
         $this->updateUser($botData, $botId);
     }

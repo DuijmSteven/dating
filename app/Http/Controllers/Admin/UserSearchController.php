@@ -83,31 +83,31 @@ class UserSearchController extends Controller
             'editBotRoute' =>'admin.bots.edit.get',
         ];
 
-        $routeName = '';
+        $viewName = '';
         $roleId = (int) $searchParameters['role_id'];
 
         $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
 
         if ($roleId === User::TYPE_PEASANT) {
-            $routeName = 'admin.peasants.overview';
+            $viewName = 'admin.peasants.overview';
             $viewData['peasants'] = $users;
             $viewData['peasantMessagesCharts'] = $this->chartsManager->getMessagesCharts(
                 $users,
                 $launchDate
         );
         } elseif ($roleId === User::TYPE_BOT) {
-            $routeName = 'admin.bots.overview';
+            $viewName = 'admin.bots.overview';
             $viewData['bots'] = $users;
         } elseif ($roleId === User::TYPE_OPERATOR) {
-            $routeName = 'admin.operators.overview';
+            $viewName = 'admin.operators.overview';
             $viewData['operators'] = $users;
         } else {
-            $routeName = 'admin.editors.overview';
+            $viewName = 'admin.editors.overview';
             $viewData['editors'] = $users;
         }
 
         return view(
-            $routeName,
+            $viewName,
             $viewData
         );
     }

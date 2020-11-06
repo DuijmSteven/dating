@@ -61,7 +61,7 @@ Route::group([
         });
     });
 
-    Route::post('search', 'Api\UserSearchController@postSearch');
+    Route::post('search/{page}', 'Api\UserSearchController@postSearch');
 
 });
 

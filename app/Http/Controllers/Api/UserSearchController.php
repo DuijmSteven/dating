@@ -23,23 +23,30 @@ class UserSearchController
 
     public function postSearch(Request $request)
     {
-        $searchParameters = $request->all();
+        try {
+            $searchParameters = $request->all();
 
-        $validator = Validator::make($searchParameters, UserSearchRequest::rules());
+            $validator = Validator::make($searchParameters, UserSearchRequest::rules());
 
-        if ($validator->fails()) {
-            return response()->json($validator->getMessageBag(), 422);
+            if ($validator->fails()) {
+                return response()->json($validator->getMessageBag(), 422);
+            }
+
+            /** @var User $requestingUser */
+            $requestingUser = $request->user();
+
+            $searchParametersFormatted = $this->userSearchManager->formatUserSearchArray($searchParameters);
+
+            $users = $this->userSearchManager->searchUsers(
+                $searchParametersFormatted,
+                true,
+                $request->input('page')
+            );
+
+            return response()->json($users);
+        } catch (\Exception $exception) {
+            \Log::error($exception->getTraceAsString());
+            return response()->json($exception->getMessage(), 500);
         }
-
-        /** @var User $requestingUser */
-        $requestingUser = $request->user();
-
-        $searchParametersFormatted = $this->userSearchManager->formatUserSearchArray($searchParameters);
-
-        $users = $this->userSearchManager->searchUsers(
-            $searchParametersFormatted,
-            true,
-            $request->input('page')
-        );
     }
 }
