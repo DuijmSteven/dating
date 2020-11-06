@@ -65,21 +65,34 @@ class UserSearchManager
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|Collection|static[]
      * @throws \Exception
      */
-    public function searchUsers(array $parameters, $paginated = false, $page = 1, array $ordering = null)
-    {
+    public function searchUsers(
+        array $parameters,
+        $paginated = false,
+        $page = 1,
+        array $ordering = null,
+        $relations = [],
+        $relationCounts = []
+    ) {
         if (isset($ordering) && isset($ordering['randomization_key'])) {
             if (gettype($ordering['randomization_key']) !== 'string') {
                 throw new \Exception('The ordering randomization key must be of type [string]');
             }
         }
 
-        $relations = User::COMMON_RELATIONS;
-        $relationCounts = [];
+        if ($relations && count($relations) === 0) {
+            $relations = User::COMMON_RELATIONS;
 
-        if (isset($parameters['role_id'])) {
-            $roleId = (int) $parameters['role_id'];
+            if (isset($parameters['role_id'])) {
+                $relations = UserManager::getRequiredRelationsForRole($parameters['role_id']);
+            }
+        }
 
-            [$relations, $relationCounts] = $this->userManager->getRequiredRelationsAndCountsForRole($roleId);
+        if ($relationCounts && count($relationCounts) === 0) {
+            $relationCounts = [];
+
+            if (isset($parameters['role_id'])) {
+                $relationCounts = UserManager::getRequiredRelationCountsForRole($parameters['role_id']);
+            }
         }
 
         // initial part of query
@@ -165,9 +178,9 @@ class UserSearchManager
         }
 
         $roleIdsArray = [];
-
-        if (isset($roleId)) {
-            $roleIdsArray[] = (int) $roleId;
+        
+        if (isset($parameters['role_id'])) {
+            $roleIdsArray[] = (int) $parameters['role_id'];
         } else {
             $roleIdsArray = [Role::ROLE_PEASANT, Role::ROLE_BOT];
         }

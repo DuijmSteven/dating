@@ -21,7 +21,7 @@ class UserSearchController
         $this->userSearchManager = $userSearchManager;
     }
 
-    public function postSearch(Request $request)
+    public function getPaginatedSearchResults(Request $request, $page)
     {
         try {
             $searchParameters = $request->all();
@@ -37,10 +37,16 @@ class UserSearchController
 
             $searchParametersFormatted = $this->userSearchManager->formatUserSearchArray($searchParameters);
 
+            $relations = ['meta', 'createdByOperator'];
+            $relationCounts = [];
+
             $users = $this->userSearchManager->searchUsers(
                 $searchParametersFormatted,
                 true,
-                $request->input('page')
+                $page,
+                null,
+                $relations,
+                $relationCounts
             );
 
             return response()->json($users);

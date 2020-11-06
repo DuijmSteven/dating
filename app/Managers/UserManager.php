@@ -76,25 +76,13 @@ class UserManager
         $this->conversationManager = $conversationManager;
     }
 
-    /**
-     * @param User $user
-     * @return array
-     */
-    public static function getRequiredRelationsAndCountsForRole(int $roleId): array
+    public static function getRequiredRelationsForRole(int $roleId): array
     {
         if ($roleId === User::TYPE_ADMIN) {
             $relations = array_unique(array_merge(
                     User::COMMON_RELATIONS,
-                    User::ADMIN_RELATIONS,
-//                    User::OPERATOR_RELATIONS,
-//                    User::EDITOR_RELATIONS
+                    User::ADMIN_RELATIONS
                 )
-            );
-
-            $relationCounts = array_merge(
-                User::ADMIN_RELATION_COUNTS,
-//                User::OPERATOR_RELATION_COUNTS,
-//                User::EDITOR_RELATION_COUNTS
             );
         } elseif ($roleId === User::TYPE_EDITOR) {
             $relations = array_unique(array_merge(
@@ -102,19 +90,11 @@ class UserManager
                     User::EDITOR_RELATIONS
                 )
             );
-
-            $relationCounts = array_merge(
-                User::EDITOR_RELATION_COUNTS
-            );
         } elseif ($roleId === User::TYPE_OPERATOR) {
             $relations = array_unique(array_merge(
                     User::COMMON_RELATIONS,
                     User::OPERATOR_RELATIONS
                 )
-            );
-
-            $relationCounts = array_merge(
-                User::OPERATOR_RELATION_COUNTS
             );
         } elseif ($roleId === User::TYPE_PEASANT) {
             if (Str::contains(request()->url(), 'admin')) {
@@ -124,18 +104,11 @@ class UserManager
                     )
                 );
 
-                $relationCounts = array_merge(
-                    User::PEASANT_RELATION_COUNTS
-                );
             } else {
                 $relations = array_unique(array_merge(
                         User::COMMON_RELATIONS,
                         User::PEASANT_FRONTEND_RELATIONS
                     )
-                );
-
-                $relationCounts = array_merge(
-                    User::PEASANT_FRONTEND_RELATION_COUNTS
                 );
             }
         } elseif ($roleId === User::TYPE_BOT) {
@@ -144,12 +117,52 @@ class UserManager
                     User::BOT_RELATIONS
                 )
             );
+        }
+        return $relations;
+    }
 
+    public static function getRequiredRelationCountsForRole(int $roleId): array
+    {
+        if ($roleId === User::TYPE_ADMIN) {
+            $relationCounts = array_merge(
+                User::ADMIN_RELATION_COUNTS
+            );
+        } elseif ($roleId === User::TYPE_EDITOR) {
+            $relationCounts = array_merge(
+                User::EDITOR_RELATION_COUNTS
+            );
+        } elseif ($roleId === User::TYPE_OPERATOR) {
+            $relationCounts = array_merge(
+                User::OPERATOR_RELATION_COUNTS
+            );
+        } elseif ($roleId === User::TYPE_PEASANT) {
+            if (Str::contains(request()->url(), 'admin')) {
+                $relationCounts = array_merge(
+                    User::PEASANT_RELATION_COUNTS
+                );
+            } else {
+                $relationCounts = array_merge(
+                    User::PEASANT_FRONTEND_RELATION_COUNTS
+                );
+            }
+        } elseif ($roleId === User::TYPE_BOT) {
             $relationCounts = array_merge(
                 User::BOT_RELATION_COUNTS
             );
         }
-        return array($relations, $relationCounts);
+        return $relationCounts;
+    }
+
+    /**
+     * @param User $user
+     * @return array
+     */
+    public static function getRequiredRelationsAndCountsForRole(int $roleId): array
+    {
+        return [
+            self::getRequiredRelationsForRole($roleId),
+            self::getRequiredRelationCountsForRole($roleId),
+        ];
     }
 
     public function getUserCredits(int $userId)

@@ -34,6 +34,8 @@ Route::group([
     'prefix' => 'users',
     'middleware' => ['auth:sanctum']
 ], function () {
+    Route::get('search/{page}', 'Api\UserSearchController@getPaginatedSearchResults');
+
     Route::get('paginated/{roleId}/{page}', 'Api\UserController@getUsersPaginated')
         ->name('users.get-paginated');
 
@@ -61,7 +63,6 @@ Route::group([
         });
     });
 
-    Route::post('search/{page}', 'Api\UserSearchController@postSearch');
 
 });
 
