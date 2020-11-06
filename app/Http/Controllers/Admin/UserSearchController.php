@@ -40,7 +40,6 @@ class UserSearchController extends Controller
     public function search(UserSearchRequest $userSearchRequest)
     {
         try {
-            $userSearchRequest->formatInput();
             $searchParameters = $userSearchRequest->all();
             $searchParametersFormatted = $this->userSearchManager->formatUserSearchArray($searchParameters);
 

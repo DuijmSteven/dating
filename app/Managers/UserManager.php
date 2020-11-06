@@ -6,6 +6,7 @@ namespace App\Managers;
 use App\BotMessage;
 use App\EmailType;
 use App\Helpers\ApplicationConstants\UserConstants;
+use App\Helpers\FormattingHelper;
 use App\Mail\ProfileCompletion;
 use App\Mail\ProfileViewed;
 use App\Role;
@@ -392,6 +393,7 @@ class UserManager
 
     public function createUser(array $userData)
     {
+        FormattingHelper::emptyToNull($userData);
         $userData = $this->buildUserArrayToPersist($userData, 'create');
         $userData['user']['created_by_id'] = \Auth::user()->getId();
 

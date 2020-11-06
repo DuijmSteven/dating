@@ -394,7 +394,6 @@ class PeasantController extends Controller
      */
     public function store(PeasantCreateRequest $peasantCreateRequest)
     {
-        $peasantCreateRequest->formatInput();
         $peasantData = $peasantCreateRequest->all();
         $peasantData['city'] = strtolower($peasantData['city']);
 

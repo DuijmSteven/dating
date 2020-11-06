@@ -192,7 +192,6 @@ class OperatorController extends Controller
      */
     public function store(OperatorCreateRequest $operatorCreateRequest)
     {
-        $operatorCreateRequest->formatInput();
         $operatorData = $operatorCreateRequest->all();
         $operatorData['city'] = strtolower($operatorData['city']);
         $operatorData['user']['role'] = User::TYPE_OPERATOR;

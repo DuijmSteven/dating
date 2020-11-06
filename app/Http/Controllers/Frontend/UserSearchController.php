@@ -61,7 +61,6 @@ class UserSearchController extends FrontendController
     public function search(UserSearchRequest $userSearchRequest)
     {
         try {
-            $userSearchRequest->formatInput();
             $searchParameters = $userSearchRequest->all();
             $searchParameters['gender'] = $this->authenticatedUser->meta->getLookingForGender();
             $searchParameters['looking_for_gender'] = $this->authenticatedUser->meta->getGender();

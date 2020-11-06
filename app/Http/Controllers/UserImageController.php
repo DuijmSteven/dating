@@ -44,7 +44,6 @@ class UserImageController extends Controller
 
     public function update(PeasantUpdateImagesRequest $peasantUpdateRequest)
     {
-        $peasantUpdateRequest->formatInput();
         $peasantData = $peasantUpdateRequest->all();
 
         if (isset($peasantData['user_images']) || isset($peasantData['profile_image'])) {

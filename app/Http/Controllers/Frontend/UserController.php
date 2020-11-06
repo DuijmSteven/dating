@@ -291,7 +291,6 @@ class UserController extends FrontendController
      */
     public function update(PeasantUpdateRequest $peasantUpdateRequest)
     {
-        $peasantUpdateRequest->formatInput();
         $peasantData = $peasantUpdateRequest->all();
 
         if (isset($peasantData['user_images']) || isset($peasantData['profile_image'])) {
