@@ -1,0 +1,220 @@
+// User Summary
+//
+// Markup: user-summary.hbs
+//
+// The user summary module that is used to display the image and information of a user in the user profile grid
+//
+// Style guide: Components.User Summary
+.UserSummary {
+    &__aboutMe {
+        padding: 20px 10px 0;
+        font-size: 1.6rem;
+        font-style: italic;
+        margin-top: 20px;
+        border-top: 1px solid #eee;
+    }
+
+    &__footer {
+       padding: 0;
+    }
+
+    &__body {
+        position: relative;
+        width: 100%;
+        padding: 0;
+
+        &:before {
+            content: "";
+            display: block;
+            padding-top: 100%;
+        }
+    }
+
+    &__nonProfileImageModalWrapper {
+        display: inline-block;
+        width: 50%;
+        vertical-align: top;
+    }
+
+    &__profileImage {
+        position: relative;
+    }
+
+    &__nonProfileImageWrapper {
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+        overflow: hidden;
+        width: 100%;
+        height: 200px;
+
+        @media screen and (max-width: $screen-xs-max) {
+            height: 120px;
+        }
+    }
+
+    &__nonProfileImage {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    &__user-image {
+        position: absolute;
+        overflow: hidden;
+        width: 100%;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .onlineCircle {
+            position: absolute;
+            background-color: #33e23c;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            right: 15px;
+            top: 15px;
+        }
+    }
+
+    &__footer__upperPart {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 0px;
+        padding-bottom: 20px;
+    }
+
+    &__seeProfile {
+        border: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        height: 45px;
+        border-radius: 0;
+        width: 100%;
+        box-shadow: none;
+        background-color: lighten($mainColor, 5%);
+
+        cursor: pointer;
+
+        font-size: 2rem;
+        font-weight: 500;
+        color: $white;
+
+        &__icon {
+            font-size: 26px;
+            color: $white;
+            margin-right: 5px;
+        }
+
+        &:hover {
+            background-color: $mainColor;
+            text-decoration: none;
+        }
+    }
+
+    &__sendMessage {
+        border: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        height: 45px;
+        border-radius: 0;
+        width: 100%;
+        box-shadow: none;
+        background-color: lighten($secondaryColor, 5%);
+
+        cursor: pointer;
+
+        &__text {
+            font-size: 2rem;
+            font-weight: 500;
+            color: $white;
+        }
+
+        &__icon {
+            font-size: 26px;
+            color: $white;
+            margin-right: 5px;
+        }
+
+        &:hover {
+            background-color: $secondaryColor;
+        }
+    }
+
+    &__otherImages {
+        position: relative;
+
+        .nonPayingUserOverlay {
+            display: none;
+            position: absolute;
+            justify-content: center;
+            align-items: center;
+            font-weight: 500;
+            font-size: 4rem;
+            color: #fff;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            &.showIfNonPayingUser {
+                display: flex;
+            }
+
+            .material-icons {
+                font-size: 45px;
+                color: $secondaryColor;
+                font-weight: 500;
+            }
+        }
+    }
+
+    &__userInfo {
+        text-align: center;
+        width: 100%;
+        padding-top: 15px;
+
+        &__primary {
+            display: inline-block;
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            font-size: 19px;
+            position: relative;
+
+            &:hover {
+                text-decoration: none;
+            }
+
+            .onlineCircle {
+                position: absolute;
+                background-color: #33e23c;
+                width: 13px;
+                height: 13px;
+                border-radius: 50%;
+                right: -22px;
+                top: 8px;
+            }
+        }
+
+        &__additional {
+            font-size: 16px;
+            color: $secondaryColor;
+            font-weight: 400;
+        }
+    }
+}

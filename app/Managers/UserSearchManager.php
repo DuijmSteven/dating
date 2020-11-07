@@ -178,7 +178,7 @@ class UserSearchManager
         }
 
         $roleIdsArray = [];
-        
+
         if (isset($parameters['role_id'])) {
             $roleIdsArray[] = (int) $parameters['role_id'];
         } else {

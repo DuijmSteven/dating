@@ -1,0 +1,96 @@
+// User Profile
+//
+// Markup: user-profile.hbs
+//
+// The user profile component displays all the information of a user
+//
+// Style guide: Components.User Profile
+.User-profile__info {
+    &__body {
+        padding: 0;
+
+        table {
+            margin-bottom: 0;
+        }
+
+        hr {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .fa {
+            color: map_get($userProfileItem, icon-color);
+        }
+
+        h5 {
+            color: map_get($userProfileItem, icon-color);
+        }
+
+        table {
+            tbody {
+                tr > {
+                    td {
+                        border-top: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    &__title {
+        display: block;
+        font-weight: 500;
+        color: #444;
+        padding-left: 20px;
+    }
+
+    &__value {
+        font-style: italic;
+    }
+
+    &__favorite-button {
+        button {
+            width: 100%;
+        }
+    }
+
+    &__text {
+        font-size: map_get($userProfileItem, font-size) + px;
+    }
+}
+
+.User-profile__about {
+    &__body {
+        padding: 20px 20px 10px;
+
+    }
+
+    blockquote {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        quotes: "\201C""\201D""\2018""\2019";
+    }
+    blockquote:before {
+        color: lighten($secondaryColor, 5%);
+        content: open-quote;
+        font-size: 4em;
+        line-height: 0.1em;
+        margin-right: 0.15em;
+        vertical-align: -0.4em;
+    }
+    blockquote:after {
+        color: lighten($secondaryColor, 5%);
+        content: close-quote;
+        font-size: 4em;
+        line-height: 0.1em;
+        margin-left: 0.15em;
+        vertical-align: -0.6em;
+    }
+    blockquote p {
+        display: inline;
+        font-style: italic;
+        font-size: 1.9rem;
+        color: #333;
+        font-weight: 400;
+    }
+}

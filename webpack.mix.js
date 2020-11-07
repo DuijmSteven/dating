@@ -14,8 +14,10 @@ let mix = require('laravel-mix');
 mix
     .js('resources/assets/js/sites/altijdsex-nl/app.js', 'public/js/altijdsex-nl/app.js')
     .js('resources/assets/js/sites/liefdesdate-nl/app.js', 'public/js/liefdesdate-nl/app.js')
+    .js('resources/assets/js/sites/sweetalk-nl/app.js', 'public/js/sweetalk-nl/app.js')
     .sass('resources/assets/sass/altijdsex-nl.scss', 'public/css/altijdsex-nl/app.css')
     .sass('resources/assets/sass/liefdesdate-nl.scss', 'public/css/liefdesdate-nl/app.css')
+    .sass('resources/assets/sass/sweetalk-nl.scss', 'public/css/sweetalk-nl/app.css')
     .sourceMaps()
     .version();
 

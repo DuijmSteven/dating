@@ -1,0 +1,173 @@
+// Variables
+@import "variables";
+
+@import "mixins";
+
+@import "sweetalk-nl-variables";
+
+// BootstrapPrev
+@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+
+@import "~bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css";
+
+// Jquery Autocomplete
+@import "~jquery-autocomplete/jquery.autocomplete";
+
+@import '~vuejs-dialog/dist/vuejs-dialog.min.css';
+
+// Jquery UI theme && datepicker
+@import "~jquery-ui/themes/base/theme";
+@import "~jquery-ui/themes/base/datepicker";
+@import "~jquery-ui/themes/base/autocomplete";
+
+@import "sites/sweetalk-nl/scaffolding";
+@import "sites/sweetalk-nl/navbar";
+@import "sites/sweetalk-nl/search-bar";
+@import "forms";
+@import "pagination";
+@import "footer";
+
+// Components
+@import "components/tile";
+@import "components/button";
+@import "components/activity";
+@import "components/alert";
+@import "components/sites/sweetalk-nl/user-summary";
+@import "components/sites/sweetalk-nl/user-profile";
+@import "components/sites/sweetalk-nl/private-chat-manager";
+@import "components/sites/sweetalk-nl/private-chat-item";
+@import "components/image-modal";
+@import "components/spinner";
+@import "components/confirm-dialog";
+@import "components/scroll-top-button";
+@import "components/low-profile-completion";
+@import "components/sites/sweetalk-nl/public-chat";
+@import "components/discount-header";
+
+// Modules
+@import "modules/user-account";
+@import "modules/sites/sweetalk-nl/module-profiles";
+
+// Views
+@import "views/articles";
+@import "views/faq";
+@import "views/edit-profile";
+@import "views/sites/sweetalk-nl/credits";
+@import "views/contact";
+@import "views/welcome-modal";
+
+@import "vue-apps/private-chat/main";
+
+.GeneralBackButton {
+  margin-top: -10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #434865;
+  background-color: $white;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  margin-bottom: 15px;
+  width: 100px;
+  text-decoration: none;
+  padding: 3px;
+  font-weight: 400;
+  box-shadow: 0 1px 1px 0 rgba(45,49,66,.2);
+
+  &:hover {
+    text-decoration: none;
+    color: #434865;
+    background-color: #eee;
+  }
+
+  &:focus {
+    text-decoration: none;
+    color: #434865;
+    background-color: $white;
+  }
+}
+
+
+.help-block {
+  font-size: 13px;
+}
+
+.ui-autocomplete.ui-widget.ui-widget-content {
+  max-height: 600px;
+  overflow: scroll;
+  list-style: none;
+  padding-left: 15px;
+  z-index: 500;
+
+  li {
+    font-size: 1.8rem;
+    color: #555;
+  }
+}
+
+.welcomeModal {
+  .show-mobile {
+    display: none;
+
+    @media screen and (max-width: $screen-xs-max) {
+      display: block;
+    }
+  }
+
+  .hide-mobile {
+    @media screen and (max-width: $screen-xs-max) {
+      display: none;
+    }
+  }
+}
+
+img.blurred {
+  filter: blur(9px);
+}
+
+img.very-blurred {
+  filter: blur(13px);
+}
+
+.searchResultsHeader {
+  position: absolute;
+  bottom: -54px;
+  left: 20px;
+
+  @media screen and (min-width: $screen-md-min) {
+    bottom: -100px;
+    left: 15px;
+  }
+
+  z-index: 400;
+
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  padding: 6px 20px 6px 20px;
+  background-color: #302c2c;
+  color: #fff;
+  width: -moz-fit-content;
+  width: fit-content;
+  border-radius: 0 0 6px 6px;
+  margin: 0 0 20px 0;
+  font-size: 2.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 90%;
+}
+
+.searchResultsHeaderCity {
+  color: lighten($secondaryColor, 10%);
+}
+
+@media screen and (max-width: $screen-xs-max) {
+  .searchResultsHeader {
+    font-size: 1.4rem;
+    bottom: -47px;
+    left: 0px;
+  }
+}
+
+.ui-helper-hidden-accessible {
+  display: none;
+}
