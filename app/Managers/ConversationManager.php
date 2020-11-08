@@ -339,8 +339,8 @@ class ConversationManager
             'userB.invisibleImages',
             'messagesWithAttachment.operator',
             'messagesWithAttachment' => function ($query) use ($limit) {
+                $query->orderBy('created_at', 'desc');
                 $query->take($limit);
-                $query->orderBy('created_at', 'asc');
             }
         ])
             ->withTrashed()
