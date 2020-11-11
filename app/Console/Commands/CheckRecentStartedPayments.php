@@ -48,8 +48,7 @@ class CheckRecentStartedPayments extends Command
      */
     public function handle()
     {
-        \Log::debug('Executing payments:check-recent-started...');
-
+//        \Log::debug('Executing payments:check-recent-started...');
         $recentStartedPayments = Payment::with(['peasant', 'creditpack', 'peasant.account'])
             ->where('status', Payment::STATUS_STARTED)
             ->where('created_at', '>=', Carbon::now()->subMinutes(20))
@@ -98,6 +97,6 @@ class CheckRecentStartedPayments extends Command
 
         }
 
-        \Log::debug('Executing payments:check-recent-started is done.');
+//        \Log::debug('Executing payments:check-recent-started is done.');
     }
 }
