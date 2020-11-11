@@ -78,10 +78,10 @@
                                         @endif
                                         <br>
                                         <b>Username</b>: {{ $message->sender->username }} <br>
-                                        <b>Gender</b>: {{ @trans('user_constants')['gender'][$message->sender->meta->gender] }} <br>
+                                        <b>Gender</b>: {{ @trans(config('app.directory_name') . '/user_constants')['gender'][$message->sender->meta->gender] }} <br>
 
                                         @if(count($message->sender->roles) > 0)
-                                            <b>Role</b>: {{ @trans('user_constants')['role'][$message->sender->roles[0]->getId()] }}
+                                            <b>Role</b>: {{ @trans(config('app.directory_name') . '/user_constants')['role'][$message->sender->roles[0]->getId()] }}
                                         @else
                                             <b>The user has no role set</b>
                                         @endif
@@ -122,11 +122,11 @@
                                         @endif
                                         <br>
                                         <b>Username</b>: {{ $message->recipient->username }} <br>
-                                        <b>Gender</b>: {{ @trans('user_constants')['gender'][$message->recipient->meta->gender] }}
+                                        <b>Gender</b>: {{ @trans(config('app.directory_name') . '/user_constants')['gender'][$message->recipient->meta->gender] }}
                                         <br>
 
                                         @if(count($message->recipient->roles) > 0)
-                                            <b>Role</b>: {{ @trans('user_constants')['role'][$message->recipient->roles[0]->getId()] }}
+                                            <b>Role</b>: {{ @trans(config('app.directory_name') . '/user_constants')['role'][$message->recipient->roles[0]->getId()] }}
                                         @else
                                             <b>The user has no role set</b>
                                         @endif

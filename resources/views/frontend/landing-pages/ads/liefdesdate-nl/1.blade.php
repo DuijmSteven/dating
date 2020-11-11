@@ -150,7 +150,7 @@
 
                         @if(session()->has('recaptchaFailed') && session()->get('recaptchaFailed'))
                             <div class="captchaFailed">
-                                {{ @trans('lp1.captcha_failed_message') }}
+                                {{ @trans(config('app.directory_name') . '/lp1.captcha_failed_message') }}
                             </div>
                         @endif
 
@@ -162,10 +162,10 @@
 
                         <div class="form-row mt-2">
                             <div class="form-group col-md-12">
-                                <label for="lookingFor">{{ @trans('lp1.form.i_am') }}:</label>
+                                <label for="lookingFor">{{ @trans(config('app.directory_name') . '/lp1.form.i_am') }}:</label>
                                 <select class="form-control" id="lookingFor" name="lookingFor" style="font-size: 14px">
-                                    <option value="male-female" {{ old('lookingFor') === 'male-female' ? 'selected' : '' }}>{{ @trans('lp1.form.man_looking_for_woman') }}</option>
-                                    <option value="female-male" {{ old('lookingFor') === 'female-male' ? 'selected' : '' }}>{{ @trans('lp1.form.woman_looking_for_man') }}</option>
+                                    <option value="male-female" {{ old('lookingFor') === 'male-female' ? 'selected' : '' }}>{{ @trans(config('app.directory_name') . '/lp1.form.man_looking_for_woman') }}</option>
+                                    <option value="female-male" {{ old('lookingFor') === 'female-male' ? 'selected' : '' }}>{{ @trans(config('app.directory_name') . '/lp1.form.woman_looking_for_man') }}</option>
                                 </select>
                             </div>
                         </div>
@@ -188,7 +188,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12 {{ $errors->has('username') ? ' has-error' : '' }}">
-                                <label for="name">{{ @trans('lp1.form.username') }}</label>
+                                <label for="name">{{ @trans(config('app.directory_name') . '/lp1.form.username') }}</label>
                                 <input type="text"
                                        class="form-control"
                                        id="username"
@@ -205,7 +205,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12 {{ $errors->has('password') ? ' has-error' : '' }}">
-                                <label for="password">{{ @trans('lp1.form.password') }}</label>
+                                <label for="password">{{ @trans(config('app.directory_name') . '/lp1.form.password') }}</label>
                                 <input type="text" class="form-control" id="password" name="password"
                                        required
                                 >
@@ -219,12 +219,12 @@
                         <div class="form-row">
                             <div class="col-sm-12 submit">
                                 <button type="submit"
-                                        class="JS--register-button btn btn-success btn-lg btn-block">{{ @trans('lp1.form.register_now') }}</button>
+                                        class="JS--register-button btn btn-success btn-lg btn-block">{{ @trans(config('app.directory_name') . '/lp1.form.register_now') }}</button>
                             </div>
 
                             <div class="col-xs-12">
                                 <p class="mt-3" style="font-size: 11px; text-align: justify">
-                                    {!! @trans(
+                                    {!! @trans(config('app.directory_name') .
                                             'lp1.form.register_info',
                                             [
                                                 'privacyRoute' => route('privacy.show'),
@@ -258,7 +258,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-12 text-center" style="margin-bottom: 30px">
-                    <a style="color: #337ab7" href="{{ route('tac.show') }}">{{ @trans('footer.tac') }}</a> - <a  style="color: #337ab7" href="{{ route('contact.get') }}">{{ @trans('footer.contact') }}</a>
+                    <a style="color: #337ab7" href="{{ route('tac.show') }}">{{ @trans(config('app.directory_name') . '/footer.tac') }}</a> - <a  style="color: #337ab7" href="{{ route('contact.get') }}">{{ @trans(config('app.directory_name') . '/footer.contact') }}</a>
                 </div>
             </div>
         </div>

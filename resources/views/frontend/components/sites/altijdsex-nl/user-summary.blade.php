@@ -75,7 +75,7 @@
             </div >
 
             @if(!isset($showOtherImages))
-                <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}" class="UserSummary__seeProfile">{{ trans('user_profile.see_profile') }}</a>
+                <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}" class="UserSummary__seeProfile">{{ trans(config('app.directory_name') . '/user_profile.see_profile') }}</a>
             @endif
         </div>
 

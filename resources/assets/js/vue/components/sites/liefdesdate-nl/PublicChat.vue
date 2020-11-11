@@ -7,7 +7,7 @@
                campaign
             </span>
 
-            {{ this.$parent.chatTranslations ? this.$parent.chatTranslations['public_chat_backup_title'] : '' }}
+            {{ this.$parent.chatTranslations ? this.$parent.chatTranslations['public_chat'] : '' }}
         </div>
 
         <div class="Tile__body PublicChat__panel">
@@ -142,7 +142,7 @@
                                 class="btn"
                                 type="submit"
                             >
-                                {{ this.$parent.chatTranslations['post_new_message_backup'] }}
+                                {{ this.$parent.chatTranslations['post_new_message'] }}
                             </button>
 
                             <a

@@ -38,7 +38,7 @@
                   'buttonContext' => 'form',
                   'buttonType' => 'submit',
                   'buttonState' => 'primary',
-                  'buttonText' => @trans('low_profile_completion.close_message')
+                  'buttonText' => @trans(config('app.directory_name') . '/low_profile_completion.close_message')
                 ])
             </div>
         </form>

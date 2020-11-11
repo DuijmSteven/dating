@@ -44,12 +44,12 @@ class PublicChatController extends FrontendController
 
             DB::commit();
 
-            toastr()->success(trans('public_chat.feedback.message_sent'));
+            toastr()->success(trans(config('app.directory_name') . '/public_chat.feedback.message_sent'));
         } catch (\Exception $exception) {
             \Log::error($exception->getMessage());
 
             DB::rollBack();
-            toastr()->error(trans('public_chat.feedback.message_not_sent'));
+            toastr()->error(trans(config('app.directory_name') . '/public_chat.feedback.message_not_sent'));
         }
 
         return redirect()->back()->with('errors');

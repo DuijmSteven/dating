@@ -475,7 +475,7 @@ class ConversationController
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function getChatTranslations(int $userId) {
-        $chatTranslations = File::getRequire(base_path() . '/resources/lang/' . User::find($userId)->getLocale() . '/chat.php');
+        $chatTranslations = File::getRequire(base_path() . '/resources/lang/' . User::find($userId)->getLocale() . '/' . config('app.directory_name') . '/chat.php');
 
         return response()->json($chatTranslations, 200);
     }

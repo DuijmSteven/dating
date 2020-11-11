@@ -48,7 +48,7 @@ class UserSearchController extends Controller
         } catch (\Exception $exception) {
             \Log::error($exception->getMessage() . $exception->getTraceAsString());
 
-            toastr()->error(trans('user_search.feedback.search_error'));
+            toastr()->error(trans(config('app.directory_name') . '/user_search.feedback.search_error'));
 
             return redirect()->back();
         }
@@ -181,7 +181,7 @@ class UserSearchController extends Controller
             );
         } catch (\Exception $exception) {
             \Log::error($exception->getMessage() . $exception->getTraceAsString());
-            toastr()->error(trans('user_search.feedback.search_error'));
+            toastr()->error(trans(config('app.directory_name') . '/user_search.feedback.search_error'));
         }
 
         $viewData = [

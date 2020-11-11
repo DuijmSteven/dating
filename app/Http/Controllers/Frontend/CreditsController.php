@@ -29,7 +29,7 @@ class CreditsController extends FrontendController
 
         return view('frontend.sites.' . config('app.directory_name') . '.credits',
             [
-                'title' => $this->buildTitleWith(trans('view_titles.credits')),
+                'title' => $this->buildTitleWith(trans(config('app.directory_name') . '/view_titles.credits')),
                 'users' => $users,
                 'carbonNow' => Carbon::now(),
                 'creditpacks' => Creditpack::all()->sortBy('id')

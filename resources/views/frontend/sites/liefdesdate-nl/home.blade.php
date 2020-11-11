@@ -9,7 +9,7 @@
             <span class="material-icons">
                 dynamic_feed
             </span>
-            {{ trans('home.new_members') }}
+            {{ trans(config('app.directory_name') . '/home.new_members') }}
         </div>
     </div>
 

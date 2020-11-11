@@ -9,7 +9,7 @@
             <span class="material-icons">
                 account_box
             </span>
-            {{ trans('home.new_members') }}
+            {{ trans(config('app.directory_name') . '/home.new_members') }}
         </div>
     </div>
 

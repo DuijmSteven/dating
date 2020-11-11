@@ -4,7 +4,7 @@
 
     <div class="Tile Tile__privacy">
         <div class="Tile__heading">
-            <h4>{{ trans('faq.faq') }}</h4>
+            <h4>{{ trans(config('app.directory_name') . '/faq.faq') }}</h4>
         </div>
         <div
                 class="Tile__body"

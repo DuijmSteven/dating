@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Frontend;
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\Http\Requests\UserRequests\UserSearchRequest;
 use App\Managers\UserSearchManager;
-use App\Services\OnlineUsersService;
 use App\Services\UserActivityService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -19,10 +18,6 @@ class UserSearchController extends FrontendController
 {
     /** @var UserSearchManager */
     private $userSearchManager;
-    /**
-     * @var OnlineUsersService
-     */
-    private OnlineUsersService $onlineUsersService;
 
     /**
      * UserSearchController constructor.
@@ -69,7 +64,7 @@ class UserSearchController extends FrontendController
                 Cookie::queue('searchWithProfileImageSet', $searchParameters['with_profile_image'], 60);
             }
 
-            if (isset($searchParameters['age'])) {
+            if (isset($searchParameters['age']) && $searchParameters['age'] !== '') {
                 $ageMax = 100;
 
                 $largestAgeLimit = (int)array_keys(UserConstants::$ageGroups)[sizeof(UserConstants::$ageGroups) - 1];
@@ -98,7 +93,7 @@ class UserSearchController extends FrontendController
         } catch (\Exception $exception) {
             \Log::error($exception->getMessage() . $exception->getTraceAsString());
 
-            toastr()->error(trans('user_search.feedback.search_error'));
+            toastr()->error(trans(config('app.directory_name') . '/user_search.feedback.search_error'));
 
             return redirect()->back();
         }
@@ -138,7 +133,7 @@ class UserSearchController extends FrontendController
         $viewData = [
             'users' => $users,
             'carbonNow' => Carbon::now(),
-            'title' => $this->buildTitleWith(trans('view_titles.search_results')),
+            'title' => $this->buildTitleWith(trans(config('app.directory_name') . '/view_titles.search_results')),
             'city' => $searchParameters['city_name'],
             'radius' => 80
         ];
@@ -212,13 +207,13 @@ class UserSearchController extends FrontendController
             );
         } catch (\Exception $exception) {
             \Log::error($exception->getMessage() . $exception->getTraceAsString());
-            toastr()->error(trans('user_search.feedback.search_error'));
+            toastr()->error(trans(config('app.directory_name') . '/user_search.feedback.search_error'));
         }
 
         $viewData = [
             'users' => $users,
             'carbonNow' => Carbon::now(),
-            'title' => $this->buildTitleWith(trans('view_titles.home')),
+            'title' => $this->buildTitleWith(trans(config('app.directory_name') . '/view_titles.home')),
             'city' => $city,
             'radius' => 50
         ];

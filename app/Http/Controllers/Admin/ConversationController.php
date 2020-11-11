@@ -417,7 +417,13 @@ class ConversationController extends Controller
         $conversation->userA = $userA;
         $conversation->userB = $userB;
 
-        $conversation = $this->prepareConversationObject($conversation);
+        $userA = $conversation->userA;
+        $userB = $conversation->userB;
+
+        if ($userB->isBot()) {
+            $conversation->userB = $userA;
+            $conversation->userA = $userB;
+        }
 
         return view(
             'admin.conversations.show',

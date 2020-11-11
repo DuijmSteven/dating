@@ -31,6 +31,6 @@ class Deactivated extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->subject(trans('emails.subjects.deactivated'))->view('emails.deactivated');
+        return $this->subject(trans(config('app.directory_name') . '/emails.subjects.deactivated'))->view('emails.deactivated');
     }
 }

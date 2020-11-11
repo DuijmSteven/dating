@@ -7,7 +7,7 @@
         <a href="{{ url()->previous() }}" class="GeneralBackButton">
             <i class="material-icons">
                 chevron_left
-            </i>{{ trans('user_profile.back') }}
+            </i>{{ trans(config('app.directory_name') . '/user_profile.back') }}
         </a>
     </div>
 </div>

@@ -63,17 +63,17 @@ class UserImageController extends Controller
             }
 
             if ($peasantImagesCount + $uploadedImagesCount > 10) {
-                toastr()->error(trans('edit_profile.image_limit_reached'));
+                toastr()->error(trans(config('app.directory_name') . '/edit_profile.image_limit_reached'));
                 return redirect()->back();
             }
         }
 
         try {
             $this->peasantManager->updatePeasant($peasantData, $peasantUpdateRequest->route('userId'));
-            toastr()->success(trans('user_profile.feedback.profile_updated'));
+            toastr()->success(trans(config('app.directory_name') . '/user_profile.feedback.profile_updated'));
         } catch (\Exception $exception) {
             \Log::error($exception);
-            toastr()->error(trans('user_profile.feedback.profile_not_updated'));
+            toastr()->error(trans(config('app.directory_name') . '/user_profile.feedback.profile_not_updated'));
         }
 
         return redirect()->back();
@@ -89,10 +89,10 @@ class UserImageController extends Controller
         try {
             $this->userImageManager->deleteImage($imageId);
 
-            toastr()->success(trans('user_profile.feedback.profile_updated'));
+            toastr()->success(trans(config('app.directory_name') . '/user_profile.feedback.profile_updated'));
         } catch (\Exception $exception) {
             DB::rollBack();
-            toastr()->error(trans('user_profile.feedback.profile_not_updated'));
+            toastr()->error(trans(config('app.directory_name') . '/user_profile.feedback.profile_not_updated'));
         }
 
         return Redirect::to(URL::previous() . "#images-section");
@@ -107,9 +107,9 @@ class UserImageController extends Controller
     {
         try {
             $this->userImageManager->setProfileImage($userId, $imageId);
-            toastr()->success(trans('user_profile.feedback.profile_updated'));
+            toastr()->success(trans(config('app.directory_name') . '/user_profile.feedback.profile_updated'));
         } catch (\Exception $exception) {
-            toastr()->error(trans('user_profile.feedback.profile_not_updated'));
+            toastr()->error(trans(config('app.directory_name') . '/user_profile.feedback.profile_not_updated'));
         }
 
         return Redirect::to(URL::previous() . "#images-section");

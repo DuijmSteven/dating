@@ -15,7 +15,7 @@ trait SendsPasswordResetEmails
         return view(
             'auth.passwords.email',
             [
-                'title' => trans('reset_password.reset_password') . ' | ' . ucfirst(\config('app.name'))
+                'title' => trans(config('app.directory_name') . '/reset_password.reset_password') . ' | ' . ucfirst(\config('app.name'))
             ]
         );
     }
@@ -73,7 +73,7 @@ trait SendsPasswordResetEmails
      */
     protected function sendResetLinkResponse(Request $request, $response)
     {
-        return back()->with('status', trans($response));
+        return back()->with('status', trans(config('app.directory_name') . $response));
     }
 
     /**
@@ -87,7 +87,7 @@ trait SendsPasswordResetEmails
     {
         return back()
                 ->withInput($request->only('email'))
-                ->withErrors(['email' => trans($response)]);
+                ->withErrors(['email' => trans(config('app.directory_name') . $response)]);
     }
 
     /**

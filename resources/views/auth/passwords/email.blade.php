@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">{{ trans('reset_password.reset_password') }}</div>
+                <div class="panel-heading">{{ trans(config('app.directory_name') . '/reset_password.reset_password') }}</div>
                 <div class="panel-body">
                     @if (session('status'))
                         <div class="alert alert-success">
@@ -18,7 +18,7 @@
                         @csrf
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">{{ trans('reset_password.registered_email') }}</label>
+                            <label for="email" class="col-md-4 control-label">{{ trans(config('app.directory_name') . '/reset_password.registered_email') }}</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
@@ -37,7 +37,7 @@
                                  'buttonContext' => 'form',
                                  'buttonType' => 'submit',
                                  'buttonState' => 'primary',
-                                 'buttonText' => @trans('reset_password.send_reset_link')
+                                 'buttonText' => @trans(config('app.directory_name') . '/reset_password.send_reset_link')
                              ])
                             </div>
                         </div>

@@ -184,6 +184,10 @@
                 }
             }
 
+            .material-icons {
+                font-size: 1.6rem
+            }
+
             .btn-primary {
                 background-color: #69595c;
                 border-color: #775e63;
@@ -256,7 +260,7 @@
 
         @media (min-width: $screen-sm-min) {
             &.withProfileImage {
-                width: 270px;
+                width: 280px;
             }
         }
 

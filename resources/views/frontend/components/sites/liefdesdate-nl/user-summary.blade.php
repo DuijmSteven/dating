@@ -50,7 +50,7 @@
                         <span class="material-icons UserSummary__seeProfile__icon">
                             account_circle
                         </span>
-                        {{ trans('user_profile.see_profile') }}
+                        {{ trans(config('app.directory_name') . '/user_profile.see_profile') }}
                     </a>
                 @endif
             </div>

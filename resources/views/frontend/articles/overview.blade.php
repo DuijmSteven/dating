@@ -4,7 +4,7 @@
 
 <div class="Tile">
     <div class="Tile__heading">
-        <h4>{{ @trans('articles.articles') }}</h4>
+        <h4>{{ @trans(config('app.directory_name') . '/articles.articles') }}</h4>
     </div>
     <div class="Tile__body Tile__articles">
         @foreach ($articles as $article)
@@ -30,12 +30,12 @@
                         </div>
                         <div class="text-right Article__readMore">
                             <a href="{{ route('articles.show', ['slug' => $article->getSlug()]) }}" class="Button Button--primary">
-                                <span class="Button__content">{{ @trans('articles.read_more') }}</span>
+                                <span class="Button__content">{{ @trans(config('app.directory_name') . '/articles.read_more') }}</span>
                             </a>
                         </div>
 
                         <div class="Article__posted">
-                            <i class="material-icons fontSize17"> calendar_today </i> <i>{{ @trans('articles.posted_on') }} {{ $article->created_at->toFormattedDateString() }}</i>
+                            <i class="material-icons fontSize17"> calendar_today </i> <i>{{ @trans(config('app.directory_name') . '/articles.posted_on') }} {{ $article->created_at->toFormattedDateString() }}</i>
                         </div>
                     </div>
                 </div>

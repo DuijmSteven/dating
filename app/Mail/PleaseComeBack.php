@@ -41,7 +41,7 @@ class PleaseComeBack extends Mailable implements ShouldQueue
     public function build()
     {
         return $this
-            ->subject(trans('emails.subjects.please_come_back'))
+            ->subject(trans(config('app.directory_name') . '/emails.subjects.please_come_back'))
             ->view('emails.please-come-back');
     }
 }

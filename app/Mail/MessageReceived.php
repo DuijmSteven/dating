@@ -74,6 +74,6 @@ class MessageReceived extends Mailable implements ShouldQueue
                 ->addTextHeader('List-Unsubscribe', '<mailto:unsubscribe@altijdsex.nl>');
         });
 
-        return $this->subject(trans('emails.subjects.message_received'))->view('emails.message-received');
+        return $this->subject(trans(config('app.directory_name') . '/emails.subjects.message_received'))->view('emails.message-received');
     }
 }

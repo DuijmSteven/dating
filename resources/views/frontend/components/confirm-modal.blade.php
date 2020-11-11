@@ -14,12 +14,12 @@
                           'url' => $url,
                           'buttonContext' => 'general',
                           'buttonState' => 'danger',
-                          'buttonText' => @trans('edit_profile.deactivate')
+                          'buttonText' => @trans(config('app.directory_name') . '/edit_profile.deactivate')
                       ])
 
                     <button type="button" class="pull-right Button Button--default" data-dismiss="modal">
                         <span class="Button__content">
-                            {{ trans('buttons.cancel') }}
+                            {{ trans(config('app.directory_name') . '/buttons.cancel') }}
                         </span>
                     </button>
                 </div>

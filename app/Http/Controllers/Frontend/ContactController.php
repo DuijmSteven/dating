@@ -17,8 +17,8 @@ class ContactController extends FrontendController
         return view(
             'frontend.contact',
             [
-                'title' => $this->buildTitleWith(trans('view_titles.contact')),
-                'description' => trans('contact.description')
+                'title' => $this->buildTitleWith(trans(config('app.directory_name') . '/view_titles.contact')),
+                'description' => trans(config('app.directory_name') . '/contact.description')
             ]
         );
     }
@@ -37,11 +37,11 @@ class ContactController extends FrontendController
             Mail::to(config('company.info_email'))
                 ->queue($contactEmail);
 
-            toastr()->success(trans('contact.feedback.message_sent'));
+            toastr()->success(trans(config('app.directory_name') . '/contact.feedback.message_sent'));
         } catch (\Exception $exception) {
             \Log::error($exception);
 
-            toastr()->error(trans('contact.feedback.message_not_sent'));
+            toastr()->error(trans(config('app.directory_name') . '/contact.feedback.message_not_sent'));
         }
 
         return redirect()->back()->with('errors');

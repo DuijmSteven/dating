@@ -43,7 +43,7 @@
                     @foreach(\UserConstants::selectableFields() as $fieldName => $a)
                         @if(isset($conversation->userA->meta->{$fieldName}))
                             <strong>{!! ucfirst(str_replace('_', ' ', $fieldName)) !!}:
-                            </strong> {!! @trans('user_constants.' . $fieldName . '.' . $conversation->userA->meta->{$fieldName}) !!}
+                            </strong> {!! @trans(config('app.directory_name') . '/user_constants.' . $fieldName . '.' . $conversation->userA->meta->{$fieldName}) !!}
                             <br>
                         @endif
                     @endforeach
@@ -51,12 +51,12 @@
                     @foreach(array_merge(\UserConstants::textFields(), \UserConstants::textInputs()) as $fieldName)
                         @if(isset($conversation->userA->meta->{$fieldName}) && $conversation->userA->meta->{$fieldName} != '')
                             @if($fieldName === 'dob')
-                                <strong>{!! @trans('user_constants.' . $fieldName) !!}:
+                                <strong>{!! @trans(config('app.directory_name') . '/user_constants.' . $fieldName) !!}:
                                 </strong> {!! $conversation->userA->meta->{$fieldName} !!}<br>
-                                <strong>{!! @trans('user_constants.age') !!}:
+                                <strong>{!! @trans(config('app.directory_name') . '/user_constants.age') !!}:
                                 </strong> {!! $conversation->userA->meta->{$fieldName}->diffInYears(\Carbon\Carbon::now('Europe/Amsterdam')) !!}<br>
                             @else
-                                <strong>{!! @trans('user_constants.' . $fieldName) !!}:
+                                <strong>{!! @trans(config('app.directory_name') . '/user_constants.' . $fieldName) !!}:
                                 </strong> {!! $conversation->userA->meta->{$fieldName} !!}<br>
                             @endif
 
@@ -301,7 +301,7 @@
                     @foreach(\UserConstants::selectableFields() as $fieldName => $a)
                         @if(isset($peasant->meta->{$fieldName}))
                             <strong>{!! ucfirst(str_replace('_', ' ', $fieldName)) !!}:
-                            </strong> {!! @trans('user_constants.' . $fieldName . '.' . $peasant->meta->{$fieldName}) !!}
+                            </strong> {!! @trans(config('app.directory_name') . '/user_constants.' . $fieldName . '.' . $peasant->meta->{$fieldName}) !!}
                             <br>
                         @endif
                     @endforeach
@@ -309,12 +309,12 @@
                     @foreach(array_merge(\UserConstants::textFields(), \UserConstants::textInputs()) as $fieldName)
                         @if(isset($peasant->meta->{$fieldName}) && $peasant->meta->{$fieldName} != '')
                             @if($fieldName === 'dob')
-                                <strong>{!! @trans('user_constants.' . $fieldName) !!}:
+                                <strong>{!! @trans(config('app.directory_name') . '/user_constants.' . $fieldName) !!}:
                                 </strong> {!! $peasant->meta->{$fieldName} !!}<br>
-                                <strong>{!! @trans('user_constants.age') !!}:
+                                <strong>{!! @trans(config('app.directory_name') . '/user_constants.age') !!}:
                                 </strong> {!! $peasant->meta->{$fieldName}->diffInYears(\Carbon\Carbon::now('Europe/Amsterdam')) !!}<br>
                             @else
-                                <strong>{!! @trans('user_constants.' . $fieldName) !!}:
+                                <strong>{!! @trans(config('app.directory_name') . '/user_constants.' . $fieldName) !!}:
                                 </strong> {!! $peasant->meta->{$fieldName} !!}<br>
                             @endif
 

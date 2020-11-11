@@ -19,8 +19,8 @@ class MiscController extends FrontendController
             'frontend.misc.tac',
             [
                 'tacContent' => Markdown::convertToHtml($tacContent),
-                'title' => $this->buildTitleWith(trans('view_titles.tac')),
-                'description' => trans('tac.description'),
+                'title' => $this->buildTitleWith(trans(config('app.directory_name') . '/view_titles.tac')),
+                'description' => trans(config('app.directory_name') . '/tac.description'),
             ]
         );
     }
@@ -30,8 +30,8 @@ class MiscController extends FrontendController
         return view(
             'frontend.misc.privacy',
             [
-                'title' => $this->buildTitleWith(trans('view_titles.privacy')),
-                'description' => trans('privacy.description')
+                'title' => $this->buildTitleWith(trans(config('app.directory_name') . '/view_titles.privacy')),
+                'description' => trans(config('app.directory_name') . '/privacy.description')
             ]
         );
     }
@@ -53,8 +53,8 @@ class MiscController extends FrontendController
             [
                 'faqs' => $faqs,
                 'faqSections' => $faqSections,
-                'title' => $this->buildTitleWith(trans('view_titles.faq')),
-                'description' => trans('faq.description')
+                'title' => $this->buildTitleWith(trans(config('app.directory_name') . '/view_titles.faq')),
+                'description' => trans(config('app.directory_name') . '/faq.description')
             ]
         );
     }

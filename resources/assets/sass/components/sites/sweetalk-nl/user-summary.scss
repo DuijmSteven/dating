@@ -121,6 +121,7 @@
         &:hover {
             background-color: $mainColor;
             text-decoration: none;
+            color: #fff;
         }
     }
 
@@ -152,6 +153,8 @@
 
         &:hover {
             background-color: $secondaryColor;
+            text-decoration: none;
+            color: #fff;
         }
     }
 

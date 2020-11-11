@@ -256,7 +256,7 @@
         @endif
 
 {{--        <p>--}}
-{{--            {{ trans('invoices::invoice.amount_in_words') }}: {{ $invoice->getTotalAmountInWords() }}--}}
+{{--            {{ 'trans('invoices::invoice.amount_in_words') }}: {{ $invoice->getTotalAmountInWords() }}--}}
 {{--        </p>--}}
 {{--        <p>--}}
 {{--            {{ trans('invoices::invoice.pay_until') }}: {{ $invoice->getPayUntilDate() }}--}}

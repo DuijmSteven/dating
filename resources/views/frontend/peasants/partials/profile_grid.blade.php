@@ -1,7 +1,7 @@
 @if(count($users) == 0)
     <div>
         <p style="margin-bottom: 1300px">
-            {{ trans('profile_grid.no_matching_users') }}
+            {{ trans(config('app.directory_name') . '/profile_grid.no_matching_users') }}
         </p>
     </div>
 @endif

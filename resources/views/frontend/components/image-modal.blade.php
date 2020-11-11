@@ -18,7 +18,7 @@
 {{--                @include('frontend.components.button', [--}}
 {{--                        'buttonContext' => 'general',--}}
 {{--                        'buttonState' => 'primary',--}}
-{{--                        'buttonText' => trans('navbar.credits'),--}}
+{{--                        'buttonText' => trans(config('app.directory_name') . '/navbar.credits'),--}}
 {{--                        'buttonClasses' => 'centered Button--tall Button--highlighted',--}}
 {{--                        'url' => route('credits.show'),``--}}
 {{--                    ])--}}

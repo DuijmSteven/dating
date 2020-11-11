@@ -14,9 +14,9 @@ class ArticleController extends FrontendController
         return view(
             'frontend.articles.overview',
             [
-                'title' => $this->buildTitleWith(trans('view_titles.articles')),
+                'title' => $this->buildTitleWith(trans(config('app.directory_name') . '/view_titles.articles')),
                 'articles' => $articles,
-                'description' => trans('articles.description')
+                'description' => trans(config('app.directory_name') . '/articles.description')
             ]
         );
     }
@@ -28,7 +28,7 @@ class ArticleController extends FrontendController
         return view(
             'frontend.articles.show',
             [
-                'title' =>  $article->title . ' - ' . $this->buildTitleWith(trans('view_titles.articles')),
+                'title' =>  $article->title . ' - ' . $this->buildTitleWith(trans(config('app.directory_name') . '/view_titles.articles')),
                 'description' => $article->meta_description ?? Str::limit($article->getBody(), 155),
                 'article' => $article,
                 'markdownInstance' => new \Markdown()

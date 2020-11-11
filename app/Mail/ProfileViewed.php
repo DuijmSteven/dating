@@ -48,6 +48,6 @@ class ProfileViewed extends Mailable implements ShouldQueue
                 ->addTextHeader('List-Unsubscribe', '<mailto:unsubscribe@altijdsex.nl>');
         });
 
-        return $this->subject(trans('emails.subjects.profile_viewed', ['username' => $this->messageSender->getUsername()]))->view('emails.profile-viewed');
+        return $this->subject(trans(config('app.directory_name') . '/emails.subjects.profile_viewed', ['username' => $this->messageSender->getUsername()]))->view('emails.profile-viewed');
     }
 }

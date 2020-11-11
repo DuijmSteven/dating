@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="credits-page-content">
-        <h4 class="stepHeading"><span class="step">1</span><span class="stepTitle">{{ trans('credits.select_package') }}</span></h4>
+        <h4 class="stepHeading"><span class="step">1</span><span class="stepTitle">{{ trans(config('app.directory_name') . '/credits.select_package') }}</span></h4>
         <div class="pricing-3">
             <div>
                 <div class="row">
@@ -14,7 +14,7 @@
                                 >
                                     <div class="table {{ $loop->iteration == 2 ? 'table-rose' : '' }}">
                                         <h6 class="category">{{ $creditpack->name }}</h6>
-                                        <h1 class="block-caption"><b class="package-credits">{{ $creditpack->credits }}</b> {{ trans('credits.credits') }}
+                                        <h1 class="block-caption"><b class="package-credits">{{ $creditpack->credits }}</b> {{ trans(config('app.directory_name') . '/credits.credits') }}
                                         </h1>
                                         <ul>
                                             <li>
@@ -35,7 +35,7 @@
                                                     @if($authenticatedUser->getDiscountPercentage())
                                                         <span class="discountPrice">{{ number_format((1 - $authenticatedUser->getDiscountPercentage() / 100)*$creditpack->price/$creditpack->credits / 100, 2, ',', '.') }}</span>
                                                     @endif
-                                                </b> {{ trans('credits.per_message') }}
+                                                </b> {{ trans(config('app.directory_name') . '/credits.per_message') }}
                                             </li>
                                         </ul>
 
@@ -43,16 +43,16 @@
                                             href="#"
                                             class="btn {{ $loop->iteration == 2 ? 'btn-white' : 'btn-rose' }} btn-round JS--prevent-default__click"
                                         >
-                                            {{ trans('credits.select_package_backup') }}
+                                            {{ trans(config('app.directory_name') . '/credits.select_package') }}
                                         </a>
 
                                         @if($creditpack->id === 2)
                                             <div class="usp-label most-popular">
-                                                {{ trans('credits.most_popular_backup') }}
+                                                {{ trans(config('app.directory_name') . '/credits.most_popular') }}
                                             </div>
                                         @elseif($creditpack->id === 5)
                                             <div class="usp-label best-value">
-                                                {{ trans('credits.best_value_backup') }}
+                                                {{ trans(config('app.directory_name') . '/credits.best_value') }}
                                             </div>
                                         @endif
                                     </div>
@@ -68,7 +68,7 @@
                 {{ csrf_field() }}
 
                 <div class="col-xs-12 col-md-12">
-                    <h4 class="JS--paymentMethods__title stepHeading"><span class="step">2</span><span class="stepTitle">{{ trans('credits.select') }}</span></h4>
+                    <h4 class="JS--paymentMethods__title stepHeading"><span class="step">2</span><span class="stepTitle">{{ trans(config('app.directory_name') . '/credits.select') }}</span></h4>
                     <ul class="list-group mb-3 JS--paymentMethods paymentMethodsList">
                         <li class=" Tile list-group-item d-flex justify-content-between paymentMethodsListItem JS--paymentMethodListItem"
                             style="margin-bottom: 10px; flex-wrap: wrap;">
@@ -113,21 +113,21 @@
                     </ul>
                 </div>
                 <div class="col-xs-12 col-md-12">
-                    <h4 class="stepHeading"><span class="step">3</span><span class="stepTitle JS--finalizePaymentTitle">{{ @trans('credits.cart') }}</span></h4>
+                    <h4 class="stepHeading"><span class="step">3</span><span class="stepTitle JS--finalizePaymentTitle">{{ @trans(config('app.directory_name') . '/credits.cart') }}</span></h4>
                     <ul class="Tile list-group mb-3">
                         <li class="list-group-item d-flex justify-content-between">
                             <div>
-                                <h6 class="my-0"><span class="cart-package">{{ $creditpacks[1]->name }}</span> {{ @trans('credits.package') }}
+                                <h6 class="my-0"><span class="cart-package">{{ $creditpacks[1]->name }}</span> {{ @trans(config('app.directory_name') . '/credits.package') }}
                                 </h6>
                                 <small class="text-muted"><span
-                                        class="cart-credits">{{ $creditpacks[1]->credits }}</span> {{ @trans('credits.credits') }}</small>
+                                        class="cart-credits">{{ $creditpacks[1]->credits }}</span> {{ @trans(config('app.directory_name') . '/credits.credits') }}</small>
                                 <input name="creditpack_id" type="hidden" value="{{ $creditpacks[1]->id }}">
                             </div>
                             <span class="text-muted"><span
                                     class="cart-value">&euro;{{ number_format($creditpacks[1]->price / 100, 2, ',', '.') }}</span></span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between">
-                            <span>{{ @trans('credits.total') }}:</span>
+                            <span>{{ @trans(config('app.directory_name') . '/credits.total') }}:</span>
                             <strong><span class="cart-value">&euro;{{ number_format($creditpacks[1]->price / 100, 2, ',', '.') }}</span></strong>
                         </li>
                     </ul>
@@ -135,7 +135,7 @@
                         <i class="material-icons paymentButtonCheck">
                             check_circle
                         </i>
-                        {{ @trans('credits.to_checkout_backup') }}
+                        {{ @trans(config('app.directory_name') . '/credits.to_checkout) }}
                     </button>
                 </div>
             </form>
@@ -159,7 +159,7 @@
                         <small class="text-muted">{{ $user->meta->city }}</small>
                     </p>
 {{--                    <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}"--}}
-{{--                       class="btn btn-lg btn-white">{{ @trans('credits.more_info') }}</a>--}}
+{{--                       class="btn btn-lg btn-white">{{ @trans(config('app.directory_name') . '/credits.more_info') }}</a>--}}
                 </div>
             @endforeach
         </div>

@@ -142,7 +142,7 @@ trait AuthenticatesUsers
     protected function sendFailedLoginResponse(Request $request)
     {
         throw ValidationException::withMessages([
-            $this->username() => [trans('auth.failed')],
+            $this->username() => [trans(config('app.directory_name') . '/auth.failed')],
         ]);
     }
 

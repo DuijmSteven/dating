@@ -46,8 +46,8 @@
                                                     {!! $fingerprint2->user->getId() !!}
                                                 </a>
                                             <br>
-                                            <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $fingerprint2->user->username !!} <br>
-                                            <strong>{!! @trans('user_constants.email') !!}:</strong> {!! $fingerprint2->user->email !!} <br>
+                                            <strong>{!! @trans(config('app.directory_name') . '/user_constants.username') !!}:</strong> {!! $fingerprint2->user->username !!} <br>
+                                            <strong>{!! @trans(config('app.directory_name') . '/user_constants.email') !!}:</strong> {!! $fingerprint2->user->email !!} <br>
                                             <strong>Email verified:</strong> {!! \App\UserMeta::emailVerifiedDescriptionPerId()[$fingerprint2->user->meta->getEmailVerified()] !!} <br>
 
                                             @php
@@ -64,18 +64,18 @@
 
 
                                             <strong>Credits</strong>: <span class="highlightAsDisk {{ $highlightTypeClass }}">{{ $fingerprint2->user->account->getCredits() }}</span> <br>
-                                            <strong>{!! @trans('user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($fingerprint2->user->meta->dob) !!} <br>
+                                            <strong>{!! @trans(config('app.directory_name') . '/user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($fingerprint2->user->meta->dob) !!} <br>
                                             @foreach(\UserConstants::selectableFields('peasant') as $fieldName => $a)
                                                 @if(isset($fingerprint2->user->meta->{$fieldName}))
                                                     <strong>{!! ucfirst(str_replace('_', ' ', $fieldName)) !!}:
-                                                    </strong> {!! @trans('user_constants.' . $fieldName . '.' . $fingerprint2->user->meta->{$fieldName}) !!} <br>
+                                                    </strong> {!! @trans(config('app.directory_name') . '/user_constants.' . $fieldName . '.' . $fingerprint2->user->meta->{$fieldName}) !!} <br>
                                                 @endif
                                             @endforeach
 
                                             @foreach(array_merge(\UserConstants::textFields('peasant'), \UserConstants::textInputs('peasant')) as $fieldName)
                                                 @if(isset($fingerprint2->user->meta->{$fieldName}) && $fingerprint2->user->meta->{$fieldName} != '')
                                                     <div style="max-width: 250px; {!! $fieldName === 'about_me' ? 'white-space: normal' : '' !!}">
-                                                        <strong>{!! @trans('user_constants.' . $fieldName) !!}:</strong>
+                                                        <strong>{!! @trans(config('app.directory_name') . '/user_constants.' . $fieldName) !!}:</strong>
 
                                                         @if($fieldName === 'about_me')
                                                             {{ substr($fingerprint2->user->meta->{$fieldName}, 0, 40) }}{{ strlen($fingerprint2->user->meta->{$fieldName}) > 41 ? '...' : '' }}

@@ -1,0 +1,72 @@
+<div class="Tile LatestViewed ModuleProfiles JS--Tile Tile--withToggle">
+    <div class="Tile__heading LatestViewed__heading JS--Tile__toggle">
+        <span class="material-icons">
+            preview
+        </span>
+
+        {{ trans(config('app.directory_name') . '/viewed_users.viewed_users') }}
+
+        @include('frontend.components.tile-toggle')
+    </div>
+    <div class="Tile__body LatestViewed__body ModuleProfiles__body JS--Tile__body">
+        <div class="row">
+            @php
+                $count = 0;
+            @endphp
+            @forelse($users as $user)
+                <div class="col-xs-6 {{ $count % 2 === 0 ? 'firstColumn' : 'secondColumn' }}">
+                    <div class="ModuleProfiles__username">
+                        {{ $user->username }}{{ $user->meta->dob ? ' - ' : '' }}
+                        {{ $user->meta->dob ? $user->meta->dob->diffInYears(\Carbon\Carbon::now('Europe/Amsterdam')) : '' }}
+                    </div>
+
+                    <a href="{!! route('users.show', ['username' => $user->getUsername()]) !!}" class="ModuleProfiles__item">
+                        <img class="ModuleProfiles__profile-image" src="{!! $user->profileImageUrlThumb !!}" alt="">
+
+                        @if(in_array($user->getId(), $onlineUserIds))
+                            <div class="onlineCircle"></div>
+                        @endif
+                    </a>
+
+                    <div class="ModuleProfiles__sendMessage"
+                         v-on:click="addChat({!! $authenticatedUser->getId() !!}, {!! $user->getId() !!}, '1', true)"
+                    >
+                        <i class="material-icons material-icon ModuleProfiles__sendMessage__icon">forward_to_inbox</i>
+                        <span class="ModuleProfiles__sendMessage__text">Bericht</span>
+                    </div >
+                </div>
+
+                {{--    <div class="ModuleProfiles__bodyWrapper">--}}
+                {{--        <a href="{!! route('users.show', ['username' => $user->getUsername()]) !!}" class="ModuleProfiles__item">--}}
+                {{--            <span class="ModuleProfiles__profile-image">--}}
+                {{--                <img src="{!! \StorageHelper::profileImageUrl($user, true) !!}" alt="">--}}
+
+                {{--                @if(in_array($user->getId(), $onlineUserIds))--}}
+                {{--                    <div class="onlineCircle"></div>--}}
+                {{--                @endif--}}
+                {{--            </span>--}}
+                {{--            <span class="ModuleProfiles__username">--}}
+                {{--                {{ $user->username }}{{ $user->meta->dob ? ', ' : '' }}--}}
+                {{--                {{ $user->meta->dob ? $user->meta->dob->diffInYears(\Carbon\Carbon::now('Europe/Amsterdam')) : '' }}--}}
+                {{--            </span>--}}
+                {{--        </a>--}}
+
+                {{--        <div class="ModuleProfiles__sendMessage"--}}
+                {{--             v-on:click="addChat({!! $authenticatedUser->getId() !!}, {!! $user->getId() !!}, '1', true)"--}}
+                {{--        >--}}
+                {{--            <i class="material-icons material-icon ModuleProfiles__sendMessage__icon">textsms</i>--}}
+                {{--        </div>--}}
+                {{--    </div>--}}
+                @php
+                    $count++;
+                @endphp
+            @empty
+                <div class="col-xs-12">
+                    <p>
+                        {{ trans(config('app.directory_name') . '/viewed_by_users.no_views') }}
+                    </p>
+                </div>
+            @endforelse
+        </div>
+    </div>
+</div>

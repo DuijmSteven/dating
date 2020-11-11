@@ -28,11 +28,11 @@ class MailResetPasswordNotification extends ResetPassword
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject(trans('emails.subjects.reset_password'))
-            ->line(trans('emails.reset_password.reason'))
-            ->action(trans('emails.reset_password.reset_password'), url(config('app.url').route('password.reset.final.get', ['token' => $this->token, 'email' => $notifiable->getEmailForPasswordReset()], false)))
-            ->line(trans('emails.reset_password.expiration', ['count' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire')]))
-            ->line(trans('emails.reset_password.if_not_requested'));
+            ->subject(trans(config('app.directory_name') . '/emails.subjects.reset_password'))
+            ->line(trans(config('app.directory_name') . '/emails.reset_password.reason'))
+            ->action(trans(config('app.directory_name') . '/emails.reset_password.reset_password'), url(config('app.url').route('password.reset.final.get', ['token' => $this->token, 'email' => $notifiable->getEmailForPasswordReset()], false)))
+            ->line(trans(config('app.directory_name') . '/emails.reset_password.expiration', ['count' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire')]))
+            ->line(trans(config('app.directory_name') . '/emails.reset_password.if_not_requested'));
     }
 
     /**

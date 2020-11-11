@@ -95,7 +95,7 @@ class LayoutPartComposer
 
             $layoutPartHtml = $layoutPartHtml .
                 '<div class="Module Module_' . $name . '">' .
-                    \View::make('frontend.modules.' . $name, $viewData)->render() .
+                    \View::make('frontend.modules.partials.sites.' . config('app.directory_name') . '.' . $name, $viewData)->render() .
                 '</div>';
         }
 

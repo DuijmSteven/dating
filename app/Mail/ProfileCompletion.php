@@ -31,6 +31,6 @@ class ProfileCompletion extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->subject(trans('emails.subjects.profile_completion'))->view('emails.profile-completion');
+        return $this->subject(trans(config('app.directory_name') . '/emails.subjects.profile_completion'))->view('emails.profile-completion');
     }
 }

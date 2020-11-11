@@ -36,6 +36,6 @@ class Welcome extends Mailable implements ShouldQueue
                 ->addTextHeader('List-Unsubscribe', '<mailto:unsubscribe@altijdsex.nl>');
         });
 
-        return $this->subject(trans('emails.subjects.welcome'))->view('emails.welcome');
+        return $this->subject(trans(config('app.directory_name') . '/emails.subjects.welcome'))->view('emails.welcome');
     }
 }

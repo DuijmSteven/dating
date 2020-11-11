@@ -156,7 +156,7 @@ class PaymentController extends FrontendController
         }
 
         return view('frontend.thank-you', [
-            'title' => $this->buildTitleWith(trans('view_titles.payment')),
+            'title' => $this->buildTitleWith(trans(config('app.directory_name') . '/view_titles.payment')),
             'status' => $status,
             'info' => $info,
             'transactionId' => $transactionId,

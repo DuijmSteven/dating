@@ -59,16 +59,16 @@
 
                                         <strong>Too slutty for ads:</strong> {!! $bot->meta->getTooSluttyForAds() ? 'true' : 'false'!!} <br>
 
-                                        <strong>{!! @trans('user_constants.username') !!}:</strong> {!! $bot->username !!}
+                                        <strong>{!! @trans(config('app.directory_name') . '/user_constants.username') !!}:</strong> {!! $bot->username !!}
                                         <br>
-                                        <strong>{!! @trans('user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($bot->meta->dob) !!}
+                                        <strong>{!! @trans(config('app.directory_name') . '/user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($bot->meta->dob) !!}
                                         <br>
                                         <strong>Country code:</strong> {!! $bot->meta->country !!} <br>
 
                                     @foreach(\UserConstants::selectableFields('bot') as $fieldName => $a)
                                             @if(isset($bot->meta->{$fieldName}))
                                                 <strong>{!! ucfirst(str_replace('_', ' ', $fieldName)) !!}:
-                                                </strong> {!! @trans('user_constants.' . $fieldName . '.' . $bot->meta->{$fieldName}) !!}
+                                                </strong> {!! @trans(config('app.directory_name') . '/user_constants.' . $fieldName . '.' . $bot->meta->{$fieldName}) !!}
                                                 <br>
                                             @endif
                                         @endforeach
@@ -77,7 +77,7 @@
                                             @if(isset($bot->meta->{$fieldName}) && $bot->meta->{$fieldName} != '')
                                                 <div
                                                     style="max-width: 250px; {!! $fieldName === 'about_me' ? 'white-space: normal' : '' !!}">
-                                                    <strong>{!! @trans('user_constants.' . $fieldName) !!}:</strong>
+                                                    <strong>{!! @trans(config('app.directory_name') . '/user_constants.' . $fieldName) !!}:</strong>
 
                                                     @if($fieldName === 'about_me')
                                                         {{ substr($bot->meta->{$fieldName}, 0, 40) }}{{ strlen($bot->meta->{$fieldName}) > 41 ? '...' : '' }}

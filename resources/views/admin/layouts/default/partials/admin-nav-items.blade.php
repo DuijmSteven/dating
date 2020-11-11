@@ -34,7 +34,7 @@
         </li>
         <li class="{!! \Request::route()->getName() == 'admin.statistics.google-ads.keywords' ? 'active' : '' !!}">
             <a href="{!! route('admin.statistics.google-ads.keywords') !!}">
-                <i class="fa fa-key"></i>
+         <ju></ju>       <i class="fa fa-key"></i>
                 Google Ads Keywords
             </a>
         </li>
