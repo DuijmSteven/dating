@@ -821,13 +821,8 @@ class ConversationController extends Controller
 
                 $sender->save();
 
-                if (!is_object($conversation->messages)) {
-                    \Log::error('Sender ID: ' . $sender->getId());
-                    \Log::error('Message body: ' . $messageData['message']);
-                }
-
                 // Sometimes pretend that the bot viewed the user's profile. Always when it is the first time they chat
-                if ($conversation->messages->count() == 1 || rand(0, 1)) {
+                if (!isset($conversation->messages) || rand(0, 1)) {
                     $userViewInstance = new UserView();
                     $userViewInstance->setViewerId($messageData['sender_id']);
                     $userViewInstance->setViewedId($messageData['recipient_id']);
@@ -843,11 +838,6 @@ class ConversationController extends Controller
         } catch (\Exception $exception) {
             \Log::error($exception->getMessage());
             \Log::error($exception->getTraceAsString());
-
-
-            if (Str::contains($exception->getMessage(), 'message') && $conversation) {
-                \Log::error('Convo problem convo ID:' . $conversation->getId());
-            }
 
             $alerts[] = [
                 'type' => 'error',
