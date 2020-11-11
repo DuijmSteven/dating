@@ -842,6 +842,7 @@ class ConversationController extends Controller
             ];
         } catch (\Exception $exception) {
             \Log::error($exception->getMessage());
+            \Log::error($exception->getTraceAsString());
 
 
             if (Str::contains($exception->getMessage(), 'message') && $conversation) {

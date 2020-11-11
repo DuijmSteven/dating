@@ -1,16 +1,18 @@
-.pagination {
-    > li > a {
-        border-color: #ddd;
-        color: map_get($pagination, 'textColor');
-    }
+.pagination__container {
+    .pagination {
+        > li > a {
+            border-color: #ddd;
+            color: map_get($pagination, 'textColor');
+        }
 
-    > .active > span {
-        background-color: map_get($pagination, 'activeBackGroundColor');
-        border-color: #ddd;
-
-        &:hover {
+        > .active > span {
             background-color: map_get($pagination, 'activeBackGroundColor');
             border-color: #ddd;
+
+            &:hover {
+                background-color: map_get($pagination, 'activeBackGroundColor');
+                border-color: #ddd;
+            }
         }
     }
 }
