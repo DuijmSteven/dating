@@ -23,13 +23,21 @@ class AdsLandingPagesController extends FrontendController
         parent::__construct($userActivityService);
     }
 
-    public function showLP(Request $request, $id)
+    public function showLP(Request $request, $id, $lpType = 'register')
     {
         if(view()->exists('frontend.landing-pages.ads.' . config('app.directory_name') . '.' . $id)) {
 
             $viewData = [];
 
             $viewData = $this->registrationService->checkAffiliateRequestDataAndSetRegistrationViewData($request, $viewData);
+
+            if ($lpType === 'login') {
+                $viewData['lpType'] = 'login';
+            } else {
+                $viewData['lpType'] = 'register';
+            }
+
+            $viewData['id'] = $id;
 
             return view(
                 'frontend.landing-pages.ads.' . str_replace('.', '-', config('app.name')) . '.' . $id,

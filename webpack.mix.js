@@ -18,6 +18,9 @@ mix
     .sass('resources/assets/sass/altijdsex-nl.scss', 'public/css/altijdsex-nl/app.css')
     .sass('resources/assets/sass/liefdesdate-nl.scss', 'public/css/liefdesdate-nl/app.css')
     .sass('resources/assets/sass/sweetalk-nl.scss', 'public/css/sweetalk-nl/app.css')
+    .sass('resources/assets/sass/sites/altijdsex-nl/adsLps.scss', 'public/css/altijdsex-nl/adsLps.css')
+    .sass('resources/assets/sass/sites/liefdesdate-nl/adsLps.scss', 'public/css/liefdesdate-nl/adsLps.css')
+    .sass('resources/assets/sass/sites/sweetalk-nl/adsLps.scss', 'public/css/sweetalk-nl/adsLps.css')
     .sourceMaps()
     .version();
 

@@ -1,0 +1,100 @@
+@import "resources/assets/sass/liefdesdate-nl-variables";
+
+body {
+    /*font-size: 1.9rem;*/
+    font-weight: 300;
+
+    font-family: 'Fira Sans', sans-serif;
+}
+
+.bg-img {
+    /* Control the height of the image */
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bg-img form {
+    position: absolute;
+    right: 0;
+    max-width: 500px;
+    padding: 16px;
+    background-color: white;
+    font-size: 14px;
+}
+
+.imgHeader {
+    background: url('/lps/t1/assets/img/lp-3.jpg') center/cover no-repeat;
+    min-height: 120px;
+    margin-bottom: 14px;
+}
+
+.logo img {
+    width: 100px;
+}
+
+@media (min-width: 768px) {
+    .bg-img {
+        background-image: url("/lps/t1/assets/img/lp-3.jpg");
+        min-height: 680px;
+    }
+
+    .bg-img.imageDontShowLocal {
+        background-image: none;
+    }
+
+    .bg-img form {
+        margin: 20px;
+    }
+
+    .logo img {
+        width: 180px;
+    }
+
+    .loginForm {
+        width: 500px;
+    }
+}
+
+@media (max-width: 768px) {
+    .loginForm {
+        width: 100%;
+    }
+
+    .logo img {
+        width: 110px;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .bg-img {
+        min-height: 500px;
+    }
+
+    .bg-img.login {
+        min-height: 370px;
+    }
+}
+
+.btn-register {
+    color: #fff;
+    background-color: $secondaryColor;
+    border-color: $secondaryColor;
+}
+
+.btn-login {
+    color: #fff;
+    background-color: $tertiaryColor;
+    border-color: $tertiaryColor;
+}
+
+.warning-bg {
+    background-color: lighten($secondaryColor, 25%);
+    border-radius: 10px;
+}
+
+form {
+    border-radius: 20px;
+}

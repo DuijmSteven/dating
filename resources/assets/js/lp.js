@@ -43,24 +43,6 @@ window.addEventListener('load', function () {
 $(window).on('load', function () {
     require('./global_helpers');
 
-    // $('.JS--register-button').click(function(event) {
-    //     grecaptcha.execute(DP.recaptchaKey, {action: 'register'}).then(function(token) {
-    //         document.getElementById('g-recaptcha-response').value = token;
-    //
-    //         $('#JS--registrationForm').submit();
-    //     });
-    // });
-
-    // setTimeout(() => {
-    //     // Create a new ClientJS object
-    //     var client = new ClientJS();
-    //
-    //     // Get the client's fingerprint id
-    //     var fingerprint = client.getFingerprint();
-    //
-    //     $('#userFingerprintInput').val(fingerprint)
-    // }, 100);
-
     if ($('input[type="submit"]').length > 0 || $('button[type="submit"]').length > 0) {
         $('form').submit(function () {
             $('input[type=submit]', this).attr('disabled', 'disabled');

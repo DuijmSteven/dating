@@ -65,7 +65,8 @@ Route::group([
         ->name('direct-login')
         ->middleware('signed');
 
-    Route::get('/lps/{id}', 'Frontend\AdsLandingPagesController@showLP')
+    Route::get('/lps/{id}/{lpType?}', 'Frontend\AdsLandingPagesController@showLP')
+        ->name('ads-lp.show')
         ->middleware('guest');
 
     Route::get('/', 'Frontend\LandingPageController@showRegister')

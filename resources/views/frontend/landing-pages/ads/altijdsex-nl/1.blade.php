@@ -11,25 +11,27 @@
     <meta name="viewport" content="width=device-width"/>
     <link rel="canonical" href="https://altijdsex.nl/lps/1"/>
 
-@if(App::environment('production'))
-    <!-- Google Tag Manager -->
-        <script>(function (w, d, s, l, i) {
-                w[l] = w[l] || [];
-                w[l].push({
-                    'gtm.start':
-                        new Date().getTime(), event: 'gtm.js'
-                });
-                var f = d.getElementsByTagName(s)[0],
-                    j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
-                j.async = true;
-                j.src =
-                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-                f.parentNode.insertBefore(j, f);
-            })(window, document, 'script', 'dataLayer', 'GTM-MJG2S4N');</script>
-        <!-- End Google Tag Manager -->
-@endif
+    <link rel="stylesheet" href="{{ mix('css/altijdsex-nl/adsLps.css') }}">
 
-<!--     Fonts and icons     -->
+    @if(App::environment('production'))
+        <!-- Google Tag Manager -->
+            <script>(function (w, d, s, l, i) {
+                    w[l] = w[l] || [];
+                    w[l].push({
+                        'gtm.start':
+                            new Date().getTime(), event: 'gtm.js'
+                    });
+                    var f = d.getElementsByTagName(s)[0],
+                        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+                    j.async = true;
+                    j.src =
+                        'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+                    f.parentNode.insertBefore(j, f);
+                })(window, document, 'script', 'dataLayer', 'GTM-MJG2S4N');</script>
+            <!-- End Google Tag Manager -->
+    @endif
+
+    <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
     <link
@@ -44,56 +46,6 @@
 
     @include('frontend.landing-pages.common-google-captcha-part')
 
-    <style>
-        body {
-            /*font-size: 1.9rem;*/
-            font-weight: 300;
-
-            font-family: 'Fira Sans', sans-serif;
-        }
-
-        .wizard-card .tab-content {
-            padding-bottom: 0;
-        }
-
-        @media (max-width: 767px) {
-            .tab-pane.first {
-                padding-bottom: 20px;
-            }
-        }
-
-        .wizard-card .tab-content {
-            min-height: 328px;
-        }
-
-        @media screen and (max-width: 767px) {
-            .wizard-card .tab-content {
-                min-height: 160px;
-            }
-        }
-
-        .tab-pane.second {
-            margin-bottom: 0 !important;
-        }
-
-        .logo-container {
-            position: relative;
-            z-index: 100;
-        }
-
-        .wizard-card[data-color="red"] .moving-tab {
-            background-color: #e4543a !important;
-        }
-
-        .btn.btn-danger {
-            background-color: #e4543a !important;
-        }
-
-        .wizard-card[data-color="red"] .choice:hover .icon, .wizard-card[data-color="red"] .choice.active .icon {
-            border-color: #e4543a !important;
-            color: #e4543a !important;
-        }
-    </style>
 </head>
 
 <body>
@@ -257,8 +209,7 @@
                                         <div class="col-xs-12">
                                             <p class="mt-3"
                                                style="font-size: 1.3rem; text-align: justify; margin-bottom: 0; margin-top: 5px">
-                                                {!! @trans(config('app.directory_name') .
-                                                        'lp1.form.register_info',
+                                                {!! @trans(config('app.directory_name') . '/lp1.form.register_info',
                                                         [
                                                             'privacyRoute' => route('privacy.show'),
                                                             'tacRoute' => route('tac.show'),

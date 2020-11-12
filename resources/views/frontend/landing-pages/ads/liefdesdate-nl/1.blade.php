@@ -10,6 +10,8 @@
     <meta name="viewport" content="width=device-width"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="{{ mix('css/liefdesdate-nl/adsLps.css') }}">
+
     @if(App::environment('production'))
     <!-- Google Tag Manager -->
         <script>(function (w, d, s, l, i) {
@@ -33,95 +35,112 @@
     <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">
 
     @include('frontend.landing-pages.common-google-captcha-part')
-
-    <style>
-        body {
-            /*font-size: 1.9rem;*/
-            font-weight: 300;
-
-            font-family: 'Fira Sans', sans-serif;
-        }
-
-        .bg-img {
-            /* Control the height of the image */
-            min-height: 680px;
-
-            /* Center and scale the image nicely */
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-
-        .bg-img form {
-            position: absolute;
-            right: 0;
-            max-width: 500px;
-            padding: 16px;
-            background-color: white;
-            font-size: 14px;
-        }
-
-        .imgHeader {
-            background: url('/lps/t1/assets/img/lp-3.jpg') center/cover no-repeat;
-            min-height: 120px;
-        }
-
-        .logo img {
-            width: 100px;
-        }
-
-        @media (min-width: 768px) {
-            .bg-img {
-                background-image: url("/lps/t1/assets/img/lp-3.jpg");
-            }
-
-            .bg-img form {
-                margin: 20px;
-            }
-
-            .logo img {
-                width: 180px;
-            }
-        }
-
-    </style>
 </head>
 <body>
-    @if(App::environment('production'))
-        <!-- Google Tag Manager (noscript) -->
-        <noscript>
-            <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MJG2S4N"
-                    height="0" width="0" style="display:none;visibility:hidden"></iframe>
-        </noscript>
-        <!-- End Google Tag Manager (noscript) -->
-    @endif
-    <div class="main">
-        <div class="container-fluid d-sm-block d-md-none">
-            <div class="row mt-1 mb-1 text-center">
-                <div class="col my-auto">
-                    <div class="logo">
-                        <img src="{!! asset('img/site_logos/' . config('app.directory_name') . '/main_logo.png') !!}">
-                    </div>
+@if(App::environment('production'))
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MJG2S4N"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+@endif
+<div class="main">
+    <div class="container-fluid d-sm-block d-md-none">
+        <div class="row mt-1 mb-1 text-center">
+            <div class="col my-auto">
+                <div class="logo">
+                    <img src="{!! asset('img/site_logos/' . config('app.directory_name') . '/main_logo.png') !!}">
                 </div>
             </div>
         </div>
-        <div class="row imgHeader d-sm-block d-md-none">
-            <div class="col-md-12 my-auto text-center text-white" style="background-color: black; opacity: 0.6;">
+    </div>
+
+    <div class="row imgHeader d-sm-block d-md-none">
+        @if($lpType === 'register')
+
+            <div class="col-md-12 my-auto text-center text-white warning-bg">
                 <h6>LET OP: Je kunt hier bekenden tegenkomen!</h6>
                 <span>Tijdelijk gratis inschrijving, verloopt over: </span>
                 <span class="time" style="color: #f44336; font-weight: bold">05:00</span>
             </div>
-        </div>
-        <div class="bg-img">
-            <div class="container">
-                <div style="position: relative">
+        @endif
+    </div>
+    <div class="bg-img {{ $lpType === 'login' ? 'login' : 'register' }} {{ (!config('app.show_images') && config('app.env') === 'local') ? 'imageDontShowLocal' : '' }}">
+        <div class="container">
+            <div style="position: relative">
+
+                @if($lpType === 'login')
+                    <form class="pt-0 loginForm" method="POST" action="{{ route('login.post') }}" autocomplete="off">
+
+                        {{ csrf_field() }}
+
+                        <div class="text-center my-auto d-none d-md-block pt-2 pb-2">
+                            <div class="logo">
+                                <img src="{!! asset('img/site_logos/' . config('app.directory_name') . '/main_logo.png') !!}">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="enhancedFormGroup JS--enhancedFormGroup form-group col-md-12 {{ $errors->has('identity') || $errors->has('username') || $errors->has('email') ? ' has-error' : '' }}">
+                                <label for="login-identity">{{ @trans(config('app.directory_name') . '/lp1.form.identity') }}</label>
+                                <input type="text" class="form-control enlarged" id="login-identity" name="identity"
+                                       value="{{ old('identity') }}"
+                                       required autofocus
+                                >
+                                @if ($errors->has('identity') || $errors->has('username') || $errors->has('email'))
+                                    <span class="help-block">
+                                            <strong>{{ $errors->first('identity') }}</strong>
+                                        </span>
+                                    <span class="help-block">
+                                            <strong>{{ $errors->first('username') }}</strong>
+                                        </span>
+                                    <span class="help-block">
+                                            <strong>{{ $errors->first('email') }}</strong>
+                                        </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="enhancedFormGroup JS--enhancedFormGroup form-group col-md-12 {{ $errors->has('password') ? ' has-error' : '' }}">
+                                <label for="login-password">{{ @trans(config('app.directory_name') . '/lp1.form.password') }}</label>
+                                <input type="password" class="form-control enlarged" id="login-password" name="password"
+                                       required
+                                >
+                                @if ($errors->has('password'))
+                                    <span class="help-block">
+                                                <strong>{{ $errors->first('password') }}</strong>
+                                            </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-sm-12 submit">
+                                <button type="submit"
+                                        class="btn btn-login btn-lg btn-block">{{ @trans(config('app.directory_name') . '/lp1.form.login') }}</button>
+                            </div>
+                        </div>
+
+                        <div class="form-row" style="margin-top: 20px; margin-bottom: 20px">
+                            <div class="col-xs-12 mx-auto">
+                                <span>{{ trans(config('app.directory_name') . '/lp1.form.not_have_an_account') }}</span>
+                                <a href="{{ route('ads-lp.show', ['id' => $id, 'lpType' => 'register']) }}" class="btn btn-register btn-sm">Register</a>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-xs-12 mx-auto">
+                                <span>{{ trans(config('app.directory_name') . '/lp1.forgot_password') }}</span>
+                                <a href="{{ route('password.reset.get') }}" class="btn btn-secondary btn-sm">{{ trans(config('app.directory_name') . '/lp1.reset_password') }}</a>
+                            </div>
+                        </div>
+                    </form>
+                @else
                     <form class="pt-0" id="JS--registrationForm" method="POST" action="{{ route('register.post') }}" autocomplete="off">
                         {{ csrf_field() }}
 
                         <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
                         <input type="hidden" name="action" value="validate_captcha">
-
-                        <input id="userFingerprintInput" type="hidden" name="user_fingerprint" value="">
 
                         @if(isset($mediaId))
                             <input type="hidden" name="mediaId" value="{{ $mediaId }}">
@@ -141,7 +160,7 @@
                             </div>
                         </div>
 
-                        <div class="text-center d-none d-md-block p-2" style="background-color: bisque;">
+                        <div class="text-center d-none d-md-block p-2 warning-bg">
                             <h5>LET OP: Je kunt hier bekenden tegenkomen!</h5>
                             <h6 class="mb-0">Tijdelijk gratis inschrijving, verloopt over:
                                 <span class="time" style="color: #f44336; font-weight: bold">05:00</span>
@@ -151,12 +170,6 @@
                         @if(session()->has('recaptchaFailed') && session()->get('recaptchaFailed'))
                             <div class="captchaFailed">
                                 {{ @trans(config('app.directory_name') . '/lp1.captcha_failed_message') }}
-                            </div>
-                        @endif
-
-                        @if ($errors->first('fingerprintExists'))
-                            <div class="captchaFailed">
-                                Het ziet uit als je al een account heb! Als dat niet waar is neem contact op met de helpdesk.
                             </div>
                         @endif
 
@@ -219,13 +232,12 @@
                         <div class="form-row">
                             <div class="col-sm-12 submit">
                                 <button type="submit"
-                                        class="JS--register-button btn btn-success btn-lg btn-block">{{ @trans(config('app.directory_name') . '/lp1.form.register_now') }}</button>
+                                        class="JS--register-button btn btn-register btn-lg btn-block">{{ @trans(config('app.directory_name') . '/lp1.form.register_now') }}</button>
                             </div>
 
                             <div class="col-xs-12">
                                 <p class="mt-3" style="font-size: 11px; text-align: justify">
-                                    {!! @trans(config('app.directory_name') .
-                                            'lp1.form.register_info',
+                                    {!! @trans(config('app.directory_name') . '/lp1.form.register_info',
                                             [
                                                 'privacyRoute' => route('privacy.show'),
                                                 'tacRoute' => route('tac.show'),
@@ -236,33 +248,34 @@
                             </div>
                             <div class="col-xs-12 mx-auto">
                                 <span>Heb je al een account?</span>
-                                <a href="{{ route('landing-page.show-login') }}" class="btn btn-secondary btn-sm">Login</a>
+                                <a href="{{ route('ads-lp.show', ['id' => $id, 'lpType' => 'login']) }}" class="btn btn-login btn-sm">Login</a>
                             </div>
                         </div>
                     </form>
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row mt-5">
-                <div class="col-sm-12">
-                    <div class="text-center">
-                        <h3>Contact vrouwen</h3>
-                        <p style="font-size: 18px; font-weight: 300; text-align: justify;">Online chatten begint op een datingsite, zo ook het contact met vrouwen. Sex chat en online chatten, in het bijzonder anoniem geil chatten, zijn bijzonder goede manieren om je toekomstige bedpartner beter te leren kennen. Het fijne is dat je nog weinig van jezelf bloot hoeft te geven, maar wel kunt uitvinden of iemand bij je past. Sekscontact gaat vaak verder dan gewoon kennismaken, aangezien je toch enige verbinding wilt hebben met degene waar je na de sex chat mee het bed in duikt.</p>
-                        <h3>Vreemdgaan</h3>
-                        <p style="font-size: 18px; font-weight: 300; text-align: justify;">Vind een vrouw om vreemd mee te gaan, klinkt makkelijker dan het is. Hoe doe je dat eigenlijk en hoeveel vrouwen zoeken mannen voor dezelfde redenen? Vrouw zoekt man komt net zo vaak voor als man zoekt vrouw óók als het om vreemdgaan gaat. Belangrijk is dat dit geheel discreet gebeurd, vandaar dat de aanmelding geheel anoniem verloopt en er geen persoonlijke gegevens worden vastgelegd. Dit zodat jij in alle rust kan chatten met Nederlanders!</p>
-                        <h3>Vrouw vinden</h3>
-                        <p style="font-size: 18px; font-weight: 300; text-align: justify; margin-bottom: 30px">Na het gratis registreren kun je eenvoudig op zoek gaan naar sekscontact met vrouwen online. Of je nu een oudere vrouw zoekt, singles of gebonden mensen. Na inschrijving kun je met je gratis credit direct sekscontact leggen en online chatten op deze datingsite voor sekscontacten!</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12 text-center" style="margin-bottom: 30px">
-                    <a style="color: #337ab7" href="{{ route('tac.show') }}">{{ @trans(config('app.directory_name') . '/footer.tac') }}</a> - <a  style="color: #337ab7" href="{{ route('contact.get') }}">{{ @trans(config('app.directory_name') . '/footer.contact') }}</a>
-                </div>
+                @endif
             </div>
         </div>
     </div>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="text-center">
+                    <h3>Contact vrouwen</h3>
+                    <p style="font-size: 18px; font-weight: 300; text-align: justify;">Online chatten begint op een datingsite, zo ook het contact met vrouwen. Sex chat en online chatten, in het bijzonder anoniem geil chatten, zijn bijzonder goede manieren om je toekomstige bedpartner beter te leren kennen. Het fijne is dat je nog weinig van jezelf bloot hoeft te geven, maar wel kunt uitvinden of iemand bij je past. Sekscontact gaat vaak verder dan gewoon kennismaken, aangezien je toch enige verbinding wilt hebben met degene waar je na de sex chat mee het bed in duikt.</p>
+                    <h3>Vreemdgaan</h3>
+                    <p style="font-size: 18px; font-weight: 300; text-align: justify;">Vind een vrouw om vreemd mee te gaan, klinkt makkelijker dan het is. Hoe doe je dat eigenlijk en hoeveel vrouwen zoeken mannen voor dezelfde redenen? Vrouw zoekt man komt net zo vaak voor als man zoekt vrouw óók als het om vreemdgaan gaat. Belangrijk is dat dit geheel discreet gebeurd, vandaar dat de aanmelding geheel anoniem verloopt en er geen persoonlijke gegevens worden vastgelegd. Dit zodat jij in alle rust kan chatten met Nederlanders!</p>
+                    <h3>Vrouw vinden</h3>
+                    <p style="font-size: 18px; font-weight: 300; text-align: justify; margin-bottom: 30px">Na het gratis registreren kun je eenvoudig op zoek gaan naar sekscontact met vrouwen online. Of je nu een oudere vrouw zoekt, singles of gebonden mensen. Na inschrijving kun je met je gratis credit direct sekscontact leggen en online chatten op deze datingsite voor sekscontacten!</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 text-center" style="margin-bottom: 30px">
+                <a style="color: #337ab7" href="{{ route('tac.show') }}">{{ @trans(config('app.directory_name') . '/footer.tac') }}</a> - <a  style="color: #337ab7" href="{{ route('contact.get') }}">{{ @trans(config('app.directory_name') . '/footer.contact') }}</a>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

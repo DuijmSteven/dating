@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="nl">
+
 @include('frontend.layouts.default.partials.head')
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -1023,8 +1024,6 @@
                         >
                             {{ csrf_field() }}
 
-                            <input id="userFingerprintInput" type="hidden" name="user_fingerprint" value="">
-
                             <div class="form-row">
                                 <div class="enhancedFormGroup JS--enhancedFormGroup form-group col-md-12 {{ $errors->has('identity') || $errors->has('username') || $errors->has('email') ? ' has-error' : '' }}">
                                     <label for="login-identity">{{ @trans(config('app.directory_name') . '/lp1.form.identity') }}</label>
@@ -1205,8 +1204,7 @@
         <h3 style="margin-bottom: 40px">{!! @trans(config('app.directory_name') . '/lp1.search_for_date') !!}</h3>
         <div class="mt-5">
             <p>
-                {!! @trans(config('app.directory_name') .
-                 'lp1.search_for_date_text',
+                {!! @trans(config('app.directory_name') . '/lp1.search_for_date_text',
                  [
                      'articlesRoute' => route('articles.overview'),
                  ]
