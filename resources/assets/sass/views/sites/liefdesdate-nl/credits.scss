@@ -26,9 +26,9 @@ Table of Contents End
 //    color: #3C4857;
 //}
 
-@import "../../../variables";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap";
-@import "../../../altijdsex-nl-variables";
+//@import "../../../variables";
+//@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+//@import "../../../altijdsex-nl-variables";
 
 .credits-page-content {
     .paymentMethodsList {
@@ -445,7 +445,7 @@ Table of Contents End
 
     .block .table-rose {
         /*background: linear-gradient(60deg, #ec407a, #c2185b);*/
-        background: linear-gradient(60deg, $secondaryColor, $secondaryColor);
+        background: $secondaryColor;
         border-radius: $borderRadius + px;
         box-shadow: 0 14px 26px -12px rgba(233, 30, 99, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(233, 30, 99, 0.2);
     }

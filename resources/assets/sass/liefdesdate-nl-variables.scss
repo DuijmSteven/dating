@@ -23,11 +23,11 @@ $lightBlueDull: #8eb4cb;
 $squash: #f39c12;
 $squashLight: #f7b54e;
 $yellowLight: #f9ce89;
-$solvingTheMoneyProblem: #ce5a5a;
+$pink: #ce5a5a;
 
 // brand colors
 $mainColor: #393939;
-$secondaryColor: $solvingTheMoneyProblem;
+$secondaryColor: $pink;
 $tertiaryColor: #81dada;
 $fourthColor: #e27e67;
 $textColor: $black;
@@ -281,5 +281,5 @@ $privateChatManager: (
 
 $pagination: (
         'activeBackGroundColor': $mainColor,
-        'textColor': $tertiaryColor
+        'textColor': #555
 );

@@ -19,7 +19,7 @@ body {
 
 @media (min-width: $screen-md-min) {
     .removePadding {
-        padding: 0;
+        padding: 0 !important;
     }
 }
 

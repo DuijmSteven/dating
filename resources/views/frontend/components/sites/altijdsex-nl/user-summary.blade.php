@@ -70,7 +70,9 @@
             <div class="UserSummary__sendMessage"
                  v-on:click="addChat({!! $authenticatedUser->getId() !!}, {!! $user->getId() !!}, '1', true)"
             >
-                <span class="UserSummary__sendMessage__text">Bericht</span>
+                <span class="UserSummary__sendMessage__text">
+                    {{ trans(config('app.directory_name') . '/user_profile.send_message') }}
+                </span>
                 <i class="material-icons material-icon UserSummary__sendMessage__icon">textsms</i>
             </div >
 

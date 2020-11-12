@@ -126,44 +126,44 @@
                                 </a>
                             </li>
 
-{{--                            <li class="dropdown-submenu languagesSubmenu">--}}
-{{--                                <a class="JS--showLanguagesSubmenu" tabindex="-1"--}}
-{{--                                   href="#">--}}
-{{--                                    <span class="material-icons">--}}
-{{--                                        language--}}
-{{--                                    </span>--}}
-{{--                                    {{ @trans(config('app.directory_name') . '/navbar.language') }} <span class="caret"></span>--}}
-{{--                                </a>--}}
-{{--                                <ul class="dropdown-menu">--}}
-{{--                                    <li>--}}
-{{--                                        <a class="languagesSubmenu__item"--}}
-{{--                                           href="{{ route('users.set-locale', ['locale' => 'en']) }}">--}}
-{{--                                            <div class="flagImageWrapper">--}}
-{{--                                                <img class="flagImage" src="{{ asset('img/flags/uk.svg') }}" alt="">--}}
-{{--                                            </div>--}}
-{{--                                            <span>{{ @trans(config('app.directory_name') . '/navbar.english') }}</span>--}}
-{{--                                        </a>--}}
-{{--                                    </li>--}}
-{{--                                    <li>--}}
-{{--                                        <a class="languagesSubmenu__item"--}}
-{{--                                           href="{{ route('users.set-locale', ['locale' => 'nl']) }}">--}}
-{{--                                            <div class="flagImageWrapper">--}}
-{{--                                                <img class="flagImage" src="{{ asset('img/flags/nl.svg') }}" alt="">--}}
-{{--                                            </div>--}}
-{{--                                            <span>{{ @trans(config('app.directory_name') . '/navbar.dutch') }}</span>--}}
-{{--                                        </a>--}}
-{{--                                    </li>--}}
-{{--                                </ul>--}}
-{{--                                <div class="showSelectedLanguage">--}}
-{{--                                    <div class="flagImageWrapper">--}}
-{{--                                        @if($authenticatedUser->getLocale() === 'en')--}}
-{{--                                            <img class="flagImage" src="{{ asset('img/flags/uk.svg') }}" alt="">--}}
-{{--                                        @elseif($authenticatedUser->getLocale() === 'nl')--}}
-{{--                                            <img class="flagImage" src="{{ asset('img/flags/nl.svg') }}" alt="">--}}
-{{--                                        @endif--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </li>--}}
+                            <li class="dropdown-submenu languagesSubmenu">
+                                <a class="JS--showLanguagesSubmenu" tabindex="-1"
+                                   href="#">
+                                    <span class="material-icons">
+                                        language
+                                    </span>
+                                    {{ @trans(config('app.directory_name') . '/navbar.language') }} <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="languagesSubmenu__item"
+                                           href="{{ route('users.set-locale', ['locale' => 'en']) }}">
+                                            <div class="flagImageWrapper">
+                                                <img class="flagImage" src="{{ asset('img/flags/uk.svg') }}" alt="">
+                                            </div>
+                                            <span>{{ @trans(config('app.directory_name') . '/navbar.english') }}</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="languagesSubmenu__item"
+                                           href="{{ route('users.set-locale', ['locale' => 'nl']) }}">
+                                            <div class="flagImageWrapper">
+                                                <img class="flagImage" src="{{ asset('img/flags/nl.png') }}" alt="">
+                                            </div>
+                                            <span>{{ @trans(config('app.directory_name') . '/navbar.dutch') }}</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="showSelectedLanguage">
+                                    <div class="flagImageWrapper">
+                                        @if($authenticatedUser->getLocale() === 'en')
+                                            <img class="flagImage" src="{{ asset('img/flags/uk.svg') }}" alt="">
+                                        @elseif($authenticatedUser->getLocale() === 'nl')
+                                            <img class="flagImage" src="{{ asset('img/flags/nl.png') }}" alt="">
+                                        @endif
+                                    </div>
+                                </div>
+                            </li>
 
                             <li>
                                 <a href="{!!  route('logout.post') !!}"

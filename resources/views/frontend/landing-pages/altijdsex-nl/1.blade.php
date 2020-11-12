@@ -873,7 +873,7 @@
                                                     <input type="radio" name="lookingFor" value="male-female"
                                                            checked="checked">
                                                     <div class="icon">
-                                                        @if(config('app.env') === 'local' && config('app.show_images'))
+                                                        @if(config('app.env') !== 'local' || (config('app.env') === 'local' && config('app.show_images')))
                                                             <img src="/lps/t1/assets/img/woman-2.jpg"
                                                                  style="border-radius: 50%"/>
                                                         @endif
@@ -885,7 +885,7 @@
                                                 <div class="choice" data-toggle="wizard-radio">
                                                     <input type="radio" name="lookingFor" value="female-male">
                                                     <div class="icon">
-                                                        @if(config('app.env') === 'local' && config('app.show_images'))
+                                                        @if(config('app.env') !== 'local' || (config('app.env') === 'local' && config('app.show_images')))
                                                             <img src="/lps/t1/assets/img/man-2.jpg"
                                                                  style="border-radius: 50%"/>
                                                         @endif

@@ -8,5 +8,6 @@ return [
         'profile_not_updated' => 'There was an error. Please try again or contact support.',
     ],
     'back' => 'Back',
-    'see_profile' => 'See profile'
+    'see_profile' => 'See profile',
+    'send_message' => 'Message',
 ];

@@ -37,24 +37,6 @@
     </div>
     <div class="Tile__footer UserSummary__footer">
         <div class="UserSummary__footer__upperPart">
-            <div>
-                <div class="UserSummary__sendMessage"
-                     v-on:click="addChat({!! $authenticatedUser->getId() !!}, {!! $user->getId() !!}, '1', true)"
-                >
-                    <i class="material-icons material-icon UserSummary__sendMessage__icon">forward_to_inbox</i>
-                    <span class="UserSummary__sendMessage__text">Bericht</span>
-                </div >
-
-                @if(!isset($showOtherImages))
-                    <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}" class="UserSummary__seeProfile">
-                        <span class="material-icons UserSummary__seeProfile__icon">
-                            account_circle
-                        </span>
-                        {{ trans(config('app.directory_name') . '/user_profile.see_profile') }}
-                    </a>
-                @endif
-            </div>
-
             <div class="UserSummary__userInfo">
                 <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}"
                    class="UserSummary__userInfo__primary">
@@ -66,13 +48,33 @@
 
                     {!! $user->meta->dob ? $user->meta->dob->diffInYears($carbonNow) : '' !!}
 
-                @if(in_array($user->getId(), $onlineUserIds))
+                    @if(in_array($user->getId(), $onlineUserIds))
                         <div class="onlineCircle"></div>
                     @endif
                 </a>
                 <div class="UserSummary__userInfo__additional">
                     @if(isset($user->meta->city))
                         {{ ucfirst($user->meta->city) }}
+                    @endif
+                </div>
+
+                <div>
+                    <div class="UserSummary__sendMessage"
+                         v-on:click="addChat({!! $authenticatedUser->getId() !!}, {!! $user->getId() !!}, '1', true)"
+                    >
+                        <i class="material-icons material-icon UserSummary__sendMessage__icon">forward_to_inbox</i>
+                        <span class="UserSummary__sendMessage__text">
+                        {{ trans(config('app.directory_name') . '/user_profile.send_message') }}
+                    </span>
+                    </div >
+
+                    @if(!isset($showOtherImages))
+                        <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}" class="UserSummary__seeProfile">
+                        <span class="material-icons UserSummary__seeProfile__icon">
+                            account_circle
+                        </span>
+                            {{ trans(config('app.directory_name') . '/user_profile.see_profile') }}
+                        </a>
                     @endif
                 </div>
 
@@ -83,6 +85,8 @@
                 @endif
 
             </div>
+
+
         </div>
 
         @if(isset($showOtherImages) && $showOtherImages)

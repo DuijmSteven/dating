@@ -135,7 +135,7 @@
         border-radius: 0;
         width: 100%;
         box-shadow: none;
-        background-color: lighten($secondaryColor, 5%);
+        background-color: $secondaryColor;
 
         cursor: pointer;
 
@@ -152,7 +152,7 @@
         }
 
         &:hover {
-            background-color: $secondaryColor;
+            background-color: darken($secondaryColor, 5%);
             text-decoration: none;
             color: #fff;
         }

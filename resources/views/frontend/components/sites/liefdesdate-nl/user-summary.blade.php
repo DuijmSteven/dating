@@ -42,7 +42,9 @@
                      v-on:click="addChat({!! $authenticatedUser->getId() !!}, {!! $user->getId() !!}, '1', true)"
                 >
                     <i class="material-icons material-icon UserSummary__sendMessage__icon">forward_to_inbox</i>
-                    <span class="UserSummary__sendMessage__text">Bericht</span>
+                    <span class="UserSummary__sendMessage__text">
+                        {{ trans(config('app.directory_name') . '/user_profile.send_message') }}
+                    </span>
                 </div >
 
                 @if(!isset($showOtherImages))

@@ -147,7 +147,7 @@
                 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
                     <a href="{{ route('users.show', ['username' => $user->getUsername()]) }}">
                         <img
-                            src="{{ \StorageHelper::profileImageUrl($user, true) }}"
+                            src="{{ $user->profileImageUrlThumb }}"
                             class="profileImage"
                             alt=""
                         >
