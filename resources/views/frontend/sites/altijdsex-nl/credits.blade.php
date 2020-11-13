@@ -113,26 +113,26 @@
                     </ul>
                 </div>
                 <div class="col-xs-12 col-md-12">
-                    <h4><span class="step">Stap 3</span><span class="stepTitle JS--finalizePaymentTitle">{{ @trans(config('app.directory_name') . '/credits.cart') }}</span></h4>
+                    <h4><span class="step">Stap 3</span><span class="stepTitle JS--finalizePaymentTitle">{{ trans(config('app.directory_name') . '/credits.cart') }}</span></h4>
                     <ul class="Tile list-group mb-3">
                         <li class="list-group-item d-flex justify-content-between">
                             <div>
-                                <h6 class="my-0"><span class="cart-package">{{ $creditpacks[1]->name }}</span> {{ @trans(config('app.directory_name') . '/credits.package') }}
+                                <h6 class="my-0"><span class="cart-package">{{ $creditpacks[1]->name }}</span> {{ trans(config('app.directory_name') . '/credits.package') }}
                                 </h6>
                                 <small class="text-muted"><span
-                                        class="cart-credits">{{ $creditpacks[1]->credits }}</span> {{ @trans(config('app.directory_name') . '/credits.credits') }}</small>
+                                        class="cart-credits">{{ $creditpacks[1]->credits }}</span> {{ trans(config('app.directory_name') . '/credits.credits') }}</small>
                                 <input name="creditpack_id" type="hidden" value="{{ $creditpacks[1]->id }}">
                             </div>
                             <span class="text-muted"><span
                                     class="cart-value">&euro;{{ number_format($creditpacks[1]->price / 100, 2, ',', '.') }}</span></span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between">
-                            <span>{{ @trans(config('app.directory_name') . '/credits.total') }}:</span>
+                            <span>{{ trans(config('app.directory_name') . '/credits.total') }}:</span>
                             <strong><span class="cart-value">&euro;{{ number_format($creditpacks[1]->price / 100, 2, ',', '.') }}</span></strong>
                         </li>
                     </ul>
                     <button class="Button btn btn-primary btn-lg btn-block" type="submit">
-                        {{ @trans(config('app.directory_name') . '/credits.to_checkout') }}
+                        {{ trans(config('app.directory_name') . '/credits.to_checkout') }}
                         <i class="material-icons paymentButtonCheck">
                             done
                         </i>
@@ -142,7 +142,7 @@
         </div>
 
         <div class="row mt-5 recent-container text-center currentMembers pricing-10">
-            <h3 style="margin-bottom: 30px">{{ @trans(config('app.directory_name') . '/credits.they_are_waiting') }}</h3>
+            <h3 style="margin-bottom: 30px">{{ trans(config('app.directory_name') . '/credits.they_are_waiting') }}</h3>
             @foreach ($users as $user)
                 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2">
                     <a href="{{ route('users.show', ['username' => $user->getUsername()]) }}">
@@ -160,7 +160,7 @@
                         <small class="text-muted">{{ $user->meta->city }}</small>
                     </p>
 {{--                    <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}"--}}
-{{--                       class="btn btn-lg btn-white">{{ @trans(config('app.directory_name') . '/credits.more_info') }}</a>--}}
+{{--                       class="btn btn-lg btn-white">{{ trans(config('app.directory_name') . '/credits.more_info') }}</a>--}}
                 </div>
             @endforeach
         </div>

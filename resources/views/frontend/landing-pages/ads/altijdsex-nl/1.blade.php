@@ -93,7 +93,7 @@
 
                                 @if(session()->has('recaptchaFailed') && session()->get('recaptchaFailed'))
                                     <div class="captchaFailed">
-                                        {{ @trans(config('app.directory_name') . '/lp1.captcha_failed_message') }}
+                                        {{ trans(config('app.directory_name') . '/lp1.captcha_failed_message') }}
                                     </div>
                                 @endif
 
@@ -116,7 +116,7 @@
                                     <div class="row">
                                         <div class="col-sm-12 sexSelectionContainer">
                                             <div class="col-xs-6">
-                                                <h4 class="info-text">{{ @trans(config('app.directory_name') . '/lp1.form.man_looking_for_woman') }}</h4>
+                                                <h4 class="info-text">{{ trans(config('app.directory_name') . '/lp1.form.man_looking_for_woman') }}</h4>
                                                 <div class="choice active" data-toggle="wizard-radio">
                                                     <input type="radio" name="lookingFor" value="male-female"
                                                            checked="checked">
@@ -127,7 +127,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-xs-6">
-                                                <h4 class="info-text">{{ @trans(config('app.directory_name') . '/lp1.form.woman_looking_for_man') }}</h4>
+                                                <h4 class="info-text">{{ trans(config('app.directory_name') . '/lp1.form.woman_looking_for_man') }}</h4>
                                                 <div class="choice" data-toggle="wizard-radio">
                                                     <input type="radio" name="lookingFor" value="female-male">
                                                     <div class="icon">
@@ -152,7 +152,7 @@
                                                 <div
                                                     class="form-group label-floating {{ $errors->has('email') ? ' has-error' : '' }}">
                                                     <label
-                                                        class="control-label">{!! @trans(config('app.directory_name') . '/lp1.form.email_short') !!}</label>
+                                                        class="control-label">{!! trans(config('app.directory_name') . '/lp1.form.email_short') !!}</label>
                                                     <input name="email"
                                                            type="text"
                                                            class="form-control"
@@ -172,7 +172,7 @@
                                                     class="form-group label-floating {{ $errors->has('username') ? ' has-error' : '' }}"
                                                 >
                                                     <label
-                                                        class="control-label">{{ @trans(config('app.directory_name') . '/lp1.form.username') }}</label>
+                                                        class="control-label">{{ trans(config('app.directory_name') . '/lp1.form.username') }}</label>
                                                     <input name="username"
                                                            type="text"
                                                            class="form-control"
@@ -192,7 +192,7 @@
                                                     class="form-group label-floating {{ $errors->has('password') ? ' has-error' : '' }}"
                                                 >
                                                     <label
-                                                        class="control-label">{{ @trans(config('app.directory_name') . '/lp1.form.password') }}</label>
+                                                        class="control-label">{{ trans(config('app.directory_name') . '/lp1.form.password') }}</label>
                                                     <input name="password"
                                                            type="text"
                                                            class="form-control">
@@ -209,7 +209,7 @@
                                         <div class="col-xs-12">
                                             <p class="mt-3"
                                                style="font-size: 1.3rem; text-align: justify; margin-bottom: 0; margin-top: 5px">
-                                                {!! @trans(config('app.directory_name') . '/lp1.form.register_info',
+                                                {!! trans(config('app.directory_name') . '/lp1.form.register_info',
                                                         [
                                                             'privacyRoute' => route('privacy.show'),
                                                             'tacRoute' => route('tac.show'),
@@ -288,8 +288,8 @@
     </div>
     <div class="row">
         <div class="col-sm-12 text-center" style="margin-bottom: 30px">
-            <a style="color: #337ab7" href="{{ route('tac.show') }}">{{ @trans(config('app.directory_name') . '/footer.tac') }}</a> - <a
-                style="color: #337ab7" href="{{ route('contact.get') }}">{{ @trans(config('app.directory_name') . '/footer.contact') }}</a>
+            <a style="color: #337ab7" href="{{ route('tac.show') }}">{{ trans(config('app.directory_name') . '/footer.tac') }}</a> - <a
+                style="color: #337ab7" href="{{ route('contact.get') }}">{{ trans(config('app.directory_name') . '/footer.contact') }}</a>
         </div>
     </div>
 </div>

@@ -37,6 +37,26 @@
     </div>
     <div class="Tile__footer UserSummary__footer">
         <div class="UserSummary__footer__upperPart">
+            <div>
+                <div class="UserSummary__sendMessage"
+                     v-on:click="addChat({!! $authenticatedUser->getId() !!}, {!! $user->getId() !!}, '1', true)"
+                >
+                    <i class="material-icons material-icon UserSummary__sendMessage__icon">forward_to_inbox</i>
+                    <span class="UserSummary__sendMessage__text">
+                        {{ trans(config('app.directory_name') . '/user_profile.send_message') }}
+                    </span>
+                </div >
+
+                @if(!isset($showOtherImages))
+                    <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}" class="UserSummary__seeProfile">
+                        <span class="material-icons UserSummary__seeProfile__icon">
+                            account_circle
+                        </span>
+                        {{ trans(config('app.directory_name') . '/user_profile.see_profile') }}
+                    </a>
+                @endif
+            </div>
+
             <div class="UserSummary__userInfo">
                 <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}"
                    class="UserSummary__userInfo__primary">
@@ -58,26 +78,6 @@
                     @endif
                 </div>
 
-                <div>
-                    <div class="UserSummary__sendMessage"
-                         v-on:click="addChat({!! $authenticatedUser->getId() !!}, {!! $user->getId() !!}, '1', true)"
-                    >
-                        <i class="material-icons material-icon UserSummary__sendMessage__icon">forward_to_inbox</i>
-                        <span class="UserSummary__sendMessage__text">
-                        {{ trans(config('app.directory_name') . '/user_profile.send_message') }}
-                    </span>
-                    </div >
-
-                    @if(!isset($showOtherImages))
-                        <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}" class="UserSummary__seeProfile">
-                        <span class="material-icons UserSummary__seeProfile__icon">
-                            account_circle
-                        </span>
-                            {{ trans(config('app.directory_name') . '/user_profile.see_profile') }}
-                        </a>
-                    @endif
-                </div>
-
                 @if(isset($showAboutMe) && $showAboutMe && $user->meta->getAboutMe())
                     <div class="UserSummary__aboutMe">
                         "{!! $user->meta->getAboutMe() !!}"
@@ -85,20 +85,18 @@
                 @endif
 
             </div>
-
-
         </div>
 
         @if(isset($showOtherImages) && $showOtherImages)
             <div class="UserSummary__otherImages">
                 {{-- DON'T reformat this loop, it is structured like this to avoid spacing between inline blocks --}}
                 @foreach($user->visibleImagesNotProfile as $image)<a href="#" class="modalImage UserSummary__nonProfileImageModalWrapper"><div class="UserSummary__nonProfileImageWrapper"><img
-{{--                                class="UserSummary__nonProfileImage JS--galleryImage {{ !$authenticatedUser->isPayingUser() ? 'blurred' : '' }}"--}}
-                                class="UserSummary__nonProfileImage JS--galleryImage"
-                                src="{{ \StorageHelper::userImageUrl($user->getId(), $image->getFilename()) }}"
-                                data-src="{{ \StorageHelper::userImageUrl($user->getId(), $image->getFilename()) }}"
-                                alt="user image"
-                            ></div></a>@endforeach
+                            {{--                                class="UserSummary__nonProfileImage JS--galleryImage {{ !$authenticatedUser->isPayingUser() ? 'blurred' : '' }}"--}}
+                            class="UserSummary__nonProfileImage JS--galleryImage"
+                            src="{{ $image->url }}"
+                            data-src="{{ $image->url }}"
+                            alt="user image"
+                        ></div></a>@endforeach
 
 
             </div>

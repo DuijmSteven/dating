@@ -2,7 +2,7 @@
     <form method="POST" action="{{ route('users.search.form.get') }}" id="JS--SearchBarForm">
         @csrf
         <div class="form-group city shorterInMobile {{ $errors->has('city_name') ? ' has-error' : '' }}">
-            <label for="city_name">{!! @trans(config('app.directory_name') . '/user_constants.city') !!}</label>
+            <label for="city_name">{!! trans(config('app.directory_name') . '/user_constants.city') !!}</label>
 
             <?php
                 $city = '';
@@ -36,7 +36,7 @@
             @endif
         </div>
 {{--        <div class="form-group radius hidden JS--radiusSearchInput">--}}
-{{--            <label for="">{!! @trans(config('app.directory_name') . '/search.distance') !!}</label>--}}
+{{--            <label for="">{!! trans(config('app.directory_name') . '/search.distance') !!}</label>--}}
 {{--            <select name="radius" class="form-control">--}}
 {{--                <?php--}}
 {{--                $selectedRadius = '';--}}
@@ -61,9 +61,9 @@
 {{--            </select>--}}
 {{--        </div>--}}
         <div class="form-group age">
-            <label for="">{!! @trans(config('app.directory_name') . '/user_constants.age') !!}</label>
+            <label for="">{!! trans(config('app.directory_name') . '/user_constants.age') !!}</label>
             <select name="age" class="form-control">
-                <option value="">{!! @trans(config('app.directory_name') . '/search.all') !!}</option>
+                <option value="">{!! trans(config('app.directory_name') . '/search.all') !!}</option>
                 @foreach(\UserConstants::getAgeGroups() as $key => $value)
                     <option
                         {{ Session::get('searchParameters') && Session::get('searchParameters')['age'] == $key ? 'selected' : ''}}
@@ -86,7 +86,7 @@
                 }
             ?>
 
-            <label for="with_profile_image">{!! @trans(config('app.directory_name') . '/user_constants.with_profile_image') !!}</label>
+            <label for="with_profile_image">{!! trans(config('app.directory_name') . '/user_constants.with_profile_image') !!}</label>
             <div class="profileImageLabelContainer">
                 <div class="btn-group" data-toggle="buttons">
                     <label class="SearchBar__profileImageLabel btn btn-primary {{ $withProfileImage ? 'active' : '' }}">
@@ -107,11 +107,11 @@
 {{--        <div class="form-group bodyType">--}}
 {{--            <label for="">{{ trans(config('app.directory_name') . '/user_constants.labels.body_type') }}</label>--}}
 {{--            <select name="body_type" class="form-control">--}}
-{{--                <option value="">{!! @trans(config('app.directory_name') . '/search.all') !!}</option>--}}
+{{--                <option value="">{!! trans(config('app.directory_name') . '/search.all') !!}</option>--}}
 {{--                @foreach(\UserConstants::selectableField('body_type') as $key => $value)--}}
 {{--                    <option--}}
 {{--                        {{ Session::get('searchParameters') && Session::get('searchParameters')['body_type'] == $key ? 'selected' : ''}}--}}
-{{--                        value="{{ $key }}">{{ @trans(config('app.directory_name') . '/user_constants.body_type.' . $key) }}--}}
+{{--                        value="{{ $key }}">{{ trans(config('app.directory_name') . '/user_constants.body_type.' . $key) }}--}}
 {{--                    </option>--}}
 {{--                @endforeach--}}
 {{--            </select>--}}
@@ -119,11 +119,11 @@
 {{--        <div class="form-group height">--}}
 {{--            <label for="">{{ trans(config('app.directory_name') . '/user_constants.labels.height') }}</label>--}}
 {{--            <select name="height" class="form-control">--}}
-{{--                <option value="">{!! @trans(config('app.directory_name') . '/search.all') !!}</option>--}}
+{{--                <option value="">{!! trans(config('app.directory_name') . '/search.all') !!}</option>--}}
 {{--                @foreach(\UserConstants::selectableField('height') as $key => $value)--}}
 {{--                    <option--}}
 {{--                        {{ Session::get('searchParameters') && Session::get('searchParameters')['height'] == $key ? 'selected' : ''}}--}}
-{{--                        value="{{ $key }}">{{ @trans(config('app.directory_name') . '/user_constants.height.' . $key) }}--}}
+{{--                        value="{{ $key }}">{{ trans(config('app.directory_name') . '/user_constants.height.' . $key) }}--}}
 {{--                    </option>--}}
 {{--                @endforeach--}}
 {{--            </select>--}}

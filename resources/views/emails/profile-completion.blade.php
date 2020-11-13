@@ -1,9 +1,9 @@
 @extends('emails.layouts.default.layout')
 
 @section('unsubscribe')
-    <p style="line-height: 15px; text-align: center; font-size: 12px; color: #aaa; font-family: sans-serif;">{{ @trans(config('app.directory_name') . '/unsubscribe.link_text') }}
+    <p style="line-height: 15px; text-align: center; font-size: 12px; color: #aaa; font-family: sans-serif;">{{ trans(config('app.directory_name') . '/unsubscribe.link_text') }}
         <a style="color: #aaa; text-decoration: underline;" href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('unsubscribe', ['user' => $user->id]); @endphp">
-            {{ @trans(config('app.directory_name') . '/unsubscribe.link_click') }}
+            {{ trans(config('app.directory_name') . '/unsubscribe.link_click') }}
         </a>
     </p>
 @endsection
@@ -68,9 +68,9 @@
         Team Altijdsex.nl
     </p>
 
-    <p style="text-align: center; font-size: 16px; margin-top: 30px;">{{ @trans(config('app.directory_name') . '/unsubscribe.link_text') }}
+    <p style="text-align: center; font-size: 16px; margin-top: 30px;">{{ trans(config('app.directory_name') . '/unsubscribe.link_text') }}
         <a href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('unsubscribe', ['user' => $user->id]); @endphp">
-            {{ @trans(config('app.directory_name') . '/unsubscribe.link_click') }}
+            {{ trans(config('app.directory_name') . '/unsubscribe.link_click') }}
         </a>
     </p>
 

@@ -828,7 +828,7 @@
 <main>
     <div class="vh-70 bg-image text-center JS--header headerImage {{ (!config('app.show_images') && config('app.env') === 'local') ? 'imageDontShowLocal' : '' }}">
         <div class="container" style="position:relative; height: 100%">
-            <h1 style="text-transform: none">{{ @trans(config('app.directory_name') . '/lp1.heading') }}</h1>
+            <h1 style="text-transform: none">{{ trans(config('app.directory_name') . '/lp1.heading') }}</h1>
 
             @if($formType === 'register')
                 <div class="JS--form-wrapper form-wrapper registration">
@@ -853,7 +853,7 @@
 
                                 @if(session()->has('recaptchaFailed') && session()->get('recaptchaFailed'))
                                     <div class="captchaFailed">
-                                        {{ @trans(config('app.directory_name') . '/lp1.captcha_failed_message') }}
+                                        {{ trans(config('app.directory_name') . '/lp1.captcha_failed_message') }}
                                     </div>
                                 @endif
                             </div>
@@ -869,7 +869,7 @@
                                     <div class="row">
                                         <div class="col-sm-12 sexSelectionContainer">
                                             <div class="col-xs-6">
-                                                <h4 class="info-text">{{ @trans(config('app.directory_name') . '/lp1.form.man_looking_for_woman') }}</h4>
+                                                <h4 class="info-text">{{ trans(config('app.directory_name') . '/lp1.form.man_looking_for_woman') }}</h4>
                                                 <div class="choice active" data-toggle="wizard-radio">
                                                     <input type="radio" name="lookingFor" value="male-female"
                                                            checked="checked">
@@ -882,7 +882,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-xs-6">
-                                                <h4 class="info-text">{{ @trans(config('app.directory_name') . '/lp1.form.woman_looking_for_man') }}</h4>
+                                                <h4 class="info-text">{{ trans(config('app.directory_name') . '/lp1.form.woman_looking_for_man') }}</h4>
                                                 <div class="choice" data-toggle="wizard-radio">
                                                     <input type="radio" name="lookingFor" value="female-male">
                                                     <div class="icon">
@@ -909,7 +909,7 @@
                                                 <div
                                                     class="form-group label-floating {{ $errors->has('email') ? ' has-error' : '' }}">
                                                     <label
-                                                        class="control-label">{!! @trans(config('app.directory_name') . '/lp1.form.email_short') !!}</label>
+                                                        class="control-label">{!! trans(config('app.directory_name') . '/lp1.form.email_short') !!}</label>
                                                     <input name="email"
                                                            type="text"
                                                            id="email"
@@ -930,7 +930,7 @@
                                                     class="form-group label-floating {{ $errors->has('username') ? ' has-error' : '' }}"
                                                 >
                                                     <label
-                                                        class="control-label">{{ @trans(config('app.directory_name') . '/lp1.form.username') }}</label>
+                                                        class="control-label">{{ trans(config('app.directory_name') . '/lp1.form.username') }}</label>
                                                     <input name="username"
                                                            type="text"
                                                            class="form-control"
@@ -950,7 +950,7 @@
                                                     class="form-group label-floating {{ $errors->has('password') ? ' has-error' : '' }}"
                                                 >
                                                     <label
-                                                        class="control-label">{{ @trans(config('app.directory_name') . '/lp1.form.password') }}</label>
+                                                        class="control-label">{{ trans(config('app.directory_name') . '/lp1.form.password') }}</label>
                                                     <input name="password"
                                                            type="text"
                                                            class="form-control">
@@ -966,7 +966,7 @@
 
                                         <div class="col-xs-12">
                                             <p class="mt-3" style="font-size: 1.3rem; text-align: justify; margin-bottom: 0; margin-top: 5px">
-                                                {!! @trans(config('app.directory_name') .
+                                                {!! trans(config('app.directory_name') .
                                                         'lp1.form.register_info',
                                                         [
                                                             'privacyRoute' => route('privacy.show'),
@@ -1026,7 +1026,7 @@
 
                             <div class="form-row">
                                 <div class="enhancedFormGroup JS--enhancedFormGroup form-group col-md-12 {{ $errors->has('identity') || $errors->has('username') || $errors->has('email') ? ' has-error' : '' }}">
-                                    <label for="login-identity">{{ @trans(config('app.directory_name') . '/lp1.form.identity') }}</label>
+                                    <label for="login-identity">{{ trans(config('app.directory_name') . '/lp1.form.identity') }}</label>
                                     <input type="text" class="form-control enlarged" id="login-identity" name="identity"
                                            value="{{ old('identity') }}"
                                            required autofocus
@@ -1046,7 +1046,7 @@
                             </div>
                             <div class="form-row">
                                 <div class="enhancedFormGroup JS--enhancedFormGroup form-group col-md-12 {{ $errors->has('password') ? ' has-error' : '' }}">
-                                    <label for="login-password">{{ @trans(config('app.directory_name') . '/lp1.form.password') }}</label>
+                                    <label for="login-password">{{ trans(config('app.directory_name') . '/lp1.form.password') }}</label>
                                     <input type="password" class="form-control enlarged" id="login-password" name="password"
                                            required
                                     >
@@ -1060,24 +1060,24 @@
                             <div class="form-row">
                                 <div class="col-sm-12 submit">
                                     <button type="submit"
-                                            class="btn btn-secondary btn-lg btn-block">{{ @trans(config('app.directory_name') . '/lp1.form.login') }}</button>
+                                            class="btn btn-secondary btn-lg btn-block">{{ trans(config('app.directory_name') . '/lp1.form.login') }}</button>
                                 </div>
                             </div>
                             <div class="form-row" style="margin-top: 20px">
                                 <div class="col-sm-10">
-                                    <h4 class="mt-3">{{ @trans(config('app.directory_name') . '/lp1.form.not_have_an_account') }}</h4>
+                                    <h4 class="mt-3">{{ trans(config('app.directory_name') . '/lp1.form.not_have_an_account') }}</h4>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col-sm-12 submit">
                                     <a href="{{ route('landing-page.show-register') }}" type="button"
-                                            class="btn btn-block btn-lg btn-register-login registerButton">{{ @trans(config('app.directory_name') . '/lp1.form.register') }}
+                                            class="btn btn-block btn-lg btn-register-login registerButton">{{ trans(config('app.directory_name') . '/lp1.form.register') }}
                                     </a>
                                 </div>
                             </div>
                             <div class="form-row" style="margin-top: 20px">
                                 <div class="col-sm-10">
-                                    <h4 class="mt-3">{{ @trans(config('app.directory_name') . '/lp1.forgot_password') }}</h4>
+                                    <h4 class="mt-3">{{ trans(config('app.directory_name') . '/lp1.forgot_password') }}</h4>
                                 </div>
                             </div>
                             <div class="form-row">
@@ -1103,7 +1103,7 @@
     </div>
 
     <div class="container recent-container text-center currentMembers JS--currentMembers {{ $formType === 'register' ? 'withRegistrationForm' : '' }}">
-        <h3 style="margin-bottom: 40px">{{ @trans(config('app.directory_name') . '/lp1.a_group_of_members') }}</h3>
+        <h3 style="margin-bottom: 40px">{{ trans(config('app.directory_name') . '/lp1.a_group_of_members') }}</h3>
         <div class="row mt-5">
             @foreach ($users as $user)
                 <div class="col-xs-6 col-lg-2 col-md-4 col-sm-6 mb-4 {{ $loop->index > 5 ? 'hidden-xs' : '' }}">
@@ -1124,36 +1124,36 @@
     </div>
 
     <div class="container welcome-container text-center JS--welcome-container" style="margin-bottom: 8rem;">
-        <h3>{{ @trans(config('app.directory_name') . '/lp1.welcome') }}</h3>
+        <h3>{{ trans(config('app.directory_name') . '/lp1.welcome') }}</h3>
         <div>
-            <p class="mt-4">{{ @trans(config('app.directory_name') . '/lp1.welcome_text') }}</p>
+            <p class="mt-4">{{ trans(config('app.directory_name') . '/lp1.welcome_text') }}</p>
         </div>
         <div class="row icons" style="margin-top: 75px">
             <div class="col-xs-12 col-md-4 col-sm-12">
                 <i class="material-icons">
                     how_to_reg
                 </i>
-                <h4>{{ @trans(config('app.directory_name') . '/lp1.usps.free_access.title') }}</h4>
-                <p style="text-align: center">{{ @trans(config('app.directory_name') . '/lp1.usps.free_access.text') }}</p>
+                <h4>{{ trans(config('app.directory_name') . '/lp1.usps.free_access.title') }}</h4>
+                <p style="text-align: center">{{ trans(config('app.directory_name') . '/lp1.usps.free_access.text') }}</p>
             </div>
             <div class="col-xs-12 col-md-4 col-sm-12">
                 <i class="material-icons">
                     chat
-                </i>                <h4>{{ @trans(config('app.directory_name') . '/lp1.usps.live_chat.title') }}</h4>
-                <p style="text-align: center">{{ @trans(config('app.directory_name') . '/lp1.usps.live_chat.text') }}</p>
+                </i>                <h4>{{ trans(config('app.directory_name') . '/lp1.usps.live_chat.title') }}</h4>
+                <p style="text-align: center">{{ trans(config('app.directory_name') . '/lp1.usps.live_chat.text') }}</p>
             </div>
             <div class="col-xs-12 col-md-4 col-sm-12">
                 <i class="material-icons">
                     vpn_lock
                 </i>
-                <h4>{{ @trans(config('app.directory_name') . '/lp1.usps.privacy_anonymity.title') }}</h4>
-                <p style="text-align: center">{{ @trans(config('app.directory_name') . '/lp1.usps.privacy_anonymity.text') }}</p>
+                <h4>{{ trans(config('app.directory_name') . '/lp1.usps.privacy_anonymity.title') }}</h4>
+                <p style="text-align: center">{{ trans(config('app.directory_name') . '/lp1.usps.privacy_anonymity.text') }}</p>
             </div>
         </div>
     </div>
 
     <div class="container testimonials-container text-center" style="margin-bottom: 8rem;">
-        <h3>{{ @trans(config('app.directory_name') . '/lp1.success_stories') }}</h3>
+        <h3>{{ trans(config('app.directory_name') . '/lp1.success_stories') }}</h3>
         <div id="carouselExampleControls" class="carousel slide mt-5">
             <div class="carousel-inner" style="padding-top: 15px">
                 @foreach($testimonials as $testimonial)
@@ -1181,30 +1181,30 @@
             </div>
             <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">{{ @trans(config('app.directory_name') . '/lp1.previous') }}</span>
+                <span class="sr-only">{{ trans(config('app.directory_name') . '/lp1.previous') }}</span>
             </a>
             <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">{{ @trans(config('app.directory_name') . '/lp1.next') }}</span>
+                <span class="sr-only">{{ trans(config('app.directory_name') . '/lp1.next') }}</span>
             </a>
         </div>
     </div>
 
     <div class="container text-center secondWelcome" style="margin-bottom: 10rem;">
-        <h3 style="margin-bottom: 40px">{!! @trans(config('app.directory_name') . '/lp1.online_sex_dating') !!}</h3>
+        <h3 style="margin-bottom: 40px">{!! trans(config('app.directory_name') . '/lp1.online_sex_dating') !!}</h3>
         <div class="mt-5">
             <p>
-                {!! @trans(config('app.directory_name') . '/lp1.second_welcome')
+                {!! trans(config('app.directory_name') . '/lp1.second_welcome')
          !!}
             </p>
         </div>
     </div>
 
     <div class="container text-center secondWelcome" style="margin-bottom: 10rem;">
-        <h3 style="margin-bottom: 40px">{!! @trans(config('app.directory_name') . '/lp1.search_for_date') !!}</h3>
+        <h3 style="margin-bottom: 40px">{!! trans(config('app.directory_name') . '/lp1.search_for_date') !!}</h3>
         <div class="mt-5">
             <p>
-                {!! @trans(config('app.directory_name') . '/lp1.search_for_date_text',
+                {!! trans(config('app.directory_name') . '/lp1.search_for_date_text',
                  [
                      'articlesRoute' => route('articles.overview'),
                  ]
@@ -1219,46 +1219,46 @@
     <div class="container">
         <div class="col-xs-12 col-sm-6 col-md-3">
             <div class="Footer_section">
-                <h4 class="Footer__section-title">{{ @trans(config('app.directory_name') . '/footer.noteworthy') }}</h4>
+                <h4 class="Footer__section-title">{{ trans(config('app.directory_name') . '/footer.noteworthy') }}</h4>
                 <ul class="Footer__section-list">
                     <li class="Footer__section-listItem">
-                        <a href="{{ route('articles.overview') }}">{{ @trans(config('app.directory_name') . '/footer.articles') }}</a>
+                        <a href="{{ route('articles.overview') }}">{{ trans(config('app.directory_name') . '/footer.articles') }}</a>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-3">
             <div class="Footer__section">
-                <h4 class="Footer__section-title">{{ @trans(config('app.directory_name') . '/footer.client_service') }}</h4>
+                <h4 class="Footer__section-title">{{ trans(config('app.directory_name') . '/footer.client_service') }}</h4>
                 <ul class="Footer__section-list">
                     <li class="Footer__section-listItem">
-                        <a href="{{ route('faq.show') }}">{{ @trans(config('app.directory_name') . '/footer.faq') }}</a>
+                        <a href="{{ route('faq.show') }}">{{ trans(config('app.directory_name') . '/footer.faq') }}</a>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-3">
             <div class="Footer__section">
-                <h4 class="Footer__section-title">{{ @trans(config('app.directory_name') . '/footer.about_us') }}</h4>
+                <h4 class="Footer__section-title">{{ trans(config('app.directory_name') . '/footer.about_us') }}</h4>
                 <ul class="Footer__section-list">
                     <li class="Footer__section-listItem">
-                        <a href="{{ route('contact.get') }}">{{ @trans(config('app.directory_name') . '/footer.company_data') }}</a>
+                        <a href="{{ route('contact.get') }}">{{ trans(config('app.directory_name') . '/footer.company_data') }}</a>
                     </li>
                     <li class="Footer__section-listItem">
-                        <a href="{{ route('contact.get') }}">{{ @trans(config('app.directory_name') . '/footer.contact') }}</a>
+                        <a href="{{ route('contact.get') }}">{{ trans(config('app.directory_name') . '/footer.contact') }}</a>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-3">
             <div class="Footer__section">
-                <h4 class="Footer__section-title">{{ @trans(config('app.directory_name') . '/footer.legal') }}</h4>
+                <h4 class="Footer__section-title">{{ trans(config('app.directory_name') . '/footer.legal') }}</h4>
                 <ul class="Footer__section-list">
                     <li class="Footer__section-listItem">
-                        <a href="{{ route('tac.show') }}">{{ @trans(config('app.directory_name') . '/footer.tac') }}</a>
+                        <a href="{{ route('tac.show') }}">{{ trans(config('app.directory_name') . '/footer.tac') }}</a>
                     </li>
                     <li class="Footer__section-listItem">
-                        <a href="{{ route('privacy.show') }}">{{ @trans(config('app.directory_name') . '/footer.privacy') }}</a>
+                        <a href="{{ route('privacy.show') }}">{{ trans(config('app.directory_name') . '/footer.privacy') }}</a>
                     </li>
                 </ul>
             </div>
@@ -1268,7 +1268,7 @@
                 <img src="{!! asset('img/site_logos/' . config('app.directory_name') . '/Altijdsex_LogoBig_Neg.svg') !!}" alt="{{ ucfirst(\config('app.name')) }}">
             </div>
             <div class="col-md-12 copyright">
-                <h5>{{ @trans(config('app.directory_name') . '/footer.copyright', ['currentYear' => $carbonNow->year]) }}</h5>
+                <h5>{{ trans(config('app.directory_name') . '/footer.copyright', ['currentYear' => $carbonNow->year]) }}</h5>
             </div>
 
             <div class="language-selection">
@@ -1304,7 +1304,7 @@
         <button type="button"
                 class="btn btn-block btn-lg btn-accept-cookies JS--acceptCookies"
         >
-            {{ @trans(config('app.directory_name') . '/lp1.accept') }}
+            {{ trans(config('app.directory_name') . '/lp1.accept') }}
         </button>
     </div>
 </div>

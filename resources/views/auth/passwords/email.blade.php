@@ -37,7 +37,7 @@
                                  'buttonContext' => 'form',
                                  'buttonType' => 'submit',
                                  'buttonState' => 'primary',
-                                 'buttonText' => @trans(config('app.directory_name') . '/reset_password.send_reset_link')
+                                 'buttonText' => trans(config('app.directory_name') . '/reset_password.send_reset_link')
                              ])
                             </div>
                         </div>

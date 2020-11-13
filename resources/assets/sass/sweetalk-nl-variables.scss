@@ -45,8 +45,9 @@ $roundImageDimensions: (
 );
 
 // layout tweaks
-$borderRadius: 10;
+$borderRadius: 2;
 $borderWidth: 1;
+$boxShadow: none;
 
 // font tweaks
 $fontSize: (
@@ -93,8 +94,8 @@ $tileBody: (
         'padding': 35
 );
 
-$tileBodyArticles: (        'headBackGroundColor': darken($mainColor, 4%),
-
+$tileBodyArticles: (
+        'headBackGroundColor': darken($mainColor, 4%),
         'padding': 35
 );
 

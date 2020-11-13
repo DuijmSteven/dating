@@ -50,9 +50,9 @@
                                             </a>
                                         <br>
 
-                                        <strong>{!! @trans(config('app.directory_name') . '/user_constants.email') !!}:</strong> {!! $editor->email !!} <br>
-                                        <strong>{!! @trans(config('app.directory_name') . '/user_constants.username') !!}:</strong> {!! $editor->username !!} <br>
-                                        <strong>{!! @trans(config('app.directory_name') . '/user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($editor->meta->dob) !!} <br>
+                                        <strong>{!! trans(config('app.directory_name') . '/user_constants.email') !!}:</strong> {!! $editor->email !!} <br>
+                                        <strong>{!! trans(config('app.directory_name') . '/user_constants.username') !!}:</strong> {!! $editor->username !!} <br>
+                                        <strong>{!! trans(config('app.directory_name') . '/user_constants.age') !!}</strong> {!! $carbonNow->diffInYears($editor->meta->dob) !!} <br>
                                     </div>
                                 </td>
                                 <td>

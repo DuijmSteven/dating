@@ -40,7 +40,7 @@
 
             @if(isset($authenticatedUser))
                 <div class="searchToggleButton JS--searchToggleButton">
-                    <span class="searchToggleButtonText">{{ @trans(config('app.directory_name') . '/search.search') }}</span>
+                    <span class="searchToggleButtonText">{{ trans(config('app.directory_name') . '/search.search') }}</span>
                     <i class="material-icons">
                         search
                     </i>
@@ -59,7 +59,7 @@
             <ul class="nav navbar-nav navbar-right">
                 @if (isset($authenticatedUser))
                     <li class="showMobile {!! str_contains(\Request::route()->getName(), 'home') ? 'active' : '' !!}"><a
-                            href="{{ route('home') }}" style="display: flex"><span class="material-icons" style="margin-right: 5px">home</span>{{ @trans(config('app.directory_name') . '/navbar.newsfeed') }}</a>
+                            href="{{ route('home') }}" style="display: flex"><span class="material-icons" style="margin-right: 5px">home</span>{{ trans(config('app.directory_name') . '/navbar.newsfeed') }}</a>
                     </li>
 
                     <li class="userCredits">
@@ -85,7 +85,7 @@
                             <span class="material-icons">
                                 home
                             </span>
-                            {{ @trans(config('app.directory_name') . '/navbar.newsfeed') }}
+                            {{ trans(config('app.directory_name') . '/navbar.newsfeed') }}
                         </a>
 
                         <div class="vertical-separator"></div>
@@ -114,7 +114,7 @@
                                     <span class="material-icons">
                                         build
                                     </span>
-                                    {{ @trans(config('app.directory_name') . '/navbar.edit_profile') }}
+                                    {{ trans(config('app.directory_name') . '/navbar.edit_profile') }}
                                 </a>
                             </li>
                             <li>
@@ -122,7 +122,7 @@
                                     <span class="material-icons">
                                         payments
                                     </span>
-                                    {{ @trans(config('app.directory_name') . '/navbar.credits') }}
+                                    {{ trans(config('app.directory_name') . '/navbar.credits') }}
                                 </a>
                             </li>
 
@@ -132,7 +132,7 @@
                                     <span class="material-icons">
                                         language
                                     </span>
-                                    {{ @trans(config('app.directory_name') . '/navbar.language') }} <span class="caret"></span>
+                                    {{ trans(config('app.directory_name') . '/navbar.language') }} <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
@@ -141,7 +141,7 @@
                                             <div class="flagImageWrapper">
                                                 <img class="flagImage" src="{{ asset('img/flags/uk.svg') }}" alt="">
                                             </div>
-                                            <span>{{ @trans(config('app.directory_name') . '/navbar.english') }}</span>
+                                            <span>{{ trans(config('app.directory_name') . '/navbar.english') }}</span>
                                         </a>
                                     </li>
                                     <li>
@@ -150,7 +150,7 @@
                                             <div class="flagImageWrapper">
                                                 <img class="flagImage" src="{{ asset('img/flags/nl.png') }}" alt="">
                                             </div>
-                                            <span>{{ @trans(config('app.directory_name') . '/navbar.dutch') }}</span>
+                                            <span>{{ trans(config('app.directory_name') . '/navbar.dutch') }}</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -173,7 +173,7 @@
                                     <span class="material-icons">
                                         tv_off
                                     </span>
-                                    {{ @trans(config('app.directory_name') . '/navbar.logout') }}
+                                    {{ trans(config('app.directory_name') . '/navbar.logout') }}
                                 </a>
 
                                 <form id="logout-form" action="{!!  route('logout.post') !!}" method="POST"
@@ -194,10 +194,10 @@
                     )
 
                         <li class="{!! \Request::route()->getName() == 'login.get' ? 'active' : '' !!}">
-                            <a href="{{ route('landing-page.show-login') }}">{{ @trans(config('app.directory_name') . '/navbar.login') }}</a>
+                            <a href="{{ route('landing-page.show-login') }}">{{ trans(config('app.directory_name') . '/navbar.login') }}</a>
                         </li>
                         <li class="{!! \Request::route()->getName() == 'landing-page.show' ? 'active' : '' !!}">
-                            <a href="{{ route('landing-page.show-register') }}">{{ @trans(config('app.directory_name') . '/navbar.register') }}</a>
+                            <a href="{{ route('landing-page.show-register') }}">{{ trans(config('app.directory_name') . '/navbar.register') }}</a>
                         </li>
                     @endif
                 @endif

@@ -12,6 +12,32 @@
     background: darken($mainColor, 5%);
     color: $white;
 
+    &__items {
+        width: 100%;
+        display: inline-block;
+        text-align: center;
+    }
+
+    &__item {
+        color: #fff;
+        text-decoration: none;
+        font-size: 1.7rem;
+        margin-right: 10px;
+
+        &:hover {
+            text-decoration: none;
+            color: $secondaryColor;
+        }
+
+        &::before {
+            content: '\b7';
+            padding-right: 9px;
+            color:#fff;
+            font-weight: bold;
+            font-size: 1.8rem;
+        }
+    }
+
     &__logo {
         img {
             width: map_get($footerLogo, height) + px;
@@ -20,31 +46,6 @@
 
         &-container {
             padding-top: 20px;
-        }
-    }
-
-    &__section {
-        &-title {
-            color: $secondaryColor;
-            font-size: 17px;
-        }
-
-        &-list {
-            list-style: none;
-            padding: 0;
-
-        }
-
-        &-listItem {
-            a {
-                text-decoration: none;
-                color: #d4cbce;
-                font-weight: 400;
-
-                &:hover {
-                    color: lighten(#d4cbce, 10%)
-                }
-            }
         }
     }
 }

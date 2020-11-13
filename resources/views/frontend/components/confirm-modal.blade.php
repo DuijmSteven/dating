@@ -14,7 +14,7 @@
                           'url' => $url,
                           'buttonContext' => 'general',
                           'buttonState' => 'danger',
-                          'buttonText' => @trans(config('app.directory_name') . '/edit_profile.deactivate')
+                          'buttonText' => trans(config('app.directory_name') . '/edit_profile.deactivate')
                       ])
 
                     <button type="button" class="pull-right Button Button--default" data-dismiss="modal">

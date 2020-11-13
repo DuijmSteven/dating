@@ -93,7 +93,7 @@
                             <div
                                 class="enhancedFormGroup JS--enhancedFormGroup form-group col-md-12 {{ $errors->has('identity') || $errors->has('username') || $errors->has('email') ? ' has-error' : '' }}">
                                 <label
-                                    for="login-identity">{{ @trans(config('app.directory_name') . '/lp1.form.identity') }}</label>
+                                    for="login-identity">{{ trans(config('app.directory_name') . '/lp1.form.identity') }}</label>
                                 <input type="text" class="form-control enlarged" id="login-identity" name="identity"
                                        value="{{ old('identity') }}"
                                        required autofocus
@@ -115,7 +115,7 @@
                             <div
                                 class="enhancedFormGroup JS--enhancedFormGroup form-group col-md-12 {{ $errors->has('password') ? ' has-error' : '' }}">
                                 <label
-                                    for="login-password">{{ @trans(config('app.directory_name') . '/lp1.form.password') }}</label>
+                                    for="login-password">{{ trans(config('app.directory_name') . '/lp1.form.password') }}</label>
                                 <input type="password" class="form-control enlarged" id="login-password" name="password"
                                        required
                                 >
@@ -129,7 +129,7 @@
                         <div class="form-row">
                             <div class="col-sm-12 submit">
                                 <button type="submit"
-                                        class="btn btn-login btn-lg btn-block">{{ @trans(config('app.directory_name') . '/lp1.form.login') }}</button>
+                                        class="btn btn-login btn-lg btn-block">{{ trans(config('app.directory_name') . '/lp1.form.login') }}</button>
                             </div>
                         </div>
 
@@ -186,19 +186,19 @@
 
                         @if(session()->has('recaptchaFailed') && session()->get('recaptchaFailed'))
                             <div class="captchaFailed">
-                                {{ @trans(config('app.directory_name') . '/lp1.captcha_failed_message') }}
+                                {{ trans(config('app.directory_name') . '/lp1.captcha_failed_message') }}
                             </div>
                         @endif
 
                         <div class="form-row mt-2">
                             <div class="form-group col-md-12">
-                                <label for="lookingFor">{{ @trans(config('app.directory_name') . '/lp1.form.i_am') }}
+                                <label for="lookingFor">{{ trans(config('app.directory_name') . '/lp1.form.i_am') }}
                                     :</label>
                                 <select class="form-control" id="lookingFor" name="lookingFor" style="font-size: 14px">
                                     <option
-                                        value="male-female" {{ old('lookingFor') === 'male-female' ? 'selected' : '' }}>{{ @trans(config('app.directory_name') . '/lp1.form.man_looking_for_woman') }}</option>
+                                        value="male-female" {{ old('lookingFor') === 'male-female' ? 'selected' : '' }}>{{ trans(config('app.directory_name') . '/lp1.form.man_looking_for_woman') }}</option>
                                     <option
-                                        value="female-male" {{ old('lookingFor') === 'female-male' ? 'selected' : '' }}>{{ @trans(config('app.directory_name') . '/lp1.form.woman_looking_for_man') }}</option>
+                                        value="female-male" {{ old('lookingFor') === 'female-male' ? 'selected' : '' }}>{{ trans(config('app.directory_name') . '/lp1.form.woman_looking_for_man') }}</option>
                                 </select>
                             </div>
                         </div>
@@ -222,7 +222,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-12 {{ $errors->has('username') ? ' has-error' : '' }}">
                                 <label
-                                    for="name">{{ @trans(config('app.directory_name') . '/lp1.form.username') }}</label>
+                                    for="name">{{ trans(config('app.directory_name') . '/lp1.form.username') }}</label>
                                 <input type="text"
                                        class="form-control"
                                        id="username"
@@ -240,7 +240,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-12 {{ $errors->has('password') ? ' has-error' : '' }}">
                                 <label
-                                    for="password">{{ @trans(config('app.directory_name') . '/lp1.form.password') }}</label>
+                                    for="password">{{ trans(config('app.directory_name') . '/lp1.form.password') }}</label>
                                 <input type="text" class="form-control" id="password" name="password"
                                        required
                                 >
@@ -254,12 +254,12 @@
                         <div class="form-row">
                             <div class="col-sm-12 submit">
                                 <button type="submit"
-                                        class="JS--register-button btn btn-register btn-lg btn-block">{{ @trans(config('app.directory_name') . '/lp1.form.register_now') }}</button>
+                                        class="JS--register-button btn btn-register btn-lg btn-block">{{ trans(config('app.directory_name') . '/lp1.form.register_now') }}</button>
                             </div>
 
                             <div class="col-xs-12">
                                 <p class="mt-3" style="font-size: 11px; text-align: justify">
-                                    {!! @trans(config('app.directory_name') . '/lp1.form.register_info',
+                                    {!! trans(config('app.directory_name') . '/lp1.form.register_info',
                                             [
                                                 'privacyRoute' => route('privacy.show'),
                                                 'tacRoute' => route('tac.show'),
@@ -308,9 +308,9 @@
         <div class="row">
             <div class="col-sm-12 text-center" style="margin-bottom: 30px">
                 <a style="color: #337ab7"
-                   href="{{ route('tac.show') }}">{{ @trans(config('app.directory_name') . '/footer.tac') }}</a> - <a
+                   href="{{ route('tac.show') }}">{{ trans(config('app.directory_name') . '/footer.tac') }}</a> - <a
                     style="color: #337ab7"
-                    href="{{ route('contact.get') }}">{{ @trans(config('app.directory_name') . '/footer.contact') }}</a>
+                    href="{{ route('contact.get') }}">{{ trans(config('app.directory_name') . '/footer.contact') }}</a>
             </div>
         </div>
     </div>

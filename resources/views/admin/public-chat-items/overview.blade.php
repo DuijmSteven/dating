@@ -70,10 +70,10 @@
                                         @endif
                                         <br>
                                         <b>Username</b>: {{ $publicChatItem->sender->username }} <br>
-                                        <b>Gender</b>: {{ @trans(config('app.directory_name') . '/user_constants')['gender'][$publicChatItem->sender->meta->gender] }} <br>
+                                        <b>Gender</b>: {{ trans(config('app.directory_name') . '/user_constants')['gender'][$publicChatItem->sender->meta->gender] }} <br>
 
                                         @if(count($publicChatItem->sender->roles) > 0)
-                                            <b>Role</b>: {{ @trans(config('app.directory_name') . '/user_constants')['role'][$publicChatItem->sender->roles[0]->getId()] }}
+                                            <b>Role</b>: {{ trans(config('app.directory_name') . '/user_constants')['role'][$publicChatItem->sender->roles[0]->getId()] }}
                                         @else
                                             <b>The user has no role set</b>
                                         @endif
