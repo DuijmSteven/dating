@@ -110,7 +110,8 @@ return [
             'unique' => 'Dit e-mailadres is al in gebruik.'
         ],
         'identity' => [
-            'required' => 'Een e-mail adres of gebruikersnaam is verplicht'
+            'required' => 'Een e-mail adres of gebruikersnaam is verplicht',
+            'unique' => 'Dit e-mailadres of gebruikersnaam is al in gebruik.'
         ],
         'password' => [
             'confirmed' => 'Het wachtwoord komt niet overeen. Probeer het nog eens.'
@@ -130,7 +131,8 @@ return [
             'required_without' => 'Je moet ten minste één foto kiezen om te uploaden'
         ],
         'username' => [
-            'alpha_num' => 'De gebruikersnaam mag alleen uit letters en cijfers bestaan'
+            'alpha_num' => 'De gebruikersnaam mag alleen uit letters en cijfers bestaan',
+            'unique' => 'Dit gebruikersnaam is al in gebruik.'
         ]
     ],
 

@@ -276,10 +276,10 @@ $privateChatManager: (
         'headBackGroundColor': darken($mainColor, 4%),
         'headColor': $white,
         'headHeight': 50,
-        'headHeightMobileMaximized': 57
+        'headHeightMobileMaximized': 43
 );
 
 $pagination: (
         'activeBackGroundColor': $mainColor,
-        'textColor': $tertiaryColor
+        'textColor': #555
 );

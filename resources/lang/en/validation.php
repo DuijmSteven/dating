@@ -28,43 +28,43 @@ return [
         'array' => 'The :attribute must have between :min and :max items.',
     ],
     'boolean' => 'The :attribute field must be true or false.',
-    'confirmed' => 'Het :attribute veld bevestiging komt niet overeen. Probeer het nog eens.',
-    'date' => ':attribute is geen geldige datum.',
+    'confirmed' => 'The :attribute confirmation does not match.',
+    'date' => 'The :attribute is not a valid date.',
     'date_format' => 'The :attribute does not match the format :format.',
     'different' => 'The :attribute and :other must be different.',
     'digits' => 'The :attribute must be :digits digits.',
     'digits_between' => 'The :attribute must be between :min and :max digits.',
     'dimensions' => 'The :attribute has invalid image dimensions.',
     'distinct' => 'The :attribute field has a duplicate value.',
-    'email' => 'Het :attribute veld moet een geldig e-mail adres bevatten.',
+    'email' => 'The :attribute must be a valid email address.',
     'exists' => 'The selected :attribute is invalid.',
     'file' => 'The :attribute must be a file.',
     'filled' => 'The :attribute field is required.',
     'image' => 'The :attribute must be an image.',
-    'in' => 'Het geselecteerde :attribute is ongeldig.',
+    'in' => 'The selected :attribute is invalid.',
     'in_array' => 'The :attribute field does not exist in :other.',
     'integer' => 'The :attribute must be an integer.',
     'ip' => 'The :attribute must be a valid IP address.',
     'json' => 'The :attribute must be a valid JSON string.',
     'max' => [
-        'numeric' => ':attribute mag niet groter zijn dan :max.',
-        'file' => ':attribute mag niet groter zijn dan :max kilobytes.',
-        'string' => ':attribute mag niet groter zijn dan :max characters.',
-        'array' => ':attribute may not have more than :max items.',
+        'numeric' => 'The :attribute may not be greater than :max.',
+        'file' => 'The :attribute may not be greater than :max kilobytes.',
+        'string' => 'The :attribute may not be greater than :max characters.',
+        'array' => 'The :attribute may not have more than :max items.',
     ],
     'mimes' => 'The :attribute must be a file of type: :values.',
     'mimetypes' => 'The :attribute must be a file of type: :values.',
     'min' => [
-        'numeric' => ':attribute moet minstens :min zijn.',
-        'file' => ':attribute moet minstens :min kilobytes zijn.',
-        'string' => ':attribute moet minstens :min characters zijn.',
-        'array' => ':attribute must have at least :min items.',
+        'numeric' => 'The :attribute must be at least :min.',
+        'file' => 'The :attribute must be at least :min kilobytes.',
+        'string' => 'The :attribute must be at least :min characters.',
+        'array' => 'The :attribute must have at least :min items.',
     ],
     'not_in' => 'The selected :attribute is invalid.',
-    'numeric' => ':attribute moet een nummer zijn.',
+    'numeric' => 'The :attribute must be a number.',
     'present' => 'The :attribute field must be present.',
     'regex' => 'The :attribute format is invalid.',
-    'required' => 'Dit veld is vereist.',
+    'required' => 'The :attribute field is required.',
     'required_if' => 'The :attribute field is required when :other is :value.',
     'required_unless' => 'The :attribute field is required unless :other is in :values.',
     'required_with' => 'The :attribute field is required when :values is present.',
@@ -78,13 +78,13 @@ return [
         'string' => 'The :attribute must be :size characters.',
         'array' => 'The :attribute must contain :size items.',
     ],
-    'string' => ':attribute moet een string zijn.',
+    'string' => 'The :attribute must be a string.',
     'timezone' => 'The :attribute must be a valid zone.',
-    'unique' => 'Het :attribute is al bezet.',
+    'unique' => 'The :attribute has already been taken.',
     'uploaded' => 'The :attribute failed to upload.',
     'url' => 'The :attribute format is invalid.',
 
-    'without_spaces' => 'Je kan geen spaties gebruiken in dit veld.',
+    'without_spaces' => 'The :attribute can have no spaces',
 
     /*
     |--------------------------------------------------------------------------
@@ -99,38 +99,40 @@ return [
 
     'custom' => [
         'city' => [
-            'in' => 'Selecteer de gewenste stad uit de lijst',
+            'in' => 'The :attribute must be selected from the provided list of cities',
         ],
         'city_name' => [
-            'in' => 'Selecteer de gewenste stad uit de lijst',
+            'in' => 'The city must be selected from the provided list of cities',
         ],
-        'user_images.*.max' => 'Elke foto kan niet groter zijn dan :max kB',
-        'user_images.*.image' => 'De fotos moeten van het volgende type zijn: jpg, jpeg of png',
+        'user_images.*.max' => 'Each image cannot be larger than :max kB',
+        'user_images.*.image' => 'The files must be images of the types jpg, jpeg or png',
         'email' => [
-            'unique' => 'Dit e-mailadres is al in gebruik.'
+            'unique' => 'This email address is already taken'
         ],
         'identity' => [
-            'required' => 'Een e-mail adres of gebruikersnaam is verplicht'
+            'required' => 'An email or username is required',
+            'unique' => 'This email address or username is already taken.'
         ],
         'password' => [
-            'confirmed' => 'Het wachtwoord komt niet overeen. Probeer het nog eens.'
+            'confirmed' => 'The passwords do not match. Please try again'
         ],
-        'date' => 'Dit is geen geldige datum.',
+        'date' => 'This is not a valid date',
         'message' => [
-            'min' => 'Het bericht mag niet korter zijn dan :min characters.',
-            'max' => 'Het bericht mag niet groter zijn dan :max characters.',
-            'required_without' => 'Een bericht of afbeelding is vereist',
+            'min' => 'The message cannot be shorter than :min characters',
+            'max' => 'The message cannot be larger than :max characters',
+            'required_without' => 'A message or an image is required',
         ],
         'dob' => [
-            'before' => 'Je moet 18+ zijn om deze website te gebruiken',
-            'after' => 'Je moet 120- zijn om deze website te gebruiken!',
-            'date_format' => 'De geboortedatum moet overeenkomen met het formaat dd-mm-yyyy',
+            'before' => 'You must be older that 18 years old in order to use this site',
+            'after' => 'You must be younger that 120 years old in order to use this site!',
+            'date_format' => 'The date of birth does not match the format dd-mm-yyyy',
         ],
         'profile_image' => [
-            'required_without' => 'Je moet ten minste één foto kiezen om te uploaden'
+            'required_without' => 'You must choose at least one photo to upload'
         ],
         'username' => [
-            'alpha_num' => 'De gebruikersnaam mag alleen uit letters en cijfers bestaan'
+            'alpha_num' => 'The username should consist of letters and numbers',
+            'unique' => 'This username is already taken.'
         ]
     ],
 
