@@ -73,7 +73,7 @@ class Handler extends ExceptionHandler
 //
 //            Mail::to('develyvof@gmail.com')
 //                ->queue($exceptionEmail);
-        }
+//        }
 
         return parent::render($request, $exception);
     }
