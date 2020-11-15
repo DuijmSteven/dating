@@ -13,6 +13,11 @@
         <b>Domain: </b> {{ $siteDomain }} <br>
     </p>
 
+    <h3>Request</h3>
+    <p>
+        <b>URL: </b> {{ $request->url() }} <br>
+    </p>
+
     @if(isset($user) && $user)
 
         <h3>User</h3>

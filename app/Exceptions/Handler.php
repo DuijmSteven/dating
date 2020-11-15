@@ -67,7 +67,8 @@ class Handler extends ExceptionHandler
                     config('app.site_id'),
                     config('app.name'),
                     config('app.url'),
-                    $exception
+                    $exception,
+                    $request
                 )
             )
             ->onQueue('emails');
