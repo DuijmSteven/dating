@@ -43,7 +43,7 @@ class Controller extends BaseController
 
             view()->share('authenticatedUser', $this->authenticatedUser);
             view()->share('onlineUserIds', $this->onlineUserIds);
-            view()->share('carbonNow', Carbon::now());
+            //view()->share('carbonNow', Carbon::now());
 
             return $next($request);
         });

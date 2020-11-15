@@ -2,9 +2,13 @@
 
 namespace App\Exceptions;
 
+use App\Mail\Exception;
+use App\Mail\UserBoughtCredits;
+use App\User;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
+use Illuminate\Support\Facades\Mail;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -48,7 +52,24 @@ class Handler extends ExceptionHandler
         if ($exception instanceof TokenMismatchException) {
 
             return redirect()->route('home');
+        }
 
+        if ($exception) {
+            /** @var User $user */
+            $user = \Auth::user();
+            $exceptionEmail = (
+                new Exception(
+                    $user,
+                    config('app.site_id'),
+                    config('app.name'),
+                    config('app.url'),
+                    $exception
+                )
+            )
+            ->onQueue('emails');
+
+            Mail::to('develyvof@gmail.com')
+                ->queue($exceptionEmail);
         }
 
         return parent::render($request, $exception);
