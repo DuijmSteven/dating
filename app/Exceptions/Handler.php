@@ -73,7 +73,7 @@ class Handler extends ExceptionHandler
             )
             ->onQueue('emails');
 
-            Mail::to('develyvof@gmail.com')
+            Mail::to('develyvof.exceptions@gmail.com')
                 ->queue($exceptionEmail);
         }
 
