@@ -9,6 +9,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\ValidationException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -54,12 +55,9 @@ class Handler extends ExceptionHandler
             return redirect()->route('home');
         }
 
-        \Log::error('asd', [$exception->getMessage()]);
-        \Log::error('asd', [$exception->getTraceAsString()]);
-
         if (
-            $exception
-        
+            $exception &&
+            !$exception instanceof ValidationException
         ) {
             /** @var User $user */
             $user = \Auth::user();
