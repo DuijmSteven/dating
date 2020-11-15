@@ -19,7 +19,10 @@ class Exception extends Mailable implements ShouldQueue
     public $siteId;
     public $siteName;
     public $siteDomain;
-    private $request;
+    public $requestUrl;
+    public $exceptionMessage;
+    public $exceptionTrace;
+    public $exceptionClass;
 
     /**
      * Create a new message instance.
@@ -31,15 +34,19 @@ class Exception extends Mailable implements ShouldQueue
         string $siteId,
         string $siteName,
         string $siteDomain,
-        \Exception $exception,
-        Request $request
+        ?string $exceptionMessage,
+        ?string $exceptionTrace,
+        ?string $exceptionClass,
+        ?string $requestUrl
     ) {
         $this->user = $user;
-        $this->exception = $exception;
         $this->siteId = $siteId;
         $this->siteName = $siteName;
         $this->siteDomain = $siteDomain;
-        $this->request = $request;
+        $this->requestUrl = $requestUrl;
+        $this->exceptionMessage = $exceptionMessage;
+        $this->exceptionTrace = $exceptionTrace;
+        $this->exceptionClass = $exceptionClass;
     }
 
     /**

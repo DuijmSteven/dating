@@ -51,7 +51,6 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
         if ($exception instanceof TokenMismatchException) {
-
             return redirect()->route('home');
         }
 
@@ -67,8 +66,10 @@ class Handler extends ExceptionHandler
                     config('app.site_id'),
                     config('app.name'),
                     config('app.url'),
-                    $exception,
-                    $request
+                    $exception->getMessage(),
+                    $exception->getTraceAsString(),
+                    get_class($exception),
+                    $request->url()
                 )
             )
             ->onQueue('emails');

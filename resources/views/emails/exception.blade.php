@@ -3,7 +3,7 @@
 @section('content')
 
     <h1 style="margin: 0 0 30px; font-size: 25px; line-height: 30px; color: #333333; font-weight: bold; text-align: center">
-        Exception {{ get_class($exception) }}!
+        {{ $exceptionClass }}!
     </h1>
 
     <h3>Site</h3>
@@ -15,7 +15,7 @@
 
     <h3>Request</h3>
     <p>
-        <b>URL: </b> {{ $request->url() }} <br>
+        <b>URL: </b> {{ $requestUrl }} <br>
     </p>
 
     @if(isset($user) && $user)
@@ -30,12 +30,12 @@
 
     <h3>Exception Message: </h3>
     <pre>
-        {{ $exception->getMessage() }}
+        {{ $exceptionMessage }}
     </pre>
 
     <h3>Exception Trace: </h3>
     <pre>
-        {{ $exception->getTraceAsString() }}
+        {{ $exceptionTrace }}
     </pre>
 
 
