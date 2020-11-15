@@ -54,25 +54,25 @@ class Handler extends ExceptionHandler
             return redirect()->route('home');
         }
 
-        \Log::error('asd', [$exception->getMessage()]);
-        \Log::error('asd', [$exception->getTraceAsString()]);
-
-        if ($exception) {
-            /** @var User $user */
-            $user = \Auth::user();
-            $exceptionEmail = (
-                new Exception(
-                    $user,
-                    config('app.site_id'),
-                    config('app.name'),
-                    config('app.url'),
-                    $exception
-                )
-            )
-            ->onQueue('emails');
-
-            Mail::to('develyvof@gmail.com')
-                ->queue($exceptionEmail);
+//        \Log::error('asd', [$exception->getMessage()]);
+//        \Log::error('asd', [$exception->getTraceAsString()]);
+//
+//        if ($exception) {
+//            /** @var User $user */
+//            $user = \Auth::user();
+//            $exceptionEmail = (
+//                new Exception(
+//                    $user,
+//                    config('app.site_id'),
+//                    config('app.name'),
+//                    config('app.url'),
+//                    $exception
+//                )
+//            )
+//            ->onQueue('emails');
+//
+//            Mail::to('develyvof@gmail.com')
+//                ->queue($exceptionEmail);
         }
 
         return parent::render($request, $exception);
