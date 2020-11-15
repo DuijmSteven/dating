@@ -25,7 +25,7 @@ class Exception extends Mailable implements ShouldQueue
      * @return void
      */
     public function __construct(
-        User $user,
+        ?User $user = null,
         string $siteId,
         string $siteName,
         string $siteDomain,
