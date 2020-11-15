@@ -56,6 +56,7 @@ class Exception extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->subject(get_class($this->exception))->view('emails.exception');
+        $subject = $this->exceptionClass ? $this->exceptionClass : 'Unknown exception';
+        return $this->subject($subject)->view('emails.exception');
     }
 }
