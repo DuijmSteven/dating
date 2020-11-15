@@ -68,7 +68,7 @@ class Handler extends ExceptionHandler
                     config('app.url'),
                     $exception->getMessage(),
                     $exception->getTraceAsString(),
-                    get_class($exception),
+                    is_object($exception) ? get_class($exception) : null,
                     $request->url()
                 )
             )
