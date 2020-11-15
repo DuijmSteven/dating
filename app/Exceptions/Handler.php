@@ -54,6 +54,9 @@ class Handler extends ExceptionHandler
             return redirect()->route('home');
         }
 
+        \Log::error('asd', [$exception->getMessage()]);
+        \Log::error('asd', [$exception->getTraceAsString()]);
+
         if ($exception) {
             /** @var User $user */
             $user = \Auth::user();
