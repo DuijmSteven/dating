@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Managers\UserManager;
 use App\Services\UserActivityService;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -42,6 +43,7 @@ class Controller extends BaseController
 
             view()->share('authenticatedUser', $this->authenticatedUser);
             view()->share('onlineUserIds', $this->onlineUserIds);
+            view()->share('carbonNow', Carbon::now());
 
             return $next($request);
         });

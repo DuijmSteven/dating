@@ -1,0 +1,50 @@
+// Footer
+//
+// Markup: footer.hbs
+//
+// The Footer
+//
+// Style guide: Layout.Footer
+.Footer {
+    position: relative;
+    z-index: 5;
+    padding: 30px 0;
+    background: darken($mainColor, 5%);
+    color: $white;
+
+    &__logo {
+        img {
+            width: map_get($footerLogo, height) + px;
+            padding-top: map_get($footerLogo, margin-top) + rem;
+        }
+
+        &-container {
+            padding-top: 20px;
+        }
+    }
+
+    &__section {
+        &-title {
+            color: $secondaryColor;
+            font-size: 17px;
+        }
+
+        &-list {
+            list-style: none;
+            padding: 0;
+
+        }
+
+        &-listItem {
+            a {
+                text-decoration: none;
+                color: #d4cbce;
+                font-weight: 400;
+
+                &:hover {
+                    color: lighten(#d4cbce, 10%)
+                }
+            }
+        }
+    }
+}
