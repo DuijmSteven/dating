@@ -4,11 +4,15 @@ namespace App\Exceptions;
 
 use App\Mail\Exception;
 use App\Mail\UserBoughtCredits;
+use App\Notifications\ExceptionNotification;
+use App\Role;
 use App\User;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
 use Throwable;
 
@@ -38,6 +42,56 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable $exception)
     {
+        $traceAsString = $exception->getTraceAsString();
+        $traceAsStringParts = str_split($traceAsString, 1900);
+
+        $message = $exception->getMessage();
+
+        $logArray = [];
+
+        if (request()->user()) {
+            $roleId = request()->user()->roles[0]->id;
+
+            $logArray['User'] = [
+                'Role' =>  Role::roleDescriptionPerId()[$roleId],
+                'ID' => request()->user()->getId(),
+                'Username' => request()->user()->getUsername(),
+                'Created at' => request()->user()->getCreatedAt(),
+            ];
+
+            if (request()->user()->isPeasant()) {
+                $logArray['User']['Credits'] = request()->user()->account->credits;
+            }
+        }
+
+        if (request()) {
+            $logArray['Request'] = [
+                'URL' =>  request()->fullUrl(),
+            ];
+
+            if (request()->user()->isPeasant()) {
+                $logArray['User']['Credits'] = request()->user()->account->credits;
+            }
+        }
+
+        $logArray['Exception Message'] = $message;
+
+        if (count($traceAsStringParts) > 1) {
+            $loop = 0;
+            foreach ($traceAsStringParts as $part) {
+                $logArray['Stack Trace Part ' . ($loop + 1)] = $part;
+                $loop++;
+            }
+        } else {
+            $logArray['Stack Trace'] = $traceAsString;
+        }
+
+        Log::channel('slackExceptions')
+            ->error(
+                'Site ID: ' . config('app.site_id') . ' - ' . config('app.url'),
+                $logArray
+            );
+
         parent::report($exception);
     }
 
@@ -59,7 +113,7 @@ class Handler extends ExceptionHandler
             !$exception instanceof ValidationException
         ) {
             /** @var User $user */
-            $user = \Auth::user();
+            $user = request()->user();
             $exceptionEmail = (
                 new Exception(
                     $user,

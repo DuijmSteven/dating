@@ -24,6 +24,17 @@ class Role extends Model
         return $this->belongsToMany('App\User')->withTimestamps();
     }
 
+    public static function roleDescriptionPerId()
+    {
+        return [
+            self::ROLE_ADMIN => 'Admin',
+            self::ROLE_PEASANT => 'Peasant',
+            self::ROLE_BOT => 'Bot',
+            self::ROLE_OPERATOR => 'Operator',
+            self::ROLE_EDITOR => 'Editor',
+        ];
+    }
+
     public function getId()
     {
         return $this->id;

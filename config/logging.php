@@ -55,12 +55,12 @@ return [
             'days' => 14,
         ],
 
-        'slack' => [
+        'slackExceptions' => [
             'driver' => 'slack',
-            'url' => env('LOG_SLACK_WEBHOOK_URL'),
-            'username' => 'Laravel Log',
+            'url' => env('SLACK_EXCEPTIONS_WEBHOOK'),
+            'username' => 'Exception',
             'emoji' => ':boom:',
-            'level' => 'critical',
+            'level' => 'error',
         ],
 
         'papertrail' => [
