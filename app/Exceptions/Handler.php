@@ -52,6 +52,12 @@ class Handler extends ExceptionHandler
         if (request()->user()) {
             $roleId = request()->user()->roles[0]->id;
 
+            $logArray['Site'] = [
+                'ID' => config('app.site_id'),
+                'Name' => config('app.name'),
+                'URL' => config('app.url'),
+            ];
+
             $logArray['User'] = [
                 'Role' =>  Role::roleDescriptionPerId()[$roleId],
                 'ID' => request()->user()->getId(),
