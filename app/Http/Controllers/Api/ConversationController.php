@@ -596,6 +596,8 @@ class ConversationController
 
             return response()->json($conversation);
         } catch (\Exception $exception) {
+            Log::error($exception->getTraceAsString());
+
             return response()->json($exception->getMessage(), 500);
         }
     }
