@@ -29,11 +29,11 @@ img {
 
 .mainContainer {
     position: relative;
-    padding-top: ($navbarHeight + $extraPaddingTopMainContent + 30) + px;
-
-    @media (max-width: $screen-sm-max) {
-        padding-top: ($navbarHeightSmallScreens + 15) + px;
-    }
+    //padding-top: ($navbarHeight + $extraPaddingTopMainContent + 30) + px;
+    //
+    //@media (max-width: $screen-sm-max) {
+    //    padding-top: ($navbarHeightSmallScreens + 15) + px;
+    //}
 }
 
 .form-control {

@@ -3,8 +3,6 @@
 namespace App\Exceptions;
 
 use App\Mail\Exception;
-use App\Mail\UserBoughtCredits;
-use App\Notifications\ExceptionNotification;
 use App\Role;
 use App\User;
 use Illuminate\Auth\AuthenticationException;
@@ -12,7 +10,6 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
 use Throwable;
 
@@ -80,7 +77,9 @@ class Handler extends ExceptionHandler
             }
         }
 
+        $logArray['Exception Class'] = is_object($exception) ? get_class($exception) : null;
         $logArray['Exception Message'] = $message;
+;
 
         if (count($traceAsStringParts) > 1) {
             $loop = 0;

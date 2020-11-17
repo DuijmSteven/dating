@@ -1,0 +1,33 @@
+.Hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: $navbarHeight + px;
+    height: 324px;
+    background: #3e3737;
+
+    @media (max-width: $screen-md-max) {
+        height: 324px;
+    }
+
+    @media (max-width: $screen-sm-max) {
+        height: 220px;
+    }
+
+    @media (max-width: $screen-xs-max) {
+        height: 150px;
+    }
+
+    &__profileImage {
+        border-radius: 50%;
+        height: 130px;
+        width: 130px;
+        object-fit: cover;
+    }
+
+    &__textContainer {
+        font-size: 3rem;
+        color: #fff;
+    }
+}

@@ -27,7 +27,7 @@
 
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" method="POST" action="{!! route('admin.editors.update', ['id' => $editor->id]) !!}"
+        <form role="form" method="POST" action="{!! route('admin.editors.update', ['userId' => $editor->id]) !!}"
               enctype="multipart/form-data">
             {!! csrf_field() !!}
             {!! method_field('PUT') !!}

@@ -332,7 +332,7 @@ Route::group([
         Route::get('edit/{editorId}', 'Admin\EditorController@edit')
             ->name('admin.editors.edit.get');
 
-        Route::put('edit/{id}', 'Admin\PeasantController@update')
+        Route::put('edit/{userId}', 'Admin\PeasantController@update')
             ->name('admin.editors.update');
 
         Route::get('/online', 'Admin\EditorController@showOnline')

@@ -12,6 +12,10 @@
 <div id="app">
     @include('frontend.layouts.default.partials.header')
 
+    @if((int) config('app.site_id') === \App\Helpers\SiteHelper::SWEETALK_NL)
+        @include('frontend.layouts.default.partials.sites.sweetalk-nl.hero')
+    @endif
+
     <div class="container mainContainer">
         @if(
             isset($authenticatedUser) &&

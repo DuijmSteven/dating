@@ -102,7 +102,7 @@
                         >
                             <img
                                 class="userDropdown__image"
-                                src="{{ \StorageHelper::profileImageUrl($authenticatedUser, true) }}" alt=""
+                                src="{{ $authenticatedUser->profileImageUrlThumb }}" alt=""
                             >
 
                             <span class="userDropdown__username">{{ $authenticatedUser->username }}</span>
