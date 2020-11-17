@@ -31,7 +31,7 @@
 
         <!-- /.box-header -->
         <!-- form start -->
-        <form role="form" method="POST" action="{!! route('admin.operators.update', ['id' => $operator->id]) !!}"
+        <form role="form" method="POST" action="{!! route('admin.operators.update', ['userId' => $operator->id]) !!}"
               enctype="multipart/form-data">
             {!! csrf_field() !!}
             {!! method_field('PUT') !!}
