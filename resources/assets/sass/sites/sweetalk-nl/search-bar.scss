@@ -1,4 +1,6 @@
 .SearchBar {
+    //display: none;
+
     &.hiddenSmallScreens {
         @media (max-width: $screen-sm-max) {
             display: none;

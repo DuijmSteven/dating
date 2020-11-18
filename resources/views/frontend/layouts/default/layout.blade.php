@@ -80,8 +80,13 @@
             </private-chat>
 
             <private-chat-manager
+                v-if="conversationManagerDataFullyLoaded"
                 ref="privateChatManager"
                 :user="{{ $authenticatedUser }}"
+                :conversations="conversations"
+                :newMessagesCount="countConversationsWithNewMessages"
+                :fetchingUserConversations="fetchingUserConversations"
+                :maximized="managerMaximized"
             >
             </private-chat-manager>
         @endif

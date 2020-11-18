@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-top: $navbarHeight + px;
+    margin-top: ($navbarHeight + 2) + px;
     height: 324px;
     background: #3e3737;
 
@@ -29,5 +29,56 @@
     &__textContainer {
         font-size: 3rem;
         color: #fff;
+        margin-bottom: 15px;
+    }
+
+    &__profileImageContainer {
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    &__buttonsContainer {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: #fff;
+        margin-bottom: 15px;
+    }
+
+    &__button {
+        display: flex;
+        position: relative;
+        justify-content: center;
+        align-items: center;
+        padding: 14px;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        margin-right: 40px;
+        cursor: pointer;
+
+        &:last-of-type {
+            margin-right: 0;
+        }
+
+        &:hover {
+            background-color: $secondaryColor;
+        }
+
+        &__creditsCount {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            top: -12px;
+            right: -18px;
+            border-radius: 50%;
+            padding: 5px;
+            background: red;
+            color: #fff;
+            font-size: 1.4rem;
+            font-weight: 500;
+        }
     }
 }

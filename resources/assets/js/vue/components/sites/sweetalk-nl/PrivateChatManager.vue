@@ -1,15 +1,14 @@
 <template>
     <div class="PrivateChatManager"
-         v-if="fullyLoaded"
          v-bind:class="{
-            'maximized': this.isMaximized,
-            'minimized': !this.isMaximized,
+            'maximized': this.maximized,
+            'minimized': !this.maximized,
             'PrivateChatManager--xs': $mq === 'xs',
             'PrivateChatManager--sm': $mq === 'sm',
             'PrivateChatManager--md': $mq === 'md',
             'PrivateChatManager--lg': $mq === 'lg'
         }">
-        <div v-on:click="toggle"
+        <div v-on:click="this.$parent.toggleManager"
             class="PrivateChatManager__head"
         >
             <div class="PrivateChatManager__head__title">
@@ -19,12 +18,10 @@
                     {{ $parent.chatTranslations['conversations'] }} ({{ conversations.length }})
 
                     <div
-                        v-if="newMessagesExist"
+                        v-if="this.$parent.countConversationsWithNewMessages > 0"
                         class="PrivateChatManager__head__newMessages"
                     >
-                        <i class="material-icons">
-                            message
-                        </i>
+                        {{ this.$parent.countConversationsWithNewMessages }}
                     </div>
                 </div>
             </div>
@@ -42,12 +39,10 @@
                     </i>
 
                     <div
-                        v-if="newMessagesExist"
+                        v-if="this.$parent.countConversationsWithNewMessages > 0"
                         class="PrivateChatManager__head__newMessages mobile"
                     >
-                        <i class="material-icons">
-                            message
-                        </i>
+                        {{ this.$parent.countConversationsWithNewMessages }}
                     </div>
                 </div>
             </div>
@@ -119,28 +114,17 @@ import { requestConfig } from '../../../common-imports';
     export default {
         props: [
             'user',
+            'maximized',
+            'conversations',
+            'fetchingUserConversations',
         ],
-
         data() {
             return {
-                conversations: [],
                 currentUser: undefined,
-                isMaximized: true,
-                fullyLoaded: false,
-                countConversationsWithNewMessages: 0,
-                newMessagesExist: false,
-                fetchingUserConversations: false
             };
         },
 
         created() {
-            this.fetchUserConversations(true);
-
-            setInterval(() => {
-                if (!this.fetchingUserConversations) {
-                    this.fetchUserConversations();
-                }
-            }, 10000);
         },
 
         methods: {
@@ -174,8 +158,8 @@ import { requestConfig } from '../../../common-imports';
                 this.removeIsNewOrHasNewMessageClass(itemIndex);
             },
             removeIsNewOrHasNewMessageClass: function (index) {
-                if ($('#PrivateChatManager__item--' + index).hasClass('isNewOrHasNewMessage') && this.countConversationsWithNewMessages === 1) {
-                    this.newMessagesExist = false;
+                if ($('#PrivateChatManager__item--' + index).hasClass('isNewOrHasNewMessage') && this.$parent.countConversationsWithNewMessages === 1) {
+                    //this.newMessagesExist = false;
                 }
 
                 $('#PrivateChatManager__item--' + index).removeClass('isNewOrHasNewMessage');
@@ -207,123 +191,18 @@ import { requestConfig } from '../../../common-imports';
                 }).catch(function (error) {
                 });
             },
-            fetchConversationManagerStatus: function () {
-                axios.get(
-                    '/api/conversations/conversation-manager-state/' + parseInt(DP.authenticatedUser.id),
-                    requestConfig
-                ).then(
-                    response => {
-                        this.conversationManagerState = response;
 
-                        if (!(this.$mq === 'xs' || this.$mq === 'sm')) {
-                            this.isMaximized = this.conversationManagerState.data === 1;
-
-                            if (this.isMaximized) {
-                                $('.PrivateChatManager').addClass('maximized');
-                            }
-                        }
-
-                        this.fullyLoaded = true;
-                    }
-                );
-            },
-
-            fetchUserConversations: function (fetchStatus) {
-                this.fetchingUserConversations = true;
-
-                axios.get(
-                    '/api/conversations/' + this.user.id,
-                    requestConfig
-                ).then(response => {
-                    this.conversations = response.data;
-
-                    this.countConversationsWithNewMessages = 0;
-
-                    this.conversations.map(conversation => {
-                        if (conversation.user_a_id === this.user.id) {
-                            conversation.otherUserId = conversation.user_b_id;
-                            conversation.currentUserId = conversation.user_a_id;
-                            conversation.currentUserProfileImage = conversation.user_a_profile_image_filename;
-                            conversation.otherUserProfileImage = conversation.user_b_profile_image_filename;
-                            conversation.currentUserUsername = conversation.user_a_username;
-                            conversation.otherUserUsername = conversation.user_b_username;
-                            conversation.currentUserGender = conversation.user_a_gender;
-                            conversation.otherUserGender = conversation.user_b_gender;
-
-                            if (conversation.conversation_new_activity_for_user_a) {
-                                conversation.newActivity = true;
-
-                                this.countConversationsWithNewMessages++;
-                            } else {
-                                conversation.newActivity = false;
-                            }
-                        } else {
-                            conversation.currentUserId = conversation.user_b_id;
-                            conversation.otherUserId = conversation.user_a_id;
-                            conversation.currentUserUsername = conversation.user_b_profile_image_filename;
-                            conversation.otherUserProfileImage = conversation.user_a_profile_image_filename;
-                            conversation.currentUserUsername = conversation.user_b_username;
-                            conversation.otherUserUsername = conversation.user_a_username;
-                            conversation.currentUserGender = conversation.user_b_gender;
-                            conversation.otherUserGender = conversation.user_a_gender;
-
-                            if (conversation.conversation_new_activity_for_user_b) {
-                                conversation.newActivity = true;
-
-                                this.countConversationsWithNewMessages++;
-                            } else {
-                                conversation.newActivity = false;
-                            }
-                        }
-
-                        if (this.countConversationsWithNewMessages > 0) {
-                            this.newMessagesExist = true;
-                        } else {
-                            this.newMessagesExist = false;
-                        }
-                    });
-
-                    if (fetchStatus) {
-                        this.fetchConversationManagerStatus();
-                    }
-
-                    this.fetchingUserConversations = false;
-                }).catch(function (error) {
-                    this.fetchingUserConversations = false;
-                }.bind(this));
-            },
-            toggle: function () {
-                $('#PrivateChatManager__body').slideToggle('fast');
-                this.isMaximized = !this.isMaximized;
-
-                if (['xs', 'sm'].includes(this.$mq) && this.isMaximized) {
-                    $('body').css('overflow-y', 'hidden');
-                } else {
-                    $('body').css('overflow-y', 'scroll');
-                }
-
-                let managerState = this.isMaximized ? 1 : 0;
-
-                axios.get(
-                    '/api/conversations/conversation-manager-state/' +
-                    parseInt(DP.authenticatedUser.id) + '/' +
-                    managerState,
-                    requestConfig
-                ).then(
-                    response => {}
-                );
-            }
         },
         mounted() {
-            this.$root.$on('fetchUserConversations', () => {
-                this.fetchUserConversations(true);
-            });
+            // this.$root.$on('fetchUserConversations', () => {
+            //     this.fetchUserConversations(true);
+            // });
 
             if (this.$mq === 'xs' || this.$mq === 'sm') {
                 $('#PrivateChatManager__body').slideToggle('fast');
-                this.isMaximized = !this.isMaximized;
+                this.maximized = !this.maximized;
 
-                if (['xs', 'sm'].includes(this.$mq) && this.isMaximized) {
+                if (['xs', 'sm'].includes(this.$mq) && this.maximized) {
                     $('body').css('overflow-y', 'hidden');
                 } else {
                     $('body').css('overflow-y', 'scroll');

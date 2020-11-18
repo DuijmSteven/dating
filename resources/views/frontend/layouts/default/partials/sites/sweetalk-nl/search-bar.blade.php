@@ -35,31 +35,7 @@
                 </span>
             @endif
         </div>
-{{--        <div class="form-group radius hidden JS--radiusSearchInput">--}}
-{{--            <label for="">{!! trans(config('app.directory_name') . '/search.distance') !!}</label>--}}
-{{--            <select name="radius" class="form-control">--}}
-{{--                <?php--}}
-{{--                $selectedRadius = '';--}}
 
-{{--                if (old('city_name')) {--}}
-{{--                    $selectedRadius = old('city_name');--}}
-{{--                } else {--}}
-{{--                    if (Session::get('searchParameters') && isset(Session::get('searchParameters')['radius'])) {--}}
-{{--                        $selectedRadius = Session::get('searchParameters')['radius'];--}}
-{{--                    } else {--}}
-{{--                        $selectedRadius = '';--}}
-{{--                    }--}}
-{{--                }--}}
-{{--                ?>--}}
-
-{{--                @foreach(\UserConstants::getRadiuses() as $radius)--}}
-{{--                    <option--}}
-{{--                        {{ $selectedRadius == $radius ? 'selected' : ''}}--}}
-{{--                        value="{{ $radius }}">{{ $radius }}km--}}
-{{--                    </option>--}}
-{{--                @endforeach--}}
-{{--            </select>--}}
-{{--        </div>--}}
         <div class="form-group age">
             <label for="">{!! trans(config('app.directory_name') . '/user_constants.age') !!}</label>
             <select name="age" class="form-control">
@@ -98,30 +74,7 @@
                 </div>
             </div>
         </div>
-{{--        <div class="form-group bodyType">--}}
-{{--            <label for="">{{ trans(config('app.directory_name') . '/user_constants.labels.body_type') }}</label>--}}
-{{--            <select name="body_type" class="form-control">--}}
-{{--                <option value="">{!! trans(config('app.directory_name') . '/search.all') !!}</option>--}}
-{{--                @foreach(\UserConstants::selectableField('body_type') as $key => $value)--}}
-{{--                    <option--}}
-{{--                        {{ Session::get('searchParameters') && Session::get('searchParameters')['body_type'] == $key ? 'selected' : ''}}--}}
-{{--                        value="{{ $key }}">{{ trans(config('app.directory_name') . '/user_constants.body_type.' . $key) }}--}}
-{{--                    </option>--}}
-{{--                @endforeach--}}
-{{--            </select>--}}
-{{--        </div>--}}
-{{--        <div class="form-group height">--}}
-{{--            <label for="">{{ trans(config('app.directory_name') . '/user_constants.labels.height') }}</label>--}}
-{{--            <select name="height" class="form-control">--}}
-{{--                <option value="">{!! trans(config('app.directory_name') . '/search.all') !!}</option>--}}
-{{--                @foreach(\UserConstants::selectableField('height') as $key => $value)--}}
-{{--                    <option--}}
-{{--                        {{ Session::get('searchParameters') && Session::get('searchParameters')['height'] == $key ? 'selected' : ''}}--}}
-{{--                        value="{{ $key }}">{{ trans(config('app.directory_name') . '/user_constants.height.' . $key) }}--}}
-{{--                    </option>--}}
-{{--                @endforeach--}}
-{{--            </select>--}}
-{{--        </div>--}}
+
         <div class="form-group submit text-right">
             @include('frontend.components.button', [
                 'buttonContext' => 'form',
@@ -139,6 +92,11 @@
         class="credits"
         href="{{ route('credits.show') }}"
     >
-        <credits-count></credits-count>
+        <credits-count
+            v-if="userCredits"
+            :credits="userCredits"
+            :template="'text'"
+        >
+        </credits-count>
     </a>
 </div>

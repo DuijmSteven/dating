@@ -18,7 +18,12 @@ if ($('#app').length > 0) {
             onlineUserIds: undefined,
             chatTranslations: undefined,
             gettingPartners: false,
-            gettingOnlineIds: false
+            gettingOnlineIds: false,
+            managerMaximized: true,
+            conversations: [],
+            countConversationsWithNewMessages: 0,
+            fetchingUserConversations: false,
+            conversationManagerDataFullyLoaded: false
         },
 
         created() {
@@ -26,6 +31,13 @@ if ($('#app').length > 0) {
                 this.getConversationPartners();
                 this.getUserCredits();
                 this.getOnlineUserIds();
+                this.fetchUserConversations(true);
+
+                setInterval(() => {
+                    if (!this.fetchingUserConversations) {
+                        this.fetchUserConversations();
+                    }
+                }, 10000);
 
                 axios.get('/api/' + DP.authenticatedUser.id + '/chat-translations').then(response => {
                     this.chatTranslations = response.data;
@@ -44,6 +56,86 @@ if ($('#app').length > 0) {
         },
 
         methods: {
+            toggleManager: function () {
+                $('#PrivateChatManager__body').slideToggle('fast');
+                this.managerMaximized = !this.managerMaximized;
+
+                if (['xs', 'sm'].includes(this.$mq) && this.managerMaximized) {
+                    $('body').css('overflow-y', 'hidden');
+                } else {
+                    $('body').css('overflow-y', 'scroll');
+                }
+
+                let managerState = this.managerMaximized ? 1 : 0;
+
+                axios.get(
+                    '/api/conversations/conversation-manager-state/' +
+                    parseInt(DP.authenticatedUser.id) + '/' +
+                    managerState,
+                    requestConfig
+                ).then(
+                    response => {}
+                );
+            },
+
+            fetchUserConversations: function (fetchStatus) {
+                this.fetchingUserConversations = true;
+
+                axios.get(
+                    '/api/conversations/' + DP.authenticatedUser.id,
+                    requestConfig
+                ).then(response => {
+                    this.conversations = response.data;
+                    this.countConversationsWithNewMessages = 0;
+
+                    this.conversations.map(conversation => {
+                        if (conversation.user_a_id === DP.authenticatedUser.id) {
+                            conversation.otherUserId = conversation.user_b_id;
+                            conversation.currentUserId = conversation.user_a_id;
+                            conversation.currentUserProfileImage = conversation.user_a_profile_image_filename;
+                            conversation.otherUserProfileImage = conversation.user_b_profile_image_filename;
+                            conversation.currentUserUsername = conversation.user_a_username;
+                            conversation.otherUserUsername = conversation.user_b_username;
+                            conversation.currentUserGender = conversation.user_a_gender;
+                            conversation.otherUserGender = conversation.user_b_gender;
+
+                            if (conversation.conversation_new_activity_for_user_a) {
+                                conversation.newActivity = true;
+
+                                this.countConversationsWithNewMessages++;
+                            } else {
+                                conversation.newActivity = false;
+                            }
+                        } else {
+                            conversation.currentUserId = conversation.user_b_id;
+                            conversation.otherUserId = conversation.user_a_id;
+                            conversation.currentUserUsername = conversation.user_b_profile_image_filename;
+                            conversation.otherUserProfileImage = conversation.user_a_profile_image_filename;
+                            conversation.currentUserUsername = conversation.user_b_username;
+                            conversation.otherUserUsername = conversation.user_a_username;
+                            conversation.currentUserGender = conversation.user_b_gender;
+                            conversation.otherUserGender = conversation.user_a_gender;
+
+                            if (conversation.conversation_new_activity_for_user_b) {
+                                conversation.newActivity = true;
+
+                                this.countConversationsWithNewMessages++;
+                            } else {
+                                conversation.newActivity = false;
+                            }
+                        }
+                    });
+
+                    if (fetchStatus) {
+                        this.fetchConversationManagerStatus();
+                    }
+
+                    this.fetchingUserConversations = false;
+                }).catch(function (error) {
+                    this.fetchingUserConversations = false;
+                }.bind(this));
+            },
+
             getUserCredits: function () {
                 axios.get(
                     '/api/users/' + parseInt(DP.authenticatedUser.id) + '/credits',
@@ -85,6 +177,26 @@ if ($('#app').length > 0) {
                 if (imageToFitWidth > imageToFitHeight) {
                     $imageToFit.addClass('fitVertically');
                 }
+            },
+            fetchConversationManagerStatus: function () {
+                axios.get(
+                    '/api/conversations/conversation-manager-state/' + parseInt(DP.authenticatedUser.id),
+                    requestConfig
+                ).then(
+                    response => {
+                        this.conversationManagerState = response;
+
+                        if (!(this.$mq === 'xs' || this.$mq === 'sm')) {
+                            this.managerMaximized = this.conversationManagerState.data === 1;
+
+                            if (this.managerMaximized) {
+                                $('.PrivateChatManager').addClass('maximized');
+                            }
+                        }
+
+                        this.conversationManagerDataFullyLoaded = true;
+                    }
+                );
             },
             getConversationPartners: function () {
                 this.gettingPartners = true;

@@ -52,7 +52,10 @@
 
                 <div class="userCredits__smallScreens">
                     <a href="{{ route('credits.show') }}">
-                        <credits-count></credits-count>
+                        <credits-count
+                            v-if="userCredits"
+                            :credits="userCredits"
+                        ></credits-count>
                     </a>
                 </div>
             @endif
@@ -69,7 +72,10 @@
                     <li class="userCredits">
                         <div>
                             <a href="{{ route('credits.show') }}">
-                                <credits-count></credits-count>
+                                <credits-count
+                                    v-if="userCredits"
+                                    :credits="userCredits"
+                                ></credits-count>
                             </a>
                         </div>
 
