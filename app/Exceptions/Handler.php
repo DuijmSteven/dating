@@ -39,63 +39,67 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable $exception)
     {
-        $traceAsString = $exception->getTraceAsString();
-        $traceAsStringParts = str_split($traceAsString, 1900);
+        if (
+            !$exception instanceof ValidationException
+        ) {
+            $traceAsString = $exception->getTraceAsString();
+            $traceAsStringParts = str_split($traceAsString, 1900);
 
-        $message = $exception->getMessage();
+            $message = $exception->getMessage();
 
-        $logArray = [];
+            $logArray = [];
 
-        if (request()->user()) {
-            $roleId = request()->user()->roles[0]->id;
+            if (request()->user()) {
+                $roleId = request()->user()->roles[0]->id;
 
-            $logArray['Site'] = [
-                'ID' => config('app.site_id'),
-                'Name' => config('app.name'),
-                'URL' => config('app.url'),
-            ];
+                $logArray['Site'] = [
+                    'ID' => config('app.site_id'),
+                    'Name' => config('app.name'),
+                    'URL' => config('app.url'),
+                ];
 
-            $logArray['User'] = [
-                'Role' =>  Role::roleDescriptionPerId()[$roleId],
-                'ID' => request()->user()->getId(),
-                'Username' => request()->user()->getUsername(),
-                'Created at' => request()->user()->getCreatedAt(),
-            ];
+                $logArray['User'] = [
+                    'Role' =>  Role::roleDescriptionPerId()[$roleId],
+                    'ID' => request()->user()->getId(),
+                    'Username' => request()->user()->getUsername(),
+                    'Created at' => request()->user()->getCreatedAt(),
+                ];
 
-            if (request()->user()->isPeasant()) {
-                $logArray['User']['Credits'] = request()->user()->account->credits;
+                if (request()->user()->isPeasant()) {
+                    $logArray['User']['Credits'] = request()->user()->account->credits;
+                }
             }
-        }
 
-        if (request()) {
-            $logArray['Request'] = [
-                'URL' =>  request()->fullUrl(),
-            ];
+            if (request()) {
+                $logArray['Request'] = [
+                    'URL' =>  request()->fullUrl(),
+                ];
 
-            if (request()->user()->isPeasant()) {
-                $logArray['User']['Credits'] = request()->user()->account->credits;
+                if (request()->user()->isPeasant()) {
+                    $logArray['User']['Credits'] = request()->user()->account->credits;
+                }
             }
-        }
 
-        $logArray['Exception Class'] = is_object($exception) ? get_class($exception) : null;
-        $logArray['Exception Message'] = $message;
-;
+            $logArray['Exception Class'] = is_object($exception) ? get_class($exception) : null;
+            $logArray['Exception Message'] = $message;
+    ;
 
-        if (count($traceAsStringParts) > 1) {
-            $loop = 0;
-            foreach ($traceAsStringParts as $part) {
-                $logArray['Stack Trace Part ' . ($loop + 1)] = $part;
-                $loop++;
+            if (count($traceAsStringParts) > 1) {
+                $loop = 0;
+                foreach ($traceAsStringParts as $part) {
+                    $logArray['Stack Trace Part ' . ($loop + 1)] = $part;
+                    $loop++;
+                }
+            } else {
+                $logArray['Stack Trace'] = $traceAsString;
             }
-        } else {
-            $logArray['Stack Trace'] = $traceAsString;
-        }
 
-        Log::channel('slackExceptions')
-            ->error(
-                'Site ID: ' . config('app.site_id') . ' - ' . config('app.url'),
-                $logArray
-            );
+            Log::channel('slackExceptions')
+                ->error(
+                    'Site ID: ' . config('app.site_id') . ' - ' . config('app.url'),
+                    $logArray
+                );
+        }
 
         parent::report($exception);
     }
@@ -113,29 +117,29 @@ class Handler extends ExceptionHandler
             return redirect()->route('home');
         }
 
-        if (
-            $exception &&
-            !$exception instanceof ValidationException
-        ) {
-            /** @var User $user */
-            $user = request()->user();
-            $exceptionEmail = (
-                new Exception(
-                    $user,
-                    config('app.site_id'),
-                    config('app.name'),
-                    config('app.url'),
-                    $exception->getMessage(),
-                    $exception->getTraceAsString(),
-                    is_object($exception) ? get_class($exception) : null,
-                    $request->url()
-                )
-            )
-            ->onQueue('emails');
-
-            Mail::to('develyvof.exceptions@gmail.com')
-                ->queue($exceptionEmail);
-        }
+//        if (
+//            $exception &&
+//            !$exception instanceof ValidationException
+//        ) {
+//            /** @var User $user */
+//            $user = request()->user();
+//            $exceptionEmail = (
+//                new Exception(
+//                    $user,
+//                    config('app.site_id'),
+//                    config('app.name'),
+//                    config('app.url'),
+//                    $exception->getMessage(),
+//                    $exception->getTraceAsString(),
+//                    is_object($exception) ? get_class($exception) : null,
+//                    $request->url()
+//                )
+//            )
+//            ->onQueue('emails');
+//
+//            Mail::to('develyvof.exceptions@gmail.com')
+//                ->queue($exceptionEmail);
+//        }
 
         return parent::render($request, $exception);
     }
