@@ -11,6 +11,7 @@ use Illuminate\Session\TokenMismatchException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
+use Swift_RfcComplianceException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -40,7 +41,8 @@ class Handler extends ExceptionHandler
     public function report(Throwable $exception)
     {
         if (
-            !$exception instanceof ValidationException
+            !$exception instanceof ValidationException &&
+            !$exception instanceof Swift_RfcComplianceException
         ) {
             $traceAsString = $exception->getTraceAsString();
             $traceAsStringParts = str_split($traceAsString, 1900);
