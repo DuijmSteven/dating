@@ -5,6 +5,9 @@ namespace App\Providers;
 use Carbon\Carbon;
 use Http\Adapter\Guzzle7\Client;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Queue\Events\JobFailed;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -25,6 +28,23 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
             $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
         }
+
+        Queue::failing(function (JobFailed $event) {
+            $logArray['Site'] = [
+                'ID' => config('app.site_id'),
+                'Name' => config('app.name'),
+                'URL' => config('app.url'),
+            ];
+
+            $logArray['Job'] = $event->job;
+            $logArray['Exception Message'] = $event->exception->getMessage();
+
+            Log::channel('slackQueues')
+                ->error(
+                    'Site ID: ' . config('app.site_id') . ' - ' . config('app.url'),
+                    $logArray
+                );
+        });
 
         Carbon::setLocale('nl');
 

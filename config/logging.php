@@ -63,6 +63,14 @@ return [
             'level' => 'error',
         ],
 
+        'slackQueues' => [
+            'driver' => 'slack',
+            'url' => env('SLACK_QUEUES_WEBHOOK'),
+            'username' => 'Queue issue',
+            'emoji' => ':boom:',
+            'level' => 'error',
+        ],
+
         'papertrail' => [
             'driver'  => 'monolog',
             'level' => 'debug',
