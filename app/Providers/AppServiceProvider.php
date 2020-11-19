@@ -37,7 +37,23 @@ class AppServiceProvider extends ServiceProvider
             ];
 
             $logArray['Job'] = $event->job;
-            $logArray['Exception Message'] = $event->exception->getMessage();
+
+            $exception = $event->exception;
+            $traceAsString = $exception->getTraceAsString();
+            $traceAsStringParts = str_split($traceAsString, 1900);
+
+            $logArray['Exception Class'] = get_class($exception);
+            $logArray['Exception Message'] = $exception->getMessage();
+
+            if (count($traceAsStringParts) > 1) {
+                $loop = 0;
+                foreach ($traceAsStringParts as $part) {
+                    $logArray['Stack Trace Part ' . ($loop + 1)] = $part;
+                    $loop++;
+                }
+            } else {
+                $logArray['Stack Trace'] = $traceAsString;
+            }
 
             Log::channel('slackQueues')
                 ->error(

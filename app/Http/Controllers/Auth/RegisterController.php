@@ -312,11 +312,9 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        \Log::info($data);
-
         return User::create([
-            'username' => $data['username'],
-            'email' => $data['email'],
+            'username' => trim($data['username']),
+            'email' => trim($data['email']),
             'active' => 1,
             'password' => bcrypt($data['password']),
             'api_token' => Str::random(60),

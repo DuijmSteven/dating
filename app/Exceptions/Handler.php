@@ -43,8 +43,8 @@ class Handler extends ExceptionHandler
     {
         if (
             !$exception instanceof ValidationException &&
-            !$exception instanceof Swift_RfcComplianceException &&
-            !$exception instanceof SesException &&
+//            !$exception instanceof Swift_RfcComplianceException &&
+//            !$exception instanceof SesException &&
             !$exception instanceof AuthenticationException
         ) {
             $traceAsString = $exception->getTraceAsString();
@@ -81,10 +81,8 @@ class Handler extends ExceptionHandler
                 }
             }
 
-
             $logArray['Exception Class'] = is_object($exception) ? get_class($exception) : null;
             $logArray['Exception Message'] = $message;
-    ;
 
             if (count($traceAsStringParts) > 1) {
                 $loop = 0;
