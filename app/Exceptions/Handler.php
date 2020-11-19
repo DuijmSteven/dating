@@ -49,14 +49,20 @@ class Handler extends ExceptionHandler
 
             $logArray = [];
 
+            $logArray['Site'] = [
+                'ID' => config('app.site_id'),
+                'Name' => config('app.name'),
+                'URL' => config('app.url'),
+            ];
+
+            if (request()) {
+                $logArray['Request'] = [
+                    'URL' =>  request()->fullUrl(),
+                ];
+            }
+
             if (request()->user()) {
                 $roleId = request()->user()->roles[0]->id;
-
-                $logArray['Site'] = [
-                    'ID' => config('app.site_id'),
-                    'Name' => config('app.name'),
-                    'URL' => config('app.url'),
-                ];
 
                 $logArray['User'] = [
                     'Role' =>  Role::roleDescriptionPerId()[$roleId],
@@ -70,15 +76,6 @@ class Handler extends ExceptionHandler
                 }
             }
 
-            if (request()) {
-                $logArray['Request'] = [
-                    'URL' =>  request()->fullUrl(),
-                ];
-
-                if (request()->user() && request()->user()->isPeasant()) {
-                    $logArray['User']['Credits'] = request()->user()->account->credits;
-                }
-            }
 
             $logArray['Exception Class'] = is_object($exception) ? get_class($exception) : null;
             $logArray['Exception Message'] = $message;
