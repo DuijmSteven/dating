@@ -63,6 +63,14 @@ return [
             'level' => 'error',
         ],
 
+        'slackNonUserExceptions' => [
+            'driver' => 'slack',
+            'url' => env('SLACK_NON_USER_EXCEPTIONS_WEBHOOK'),
+            'username' => 'Exception',
+            'emoji' => ':boom:',
+            'level' => 'error',
+        ],
+
         'slackQueues' => [
             'driver' => 'slack',
             'url' => env('SLACK_QUEUES_WEBHOOK'),

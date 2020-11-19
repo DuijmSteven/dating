@@ -96,7 +96,9 @@ class Handler extends ExceptionHandler
                 $logArray['Stack Trace'] = $traceAsString;
             }
 
-            Log::channel('slackExceptions')
+            $channel = request()->user() ? 'slackExceptions' : 'slackNonUserExceptions';
+
+            Log::channel($channel)
                 ->error(
                     'Site ID: ' . config('app.site_id') . ' - ' . config('app.url'),
                     $logArray
