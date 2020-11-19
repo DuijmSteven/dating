@@ -75,7 +75,7 @@ class Handler extends ExceptionHandler
                     'URL' =>  request()->fullUrl(),
                 ];
 
-                if (request()->user()->isPeasant()) {
+                if (request()->user() && request()->user()->isPeasant()) {
                     $logArray['User']['Credits'] = request()->user()->account->credits;
                 }
             }
