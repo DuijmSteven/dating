@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use App\Mail\Exception;
 use App\Role;
 use App\User;
+use Aws\Ses\Exception\SesException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
@@ -42,7 +43,8 @@ class Handler extends ExceptionHandler
     {
         if (
             !$exception instanceof ValidationException &&
-            !$exception instanceof Swift_RfcComplianceException
+            !$exception instanceof Swift_RfcComplianceException &&
+            !$exception instanceof SesException
         ) {
             $traceAsString = $exception->getTraceAsString();
             $traceAsStringParts = str_split($traceAsString, 1900);
