@@ -105,16 +105,9 @@ class UserLocationService
 
     public function getCoordinatesForUser(User $user)
     {
-
-        if ($user->meta->city) {
-            $explodedCity = explode(' (', $user->meta->city);
-            $cityName = trim($explodedCity[0]);
-            $countryCode = explode(')', $explodedCity[1])[0];
-        } else {
-            $location = $this->getLocationFromIp($this->getUserIp());
-            $cityName = $location['city'];
-            $countryCode = $location['country_code'];
-        }
+        $location = $this->getLocationFromIp($this->getUserIp());
+        $cityName = $location['city'];
+        $countryCode = $location['country_code'];
 
         if (!$cityName || !$countryCode) {
             $cityName = 'Amsterdam';

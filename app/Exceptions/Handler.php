@@ -43,8 +43,7 @@ class Handler extends ExceptionHandler
     {
         if (
             !$exception instanceof ValidationException &&
-//            !$exception instanceof Swift_RfcComplianceException &&
-//            !$exception instanceof SesException &&
+            !$exception instanceof TokenMismatchException &&
             !$exception instanceof AuthenticationException
         ) {
             $traceAsString = $exception->getTraceAsString();
