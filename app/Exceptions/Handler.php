@@ -2,17 +2,14 @@
 
 namespace App\Exceptions;
 
-use App\Mail\Exception;
 use App\Role;
-use App\User;
 use Aws\Ses\Exception\SesException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
-use Swift_RfcComplianceException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -45,7 +42,8 @@ class Handler extends ExceptionHandler
             !$exception instanceof ValidationException &&
             !$exception instanceof TokenMismatchException &&
             !$exception instanceof SesException && // Amazon exception that fails on some weird unknown emails
-            !$exception instanceof AuthenticationException
+            !$exception instanceof AuthenticationException &&
+            !Str::contains(request()->header('User-Agent'), 'bingbot')
         ) {
             $traceAsString = $exception->getTraceAsString();
             $traceAsStringParts = str_split($traceAsString, 1900);
@@ -65,7 +63,6 @@ class Handler extends ExceptionHandler
 
                 $logArray['Request'] = [
                     'Full URL' =>  request()->fullUrl(),
-                    'URI' => request()->getRequestUri(),
                     'host' => $requestHost,
                     'Client IP' => request()->getClientIp(),
                     'Agent' => request()->header('User-Agent'),
