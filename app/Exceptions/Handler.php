@@ -61,8 +61,14 @@ class Handler extends ExceptionHandler
             ];
 
             if (request()) {
+                $requestHost = parse_url(request()->headers->get('origin'),  PHP_URL_HOST);
+
                 $logArray['Request'] = [
-                    'URL' =>  request()->fullUrl(),
+                    'Full URL' =>  request()->fullUrl(),
+                    'URI' => request()->getRequestUri(),
+                    'host' => $requestHost,
+                    'Client IP' => request()->getClientIp(),
+                    'Agent' => request()->header('User-Agent'),
                 ];
             }
 
