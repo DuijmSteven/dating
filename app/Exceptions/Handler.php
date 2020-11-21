@@ -44,6 +44,7 @@ class Handler extends ExceptionHandler
         if (
             !$exception instanceof ValidationException &&
             !$exception instanceof TokenMismatchException &&
+            !$exception instanceof SesException && // Amazon exception that fails on some weird unknown emails
             !$exception instanceof AuthenticationException
         ) {
             $traceAsString = $exception->getTraceAsString();
