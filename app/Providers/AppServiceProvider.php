@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Aws\Ses\Exception\SesException;
 use Carbon\Carbon;
 use Http\Adapter\Guzzle7\Client;
 use Illuminate\Pagination\Paginator;
@@ -30,36 +31,42 @@ class AppServiceProvider extends ServiceProvider
         }
 
         Queue::failing(function (JobFailed $event) {
-            $logArray['Site'] = [
-                'ID' => config('app.site_id'),
-                'Name' => config('app.name'),
-                'URL' => config('app.url'),
-            ];
-
-            $logArray['Job'] = $event->job;
-
             $exception = $event->exception;
-            $traceAsString = $exception->getTraceAsString();
-            $traceAsStringParts = str_split($traceAsString, 1900);
 
-            $logArray['Exception Class'] = get_class($exception);
-            $logArray['Exception Message'] = $exception->getMessage();
+            if (
+                !$exception instanceof SesException // Amazon exception that fails on some weird unknown emails
+            ) {
+                $logArray['Site'] = [
+                    'ID' => config('app.site_id'),
+                    'Name' => config('app.name'),
+                    'URL' => config('app.url'),
+                ];
 
-            if (count($traceAsStringParts) > 1) {
-                $loop = 0;
-                foreach ($traceAsStringParts as $part) {
-                    $logArray['Stack Trace Part ' . ($loop + 1)] = $part;
-                    $loop++;
+                $logArray['Job'] = $event->job;
+
+                $traceAsString = $exception->getTraceAsString();
+                $traceAsStringParts = str_split($traceAsString, 1900);
+
+                $logArray['Exception Class'] = get_class($exception);
+                $logArray['Exception Message'] = $exception->getMessage();
+
+                if (count($traceAsStringParts) > 1) {
+                    $loop = 0;
+                    foreach ($traceAsStringParts as $part) {
+                        $logArray['Stack Trace Part ' . ($loop + 1)] = $part;
+                        $loop++;
+                    }
+                } else {
+                    $logArray['Stack Trace'] = $traceAsString;
                 }
-            } else {
-                $logArray['Stack Trace'] = $traceAsString;
+
+                Log::channel('slackQueues')
+                    ->error(
+                        'Site ID: ' . config('app.site_id') . ' - ' . config('app.url'),
+                        $logArray
+                    );
             }
 
-            Log::channel('slackQueues')
-                ->error(
-                    'Site ID: ' . config('app.site_id') . ' - ' . config('app.url'),
-                    $logArray
-                );
         });
 
         Carbon::setLocale('nl');

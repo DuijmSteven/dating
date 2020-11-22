@@ -43,7 +43,7 @@ class Handler extends ExceptionHandler
             !$exception instanceof TokenMismatchException &&
             !$exception instanceof SesException && // Amazon exception that fails on some weird unknown emails
             !$exception instanceof AuthenticationException &&
-            !Str::contains(request()->header('User-Agent'), 'bingbot')
+            !Str::contains(request()->header('User-Agent'), 'bot')
         ) {
             $traceAsString = $exception->getTraceAsString();
             $traceAsStringParts = str_split($traceAsString, 1900);
