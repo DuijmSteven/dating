@@ -168,7 +168,12 @@ $(window).on('load', function () {
         $('.welcomeModal').modal('show');
 
         setTimeout(() => {
-            $.get(DP.baseUrl + '/api/users/' + DP.authenticatedUser.id + '/milestones/accepted-welcome-message', function (data) {
+            $.ajax({
+                type: "GET",
+                beforeSend: function(request) {
+                    request.setRequestHeader('Authorization', 'Bearer ' + DP.sanctumToken);
+                },
+                url: DP.baseUrl + '/api/users/' + DP.authenticatedUser.id + '/milestones/accepted-welcome-message',
             });
         }, 1000);
 
