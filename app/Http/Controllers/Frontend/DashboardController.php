@@ -3,15 +3,11 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Services\OnlineUsersService;
-use App\Services\UserLocationService;
-use App\Activity;
-use App\Http\Requests\Request;
 use App\Services\UserActivityService;
+use App\Services\UserLocationService;
 use App\User;
 use Carbon\Carbon;
-use Hash;
 use Illuminate\Support\Facades\Auth;
-use Stevebauman\Location\Facades\Location;
 
 /**
  * Class DashboardController

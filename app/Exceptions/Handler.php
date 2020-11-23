@@ -10,6 +10,7 @@ use Illuminate\Session\TokenMismatchException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -43,6 +44,7 @@ class Handler extends ExceptionHandler
             !$exception instanceof TokenMismatchException &&
             !$exception instanceof SesException && // Amazon exception that fails on some weird unknown emails
             !$exception instanceof AuthenticationException &&
+            !($exception instanceof NotFoundHttpException && !request()->user()) &&
             !Str::contains(request()->header('User-Agent'), 'bot')
         ) {
             $traceAsString = $exception->getTraceAsString();
