@@ -48,6 +48,7 @@ class CopyBotDataFromS3BucketToOtherS3Bucket extends Command
                 $query->where('id', Role::ROLE_BOT);
             })
             ->where('active', false)
+            ->where('id', '>', 10000)
             ->get();
 
         try {
@@ -55,19 +56,17 @@ class CopyBotDataFromS3BucketToOtherS3Bucket extends Command
             $errorCount = 0;
 
             foreach ($botsToCopy as $bot) {
+                $copyProductionBucketToCurrentEnvBucket = Process::fromShellCommandline(
+                    '/usr/local/bin/aws s3 sync s3://' . $fromBucket . '/users/' . $bot->getId() . '/images' . '  s3://' . $toBucket . '/users/' . $bot->getId() . '/images'
+                );
+                $copyProductionBucketToCurrentEnvBucket->setTimeout(1000);
+                $copyProductionBucketToCurrentEnvBucket->run();
 
-            }
-
-            $copyProductionBucketToCurrentEnvBucket = Process::fromShellCommandline(
-                '/usr/local/bin/aws s3 sync s3://' . $fromBucket . '/users/' . $bot->getId() . '/images' . '  s3://' . $toBucket . '/users/' . $bot->getId() . '/images'
-            );
-            $copyProductionBucketToCurrentEnvBucket->setTimeout(1000);
-            $copyProductionBucketToCurrentEnvBucket->run();
-
-            if ($copyProductionBucketToCurrentEnvBucket->isSuccessful()) {
-                $successfullyCopiedCount++;
-            } else {
-                $errorCount++;
+                if ($copyProductionBucketToCurrentEnvBucket->isSuccessful()) {
+                    $successfullyCopiedCount++;
+                } else {
+                    $errorCount++;
+                }
             }
         }
         catch (\Exception $e)
