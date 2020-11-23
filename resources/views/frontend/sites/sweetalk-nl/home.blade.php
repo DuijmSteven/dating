@@ -14,18 +14,9 @@
     </div>
 
     @foreach($users as $user)
-
         @include('frontend.components.sites.' . config('app.directory_name') . '.user-summary',
             ['user' => $user, 'showAboutMe' => true, 'firstTile' => $loop->index === 0]
         )
-
-{{--        @include('frontend.components.activity', [--}}
-{{--            'user' => $user,--}}
-{{--            'activityThumbnailUrl' => \StorageHelper::profileImageUrl($user, true),--}}
-{{--            'activityTitle' => $user->getUsername(),--}}
-{{--            'activityImageUrl' => \StorageHelper::profileImageUrl($user),--}}
-{{--            'activityText' => $user->meta->getAboutMe(),--}}
-{{--        ])--}}
     @endforeach
 
 @endsection

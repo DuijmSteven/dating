@@ -3,8 +3,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: ($navbarHeight + 2) + px;
-    height: 324px;
+    height: 338px;
+    padding-bottom: 7px;
     background: #3e3737;
 
     @media (max-width: $screen-md-max) {
@@ -34,10 +34,10 @@
 
     &__profileImageContainer {
         margin-top: 15px;
-        margin-bottom: 15px;
+        margin-bottom: 5px;
     }
 
-    &__buttonsContainer {
+    &__buttonsOuterContainer {
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -45,6 +45,14 @@
         font-size: 2rem;
         color: #fff;
         margin-bottom: 15px;
+    }
+
+    &__buttonContainer {
+        margin-right: 40px;
+
+        &:last-of-type {
+            margin-right: 0;
+        }
     }
 
     &__button {
@@ -55,30 +63,58 @@
         padding: 14px;
         border: 2px solid #fff;
         border-radius: 50%;
-        margin-right: 40px;
         cursor: pointer;
+        margin-bottom: 0px;
+        text-decoration: none;
 
-        &:last-of-type {
-            margin-right: 0;
+        .material-icons {
+            color: #fff;
         }
 
         &:hover {
             background-color: $secondaryColor;
+            text-decoration: none;
+        }
+
+        &:focus,
+        &:active {
+            text-decoration: none;
         }
 
         &__creditsCount {
-            position: absolute;
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            top: -12px;
-            right: -18px;
-            border-radius: 50%;
-            padding: 5px;
-            background: red;
-            color: #fff;
+            //border-radius: 50%;
+            //width: 30px;
+            //height: 30px;
+            //border: 2px solid #fff;
+            background: transparent;
+            color: #ff4343;
             font-size: 1.4rem;
             font-weight: 500;
+        }
+
+        &__text {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            span {
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                //width: 30px;
+                //height: 30px;
+                //border: 2px solid #fff;
+                //border-radius: 50%;
+                background: transparent;
+                color: #ff4343;
+                font-size: 1.4rem;
+                font-weight: 500;
+            }
         }
     }
 }

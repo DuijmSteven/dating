@@ -1,80 +1,23 @@
 .SearchBar {
-    //display: none;
-
-    &.hiddenSmallScreens {
-        @media (max-width: $screen-sm-max) {
-            display: none;
-        }
-    }
-
-    position: absolute;
     background-color: $navbarBgColor;
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
     border-top: 0;
     border-radius: 0 0 5px 5px;
     padding: 10px;
 
     background: linear-gradient(90deg, $navbarBgColor 13%, $navbarBgColor 100%);
 
-    left: 15px;
-    right: 15px;
+    width: 100%;
+    left: 0;
 
-    @media (max-width: $screen-xs-max) {
-        left: 0;
-        right: 0;
-    }
-
+    position: fixed;
     top: $navbarHeight + px;
-
-    .credits {
-        display: none;
-
-        @media (min-width: $screen-md-min) {
-            display: block;
-            position: absolute;
-            right: 15px;
-            bottom: 10px;
-            border-left: 1px solid #777;
-            padding-left: 12px;
-            font-size: 1.9rem;
-            font-weight: 500;
-            color: $secondaryColor;
-        }
-    }
-
-    @media (min-width: $screen-md-min) {
-        font-size: 1.5rem;
-
-        input {
-            font-size: 17px;
-            height: 29px;
-        }
-
-        select {
-            font-size: 17px;
-            height: 29px;
-            padding-top: 3px;
-        }
-
-        .withProfileImage {
-            .SearchBar__profileImageLabel {
-                height: 29px !important;
-            }
-        }
-
-        .city,
-        .age,
-        .withProfileImage > {
-            label {
-                margin-right: 10px;
-            }
-        }
-    }
 
     @media (max-width: $screen-sm-max) {
         top: $navbarHeightSmallScreens + px;
     }
 
-    z-index: 250;
+    z-index: 400;
 
     form {
         margin: 0;
@@ -98,27 +41,20 @@
 
     .help-block {
         position: absolute;
-        bottom: -5px;
-        left: 11px;
         color: lighten($secondaryColor, 15%);
-
-        @media (max-width: $screen-sm-max) {
-            position: static;
-            display: block;
-        }
     }
 
-    //@media (min-width: $screen-sm-min) {
-    //    width: 500px;
-    //    left: 50%;
-    //    margin-left:  -250px;
-    //}
-    //
-    //@media (min-width: $screen-md-min) {
-    //    width: 900px;
-    //    left: 50%;
-    //    margin-left:  -450px;
-    //}
+    @media (min-width: $screen-sm-min) {
+        width: 500px;
+        left: 50%;
+        margin-left:  -250px;
+    }
+
+    @media (min-width: $screen-md-min) {
+        width: 900px;
+        left: 50%;
+        margin-left:  -450px;
+    }
 
     @media (max-width: $screen-sm-max) {
         .profileImageLabelContainer {
@@ -129,11 +65,6 @@
     }
 
     .form-group {
-        @media (min-width: $screen-md-min) {
-            display: flex;
-            align-items: center;
-        }
-
         margin-bottom: 0;
 
         .form-control {
@@ -147,10 +78,6 @@
             color: $navbarLinkColor;
 
             display: inline-block;
-
-            @media (min-width: $screen-md-min) {
-                margin-bottom: 0;
-            }
 
             @media (max-width: $screen-sm-max) {
                 font-size: 1.5rem;
@@ -220,13 +147,13 @@
             padding-right: 20px;
 
             &.city {
-                width: 21%;
+                width: 25%;
             }
 
             &.radius,
             &.age,
             &.bodyType {
-                width: 23%;
+                width: 15%;
             }
 
             &.height {
@@ -234,16 +161,19 @@
             }
 
             &.withProfileImage {
-                width: 24%;
+                width: 25%;
             }
 
             &.submit {
                 width: 70px;
+                position: absolute;
+                right: 10px;
+                bottom: 9px;
                 padding-right: 0;
 
                 button {
                     width: 70px;
-                    height: 29px;
+                    height: 36px;
                     text-align: center;
                     padding: 0;
                 }
@@ -256,11 +186,6 @@
             }
         }
 
-        @media (min-width: $screen-sm-min) {
-            &.withProfileImage {
-                width: 270px;
-            }
-        }
 
         &.submit {
             button {

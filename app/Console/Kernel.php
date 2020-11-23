@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Console\Commands\CheckRecentStartedPayments;
 use App\Console\Commands\CheckXpartnersLeadsWIthPendingEligibilityStatus;
+use App\Console\Commands\CopyBotDataFromS3BucketToOtherS3Bucket;
 use App\Console\Commands\CreateDiscountForInactiveUsersAndMailThem;
 use App\Console\Commands\ExportDb;
 use App\Console\Commands\SendMassMessage;
@@ -30,6 +31,7 @@ class Kernel extends ConsoleKernel
         Commands\DuplicateProductionS3BucketToCurrentEnvironmentBucket::class,
         Commands\UpdateCurrentEnvDbAndAws::class,
         Commands\SendProfileCompletionEmails::class,
+        CopyBotDataFromS3BucketToOtherS3Bucket::class,
         CheckRecentStartedPayments::class,
         SendMassMessage::class,
         CheckXpartnersLeadsWIthPendingEligibilityStatus::class,

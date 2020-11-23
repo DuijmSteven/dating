@@ -135,7 +135,7 @@
                         <i class="material-icons paymentButtonCheck">
                             check_circle
                         </i>
-                        {{ trans(config('app.directory_name') . '/credits.to_checkout) }}
+                        {{ trans(config('app.directory_name') . '/credits.to_checkout') }}
                     </button>
                 </div>
             </form>
@@ -158,8 +158,8 @@
                     <p class="offset-0" style="white-space: nowrap; line-height: 18px; overflow: hidden; text-overflow: ellipsis">
                         <small class="text-muted">{{ $user->meta->city }}</small>
                     </p>
-{{--                    <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}"--}}
-{{--                       class="btn btn-lg btn-white">{{ trans(config('app.directory_name') . '/credits.more_info') }}</a>--}}
+                    {{--                    <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}"--}}
+                    {{--                       class="btn btn-lg btn-white">{{ trans(config('app.directory_name') . '/credits.more_info') }}</a>--}}
                 </div>
             @endforeach
         </div>

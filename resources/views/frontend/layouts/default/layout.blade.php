@@ -9,10 +9,13 @@
                       height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 @endif
-<div id="app">
+<div id="app" class="fullWrapper">
     @include('frontend.layouts.default.partials.header')
 
-    @if((int) config('app.site_id') === \App\Helpers\SiteHelper::SWEETALK_NL)
+    @if(
+        (int) config('app.site_id') === \App\Helpers\SiteHelper::SWEETALK_NL &&
+        Route::currentRouteNamed('home')
+    )
         @include('frontend.layouts.default.partials.sites.sweetalk-nl.hero')
     @endif
 

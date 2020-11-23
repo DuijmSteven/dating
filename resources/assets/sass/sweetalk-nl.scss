@@ -59,6 +59,10 @@
 
 @import "vue-apps/private-chat/main";
 
+.fullWrapper {
+  margin-top: $navbarHeight + px;
+}
+
 .GeneralBackButton {
   margin-top: -10px;
   display: flex;

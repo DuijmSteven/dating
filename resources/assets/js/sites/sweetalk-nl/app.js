@@ -62,6 +62,7 @@ Vue.component('private-chat', require('../../vue/components/sites/' + DP.appDire
 Vue.component('chat-message', require('../../vue/components/sites/' + DP.appDirectoryName + '/ChatMessage.vue'));
 Vue.component('chat-form', require('../../vue/components/sites/' + DP.appDirectoryName + '/ChatForm.vue'));
 Vue.component('credits-count', require('../../vue/components/sites/' + DP.appDirectoryName + '/CreditsCount.vue'));
+Vue.component('conversations-with-new-messages-count', require('../../vue/components/sites/' + DP.appDirectoryName + '/ConversationsWithNewMessagesCount.vue'));
 Vue.component('public-chat', require('../../vue/components/sites/' + DP.appDirectoryName + '/PublicChat.vue'));
 
 require('../../vue/vue-js-app');
@@ -386,42 +387,38 @@ $(window).on('load', function () {
     if ($('.JS--searchToggleButton').length > 0) {
         $('.JS--searchToggleButton').click(() => {
             if (!$('.JS--SearchBar').hasClass('closedByButtonClick')) {
-                $('.JS--SearchBar').removeClass('hiddenSmallScreens');
+                $('.JS--SearchBar').removeClass('hidden');
 
-                $('.JS--searchToggleButton').toggleClass('pressed');
+                $('.JS--searchToggleButton').toggleClass('active');
                 Cookies.set('searchBarState', 'open');
             }
         });
 
         $(document).on("mousedown", function (e) {
-            if ($(window).width() < 993) {
-                if (!$('.JS--SearchBar').hasClass('hiddenSmallScreens')) {
-                    var container = $(".JS--SearchBar");
-                    var autocompleteCities = $(".ui-autocomplete");
+            if (!$('.JS--SearchBar').hasClass('hidden')) {
+                var container = $(".JS--SearchBar");
+                var autocompleteCities = $(".ui-autocomplete");
 
-                    // if the target of the click isn't the container nor a descendant of the container
-                    if (
-                        ($(e.target).hasClass('JS--searchToggleButton') || $(e.target).parents('.JS--searchToggleButton').length) ||
-                        (
-                            (!container.is(e.target) && container.has(e.target).length === 0) &&
-                            (!autocompleteCities.is(e.target) && autocompleteCities.has(e.target).length === 0)
-                        )
-                    ) {
-                        container.addClass('hiddenSmallScreens');
-                        $('.JS--searchToggleButton').removeClass('pressed');
-                        Cookies.set('searchBarState', 'hidden');
+                // if the target of the click isn't the container nor a descendant of the container
+                if (
+                    ($(e.target).hasClass('JS--searchToggleButton') || $(e.target).parents('.JS--searchToggleButton').length) ||
+                    (
+                        (!container.is(e.target) && container.has(e.target).length === 0) &&
+                        (!autocompleteCities.is(e.target) && autocompleteCities.has(e.target).length === 0)
+                    )
+                ) {
+                    container.addClass('hidden');
+                    $('.JS--searchToggleButton').removeClass('active');
+                    Cookies.set('searchBarState', 'hidden');
 
-                        container.addClass('closedByButtonClick');
+                    container.addClass('closedByButtonClick');
 
-                        setTimeout(function () {
-                            container.removeClass('closedByButtonClick');
-                        }, 300);
-                    }
+                    setTimeout(function () {
+                        container.removeClass('closedByButtonClick');
+                    }, 300);
                 }
-
             }
         });
-
     }
 
     if ($('.dropdown-submenu').length > 0) {

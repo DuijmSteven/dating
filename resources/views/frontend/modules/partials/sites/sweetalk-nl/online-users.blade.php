@@ -52,7 +52,7 @@
             @empty
                 <div class="col-xs-12">
                     <p>
-                        {{ trans(config('app.directory_name') . '/viewed_by_users.no_views') }}
+                        {{ trans(config('app.directory_name') . '/online_users.no_online_users') }}
                     </p>
                 </div>
             @endforelse

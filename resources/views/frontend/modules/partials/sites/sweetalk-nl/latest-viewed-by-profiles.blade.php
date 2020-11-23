@@ -1,7 +1,7 @@
 <div class="Tile LatestViewed ModuleProfiles JS--Tile Tile--withToggle">
     <div class="Tile__heading LatestViewedBy__heading JS--Tile__toggle">
         <span class="material-icons">
-            preview
+            people
         </span>
 
         {{ trans(config('app.directory_name') . '/viewed_by_users.viewed_by_users') }}
