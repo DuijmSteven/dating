@@ -17,6 +17,8 @@ use App\UserAccount;
 use App\UserAffiliateTracking;
 use App\UserMeta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -284,6 +286,9 @@ class RegisterController extends Controller
         Cookie::queue(Cookie::forget('mediaId'));
 
         $this->guard()->login($createdUser);
+
+        $plainTextToken = Auth::user()->createToken($createdUser->getUsername())->plainTextToken;
+        Cache::put('sanctum_token', $plainTextToken);
 
         return $this->registered($request, $createdUser)
             ?: redirect($this->redirectPath());
