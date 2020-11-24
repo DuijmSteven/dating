@@ -250,6 +250,15 @@ Route::group([
     Route::get('statistics/google-ads', 'Admin\StatisticsController@googleAds')
         ->name('admin.statistics.google-ads');
 
+    Route::get('statistics/xpartners', 'Admin\StatisticsController@xpartners')
+        ->name('admin.statistics.xpartners');
+
+    Route::get('statistics/operators', 'Admin\StatisticsController@operators')
+        ->name('admin.statistics.operators');
+
+    Route::get('statistics/user-acquisition', 'Admin\StatisticsController@userAcquisition')
+        ->name('admin.statistics.user-acquisition');
+
     Route::get('statistics/google-ads/keywords', 'Admin\StatisticsController@googleAdsKeywords')
         ->name('admin.statistics.google-ads.keywords');
 

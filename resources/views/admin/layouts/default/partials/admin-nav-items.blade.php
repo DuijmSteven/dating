@@ -32,10 +32,28 @@
                 Google Ads
             </a>
         </li>
+        <li class="{!! \Request::route()->getName() == 'admin.statistics.xpartners' ? 'active' : '' !!}">
+            <a href="{!! route('admin.statistics.xpartners') !!}">
+                <i class="fa fa-google"></i>
+                Xpartners
+            </a>
+        </li>
         <li class="{!! \Request::route()->getName() == 'admin.statistics.google-ads.keywords' ? 'active' : '' !!}">
             <a href="{!! route('admin.statistics.google-ads.keywords') !!}">
          <ju></ju>       <i class="fa fa-key"></i>
                 Google Ads Keywords
+            </a>
+        </li>
+        <li class="{!! \Request::route()->getName() == 'admin.statistics.operators' ? 'active' : '' !!}">
+            <a href="{!! route('admin.statistics.operators') !!}">
+                <i class="fa fa-google"></i>
+                Operators
+            </a>
+        </li>
+        <li class="{!! \Request::route()->getName() == 'admin.statistics.user-acquisition' ? 'active' : '' !!}">
+            <a href="{!! route('admin.statistics.user-acquisition') !!}">
+                <i class="fa fa-google"></i>
+                User acquisition
             </a>
         </li>
     </ul>

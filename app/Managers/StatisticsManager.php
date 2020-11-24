@@ -195,7 +195,7 @@ class StatisticsManager
         ];
     }
 
-    public function getGoogleAdsLvuStatistics()
+    public function getAffiliateLvuStatistics(string $affiliate = UserAffiliateTracking::AFFILIATE_GOOGLE)
     {
         $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
         $tenDaysAgo = Carbon::now('Europe/Amsterdam')->subDays(10)->setTimezone('UTC');
@@ -218,8 +218,8 @@ class StatisticsManager
         $allUsersCount = User::whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_PEASANT);
             })
-            ->whereHas('affiliateTracking', function ($query) {
-                $query->where('affiliate', UserAffiliateTracking::AFFILIATE_GOOGLE);
+            ->whereHas('affiliateTracking', function ($query) use ($affiliate) {
+                $query->where('affiliate', $affiliate);
             })
             ->count();
 
@@ -227,56 +227,56 @@ class StatisticsManager
             Carbon::now()->subYears(10),
             $endOfToday,
             null,
-            UserAffiliateTracking::AFFILIATE_GOOGLE
+            $affiliate
         );
 
         $revenueFromUsersUntilFourMonthsAgo = $this->revenueBetween(
             Carbon::now()->subYears(10),
             $endOfToday,
             $fourMonthsAgo,
-            UserAffiliateTracking::AFFILIATE_GOOGLE
+            $affiliate
         );
 
         $revenueFromUsersUntilThreeMonthsAgo = $this->revenueBetween(
             Carbon::now()->subYears(10),
             $endOfToday,
             $threeMonthsAgo,
-            UserAffiliateTracking::AFFILIATE_GOOGLE
+            $affiliate
         );
 
         $revenueFromUsersUntilTwoMonthsAgo = $this->revenueBetween(
             Carbon::now()->subYears(10),
             $endOfToday,
             $twoMonthsAgo,
-            UserAffiliateTracking::AFFILIATE_GOOGLE
+            $affiliate
         );
 
         $revenueFromUsersUntilOneMonthAndAHalfAgo = $this->revenueBetween(
             Carbon::now()->subYears(10),
             $endOfToday,
             $oneAndAHalfMonthAgo,
-            UserAffiliateTracking::AFFILIATE_GOOGLE
+            $affiliate
         );
 
         $revenueFromUsersUntilOneMonthAgo = $this->revenueBetween(
             Carbon::now()->subYears(10),
             $endOfToday,
             $oneMonthAgo,
-            UserAffiliateTracking::AFFILIATE_GOOGLE
+            $affiliate
         );
 
         $revenueFromUsersUntilTwentyDaysAgo = $this->revenueBetween(
             Carbon::now()->subYears(10),
             $endOfToday,
             $twentyDaysAgo,
-            UserAffiliateTracking::AFFILIATE_GOOGLE
+            $affiliate
         );
 
         $revenueFromUsersUntilTenDaysAgo = $this->revenueBetween(
             Carbon::now()->subYears(10),
             $endOfToday,
             $tenDaysAgo,
-            UserAffiliateTracking::AFFILIATE_GOOGLE
+            $affiliate
         );
 
         $alvPerUserRegisteredAllTime = $this->calculateAverageRevenuePerUser($allTimeRevenue, $allUsersCount);
@@ -289,11 +289,11 @@ class StatisticsManager
         $alvPerPayingUserRegisteredUntilTwentyDaysAgo = $this->calculateAverageRevenuePerUser($revenueFromUsersUntilTwentyDaysAgo, $payingUsersUntilTwentyDaysAgoCount);
         $alvPerPayingUserRegisteredUntilTenDaysAgo = $this->calculateAverageRevenuePerUser($revenueFromUsersUntilTenDaysAgo, $payingUsersUntilTenDaysAgoCount);
 
-        $peasantsWithCreditpack = $this->peasantsWithCreditpack(UserAffiliateTracking::AFFILIATE_GOOGLE);
+        $peasantsWithCreditpack = $this->peasantsWithCreditpack($affiliate);
 
         return [
-            'no_credits' => $this->peasantsWithNoCreditpackCount(UserAffiliateTracking::AFFILIATE_GOOGLE),
-            'never_bought' => $this->peasantsThatNeverHadCreditpackCount(UserAffiliateTracking::AFFILIATE_GOOGLE),
+            'no_credits' => $this->peasantsWithNoCreditpackCount($affiliate),
+            'never_bought' => $this->peasantsThatNeverHadCreditpackCount($affiliate),
             'small' => $this->filterPeasantsWithCreditpackIdCount(
                 $peasantsWithCreditpack,
                 Creditpack::SMALL

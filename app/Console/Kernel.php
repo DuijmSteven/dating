@@ -13,6 +13,7 @@ use App\Console\Commands\SetProfileViews;
 use App\Console\Commands\UpdateCurrentEnvDbAndAws;
 use App\Console\Commands\ValidateEligibleXpartnersLeads;
 use App\Console\Commands\VerifyPendingEmails;
+use App\Helpers\SiteHelper;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -53,10 +54,12 @@ class Kernel extends ConsoleKernel
         $schedule->command(SetProfileViews::class)->everyMinute();
 
         if (config('app.env') === 'production') {
-            $schedule->command(SendProfileCompletionEmails::class)->dailyAt("19:00");
+            if (config('app.site_id') === SiteHelper::ALTIJDSEX_NL) {
+                $schedule->command(SendProfileCompletionEmails::class)->dailyAt("19:00");
+            }
+
             $schedule->command(ExportDb::class)->dailyAt("05:30");
             $schedule->command(CheckRecentStartedPayments::class)->everyMinute();
-
             $schedule->command(VerifyPendingEmails::class)->everyMinute();
 
 //            $schedule->command(CheckXpartnersLeadsWIthPendingEligibilityStatus::class)->hourlyAt(10);

@@ -156,73 +156,129 @@ class StatisticsController extends Controller
         $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
         $googleAdsLaunchDate = Carbon::createFromFormat('d-m-Y H:i:s', '11-06-2020 00:00:00');
 
-        $xpartnersAdExpensesAllTime = $this->statisticsManager->affiliateExpensesBetween(
-            Expense::PAYEE_XPARTNERS,
-            Expense::TYPE_ADS,
-            $launchDate,
-            $endOfToday
-        );
-
-        $xpartnersOtherExpensesAllTime = $this->statisticsManager->affiliateExpensesBetween(
-            Expense::PAYEE_XPARTNERS,
-            Expense::TYPE_OTHER,
-            $launchDate,
-            $endOfToday
-        );
-
-        $xpartnersRevenueAllTime = $this->statisticsManager->affiliateRevenueBetween(
-            UserAffiliateTracking::AFFILIATE_XPARTNERS,
-            $launchDate,
-            $endOfToday
-        );
-
-        $xpartnersConversionsAllTimeCount = $this->statisticsManager->affiliateConversionsBetweenCount(
-            UserAffiliateTracking::AFFILIATE_XPARTNERS,
-            $launchDate,
-            $endOfToday
-        );
-
-        $xpartnersLeadsAllTimeCount = User::whereHas('affiliateTracking', function ($query) {
-            $query->where('affiliate', UserAffiliateTracking::AFFILIATE_XPARTNERS);
-        })->whereHas('roles', function ($query) {
-            $query->where('id', User::TYPE_PEASANT);
-        })
-        ->where('created_at', '>=', $launchDate)
-        ->count();
-
         $viewData = [
-            'botMessageStatistics' => [
-                'messagesSentToday' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
-                    User::TYPE_BOT,
+//            'botMessageStatistics' => [
+//                'messagesSentToday' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
+//                    User::TYPE_BOT,
+//                    $startOfToday,
+//                    $endOfToday
+//                ),
+//                'messagesSentYesterday' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
+//                    User::TYPE_BOT,
+//                    $startOfYesterday,
+//                    $endOfYesterday
+//                ),
+//                'messagesSentCurrentWeek' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
+//                    User::TYPE_BOT,
+//                    $startOfWeek,
+//                    $endOfWeek
+//                ),
+//                'messagesSentCurrentMonth' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
+//                    User::TYPE_BOT,
+//                    $startOfMonth,
+//                    $endOfMonth
+//                ),
+//                'messagesSentPreviousMonth' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
+//                    User::TYPE_BOT,
+//                    $startOfPreviousMonthUtc,
+//                    $endOfPreviousMonthUtc
+//                ),
+//                'messagesSentCurrentYear' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
+//                    User::TYPE_BOT,
+//                    $startOfYear,
+//                    $endOfToday
+//                )
+//            ],
+            'peasantPublicChatMessageStatistics' => [
+                'messagesSentToday' => $this->statisticsManager->publicChatMessagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
                     $startOfToday,
                     $endOfToday
                 ),
-                'messagesSentYesterday' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
-                    User::TYPE_BOT,
+                'messagesSentYesterday' => $this->statisticsManager->publicChatMessagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
                     $startOfYesterday,
                     $endOfYesterday
                 ),
-                'messagesSentCurrentWeek' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
-                    User::TYPE_BOT,
+                'messagesSentCurrentWeek' => $this->statisticsManager->publicChatMessagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
                     $startOfWeek,
                     $endOfWeek
                 ),
-                'messagesSentCurrentMonth' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
-                    User::TYPE_BOT,
+                'messagesSentCurrentMonth' => $this->statisticsManager->publicChatMessagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
                     $startOfMonth,
                     $endOfMonth
                 ),
-                'messagesSentPreviousMonth' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
-                    User::TYPE_BOT,
+                'messagesSentPreviousMonth' => $this->statisticsManager->publicChatMessagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
                     $startOfPreviousMonthUtc,
                     $endOfPreviousMonthUtc
                 ),
-                'messagesSentCurrentYear' => $this->statisticsManager->messagesSentByUserTypeCountBetween(
-                    User::TYPE_BOT,
+                'messagesSentCurrentYear' => $this->statisticsManager->publicChatMessagesSentByUserTypeCountBetween(
+                    User::TYPE_PEASANT,
                     $startOfYear,
                     $endOfToday
                 )
             ],
+            'topMessagerStatistics' => [
+                'this_month' => $this->statisticsManager->topMessagersBetweenDates($startOfMonth, $endOfMonth, 25)
+            ],
+            'userTypeStatistics' => $this->statisticsManager->getUserTypeStatistics(),
+            'excludingXpartnersUserTypeStatistics' => $this->statisticsManager->getexcludingXpartnersLvuStatistics(),
+        ];
+
+        return view('admin.statistics.general', array_merge(
+            $viewData,
+            [
+                'title' => 'Statistics - ' . ucfirst(\config('app.name')),
+                'headingLarge' => 'Statistics',
+                'headingSmall' => '',
+                'salesTax' => self::SALES_TAX,
+                'averagePeasantMessagesPerHourChart' => $this->chartsManager->createAveragePeasantMessagesPerHourInPeriodChart(
+                    Carbon::now('Europe/Amsterdam')->subDays(10)->setTimezone('UTC'),
+                    Carbon::now('Europe/Amsterdam')->setTimezone('UTC')
+                ),
+                'peasantMessagesMonthlyChart' => $this->chartsManager->createPeasantMessagesMonthlyChart(),
+                'paymentsChart' => $this->chartsManager->createPaymentsChart(
+                    $googleAdsLaunchDate
+                ),
+                'paymentsMonthlyChart' => $this->chartsManager->createPaymentsMonthlyChart(),
+                'revenueMonthlyChart' => $this->chartsManager->createRevenueMonthlyChart(),
+                'revenueWithoutSalesTaxChart' => $this->chartsManager->createRevenueWithoutSalesTaxChart(),
+                'revenueWithoutSalesTaxMonthlyChart' => $this->chartsManager->createRevenueWithoutSalesTaxMonthlyChart(),
+            ]
+        ));
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Exception
+     */
+    public function userAcquisition()
+    {
+        $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');
+        $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
+        $startOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->startOfDay()->setTimezone('UTC');
+        $endOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->endOfDay()->setTimezone('UTC');
+
+        $startOfWeek = Carbon::now('Europe/Amsterdam')->startOfWeek()->setTimezone('UTC');
+        $endOfWeek = Carbon::now('Europe/Amsterdam')->endOfWeek()->setTimezone('UTC');
+        $startOfMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->setTimezone('UTC');
+        $endOfMonth = Carbon::now('Europe/Amsterdam')->endOfMonth()->setTimezone('UTC');
+
+        $startOfPreviousMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->subMonth();
+        $endOfPreviousMonth = $startOfPreviousMonth->copy()->endOfMonth();
+
+        $startOfPreviousMonthUtc = $startOfPreviousMonth->setTimezone('UTC');
+        $endOfPreviousMonthUtc = $endOfPreviousMonth->setTimezone('UTC');
+
+        $startOfYear = Carbon::now('Europe/Amsterdam')->startOfYear()->setTimezone('UTC');
+
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+        $googleAdsLaunchDate = Carbon::createFromFormat('d-m-Y H:i:s', '11-06-2020 00:00:00');
+
+        $viewData = [
             'registrationStatistics' => [
                 'registrationsToday' => $this->statisticsManager->registrationsCountBetween(
                     $startOfToday,
@@ -275,129 +331,15 @@ class StatisticsController extends Controller
                     $endOfToday
                 )
             ],
-            'xpartnersRevenueStatistics' => [
-                'revenueToday' => $this->statisticsManager->affiliateRevenueBetween(
-                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
-                    $startOfToday,
-                    $endOfToday
-                ),
-                'revenueYesterday' => $this->statisticsManager->affiliateRevenueBetween(
-                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
-                    $startOfYesterday,
-                    $endOfYesterday
-                ),
-                'revenueCurrentWeek' => $this->statisticsManager->affiliateRevenueBetween(
-                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
-                    $startOfWeek,
-                    $endOfWeek
-                ),
-                'revenueCurrentMonth' => $this->statisticsManager->affiliateRevenueBetween(
-                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
-                    $startOfMonth,
-                    $endOfMonth
-                ),
-                'revenuePreviousMonth' => $this->statisticsManager->affiliateRevenueBetween(
-                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
-                    $startOfPreviousMonthUtc,
-                    $endOfPreviousMonthUtc
-                ),
-                'revenueCurrentYear' => $this->statisticsManager->affiliateRevenueBetween(
-                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
-                    $startOfYear,
-                    $endOfToday
-                ),
-                'allTimeAdExpenses' => $xpartnersAdExpensesAllTime,
-                'allTimeOtherExpenses' => $xpartnersOtherExpensesAllTime,
-                'allTimeNetRevenue' => $xpartnersRevenueAllTime - $xpartnersAdExpensesAllTime - $xpartnersOtherExpensesAllTime
-            ],
-            'xpartnersConversionStatistics' => [
-                'conversionsToday' => $this->statisticsManager->affiliateConversionsBetweenCount(
-                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
-                    $startOfToday,
-                    $endOfToday
-                ),
-                'conversionsYesterday' => $this->statisticsManager->affiliateConversionsBetweenCount(
-                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
-                    $startOfYesterday,
-                    $endOfYesterday
-                ),
-                'conversionsCurrentWeek' => $this->statisticsManager->affiliateConversionsBetweenCount(
-                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
-                    $startOfWeek,
-                    $endOfWeek
-                ),
-                'conversionsCurrentMonth' => $this->statisticsManager->affiliateConversionsBetweenCount(
-                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
-                    $startOfMonth,
-                    $endOfMonth
-                ),
-                'conversionsPreviousMonth' => $this->statisticsManager->affiliateConversionsBetweenCount(
-                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
-                    $startOfPreviousMonthUtc,
-                    $endOfPreviousMonthUtc
-                ),
-                'conversionsCurrentYear' => $this->statisticsManager->affiliateConversionsBetweenCount(
-                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
-                    $startOfYear,
-                    $endOfToday
-                ),
-                'allTimeConversionRate' => $xpartnersConversionsAllTimeCount / $xpartnersLeadsAllTimeCount * 100
-            ],
-            'peasantPublicChatMessageStatistics' => [
-                'messagesSentToday' => $this->statisticsManager->publicChatMessagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfToday,
-                    $endOfToday
-                ),
-                'messagesSentYesterday' => $this->statisticsManager->publicChatMessagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfYesterday,
-                    $endOfYesterday
-                ),
-                'messagesSentCurrentWeek' => $this->statisticsManager->publicChatMessagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfWeek,
-                    $endOfWeek
-                ),
-                'messagesSentCurrentMonth' => $this->statisticsManager->publicChatMessagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfMonth,
-                    $endOfMonth
-                ),
-                'messagesSentPreviousMonth' => $this->statisticsManager->publicChatMessagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfPreviousMonthUtc,
-                    $endOfPreviousMonthUtc
-                ),
-                'messagesSentCurrentYear' => $this->statisticsManager->publicChatMessagesSentByUserTypeCountBetween(
-                    User::TYPE_PEASANT,
-                    $startOfYear,
-                    $endOfToday
-                )
-            ],
-            'topMessagerStatistics' => [
-                'this_month' => $this->statisticsManager->topMessagersBetweenDates($startOfMonth, $endOfMonth, 25)
-            ],
-            'topOperatorMessagerStatistics' => [
-                'today' => $this->statisticsManager->topOperatorMessagersBetweenDates($startOfToday, $endOfToday, 50),
-                'this_week' => $this->statisticsManager->topOperatorMessagersBetweenDates($startOfWeek, $endOfWeek, 50),
-                'this_month' => $this->statisticsManager->topOperatorMessagersBetweenDates($startOfMonth, $endOfMonth, 25),
-            ],
-            'userTypeStatistics' => $this->statisticsManager->getUserTypeStatistics(),
-            'excludingXpartnersUserTypeStatistics' => $this->statisticsManager->getexcludingXpartnersLvuStatistics(),
         ];
 
-        return view('admin.statistics.general', array_merge(
+        return view('admin.statistics.user-acquisition', array_merge(
             $viewData,
             [
                 'title' => 'Statistics - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Statistics',
-                'headingSmall' => '',
+                'headingSmall' => 'User acquisition',
                 'salesTax' => self::SALES_TAX,
-                'averagePeasantMessagesPerHourChart' => $this->chartsManager->createAveragePeasantMessagesPerHourInPeriodChart(
-                    Carbon::now('Europe/Amsterdam')->subDays(10)->setTimezone('UTC'),
-                    Carbon::now('Europe/Amsterdam')->setTimezone('UTC')
-                ),
                 'registrationsChart' => $this->chartsManager->createRegistrationsChart(
                     $googleAdsLaunchDate
                 ),
@@ -407,18 +349,40 @@ class StatisticsController extends Controller
                 'registrationsMonthlyChart' => $this->chartsManager->createRegistrationsMonthlyChart(),
                 'deactivationsMonthlyChart' => $this->chartsManager->createDeactivationsMonthlyChart(),
                 'netPeasantsAcquiredMonthlyChart' => $this->chartsManager->createNetPeasantsAcquiredMonthlyChart(),
-                'peasantMessagesMonthlyChart' => $this->chartsManager->createPeasantMessagesMonthlyChart(),
-                'paymentsChart' => $this->chartsManager->createPaymentsChart(
-                    $googleAdsLaunchDate
-                ),
-                'paymentsMonthlyChart' => $this->chartsManager->createPaymentsMonthlyChart(),
-                'revenueMonthlyChart' => $this->chartsManager->createRevenueMonthlyChart(),
-                'revenueWithoutSalesTaxChart' => $this->chartsManager->createRevenueWithoutSalesTaxChart(),
-                'revenueWithoutSalesTaxMonthlyChart' => $this->chartsManager->createRevenueWithoutSalesTaxMonthlyChart(),
-                'xpartnersRevenueChart' => $this->chartsManager->createAffiliateRevenueChart(
-                    UserAffiliateTracking::AFFILIATE_XPARTNERS
-                ),
-                'rpuChart' => $this->chartsManager->createRpuChart(),
+            ]
+        ));
+    }
+
+    public function operators()
+    {
+        $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');
+        $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
+
+        $startOfWeek = Carbon::now('Europe/Amsterdam')->startOfWeek()->setTimezone('UTC');
+        $endOfWeek = Carbon::now('Europe/Amsterdam')->endOfWeek()->setTimezone('UTC');
+        $startOfMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->setTimezone('UTC');
+        $endOfMonth = Carbon::now('Europe/Amsterdam')->endOfMonth()->setTimezone('UTC');
+
+        $startOfPreviousMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->subMonth();
+        $endOfPreviousMonth = $startOfPreviousMonth->copy()->endOfMonth();
+
+        $viewData = [
+            'topMessagerStatistics' => [
+                'this_month' => $this->statisticsManager->topMessagersBetweenDates($startOfMonth, $endOfMonth, 25)
+            ],
+            'topOperatorMessagerStatistics' => [
+                'today' => $this->statisticsManager->topOperatorMessagersBetweenDates($startOfToday, $endOfToday, 50),
+                'this_week' => $this->statisticsManager->topOperatorMessagersBetweenDates($startOfWeek, $endOfWeek, 50),
+                'this_month' => $this->statisticsManager->topOperatorMessagersBetweenDates($startOfMonth, $endOfMonth, 25),
+            ],
+        ];
+
+        return view('admin.statistics.operators', array_merge(
+            $viewData,
+            [
+                'title' => 'Statistics - ' . ucfirst(\config('app.name')),
+                'headingLarge' => 'Statistics',
+                'headingSmall' => 'Operators',
             ]
         ));
     }
@@ -551,45 +515,6 @@ class StatisticsController extends Controller
                 'allTimeConversionRate' => $googleAdsConversionsAllTimeCount / $googleAdsLeadsAllTimeCount * 100,
                 'allTimeCostPerConversion' => $googleAdsExpensesAllTime / $googleAdsConversionsAllTime
             ],
-            'googleAdsBelgiumConversionStatistics' => [
-                'conversionsToday' => $this->statisticsManager->affiliateConversionsBetweenCount(
-                    UserAffiliateTracking::AFFILIATE_GOOGLE,
-                    $startOfToday,
-                    $endOfToday,
-                    UserAffiliateTracking::PUBLISHER_GOOGLE_BE
-                ),
-                'conversionsYesterday' => $this->statisticsManager->affiliateConversionsBetweenCount(
-                    UserAffiliateTracking::AFFILIATE_GOOGLE,
-                    $startOfYesterday,
-                    $endOfYesterday,
-                    UserAffiliateTracking::PUBLISHER_GOOGLE_BE
-                ),
-                'conversionsCurrentWeek' => $this->statisticsManager->affiliateConversionsBetweenCount(
-                    UserAffiliateTracking::AFFILIATE_GOOGLE,
-                    $startOfWeek,
-                    $endOfWeek,
-                    UserAffiliateTracking::PUBLISHER_GOOGLE_BE
-                ),
-                'conversionsCurrentMonth' => $this->statisticsManager->affiliateConversionsBetweenCount(
-                    UserAffiliateTracking::AFFILIATE_GOOGLE,
-                    $startOfMonth,
-                    $endOfMonth,
-                    UserAffiliateTracking::PUBLISHER_GOOGLE_BE
-                ),
-                'conversionsPreviousMonth' => $this->statisticsManager->affiliateConversionsBetweenCount(
-                    UserAffiliateTracking::AFFILIATE_GOOGLE,
-                    $startOfPreviousMonthUtc,
-                    $endOfPreviousMonthUtc,
-                    UserAffiliateTracking::PUBLISHER_GOOGLE_BE
-                ),
-                'conversionsCurrentYear' => $this->statisticsManager->affiliateConversionsBetweenCount(
-                    UserAffiliateTracking::AFFILIATE_GOOGLE,
-                    $startOfYear,
-                    $endOfToday,
-                    UserAffiliateTracking::PUBLISHER_GOOGLE_BE
-                ),
-                'conversionsAllTime' => $googleAdsConversionsAllTime,
-            ],
             'googleAdsRevenueStatistics' => [
                 'revenueToday' => $this->statisticsManager->affiliateRevenueBetween(
                     UserAffiliateTracking::AFFILIATE_GOOGLE,
@@ -634,57 +559,7 @@ class StatisticsController extends Controller
                 'allTimeAdExpenses' => $googleAdsExpensesAllTime,
                 'allTimeNetRevenue' => $googleAdsRevenueAllTime - $googleAdsExpensesAllTime,
             ],
-            'googleAdsBelgiumRevenueStatistics' => [
-                'revenueToday' => $this->statisticsManager->affiliateRevenueBetween(
-                    UserAffiliateTracking::AFFILIATE_GOOGLE,
-                    $startOfToday,
-                    $endOfToday,
-                    UserAffiliateTracking::PUBLISHER_GOOGLE_BE
-                ),
-                'revenueYesterday' => $this->statisticsManager->affiliateRevenueBetween(
-                    UserAffiliateTracking::AFFILIATE_GOOGLE,
-                    $startOfYesterday,
-                    $endOfYesterday,
-                    UserAffiliateTracking::PUBLISHER_GOOGLE_BE
-                ),
-                'revenueCurrentWeek' => $this->statisticsManager->affiliateRevenueBetween(
-                    UserAffiliateTracking::AFFILIATE_GOOGLE,
-                    $startOfWeek,
-                    $endOfWeek,
-                    UserAffiliateTracking::PUBLISHER_GOOGLE_BE
-                ),
-                'revenueCurrentMonth' => $this->statisticsManager->affiliateRevenueBetween(
-                    UserAffiliateTracking::AFFILIATE_GOOGLE,
-                    $startOfMonth,
-                    $endOfMonth,
-                    UserAffiliateTracking::PUBLISHER_GOOGLE_BE
-                ),
-                'revenuePreviousMonth' => $this->statisticsManager->affiliateRevenueBetween(
-                    UserAffiliateTracking::AFFILIATE_GOOGLE,
-                    $startOfPreviousMonthUtc,
-                    $endOfPreviousMonthUtc,
-                    UserAffiliateTracking::PUBLISHER_GOOGLE_BE
-                ),
-                'revenueCurrentYear' => $this->statisticsManager->affiliateRevenueBetween(
-                    UserAffiliateTracking::AFFILIATE_GOOGLE,
-                    $startOfYear,
-                    $endOfToday,
-                    UserAffiliateTracking::PUBLISHER_GOOGLE_BE
-                ),
-                'averageRevenueLastSevenDays' => $this->statisticsManager->affiliateRevenueBetween(
-                        UserAffiliateTracking::AFFILIATE_GOOGLE,
-                        $startOfSevenDaysAgo,
-                        $endOfYesterday,
-                        UserAffiliateTracking::PUBLISHER_GOOGLE_BE
-                    ) / 7,
-                'averageRevenueLastThirtyDays' => $this->statisticsManager->affiliateRevenueBetween(
-                        UserAffiliateTracking::AFFILIATE_GOOGLE,
-                        $startOfThirtyDaysAgo,
-                        $endOfYesterday,
-                        UserAffiliateTracking::PUBLISHER_GOOGLE_BE
-                    ) / 30
-            ],
-            'googleAdsUserTypeStatistics' => $this->statisticsManager->getGoogleAdsLvuStatistics(),
+            'googleAdsUserTypeStatistics' => $this->statisticsManager->getAffiliateLvuStatistics(UserAffiliateTracking::AFFILIATE_GOOGLE),
         ];
 
         return view('admin.statistics.google-ads', array_merge(
@@ -702,6 +577,201 @@ class StatisticsController extends Controller
                 'googleLeadsChart' => $this->chartsManager->createGoogleLeadsChart(),
                 'googleAdsRevenueChart' => $this->chartsManager->createAffiliateRevenueChart(
                     UserAffiliateTracking::AFFILIATE_GOOGLE
+                ),
+            ]
+        ));
+    }
+
+    public function xpartners()
+    {
+        $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');
+        $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
+        $startOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->startOfDay()->setTimezone('UTC');
+        $endOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->endOfDay()->setTimezone('UTC');
+
+        $startOfSevenDaysAgo = Carbon::now('Europe/Amsterdam')->subDays(7)->startOfDay()->setTimezone('UTC');
+        $startOfThirtyDaysAgo = Carbon::now('Europe/Amsterdam')->subDays(30)->startOfDay()->setTimezone('UTC');
+
+        $startOfWeek = Carbon::now('Europe/Amsterdam')->startOfWeek()->setTimezone('UTC');
+        $endOfWeek = Carbon::now('Europe/Amsterdam')->endOfWeek()->setTimezone('UTC');
+        $startOfMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->setTimezone('UTC');
+        $endOfMonth = Carbon::now('Europe/Amsterdam')->endOfMonth()->setTimezone('UTC');
+
+        $startOfPreviousMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->subMonth();
+        $endOfPreviousMonth = $startOfPreviousMonth->copy()->endOfMonth();
+
+        $startOfPreviousMonthUtc = $startOfPreviousMonth->setTimezone('UTC');
+        $endOfPreviousMonthUtc = $endOfPreviousMonth->setTimezone('UTC');
+
+        $startOfYear = Carbon::now('Europe/Amsterdam')->startOfYear()->setTimezone('UTC');
+
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+
+        $xpartnersLaunchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-05-2020 00:00:00');
+
+        $xpartnersExpensesAllTime = $this->statisticsManager->affiliateExpensesBetween(
+            Expense::PAYEE_XPARTNERS,
+            Expense::TYPE_ADS,
+            $launchDate,
+            $endOfToday
+        );
+
+        $xpartnersRevenueAllTime = $this->statisticsManager->affiliateRevenueBetween(
+            UserAffiliateTracking::AFFILIATE_XPARTNERS,
+            $launchDate,
+            $endOfToday
+        );
+
+        $xpartnersConversionsAllTimeCount = $this->statisticsManager->affiliateConversionsBetweenCount(
+            UserAffiliateTracking::AFFILIATE_XPARTNERS,
+            $launchDate,
+            $endOfToday
+        );
+
+        $xpartnersLeadsAllTimeCount = User::whereHas('affiliateTracking', function ($query) {
+            $query->where('affiliate', UserAffiliateTracking::AFFILIATE_XPARTNERS);
+        })->whereHas('roles', function ($query) {
+            $query->where('id', User::TYPE_PEASANT);
+        })
+            ->where('created_at', '>=', $launchDate)
+            ->count();
+
+        $xpartnersConversionsAllTime = $this->statisticsManager->affiliateConversionsBetweenCount(
+            UserAffiliateTracking::AFFILIATE_XPARTNERS,
+            $xpartnersLaunchDate,
+            $endOfToday
+        );
+
+        $viewData = [
+            'peasantMessageStatistics' => [
+                'messagesSentToday' => $this->statisticsManager->paidMessagesSentCount(
+                    $startOfToday,
+                    $endOfToday,
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS
+                ),
+                'messagesSentYesterday' => $this->statisticsManager->paidMessagesSentCount(
+                    $startOfYesterday,
+                    $endOfYesterday,
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS
+                ),
+                'messagesSentCurrentWeek' => $this->statisticsManager->paidMessagesSentCount(
+                    $startOfWeek,
+                    $endOfWeek,
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS
+                ),
+                'messagesSentCurrentMonth' => $this->statisticsManager->paidMessagesSentCount(
+                    $startOfMonth,
+                    $endOfMonth,
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS
+                ),
+                'messagesSentPreviousMonth' => $this->statisticsManager->paidMessagesSentCount(
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc,
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS
+                ),
+                'messagesSentCurrentYear' => $this->statisticsManager->paidMessagesSentCount(
+                    $startOfYear,
+                    $endOfToday,
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS
+                )
+            ],
+            'xpartnersConversionStatistics' => [
+                'conversionsToday' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
+                    $startOfToday,
+                    $endOfToday
+                ),
+                'conversionsYesterday' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
+                    $startOfYesterday,
+                    $endOfYesterday
+                ),
+                'conversionsCurrentWeek' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
+                    $startOfWeek,
+                    $endOfWeek
+                ),
+                'conversionsCurrentMonth' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
+                    $startOfMonth,
+                    $endOfMonth
+                ),
+                'conversionsPreviousMonth' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc
+                ),
+                'conversionsCurrentYear' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
+                    $startOfYear,
+                    $endOfToday
+                ),
+                'conversionsAllTime' => $xpartnersConversionsAllTime,
+                'allTimeConversionRate' => $xpartnersConversionsAllTimeCount / $xpartnersLeadsAllTimeCount * 100,
+                'allTimeCostPerConversion' => $xpartnersExpensesAllTime / $xpartnersConversionsAllTime
+            ],
+            'xpartnersRevenueStatistics' => [
+                'revenueToday' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
+                    $startOfToday,
+                    $endOfToday
+                ),
+                'revenueYesterday' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
+                    $startOfYesterday,
+                    $endOfYesterday
+                ),
+                'revenueCurrentWeek' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
+                    $startOfWeek,
+                    $endOfWeek
+                ),
+                'revenueCurrentMonth' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
+                    $startOfMonth,
+                    $endOfMonth
+                ),
+                'revenuePreviousMonth' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
+                    $startOfPreviousMonthUtc,
+                    $endOfPreviousMonthUtc
+                ),
+                'revenueCurrentYear' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS,
+                    $startOfYear,
+                    $endOfToday
+                ),
+                'averageRevenueLastSevenDays' => $this->statisticsManager->affiliateRevenueBetween(
+                        UserAffiliateTracking::AFFILIATE_XPARTNERS,
+                        $startOfSevenDaysAgo,
+                        $endOfYesterday
+                    ) / 7,
+                'averageRevenueLastThirtyDays' => $this->statisticsManager->affiliateRevenueBetween(
+                        UserAffiliateTracking::AFFILIATE_XPARTNERS,
+                        $startOfThirtyDaysAgo,
+                        $endOfYesterday
+                    ) / 30,
+                'allTimeAdExpenses' => $xpartnersExpensesAllTime,
+                'allTimeNetRevenue' => $xpartnersRevenueAllTime - $xpartnersExpensesAllTime,
+            ],
+            'xpartnersUserTypeStatistics' => $this->statisticsManager->getAffiliateLvuStatistics(UserAffiliateTracking::AFFILIATE_XPARTNERS),
+        ];
+
+        return view('admin.statistics.xpartners', array_merge(
+            $viewData,
+            [
+                'title' => 'Statistics - ' . ucfirst(\config('app.name')),
+                'headingLarge' => 'Statistics',
+                'headingSmall' => 'Xpartners',
+                'salesTax' => self::SALES_TAX,
+                'xpartnersPeasantMessagesChart' => $this->chartsManager->createPeasantMessagesChart(
+                    null,
+                    $xpartnersLaunchDate,
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS
+                ),
+                'xpartnersConversionsChart' => $this->chartsManager->createXpartnersConversionsChart(),
+                'xpartnersRevenueChart' => $this->chartsManager->createAffiliateRevenueChart(
+                    UserAffiliateTracking::AFFILIATE_XPARTNERS
                 ),
             ]
         ));
