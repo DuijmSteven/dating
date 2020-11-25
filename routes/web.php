@@ -210,9 +210,6 @@ Route::group([
         ->name('payments.check');
 });
 
-Route::post('payments/report', 'Frontend\PaymentController@reportPayment')
-    ->name('payments.report');
-
 Route::get('privacy', 'Frontend\MiscController@showPrivacy')
     ->name('privacy.show');
 

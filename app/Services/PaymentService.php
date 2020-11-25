@@ -171,7 +171,8 @@ class PaymentService implements PaymentProvider
         User $peasant,
         string $paymentMethod,
         int $transactionId,
-        Creditpack $creditpack
+        Creditpack $creditpack,
+        bool $isConversion
     ) {
         switch ($paymentMethod) {
             case 'ideal':
@@ -232,7 +233,10 @@ class PaymentService implements PaymentProvider
 
         Payment::where('user_id', $peasant->getId())
                ->where('transaction_id', $transactionId)
-               ->update(['status' => $statusUpdate]);
+               ->update([
+                   'status' => $statusUpdate,
+                   'is_conversion' => $isConversion
+               ]);
 
         return $check = [
             'status' => $status,

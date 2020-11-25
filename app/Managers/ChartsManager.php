@@ -744,7 +744,7 @@ class ChartsManager
      * @return ConversionsChart()|null
      * @throws \Exception
      */
-    public function createXpartnersConversionsChart()
+    public function createAffiliateConversionsChart(string $affiliate = UserAffiliateTracking::AFFILIATE_GOOGLE)
     {
         $query = \DB::table('users as u')
             ->select(\DB::raw('DATE(CONVERT_TZ(p.created_at, \'UTC\', \'Europe/Amsterdam\')) as creationDate, COUNT(DISTINCT(u.id)) as conversionsOnDate'))
@@ -752,7 +752,7 @@ class ChartsManager
             ->leftJoin('user_affiliate_tracking as uat', 'uat.user_id', 'u.id')
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('p.status', Payment::STATUS_COMPLETED)
-            ->where('uat.affiliate', 'xpartners')
+            ->where('uat.affiliate', $affiliate)
             ->where('p.created_at', '>=', '2020-05-23 00:00:00')
             ->groupBy('creationDate')
             ->orderBy('creationDate', 'ASC');
@@ -798,11 +798,11 @@ class ChartsManager
         $conversionsChart->labels($labels);
 
         $conversionsChart
-            ->dataset('X-Parterns conversions on date', 'line', $counts)
+            ->dataset(ucfirst($affiliate) . ' conversions on date', 'line', $counts)
             ->backGroundColor('#6d6913');
 
         $conversionsChart
-            ->title('X-Parterns conversions per day');
+            ->title(ucfirst($affiliate) . ' conversions per day');
 
         return $conversionsChart;
     }

@@ -578,25 +578,16 @@ class StatisticsManager
 
     public function affiliateConversionsBetweenQueryBuilder(string $affiliate, $startDate, $endDate, $publisher = null)
     {
-        $query = User::whereDoesntHave('payments', function ($query) use ($startDate) {
-            $query->where(
-                'created_at',
-                '<',
-                $startDate
-            )
-                ->where('status', Payment::STATUS_COMPLETED);
-        })
-        ->whereHas('payments', function ($query) use ($startDate, $endDate) {
-            $query->whereBetween('created_at',
-                [
-                    $startDate,
-                    $endDate
-                ])
-                ->where('status', Payment::STATUS_COMPLETED);
-        });
+        $query = Payment
+            ::where('is_conversion', true)
+            ->whereBetween('created_at',
+            [
+                $startDate,
+                $endDate
+            ]);
 
         if ($affiliate !== 'any') {
-            $query->whereHas('affiliateTracking', function ($query) use ($affiliate, $publisher) {
+            $query->whereHas('peasant.affiliateTracking', function ($query) use ($affiliate, $publisher) {
                 $query->where('affiliate', $affiliate);
 
                 if ($publisher) {
@@ -605,8 +596,7 @@ class StatisticsManager
             });
         }
 
-        $query->distinct('id')
-            ->orderBy('id', 'desc');
+        $query->orderBy('created_at', 'desc');
 
         return $query;
     }
@@ -614,7 +604,7 @@ class StatisticsManager
     public function affiliateConversionsBetweenCount(string $affiliate, $startDate, $endDate, $publisher = null)
     {
         return $this->affiliateConversionsBetweenQueryBuilder($affiliate, $startDate, $endDate, $publisher)
-            ->count('id');
+            ->count();
     }
 
     public function registrationsCountBetween($startDate, $endDate)

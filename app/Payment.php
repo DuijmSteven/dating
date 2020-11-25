@@ -18,6 +18,8 @@ class Payment extends TimeZonedModel
         'description',
         'amount',
         'status',
+        'user_id',
+        'is_conversion',
         'transaction_id'
     ];
 
@@ -52,6 +54,22 @@ class Payment extends TimeZonedModel
         $this->tracked = $tracked;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getIsConversion(): bool
+    {
+        return $this->is_conversion;
+    }
+
+    /**
+     * @param bool $isConversion
+     */
+    public function setIsConversion(bool $isConversion)
+    {
+        $this->is_conversion = $isConversion;
+    }
+
     public function getDescription()
     {
         return $this->description;
@@ -80,6 +98,16 @@ class Payment extends TimeZonedModel
     public function setStatus(string $status)
     {
         $this->status = $status;
+    }
+
+    public function getUserId()
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(string $userId)
+    {
+        $this->user_id = $userId;
     }
 
     public function getTransactionId()

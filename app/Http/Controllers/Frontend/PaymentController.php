@@ -124,6 +124,13 @@ class PaymentController extends FrontendController
 
         $transactionTotal = number_format($price / 100, 2, '.', '');
 
+        $previousCompletedPayments = Payment
+            ::where('user_id', $this->authenticatedUser->getId())
+            ->where('status', Payment::STATUS_COMPLETED)
+            ->count();
+
+        $isConversion = $previousCompletedPayments === 0 ? true : false;
+
         //get payment status from db
         $paymentStatus = Payment::where('user_id', $this->authenticatedUser->getId())
             ->where('transaction_id', $transactionId)
@@ -141,7 +148,8 @@ class PaymentController extends FrontendController
                 $this->authenticatedUser,
                 $paymentMethod,
                 $transactionId,
-                $creditPack
+                $creditPack,
+                $isConversion
             );
 
             if($check['status']) {
@@ -164,41 +172,6 @@ class PaymentController extends FrontendController
             'sku' => $creditPack->name . $creditPack->credits,
             'name' => $creditPack->name
         ]);
-    }
-
-    public function reportPayment(Request $request)
-    {
-        \Log::debug($request);
-
-        $transactionId = $request->get('trxid');
-
-        \Log::debug($transactionId);
-
-        //get payment status from db
-        $paymentStatus = Payment::where('transaction_id', $transactionId)
-            ->firstOrFail()
-            ->getStatus();
-
-        //if payment status is started check the status from the provider
-        if($paymentStatus == Payment::STATUS_STARTED) {
-            $payment = Payment::where('transaction_id', $transactionId)->firstOrFail();
-            $peasant = $payment->peasant;
-            $paymentMethod = $payment->method;
-            $creditPackId = $payment->creditpack_id;
-            $creditPack = Creditpack::find($creditPackId);
-            $transactionTotal = number_format((float) $creditPack->price/100, 2, '.', '');
-
-            $check = $this->paymentProvider->paymentCheck(
-                $peasant,
-                $paymentMethod,
-                $transactionId,
-                $creditPack
-            );
-
-            if($check['status']) {
-                $this->successfulPayment($peasant, $creditPack, $transactionId, $transactionTotal);
-            }
-        }
     }
 
     /**

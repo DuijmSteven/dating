@@ -73,5 +73,11 @@ interface PaymentProvider
      * @param  int  $transactionId
      * @return mixed
      */
-    public function paymentCheck(User $peasant, string $paymentMethod, int $transactionId, Creditpack $creditpack);
+    public function paymentCheck(
+        User $peasant,
+        string $paymentMethod,
+        int $transactionId,
+        Creditpack $creditpack,
+        bool $isConversion
+    );
 }
