@@ -578,7 +578,7 @@ class StatisticsController extends Controller
                 'googleAdsRevenueChart' => $this->chartsManager->createAffiliateRevenueChart(
                     UserAffiliateTracking::AFFILIATE_GOOGLE
                 ),
-//                'googleAdsConversionsChart' => $this->chartsManager->createAffiliateConversionsChart(UserAffiliateTracking::AFFILIATE_GOOGLE),
+                'googleAdsConversionsChart' => $this->chartsManager->createAffiliateConversionsChart(UserAffiliateTracking::AFFILIATE_GOOGLE),
             ]
         ));
     }
@@ -773,7 +773,7 @@ class StatisticsController extends Controller
                 'xpartnersRevenueChart' => $this->chartsManager->createAffiliateRevenueChart(
                     UserAffiliateTracking::AFFILIATE_XPARTNERS
                 ),
-//                'xpartnersConversionsChart' => $this->chartsManager->createAffiliateConversionsChart(UserAffiliateTracking::AFFILIATE_XPARTNERS),
+                'xpartnersConversionsChart' => $this->chartsManager->createAffiliateConversionsChart(UserAffiliateTracking::AFFILIATE_XPARTNERS),
             ]
         ));
     }

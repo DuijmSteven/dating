@@ -744,16 +744,20 @@ class ChartsManager
      * @return ConversionsChart()|null
      * @throws \Exception
      */
-    public function createAffiliateConversionsChart(string $affiliate = UserAffiliateTracking::AFFILIATE_GOOGLE)
+    public function createAffiliateConversionsChart(string $affiliate = null)
     {
-        $query = \DB::table('users as u')
-            ->select(\DB::raw('DATE(CONVERT_TZ(p.created_at, \'UTC\', \'Europe/Amsterdam\')) as creationDate, COUNT(DISTINCT(u.id)) as conversionsOnDate'))
-            ->leftJoin('payments as p', 'u.id', 'p.user_id')
-            ->leftJoin('user_affiliate_tracking as uat', 'uat.user_id', 'u.id')
-            ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
-            ->where('p.status', Payment::STATUS_COMPLETED)
-            ->where('uat.affiliate', $affiliate)
+        $query = \DB::table('payments as p')
+            ->select(\DB::raw('DATE(CONVERT_TZ(p.created_at, \'UTC\', \'Europe/Amsterdam\')) as creationDate, COUNT(p.id) as conversionsOnDate'));
+
+        if ($affiliate) {
+            $query->leftJoin('user_affiliate_tracking as uat', 'uat.user_id', 'p.user_id')
+                ->leftJoin('users as u', 'p.user_id', 'u.id')
+                ->where('uat.affiliate', $affiliate);
+        }
+
+        $query->where('p.status', Payment::STATUS_COMPLETED)
             ->where('p.created_at', '>=', '2020-05-23 00:00:00')
+            ->where('p.is_conversion', true)
             ->groupBy('creationDate')
             ->orderBy('creationDate', 'ASC');
 
