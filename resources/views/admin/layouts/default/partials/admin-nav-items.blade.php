@@ -34,7 +34,7 @@
         </li>
         <li class="{!! \Request::route()->getName() == 'admin.statistics.xpartners' ? 'active' : '' !!}">
             <a href="{!! route('admin.statistics.xpartners') !!}">
-                <i class="fa fa-google"></i>
+                <i class="fa fa-user-secret"></i>
                 Xpartners
             </a>
         </li>
@@ -46,13 +46,13 @@
         </li>
         <li class="{!! \Request::route()->getName() == 'admin.statistics.operators' ? 'active' : '' !!}">
             <a href="{!! route('admin.statistics.operators') !!}">
-                <i class="fa fa-google"></i>
+                <i class="fa fa-users"></i>
                 Operators
             </a>
         </li>
         <li class="{!! \Request::route()->getName() == 'admin.statistics.user-acquisition' ? 'active' : '' !!}">
             <a href="{!! route('admin.statistics.user-acquisition') !!}">
-                <i class="fa fa-google"></i>
+                <i class="fa fa-user-plus"></i>
                 User acquisition
             </a>
         </li>
