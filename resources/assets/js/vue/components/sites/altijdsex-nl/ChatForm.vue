@@ -76,6 +76,7 @@
             'conversation',
             'sendingMessage',
             'chatTranslations',
+            'credits'
         ],
 
         data() {
@@ -87,7 +88,6 @@
                 textBeingSent: '',
                 fileBeingSent: null,
                 imagePreviewUrlBackup: null,
-                userCredits: undefined,
                 disableTextarea: false,
                 showEmoticonPicker: false,
                 emojiData: emojiData,
@@ -111,12 +111,6 @@
                 this.fileBeingSent = null;
                 this.imagePreviewUrlBackup = null;
             });
-
-            this.$root.$on('userCreditsUpdated', (data) => {
-                this.userCredits = data.credits;
-            });
-
-            this.getUserCredits();
         },
 
         computed: {
@@ -160,22 +154,12 @@
 
                 this.$nextTick(() => textarea.focus());
             },
-            getUserCredits: function () {
-                axios.get(
-                    '/api/users/' + parseInt(DP.authenticatedUser.id) + '/credits',
-                    requestConfig
-                ).then(
-                    response => {
-                        this.userCredits = response.data;
-                    }
-                );
-            },
             chatFocused() {
                 this.removeNotificationClass();
                 this.$parent.setConversationActivityForUserFalse();
             },
             textareaKeyDown(event) {
-                if (this.userCredits === 0) {
+                if (this.credits === 0) {
                     this.file = null;
                     this.imagePreviewUrl = null;
 

@@ -147,6 +147,7 @@
                     :conversation="conversation"
                     :sendingMessage="sendingMessage"
                     :chatTranslations="this.$parent.chatTranslations"
+                    :credits="userCredits"
                 ></chat-form>
             </div>
         </div>

@@ -4,7 +4,7 @@
             v-if="template === 'text'"
             class="userCreditsNumber"
         >
-            <span class="userCreditsText">Credit{{ userCredits !== 1 ? 's' : '' }}: {{ credits }}</span>
+            {{ credits }}
         </span>
 
         <span

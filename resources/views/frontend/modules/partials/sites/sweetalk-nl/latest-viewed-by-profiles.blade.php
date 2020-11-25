@@ -41,12 +41,23 @@
                         @endif
                     </a>
 
-                    <div class="ModuleProfiles__sendMessage"
-                         v-on:click="addChat({!! $authenticatedUser->getId() !!}, {!! $user->getId() !!}, '1', true)"
-                    >
-                        <i class="material-icons material-icon ModuleProfiles__sendMessage__icon">forward_to_inbox</i>
-                        <span class="ModuleProfiles__sendMessage__text">Bericht</span>
-                    </div >
+                    <div class="ModuleProfiles__buttons">
+                        <div class="ModuleProfiles__button sendMessage"
+                             v-on:click="addChat({!! $authenticatedUser->getId() !!}, {!! $user->getId() !!}, '1', true)"
+                        >
+                            <i class="material-icons material-icon ModuleProfiles__button__icon">forward_to_inbox</i>
+                        </div >
+
+                        <a
+                            class="ModuleProfiles__button seeProfile"
+                            href="{{ route('users.show', ['username' => $user->getUsername()])  }}"
+                        >
+                            <span class="material-icons ModuleProfiles__button__icon">
+                                account_circle
+                            </span>
+                        </a>
+                    </div>
+
                 </div>
 
                 {{--    <div class="ModuleProfiles__bodyWrapper">--}}

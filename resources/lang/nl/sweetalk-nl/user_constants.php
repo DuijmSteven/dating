@@ -67,7 +67,7 @@ return [
     'about_me' => 'Over mij',
     'dob' => 'Geboortedatum',
     'age' => 'Leeftijd',
-    'city' => 'Stad',
+    'city' => 'Woonplaats',
     'country' => 'Land',
     'password' => 'Wachtwoord',
     'email' => 'E-mail',
@@ -83,6 +83,6 @@ return [
         'smoking_habits' => 'Rookgedrag',
         'drinking_habits' => 'Drinkgewoontes',
     ],
-    'with_profile_image' => 'Alleen met profielfoto'
+    'with_profile_image' => 'Foto belankrijk'
 
 ];

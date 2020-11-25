@@ -61,10 +61,21 @@
 
 .fullWrapper {
   margin-top: $navbarHeight + px;
+
+  @media (max-width: $screen-xs-max) {
+    margin-top: $navbarHeightSmallScreens * 2 + px;
+  }
+}
+
+body.scrolled {
+  .fullWrapper {
+    @media (max-width: $screen-xs-max) {
+      margin-top: $navbarHeightSmallScreens + px;
+    }
+  }
 }
 
 .GeneralBackButton {
-  margin-top: -10px;
   display: flex;
   justify-content: center;
   align-items: center;

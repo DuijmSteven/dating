@@ -76,6 +76,7 @@
             'conversation',
             'sendingMessage',
             'chatTranslations',
+            'credits'
         ],
 
         data() {
@@ -87,7 +88,6 @@
                 textBeingSent: '',
                 fileBeingSent: null,
                 imagePreviewUrlBackup: null,
-                userCredits: undefined,
                 disableTextarea: false,
                 showEmoticonPicker: false,
                 emojiData: emojiData,
@@ -111,12 +111,6 @@
                 this.fileBeingSent = null;
                 this.imagePreviewUrlBackup = null;
             });
-
-            this.$root.$on('userCreditsUpdated', (data) => {
-                this.userCredits = data.credits;
-            });
-
-            this.getUserCredits();
         },
 
         computed: {

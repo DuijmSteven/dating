@@ -53,7 +53,7 @@
                 <div class="userCredits__smallScreens">
                     <a href="{{ route('credits.show') }}">
                         <credits-count
-                            v-if="userCredits"
+                            v-if="userCredits >= 0"
                             :credits="userCredits"
                         ></credits-count>
                     </a>
@@ -73,7 +73,7 @@
                         <div>
                             <a href="{{ route('credits.show') }}">
                                 <credits-count
-                                    v-if="userCredits"
+                                    v-if="userCredits >= 0"
                                     :credits="userCredits"
                                 ></credits-count>
                             </a>

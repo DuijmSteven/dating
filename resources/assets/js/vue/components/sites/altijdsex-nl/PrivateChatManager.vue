@@ -125,6 +125,8 @@ export default {
     },
 
     created() {
+
+        console.log(this.maximized);
     },
 
     methods: {
@@ -191,24 +193,6 @@ export default {
             }).catch(function (error) {
             });
         },
-
     },
-    mounted() {
-        // this.$root.$on('fetchUserConversations', () => {
-        //     this.$parent.fetchUserConversations(true);
-        // });
-
-        if (this.$mq === 'xs' || this.$mq === 'sm') {
-            $('#PrivateChatManager__body').slideToggle('fast');
-            this.maximized = !this.maximized;
-
-            if (['xs', 'sm'].includes(this.$mq) && this.maximized) {
-                $('body').css('overflow-y', 'hidden');
-            } else {
-                $('body').css('overflow-y', 'scroll');
-            }
-
-        }
-    }
 }
 </script>

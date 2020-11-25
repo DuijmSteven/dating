@@ -91,12 +91,17 @@
         flex-direction: column;
         justify-content: center;
         padding-top: 0px;
-        padding-bottom: 20px;
+
+        &__buttons {
+            display: flex;
+            flex-direction: row;
+        }
     }
 
     &__seeProfile {
         border: 0;
         display: flex;
+        flex: 1;
         justify-content: center;
         align-items: center;
 
@@ -123,11 +128,16 @@
             text-decoration: none;
             color: #fff;
         }
+
+        @media (max-width: $screen-xs-max) {
+            font-size: 1.6rem;
+        }
     }
 
     &__sendMessage {
         border: 0;
         display: flex;
+        flex: 1;
         justify-content: center;
         align-items: center;
 
@@ -143,6 +153,10 @@
             font-size: 2rem;
             font-weight: 500;
             color: $white;
+
+            @media (max-width: $screen-xs-max) {
+                font-size: 1.6rem;
+            }
         }
 
         &__icon {
@@ -190,6 +204,7 @@
         text-align: center;
         width: 100%;
         padding-top: 15px;
+        padding-bottom: 15px;
 
         &__primary {
             display: inline-block;

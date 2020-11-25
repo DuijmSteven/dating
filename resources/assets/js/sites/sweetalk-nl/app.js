@@ -82,6 +82,14 @@ $(window).on('load', function () {
         // $('#JS--SearchBarForm').disableAutoFill();
     }
 
+    $(window).scroll(() => {
+        if ($(window).scrollTop() > 40) {
+            $('body').addClass('scrolled');
+        } else {
+            $('body').removeClass('scrolled');
+        }
+    });
+
     if ($('#JS--EditProfileUserDetailsForm')) {
         $('#JS--EditProfileUserDetailsForm').disableAutoFill();
     }

@@ -193,22 +193,5 @@ export default {
         },
 
     },
-    mounted() {
-        // this.$root.$on('fetchUserConversations', () => {
-        //     this.fetchUserConversations(true);
-        // });
-
-        if (this.$mq === 'xs' || this.$mq === 'sm') {
-            $('#PrivateChatManager__body').slideToggle('fast');
-            this.maximized = !this.maximized;
-
-            if (['xs', 'sm'].includes(this.$mq) && this.maximized) {
-                $('body').css('overflow-y', 'hidden');
-            } else {
-                $('body').css('overflow-y', 'scroll');
-            }
-
-        }
-    }
 }
 </script>

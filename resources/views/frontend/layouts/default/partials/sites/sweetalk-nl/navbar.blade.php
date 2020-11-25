@@ -26,7 +26,7 @@
         </a>
 
         <div
-            class="Navbar__centralMenu__item JS--searchToggleButton {!! \Request::route()->getName() == 'users.edit-profile.get' ? 'active' : '' !!}"
+            class="Navbar__centralMenu__item JS--searchToggleButton"
             title="{{ trans(config('app.directory_name') . '/search.search') }}"
         >
             <span class="material-icons Navbar__centralMenu__item__icon">
@@ -49,9 +49,18 @@
             class="Navbar__centralMenu__item {!! \Request::route()->getName() == 'credits.show' ? 'active' : '' !!}"
             title="{{ trans(config('app.directory_name') . '/navbar.credits') }}"
         >
-            <span class="material-icons Navbar__centralMenu__item__icon">
-                payments
+            <span style="position: relative; display: flex">
+                <span class="material-icons Navbar__centralMenu__item__icon">
+                    payments
+                </span>
+                <credits-count
+                    v-if="userCredits >= 0"
+                    :credits="userCredits"
+                    :template="'text'"
+                >
+                </credits-count>
             </span>
+
         </a>
 
         <a

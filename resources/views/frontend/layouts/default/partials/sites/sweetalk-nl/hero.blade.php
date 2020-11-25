@@ -24,7 +24,7 @@
             <div
                 class="Hero__button chatManager"
                 v-on:click="toggleManager()"
-                title="Gespreken"
+                title="{{ trans(config('app.directory_name') . '/hero.conversations') }}"
             >
                 <span class="material-icons">
                     chat
@@ -43,7 +43,7 @@
             <a
                 href="{{ route('credits.show') }}"
                 class="Hero__button credits"
-                title="Koop Credits"
+                title="{{ trans(config('app.directory_name') . '/hero.credits') }}"
             >
                 <span class="material-icons">
                     payments
@@ -52,7 +52,7 @@
 
             <div class="Hero__button__text">
                 <credits-count
-                    v-if="userCredits"
+                    v-if="userCredits >= 0"
                     :credits="userCredits"
                     :template="'disk'"
                 >
@@ -64,7 +64,7 @@
             <a
                 href="{{ route('users.edit-profile.get', ['username' => $authenticatedUser->getUsername()]) }}"
                 class="Hero__button editProfile"
-                title="Profiel Bewerken"
+                title="{{ trans(config('app.directory_name') . '/hero.edit_profile') }}"
             >
                 <span class="material-icons">
                     build

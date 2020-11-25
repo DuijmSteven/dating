@@ -1,4 +1,4 @@
-<div class="SearchBar JS--SearchBar  {{ count($errors) ? 'with-errors' : '' }}">
+<div class="SearchBar JS--SearchBar hidden {{ count($errors) ? 'with-errors' : '' }}">
     <form method="POST" action="{{ route('users.search.form.get') }}" id="JS--SearchBarForm">
         @csrf
         <div class="form-group city shorterInMobile {{ $errors->has('city_name') ? ' has-error' : '' }}">

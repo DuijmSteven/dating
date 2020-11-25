@@ -19,7 +19,7 @@ if ($('#app').length > 0) {
             chatTranslations: undefined,
             gettingPartners: false,
             gettingOnlineIds: false,
-            managerMaximized: true,
+            managerMaximized: false,
             conversations: [],
             countConversationsWithNewMessages: 0,
             fetchingUserConversations: false,
@@ -28,6 +28,10 @@ if ($('#app').length > 0) {
 
         created() {
             if (!(isUndefined(DP.authenticatedUser) || DP.authenticatedUser == null)) {
+                // if (!['xs', 'sm'].includes(this.$mq)) {
+                //     this.managerMaximized = true;
+                // }
+
                 this.getConversationPartners();
                 this.getUserCredits();
                 this.getOnlineUserIds();
@@ -52,6 +56,10 @@ if ($('#app').length > 0) {
                         this.getOnlineUserIds();
                     }
                 }, 5000);
+
+                this.$root.$on('updateUserCredits', () => {
+                    this.getUserCredits();
+                });
             }
         },
 
@@ -189,9 +197,9 @@ if ($('#app').length > 0) {
                         if (!(this.$mq === 'xs' || this.$mq === 'sm')) {
                             this.managerMaximized = this.conversationManagerState.data === 1;
 
-                            if (this.managerMaximized) {
-                                $('.PrivateChatManager').addClass('maximized');
-                            }
+                            // if (this.managerMaximized) {
+                            //     $('.PrivateChatManager').addClass('maximized');
+                            // }
                         }
 
                         this.conversationManagerDataFullyLoaded = true;

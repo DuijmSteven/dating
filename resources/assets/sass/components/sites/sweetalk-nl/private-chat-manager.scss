@@ -261,7 +261,7 @@
 
     &.maximized {
         .PrivateChatManager__body {
-            display: block;
+            display: block !important;
         }
     }
 

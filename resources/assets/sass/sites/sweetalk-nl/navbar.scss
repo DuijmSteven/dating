@@ -13,6 +13,10 @@
     background: $navbarBgColor;
     border-bottom: 1px solid #545454;
 
+    @media (max-width: $screen-xs-max) {
+        height: $navbarHeightSmallScreens + px;
+    }
+
     &__brand {
         position: absolute;
         left: 16px;
@@ -38,6 +42,21 @@
         padding: 0;
         height: 100%;
         width: 585px;
+        z-index: 100;
+
+        @media (max-width: $screen-sm-max) {
+            width: 350px;
+        }
+
+        @media (max-width: $screen-xs-max) {
+            position: fixed;
+            top: $navbarHeightSmallScreens + px;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: $navbarHeightSmallScreens + px;
+            background: $navbarBgColor;
+        }
 
         &__item {
             position: relative;
@@ -54,6 +73,11 @@
             &:hover {
                 color: #fff;
                 text-decoration: none;
+
+                &:not(.active){
+                    background-color: #3c3b3b;
+                    border-radius: 14px;
+                }
             }
 
             &:focus,
@@ -70,7 +94,33 @@
             }
 
             &__icon {
+                position: relative;
                 font-size: 32px !important;
+
+                @media (max-width: $screen-sm-max) {
+                    font-size: 25px !important;
+                }
+            }
+
+            .userCreditsNumber {
+                position: absolute;
+                top: -7px;
+                right: -21px;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                width: 25px;
+                height: 25px;
+                background-color: #ff4343;
+                color: #fff;
+                font-weight: 400;
+                font-size: 1.5rem;
+
+                @media (max-width: $screen-sm-max) {
+                    font-size: 1.3rem;
+                }
             }
         }
     }
@@ -112,6 +162,14 @@
 
         &__downIcon {
             color: #fff;
+        }
+    }
+}
+
+body.scrolled {
+    @media (max-width: $screen-xs-max) {
+        .Navbar__centralMenu {
+            top: 0;
         }
     }
 }

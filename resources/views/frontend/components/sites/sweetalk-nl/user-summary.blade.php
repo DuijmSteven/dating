@@ -37,26 +37,6 @@
     </div>
     <div class="Tile__footer UserSummary__footer">
         <div class="UserSummary__footer__upperPart">
-            <div>
-                <div class="UserSummary__sendMessage"
-                     v-on:click="addChat({!! $authenticatedUser->getId() !!}, {!! $user->getId() !!}, '1', true)"
-                >
-                    <i class="material-icons material-icon UserSummary__sendMessage__icon">forward_to_inbox</i>
-                    <span class="UserSummary__sendMessage__text">
-                        {{ trans(config('app.directory_name') . '/user_profile.send_message') }}
-                    </span>
-                </div >
-
-                @if(!isset($showOtherImages))
-                    <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}" class="UserSummary__seeProfile">
-                        <span class="material-icons UserSummary__seeProfile__icon">
-                            account_circle
-                        </span>
-                        {{ trans(config('app.directory_name') . '/user_profile.see_profile') }}
-                    </a>
-                @endif
-            </div>
-
             <div class="UserSummary__userInfo">
                 <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}"
                    class="UserSummary__userInfo__primary">
@@ -83,7 +63,30 @@
                         "{!! $user->meta->getAboutMe() !!}"
                     </div>
                 @endif
+            </div>
 
+            <div class="UserSummary__footer__upperPart__buttons">
+                <div
+                    class="UserSummary__sendMessage"
+                    v-on:click="addChat({!! $authenticatedUser->getId() !!}, {!! $user->getId() !!}, '1', true)"
+                >
+                    <i class="material-icons material-icon UserSummary__sendMessage__icon">forward_to_inbox</i>
+                    <span class="UserSummary__sendMessage__text">
+                        {{ trans(config('app.directory_name') . '/user_profile.send_message') }}
+                    </span>
+                </div >
+
+                @if(!isset($showOtherImages))
+                    <a
+                       class="UserSummary__seeProfile"
+                       href="{{ route('users.show', ['username' => $user->getUsername()])  }}"
+                    >
+                        <span class="material-icons UserSummary__seeProfile__icon">
+                            account_circle
+                        </span>
+                        {{ trans(config('app.directory_name') . '/user_profile.see_profile') }}
+                    </a>
+                @endif
             </div>
         </div>
 

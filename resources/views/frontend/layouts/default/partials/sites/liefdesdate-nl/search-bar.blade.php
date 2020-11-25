@@ -146,7 +146,7 @@
         href="{{ route('credits.show') }}"
     >
         <credits-count
-            v-if="userCredits"
+            v-if="userCredits >= 0"
             :credits="userCredits"
         ></credits-count>
     </a>
