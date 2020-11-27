@@ -28,7 +28,7 @@
 @import "sites/liefdesdate-nl/footer";
 
 // Components
-@import "components/tile";
+@import "components/sites/liefdesdate-nl/tile";
 @import "components/button";
 @import "components/activity";
 @import "components/alert";
@@ -51,9 +51,9 @@
 // Views
 @import "views/articles";
 @import "views/faq";
-@import "views/edit-profile";
+@import "views/sites/liefdesdate-nl/edit-profile";
 @import "views/sites/liefdesdate-nl/credits";
-@import "views/contact";
+@import "views/sites/liefdesdate-nl/contact";
 @import "views/welcome-modal";
 
 @import "vue-apps/private-chat/main";

@@ -63,6 +63,10 @@
         @media (max-width: $screen-xs-max) {
             font-size: 11px;
         }
+
+        @media (min-width: 992px) and (max-width: 1210px) {
+            display: none;
+        }
     }
 
     &__panel {

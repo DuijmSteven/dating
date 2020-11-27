@@ -2,6 +2,8 @@
 
 return [
     'select_package' => 'Select a package',
+    'further' => 'Continue',
+    'i_choose' => 'I choose',
     'credits' => 'credits',
     'per_message' => 'per message',
     'select' => 'Select payment method',

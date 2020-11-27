@@ -54,7 +54,7 @@
                 <credits-count
                     v-if="userCredits >= 0"
                     :credits="userCredits"
-                    :template="'disk'"
+                    :template="'text'"
                 >
                 </credits-count>
             </div>
@@ -74,6 +74,7 @@
             <div class="Hero__button__text">
                 <span>
                     {{ $authenticatedUser->profileRatioFilled * 100 }}%
+                    ingevuld
                 </span>
             </div>
         </div>

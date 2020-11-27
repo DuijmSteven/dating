@@ -28,7 +28,6 @@ Table of Contents End
 
 @import "../../../variables";
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
-@import "../../../altijdsex-nl-variables";
 
 .credits-page-content {
     .paymentMethodsList {
@@ -44,15 +43,19 @@ Table of Contents End
     .stepHeading {
         display: flex;
         align-items: center;
+
+        border-bottom: 3px solid #bbb;
+        padding-bottom: 10px;
+        margin-bottom: 26px;
     }
 
     .step {
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 50%;
+        border-radius: 4px;
         margin-right: 9px;
-        background-color: #ce5a5a;
+        background-color: $mainColor;
         font-weight: 500;
         font-size: 38px;
         width: 45px;
@@ -99,7 +102,7 @@ Table of Contents End
 
     h4,
     .h4 {
-        font-size: 1.3em;
+        font-size: 2.2rem;
         line-height: 1.55em;
     }
 
@@ -111,7 +114,7 @@ Table of Contents End
 
     h6,
     .h6 {
-        font-size: 1.0em;
+        font-size: 2.6rem;
         text-transform: uppercase;
         font-weight: 700;
     }
@@ -248,7 +251,9 @@ Table of Contents End
 
 
     .btn[type='submit'] {
-        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .normalPrice {
@@ -304,6 +309,7 @@ Table of Contents End
 
     .block-pricing .table {
         padding: 15px !important;
+        padding-bottom: 43px !important;
         margin-bottom: 0px;
     }
 
@@ -396,14 +402,8 @@ Table of Contents End
     .block-pricing .block-caption {
         margin-top: 30px;
 
-        border: 1px solid #e2e2e2;
         padding: 2px 0;
         border-radius: 10px;
-        box-shadow: 0 0 5px rgba(0,0,0,0.2);
-    }
-
-    .block-pricing .table-rose .block-caption {
-        border: 1px solid #e08080;
     }
 
     .block [class*="table-"] h1 small,
@@ -447,7 +447,7 @@ Table of Contents End
         /*background: linear-gradient(60deg, #ec407a, #c2185b);*/
         background: linear-gradient(60deg, $secondaryColor, $secondaryColor);
         border-radius: $borderRadius + px;
-        box-shadow: 0 14px 26px -12px rgba(233, 30, 99, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(233, 30, 99, 0.2);
+        box-shadow: 0 10px 15px -9px rgba(0, 0, 0, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
     }
 
     .block [class*="table-"] .category,
@@ -465,12 +465,22 @@ Table of Contents End
         position: relative;
         padding: 12px 30px;
         margin: 10px 1px;
-        font-size: 12px;
-        font-weight: 400;
-        text-transform: uppercase;
+        font-size: 1.8rem;
+        font-weight: 500;
         letter-spacing: 0;
         will-change: box-shadow, transform;
         transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .creditsPacks {
+        .btn {
+            margin: 0;
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 0 0 5px 5px !important;
+        }
     }
 
     .btn.btn-round {

@@ -30,6 +30,32 @@
 
         &__logo {
             height: $logoHeight + px;
+
+            display: inline-block;
+
+            @media (max-width: $screen-md-max) {
+                height: ($logoHeight - 8) + px;
+            }
+
+            @media (max-width: $screen-sm-max) {
+                height: ($logoHeight - 12) + px;
+            }
+
+            @media (max-width: $screen-xs-max) {
+                height: ($logoHeight - 16) + px;
+            }
+
+            @media (max-width: 530px) {
+                height: ($logoHeight - 20) + px;
+            }
+
+            //&__mobile {
+            //    display: none;
+            //
+            //    @media (max-width: 530px) {
+            //        display: inline-block;
+            //    }
+            //}
         }
     }
 
@@ -69,6 +95,12 @@
             color: #fff;
             cursor: pointer;
             text-decoration: none;
+
+            &.loggedOut {
+                .Navbar__centralMenu__item__icon {
+                    margin-right: 10px;
+                }
+            }
 
             &:hover {
                 color: #fff;
@@ -149,6 +181,11 @@
             object-fit: cover;
 
             margin-right: 10px;
+
+            @media (max-width: $screen-xs-max) {
+                height: 34px;
+                width: 34px;
+            }
         }
 
         &__username {

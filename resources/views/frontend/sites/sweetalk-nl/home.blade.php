@@ -15,7 +15,7 @@
 
     @foreach($users as $user)
         @include('frontend.components.sites.' . config('app.directory_name') . '.user-summary',
-            ['user' => $user, 'showAboutMe' => true, 'firstTile' => $loop->index === 0]
+            ['user' => $user, 'showAboutMe' => false, 'firstTile' => $loop->index === 0]
         )
     @endforeach
 

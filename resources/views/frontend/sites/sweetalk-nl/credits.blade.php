@@ -4,7 +4,7 @@
     <div class="credits-page-content">
         <h4 class="stepHeading"><span class="step">1</span><span class="stepTitle">{{ trans(config('app.directory_name') . '/credits.select_package') }}</span></h4>
         <div class="pricing-3">
-            <div>
+            <div class="creditsPacks">
                 <div class="row">
                     @foreach($creditpacks as $creditpack)
                         @if($creditpack->id !== 4 || $authenticatedUser->isAdmin() || config('app.env') === 'staging')
@@ -28,6 +28,7 @@
                                                 @endif
                                             </li>
                                             <li>
+                                                {{ ucfirst(trans(config('app.directory_name') . '/credits.per_message')) }}:
                                                 <b>
                                                     &euro;
                                                     <span class="{{ !$authenticatedUser->getDiscountPercentage() ? '' : 'normalPrice' }}">{{ number_format($creditpack->price/$creditpack->credits / 100, 2, ',', '.') }}</span>
@@ -35,7 +36,7 @@
                                                     @if($authenticatedUser->getDiscountPercentage())
                                                         <span class="discountPrice">{{ number_format((1 - $authenticatedUser->getDiscountPercentage() / 100)*$creditpack->price/$creditpack->credits / 100, 2, ',', '.') }}</span>
                                                     @endif
-                                                </b> {{ trans(config('app.directory_name') . '/credits.per_message') }}
+                                                </b>
                                             </li>
                                         </ul>
 
@@ -43,7 +44,11 @@
                                             href="#"
                                             class="btn {{ $loop->iteration == 2 ? 'btn-white' : 'btn-rose' }} btn-round JS--prevent-default__click"
                                         >
-                                            {{ trans(config('app.directory_name') . '/credits.select_package') }}
+                                            @if($creditpack->id === \App\Creditpack::MEDIUM)
+                                                {{ trans(config('app.directory_name') . '/credits.i_choose') }} medium
+                                            @else
+                                                {{ trans(config('app.directory_name') . '/credits.further') }}
+                                            @endif
                                         </a>
 
                                         @if($creditpack->id === 2)

@@ -1,17 +1,17 @@
 <template>
     <div>
         <span
-            v-if="template === 'text'"
+            v-if="template === 'number'"
             class="userCreditsNumber"
         >
             {{ credits }}
         </span>
 
         <span
-            v-if="template === 'disk'"
+            v-if="template === 'text'"
             class="Hero__button__creditsCount"
         >
-            {{ credits }}
+            {{ credits }} Credits
         </span>
     </div>
 

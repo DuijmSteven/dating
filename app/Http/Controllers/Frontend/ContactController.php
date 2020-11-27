@@ -15,7 +15,7 @@ class ContactController extends FrontendController
     public function showContact()
     {
         return view(
-            'frontend.contact',
+            'frontend.sites.' . config('app.directory_name') . '.contact',
             [
                 'title' => $this->buildTitleWith(trans(config('app.directory_name') . '/view_titles.contact')),
                 'description' => trans(config('app.directory_name') . '/contact.description')

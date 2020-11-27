@@ -28,7 +28,7 @@
 @import "sites/altijdsex-nl/footer";
 
 // Components
-@import "components/tile";
+@import "components/sites/altijdsex-nl/tile";
 @import "components/button";
 @import "components/activity";
 @import "components/alert";
@@ -51,9 +51,9 @@
 // Views
 @import "views/articles";
 @import "views/faq";
-@import "views/edit-profile";
+@import "views/sites/altijdsex-nl/edit-profile";
 @import "views/sites/altijdsex-nl/credits";
-@import "views/contact";
+@import "views/sites/altijdsex-nl/contact";
 @import "views/welcome-modal";
 
 @import "vue-apps/private-chat/main";

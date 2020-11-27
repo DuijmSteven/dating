@@ -1,0 +1,93 @@
+//  Tile
+//
+// Markup: tile.hbs
+//
+// The main layout component which all the modules and other components are based upon
+//
+// Style guide: Components.Tile
+.Tile {
+    overflow: hidden;
+    position: relative;
+
+    margin-bottom: 20px;
+    border-radius: $borderRadius + px;
+
+    background-color: $tileBgColor;
+    box-shadow: $boxShadow;
+
+    text-align: justify;
+
+    @media (max-width: $screen-sm-max) {
+        &--withToggle {
+            .Tile__body:not(.Online-users__body):not(.LatestViewedBy__body) {
+                display: none;
+            }
+        }
+    }
+
+    &.firstTile {
+        border-radius: 0 0 $borderRadius + px $borderRadius + px;
+    }
+
+    &__toggle {
+        position: absolute;
+        right: 13px;
+        top: 16px;
+        color: #2b2b2a;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        @media (min-width: $screen-md-min) {
+            display: none;
+        }
+    }
+
+    &__heading {
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        padding: map_get($tileHeading, padding) + px;
+        font-size: map_get($tileHeading, fontSize) + px;
+        font-weight: 500;
+        color: map_get($tileHeading, fontColor);
+        text-align: map_get($tileHeading, textAlign);
+        white-space: nowrap;
+
+        > .material-icons {
+            margin-right: 5px;
+        }
+    }
+
+    &__body {
+        padding: 20px map_get($tileBody, padding) + px;
+
+        @media (max-width: $screen-sm-max) {
+            padding: 0 15px 20px 15px;
+        }
+
+        h4 {
+            margin-top: 30px;
+        }
+    }
+
+    &__articles {
+        padding: map_get($tileBodyArticles, padding) + px;
+    }
+
+    &__article {
+        .Tile__body {
+            padding: 30px;
+            text-align: justify;
+        }
+
+        .Tile__heading {
+            white-space: initial;
+        }
+    }
+
+    &__footer {
+        padding: map_get($tileHeading, padding) + px;
+    }
+}

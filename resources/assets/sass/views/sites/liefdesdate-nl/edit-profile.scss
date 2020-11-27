@@ -1,0 +1,101 @@
+.EditProfile {
+    .imagesWrapper.overflown {
+        max-height: 550px;
+        padding: 20px;
+        padding-bottom: 0;
+        overflow: scroll;
+        box-shadow: inset 0px 0px 28px rgba(0,0,0,0.3);
+    }
+
+    .imageResource {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .imageResourceWrapper {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .userImageFullItem.noImage {
+        height: initial;
+    }
+
+    @media screen and (max-width: $screen-xs-max) {
+        .userImageFullItem {
+            margin-bottom: 30px;
+        }
+    }
+
+    @media screen and (min-width: $screen-sm-min) {
+        .imageResourceWrapper {
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+
+        .userImageFullItem {
+            height: 500px;
+        }
+    }
+
+    .profileImageLabel {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 30px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background-color: rgba(0, 0, 0, 0.3);
+        font-weight: 400;
+        color: $white;
+        font-size: 1.7rem;
+    }
+
+    .material-icon-calendar {
+        font-size: 17px;
+    }
+
+    table .action-buttons .btn {
+        display: block;
+        margin-bottom: 5px;
+        width: 100%;
+    }
+
+    .checkbox.notificationSettingsItem {
+        line-height: 20px;
+
+        .helpText {
+            margin-left: 20px;
+            color: #777;
+            font-size: 15px;
+        }
+    }
+
+    label {
+        color: #734e4e;
+    }
+
+    table {
+        th {
+            //font-size: 14px;
+            color: #734e4e;
+        }
+
+        td.action-buttons {
+            padding-left: 0;
+            width: 200px;
+
+            .btn {
+                width: 200px;
+            }
+        }
+    }
+}
