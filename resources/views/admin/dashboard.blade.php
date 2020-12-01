@@ -441,13 +441,15 @@
         </div>
     @endif
 
-    <div class="row">
-        <div class="col-xs-12">
-            <div style="width: 100%">
-                {!! $conversionsChart->container() !!}
-                {!! $conversionsChart->script() !!}
+    @if($conversionsChart)
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="width: 100%">
+                    {!! $conversionsChart->container() !!}
+                    {!! $conversionsChart->script() !!}
+                </div>
             </div>
         </div>
-    </div>
+    @endif
 
 @endsection
