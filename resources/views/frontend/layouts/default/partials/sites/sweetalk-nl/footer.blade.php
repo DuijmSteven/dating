@@ -1,12 +1,18 @@
 <footer class="Footer">
     <div class="container">
         <div class="Footer__items">
-            <a class="Footer__item" href="{{ route('articles.overview') }}">{{ trans(config('app.directory_name') . '/footer.articles') }}</a>
-            <a class="Footer__item" href="{{ route('faq.show') }}">{{ trans(config('app.directory_name') . '/footer.faq') }}</a>
-            <a class="Footer__item" href="{{ route('contact.get') }}">{{ trans(config('app.directory_name') . '/footer.company_data') }}</a>
+            @if(isset($authenticatedUser))
+                <a class="Footer__item" href="{{ route('articles.overview') }}">{{ trans(config('app.directory_name') . '/footer.articles') }}</a>
+                <a class="Footer__item" href="{{ route('faq.show') }}">{{ trans(config('app.directory_name') . '/footer.faq') }}</a>
+                <a class="Footer__item" href="{{ route('contact.get') }}">{{ trans(config('app.directory_name') . '/footer.company_data') }}</a>
+            @endif
+
             <a class="Footer__item" href="{{ route('contact.get') }}">{{ trans(config('app.directory_name') . '/footer.contact') }}</a>
             <a class="Footer__item" href="{{ route('tac.show') }}">{{ trans(config('app.directory_name') . '/footer.tac') }}</a>
-            <a class="Footer__item" href="{{ route('privacy.show') }}">{{ trans(config('app.directory_name') . '/footer.privacy') }}</a>
+
+            @if(isset($authenticatedUser))
+                <a class="Footer__item" href="{{ route('privacy.show') }}">{{ trans(config('app.directory_name') . '/footer.privacy') }}</a>
+            @endif
         </div>
 
 {{--        <div class="col-xs-12 col-sm-6 col-md-3">--}}

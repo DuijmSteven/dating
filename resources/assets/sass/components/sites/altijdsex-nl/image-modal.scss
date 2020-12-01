@@ -10,7 +10,7 @@
     font-size: 70px;
     box-shadow: 0 0 5px rgba(0,0,0,0.4);
     cursor: pointer;
-    background-color: #da8975;
+    background-color: $secondaryColor;
 
     @media screen and (max-width: $screen-xs-max) {
       font-size: 40px;

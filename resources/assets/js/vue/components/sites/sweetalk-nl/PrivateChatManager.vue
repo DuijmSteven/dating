@@ -15,7 +15,7 @@
                 <div
                     v-if="$parent.chatTranslations"
                     class="PrivateChatManager__head__title__text">
-                    {{ $parent.chatTranslations['conversations'] }} ({{ conversations.length }})
+                    {{ conversations.length }} {{ $parent.chatTranslations['conversations'] }}
 
                     <div
                         v-if="this.$parent.countConversationsWithNewMessages > 0"

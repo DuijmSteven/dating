@@ -2,6 +2,9 @@
 
 return [
     'information' => 'Information',
+    'profile' => 'Profile',
+    'unknown' => 'Unknown',
+    'online' => 'Online now',
     'about_me' => 'About me',
     'feedback' => [
         'profile_updated' => 'Your profile has been updated successfully.',
@@ -9,5 +12,6 @@ return [
     ],
     'back' => 'Back',
     'see_profile' => 'See profile',
-    'send_message' => 'Message',
+    'send_message' => 'Chat with :username',
+    'chat' => 'Chat',
 ];

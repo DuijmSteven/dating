@@ -64,7 +64,7 @@ return [
         2 => 'Sociaal',
         3 => 'Ik drink nooit'
     ],
-    'about_me' => 'Over mij',
+    'about_me' => 'Persoonlijk citaat',
     'dob' => 'Geboortedatum',
     'age' => 'Leeftijd',
     'city' => 'Woonplaats',

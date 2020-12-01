@@ -22,7 +22,7 @@
     <div class="Hero__buttonsOuterContainer">
         <div class="Hero__buttonContainer">
             <div
-                class="Hero__button chatManager"
+                class="Hero__button Hero__button--bordered chatManager"
                 v-on:click="toggleManager()"
                 title="{{ trans(config('app.directory_name') . '/hero.conversations') }}"
             >
@@ -42,7 +42,7 @@
         <div class="Hero__buttonContainer">
             <a
                 href="{{ route('credits.show') }}"
-                class="Hero__button credits"
+                class="Hero__button Hero__button--bordered credits"
                 title="{{ trans(config('app.directory_name') . '/hero.credits') }}"
             >
                 <span class="material-icons">
@@ -63,7 +63,7 @@
         <div class="Hero__buttonContainer">
             <a
                 href="{{ route('users.edit-profile.get', ['username' => $authenticatedUser->getUsername()]) }}"
-                class="Hero__button editProfile"
+                class="Hero__button Hero__button--bordered editProfile"
                 title="{{ trans(config('app.directory_name') . '/hero.edit_profile') }}"
             >
                 <span class="material-icons">

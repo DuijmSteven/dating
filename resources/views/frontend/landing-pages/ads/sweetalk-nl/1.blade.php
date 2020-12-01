@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="{{ mix('css/sweetalk-nl/adsLps.css') }}">
 
     @if(App::environment('production'))
     <!-- Google Tag Manager -->
@@ -40,6 +39,9 @@
 
     @include('frontend.landing-pages.common-google-captcha-part')
 
+    @include('frontend.layouts.default.partials.favicons')
+
+    <link rel="stylesheet" href="{{ mix('css/sweetalk-nl/adsLps.css') }}">
 </head>
 
 <body>
@@ -53,7 +55,7 @@
 @endif
 <div class="main">
     <div class="container-fluid d-sm-block d-md-none">
-        <div class="row mt-1 mb-1 text-center">
+        <div class="row text-center logoHeading">
             <div class="col my-auto">
                 <div class="logo">
                     <img src="{!! asset('img/site_logos/' . config('app.directory_name') . '/main_logo.png') !!}">
@@ -68,7 +70,7 @@
             <div class="col-md-12 my-auto text-center text-white warning-bg">
                 <h6>LET OP: Je kunt hier bekenden tegenkomen!</h6>
                 <span>Tijdelijk gratis inschrijving, verloopt over: </span>
-                <span class="time" style="color: #f44336; font-weight: bold">05:00</span>
+                <span class="time" style="color: #fff; font-weight: bold">05:00</span>
             </div>
         @endif
     </div>
@@ -145,13 +147,14 @@
                             <div class="col-xs-12 mx-auto">
                                 <span>{{ trans(config('app.directory_name') . '/lp1.forgot_password') }}</span>
                                 <a href="{{ route('password.reset.get') }}"
-                                   class="btn btn-secondary btn-sm">{{ trans(config('app.directory_name') . '/lp1.reset_password') }}</a>
+                                   class="btn btn-default btn-sm">{{ trans(config('app.directory_name') . '/lp1.reset_password') }}</a>
                             </div>
                         </div>
                     </form>
                 @else
-                    <form class="pt-0" id="JS--registrationForm" method="POST" action="{{ route('register.post') }}"
-                          autocomplete="off">
+                    <form class="pt-0 registrationForm" id="JS--registrationForm" method="POST" action="{{ route('register.post') }}"
+                          autocomplete="off"
+                    >
                         {{ csrf_field() }}
 
                         <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
@@ -180,7 +183,7 @@
                         <div class="text-center d-none d-md-block p-2 warning-bg">
                             <h5>LET OP: Je kunt hier bekenden tegenkomen!</h5>
                             <h6 class="mb-0">Tijdelijk gratis inschrijving, verloopt over:
-                                <span class="time" style="color: #f44336; font-weight: bold">05:00</span>
+                                <span class="time" style="color: #fff; font-weight: bold">05:00</span>
                             </h6>
                         </div>
 
@@ -256,9 +259,10 @@
                                 <button type="submit"
                                         class="JS--register-button btn btn-register btn-lg btn-block">{{ trans(config('app.directory_name') . '/lp1.form.register_now') }}</button>
                             </div>
-
+                        </div>
+                        <div class="formFooter">
                             <div class="col-xs-12">
-                                <p class="mt-3" style="font-size: 11px; text-align: justify">
+                                <p style="font-size: 11px; text-align: justify">
                                     {!! trans(config('app.directory_name') . '/lp1.form.register_info',
                                             [
                                                 'privacyRoute' => route('privacy.show'),
@@ -269,7 +273,7 @@
                                 </p>
                             </div>
                             <div class="col-xs-12 mx-auto">
-                                <span>Heb je al een account?</span>
+                                <span style="margin-right: 8px;">Heb je al een account?</span>
                                 <a href="{{ route('ads-lp.show', ['id' => $id, 'lpType' => 'login']) }}"
                                    class="btn btn-login btn-sm">Login</a>
                             </div>
@@ -305,15 +309,8 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-12 text-center" style="margin-bottom: 30px">
-                <a style="color: #337ab7"
-                   href="{{ route('tac.show') }}">{{ trans(config('app.directory_name') . '/footer.tac') }}</a> - <a
-                    style="color: #337ab7"
-                    href="{{ route('contact.get') }}">{{ trans(config('app.directory_name') . '/footer.contact') }}</a>
-            </div>
-        </div>
     </div>
+    @include('frontend.layouts.default.partials.sites.sweetalk-nl.footer')
 </div>
 </body>
 

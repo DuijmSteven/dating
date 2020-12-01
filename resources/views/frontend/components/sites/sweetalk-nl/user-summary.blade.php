@@ -31,50 +31,54 @@
             @endif
 
             @if(in_array($user->getId(), $onlineUserIds))
-                <div class="onlineCircle"></div>
+                <div class="onlineCircle blinking"></div>
             @endif
         </div>
     </div>
     <div class="Tile__footer UserSummary__footer">
         <div class="UserSummary__footer__upperPart">
-            <div class="UserSummary__userInfo">
-                <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}"
-                   class="UserSummary__userInfo__primary">
-                    {{ $user->username }}
+            @if(!isset($noInfo) || (isset($noInfo) && $noInfo === false))
+                <div class="UserSummary__userInfo">
+                    <a href="{{ route('users.show', ['username' => $user->getUsername()])  }}"
+                       class="UserSummary__userInfo__primary">
+                        {{ $user->username }}
 
-                    @if($user->meta->dob)
-                        {!! ' <span>-</span> ' !!}
-                    @endif
+                        @if($user->meta->dob)
+                            {!! ' <span>-</span> ' !!}
+                        @endif
 
-                    {!! $user->meta->dob ? $user->meta->dob->diffInYears($carbonNow) : '' !!}
+                        {!! $user->meta->dob ? $user->meta->dob->diffInYears($carbonNow) : '' !!}
 
-                    @if(in_array($user->getId(), $onlineUserIds))
-                        <div class="onlineCircle"></div>
-                    @endif
-                </a>
-                <div class="UserSummary__userInfo__additional">
-                    @if(isset($user->meta->city))
-                        {{ ucfirst($user->meta->city) }}
+                        @if(in_array($user->getId(), $onlineUserIds))
+                            <div class="onlineCircle"></div>
+                        @endif
+                    </a>
+                    <div class="UserSummary__userInfo__additional">
+                        @if(isset($user->meta->city))
+                            {{ ucfirst($user->meta->city) }}
+                        @endif
+                    </div>
+
+                    @if(isset($showAboutMe) && $showAboutMe && $user->meta->getAboutMe())
+                        <div class="UserSummary__aboutMe">
+                            "{!! $user->meta->getAboutMe() !!}"
+                        </div>
                     @endif
                 </div>
-
-                @if(isset($showAboutMe) && $showAboutMe && $user->meta->getAboutMe())
-                    <div class="UserSummary__aboutMe">
-                        "{!! $user->meta->getAboutMe() !!}"
-                    </div>
-                @endif
-            </div>
+            @endif
 
             <div class="UserSummary__footer__upperPart__buttons">
-                <div
-                    class="UserSummary__sendMessage"
-                    v-on:click="addChat({!! $authenticatedUser->getId() !!}, {!! $user->getId() !!}, '1', true)"
-                >
-                    <i class="material-icons material-icon UserSummary__sendMessage__icon">forward_to_inbox</i>
-                    <span class="UserSummary__sendMessage__text">
-                        {{ trans(config('app.directory_name') . '/user_profile.send_message') }}
-                    </span>
-                </div >
+                @if(!isset($noButton) || (isset($noButton) && $noButton === false))
+                    <div
+                        class="UserSummary__sendMessage"
+                        v-on:click="addChat({!! $authenticatedUser->getId() !!}, {!! $user->getId() !!}, '1', true)"
+                    >
+                        <i class="material-icons material-icon UserSummary__sendMessage__icon">chat_bubble</i>
+                        <span class="UserSummary__sendMessage__text">
+                            {{ trans(config('app.directory_name') . '/user_profile.send_message') }}
+                        </span>
+                    </div>
+                @endif
 
                 @if(!isset($showOtherImages))
                     <a

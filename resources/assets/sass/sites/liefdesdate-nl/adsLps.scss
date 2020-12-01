@@ -82,12 +82,24 @@ body {
     color: #fff;
     background-color: $secondaryColor;
     border-color: $secondaryColor;
+
+    &:hover {
+        text-decoration: none;
+        color: #fff;
+        background-color: darken($secondaryColor, 7%);
+    }
 }
 
 .btn-login {
     color: #fff;
     background-color: $tertiaryColor;
     border-color: $tertiaryColor;
+
+    &:hover {
+        text-decoration: none;
+        color: #fff;
+        background-color: darken($tertiaryColor, 7%);
+    }
 }
 
 .warning-bg {

@@ -29,8 +29,7 @@ class LandingPageController extends FrontendController
         $this->userLocationService = $userLocationService;
     }
 
-    public
-    function showRegister(Request $request)
+    public function showRegister(Request $request)
     {
         $this->setLocale($request);
         $users = $this->getUsers();
@@ -45,39 +44,66 @@ class LandingPageController extends FrontendController
             'canonical' => 'https://' . config('app.name') . '/'
         ];
 
-        $viewData = $this->registrationService->checkAffiliateRequestDataAndSetRegistrationViewData($request, $viewData);
 
-        return view(
-            'frontend.landing-pages.' . str_replace('.', '-', config('app.name')) . '.1',
-            $viewData
-        );
+        if (config('app.name') === 'altijdsex.nl') {
+            $viewData = $this->registrationService->checkAffiliateRequestDataAndSetRegistrationViewData($request, $viewData);
+
+            return view(
+                'frontend.landing-pages.' . str_replace('.', '-', config('app.name')) . '.1',
+                $viewData
+            );
+        } else {
+            return $this->showAdsLp($request, 1, 'register');
+        }
     }
 
-    public
-    function showLogin(Request $request)
+    public function showLogin(Request $request)
     {
         $this->setLocale($request);
         $users = $this->getUsers();
         $testimonials = $this->getTestimonials();
 
-        return view(
-            'frontend.landing-pages.' . str_replace('.', '-', config('app.name')) . '.1',
-            [
-                'title' => 'De beste datingsite voor sex dating | ' . ucfirst(\config('app.name')),
-                'users' => $users,
-                'carbonNow' => Carbon::now(),
-                'testimonials' => $testimonials,
-                'formType' => 'login',
-                'canonical' => 'https://' . config('app.name') . '/'
-            ]
-        );
+        if (config('app.name') === 'altijdsex.nl') {
+            return view(
+                'frontend.landing-pages.' . str_replace('.', '-', config('app.name')) . '.1',
+                [
+                    'title' => 'De beste datingsite voor sex dating | ' . ucfirst(\config('app.name')),
+                    'users' => $users,
+                    'carbonNow' => Carbon::now(),
+                    'testimonials' => $testimonials,
+                    'formType' => 'login',
+                    'canonical' => 'https://' . config('app.name') . '/'
+                ]
+            );
+        } else {
+            return $this->showAdsLp($request, 1, 'login');
+        }
+    }
+
+    public function showAdsLp(Request $request, $id, $lpType = 'register')
+    {
+        if(view()->exists('frontend.landing-pages.ads.' . config('app.directory_name') . '.' . $id)) {
+            if ($lpType === 'login') {
+                $viewData['lpType'] = 'login';
+            } else {
+                $viewData['lpType'] = 'register';
+            }
+
+            $viewData['id'] = $id;
+
+            return view(
+                'frontend.landing-pages.ads.' . str_replace('.', '-', config('app.name')) . '.' . $id,
+                $viewData
+            );
+        } else {
+            return abort(404);
+        }
     }
 
     /**
      * @return array
      */
-    private
-    function getTestimonials(): array
+    private function getTestimonials(): array
     {
         $testimonials = [
             [
@@ -123,8 +149,7 @@ class LandingPageController extends FrontendController
     /**
      * @return User[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Query\Builder[]|\Illuminate\Support\Collection
      */
-    private
-    function getUsers()
+    private function getUsers()
     {
 //        $countryCode = strtolower($this->userLocationService->getCountryCodeFromIp($this->userLocationService->getUserIp()));
 //
@@ -153,8 +178,7 @@ class LandingPageController extends FrontendController
     /**
      * @param Request $request
      */
-    private
-    function setLocale(Request $request): void
+    private function setLocale(Request $request): void
     {
         $locale = 'nl';
 

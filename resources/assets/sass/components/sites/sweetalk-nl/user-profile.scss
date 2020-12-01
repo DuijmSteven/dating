@@ -1,10 +1,45 @@
-// User Profile
-//
-// Markup: user-profile.hbs
-//
-// The user profile component displays all the information of a user
-//
-// Style guide: Components.User Profile
+.User-profile {
+    padding-bottom: 20px;
+
+    &__sendMessageButton {
+        border: 0;
+        display: flex;
+        flex: 1;
+        justify-content: center;
+        align-items: center;
+
+        height: 45px;
+        border-radius: 0;
+        width: 100%;
+        box-shadow: none;
+        background-color: lighten($secondaryColor, 5%);
+
+        cursor: pointer;
+
+        &__text {
+            font-size: 2rem;
+            font-weight: 500;
+            color: $white;
+
+            @media (max-width: $screen-xs-max) {
+                font-size: 1.6rem;
+            }
+        }
+
+        &__icon {
+            font-size: 26px;
+            color: $white;
+            margin-right: 5px;
+        }
+
+        &:hover {
+            background-color: $secondaryColor;
+            text-decoration: none;
+            color: #fff;
+        }
+    }
+}
+
 .User-profile__info {
     &__body {
         padding: 0;

@@ -23,7 +23,7 @@
         <span class="material-icons">
             info
         </span>
-        {{ trans(config('app.directory_name') . '/user_profile.information') }}
+        {{ trans(config('app.directory_name') . '/user_profile.profile') }}
     </div>
     <div class="Tile__body User-profile__info__body">
         <div class="User-profile__text">

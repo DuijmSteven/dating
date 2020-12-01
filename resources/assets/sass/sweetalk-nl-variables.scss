@@ -28,8 +28,8 @@ $pink: #ce5a5a;
 // brand colors
 $mainColor: #242526;
 $secondaryColor: #910432;
-$tertiaryColor: #48bfd7;
-$fourthColor: #e27e67;
+$tertiaryColor: #EB2157;
+$fourthColor: #70434F;
 $textColor: $black;
 
 // layout colors
@@ -274,10 +274,10 @@ $privateChatItem: (
 );
 
 $privateChatManager: (
-        'headBackGroundColor': darken($mainColor, 4%),
+        'headBackGroundColor': lighten($mainColor, 4%),
         'headColor': $white,
-        'headHeight': 50,
-        'headHeightMobileMaximized': 43
+        'headHeight': 39,
+        'headHeightMobileMaximized': 39
 );
 
 $pagination: (

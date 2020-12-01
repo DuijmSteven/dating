@@ -17,6 +17,7 @@
 
 @include('frontend.landing-pages.common-google-captcha-part')
 
+
 <script type="application/ld+json">
     {
       "@context": "https://schema.org",

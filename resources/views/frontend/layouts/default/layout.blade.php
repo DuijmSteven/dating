@@ -16,7 +16,12 @@
         (int) config('app.site_id') === \App\Helpers\SiteHelper::SWEETALK_NL &&
         Route::currentRouteNamed('home')
     )
-        @include('frontend.layouts.default.partials.sites.sweetalk-nl.hero')
+        @include('frontend.layouts.default.partials.sites.sweetalk-nl.homepage-hero')
+    @elseif(
+        (int) config('app.site_id') === \App\Helpers\SiteHelper::SWEETALK_NL &&
+        Route::currentRouteNamed('users.show')
+    )
+        @include('frontend.users.sites.sweetalk-nl.profile-hero')
     @endif
 
     <div class="container mainContainer">

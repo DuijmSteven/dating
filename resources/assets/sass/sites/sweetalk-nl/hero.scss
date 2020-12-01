@@ -8,9 +8,9 @@
     background: #3e3737;
 
     background-image: url("/img/mosaic2.jpg");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: 50% 50%;
+    background-size:     cover;
+    background-repeat:   no-repeat;
+    background-position: center center;
 
     @media (max-width: $screen-md-max) {
         height: 324px;
@@ -44,6 +44,7 @@
     }
 
     &__textContainer {
+        position: relative;
         font-size: 3rem;
         color: #fff;
         margin-bottom: 15px;
@@ -84,6 +85,37 @@
         }
     }
 
+    &--userProfile {
+        @media (max-width: $screen-xs-max) {
+
+            .Hero__buttonsOuterContainer {
+                font-size: 1.6rem;
+            }
+
+            .Hero__buttonContainer {
+                margin-right: 27px;
+
+                &:last-of-type {
+                    margin-right: 0;
+                }
+            }
+
+            .Hero__textContainer {
+                margin-bottom: 14px;
+            }
+
+            .Hero__button {
+                width: 24px;
+                height: 24px;
+            }
+
+            .Hero__profileImage {
+                height: 88px;
+                width: 88px;
+            }
+        }
+    }
+
     &__button {
         display: flex;
         position: relative;
@@ -92,9 +124,8 @@
         padding: 14px;
         width: 53px;
         height: 53px;
-        border: 2px solid #fff;
+        border: none;
         border-radius: 50%;
-        cursor: pointer;
         margin-bottom: 0;
         text-decoration: none;
 
@@ -106,33 +137,31 @@
             padding: 5px;
         }
 
+        &--bordered {
+            border: 2px solid #fff;
+            cursor: pointer;
+
+            &:hover {
+                background-color: $secondaryColor;
+            }
+        }
+
         .material-icons {
             color: #fff;
+
+            &.online {
+                color: #33e23c;
+                font-size: 17px;
+            }
         }
 
         &:hover {
-            background-color: $secondaryColor;
             text-decoration: none;
         }
 
         &:focus,
         &:active {
             text-decoration: none;
-        }
-
-        &__creditsCount {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            //border-radius: 50%;
-            //width: 30px;
-            //height: 30px;
-            //border: 2px solid #fff;
-            background: transparent;
-            color: #ff4343;
-            font-size: 1.4rem;
-            font-weight: 500;
         }
 
         &__text {
@@ -155,5 +184,128 @@
                 font-weight: 300;
             }
         }
+
+        &__creditsCount {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            //border-radius: 50%;
+            //width: 30px;
+            //height: 30px;
+            //border: 2px solid #fff;
+            background: transparent;
+            color: #ff4343;
+            font-size: 1.4rem;
+            font-weight: 500;
+        }
+    }
+
+    &__chatButton {
+        display: flex;
+        position: relative;
+        justify-content: center;
+        align-items: center;
+        //padding: 14px;
+        width: 53px;
+        height: 53px;
+        border: none;
+        border-radius: 50%;
+        margin-bottom: 0;
+        text-decoration: none;
+
+        &Container {
+            position: absolute;
+            right: -149px;
+            bottom: -34px;
+            font-size: 2rem;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            @media (max-width: $screen-md-max) {
+                right: -130px;
+                font-size: 2rem;
+            }
+
+
+            @media (max-width: $screen-sm-max) {
+                right: -100px;
+                font-size: 2rem;
+            }
+
+            @media (max-width: $screen-xs-max) {
+                right: -60px;
+                font-size: 1.4rem;
+                bottom: 52px;
+            }
+        }
+
+        @media (max-width: $screen-md-max) {
+            width: 53px;
+            height: 53px;
+        }
+
+        @media (max-width: $screen-sm-max) {
+            width: 53px;
+            height: 53px;
+        }
+
+        @media (max-width: $screen-xs-max) {
+            width: 50px;
+            height: 50px;
+        }
+
+        &--bordered {
+            border: 2px solid #fff;
+            cursor: pointer;
+            background-color: $secondaryColor;
+
+            &:hover {
+                background-color: darken($secondaryColor, 5%);
+            }
+        }
+
+        .material-icons {
+            color: #fff;
+
+            &.online {
+                color: #33e23c;
+                font-size: 17px;
+            }
+        }
+
+        &:hover {
+            text-decoration: none;
+        }
+
+        &:focus,
+        &:active {
+            text-decoration: none;
+        }
+
+        &__text {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            span {
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                //width: 30px;
+                //height: 30px;
+                //border: 2px solid #fff;
+                //border-radius: 50%;
+                background: transparent;
+                color: #ffffff;
+                font-size: 1.7rem;
+                font-weight: 300;
+            }
+        }
+
     }
 }
