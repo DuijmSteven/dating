@@ -75,7 +75,7 @@
                     >
                         <i class="material-icons material-icon UserSummary__sendMessage__icon">chat_bubble</i>
                         <span class="UserSummary__sendMessage__text">
-                            {{ trans(config('app.directory_name') . '/user_profile.send_message') }}
+                            {{ trans(config('app.directory_name') . '/user_profile.chat') }}
                         </span>
                     </div>
                 @endif

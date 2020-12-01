@@ -32,17 +32,13 @@
 
                     <a href="{!! route('users.show', ['username' => $user->getUsername()]) !!}" class="ModuleProfiles__item">
                         <img class="ModuleProfiles__profile-image" src="{!! $user->profileImageUrlThumb !!}" alt="">
-
-                        @if(in_array($user->getId(), $onlineUserIds))
-                            <div class="onlineCircle"></div>
-                        @endif
                     </a>
 
                     <div class="ModuleProfiles__buttons">
                         <div class="ModuleProfiles__button sendMessage"
                              v-on:click="addChat({!! $authenticatedUser->getId() !!}, {!! $user->getId() !!}, '1', true)"
                         >
-                            <i class="material-icons material-icon ModuleProfiles__button__icon">forward_to_inbox</i>
+                            <i class="material-icons material-icon ModuleProfiles__button__icon">chat_bubble</i>
                         </div >
 
                         <a

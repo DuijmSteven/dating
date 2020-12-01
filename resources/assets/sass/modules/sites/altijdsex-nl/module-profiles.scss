@@ -1,4 +1,21 @@
 .ModuleProfiles {
+    .Online-users__heading {
+        .onlineCircle {
+            position: static;
+            background-color: #33e23c;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        &Text {
+            max-width: 84%;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+    }
+
     &__bodyWrapper {
         position: relative;
         margin-bottom: map_get($onlineUsersItem, marginBottom) + px;
@@ -115,5 +132,58 @@
         &:active {
             text-decoration: none;
         }
+    }
+}
+
+.blinking {
+    -webkit-animation: 2s blink ease infinite;
+    -moz-animation: 2s blink ease infinite;
+    -o-animation: 2s blink ease infinite;
+    animation: 2s blink ease infinite;
+
+}
+
+@keyframes blink {
+    from, to {
+        opacity: 0;
+    }
+    80% {
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes blink {
+    from, to {
+        opacity: 0;
+    }
+    80% {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes blink {
+    from, to {
+        opacity: 0;
+    }
+    80% {
+        opacity: 1;
+    }
+}
+
+@-ms-keyframes blink {
+    from, to {
+        opacity: 0;
+    }
+    80% {
+        opacity: 1;
+    }
+}
+
+@-o-keyframes blink {
+    from, to {
+        opacity: 0;
+    }
+    80% {
+        opacity: 1;
     }
 }

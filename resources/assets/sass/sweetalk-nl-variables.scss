@@ -1,7 +1,7 @@
 // colors
 $slate: #4f5d75;
 $slateLight: #617493;
-$dark: #312c2c;
+$dark: #111;
 $tomato: #ef4f2b;
 $tomatoLight: #ee796d;
 $salmon: #f3a69e;
@@ -26,7 +26,7 @@ $yellowLight: #f9ce89;
 $pink: #ce5a5a;
 
 // brand colors
-$mainColor: #242526;
+$mainColor: $dark;
 $secondaryColor: #910432;
 $tertiaryColor: #EB2157;
 $fourthColor: #70434F;
@@ -250,9 +250,8 @@ $warningButton: (
 );
 
 $dangerButton: (
-        'background-color': #b15844,
-        'background-color__hover': lighten(#b15844, 6%),
-        'background-color__active': darken(#b15844, 6%)
+        'background-color': #f63709,
+        'background-color__hover': darken(#f63709, 6%),
 );
 
 // Search

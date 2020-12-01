@@ -74,6 +74,7 @@
             </div>
         @endif
     </div>
+
     <div
         class="bg-img {{ $lpType === 'login' ? 'login' : 'register' }} {{ (!config('app.show_images') && config('app.env') === 'local') ? 'imageDontShowLocal' : '' }}">
         <div class="container">
@@ -100,16 +101,22 @@
                                        value="{{ old('identity') }}"
                                        required autofocus
                                 >
-                                @if ($errors->has('identity') || $errors->has('username') || $errors->has('email'))
+                                @if($errors->has('identity'))
                                     <span class="help-block">
-                                            <strong>{{ $errors->first('identity') }}</strong>
-                                        </span>
+                                        <strong>{{ $errors->first('identity') }}</strong>
+                                    </span>
+                                @endif
+
+                                @if($errors->has('username'))
                                     <span class="help-block">
-                                            <strong>{{ $errors->first('username') }}</strong>
-                                        </span>
+                                        <strong>{{ $errors->first('username') }}</strong>
+                                    </span>
+                                @endif
+
+                                @if($errors->has('email'))
                                     <span class="help-block">
-                                            <strong>{{ $errors->first('email') }}</strong>
-                                        </span>
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
                                 @endif
                             </div>
                         </div>
@@ -121,7 +128,7 @@
                                 <input type="password" class="form-control enlarged" id="login-password" name="password"
                                        required
                                 >
-                                @if ($errors->has('password'))
+                                @if($errors->has('password'))
                                     <span class="help-block">
                                                 <strong>{{ $errors->first('password') }}</strong>
                                             </span>
@@ -215,7 +222,7 @@
                                        value="{{ old('email') }}"
                                        required
                                 >
-                                @if ($errors->has('email'))
+                                @if($errors->has('email'))
                                     <span class="help-block">
                                             <strong>{{ $errors->first('email') }}</strong>
                                         </span>
@@ -233,7 +240,7 @@
                                        value="{{ old('username') }}"
                                        required
                                 >
-                                @if ($errors->has('username'))
+                                @if($errors->has('username'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('username') }}</strong>
                                     </span>
@@ -247,7 +254,7 @@
                                 <input type="text" class="form-control" id="password" name="password"
                                        required
                                 >
-                                @if ($errors->has('password'))
+                                @if($errors->has('password'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
@@ -256,13 +263,20 @@
                         </div>
                         <div class="form-row">
                             <div class="col-sm-12 submit">
-                                <button type="submit"
-                                        class="JS--register-button btn btn-register btn-lg btn-block">{{ trans(config('app.directory_name') . '/lp1.form.register_now') }}</button>
+                                <button
+                                    type="submit"
+                                    class="JS--register-button btn btn-register btn-lg btn-block"
+                                >
+                                    <span class="material-icons">
+                                        create
+                                    </span>
+                                    {{ trans(config('app.directory_name') . '/lp1.form.register_now') }}
+                                </button>
                             </div>
                         </div>
                         <div class="formFooter">
                             <div class="col-xs-12">
-                                <p style="font-size: 11px; text-align: justify">
+                                <p style="font-size: 11px; text-align: justify">register
                                     {!! trans(config('app.directory_name') . '/lp1.form.register_info',
                                             [
                                                 'privacyRoute' => route('privacy.show'),

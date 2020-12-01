@@ -1031,16 +1031,22 @@
                                            value="{{ old('identity') }}"
                                            required autofocus
                                     >
-                                    @if ($errors->has('identity') || $errors->has('username') || $errors->has('email'))
+                                    @if($errors->has('identity'))
                                         <span class="help-block">
-                                            <strong>{{ $errors->first('identity') }}</strong>
-                                        </span>
+                                        <strong>{{ $errors->first('identity') }}</strong>
+                                    </span>
+                                    @endif
+
+                                    @if($errors->has('username'))
                                         <span class="help-block">
-                                            <strong>{{ $errors->first('username') }}</strong>
-                                        </span>
+                                        <strong>{{ $errors->first('username') }}</strong>
+                                    </span>
+                                    @endif
+
+                                    @if($errors->has('email'))
                                         <span class="help-block">
-                                            <strong>{{ $errors->first('email') }}</strong>
-                                        </span>
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
                                     @endif
                                 </div>
                             </div>

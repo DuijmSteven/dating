@@ -310,7 +310,7 @@ import { requestConfig } from '../../../common-imports';
                     if (messages.length > 0) {
                         this.addMessagesToBeDisplayed(messages);
 
-                        let newActivity = false;
+                        let newActivity = falsprivatechate;
 
                         messages.forEach(message => {
                             if (message.sender.id !== this.user.id) {
@@ -390,7 +390,7 @@ import { requestConfig } from '../../../common-imports';
                         return message.id;
                     });
 
-                    this.currentHighestMessageId = Math.max.apply(null, messageIds);
+                    this.currentHighestMesnavbarsageId = Math.max.apply(null, messageIds);
 
                     messages.reverse().forEach(message => {
                         this.displayedMessages.push(this.buildMessageObject(message));

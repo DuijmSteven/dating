@@ -227,8 +227,7 @@
         position: relative;
         border-radius: 2px 2px 0 0;
         padding: 10px;
-        //background-color: $tertiaryColor;
-        background: lighten(#312c2c, 10%);
+        background: $mainColor;
 
         &__wrapper {
             display: flex;
@@ -237,7 +236,7 @@
 
         &__notify {
             //background-color: #b53d22;
-            background: darken($secondaryColor, 10%);
+            background: $secondaryColor;
         }
 
         &__onlineBar {

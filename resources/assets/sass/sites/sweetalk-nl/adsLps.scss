@@ -87,9 +87,18 @@ body {
 }
 
 .btn-register {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     color: #fff;
+
+    border: 2px solid #fff;
     background-color: $secondaryColor;
-    border-color: $secondaryColor;
+
+    .material-icons {
+        margin-right: 5px;
+    }
 
     &:hover {
         text-decoration: none;
@@ -99,9 +108,13 @@ body {
 }
 
 .btn-login {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     color: #fff;
     background-color: $tertiaryColor;
-    border-color: $tertiaryColor;
+    border: 2px solid #fff;
 
     &:hover {
         text-decoration: none;
@@ -130,7 +143,7 @@ body {
 }
 
 .bg-img form.registrationForm {
-    padding-bottom: 130px;
+    padding-bottom: 144px;
 }
 
 .bg-img form {
@@ -141,6 +154,7 @@ body {
         color: #fff;
         font-weight: 400;
         font-size: 15px;
+        margin-bottom: 1px;
     }
 
     p {
@@ -150,6 +164,10 @@ body {
 
     span {
         color: #fff;
+    }
+
+    .form-control {
+        height: 32px;
     }
 }
 
@@ -163,8 +181,13 @@ body {
     border-radius: 0 0 15px 15px;
 }
 
-.help-block {
-    color: red;
+.bg-img form .help-block {
+    background-color: #ec2e2e;
+    padding: 1px 12px;
+    margin-top: 5px;
+    border-radius: 5px;
+    color: white;
+    display: block;
 }
 
 @import "footer";

@@ -1,5 +1,10 @@
 <div class="Layout-part Right-sidebar">
-    <public-chat></public-chat>
+    @if(
+        (int) config('app.site_id') === \App\Helpers\SiteHelper::SWEETALK_NL &&
+        Route::currentRouteNamed('home')
+    )
+        <public-chat></public-chat>
+    @endif
 
-    {!! $rightSidebarHtml !!}
+{!! $rightSidebarHtml !!}
 </div>
