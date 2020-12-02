@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Helpers\EmailHelper;
 use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -13,6 +14,8 @@ class ProfileCompletion extends Mailable implements ShouldQueue
     use Queueable, SerializesModels;
 
     public $user;
+    public $mainColor;
+    public $secondaryColor;
 
     /**
      * Create a new message instance.
@@ -22,6 +25,8 @@ class ProfileCompletion extends Mailable implements ShouldQueue
     public function __construct(User $user)
     {
         $this->user = $user;
+        $this->mainColor = EmailHelper::getSiteMainColor();
+        $this->secondaryColor = EmailHelper::getSiteSecondaryColor();
     }
 
     /**
@@ -31,6 +36,17 @@ class ProfileCompletion extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->subject(trans(config('app.directory_name') . '/emails.subjects.profile_completion'))->view('emails.profile-completion');
+        $this->withSwiftMessage(function ($message) {
+            $message
+                ->getHeaders()
+                ->addTextHeader(
+                    'List-Unsubscribe',
+                    '<mailto:unsubscribe@' . config('app.name') . '>'
+                );
+        });
+
+        return $this
+            ->subject(trans(config('app.directory_name') . '/emails.subjects.profile_completion'))
+            ->view('emails.profile-completion');
     }
 }

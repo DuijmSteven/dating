@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Creditpack;
+use App\Mail\CreditsBought;
+use App\Mail\Deactivated;
+use App\Mail\MessageReceived;
+use App\Mail\ProfileCompletion;
+use App\Mail\ProfileViewed;
 use App\Mail\Welcome;
 use App\User;
 use Carbon\Carbon;
@@ -57,49 +62,59 @@ class TestController extends Controller
 
     public function showWelcomeEmail()
     {
-        $user = User::find(2);
+        $user = User::find(3);
 
-        return view('emails.welcome', [
-            'user' => $user
-        ]);
+        $welcomeEmail =
+            (new Welcome(
+                $user
+            ));
+
+        return $welcomeEmail->render();
     }
 
     public function showCreditsBoughtEmail()
     {
-        $user = User::find(2);
+        $user = User::find(233);
 
         $creditPack = Creditpack::find(2);
 
-        return view('emails.credits-bought', [
-            'user' => $user,
-            'creditPack' => $creditPack
-        ]);
+        $creditsBoughtEmail =
+            (new CreditsBought(
+                $user,
+                $creditPack,
+                100
+            ));
+
+        return $creditsBoughtEmail->render();
     }
 
     public function showDeactivatedEmail()
     {
-        $user = User::find(2);
+        $user = User::find(3);
 
-        return view('emails.deactivated', [
-            'user' => $user
-        ]);
+        $deactivatedEmail =
+            (new Deactivated(
+                $user
+            ));
+
+        return $deactivatedEmail->render();
     }
 
     public function showMessageReceivedEmail()
     {
         $sender = User::find(3);
         $recipient = User::find(4);
+        $messageBody = 'Hey there, it feels like it has been quite a while since we last talked! Are you up for a drink?';
 
-        return view('emails.message-received', [
-            'user' => $sender,
-            'messageSender' => $sender,
-            'messageRecipient' => $recipient,
-            'hasAttachment' => true,
-            'hasBoth' => false,
-            'hasMessage' => false,
-            'message' => 'Hey there, it feels like it has been quite a while since we last talked! Are you up for a drink?',
-            'carbonNow' => Carbon::now()
-        ]);
+        $messageReceivedEmail =
+            (new MessageReceived(
+                $sender,
+                $recipient,
+                $messageBody,
+                false
+            ));
+
+        return $messageReceivedEmail->render();
     }
 
     public function showProfileViewedEmail()
@@ -107,12 +122,15 @@ class TestController extends Controller
         $sender = User::find(3);
         $recipient = User::find(4);
 
-        return view('emails.profile-viewed', [
-            'user' => $sender,
-            'messageSender' => $sender,
-            'messageRecipient' => $recipient,
-            'carbonNow' => Carbon::now()
-        ]);
+        $profileViewedEmail =
+            (new ProfileViewed(
+                $sender,
+                $sender,
+                $recipient,
+                Carbon::now()
+            ));
+
+        return $profileViewedEmail->render();
     }
 
     public function showPleaseComeBackEmail()
@@ -127,16 +145,19 @@ class TestController extends Controller
 
     public function showProfileCompletionEmail()
     {
-        $user = User::find(1);
+        $user = User::find(3);
 
-        return view('emails.profile-completion', [
-            'user' => $user
-        ]);
+        $profileCompletionEmail =
+            (new ProfileCompletion(
+                $user
+            ));
+
+        return $profileCompletionEmail->render();
     }
 
     public function sendTestEmail()
     {
-        $user = User::find(1);
+        $user = User::find(3);
         var_dump($user->getEmail());
 
         $message = (new Welcome($user))->onQueue('emails');

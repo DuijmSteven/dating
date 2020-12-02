@@ -96,7 +96,8 @@ $tileBody: (
 
 $tileBodyArticles: (
         'headBackGroundColor': darken($mainColor, 4%),
-        'padding': 35
+        'paddingVertical': 0,
+        'paddingHorizontal': 15
 );
 
 // User-activity

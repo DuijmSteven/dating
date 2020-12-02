@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Helpers\EmailHelper;
 use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -20,6 +21,9 @@ class PleaseComeBack extends Mailable implements ShouldQueue
      */
     public Collection $creditpacks;
 
+    public $mainColor;
+    public $secondaryColor;
+
     /**
      * Create a new message instance.
      *
@@ -31,6 +35,8 @@ class PleaseComeBack extends Mailable implements ShouldQueue
     ) {
         $this->user = $user;
         $this->creditpacks = $creditpacks;
+        $this->mainColor = EmailHelper::getSiteMainColor();
+        $this->secondaryColor = EmailHelper::getSiteSecondaryColor();
     }
 
     /**
@@ -40,6 +46,15 @@ class PleaseComeBack extends Mailable implements ShouldQueue
      */
     public function build()
     {
+        $this->withSwiftMessage(function ($message) {
+            $message
+                ->getHeaders()
+                ->addTextHeader(
+                    'List-Unsubscribe',
+                    '<mailto:unsubscribe@' . config('app.name') . '>'
+                );
+        });
+
         return $this
             ->subject(trans(config('app.directory_name') . '/emails.subjects.please_come_back'))
             ->view('emails.please-come-back');

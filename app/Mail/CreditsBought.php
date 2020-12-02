@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Creditpack;
+use App\Helpers\EmailHelper;
 use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -16,6 +17,8 @@ class CreditsBought extends Mailable implements ShouldQueue
     public $user;
     public $creditPack;
     public $transactionTotal;
+    public $mainColor;
+    public $secondaryColor;
 
     /**
      * Create a new message instance.
@@ -30,6 +33,9 @@ class CreditsBought extends Mailable implements ShouldQueue
         $this->user = $user;
         $this->creditPack = $creditPack;
         $this->transactionTotal = $transactionTotal;
+
+        $this->mainColor = EmailHelper::getSiteMainColor();
+        $this->secondaryColor = EmailHelper::getSiteSecondaryColor();
     }
 
     /**
@@ -39,6 +45,17 @@ class CreditsBought extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->subject(trans(config('app.directory_name') . '/emails.subjects.credits_bought'))->view('emails.credits-bought');
+        $this->withSwiftMessage(function ($message) {
+            $message
+                ->getHeaders()
+                ->addTextHeader(
+                    'List-Unsubscribe',
+                    '<mailto:unsubscribe@' . config('app.name') . '>'
+                );
+        });
+
+        return $this
+            ->subject(trans(config('app.directory_name') . '/emails.subjects.credits_bought'))
+            ->view('emails.credits-bought');
     }
 }

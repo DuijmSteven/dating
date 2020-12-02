@@ -232,8 +232,8 @@
 	2. center tag: for Gmail and Inbox mobile apps and web versions of Gmail, GSuite, Inbox, Yahoo, AOL, Libero, Comcast, freenet, Mail.ru, Orange.fr
 	3. mso conditional: For Windows 10 Mail
 -->
-<body width="100%" style="margin: 0; padding: 0 !important; mso-line-height-rule: exactly; background-color: #2c384e;">
-<center style="width: 100%; background-color: #2c384e;">
+<body width="100%" style="margin: 0; padding: 0 !important; mso-line-height-rule: exactly; background-color: {{ $mainColor }};">
+<center style="width: 100%; background-color: {{ $mainColor }};">
     <!--[if mso | IE]>
     <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #2c384e;">
         <tr>
@@ -245,7 +245,7 @@
         <!-- Email Header : BEGIN -->
         <tr>
             <td style="padding: 20px 0; text-align: center">
-                <img src="{!! asset('img/site_logos/' . config('app.directory_name') . '/Altijdsex_LogoSmall_Pos@1x_email.png') !!}" width="200" height="50" alt="Altijdsex.nl logo" border="0" style="height: auto; font-family: sans-serif; font-size: 15px; line-height: 15px; color: #555555;">
+                <img src="{!! asset('img/site_logos/' . config('app.directory_name') . '/main_logo.png') !!}" width="200" height="50" alt="{{ ucfirst(config('app.name')) }} logo" border="0" style="height: auto; font-family: sans-serif; font-size: 15px; line-height: 15px; color: #555555;">
             </td>
         </tr>
         <!-- Email Header : END -->

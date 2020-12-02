@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Creditpack;
+use App\Helpers\EmailHelper;
 use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Http\Request;
@@ -23,6 +24,8 @@ class Exception extends Mailable implements ShouldQueue
     public $exceptionMessage;
     public $exceptionTrace;
     public $exceptionClass;
+    public $mainColor;
+    public $secondaryColor;
 
     /**
      * Create a new message instance.
@@ -47,6 +50,8 @@ class Exception extends Mailable implements ShouldQueue
         $this->exceptionMessage = $exceptionMessage;
         $this->exceptionTrace = $exceptionTrace;
         $this->exceptionClass = $exceptionClass;
+        $this->mainColor = EmailHelper::getSiteMainColor();
+        $this->secondaryColor = EmailHelper::getSiteSecondaryColor();
     }
 
     /**

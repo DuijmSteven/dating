@@ -19,10 +19,12 @@
                     </div>
                     <div class="row text-center" style="margin-top: 20px; margin-bottom: 20px;">
                         <div class="col-xs-6">
-                            <button type="submit" class="btn btn-lg btn-success" style="min-width: 80%">{{ trans(config('app.directory_name') . '/chat.yes') }}</button>
+                            <button type="submit" class="btn btn-lg btn-success" style="min-width: 80%; background-color: {{ \App\Helpers\EmailHelper::getSiteMainColor() }}">
+                                {{ trans(config('app.directory_name') . '/chat.yes') }}
+                            </button>
                         </div>
                         <div class="col-xs-6">
-                            <a href="{{ route('home') }}" class="btn btn-lg btn-warning" style="min-width: 80%">{{ trans(config('app.directory_name') . '/chat.no') }}</a>
+                            <a href="{{ route('home') }}" class="btn btn-lg btn-warning" style="min-width: 80%; background-color: {{ \App\Helpers\EmailHelper::getSiteSecondaryColor() }}">{{ trans(config('app.directory_name') . '/chat.no') }}</a>
                         </div>
                     </div>
                 </form>

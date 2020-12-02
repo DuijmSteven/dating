@@ -226,7 +226,7 @@
     &__head {
         position: relative;
         border-radius: 2px 2px 0 0;
-        padding: 10px;
+        padding: 6px 10px;
         background: $mainColor;
 
         &__wrapper {
@@ -252,6 +252,7 @@
     &__user {
         position: relative;
         display: flex;
+        align-items: center;
 
         &__onlineCircle {
             position: absolute;
@@ -289,7 +290,8 @@
     }
 
     &__username {
-        display: inline-block;
+        display: flex;
+        align-items: center;
         color: $white;
         cursor: default;
 
@@ -302,10 +304,12 @@
             text-decoration: none;
             color: $white;
             cursor: pointer;
+            font-size: 19px;
+            line-height: 17px;
 
             &:hover {
                 text-decoration: none;
-                color: darken($white, 10%);
+                color: #fff;
             }
         }
     }

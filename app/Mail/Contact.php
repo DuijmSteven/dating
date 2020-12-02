@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Helpers\EmailHelper;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -16,6 +17,9 @@ class Contact extends Mailable implements ShouldQueue
      */
     public array $requestData;
 
+    public $mainColor;
+    public $secondaryColor;
+
     /**
      * Create a new message instance.
      *
@@ -24,6 +28,9 @@ class Contact extends Mailable implements ShouldQueue
     public function __construct(array $requestData) {
 
         $this->requestData = $requestData;
+
+        $this->mainColor = EmailHelper::getSiteMainColor();
+        $this->secondaryColor = EmailHelper::getSiteSecondaryColor();
     }
 
     /**

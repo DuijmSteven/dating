@@ -17,7 +17,7 @@
     <p style="font-family: sans-serif; font-weight: normal; margin: 0; Margin-bottom: 15px;">Beste {{ $user->username }},</p>
 
     <p style="font-family: sans-serif; font-weight: normal; margin: 0; Margin-bottom: 15px;">
-        Je staat nu al even ingeschreven op <a href="{{ route('home') }}">Altijdsex.nl</a>. Jouw profielinformatie is echter nog zeer beperkt, waardoor je mogelijk contact of zelfs een hete sex date misloopt. Door onderstaande tip(s) in acht te nemen verbeter je direct je profiel.
+        Je staat nu al even ingeschreven op <a href="{{ route('home') }}">{{ ucfirst(config('app.name')) }}</a>. Jouw profielinformatie is echter nog zeer beperkt, waardoor je mogelijk contact of zelfs een hete sex date misloopt. Door onderstaande tip(s) in acht te nemen verbeter je direct je profiel.
 
     </p>
 
@@ -65,10 +65,10 @@
 
     <p style="font-family: sans-serif; font-weight: normal; margin: 0; Margin-bottom: 15px;">
         Met vriendelijke groet,<br>
-        Team Altijdsex.nl
+        Team {{ ucfirst(config('app.name')) }}
     </p>
 
-    <p style="text-align: center; font-size: 16px; margin-top: 30px;">{{ trans(config('app.directory_name') . '/unsubscribe.link_text') }}
+    <p style="text-align: center; font-size: 13px!important; margin-top: 30px;">{{ trans(config('app.directory_name') . '/unsubscribe.link_text') }}
         <a href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('unsubscribe', ['user' => $user->id]); @endphp">
             {{ trans(config('app.directory_name') . '/unsubscribe.link_click') }}
         </a>

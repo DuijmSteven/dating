@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Helpers\EmailHelper;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
@@ -25,6 +26,9 @@ class MessageReceived extends Mailable implements ShouldQueue
 
     public $hasBoth;
 
+    public $mainColor;
+    public $secondaryColor;
+
     /**
      * Create a new message instance.
      *
@@ -46,6 +50,8 @@ class MessageReceived extends Mailable implements ShouldQueue
         $this->hasAttachment = false;
         $this->hasMessage = false;
         $this->carbonNow = Carbon::now('Europe/Amsterdam');
+        $this->mainColor = EmailHelper::getSiteMainColor();
+        $this->secondaryColor = EmailHelper::getSiteSecondaryColor();
 
         if (strlen($messageBody) > 0) {
             $this->messageBody = $messageBody;
@@ -70,10 +76,16 @@ class MessageReceived extends Mailable implements ShouldQueue
     public function build()
     {
         $this->withSwiftMessage(function ($message) {
-            $message->getHeaders()
-                ->addTextHeader('List-Unsubscribe', '<mailto:unsubscribe@altijdsex.nl>');
+            $message
+                ->getHeaders()
+                ->addTextHeader(
+                    'List-Unsubscribe',
+                    '<mailto:unsubscribe@' . config('app.name') . '>'
+                );
         });
 
-        return $this->subject(trans(config('app.directory_name') . '/emails.subjects.message_received'))->view('emails.message-received');
+        return $this
+            ->subject(trans(config('app.directory_name') . '/emails.subjects.message_received'))
+            ->view('emails.message-received');
     }
 }

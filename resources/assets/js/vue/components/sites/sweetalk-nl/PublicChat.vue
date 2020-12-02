@@ -126,15 +126,23 @@
                     >
 
                     <div class="PublicChat__textareaAndButtonContainer">
-              <textarea
-                  :placeholder="this.$parent.chatTranslations ? this.$parent.chatTranslations['your_message'] : ''"
-                  class="form-control PublicChat__textarea JS--PublicChat__textarea"
-                  id="text"
-                  name="text"
-                  maxlength="200"
-                  rows="2"
-                  v-model="text"
-              ></textarea>
+                        <textarea
+                            v-if="this.DP.authenticatedUser.account.credits > 0"
+                            :placeholder="this.$parent.chatTranslations ? this.$parent.chatTranslations['your_message'] : ''"
+                            class="form-control PublicChat__textarea JS--PublicChat__textarea"
+                            id="text"
+                            name="text"
+                            maxlength="200"
+                            rows="2"
+                            v-model="text"
+                        ></textarea>
+
+                        <div class="text-left">
+                            <span class="label label-default JS--PublicChat__countChars PublicChat__countChars">{{
+                                    characterCount
+                                }}/<span
+                                    class="maxCharacters">200</span></span>
+                        </div>
 
                         <div class="text-center PublicChat__submitButton">
                             <button
@@ -154,13 +162,6 @@
                             </a>
                         </div>
                     </div>
-                    <div class="text-left">
-                        <span class="label label-default JS--PublicChat__countChars PublicChat__countChars">{{
-                                characterCount
-                            }}/<span
-                                class="maxCharacters">200</span></span>
-                    </div>
-
                 </form>
             </div>
         </div>
@@ -168,7 +169,7 @@
 </template>
 
 <script>
-import { requestConfig } from '../../../common-imports';
+import {requestConfig} from '../../../common-imports';
 
 export default {
     props: [],

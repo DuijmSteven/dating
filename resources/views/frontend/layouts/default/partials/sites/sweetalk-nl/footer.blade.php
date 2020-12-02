@@ -2,13 +2,13 @@
     <div class="container">
         <div class="Footer__items">
             @if(isset($authenticatedUser))
-                <a class="Footer__item" href="{{ route('articles.overview') }}">{{ trans(config('app.directory_name') . '/footer.articles') }}</a>
                 <a class="Footer__item" href="{{ route('faq.show') }}">{{ trans(config('app.directory_name') . '/footer.faq') }}</a>
-                <a class="Footer__item" href="{{ route('contact.get') }}">{{ trans(config('app.directory_name') . '/footer.company_data') }}</a>
             @endif
 
+            <a class="Footer__item" href="{{ route('contact.get') }}">{{ trans(config('app.directory_name') . '/footer.company_data') }}</a>
             <a class="Footer__item" href="{{ route('contact.get') }}">{{ trans(config('app.directory_name') . '/footer.contact') }}</a>
             <a class="Footer__item" href="{{ route('tac.show') }}">{{ trans(config('app.directory_name') . '/footer.tac') }}</a>
+            <a class="Footer__item" href="{{ route('articles.overview') }}">{{ trans(config('app.directory_name') . '/footer.articles') }}</a>
 
             @if(isset($authenticatedUser))
                 <a class="Footer__item" href="{{ route('privacy.show') }}">{{ trans(config('app.directory_name') . '/footer.privacy') }}</a>

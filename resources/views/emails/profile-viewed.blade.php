@@ -1,7 +1,7 @@
 @extends('emails.layouts.default.layout')
 
 @section('unsubscribe')
-    <p style="line-height: 15px; text-align: center; font-size: 12px; color: #aaa; font-family: sans-serif;">{{ trans(config('app.directory_name') . '/unsubscribe.link_text') }}
+    <p style="line-height: 15px; text-align: center; font-size: 12px!important; color: #aaa; font-family: sans-serif;">{{ trans(config('app.directory_name') . '/unsubscribe.link_text') }}
         <a style="color: #aaa; text-decoration: underline;" href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('unsubscribe', ['user' => $messageRecipient->id]); @endphp">
             {{ trans(config('app.directory_name') . '/unsubscribe.link_click') }}
         </a>
@@ -61,17 +61,17 @@
     </p>
 
     <div style="text-align: center">
-        <div style="display: inline-block; padding: 7px 20px; background-color: #ce5338; color: #fff; border: 1px solid #ce5338; border-radius: 4px; margin: 20px 0; cursor: pointer">
+        <div style="display: inline-block; padding: 7px 20px; background-color: {{ $secondaryColor }}; color: #fff; border: 1px solid #ce5338; border-radius: 4px; margin: 20px 0; cursor: pointer">
             <a style="color: #fff" href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('direct-login', ['user' => $messageRecipient->getId(), 'routeName' => 'users.show', 'routeParamName' => 'username', 'routeParam' => $messageSender->username]); @endphp">Bekijk het profiel</a>
         </div>
     </div>
 
     <p style="font-family: sans-serif; font-weight: normal; margin: 0; Margin-bottom: 15px;">
         Met vriendelijke groet,<br>
-        Team Altijdsex.nl
+        Team {{ ucfirst(config('app.name')) }}
     </p>
 
-    <p style="text-align: center; font-size: 16px; margin-top: 30px;">{{ trans(config('app.directory_name') . '/unsubscribe.link_text') }}
+    <p style="text-align: center; font-size: 13px!important; margin-top: 30px;">{{ trans(config('app.directory_name') . '/unsubscribe.link_text') }}
         <a href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('unsubscribe', ['user' => $messageRecipient->id]); @endphp">
             {{ trans(config('app.directory_name') . '/unsubscribe.link_click') }}
         </a>

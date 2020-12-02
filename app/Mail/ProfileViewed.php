@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Helpers\EmailHelper;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
@@ -17,6 +18,8 @@ class ProfileViewed extends Mailable implements ShouldQueue
     public $messageRecipient;
     public $messageSender;
     public $carbonNow;
+    public $mainColor;
+    public $secondaryColor;
 
     /**
      * Create a new message instance.
@@ -34,6 +37,8 @@ class ProfileViewed extends Mailable implements ShouldQueue
         $this->messageRecipient = $messageRecipient;
         $this->messageSender = $messageSender;
         $this->carbonNow = $carbonNow;
+        $this->mainColor = EmailHelper::getSiteMainColor();
+        $this->secondaryColor = EmailHelper::getSiteSecondaryColor();
     }
 
     /**
@@ -44,10 +49,16 @@ class ProfileViewed extends Mailable implements ShouldQueue
     public function build()
     {
         $this->withSwiftMessage(function ($message) {
-            $message->getHeaders()
-                ->addTextHeader('List-Unsubscribe', '<mailto:unsubscribe@altijdsex.nl>');
+            $message
+                ->getHeaders()
+                ->addTextHeader(
+                    'List-Unsubscribe',
+                    '<mailto:unsubscribe@' . config('app.name') . '>'
+                );
         });
 
-        return $this->subject(trans(config('app.directory_name') . '/emails.subjects.profile_viewed', ['username' => $this->messageSender->getUsername()]))->view('emails.profile-viewed');
+        return $this
+            ->subject(trans(config('app.directory_name') . '/emails.subjects.profile_viewed', ['username' => $this->messageSender->getUsername()]))
+            ->view('emails.profile-viewed');
     }
 }

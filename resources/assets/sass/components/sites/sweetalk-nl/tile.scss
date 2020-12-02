@@ -73,7 +73,7 @@
     }
 
     &__articles {
-        padding: map_get($tileBodyArticles, padding) + px;
+        padding: map_get($tileBodyArticles, paddingVertical) + px map_get($tileBodyArticles, paddingHorizontal) + px;
     }
 
     &__article {

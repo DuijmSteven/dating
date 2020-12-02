@@ -1,4 +1,4 @@
-articles.php<?php
+<?php
 
 return [
     'articles' => 'Artikelen',

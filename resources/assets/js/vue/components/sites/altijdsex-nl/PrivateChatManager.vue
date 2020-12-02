@@ -125,8 +125,6 @@ export default {
     },
 
     created() {
-
-        console.log(this.maximized);
     },
 
     methods: {
