@@ -83,8 +83,20 @@
                             <div class="JS--banksContainer" style="display: none; margin-top: 20px">
                                 <div class="form-group form-inline" style="display: contents">
                                     Bank:
-                                    <select class="form-control" id="bank" name="bank">
-                                        <?php readfile("https://transaction.digiwallet.nl/ideal/getissuers?ver=4&format=html"); ?>
+                                    <select id="bank" name="bank" class="form-control">
+                                        <option selected="selected" value="">Kies uw bank...</option>
+                                        <option value="ABNANL2A">ABN AMRO</option>
+                                        <option value="ASNBNL21">ASN Bank</option>
+                                        <option value="BUNQNL2A">bunq</option>
+                                        <option value="HANDNL2A">Handelsbanken</option>
+                                        <option value="INGBNL2A">ING</option>
+                                        <option value="KNABNL2H">Knab</option>
+                                        <option value="MOYONL21">Moneyou</option>
+                                        <option value="RABONL2U">Rabobank</option>
+                                        <option value="RBRBNL21">RegioBank</option>
+                                        <option value="SNSBNL2A">SNS Bank</option>
+                                        <option value="TRIONL2U">Triodos Bank</option>
+                                        <option value="FVLBNL22">van Lanschot</option>
                                     </select>
                                 </div>
                             </div>
