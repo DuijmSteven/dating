@@ -89,7 +89,7 @@
                                 <div class="form-group form-inline" style="display: contents">
                                     Bank:
                                     <select class="form-control" id="bank" name="bank">
-                                        <?php readfile("https://transaction.digiwallet.nl/ideal/getissuers?ver=4&format=html"); ?>
+                                        {{ \App\Helpers\PaymentsHelper::banksSelectOptions() }}
                                     </select>
                                 </div>
                             </div>
