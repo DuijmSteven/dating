@@ -25,19 +25,19 @@
     </p>
 
     <div style="text-align: center">
-        <div style="display: inline-block; padding: 7px 20px; background-color: #ce5338; color: #fff; border: 1px solid #ce5338; border-radius: 4px; margin: 20px 0; cursor: pointer">
+        <div style="display: inline-block; padding: 7px 20px; background-color: {{ $mainColor }}; color: #fff; border: 1px solid {{ $mainColor }}; border-radius: 4px; margin: 20px 0; cursor: pointer">
             <a style="color: #fff" href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('direct-login', ['user' => $user->id, 'routeName' => 'credits.show', null, null]); @endphp">Ga direct naar credits pagina!</a>
         </div>
     </div>
 
     <p style="margin-bottom: 0">
         Elke dag weer zijn er duizenden vrouwen die zich met dezelfde intenties inschrijven op
-        <a href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('direct-login', ['user' => $user->id, 'routeName' => 'credits.show', null, null]); @endphp">Altijdsex.nl</a>.
+        <a href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('direct-login', ['user' => $user->id, 'routeName' => 'credits.show', null, null]); @endphp">{{ ucfirst(config('app.name')) }}</a>.
         Daar zal vast en zeker ook wel een gelijkgestemde voor jou tussen zitten, toch? Speciaal om jouw kansen te vergroten bieden we je momenteel <b>15% korting</b> op je volgende aankoop.
     </p>
 
     <div style="text-align: center">
-        <div style="display: inline-block; padding: 7px 20px; background-color: {{ $secondaryColor }}; color: #fff; border: 1px solid #ce5338; border-radius: 4px; margin: 20px 0; cursor: pointer">
+        <div style="display: inline-block; padding: 7px 20px; background-color: {{ $secondaryColor }}; color: #fff; border: 1px solid {{ $secondaryColor }}; border-radius: 4px; margin: 20px 0; cursor: pointer">
             <a style="color: #fff" href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('direct-login', ['user' => $user->id, 'routeName' => 'credits.show', null, null]); @endphp">Profiteer van deze korting!</a>
         </div>
     </div>

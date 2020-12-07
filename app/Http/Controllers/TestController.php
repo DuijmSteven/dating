@@ -6,6 +6,7 @@ use App\Creditpack;
 use App\Mail\CreditsBought;
 use App\Mail\Deactivated;
 use App\Mail\MessageReceived;
+use App\Mail\PleaseComeBack;
 use App\Mail\ProfileCompletion;
 use App\Mail\ProfileViewed;
 use App\Mail\Welcome;
@@ -137,10 +138,13 @@ class TestController extends Controller
     {
         $user = User::find(233);
 
-        return view('emails.please-come-back', [
-            'user' => $user,
-            'creditpacks' => Creditpack::where('name', '!=', 'test')->orderBy('id')->get()
-        ]);
+        $pleaseComeBackEmail =
+            (new PleaseComeBack(
+                $user,
+                Creditpack::where('name', '!=', 'test')->orderBy('id')->get()
+            ));
+
+        return $pleaseComeBackEmail->render();
     }
 
     public function showProfileCompletionEmail()

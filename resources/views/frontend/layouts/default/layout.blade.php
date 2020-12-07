@@ -43,14 +43,14 @@
             </div>
         @endif
 
-        @if(
-            isset($authenticatedUser) &&
-            ($authenticatedUser->profileRatioFilled < 0.3 || !$authenticatedUser->profileImage) &&
-            !$authenticatedUser->hasRecentlyAcceptedProfileCompletionMessage &&
-            \Carbon\Carbon::now('Europe/Amsterdam')->gt($authenticatedUser->getCreatedAt()->tz('Europe/Amsterdam')->addMinutes(5))
-        )
-            @include('frontend.components.low-profile-completion', ['user' => $authenticatedUser])
-        @endif
+{{--        @if(--}}
+{{--            isset($authenticatedUser) &&--}}
+{{--            ($authenticatedUser->profileRatioFilled < 0.3 || !$authenticatedUser->profileImage) &&--}}
+{{--            !$authenticatedUser->hasRecentlyAcceptedProfileCompletionMessage &&--}}
+{{--            \Carbon\Carbon::now('Europe/Amsterdam')->gt($authenticatedUser->getCreatedAt()->tz('Europe/Amsterdam')->addMinutes(5))--}}
+{{--        )--}}
+{{--            @include('frontend.components.low-profile-completion', ['user' => $authenticatedUser])--}}
+{{--        @endif--}}
 
         @if(isset($sidebarCount) && $sidebarCount > 0)
             <div class="row">
