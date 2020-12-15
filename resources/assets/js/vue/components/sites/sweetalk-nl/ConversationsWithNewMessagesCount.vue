@@ -2,7 +2,7 @@
     <span
         class="ConversationsWithNewMessagesCount"
     >
-        {{ count }} Berichten
+        {{ count }} <span class="hidden-xs">Berichten</span>
     </span>
 </template>
 

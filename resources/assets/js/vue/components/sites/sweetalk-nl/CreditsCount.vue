@@ -11,7 +11,7 @@
             v-if="template === 'text'"
             class="Hero__button__creditsCount"
         >
-            {{ credits }} Credits
+            {{ credits }}  <span class="hidden-xs">Credits</span>
         </span>
     </div>
 

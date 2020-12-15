@@ -276,7 +276,7 @@
                         </div>
                         <div class="formFooter">
                             <div class="col-xs-12">
-                                <p style="font-size: 11px; text-align: justify">register
+                                <p style="font-size: 11px; text-align: justify">
                                     {!! trans(config('app.directory_name') . '/lp1.form.register_info',
                                             [
                                                 'privacyRoute' => route('privacy.show'),
@@ -285,6 +285,14 @@
                                         )
                                     !!}
                                 </p>
+
+{{--                                <div--}}
+{{--                                    style="margin-top: 10px; text-align: left; white-space: nowrap; overflow: hidden;">--}}
+{{--                                    <img src="{{ asset('img/safe.jpg') }}" style="width: 31px">--}}
+{{--                                    <p style="font-size: 1.3rem; display: inline-block">--}}
+{{--                                        Uw persoonlijke data wordt absoluut vertrouwlijk behandeld.--}}
+{{--                                    </p>--}}
+{{--                                </div>--}}
                             </div>
                             <div class="col-xs-12 mx-auto">
                                 <span style="margin-right: 8px;">Heb je al een account?</span>

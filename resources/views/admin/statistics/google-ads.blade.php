@@ -178,6 +178,8 @@
                                     class="DashboardWidget_count">{{ $googleAdsUserTypeStatistics['alvPerPayingUserRegistered'] }}</span></a></li>
                         <li><a href="{{ route('admin.peasants.with-creditpack.overview') }}">ALVU <span
                                     class="DashboardWidget_count">{{ $googleAdsUserTypeStatistics['alvPerUserRegistered'] }}</span></a></li>
+                        <li><a href="{{ route('admin.peasants.created-until-date.show', ['date' => \Carbon\Carbon::now('Europe/Amsterdam')->subMonths(4)->format('d-m-Y')]) }}">ALVPU regist. by 5 months ago ( {{ $googleAdsUserTypeStatistics['payingUsersRegisteredUntilFiveMonthsAgoCount'] }} users) <span
+                                    class="DashboardWidget_count">{{ $googleAdsUserTypeStatistics['alvPerUserRegisteredUntilFiveMonthsAgo'] }}</span></a></li>
                         <li><a href="{{ route('admin.peasants.created-until-date.show', ['date' => \Carbon\Carbon::now('Europe/Amsterdam')->subMonths(4)->format('d-m-Y')]) }}">ALVPU regist. by 4 months ago ( {{ $googleAdsUserTypeStatistics['payingUsersRegisteredUntilFourMonthsAgoCount'] }} users) <span
                                     class="DashboardWidget_count">{{ $googleAdsUserTypeStatistics['alvPerUserRegisteredUntilFourMonthsAgo'] }}</span></a></li>
                         <li><a href="{{ route('admin.peasants.created-until-date.show', ['date' => \Carbon\Carbon::now('Europe/Amsterdam')->subMonths(3)->format('d-m-Y')]) }}">ALVPU regist. by 3 months ago ( {{ $googleAdsUserTypeStatistics['payingUsersRegisteredUntilThreeMonthsAgoCount'] }} users) <span
@@ -188,10 +190,10 @@
                                     class="DashboardWidget_count">{{ $googleAdsUserTypeStatistics['alvPerUserRegisteredUntilOneMonthAndAHalfAgo'] }}</span></a></li>
                         <li><a href="{{ route('admin.peasants.created-until-date.show', ['date' => \Carbon\Carbon::now('Europe/Amsterdam')->subMonths(1)->format('d-m-Y')]) }}">ALVPU regist. by 1 month ago ( {{ $googleAdsUserTypeStatistics['payingUsersRegisteredUntilOneMonthAgoCount'] }} users) <span
                                     class="DashboardWidget_count">{{ $googleAdsUserTypeStatistics['alvPerUserRegisteredUntilOneMonthAgo'] }}</span></a></li>
-                        <li><a href="{{ route('admin.peasants.created-until-date.show', ['date' => \Carbon\Carbon::now('Europe/Amsterdam')->subDays(20)->format('d-m-Y')]) }}">ALVPU regist. by 20 days ago ( {{ $googleAdsUserTypeStatistics['payingUsersRegisteredUntilTwentyDaysAgoCount'] }} users) <span
-                                    class="DashboardWidget_count">{{ $googleAdsUserTypeStatistics['alvPerUserRegisteredUntilTwentyDaysAgo'] }}</span></a></li>
-                        <li><a href="{{ route('admin.peasants.created-until-date.show', ['date' => \Carbon\Carbon::now('Europe/Amsterdam')->subDays(10)->format('d-m-Y')]) }}">ALVPU regist. by 10 days ago ( {{ $googleAdsUserTypeStatistics['payingUsersRegisteredUntilTenDaysAgoCount'] }} users) <span
-                                    class="DashboardWidget_count">{{ $googleAdsUserTypeStatistics['alvPerUserRegisteredUntilTenDaysAgo'] }}</span></a></li>
+{{--                        <li><a href="{{ route('admin.peasants.created-until-date.show', ['date' => \Carbon\Carbon::now('Europe/Amsterdam')->subDays(20)->format('d-m-Y')]) }}">ALVPU regist. by 20 days ago ( {{ $googleAdsUserTypeStatistics['payingUsersRegisteredUntilTwentyDaysAgoCount'] }} users) <span--}}
+{{--                                    class="DashboardWidget_count">{{ $googleAdsUserTypeStatistics['alvPerUserRegisteredUntilTwentyDaysAgo'] }}</span></a></li>--}}
+{{--                        <li><a href="{{ route('admin.peasants.created-until-date.show', ['date' => \Carbon\Carbon::now('Europe/Amsterdam')->subDays(10)->format('d-m-Y')]) }}">ALVPU regist. by 10 days ago ( {{ $googleAdsUserTypeStatistics['payingUsersRegisteredUntilTenDaysAgoCount'] }} users) <span--}}
+{{--                                    class="DashboardWidget_count">{{ $googleAdsUserTypeStatistics['alvPerUserRegisteredUntilTenDaysAgo'] }}</span></a></li>--}}
                     </ul>
                 </div>
             </div>

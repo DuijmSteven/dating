@@ -105,8 +105,8 @@
             position: absolute;
             top: 27px;
             right: 36px;
+            border-radius: 30%;
             background-color: #fff;
-            border-radius: 50%;
             color: #ff5b49;
             font-size: 24px;
 
@@ -344,7 +344,9 @@
 
         &__item {
             &__deleteIcon {
-                font-size: 21px !important;
+                top: 36px;
+                right: 36px;
+                font-size: 29px !important;
             }
         }
 
