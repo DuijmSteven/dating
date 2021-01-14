@@ -40,7 +40,7 @@
         </li>
         <li class="{!! \Request::route()->getName() == 'admin.statistics.google-ads.keywords' ? 'active' : '' !!}">
             <a href="{!! route('admin.statistics.google-ads.keywords') !!}">
-         <ju></ju>       <i class="fa fa-key"></i>
+                <i class="fa fa-key"></i>
                 Google Ads Keywords
             </a>
         </li>
@@ -54,6 +54,13 @@
             <a href="{!! route('admin.statistics.user-acquisition') !!}">
                 <i class="fa fa-user-plus"></i>
                 User acquisition
+            </a>
+        </li>
+
+        <li class="{!! \Request::route()->getName() == 'admin.statistics.best-bots' ? 'active' : '' !!}">
+            <a href="{!! route('admin.statistics.best-bots') !!}">
+                <i class="fa fa-users"></i>
+                Best bots
             </a>
         </li>
     </ul>

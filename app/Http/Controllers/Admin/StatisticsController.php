@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Managers\ChartsManager;
 use App\Managers\StatisticsManager;
 use App\Payment;
+use App\Role;
 use App\Services\UserActivityService;
 use App\User;
 use App\UserAffiliateTracking;
@@ -806,6 +807,38 @@ class StatisticsController extends Controller
                 'headingSmall' => 'Google Ads Keywords',
                 'leadsPerKeyword' => $leadsPerKeyword,
                 'conversionsPerKeyword' => $conversionsPerKeyword,
+            ]
+        );
+    }
+
+    public function bestBots()
+    {
+        $bestBotsByMessagesReceived = User
+            ::whereHas('roles', function ($query) {
+                $query->where('id', Role::ROLE_BOT);
+            })
+            ->withCount('messaged')
+            ->orderBy('messaged_count', 'desc')
+            ->take(100)
+            ->get();
+
+        $bestBotsByOverallViewsReceived = User
+            ::whereHas('roles', function ($query) {
+                $query->where('id', Role::ROLE_BOT);
+            })
+            ->withCount('views')
+            ->orderBy('views_count', 'desc')
+            ->take(100)
+            ->get();
+
+        return view(
+            'admin.statistics.best-bots',
+            [
+                'title' => 'Statistics - ' . ucfirst(\config('app.name')),
+                'headingLarge' => 'Statistics',
+                'headingSmall' => 'Best bots',
+                'bestBotsByMessagesReceived' => $bestBotsByMessagesReceived,
+                'bestBotsByOverallViewsReceived' => $bestBotsByOverallViewsReceived
             ]
         );
     }
