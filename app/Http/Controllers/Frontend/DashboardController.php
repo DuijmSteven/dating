@@ -85,7 +85,7 @@ class DashboardController extends FrontendController
         if (count($users) < 10) {
             \Log::debug('Not enough recent bots with profile pic in last 100 days within 80km radius. Fetching anything :)');
 
-            $users = $this->homeUsers(150, 150);
+            $users = $this->homeUsers(200, 150);
         }
 
         return view('frontend.sites.' . config('app.directory_name') . '.home', [
