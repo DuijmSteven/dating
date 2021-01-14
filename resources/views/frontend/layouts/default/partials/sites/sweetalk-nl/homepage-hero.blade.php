@@ -74,6 +74,7 @@
             <div class="Hero__button__text">
                 <span>
                     {{ $authenticatedUser->profileRatioFilled * 100 }}%
+                    &nbsp;
                     <span class="hidden-xs">ingevuld</span>
                 </span>
             </div>
