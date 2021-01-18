@@ -86,6 +86,6 @@ class MessageReceived extends Mailable implements ShouldQueue
 
         return $this
             ->subject(trans(config('app.directory_name') . '/emails.subjects.message_received'))
-            ->view('emails.message-received');
+            ->view('emails.sites.' . config('app.directory_name') . '.message-received');
     }
 }

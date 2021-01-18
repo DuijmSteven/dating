@@ -56,10 +56,9 @@
                                 >
                                     <strong class="primary-font">{{ item.sender.username }}</strong>
                                 </span>
-
-                                <small class="pull-right PublicChat__timeAgo">
-                                    <span class="glyphicon glyphicon-time"></span> {{ item.publishedAtHumanReadable }}
-                                </small>
+                            </div>
+                            <div class="PublicChat__timeAgo">
+                                <span class="glyphicon glyphicon-time"></span> {{ item.publishedAtHumanReadable }}
                             </div>
                             <p>
                                 {{ item.body }}

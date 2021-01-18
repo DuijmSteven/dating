@@ -46,6 +46,6 @@ class Welcome extends Mailable implements ShouldQueue
         });
         return $this
             ->subject(trans(config('app.directory_name') . '/emails.subjects.welcome'))
-            ->view('emails.welcome');
+            ->view('emails.sites.' . config('app.directory_name') . '.welcome');
     }
 }
