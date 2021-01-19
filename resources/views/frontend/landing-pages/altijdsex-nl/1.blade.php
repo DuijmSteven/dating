@@ -1140,20 +1140,20 @@
                     how_to_reg
                 </i>
                 <h4>{{ trans(config('app.directory_name') . '/lp1.usps.free_access.title') }}</h4>
-                <p style="text-align: center">{{ trans(config('app.directory_name') . '/lp1.usps.free_access.text') }}</p>
+                <p style="text-align: left">{{ trans(config('app.directory_name') . '/lp1.usps.free_access.text') }}</p>
             </div>
             <div class="col-xs-12 col-md-4 col-sm-12">
                 <i class="material-icons">
                     chat
                 </i>                <h4>{{ trans(config('app.directory_name') . '/lp1.usps.live_chat.title') }}</h4>
-                <p style="text-align: center">{{ trans(config('app.directory_name') . '/lp1.usps.live_chat.text') }}</p>
+                <p style="text-align: left">{{ trans(config('app.directory_name') . '/lp1.usps.live_chat.text') }}</p>
             </div>
             <div class="col-xs-12 col-md-4 col-sm-12">
                 <i class="material-icons">
                     vpn_lock
                 </i>
                 <h4>{{ trans(config('app.directory_name') . '/lp1.usps.privacy_anonymity.title') }}</h4>
-                <p style="text-align: center">{{ trans(config('app.directory_name') . '/lp1.usps.privacy_anonymity.text') }}</p>
+                <p style="text-align: left">{{ trans(config('app.directory_name') . '/lp1.usps.privacy_anonymity.text') }}</p>
             </div>
         </div>
     </div>

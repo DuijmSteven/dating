@@ -7,6 +7,23 @@ body {
     font-family: 'Fira Sans', sans-serif;
 }
 
+.roundImage {
+    width: 150px;
+    height: 150px;
+    border-radius: 3px;
+    object-fit: cover;
+    transform: translateY(-0.5rem);
+}
+
+h5.recentUsername {
+    font-size: 19px;
+    font-weight: 700;
+    color: $secondaryColor;
+    letter-spacing: 1px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
 .bg-img {
     /* Control the height of the image */
     background-image: url('/img/couple.jpg');

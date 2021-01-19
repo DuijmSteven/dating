@@ -8,7 +8,7 @@
             <a class="Footer__item" href="{{ route('contact.get') }}">{{ trans(config('app.directory_name') . '/footer.company_data') }}</a>
             <a class="Footer__item" href="{{ route('contact.get') }}">{{ trans(config('app.directory_name') . '/footer.contact') }}</a>
             <a class="Footer__item" href="{{ route('tac.show') }}">{{ trans(config('app.directory_name') . '/footer.tac') }}</a>
-            <a class="Footer__item" href="{{ route('articles.overview') }}">{{ trans(config('app.directory_name') . '/footer.articles') }}</a>
+{{--            <a class="Footer__item" href="{{ route('articles.overview') }}">{{ trans(config('app.directory_name') . '/footer.articles') }}</a>--}}
 
             @if(isset($authenticatedUser))
                 <a class="Footer__item" href="{{ route('privacy.show') }}">{{ trans(config('app.directory_name') . '/footer.privacy') }}</a>
@@ -66,7 +66,7 @@
             !isset($isAnonymousDomain) ||
             !$isAnonymousDomain
         )
-            <div class="col-xs-12 text-center Footer__logo-container">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center Footer__logo-container">
                 <div class="Footer__logo">
                     <img src="{!! asset('img/site_logos/' . config('app.directory_name') . '/footer_logo.png') !!}" alt="{{ ucfirst(\config('app.name')) }}">
                 </div>

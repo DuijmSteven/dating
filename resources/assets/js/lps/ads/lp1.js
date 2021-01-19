@@ -1,3 +1,4 @@
+import $ from "jquery";
 
 $(window).on('load', function () {
 
@@ -16,6 +17,10 @@ $(window).on('load', function () {
     if ($('.has-error').length > 0) {
         $('#JS--registerButton').click();
     }
+
+    $('.scrollToRegistration').click(() => {
+        $('html, body').animate({scrollTop:0}, 500, 'swing');
+    });
 });
 
 

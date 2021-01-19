@@ -89,6 +89,7 @@ class LandingPageController extends FrontendController
                 $viewData['lpType'] = 'register';
             }
 
+            $viewData['users'] = $this->getUsers();
             $viewData['id'] = $id;
 
             return view(
@@ -151,11 +152,7 @@ class LandingPageController extends FrontendController
      */
     private function getUsers()
     {
-//        $countryCode = strtolower($this->userLocationService->getCountryCodeFromIp($this->userLocationService->getUserIp()));
-//
-//        if (!in_array($countryCode, ['nl', 'be'])) {
         $countryCode = 'nl';
-//        }
 
         $users = User::with(['roles', 'meta'])->whereHas('roles', function ($query) {
             $query->where('id', User::TYPE_BOT);

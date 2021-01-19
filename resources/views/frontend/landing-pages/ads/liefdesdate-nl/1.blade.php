@@ -29,7 +29,6 @@
             })(window, document, 'script', 'dataLayer', 'GTM-MJG2S4N');</script>
         <!-- End Google Tag Manager -->
     @endif
-
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">
@@ -264,72 +263,144 @@
             </div>
         </div>
     </div>
+
+{{--    <div class="container welcome-container text-center JS--welcome-container" style="margin-bottom: 8rem;">--}}
+
+{{--        <div class="row icons" style="margin-top: 75px">--}}
+{{--            <div class="col-xs-12 col-md-4 col-sm-12">--}}
+{{--                <i class="material-icons">--}}
+{{--                    how_to_reg--}}
+{{--                </i>--}}
+{{--                <h4>{{ trans(config('app.directory_name') . '/lp1.usps.free_access.title') }}</h4>--}}
+{{--                <p style="text-align: left">{{ trans(config('app.directory_name') . '/lp1.usps.free_access.text') }}</p>--}}
+{{--            </div>--}}
+{{--            <div class="col-xs-12 col-md-4 col-sm-12">--}}
+{{--                <i class="material-icons">--}}
+{{--                    chat--}}
+{{--                </i>                <h4>{{ trans(config('app.directory_name') . '/lp1.usps.live_chat.title') }}</h4>--}}
+{{--                <p style="text-align: left">{{ trans(config('app.directory_name') . '/lp1.usps.live_chat.text') }}</p>--}}
+{{--            </div>--}}
+{{--            <div class="col-xs-12 col-md-4 col-sm-12">--}}
+{{--                <i class="material-icons">--}}
+{{--                    vpn_lock--}}
+{{--                </i>--}}
+{{--                <h4>{{ trans(config('app.directory_name') . '/lp1.usps.privacy_anonymity.title') }}</h4>--}}
+{{--                <p style="text-align: left">{{ trans(config('app.directory_name') . '/lp1.usps.privacy_anonymity.text') }}</p>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+
     <div class="container">
         <div class="row mt-5">
             <div class="col-sm-12">
                 <div class="text-center">
                     <h3>Contact vrouwen</h3>
                     <p style="font-size: 18px; font-weight: 300; text-align: justify;">Online chatten begint op een datingsite, zo ook het contact met vrouwen. Sex chat en online chatten, in het bijzonder anoniem geil chatten, zijn bijzonder goede manieren om je toekomstige bedpartner beter te leren kennen. Het fijne is dat je nog weinig van jezelf bloot hoeft te geven, maar wel kunt uitvinden of iemand bij je past. Sekscontact gaat vaak verder dan gewoon kennismaken, aangezien je toch enige verbinding wilt hebben met degene waar je na de sex chat mee het bed in duikt.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            @foreach ($users as $user)
+                <div class="text-center col-xs-6 col-lg-2 col-md-4 col-sm-6 mb-4 {{ $loop->index > 5 ? 'hidden-xs' : '' }}">
+                    <a href="#" class="scrollToRegistration">
+                        <img
+                            src="{{ $user->profileImageUrlThumb }}"
+                            class="roundImage"
+                            alt="profile-image"
+                        >
+                        <h5 class="small recentUsername">{{ $user->username }}</h5>
+                        <p class="offset-0 user-info">
+                            <small class="text-muted">{{ $user->meta->city }}</small>
+                        </p>
+                    </a>
+                </div>
+            @endforeach
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="text-center">
                     <h3>Vreemdgaan</h3>
                     <p style="font-size: 18px; font-weight: 300; text-align: justify;">Vind een vrouw om vreemd mee te gaan, klinkt makkelijker dan het is. Hoe doe je dat eigenlijk en hoeveel vrouwen zoeken mannen voor dezelfde redenen? Vrouw zoekt man komt net zo vaak voor als man zoekt vrouw óók als het om vreemdgaan gaat. Belangrijk is dat dit geheel discreet gebeurd, vandaar dat de aanmelding geheel anoniem verloopt en er geen persoonlijke gegevens worden vastgelegd. Dit zodat jij in alle rust kan chatten met Nederlanders!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-sm-12">
+                <div class="text-center">
                     <h3>Vrouw vinden</h3>
                     <p style="font-size: 18px; font-weight: 300; text-align: justify; margin-bottom: 30px">Na het gratis registreren kun je eenvoudig op zoek gaan naar sekscontact met vrouwen online. Of je nu een oudere vrouw zoekt, singles of gebonden mensen. Na inschrijving kun je met je gratis credit direct sekscontact leggen en online chatten op deze datingsite voor sekscontacten!</p>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-12 text-center" style="margin-bottom: 30px">
-                <a style="color: #337ab7" href="{{ route('tac.show') }}">{{ trans(config('app.directory_name') . '/footer.tac') }}</a> - <a  style="color: #337ab7" href="{{ route('contact.get') }}">{{ trans(config('app.directory_name') . '/footer.contact') }}</a>
-            </div>
-        </div>
+{{--        <div class="row">--}}
+{{--            <div class="col-sm-12 text-center" style="margin-bottom: 30px">--}}
+{{--                <a style="color: #337ab7" href="{{ route('tac.show') }}">{{ trans(config('app.directory_name') . '/footer.tac') }}</a> - <a  style="color: #337ab7" href="{{ route('contact.get') }}">{{ trans(config('app.directory_name') . '/footer.contact') }}</a>--}}
+{{--            </div>--}}
+{{--        </div>--}}
     </div>
 </div>
+
+@include('frontend.layouts.default.partials.sites.liefdesdate-nl.footer')
+
 </body>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script
+    src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+    crossorigin="anonymous"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
 <script>
-    var DP = {
-        baseUrl: '{!! url('/') !!}',
-        locale: '{{ app()->getLocale() }}',
-        recaptchaKey: '{{ config('app.recaptcha_key') }}',
-        recaptchaSecret: '{{ config('app.recaptcha_secret') }}',
-    };
+    (function($){
+        var DP = {
+            baseUrl: '{!! url('/') !!}',
+            locale: '{{ app()->getLocale() }}',
+            recaptchaKey: '{{ config('app.recaptcha_key') }}',
+            recaptchaSecret: '{{ config('app.recaptcha_secret') }}',
+        };
 
-    $('.JS--register-button').click(function (event) {
-        grecaptcha.execute(DP.recaptchaKey, {action: 'register'}).then(function (token) {
-            document.getElementById('g-recaptcha-response').value = token;
+        $('.JS--register-button').click(function (event) {
+            grecaptcha.execute(DP.recaptchaKey, {action: 'register'}).then(function (token) {
+                document.getElementById('g-recaptcha-response').value = token;
 
-            $('#JS--registrationForm').submit();
+                $('#JS--registrationForm').submit();
+            });
         });
-    });
 
-    function startTimer(duration, display) {
-        var timer = duration, minutes, seconds;
-        setInterval(function () {
-            minutes = parseInt(timer / 60, 10);
-            seconds = parseInt(timer % 60, 10);
+        $('.scrollToRegistration').click(() => {
+            $('html, body').animate({scrollTop:0}, 500, 'swing');
+        });
 
-            minutes = minutes < 10 ? "0" + minutes : minutes;
-            seconds = seconds < 10 ? "0" + seconds : seconds;
+        function startTimer(duration, display) {
+            var timer = duration, minutes, seconds;
+            setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
 
-            for (i = 0; i < display.length; i++) {
-                display[i].textContent = minutes + ":" + seconds;
-            }
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
 
-            if (--timer < 0) {
-                timer = 0;
-            }
-        }, 1000);
-    }
+                for (i = 0; i < display.length; i++) {
+                    display[i].textContent = minutes + ":" + seconds;
+                }
 
-    window.onload = function () {
-        var fiveMinutes = 60 * 5,
-            display = document.querySelectorAll('.time');
-        startTimer(fiveMinutes, display);
-    };
+                if (--timer < 0) {
+                    timer = 0;
+                }
+            }, 1000);
+        }
+
+        window.onload = function () {
+            var fiveMinutes = 60 * 5,
+                display = document.querySelectorAll('.time');
+            startTimer(fiveMinutes, display);
+        };
+    })(jQuery);
 </script>
 
 </html>
