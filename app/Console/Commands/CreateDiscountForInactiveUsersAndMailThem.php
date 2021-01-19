@@ -56,6 +56,7 @@ class CreateDiscountForInactiveUsersAndMailThem extends Command
             ::whereHas('roles', function ($query) {
                 $query->where('id', Role::ROLE_PEASANT);
             })
+            ->where('active', true)
             ->whereHas('meta', function ($query) {
                 $query->where('email_verified', UserMeta::EMAIL_VERIFIED_DELIVERABLE)
                     ->orWhere('email_verified', UserMeta::EMAIL_VERIFIED_RISKY);
