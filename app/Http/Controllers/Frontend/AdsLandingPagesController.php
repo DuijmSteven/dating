@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App;
 use App\Services\RegistrationService;
+use App\User;
 use Illuminate\Http\Request;
 
 class AdsLandingPagesController extends FrontendController
@@ -37,6 +38,7 @@ class AdsLandingPagesController extends FrontendController
                 $viewData['lpType'] = 'register';
             }
 
+            $viewData['users'] = $this->getUsers();
             $viewData['id'] = $id;
 
             return view(
@@ -46,5 +48,30 @@ class AdsLandingPagesController extends FrontendController
         } else {
             return abort(404);
         }
+    }
+
+    /**
+     * @return User[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Query\Builder[]|\Illuminate\Support\Collection
+     */
+    private function getUsers()
+    {
+        $countryCode = 'nl';
+
+        $users = User::with(['roles', 'meta'])->whereHas('roles', function ($query) {
+            $query->where('id', User::TYPE_BOT);
+        })
+            ->whereHas('meta', function ($query) use ($countryCode) {
+                $query->where('gender', User::GENDER_FEMALE);
+                $query->where('country', $countryCode);
+            })
+            ->whereDoesntHave('meta', function ($query) {
+                $query->where('too_slutty_for_ads', true);
+            })
+            ->whereHas('profileImage')
+            ->inRandomOrder()
+            ->take(12)
+            ->get();
+
+        return $users;
     }
 }
