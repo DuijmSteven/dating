@@ -39,6 +39,9 @@
                         <li><a href="#">Current year <span
                                     class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentCurrentYear'] !!}</span></a>
                         </li>
+                        <li><a href="#">Last year <span
+                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentLastYear'] !!}</span></a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -81,6 +84,10 @@
                         <li><a href="#">Current year <span
                                     class="DashboardWidget_count">&euro; {{ number_format($googleAdsRevenueStatistics['revenueCurrentYear']/100, 2) }} (<span
                                         style="color: #08a05e; font-weight: 600">{{ number_format($googleAdsRevenueStatistics['revenueCurrentYear']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
+                        </li>
+                        <li><a href="#">Last year <span
+                                    class="DashboardWidget_count">&euro; {{ number_format($googleAdsRevenueStatistics['revenueLastYear']/100, 2) }} (<span
+                                        style="color: #08a05e; font-weight: 600">{{ number_format($googleAdsRevenueStatistics['revenueLastYear']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
                         </li>
                         <li><a href="#">Average last 7 days <span
                                     class="DashboardWidget_count">&euro; {{ number_format($googleAdsRevenueStatistics['averageRevenueLastSevenDays']/100, 2) }} (<span
@@ -132,6 +139,9 @@
                         <li><a href="#">Current year <span
                                     class="DashboardWidget_count">{{ $googleAdsConversionStatistics['conversionsCurrentYear'] }} </span></a>
                         </li>
+                        <li><a href="#">Last year <span
+                                    class="DashboardWidget_count">{{ $googleAdsConversionStatistics['conversionsLastYear'] }} </span></a>
+                        </li>
                         <li><a href="#">All time conversion rate <span
                                     class="DashboardWidget_count">{{ number_format($googleAdsConversionStatistics['allTimeConversionRate'], 1) }}% </span></a>
                         </li>
@@ -178,7 +188,17 @@
                                     class="DashboardWidget_count">{{ $googleAdsUserTypeStatistics['alvPerPayingUserRegistered'] }}</span></a></li>
                         <li><a href="{{ route('admin.peasants.with-creditpack.overview') }}">ALVU <span
                                     class="DashboardWidget_count">{{ $googleAdsUserTypeStatistics['alvPerUserRegistered'] }}</span></a></li>
-                        <li><a href="{{ route('admin.peasants.created-until-date.show', ['date' => \Carbon\Carbon::now('Europe/Amsterdam')->subMonths(4)->format('d-m-Y')]) }}">ALVPU regist. by 5 months ago ( {{ $googleAdsUserTypeStatistics['payingUsersRegisteredUntilFiveMonthsAgoCount'] }} users) <span
+
+                        <li><a href="{{ route('admin.peasants.created-until-date.show', ['date' => \Carbon\Carbon::now('Europe/Amsterdam')->subMonths(7)->format('d-m-Y')]) }}">ALVPU regist. by 9 months ago ( {{ $googleAdsUserTypeStatistics['payingUsersRegisteredUntilNineMonthsAgoCount'] }} users) <span
+                                    class="DashboardWidget_count">{{ $googleAdsUserTypeStatistics['alvPerUserRegisteredUntilNineMonthsAgo'] }}</span></a></li>
+                        <li><a href="{{ route('admin.peasants.created-until-date.show', ['date' => \Carbon\Carbon::now('Europe/Amsterdam')->subMonths(7)->format('d-m-Y')]) }}">ALVPU regist. by 8 months ago ( {{ $googleAdsUserTypeStatistics['payingUsersRegisteredUntilEightMonthsAgoCount'] }} users) <span
+                                    class="DashboardWidget_count">{{ $googleAdsUserTypeStatistics['alvPerUserRegisteredUntilEightMonthsAgo'] }}</span></a></li>
+
+                        <li><a href="{{ route('admin.peasants.created-until-date.show', ['date' => \Carbon\Carbon::now('Europe/Amsterdam')->subMonths(7)->format('d-m-Y')]) }}">ALVPU regist. by 7 months ago ( {{ $googleAdsUserTypeStatistics['payingUsersRegisteredUntilSevenMonthsAgoCount'] }} users) <span
+                                    class="DashboardWidget_count">{{ $googleAdsUserTypeStatistics['alvPerUserRegisteredUntilSevenMonthsAgo'] }}</span></a></li>
+                        <li><a href="{{ route('admin.peasants.created-until-date.show', ['date' => \Carbon\Carbon::now('Europe/Amsterdam')->subMonths(6)->format('d-m-Y')]) }}">ALVPU regist. by 6 months ago ( {{ $googleAdsUserTypeStatistics['payingUsersRegisteredUntilSixMonthsAgoCount'] }} users) <span
+                                    class="DashboardWidget_count">{{ $googleAdsUserTypeStatistics['alvPerUserRegisteredUntilSixMonthsAgo'] }}</span></a></li>
+                        <li><a href="{{ route('admin.peasants.created-until-date.show', ['date' => \Carbon\Carbon::now('Europe/Amsterdam')->subMonths(5)->format('d-m-Y')]) }}">ALVPU regist. by 5 months ago ( {{ $googleAdsUserTypeStatistics['payingUsersRegisteredUntilFiveMonthsAgoCount'] }} users) <span
                                     class="DashboardWidget_count">{{ $googleAdsUserTypeStatistics['alvPerUserRegisteredUntilFiveMonthsAgo'] }}</span></a></li>
                         <li><a href="{{ route('admin.peasants.created-until-date.show', ['date' => \Carbon\Carbon::now('Europe/Amsterdam')->subMonths(4)->format('d-m-Y')]) }}">ALVPU regist. by 4 months ago ( {{ $googleAdsUserTypeStatistics['payingUsersRegisteredUntilFourMonthsAgoCount'] }} users) <span
                                     class="DashboardWidget_count">{{ $googleAdsUserTypeStatistics['alvPerUserRegisteredUntilFourMonthsAgo'] }}</span></a></li>

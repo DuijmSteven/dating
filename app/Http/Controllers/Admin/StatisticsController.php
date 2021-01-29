@@ -409,6 +409,8 @@ class StatisticsController extends Controller
         $startOfPreviousMonthUtc = $startOfPreviousMonth->setTimezone('UTC');
         $endOfPreviousMonthUtc = $endOfPreviousMonth->setTimezone('UTC');
 
+        $startOfLastYear = Carbon::now('Europe/Amsterdam')->subYears(1)->startOfYear()->setTimezone('UTC');
+        $endOfLastYear = Carbon::now('Europe/Amsterdam')->subYears(1)->endOfYear()->setTimezone('UTC');
         $startOfYear = Carbon::now('Europe/Amsterdam')->startOfYear()->setTimezone('UTC');
 
         $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
@@ -479,6 +481,11 @@ class StatisticsController extends Controller
                     $startOfYear,
                     $endOfToday,
                     UserAffiliateTracking::AFFILIATE_GOOGLE
+                ),
+                'messagesSentLastYear' => $this->statisticsManager->paidMessagesSentCount(
+                    $startOfLastYear,
+                    $endOfLastYear,
+                    UserAffiliateTracking::AFFILIATE_GOOGLE
                 )
             ],
             'googleAdsConversionStatistics' => [
@@ -511,6 +518,11 @@ class StatisticsController extends Controller
                     UserAffiliateTracking::AFFILIATE_GOOGLE,
                     $startOfYear,
                     $endOfToday
+                ),
+                'conversionsLastYear' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfLastYear,
+                    $endOfLastYear
                 ),
                 'conversionsAllTime' => $googleAdsConversionsAllTime,
                 'allTimeConversionRate' => $googleAdsConversionsAllTimeCount / $googleAdsLeadsAllTimeCount * 100,
@@ -546,6 +558,11 @@ class StatisticsController extends Controller
                     UserAffiliateTracking::AFFILIATE_GOOGLE,
                     $startOfYear,
                     $endOfToday
+                ),
+                'revenueLastYear' => $this->statisticsManager->affiliateRevenueBetween(
+                    UserAffiliateTracking::AFFILIATE_GOOGLE,
+                    $startOfLastYear,
+                    $endOfLastYear
                 ),
                 'averageRevenueLastSevenDays' => $this->statisticsManager->affiliateRevenueBetween(
                         UserAffiliateTracking::AFFILIATE_GOOGLE,

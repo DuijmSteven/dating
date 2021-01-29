@@ -179,6 +179,12 @@
                                 ({{ $peasantMessagesPerHourStatistics['currentYear'] }})
                             </span></a>
                         </li>
+                        <li><a href="#">Last
+                                year <span
+                                    class="DashboardWidget_count">{!! $peasantMessageStatistics['messagesSentLastYear'] !!}
+                                ({{ $peasantMessagesPerHourStatistics['lastYear'] }})
+                            </span></a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -220,6 +226,10 @@
                         <li><a href="#">Current year <span
                                     class="DashboardWidget_count">&euro; {{ $revenueStatistics['revenueCurrentYear']/100 }} (<span
                                         style="color: #08a05e; font-weight: 600">{{ number_format($revenueStatistics['revenueCurrentYear']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
+                        </li>
+                        <li><a href="#">Last year <span
+                                    class="DashboardWidget_count">&euro; {{ $revenueStatistics['revenueLastYear']/100 }} (<span
+                                        style="color: #08a05e; font-weight: 600">{{ number_format($revenueStatistics['revenueLastYear']/(1 + $salesTax)/100, 2) }}</span>)</span></a>
                         </li>
                         <li><a href="#">Average last 7 days <span
                                     class="DashboardWidget_count">&euro; {{ number_format($revenueStatistics['averageRevenueLastSevenDays']/100, 2) }} (<span
@@ -265,6 +275,9 @@
                         </li>
                         <li><a href="#">Current year <span
                                     class="DashboardWidget_count">{{ $conversionStatistics['conversionsCurrentYear'] }} </span></a>
+                        </li>
+                        <li><a href="#">Last year <span
+                                    class="DashboardWidget_count">{{ $conversionStatistics['conversionsLastYear'] }} </span></a>
                         </li>
                         <li><a href="#">All time conversion rate <span
                                     class="DashboardWidget_count">{{ number_format($conversionStatistics['allTimeConversionRate'], 1) }}% </span></a>

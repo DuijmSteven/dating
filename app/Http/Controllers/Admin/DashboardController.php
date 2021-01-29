@@ -123,6 +123,8 @@ class DashboardController extends Controller
         $startOfPreviousMonthUtc = $startOfPreviousMonth->setTimezone('UTC');
         $endOfPreviousMonthUtc = $endOfPreviousMonth->setTimezone('UTC');
 
+        $startOfLastYear = Carbon::now('Europe/Amsterdam')->subYears(1)->startOfYear()->setTimezone('UTC');
+        $endOfLastYear = Carbon::now('Europe/Amsterdam')->subYears(1)->endOfYear()->setTimezone('UTC');
         $startOfYear = Carbon::now('Europe/Amsterdam')->startOfYear()->setTimezone('UTC');
 
         $tenMinutesAgo = Carbon::now('Europe/Amsterdam')->subMinutes(10)->setTimezone('UTC');
@@ -189,6 +191,10 @@ class DashboardController extends Controller
                 'messagesSentCurrentYear' => $this->statisticsManager->paidMessagesSentCount(
                     $startOfYear,
                     $endOfToday
+                ),
+                'messagesSentLastYear' => $this->statisticsManager->paidMessagesSentCount(
+                    $startOfLastYear,
+                    $endOfLastYear
                 )
             ],
             'peasantMessagesPerHourStatistics' => [
@@ -205,7 +211,8 @@ class DashboardController extends Controller
                         $startOfPreviousMonthUtc,
                         $endOfPreviousMonthUtc
                     ) / $endOfPreviousMonthUtc->diffInHours($startOfPreviousMonthUtc), 0),
-                'currentYear' => $this->statisticsManager->messagesSentByUserTypePerHourCurrentYear()
+                'currentYear' => $this->statisticsManager->messagesSentByUserTypePerHourCurrentYear(),
+                'lastYear' => $this->statisticsManager->messagesSentByUserTypePerHourLastYear()
             ],
             'revenueStatistics' => [
                 'revenueToday' => $this->statisticsManager->revenueBetween(
@@ -231,6 +238,10 @@ class DashboardController extends Controller
                 'revenueCurrentYear' => $this->statisticsManager->revenueBetween(
                     $startOfYear,
                     $endOfToday
+                ),
+                'revenueLastYear' => $this->statisticsManager->revenueBetween(
+                    $startOfLastYear,
+                    $endOfLastYear
                 ),
                 'averageRevenueLastSevenDays' => $this->statisticsManager->revenueBetween(
                     $startOfSevenDaysAgo,
@@ -271,6 +282,11 @@ class DashboardController extends Controller
                     'any',
                     $startOfYear,
                     $endOfToday
+                ),
+                'conversionsLastYear' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                    'any',
+                    $startOfLastYear,
+                    $endOfLastYear
                 ),
                 'allTimeConversionRate' => $allUsersCount > 0 ? $conversionsAllTimeCount / $allUsersCount * 100 : 0
             ],
