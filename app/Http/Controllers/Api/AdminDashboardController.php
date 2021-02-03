@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Conversation;
+use App\Managers\ConversationManager;
+use App\Managers\StatisticsManager;
 use App\Role;
 use App\Services\UserActivityService;
 use App\User;
@@ -12,11 +15,23 @@ class AdminDashboardController
      * @var UserActivityService
      */
     private UserActivityService $userActivityService;
+    /**
+     * @var ConversationManager
+     */
+    private ConversationManager $conversationManager;
+    /**
+     * @var StatisticsManager
+     */
+    private StatisticsManager $statisticsManager;
 
     public function __construct(
-        UserActivityService $userActivityService
+        UserActivityService $userActivityService,
+        ConversationManager $conversationManager,
+        StatisticsManager $statisticsManager
     ) {
         $this->userActivityService = $userActivityService;
+        $this->conversationManager = $conversationManager;
+        $this->statisticsManager = $statisticsManager;
     }
 
     public function getAdminDashboardData()
@@ -66,6 +81,8 @@ class AdminDashboardController
                 User::GENDER_FEMALE
             );
 
+
+
             $data = [
                 'onlineIds' => $onlineIds,
                 'onlineFemaleStraightBotsCount' => $onlineFemaleStraightBotsCount,
@@ -74,6 +91,17 @@ class AdminDashboardController
                 'activeMaleStraightBotsCount' => $activeMaleStraightBotsCount,
                 'inactiveFemaleStraightBotsCount' => $inactiveFemaleStraightBotsCount,
                 'inactiveMaleStraightBotsCount' => $inactiveMaleStraightBotsCount,
+                'availableConversationsCount' => $this->conversationManager->getConversationsByCycleStageCount([
+                    Conversation::CYCLE_STAGE_NEW,
+                    Conversation::CYCLE_STAGE_UNREPLIED
+                ]),
+                'stoppedConversationsCount' => $this->conversationManager->getConversationsByCycleStageCount([
+                    Conversation::CYCLE_STAGE_STOPPED
+                ]),
+                'messageRateLastHour' => $this->statisticsManager->paidMessagesSentByUserTypeLastHour(),
+                'unspentCreditsOfUsersActiveInLastThirtyDays' => $this->statisticsManager->unspentCredits(30),
+                'unspentCreditsOfUsersActiveInLastTenDays' => $this->statisticsManager->unspentCredits(10),
+                'unspentCreditsOfUsersActiveInLastThreeDays' => $this->statisticsManager->unspentCredits(3),
             ];
 
             return response()->json($data);
