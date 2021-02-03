@@ -44,11 +44,18 @@ class AdminDashboardController
                 User::GENDER_MALE
             );
 
+            $activeMaleStraightBotsCount = $this->userActivityService->getActiveCountByType(
+                Role::ROLE_BOT,
+                User::GENDER_MALE,
+                User::GENDER_FEMALE
+            );
+
             $data = [
                 'onlineIds' => $onlineIds,
                 'onlineFemaleStraightBotsCount' => $onlineFemaleStraightBotsCount,
                 'onlinePeasantsCount' => $onlinePeasantsCount,
                 'activeFemaleStraightBotsCount' => $activeFemaleStraightBotsCount,
+                'activeMaleStraightBotsCount' => $activeMaleStraightBotsCount,
             ];
 
             return response()->json($data);
