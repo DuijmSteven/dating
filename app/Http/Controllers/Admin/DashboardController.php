@@ -67,6 +67,7 @@ class DashboardController extends Controller
         );
 
         $activeFemaleStraightBotsCount = $this->userActivityService->getActiveCountByType(
+            true,
             Role::ROLE_BOT,
             User::GENDER_FEMALE,
             User::GENDER_MALE

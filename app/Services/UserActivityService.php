@@ -68,19 +68,24 @@ class UserActivityService
     }
 
     public function getActiveCountByType(
+        bool $active = null,
         int $roleId = null,
         int $genderId = null,
         int $lookingForGenderId = null
     ) {
-        return User::with('roles')
+        $query = User::with('roles')
             ->whereHas('roles', function ($query) use ($roleId) {
                 $query->where('id', $roleId);
             })
             ->whereHas('meta', function ($query) use ($genderId, $lookingForGenderId) {
                 $query->where('gender', $genderId);
                 $query->where('looking_for_gender', $lookingForGenderId);
-            })
-            ->where('active', true)
-            ->count();
+            });
+
+        if (is_bool($active)) {
+            $query->where('active', $active);
+        }
+
+        return $query->count();
     }
 }

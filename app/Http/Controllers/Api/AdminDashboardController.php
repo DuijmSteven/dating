@@ -39,12 +39,28 @@ class AdminDashboardController
             );
 
             $activeFemaleStraightBotsCount = $this->userActivityService->getActiveCountByType(
+                true,
                 Role::ROLE_BOT,
                 User::GENDER_FEMALE,
                 User::GENDER_MALE
             );
 
             $activeMaleStraightBotsCount = $this->userActivityService->getActiveCountByType(
+                true,
+                Role::ROLE_BOT,
+                User::GENDER_MALE,
+                User::GENDER_FEMALE
+            );
+
+            $inactiveFemaleStraightBotsCount = $this->userActivityService->getActiveCountByType(
+                false,
+                Role::ROLE_BOT,
+                User::GENDER_FEMALE,
+                User::GENDER_MALE
+            );
+
+            $inactiveMaleStraightBotsCount = $this->userActivityService->getActiveCountByType(
+                false,
                 Role::ROLE_BOT,
                 User::GENDER_MALE,
                 User::GENDER_FEMALE
@@ -56,6 +72,8 @@ class AdminDashboardController
                 'onlinePeasantsCount' => $onlinePeasantsCount,
                 'activeFemaleStraightBotsCount' => $activeFemaleStraightBotsCount,
                 'activeMaleStraightBotsCount' => $activeMaleStraightBotsCount,
+                'inactiveFemaleStraightBotsCount' => $inactiveFemaleStraightBotsCount,
+                'inactiveMaleStraightBotsCount' => $inactiveMaleStraightBotsCount,
             ];
 
             return response()->json($data);
