@@ -3,10 +3,11 @@
 namespace App\Middleware\Api;
 
 use Closure;
+use Illuminate\Http\Request;
 
 class VerifyOperator
 {
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         if (
             !$request->user()->isOperator() &&

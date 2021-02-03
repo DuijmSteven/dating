@@ -90,5 +90,4 @@ class BotController
             return response()->json($exception->getMessage(), 500);
         }
     }
-
 }

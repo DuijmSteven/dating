@@ -81,15 +81,18 @@ Route::group([
         ->name('conversations-messages.get-messages-with-higher-id');
 });
 
+Route::get('admin-dashboard-data', 'Api\AdminDashboardController@getAdminDashboardData')
+    ->middleware('auth:sanctum', 'api_admin');
+
 Route::group([
     'prefix' => 'conversations',
     'middleware' => ['auth:sanctum']
 ], function () {
     Route::get('operator-platform-dashboard-data', 'Api\ConversationController@getOperatorPlatformDashboardData')
-        ->middleware('operator');
+        ->middleware('api_operator');
 
     Route::get('{conversationId}/lock/{limit?}', 'Api\ConversationController@lockAndGetData')
-        ->middleware('operator');
+        ->middleware('api_operator');
 
     Route::get('{conversationId}/get-locked-info', 'Api\ConversationController@getLockedInformation')
         ->name('conversations.get-locked-info');

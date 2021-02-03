@@ -41,4 +41,46 @@ class UserActivityService
             ->pluck('id')
             ->toArray();
     }
+
+    public function getOnlineCountByType(
+        array $onlineIds,
+        int $roleId = null,
+        int $genderId = null,
+        int $lookingForGenderId = null
+    ) {
+        return User::with('roles')
+            ->whereHas('roles', function ($query) use ($roleId) {
+                if ($roleId) {
+                    $query->where('id', $roleId);
+                }
+            })
+            ->whereHas('meta', function ($query) use ($genderId, $lookingForGenderId) {
+                if ($genderId) {
+                    $query->where('gender', $genderId);
+                }
+
+                if ($lookingForGenderId) {
+                    $query->where('looking_for_gender', $lookingForGenderId);
+                }
+            })
+            ->whereIn('id', $onlineIds)
+            ->count();
+    }
+
+    public function getActiveCountByType(
+        int $roleId = null,
+        int $genderId = null,
+        int $lookingForGenderId = null
+    ) {
+        return User::with('roles')
+            ->whereHas('roles', function ($query) use ($roleId) {
+                $query->where('id', $roleId);
+            })
+            ->whereHas('meta', function ($query) use ($genderId, $lookingForGenderId) {
+                $query->where('gender', $genderId);
+                $query->where('looking_for_gender', $lookingForGenderId);
+            })
+            ->where('active', true)
+            ->count();
+    }
 }

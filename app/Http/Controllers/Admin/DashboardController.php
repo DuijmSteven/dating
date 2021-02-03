@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Managers\ChartsManager;
 use App\Managers\ConversationManager;
 use App\Managers\StatisticsManager;
+use App\Role;
 use App\Services\ProbabilityService;
 use App\Services\UserActivityService;
 use App\User;
@@ -53,56 +54,23 @@ class DashboardController extends Controller
             $this->userActivityService::GENERAL_ONLINE_TIMEFRAME_IN_MINUTES
         );
 
-        $onlineFemaleStraightBotsCount = User::with('roles')
-            ->whereHas('roles', function ($query) {
-                $query->where('id', User::TYPE_BOT);
-            })
-            ->whereHas('meta', function ($query) {
-                $query->where('gender', User::GENDER_FEMALE);
-                $query->where('looking_for_gender', User::GENDER_MALE);
-            })
-            ->whereIn('id', $onlineIds)
-            ->count();
+        $onlineFemaleStraightBotsCount = $this->userActivityService->getOnlineCountByType(
+            $onlineIds,
+            Role::ROLE_BOT,
+            User::GENDER_FEMALE,
+            User::GENDER_MALE
+        );
 
-//        $onlineMaleStraightBotsCount = User::with('roles')
-//            ->whereHas('roles', function ($query) {
-//                $query->where('id', User::TYPE_BOT);
-//            })
-//            ->whereHas('meta', function ($query) {
-//                $query->where('gender', User::GENDER_MALE);
-//                $query->where('looking_for_gender', User::GENDER_FEMALE);
-//            })
-//            ->whereIn('id', $onlineIds)
-//            ->count();
+        $onlinePeasantsCount = $this->userActivityService->getOnlineCountByType(
+            $onlineIds,
+            Role::ROLE_PEASANT,
+        );
 
-        $onlinePeasantsCount = User::with('roles')
-            ->whereHas('roles', function ($query) {
-                $query->where('id', User::TYPE_PEASANT);
-            })
-            ->whereIn('id', $onlineIds)
-            ->count();
-
-        $activeFemaleStraightBotsCount = User::with('roles')
-            ->whereHas('roles', function ($query) {
-                $query->where('id', User::TYPE_BOT);
-            })
-            ->whereHas('meta', function ($query) {
-                $query->where('gender', User::GENDER_FEMALE);
-                $query->where('looking_for_gender', User::GENDER_MALE);
-            })
-            ->where('active', true)
-            ->count();
-
-//        $activeMaleStraightBotsCount = User::with('roles')
-//            ->whereHas('roles', function ($query) {
-//                $query->where('id', User::TYPE_BOT);
-//            })
-//            ->whereHas('meta', function ($query) {
-//                $query->where('gender', User::GENDER_MALE);
-//                $query->where('looking_for_gender', User::GENDER_FEMALE);
-//            })
-//            ->where('active', true)
-//            ->count();
+        $activeFemaleStraightBotsCount = $this->userActivityService->getActiveCountByType(
+            Role::ROLE_BOT,
+            User::GENDER_FEMALE,
+            User::GENDER_MALE
+        );
 
         $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');
         $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
