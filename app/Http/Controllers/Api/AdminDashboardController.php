@@ -8,6 +8,7 @@ use App\Managers\StatisticsManager;
 use App\Role;
 use App\Services\UserActivityService;
 use App\User;
+use Carbon\Carbon;
 
 class AdminDashboardController
 {
@@ -37,6 +38,33 @@ class AdminDashboardController
     public function getAdminDashboardData()
     {
         try {
+            $startOfToday = Carbon::now('Europe/Amsterdam')->startOfDay()->setTimezone('UTC');
+            $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
+            $startOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->startOfDay()->setTimezone('UTC');
+            $endOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->endOfDay()->setTimezone('UTC');
+
+            $startOfSevenDaysAgo = Carbon::now('Europe/Amsterdam')->subDays(7)->startOfDay()->setTimezone('UTC');
+            $startOfThirtyDaysAgo = Carbon::now('Europe/Amsterdam')->subDays(30)->startOfDay()->setTimezone('UTC');
+
+            $startOfWeek = Carbon::now('Europe/Amsterdam')->startOfWeek()->setTimezone('UTC');
+            $endOfWeek = Carbon::now('Europe/Amsterdam')->endOfWeek()->setTimezone('UTC');
+            $startOfMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->setTimezone('UTC');
+            $endOfMonth = Carbon::now('Europe/Amsterdam')->endOfMonth()->setTimezone('UTC');
+
+            $startOfPreviousMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->subMonth();
+            $endOfPreviousMonth = $startOfPreviousMonth->copy()->endOfMonth();
+
+            $startOfPreviousMonthUtc = $startOfPreviousMonth->setTimezone('UTC');
+            $endOfPreviousMonthUtc = $endOfPreviousMonth->setTimezone('UTC');
+
+            $startOfLastYear = Carbon::now('Europe/Amsterdam')->subYears(1)->startOfYear()->setTimezone('UTC');
+            $endOfLastYear = Carbon::now('Europe/Amsterdam')->subYears(1)->endOfYear()->setTimezone('UTC');
+            $startOfYear = Carbon::now('Europe/Amsterdam')->startOfYear()->setTimezone('UTC');
+
+            $tenMinutesAgo = Carbon::now('Europe/Amsterdam')->subMinutes(10)->setTimezone('UTC');
+            $oneHourAgo = Carbon::now('Europe/Amsterdam')->subHours(1)->setTimezone('UTC');
+            $now = Carbon::now('Europe/Amsterdam')->setTimezone('UTC');
+
             $onlineIds = $this->userActivityService->getOnlineUserIds(
                 $this->userActivityService::GENERAL_ONLINE_TIMEFRAME_IN_MINUTES
             );
@@ -81,8 +109,6 @@ class AdminDashboardController
                 User::GENDER_FEMALE
             );
 
-
-
             $data = [
                 'onlineIds' => $onlineIds,
                 'onlineFemaleStraightBotsCount' => $onlineFemaleStraightBotsCount,
@@ -102,6 +128,74 @@ class AdminDashboardController
                 'unspentCreditsOfUsersActiveInLastThirtyDays' => $this->statisticsManager->unspentCredits(30),
                 'unspentCreditsOfUsersActiveInLastTenDays' => $this->statisticsManager->unspentCredits(10),
                 'unspentCreditsOfUsersActiveInLastThreeDays' => $this->statisticsManager->unspentCredits(3),
+                'revenueStatistics' => [
+                    'revenueToday' => $this->statisticsManager->revenueBetween(
+                        $startOfToday,
+                        $endOfToday
+                    ),
+                    'revenueYesterday' => $this->statisticsManager->revenueBetween(
+                        $startOfYesterday,
+                        $endOfYesterday
+                    ),
+                    'revenueCurrentWeek' => $this->statisticsManager->revenueBetween(
+                        $startOfWeek,
+                        $endOfWeek
+                    ),
+                    'revenueCurrentMonth' => $this->statisticsManager->revenueBetween(
+                        $startOfMonth,
+                        $endOfMonth
+                    ),
+                    'revenuePreviousMonth' => $this->statisticsManager->revenueBetween(
+                        $startOfPreviousMonthUtc,
+                        $endOfPreviousMonthUtc
+                    ),
+                    'revenueCurrentYear' => $this->statisticsManager->revenueBetween(
+                        $startOfYear,
+                        $endOfToday
+                    ),
+                    'revenueLastYear' => $this->statisticsManager->revenueBetween(
+                        $startOfLastYear,
+                        $endOfLastYear
+                    ),
+                    'averageRevenueLastSevenDays' => $this->statisticsManager->revenueBetween(
+                        $startOfSevenDaysAgo,
+                        $endOfYesterday
+                    ) / 7,
+                    'averageRevenueLastThirtyDays' => $this->statisticsManager->revenueBetween(
+                        $startOfThirtyDaysAgo,
+                        $endOfYesterday
+                    ) / 30,
+                ],
+                'peasantMessageStatistics' => [
+                    'messagesSentToday' => $this->statisticsManager->paidMessagesSentCount(
+                        $startOfToday,
+                        $endOfToday
+                    ),
+                    'messagesSentYesterday' => $this->statisticsManager->paidMessagesSentCount(
+                        $startOfYesterday,
+                        $endOfYesterday
+                    ),
+                    'messagesSentCurrentWeek' => $this->statisticsManager->paidMessagesSentCount(
+                        $startOfWeek,
+                        $endOfWeek
+                    ),
+                    'messagesSentCurrentMonth' => $this->statisticsManager->paidMessagesSentCount(
+                        $startOfMonth,
+                        $endOfMonth
+                    ),
+                    'messagesSentPreviousMonth' => $this->statisticsManager->paidMessagesSentCount(
+                        $startOfPreviousMonthUtc,
+                        $endOfPreviousMonthUtc
+                    ),
+                    'messagesSentCurrentYear' => $this->statisticsManager->paidMessagesSentCount(
+                        $startOfYear,
+                        $endOfToday
+                    ),
+                    'messagesSentLastYear' => $this->statisticsManager->paidMessagesSentCount(
+                        $startOfLastYear,
+                        $endOfLastYear
+                    )
+                ],
             ];
 
             return response()->json($data);
