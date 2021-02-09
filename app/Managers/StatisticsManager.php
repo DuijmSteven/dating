@@ -772,7 +772,17 @@ class StatisticsManager
     public function affiliateConversionsBetweenQueryBuilder(string $affiliate, $startDate, $endDate, $publisher = null)
     {
         $query = Payment
-            ::where('is_conversion', true)
+            ::with([
+                'peasant',
+                'peasant.meta',
+                'peasant.account',
+                'peasant.payments',
+                'peasant.completedPayments',
+                'peasant.affiliateTracking',
+                'peasant.conversationsAsUserA',
+                'peasant.conversationsAsUserB',
+            ])
+            ->where('is_conversion', true)
             ->whereBetween('created_at',
             [
                 $startDate,

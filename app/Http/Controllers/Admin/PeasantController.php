@@ -11,10 +11,12 @@ use App\Managers\ChartsManager;
 use App\Managers\PeasantManager;
 use App\Managers\StatisticsManager;
 use App\Managers\UserManager;
+use App\Payment;
 use App\Services\UserActivityService;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class PeasantController extends Controller
@@ -133,6 +135,7 @@ class PeasantController extends Controller
         $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
         $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
 
+        /** @var Collection<Payment> $conversions */
         $conversions = $this->statisticsManager->affiliateConversionsBetweenQueryBuilder(
             'any',
             $launchDate,
@@ -140,17 +143,22 @@ class PeasantController extends Controller
         )
         ->paginate(20);
 
+        $peasants = $conversions->map(function ($conversion, $key) {
+            return $conversion->peasant;
+        });
+
         $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
 
         return view(
-            'admin.peasants.overview',
+            'admin.peasants.conversions.overview',
             [
                 'title' => 'Conversions Overview - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Conversions',
                 'headingSmall' => 'Overview',
                 'carbonNow' => Carbon::now(),
-                'peasants' => $conversions,
-                'peasantMessagesCharts' => $this->chartsManager->getMessagesCharts($conversions, $launchDate),
+                'conversions' => $conversions,
+                'peasants' => $peasants,
+                'peasantMessagesCharts' => $this->chartsManager->getMessagesCharts($peasants, $launchDate),
             ]
         );
     }
