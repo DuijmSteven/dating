@@ -84,6 +84,9 @@ Route::group([
 Route::get('admin-dashboard-data', 'Api\AdminDashboardController@getAdminDashboardData')
     ->middleware('auth:sanctum', 'api_admin');
 
+Route::get('site-dashboard-data', 'Api\AdminDashboardController@getSiteDashboardData')
+    ->middleware('auth:sanctum', 'api_admin');
+
 Route::group([
     'prefix' => 'conversations',
     'middleware' => ['auth:sanctum']
