@@ -154,7 +154,7 @@ class StatisticsController extends Controller
 
         $startOfYear = Carbon::now('Europe/Amsterdam')->startOfYear()->setTimezone('UTC');
 
-        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.launch_date'));
         $googleAdsLaunchDate = Carbon::createFromFormat('d-m-Y H:i:s', '11-06-2020 00:00:00');
 
         $viewData = [
@@ -276,7 +276,7 @@ class StatisticsController extends Controller
 
         $startOfYear = Carbon::now('Europe/Amsterdam')->startOfYear()->setTimezone('UTC');
 
-        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.launch_date'));
         $googleAdsLaunchDate = Carbon::createFromFormat('d-m-Y H:i:s', '11-06-2020 00:00:00');
 
         $viewData = [
@@ -413,7 +413,7 @@ class StatisticsController extends Controller
         $endOfLastYear = Carbon::now('Europe/Amsterdam')->subYears(1)->endOfYear()->setTimezone('UTC');
         $startOfYear = Carbon::now('Europe/Amsterdam')->startOfYear()->setTimezone('UTC');
 
-        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.launch_date'));
 
         $googleAdsLaunchDate = Carbon::createFromFormat('d-m-Y H:i:s', '11-06-2020 00:00:00');
 
@@ -624,7 +624,7 @@ class StatisticsController extends Controller
 
         $startOfYear = Carbon::now('Europe/Amsterdam')->startOfYear()->setTimezone('UTC');
 
-        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.launch_date'));
 
         $xpartnersLaunchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-05-2020 00:00:00');
 

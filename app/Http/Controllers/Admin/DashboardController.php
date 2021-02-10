@@ -100,7 +100,7 @@ class DashboardController extends Controller
         $oneHourAgo = Carbon::now('Europe/Amsterdam')->subHours(1)->setTimezone('UTC');
         $now = Carbon::now('Europe/Amsterdam')->setTimezone('UTC');
 
-        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.launch_date'));
 
         $googleAdsLaunchDate = Carbon::createFromFormat('d-m-Y H:i:s', '11-06-2020 00:00:00');
 

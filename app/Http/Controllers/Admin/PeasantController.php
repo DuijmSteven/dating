@@ -85,7 +85,7 @@ class PeasantController extends Controller
             ->orderBy('id', 'desc')
             ->paginate(20);
 
-        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.launch_date'));
 
         return view(
             'admin.peasants.overview',
@@ -112,7 +112,7 @@ class PeasantController extends Controller
             ->orderBy('id', 'desc')
             ->paginate(20);
 
-        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.launch_date'));
 
         return view(
             'admin.peasants.overview',
@@ -132,7 +132,7 @@ class PeasantController extends Controller
      */
     public function conversions()
     {
-        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.launch_date'));
         $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
 
         /** @var Collection<Payment> $conversions */
@@ -147,7 +147,7 @@ class PeasantController extends Controller
             return $conversion->peasant;
         });
 
-        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.launch_date'));
 
         return view(
             'admin.peasants.conversions.overview',
@@ -165,7 +165,7 @@ class PeasantController extends Controller
 
     public function fingerprints()
     {
-        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.launch_date'));
 
         $fingerprintsWithPeasants = UserFingerprint::with(['user'])
             ->whereHas('user')
@@ -223,7 +223,7 @@ class PeasantController extends Controller
             ->orderBy('id', 'desc')
             ->paginate(20);
 
-        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.launch_date'));
 
         return view(
             'admin.peasants.overview',
@@ -280,7 +280,7 @@ class PeasantController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(20);
 
-        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.launch_date'));
 
         return view(
             'admin.peasants.overview',
@@ -299,7 +299,7 @@ class PeasantController extends Controller
     {
         $peasantsWithCreditpack = $this->statisticsManager->peasantsWithCreditpackQueryBuilder()->paginate(20);
 
-        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.launch_date'));
 
         return view(
             'admin.peasants.overview',
@@ -365,7 +365,7 @@ class PeasantController extends Controller
             ->orderBy('id')
             ->paginate(20);
 
-        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.launch_date'));
 
         return view(
             'admin.peasants.overview',
@@ -439,7 +439,7 @@ class PeasantController extends Controller
             )
             ->findOrFail($peasantId);
 
-        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.launch_date'));
 
         return view(
             'admin.peasants.edit',

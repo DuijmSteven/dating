@@ -231,6 +231,8 @@ class AdminDashboardController
             $oneHourAgo = Carbon::now('Europe/Amsterdam')->subHours(1)->setTimezone('UTC');
             $now = Carbon::now('Europe/Amsterdam')->setTimezone('UTC');
 
+            $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.launch_date'));
+
             $onlineIds = $this->userActivityService->getOnlineUserIds(
                 $this->userActivityService::GENERAL_ONLINE_TIMEFRAME_IN_MINUTES
             );
@@ -274,6 +276,16 @@ class AdminDashboardController
                 User::GENDER_MALE,
                 User::GENDER_FEMALE
             );
+
+            $conversionsAllTimeCount = $this->statisticsManager->affiliateConversionsBetweenCount(
+                'any',
+                $launchDate,
+                $endOfToday
+            );
+
+            $allUsersCount = User::whereHas('roles', function ($query) {
+                $query->where('id', User::TYPE_PEASANT);
+            })->count();
 
             $data = [
                 'onlineIds' => $onlineIds,
@@ -361,6 +373,58 @@ class AdminDashboardController
                         $startOfLastYear,
                         $endOfLastYear
                     )
+                ],
+                'conversionStatistics' => [
+                    'conversionsToday' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                        'any',
+                        $startOfToday,
+                        $endOfToday
+                    ),
+                    'conversionsYesterday' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                        'any',
+                        $startOfYesterday,
+                        $endOfYesterday
+                    ),
+                    'conversionsCurrentWeek' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                        'any',
+                        $startOfWeek,
+                        $endOfWeek
+                    ),
+                    'conversionsCurrentMonth' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                        'any',
+                        $startOfMonth,
+                        $endOfMonth
+                    ),
+                    'conversionsPreviousMonth' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                        'any',
+                        $startOfPreviousMonthUtc,
+                        $endOfPreviousMonthUtc
+                    ),
+                    'conversionsCurrentYear' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                        'any',
+                        $startOfYear,
+                        $endOfToday
+                    ),
+                    'conversionsLastYear' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                        'any',
+                        $startOfLastYear,
+                        $endOfLastYear
+                    ),
+                    'allTimeConversionRate' => $allUsersCount > 0 ? $conversionsAllTimeCount / $allUsersCount * 100 : 0
+                ],
+                'topMessagerStatistics' => [
+                    'today' => $this->statisticsManager->topMessagersBetweenDates($startOfToday, $endOfToday, 50),
+                    'this_week' => $this->statisticsManager->topMessagersBetweenDates($startOfWeek, $endOfWeek, 50),
+                ],
+                'messagersOnARollStatistics' => [
+                    'last_ten_minutes' => [
+                        'peasants' => $this->statisticsManager->peasantMessagersOnARoll($tenMinutesAgo, $now, 50, 1),
+                        'countLimit' => 1
+                    ],
+                    'last_hour' => [
+                        'peasants' => $this->statisticsManager->peasantMessagersOnARoll($oneHourAgo, $now, 50, 2),
+                        'countLimit' => 2
+                    ]
                 ],
             ];
 

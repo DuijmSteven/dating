@@ -118,7 +118,7 @@ class StatisticsManager
         $eightMonthsAgo = Carbon::now('Europe/Amsterdam')->subMonths(8)->setTimezone('UTC');
         $nineMonthsAgo = Carbon::now('Europe/Amsterdam')->subMonths(9)->setTimezone('UTC');
 
-        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.launch_date'));
 
         $allTimePayingUsersCount = $this->payingUsersCreatedUntilDateCount($endOfToday);
         $payingUsersUntilNineMonthsAgoCount = $this->payingUsersCreatedUntilDateCount($nineMonthsAgo);
@@ -268,7 +268,7 @@ class StatisticsManager
         $eightMonthsAgo = Carbon::now('Europe/Amsterdam')->subMonths(8)->setTimezone('UTC');
         $nineMonthsAgo = Carbon::now('Europe/Amsterdam')->subMonths(9)->setTimezone('UTC');
 
-        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.launch_date'));
 
         $allTimePayingUsersCount = $this->payingUsersCreatedUntilDateCount($endOfToday, $affiliate);
         $payingUsersUntilNineMonthsAgoCount = $this->payingUsersCreatedUntilDateCount($nineMonthsAgo, $affiliate);
@@ -465,7 +465,7 @@ class StatisticsManager
         $eightMonthsAgo = Carbon::now('Europe/Amsterdam')->subMonths(8)->setTimezone('UTC');
         $nineMonthsAgo = Carbon::now('Europe/Amsterdam')->subMonths(9)->setTimezone('UTC');
 
-        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.launch_date'));
 
         $allTimePayingUsersCount = $this->payingUsersCreatedUntilDateCount(
             $endOfToday,

@@ -85,7 +85,7 @@ class UserSearchController extends Controller
         $viewName = '';
         $roleId = (int) $searchParameters['role_id'];
 
-        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', '01-02-2020 00:00:00');
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.launch_date'));
 
         if ($roleId === User::TYPE_PEASANT) {
             $viewName = 'admin.peasants.overview';
