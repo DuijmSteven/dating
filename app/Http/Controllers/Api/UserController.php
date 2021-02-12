@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Managers\UserManager;
 use App\Milestone;
 use App\MilestoneUser;
+use App\Role;
 use App\Services\UserActivityService;
 use App\User;
 use Carbon\Carbon;
@@ -85,7 +86,19 @@ class UserController
 
             if ($requestingUser->isAdmin()) {
                 $relations[] = 'createdByOperator';
-                $relationCounts = User::BOT_RELATION_COUNTS;
+
+                if ($roleId === Role::ROLE_BOT) {
+                    $relationCounts = User::BOT_RELATION_COUNTS;
+                }
+            }
+
+            if ($roleId === Role::ROLE_PEASANT) {
+//                $relations[] = 'account';
+//                $relations[] = 'completedPayments';
+//                $relations[] = 'hasViewedUnique';
+//                $relationCounts[] = 'hasViewed';
+                $relations = array_merge(User::PEASANT_RELATIONS, User::COMMON_RELATIONS);
+                $relationCounts = User::PEASANT_RELATION_COUNTS;
             }
 
                 /** @var Collection $bots */

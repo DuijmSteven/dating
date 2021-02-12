@@ -136,7 +136,7 @@ class UserManager
                 User::OPERATOR_RELATION_COUNTS
             );
         } elseif ($roleId === User::TYPE_PEASANT) {
-            if (Str::contains(request()->url(), 'admin')) {
+            if (Str::contains(request()->url(), 'admin') || Str::contains(request()->url(), 'api')) {
                 $relationCounts = array_merge(
                     User::PEASANT_RELATION_COUNTS
                 );
@@ -712,13 +712,13 @@ class UserManager
     public function getUserById(int $userId, ?int $roleId = null)
     {
         if (null === $roleId) {
-            $additionalRelations = [];
+            $additionalRelations = User::COMMON_RELATIONS;
             $additionalRelationCounts = [];
         } elseif ($roleId === Role::ROLE_BOT) {
             $additionalRelations = User::BOT_RELATIONS;
             $additionalRelationCounts = User::BOT_RELATION_COUNTS;
         } elseif ($roleId === Role::ROLE_PEASANT) {
-            $additionalRelations = User::PEASANT_RELATIONS;
+            $additionalRelations = array_merge(User::PEASANT_RELATIONS, ['imagesNotProfile']);
             $additionalRelationCounts = User::PEASANT_RELATION_COUNTS;
         } elseif ($roleId === Role::ROLE_EDITOR) {
             $additionalRelations = User::EDITOR_RELATIONS;

@@ -113,7 +113,8 @@ class User extends Authenticatable
         'conversationsAsUserA',
         'conversationsAsUserB',
         'payments',
-        'botMessagesReceived'
+        'botMessagesReceived',
+        'hasViewed'
     ];
 
     const BOT_RELATIONS = [

@@ -75,6 +75,14 @@ Route::group([
 });
 
 Route::group([
+    'prefix' => 'peasants',
+    'middleware' => ['auth:sanctum']
+], function () {
+    Route::post('create', 'Api\PeasantController@create');
+    Route::put('{peasantId}/update', 'Api\PeasantController@update');
+});
+
+Route::group([
     'prefix' => 'conversation-messages'
 ], function () {
     Route::get('{userAId}/{userBId}/{messageIdHigherThan}', 'Api\ConversationController@getConversationMessagesWithIdHigherThanByParticipantIds')

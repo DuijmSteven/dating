@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Admin\Users\UserSearchRequest;
+use App\Managers\UserManager;
 use App\Managers\UserSearchManager;
 use App\User;
 use Illuminate\Http\Request;
@@ -14,11 +15,17 @@ class UserSearchController
      * @var UserSearchManager
      */
     private UserSearchManager $userSearchManager;
+    /**
+     * @var UserManager
+     */
+    private UserManager $userManager;
 
     public function __construct(
-        UserSearchManager $userSearchManager
+        UserSearchManager $userSearchManager,
+        UserManager $userManager
     ) {
         $this->userSearchManager = $userSearchManager;
+        $this->userManager = $userManager;
     }
 
     public function getPaginatedSearchResults(Request $request, $page)
@@ -37,8 +44,8 @@ class UserSearchController
 
             $searchParametersFormatted = $this->userSearchManager->formatUserSearchArray($searchParameters);
 
-            $relations = ['meta', 'createdByOperator'];
-            $relationCounts = [];
+            $relations = UserManager::getRequiredRelationsForRole((int) $searchParametersFormatted['role_id']);
+            $relationCounts = UserManager::getRequiredRelationCountsForRole((int) $searchParametersFormatted['role_id']);
 
             $users = $this->userSearchManager->searchUsers(
                 $searchParametersFormatted,
