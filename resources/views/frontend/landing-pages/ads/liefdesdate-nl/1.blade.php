@@ -60,10 +60,9 @@
     <div class="row imgHeader d-sm-block d-md-none">
         @if($lpType === 'register')
 
-            <div class="col-md-12 my-auto text-center text-white warning-bg">
+            <div class="col-md-12 text-center text-white warning-box warning-bg">
                 <h6>LET OP: Je kunt hier bekenden tegenkomen!</h6>
-                <span>Tijdelijk gratis inschrijving, verloopt over: </span>
-                <span class="time" style="color: #f44336; font-weight: bold">05:00</span>
+                <span>Tijdelijk gratis inschrijving, verloopt over: <span class="time" style="color: #f44336; font-weight: bold">05:00</span></span>
             </div>
         @endif
     </div>
@@ -291,7 +290,7 @@
 {{--    </div>--}}
 
     <div class="container">
-        <div class="row mt-5">
+        <div class="row firstAfterHero">
             <div class="col-sm-12">
                 <div class="text-center">
                     <h3>Contact vrouwen</h3>

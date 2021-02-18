@@ -29,6 +29,17 @@ a, a:hover {
     padding: 16px;
     background-color: white;
     font-size: 14px;
+
+    @media (max-width: 768px) {
+        margin-top: -40px;
+        max-width: 500px;
+        padding: 16px;
+        background-color: white;
+        font-size: 14px;
+        border-radius: 15px;
+        border: 1px solid #eee;
+        box-shadow: 0 0 4px rgba(0,0,0,0.2);
+    }
 }
 
 .help-block {
@@ -53,9 +64,33 @@ h5.recentUsername {
     margin-bottom: 0;
 }
 
+.warning-box {
+    display: flex;
+    height: 45px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    h6 {
+        margin-bottom: -2px;
+    }
+
+    @media (max-width: 400px) {
+        * {
+            font-size: 14px !important;
+        }
+    }
+
+    @media (max-width: 340px) {
+        * {
+            font-size: 12px !important;
+        }
+    }
+}
+
 .imgHeader {
-    background: url('/lps/t1/assets/img/lp-3.jpg') center/cover no-repeat;
-    min-height: 120px;
+    background: url('/img/sites/liefdesdate-nl/lp1-header-mobile.jpg') center/cover no-repeat;
+    min-height: 226px;
     margin-bottom: 14px;
 }
 
@@ -64,8 +99,12 @@ h5.recentUsername {
 }
 
 @media (min-width: 768px) {
+    .firstAfterHero {
+        margin-top: 30px;
+    }
+
     .bg-img {
-        background-image: url("/lps/t1/assets/img/lp-3.jpg");
+        background-image: url("/img/sites/liefdesdate-nl/lp1-header.jpg");
         min-height: 680px;
     }
 

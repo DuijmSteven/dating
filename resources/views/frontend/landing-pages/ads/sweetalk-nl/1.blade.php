@@ -64,17 +64,6 @@
         </div>
     </div>
 
-    <div class="row imgHeader d-sm-block d-md-none">
-        @if($lpType === 'register')
-
-            <div class="col-md-12 my-auto text-center text-white warning-bg">
-                <h6>LET OP: Je kunt hier bekenden tegenkomen!</h6>
-                <span>Tijdelijk gratis inschrijving, verloopt over: </span>
-                <span class="time" style="color: #fff; font-weight: bold">05:00</span>
-            </div>
-        @endif
-    </div>
-
     <div
         class="bg-img {{ $lpType === 'login' ? 'login' : 'register' }} {{ (!config('app.show_images') && config('app.env') === 'local') ? 'imageDontShowLocal' : '' }}">
         <div class="container">
