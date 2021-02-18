@@ -6,7 +6,7 @@
 
     <script>
         grecaptcha.ready(function() {
-            grecaptcha.execute('6Ldx0N8UAAAAABj1wlIcdnxtgCxrprg3DPMsDtkj', {action: 'homepage'}).then(function(token) {
+            grecaptcha.execute('6LdHptgUAAAAACP5lA0778MuyBsjs6oEnQcWo0T1', {action: 'homepage'}).then(function(token) {
             });
         });
     </script>
@@ -25,7 +25,7 @@
 
     <script>
         grecaptcha.ready(function() {
-            grecaptcha.execute('6Le9gtIZAAAAAD0V29NclSJdawf-8A8F5wBAdWot', {action: 'homepage'}).then(function(token) {
+            grecaptcha.execute('6Les2dYZAAAAAPxu6emr65nygAIwEGvvU7RASKWz', {action: 'homepage'}).then(function(token) {
             });
         });
     </script>
@@ -43,7 +43,7 @@
 
     <script>
         grecaptcha.ready(function() {
-            grecaptcha.execute('6Les2dYZAAAAAPxu6emr65nygAIwEGvvU7RASKWz', {action: 'homepage'}).then(function(token) {
+            grecaptcha.execute('6LfSZV0aAAAAAIaUyZ_pjaqXtG3mVocGJl5rXaC5', {action: 'homepage'}).then(function(token) {
             });
         });
     </script>
@@ -52,16 +52,7 @@
 
     <script>
         grecaptcha.ready(function() {
-            grecaptcha.execute('6Les2dYZAAAAAPxu6emr65nygAIwEGvvU7RASKWz', {action: 'homepage'}).then(function(token) {
-            });
-        });
-    </script>
-@else
-    <script src="https://www.google.com/recaptcha/api.js?render=6LeTaF0aAAAAAKf5R8aZMClUgssSrst9JbA9Daos"></script>
-
-    <script>
-        grecaptcha.ready(function() {
-            grecaptcha.execute('6LdHptgUAAAAACP5lA0778MuyBsjs6oEnQcWo0T1', {action: 'homepage'}).then(function(token) {
+            grecaptcha.execute('6LeTaF0aAAAAAKf5R8aZMClUgssSrst9JbA9Daos', {action: 'homepage'}).then(function(token) {
             });
         });
     </script>
