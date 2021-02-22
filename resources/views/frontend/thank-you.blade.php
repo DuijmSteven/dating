@@ -4,60 +4,47 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="FeedbackContainer">
-                <h1 id="analytics--successfulPayment" style="margin-top:0; font-size: 60px; font-weight: 700;">{{ trans(config('app.directory_name') . '/credits_bought_feedback.thanks') }}</h1>
-                <i class="material-icons" style="font-size: 10rem; color: #2ab27b">done</i>
-                <h4 style="margin-bottom: 30px">{{ trans(config('app.directory_name') . '/credits_bought_feedback.success_message') }}</h4>
+                @if ($status == 'success')
+                    <h1 id="analytics--successfulPayment" style="margin-top:0; font-size: 60px; font-weight: 700;">{{ trans(config('app.directory_name') . '/credits_bought_feedback.thanks') }}</h1>
+                    <i class="material-icons" style="font-size: 10rem; color: #2ab27b">done</i>
+                    <h4 style="margin-bottom: 30px">{{ trans(config('app.directory_name') . '/credits_bought_feedback.success_message') }}</h4>
 
-                <a
-                    href="{{ route('home') }}"
-                    class="Button Button--primary centered"
-                >
-                    <span class="Button__content">
-                        {{ trans(config('app.directory_name') . '/credits_bought_feedback.home') }}
-                    </span>
-                </a>
+                    <a
+                        href="{{ route('home') }}"
+                        class="Button Button--primary centered"
+                    >
+                        <span class="Button__content">
+                            {{ trans(config('app.directory_name') . '/credits_bought_feedback.home') }}
+                        </span>
+                    </a>
+                @elseif ($status == 'completed')
+                    <h1 style="margin-top:0; font-size: 60px; font-weight: 700;">{{ trans(config('app.directory_name') . '/credits_bought_feedback.thanks') }}</h1>
+                    <i class="material-icons" style="font-size: 10rem; color: #2ab27b">done</i>
+                    <h4 style="margin-bottom: 30px">{{ trans(config('app.directory_name') . '/credits_bought_feedback.success_message') }}</h4>
 
-{{--                @if ($status == 'success')--}}
-{{--                    <h1 id="analytics--successfulPayment" style="margin-top:0; font-size: 60px; font-weight: 700;">{{ trans(config('app.directory_name') . '/credits_bought_feedback.thanks') }}</h1>--}}
-{{--                    <i class="material-icons" style="font-size: 10rem; color: #2ab27b">done</i>--}}
-{{--                    <h4 style="margin-bottom: 30px">{{ trans(config('app.directory_name') . '/credits_bought_feedback.success_message') }}</h4>--}}
+                    <a
+                        href="{{ route('home') }}"
+                        class="Button Button--primary centered"
+                    >
+                        <span class="Button__content">
+                            {{ trans(config('app.directory_name') . '/credits_bought_feedback.home') }}
+                        </span>
+                    </a>
+                @else
+                    <h1 style="font-size: 60px; font-weight: 700;">
+                        {{ trans(config('app.directory_name') . '/credits_bought_feedback.problem_with_payment') }}
+                    </h1>
+                    <h3>{{ $info }}</h3>
 
-{{--                    <a--}}
-{{--                        href="{{ route('home') }}"--}}
-{{--                        class="Button Button--primary centered"--}}
-{{--                    >--}}
-{{--                        <span class="Button__content">--}}
-{{--                            {{ trans(config('app.directory_name') . '/credits_bought_feedback.home') }}--}}
-{{--                        </span>--}}
-{{--                    </a>--}}
-{{--                @elseif ($status == 'completed')--}}
-{{--                    <h1 style="margin-top:0; font-size: 60px; font-weight: 700;">{{ trans(config('app.directory_name') . '/credits_bought_feedback.thanks') }}</h1>--}}
-{{--                    <i class="material-icons" style="font-size: 10rem; color: #2ab27b">done</i>--}}
-{{--                    <h4 style="margin-bottom: 30px">{{ trans(config('app.directory_name') . '/credits_bought_feedback.success_message') }}</h4>--}}
-
-{{--                    <a--}}
-{{--                        href="{{ route('home') }}"--}}
-{{--                        class="Button Button--primary centered"--}}
-{{--                    >--}}
-{{--                        <span class="Button__content">--}}
-{{--                            {{ trans(config('app.directory_name') . '/credits_bought_feedback.home') }}--}}
-{{--                        </span>--}}
-{{--                    </a>--}}
-{{--                @else--}}
-{{--                    <h1 style="font-size: 60px; font-weight: 700;">--}}
-{{--                        {{ trans(config('app.directory_name') . '/credits_bought_feedback.problem_with_payment') }}--}}
-{{--                    </h1>--}}
-{{--                    <h3>{{ $info }}</h3>--}}
-
-{{--                    <a--}}
-{{--                        href="{{ route('credits.show') }}"--}}
-{{--                        class="Button Button--primary centered"--}}
-{{--                    >--}}
-{{--                        <span class="Button__content">--}}
-{{--                            {{ trans(config('app.directory_name') . '/credits_bought_feedback.retry') }}--}}
-{{--                        </span>--}}
-{{--                    </a>--}}
-{{--                @endif--}}
+                    <a
+                        href="{{ route('credits.show') }}"
+                        class="Button Button--primary centered"
+                    >
+                        <span class="Button__content">
+                            {{ trans(config('app.directory_name') . '/credits_bought_feedback.retry') }}
+                        </span>
+                    </a>
+                @endif
 
             </div>
         </div>
