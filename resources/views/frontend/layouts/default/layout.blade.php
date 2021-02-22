@@ -9,7 +9,7 @@
                       height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 @endif
-<div id="app" class="fullWrapper">
+<div id="app" class="fullWrapper {!! \Request::route()->getName() == 'password.reset.get' ? 'withBackground' : '' !!}">
     @include('frontend.layouts.default.partials.header')
 
     @if(
