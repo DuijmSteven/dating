@@ -124,7 +124,7 @@ trait ResetsPasswords
     protected function sendResetResponse(Request $request, $response)
     {
         return redirect($this->redirectPath())
-                            ->with('status', trans(config('app.directory_name') . '.' . $response));
+                            ->with('status', trans(config('app.directory_name') . '/' . $response));
     }
 
     /**
@@ -138,7 +138,7 @@ trait ResetsPasswords
     {
         return redirect()->back()
                     ->withInput($request->only('email'))
-                    ->withErrors(['email' => trans(config('app.directory_name') . '.' . $response)]);
+                    ->withErrors(['email' => trans(config('app.directory_name') . '/' . $response)]);
     }
 
     /**
