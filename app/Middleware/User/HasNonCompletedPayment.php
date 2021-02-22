@@ -17,9 +17,6 @@ class HasNonCompletedPayment
      */
     public function handle($request, Closure $next)
     {
-        $request->session()->put('transactionId', '1212');
-        $request->session()->put('paymentMethod', 'ideal');
-        $request->session()->put('creditPackId', '1');
         $transactionId = $request->session()->get('transactionId');
 
         if (null === $transactionId) {
