@@ -73,7 +73,7 @@ trait SendsPasswordResetEmails
      */
     protected function sendResetLinkResponse(Request $request, $response)
     {
-        return back()->with('status', trans(config('app.directory_name'). '.' . $response));
+        return back()->with('status', trans(config('app.directory_name') . '.' . $response));
     }
 
     /**
