@@ -21,6 +21,7 @@ class UserAffiliateTracking extends TimeZonedModel
     const PUBLISHER_DATECENTRALE = 8;
     const PUBLISHER_GOOGLE_NL= 9;
     const PUBLISHER_GOOGLE_BE= 10;
+    const PUBLISHER_DATINGSITELIJST= 11;
 
     const LEAD_STATUS_UNVALIDATED = 0;
     const LEAD_STATUS_VALIDATED = 1;
@@ -42,6 +43,7 @@ class UserAffiliateTracking extends TimeZonedModel
             self::PUBLISHER_DATECENTRALE => 'datecentrale.nl',
             self::PUBLISHER_GOOGLE_NL => 'Google ads NL',
             self::PUBLISHER_GOOGLE_BE => 'Google ads BE',
+            self::PUBLISHER_DATINGSITELIJST => 'datingsitelijst',
         ];
     }
 

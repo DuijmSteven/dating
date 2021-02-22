@@ -38,6 +38,25 @@ class RegistrationService
             $viewData['registrationKeyword'] = $registrationKeyword;
         }
 
+        if ($request->input('publisher') || Cookie::has('publisher')) {
+
+            if (!Cookie::has('publisher')) {
+                Cookie::queue(
+                    'publisher',
+                    $request->input('publisher'),
+                    100000
+                );
+            }
+
+            if ($request->input('publisher')) {
+                $publisher = $request->input('publisher');
+            } else {
+                $publisher = Cookie::get('publisher');
+            }
+
+            $viewData['publisher'] = $publisher;
+        }
+
         if (
             (
                 $request->input('affiliate') &&

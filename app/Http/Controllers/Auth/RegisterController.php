@@ -184,16 +184,11 @@ class RegisterController extends Controller
                 $publisher = UserAffiliateTracking::publisherPerMediaId()[$mediaId];
             } else {
                 if ($request->input('affiliate') === UserAffiliateTracking::AFFILIATE_GOOGLE) {
-                    if ($request->input('country') === 'nl') {
-                        $publisher = UserAffiliateTracking::PUBLISHER_GOOGLE_NL;
-                    } elseif ($request->input('country') === 'be') {
-                        $publisher = UserAffiliateTracking::PUBLISHER_GOOGLE_BE;
-                    } else {
-                        \Log::debug('Country parameter: ' . $request->input('country'));
-
-                        \Log::debug('Google ads registration with null country');
-
-                        $publisher = null;
+                    if (
+                        $request->input('publisher') &&
+                        $request->input('publisher') === UserAffiliateTracking::publisherDescriptionPerId()[UserAffiliateTracking::PUBLISHER_DATINGSITELIJST]
+                    ) {
+                        $publisher = UserAffiliateTracking::PUBLISHER_DATINGSITELIJST;
                     }
                 } else {
                     $publisher = null;
@@ -223,6 +218,23 @@ class RegisterController extends Controller
                 null,
                 UserAffiliateTracking::PUBLISHER_DATECENTRALE
             );
+        } else if (
+            $request->input('publisher') &&
+            $request->input('publisher') === UserAffiliateTracking::publisherDescriptionPerId()[UserAffiliateTracking::PUBLISHER_DATINGSITELIJST]
+        ) {
+            try {
+                $this->affiliateManager->storeAffiliateTrackingInfo(
+                    $createdUser->id,
+                    null,
+                    $request->input('clickId'),
+                    $countryCode,
+                    null,
+                    UserAffiliateTracking::PUBLISHER_DATINGSITELIJST
+                );
+            } catch (\Exception $exception) {
+                DB::rollBack();
+                throw $exception;
+            }
         }
 
         try {
@@ -284,6 +296,7 @@ class RegisterController extends Controller
         Cookie::queue(Cookie::forget('clid'));
         Cookie::queue(Cookie::forget('gclid'));
         Cookie::queue(Cookie::forget('mediaId'));
+        Cookie::queue(Cookie::forget('publisher'));
 
         $this->guard()->login($createdUser);
 

@@ -9,6 +9,10 @@
     <input type="hidden" name="registrationKeyword" value="{{ $registrationKeyword }}">
 @endif
 
+@if(isset($publisher))
+    <input type="hidden" name="publisher" value="{{ $publisher }}">
+@endif
+
 @if(isset($clickId))
     <input type="hidden" name="clickId" value="{{ $clickId }}">
     <input type="hidden" name="affiliate" value="{{ $affiliate }}">

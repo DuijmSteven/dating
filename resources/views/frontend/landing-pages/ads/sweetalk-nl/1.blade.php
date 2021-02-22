@@ -153,21 +153,7 @@
                     >
                         {{ csrf_field() }}
 
-                        <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
-                        <input type="hidden" name="action" value="validate_captcha">
-
-                        @if(isset($mediaId))
-                            <input type="hidden" name="mediaId" value="{{ $mediaId }}">
-                        @endif
-
-                        @if(isset($clickId))
-                            <input type="hidden" name="clickId" value="{{ $clickId }}">
-                            <input type="hidden" name="affiliate" value="{{ $affiliate }}">
-                            <input type="hidden" name="country" value="{{ $country }}">
-                        @elseif(isset($affiliate) && $affiliate === \App\UserAffiliateTracking::AFFILIATE_DATECENTRALE)
-                            <input type="hidden" name="affiliate"
-                                   value="{{ \App\UserAffiliateTracking::AFFILIATE_DATECENTRALE }}">
-                        @endif
+                        @include('frontend.landing-pages.common-registration-form-part')
 
                         <div class="text-center my-auto d-none d-md-block pt-2 pb-2">
                             <div class="logo">
