@@ -180,20 +180,18 @@ trait AuthenticatesUsers
         $redirect = redirect(route('landing-page.show-login'));
 
         if (config('app.env') === 'staging') {
-            if (Str::contains(request()->getHttpHost(), 'altijdsex')) {
-                $redirect = redirect('https://staging.altijdsex.nl/login');
+            if (Str::contains(request()->getHttpHost(), config('app.pure_name'))) {
+                $redirect = redirect('https://staging.' . config('app.pure_name') . '.nl/login');
             } else {
                 $redirect = redirect('https://staging.devely-operators.nl/operators/login');
             }
 
         } else if (config('app.env') === 'production') {
-            if (Str::contains(request()->getHttpHost(), 'altijdsex')) {
-                $redirect = redirect('https://altijdsex.nl/login');
+            if (Str::contains(request()->getHttpHost(), config('app.pure_name'))) {
+                $redirect = redirect('https://' . config('app.pure_name') . '.nl/login');
             } else {
                 $redirect = redirect('https://devely-operators.nl/operators/login');
             }
-
-            $redirect = redirect(route('landing-page.show-login'));
         }
 
         return $this->loggedOut($request) ?: $redirect;
