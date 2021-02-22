@@ -50,7 +50,7 @@ Route::group([
         ->name('password.reset.post');
 
     Route::get('password/reset-final', 'Auth\ResetPasswordController@showResetForm')
-        ->name('password.reset.finl.get');
+        ->name('password.reset.final.get');
 
     Route::get('contact', 'Frontend\ContactController@showContact')
         ->name('contact.get');
