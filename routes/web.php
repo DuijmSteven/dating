@@ -207,6 +207,7 @@ Route::group([
     Route::post('/', 'Frontend\PaymentController@postPayment')
         ->name('payments.post');
     Route::get('thank-you', 'Frontend\PaymentController@checkPayment')
+        ->middleware(['has_non_completed_payment'])
         ->name('payments.check');
 });
 

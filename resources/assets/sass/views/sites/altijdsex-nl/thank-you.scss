@@ -1,0 +1,37 @@
+.FeedbackContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    background-image: url('/img/sites/altijdsex-nl/thank-you-bg.jpg');
+
+    margin-bottom: 25px;
+    color: #fff;
+
+    padding: 180px 30px;
+
+    @media (max-width: $screen-xs-max)
+    {
+        padding: 80px 30px;
+    }
+
+    h1, h4 {
+        margin-bottom: 30px;
+        background: $mainColor;
+        padding: 6px;
+        border-radius: 7px;
+    }
+
+    i {
+        font-size: 9.1rem;
+        color: rgb(42, 178, 123);
+        border: 14px solid #302c2c;
+        border-radius: 50%;
+        background: #302c2c;
+    }
+}

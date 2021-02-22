@@ -24,7 +24,7 @@
         @include('frontend.users.sites.sweetalk-nl.profile-hero')
     @endif
 
-    <div class="container mainContainer">
+    <div class="container mainContainer {!! \Request::route()->getName() == 'payments.check' ? ' mainContainer--reducedTopPadding-md-up' : '' !!}">
         @if(
             isset($authenticatedUser) &&
             $authenticatedUser != null &&

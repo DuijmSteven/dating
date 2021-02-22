@@ -6,6 +6,7 @@ use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\VerifyCsrfToken;
 use App\Middleware\Api\CanManipulateUser;
+use App\Middleware\User\HasNonCompletedPayment;
 use App\Middleware\User\SetLastOnlineAt;
 use App\Middleware\User\SetLocale;
 use App\Middleware\User\VerifyAdmin;
@@ -95,6 +96,7 @@ class Kernel extends HttpKernel
         'api_admin' => \App\Middleware\Api\VerifyAdmin::class,
         'api_operator' => \App\Middleware\Api\VerifyOperator::class,
         'api_editor' => \App\Middleware\Api\VerifyEditor::class,
-        'can_manipulate_user' => CanManipulateUser::class
+        'can_manipulate_user' => CanManipulateUser::class,
+        'has_non_completed_payment' => HasNonCompletedPayment::class
     ];
 }

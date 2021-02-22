@@ -34,6 +34,12 @@ img {
     @media (max-width: $screen-sm-max) {
         padding-top: ($navbarHeightSmallScreens + 15) + px;
     }
+
+    @media (min-width: $screen-sm-min) {
+        &--reducedTopPadding-md-up {
+            padding-top: 80px;
+        }
+    }
 }
 
 .form-control {

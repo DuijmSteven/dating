@@ -109,11 +109,11 @@ class PaymentController extends FrontendController
     /**
      * @throws \Exception
      */
-    public function checkPayment()
+    public function checkPayment(Request $request)
     {
-        $transactionId = session('transactionId');
-        $paymentMethod = session('paymentMethod');
-        $creditPackId = session('creditPackId');
+        $transactionId = $request->session()->get('transactionId');
+        $paymentMethod = $request->session()->get('paymentMethod');
+        $creditPackId = $request->session()->get('creditPackId');
         $creditPack = Creditpack::find($creditPackId);
 
         $price = (float) $creditPack->price;
@@ -138,7 +138,7 @@ class PaymentController extends FrontendController
             ->getStatus();
 
         //check if payment is already completed (user refreshed the thank-you page or visited it again in general)
-        if($paymentStatus == Payment::STATUS_COMPLETED) {
+        if($paymentStatus === Payment::STATUS_COMPLETED) {
             $this->authenticatedUser->setDiscountPercentage(null);
             $this->authenticatedUser->save();
 
@@ -162,6 +162,10 @@ class PaymentController extends FrontendController
             $check['status'] ? $status = 'success' : $status = 'fail';
             $info = $check['info'];
         }
+
+        $request->session()->forget('transactionId');
+        $request->session()->forget('paymentMethod');
+        $request->session()->forget('creditPackId');
 
         return view('frontend.thank-you', [
             'title' => $this->buildTitleWith(trans(config('app.directory_name') . '/view_titles.payment')),
