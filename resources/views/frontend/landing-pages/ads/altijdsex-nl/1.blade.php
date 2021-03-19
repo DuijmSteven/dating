@@ -62,7 +62,7 @@
         <div class="logo-container text-center">
             <div class="logo">
                 <img
-                    src="{!! asset('img/site_logos/' . config('app.directory_name') . '/Altijdsex_Logo_Small_Pos.png') !!}"
+                    src="{!! asset('img/site_logos/' . config('app.directory_name') . '/Altijdsex_Logo_Small_Pos.svg') !!}"
                     width="200px">
             </div>
         </div>

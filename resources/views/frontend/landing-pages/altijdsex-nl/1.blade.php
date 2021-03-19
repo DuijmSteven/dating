@@ -1274,7 +1274,7 @@
                 <img src="{!! asset('img/site_logos/' . config('app.directory_name') . '/Altijdsex_LogoBig_Neg.svg') !!}" alt="{{ ucfirst(\config('app.name')) }}">
             </div>
             <div class="col-md-12 copyright">
-                <h5>{{ trans(config('app.directory_name') . '/footer.copyright', ['currentYear' => $carbonNow->year]) }}</h5>
+                <h5>{{ trans(config('app.directory_name') . '/footer.copyright', ['currentYear' => $carbonNow->year, 'siteName' => ucfirst(config('app.name'))]) }}</h5>
             </div>
 
             <div class="language-selection">
