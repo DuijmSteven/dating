@@ -18,7 +18,7 @@ class BotUpdate extends Request
         $userProfileFields = UserConstants::selectableFields('bot');
 
         $rules = [
-            'username' => 'without_spaces|min:5|max:50|string|required|unique:users,username,' . $botId . ',id',
+            'username' => 'without_spaces|min:3|max:25|string|required|unique:users,username,' . $botId . ',id',
             'active' => 'boolean',
             'too_slutty_for_ads' => 'boolean',
             'dob' => 'date_format:d-m-Y|before:' . Carbon::now('Europe/Amsterdam')->subYears(18)->format('d-m-Y') . '|after:' . Carbon::now('Europe/Amsterdam')->subYears(100)->format('d-m-Y'),
