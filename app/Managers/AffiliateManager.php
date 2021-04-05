@@ -28,7 +28,7 @@ class AffiliateManager
     ) {
     }
 
-    public function storeAffiliateTrackingInfo(int $userId, string $affiliate, $clickId, $countryCode, $mediaId = null, $publisher = null)
+    public function storeAffiliateTrackingInfo(int $userId, $affiliate, $clickId, $countryCode, $mediaId = null, $publisher = null)
     {
         $affilateData = [
             'user_id' => $userId,
