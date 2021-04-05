@@ -33,7 +33,7 @@
 
             <div class="Hero__button__text">
                 <conversations-with-new-messages-count
-                    v-if="countConversationsWithNewMessages"
+                    v-if="countConversationsWithNewMessages > -1"
                     :count="countConversationsWithNewMessages"
                 >
                 </conversations-with-new-messages-count>
