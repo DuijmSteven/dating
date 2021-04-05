@@ -26,15 +26,15 @@ return [
         'login' => 'Login',
     ],
     'welcome' => 'Direct Sex Chat!',
-    'welcome_text' => 'Welcome to the leading dating site: Altijdsex.nl! Are you looking for a sexdate? An sexy conversation? Or simply e sexbuddy? On Altijdsex.nl you will run into endless opportunities. Make a free account and come into contact with others now!',
+    'welcome_text' => 'Welcome to the leading dating site: Sweetalk.nl! Are you looking for a sexdate? An sexy conversation? Or simply e sexbuddy? On Sweetalk.nl you will run into endless opportunities. Make a free account and come into contact with others now!',
     'usps' => [
         'free_access' => [
             'title' => 'Free access',
-            'text' => 'Je kunt je gratis inschrijven op Altijdsex.nl en direct gebruiken maken van onze diensten. Geen kleine letters en geen abonnement, lidmaatschap of automatische afschrijving van je rekening. Jij bepaalt wat je betaalt!',
+            'text' => 'Je kunt je gratis inschrijven op Sweetalk.nl en direct gebruiken maken van onze diensten. Geen kleine letters en geen abonnement, lidmaatschap of automatische afschrijving van je rekening. Jij bepaalt wat je betaalt!',
         ],
         'live_chat' => [
             'title' => 'Live Chat',
-            'text' => 'Op Altijdsex.nl maak je gebruik van een moderne live chat. Je bent dus niet langer afhankelijk van een ouderwetse berichtenbox die je dient te verversen. Hierdoor zie je het direct als je een nieuw bericht krijgt en je kunt hier dan ook direct op reageren. Maak gratis een account aan en ga vrijblijvend op zoek!',
+            'text' => 'Op Sweetalk.nl maak je gebruik van een moderne live chat. Je bent dus niet langer afhankelijk van een ouderwetse berichtenbox die je dient te verversen. Hierdoor zie je het direct als je een nieuw bericht krijgt en je kunt hier dan ook direct op reageren. Maak gratis een account aan en ga vrijblijvend op zoek!',
         ],
         'privacy_anonymity' => [
             'title' => 'Safety & Privacy',

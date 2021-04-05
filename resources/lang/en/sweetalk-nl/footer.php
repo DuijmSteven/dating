@@ -11,5 +11,5 @@ return [
     'legal' => 'Legal',
     'tac' => 'Terms & Conditions',
     'privacy' => 'Privacy',
-    'copyright' => 'Copyright © :currentYear altijdsex.nl',
+    'copyright' => 'Copyright © :currentYear Sweetalk.nl',
 ];

@@ -26,15 +26,15 @@ return [
         'login' => 'Log in',
     ],
     'welcome' => 'Direct Sex Chat!',
-    'welcome_text' => 'Welkom op de beste datingsite van Nederland: Altijdsex.nl! Ben je op zoek naar een sexdate? Geil chatten? Of gewoon naar een seksbuddy? Op Altijdsex.nl kom je duizenden gelijkgestemden tegen, waar je direct op veilige en anonieme wijze mee kan sekschatten. Maak nu gratis een account aan en start direct met sex chat!',
+    'welcome_text' => 'Welkom op de beste datingsite van Nederland: Liefdesdate.nl! Ben je op zoek naar een sexdate? Geil chatten? Of gewoon naar een seksbuddy? Op Liefdesdate.nl kom je duizenden gelijkgestemden tegen, waar je direct op veilige en anonieme wijze mee kan sekschatten. Maak nu gratis een account aan en start direct met sex chat!',
     'usps' => [
         'free_access' => [
             'title' => 'Gratis Toegang',
-            'text' => 'Je kunt je gratis inschrijven op Altijdsex.nl en direct gebruiken maken van onze diensten. Geen kleine letters en geen abonnement, lidmaatschap of automatische afschrijving van je rekening. Jij bepaalt wat je betaalt! Het maakt op onze datingsite dus niet uit of je als vrouw zoekt man of als man zoekt vrouw inschrijft. Voor zowel mannen als vrouwen is de inschrijving geheel gratis.',
+            'text' => 'Je kunt je gratis inschrijven op Liefdesdate.nl en direct gebruiken maken van onze diensten. Geen kleine letters en geen abonnement, lidmaatschap of automatische afschrijving van je rekening. Jij bepaalt wat je betaalt! Het maakt op onze datingsite dus niet uit of je als vrouw zoekt man of als man zoekt vrouw inschrijft. Voor zowel mannen als vrouwen is de inschrijving geheel gratis.',
         ],
         'live_chat' => [
             'title' => 'Live Chat',
-            'text' => 'Op Altijdsex.nl maak je gebruik van een moderne live chat. Je bent dus niet langer afhankelijk van een ouderwetse berichtenbox die je dient te verversen. Hierdoor zie je het direct als je een nieuw bericht krijgt en je kunt dan gelijk door met sekschatten. Maak gratis een account aan en ga vrijblijvend op zoek naar een sex afspraak!',
+            'text' => 'Op Liefdesdate.nl maak je gebruik van een moderne live chat. Je bent dus niet langer afhankelijk van een ouderwetse berichtenbox die je dient te verversen. Hierdoor zie je het direct als je een nieuw bericht krijgt en je kunt dan gelijk door met sekschatten. Maak gratis een account aan en ga vrijblijvend op zoek naar een sex afspraak!',
         ],
         'privacy_anonymity' => [
             'title' => 'Veiligheid & Privacy',

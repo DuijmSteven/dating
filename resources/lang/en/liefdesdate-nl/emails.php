@@ -2,7 +2,7 @@
 
 return [
     'subjects' => [
-        'welcome' => 'Welcome',
+        'welcome' => 'Welcome to Liefdesdate.nl',
         'message_received' => 'New message received',
         'credits_bought' => 'Creditpack purchase',
         'deactivated' => 'Account deactivation',

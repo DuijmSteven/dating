@@ -2,7 +2,7 @@
 
 return [
     'subjects' => [
-        'welcome' => 'Welkom op Altijdsex.nl',
+        'welcome' => 'Welkom op Liefdesdate.nl',
         'message_received' => 'Nieuw Bericht',
         'credits_bought' => 'Credits aankoop',
         'deactivated' => 'Account gedeactiveerd',
