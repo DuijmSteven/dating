@@ -46,9 +46,7 @@ class LandingPageController extends FrontendController
 
 
         if (
-            config('app.name') === 'altijdsex.nl' ||
-            config('app.name') === 'liefesdate.nl' ||
-            config('app.name') === 'sweetalk.nl'
+            config('app.name') === 'altijdsex.nl'
         ) {
             $viewData = $this->registrationService->checkAffiliateRequestDataAndSetRegistrationViewData($request, $viewData);
 
@@ -92,6 +90,8 @@ class LandingPageController extends FrontendController
             } else {
                 $viewData['lpType'] = 'register';
             }
+
+            $viewData = $this->registrationService->checkAffiliateRequestDataAndSetRegistrationViewData($request, $viewData);
 
             $viewData['users'] = $this->getUsers();
             $viewData['id'] = $id;
