@@ -94,6 +94,7 @@ class LandingPageController extends FrontendController
             $viewData = $this->registrationService->checkAffiliateRequestDataAndSetRegistrationViewData($request, $viewData);
 
             $viewData['users'] = $this->getUsers();
+            $viewData['totalUsersCount'] = User::count();
             $viewData['id'] = $id;
 
             return view(
