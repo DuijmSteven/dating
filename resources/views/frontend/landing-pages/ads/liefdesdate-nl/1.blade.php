@@ -61,8 +61,9 @@
         @if($lpType === 'register')
 
             <div class="col-md-12 text-center text-white warning-box warning-bg">
-                <h6>LET OP: Je kunt hier bekenden tegenkomen!</h6>
-                <span>Tijdelijk gratis inschrijving, verloopt over: <span class="time" style="color: #f44336; font-weight: bold">05:00</span></span>
+                <h6>{{ $users ? count($users) + 6786 : 6786 }} geregistreerde gebruikers!</h6>
+                <span>GRATIS Inschrijven!</span>
+                <?php /*<span>Tijdelijk gratis inschrijving, verloopt over: <span class="time" style="color: #f44336; font-weight: bold">05:00</span></span>*/ ?>
             </div>
         @endif
     </div>
@@ -153,11 +154,9 @@
                             </div>
                         </div>
 
-                        <div class="text-center d-none d-md-block p-2 warning-bg">
-                            <h5>LET OP: Je kunt hier bekenden tegenkomen!</h5>
-                            <h6 class="mb-0">Tijdelijk gratis inschrijving, verloopt over:
-                                <span class="time" style="color: #f44336; font-weight: bold">05:00</span>
-                            </h6>
+                        <div class="text-center text-white d-none d-md-block p-2 warning-bg">
+                            <h5 class="mb-0">{{ $users ? count($users) + 6786 : 6786 }} geregistreerde gebruikers!</h5>
+                            <h6 class="mb-0 mt-2">GRATIS Inschrijven!</h6>
                         </div>
 
                         @if(session()->has('recaptchaFailed') && session()->get('recaptchaFailed'))
@@ -277,15 +276,51 @@
 {{--    </div>--}}
 
     <div class="container">
-        <div class="row firstAfterHero">
+        <div class="row mt-5 mb-5">
+            <div class="col-md-4 text-center">
+                <i class="material-icons " style="color: #ebbcbc; font-size: 7em">
+                    textsms
+                </i>
+                <h3> >75.000 berichten per maand</h3>
+            </div>
+            <div class="col-md-4 text-center">
+                <i class="material-icons" style="color: #ebbcbc; font-size: 7em">
+                    group
+                </i>
+                <h3>58% / 42% vrouw / man balans</h3>
+            </div>
+            <div class="col-md-4 text-center">
+                <i class="material-icons" style="color: #ebbcbc; font-size: 7em">
+                    insights
+                </i>
+                <h3>1 op de 3 vindt een relatie</h3>
+            </div>
+        </div>
+        <div class="row mb-5">
             <div class="col-sm-12">
-                <div class="text-center">
-                    <h3>Contact vrouwen</h3>
-                    <p style="font-size: 18px; font-weight: 300; text-align: justify;">Online chatten begint op een datingsite, zo ook het contact met vrouwen. Sex chat en online chatten, in het bijzonder anoniem geil chatten, zijn bijzonder goede manieren om je toekomstige bedpartner beter te leren kennen. Het fijne is dat je nog weinig van jezelf bloot hoeft te geven, maar wel kunt uitvinden of iemand bij je past. Sekscontact gaat vaak verder dan gewoon kennismaken, aangezien je toch enige verbinding wilt hebben met degene waar je na de sex chat mee het bed in duikt.</p>
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-4 my-md-auto text-center">
+                            <i class="material-icons" style="color: #ebbcbc; font-size: 5em">
+                                lock
+                            </i>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h3 class="card-title">
+                                    Veilig Daten
+                                </h3>
+                                <p class="card-text">
+                                    Veilig daten is in deze tijd aan de orde van de dag en hier worden gedegen maatregelen voor getroffen. Zo is de verbinding met {{ ucfirst(config('app.pure_name')) }} te allen tijde versleuteld, waardoor je gegevens niet in handen van vreemden terecht kunnen komen. Ook kun je geheel anoniem daten op deze datingsite, waardoor jezelf besluit of en wanneer je je identiteit bekend maakt tegenover een toekomstige date.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <?php /*
         <div class="row mt-5">
             @foreach ($users as $user)
                 <div class="text-center col-xs-6 col-lg-2 col-md-4 col-sm-6 mb-4 {{ $loop->index > 5 ? 'hidden-xs' : '' }}">
@@ -303,24 +338,7 @@
                 </div>
             @endforeach
         </div>
-
-        <div class="row mt-5">
-            <div class="col-sm-12">
-                <div class="text-center">
-                    <h3>Vreemdgaan</h3>
-                    <p style="font-size: 18px; font-weight: 300; text-align: justify;">Vind een vrouw om vreemd mee te gaan, klinkt makkelijker dan het is. Hoe doe je dat eigenlijk en hoeveel vrouwen zoeken mannen voor dezelfde redenen? Vrouw zoekt man komt net zo vaak voor als man zoekt vrouw óók als het om vreemdgaan gaat. Belangrijk is dat dit geheel discreet gebeurd, vandaar dat de aanmelding geheel anoniem verloopt en er geen persoonlijke gegevens worden vastgelegd. Dit zodat jij in alle rust kan chatten met Nederlanders!</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="row mt-5">
-            <div class="col-sm-12">
-                <div class="text-center">
-                    <h3>Vrouw vinden</h3>
-                    <p style="font-size: 18px; font-weight: 300; text-align: justify; margin-bottom: 30px">Na het gratis registreren kun je eenvoudig op zoek gaan naar sekscontact met vrouwen online. Of je nu een oudere vrouw zoekt, singles of gebonden mensen. Na inschrijving kun je met je gratis credit direct sekscontact leggen en online chatten op deze datingsite voor sekscontacten!</p>
-                </div>
-            </div>
-        </div>
+        */ ?>
 {{--        <div class="row">--}}
 {{--            <div class="col-sm-12 text-center" style="margin-bottom: 30px">--}}
 {{--                <a style="color: #337ab7" href="{{ route('tac.show') }}">{{ trans(config('app.directory_name') . '/footer.tac') }}</a> - <a  style="color: #337ab7" href="{{ route('contact.get') }}">{{ trans(config('app.directory_name') . '/footer.contact') }}</a>--}}
