@@ -162,12 +162,12 @@
                             </div>
                         </div>
 
-                        <div class="text-center d-none d-md-block p-2 warning-bg">
-                            <h5>LET OP: Je kunt hier bekenden tegenkomen!</h5>
-                            <h6 class="mb-0">Tijdelijk gratis inschrijving, verloopt over:
-                                <span class="time" style="color: #fff; font-weight: bold">05:00</span>
-                            </h6>
-                        </div>
+{{--                        <div class="text-center d-none d-md-block p-2 warning-bg">--}}
+{{--                            <h5>LET OP: Je kunt hier bekenden tegenkomen!</h5>--}}
+{{--                            <h6 class="mb-0">Tijdelijk gratis inschrijving, verloopt over:--}}
+{{--                                <span class="time" style="color: #fff; font-weight: bold">05:00</span>--}}
+{{--                            </h6>--}}
+{{--                        </div>--}}
 
                         @if(session()->has('recaptchaFailed') && session()->get('recaptchaFailed'))
                             <div class="captchaFailed">

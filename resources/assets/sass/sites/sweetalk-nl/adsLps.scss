@@ -196,6 +196,14 @@ h5.recentUsername {
 
 .bg-img form.registrationForm {
     padding-bottom: 144px;
+
+    @media (max-width: 767px) {
+        width: 100%;
+    }
+
+    @media (min-width: 768px) {
+        min-width: 400px;
+    }
 }
 
 .bg-img form {
