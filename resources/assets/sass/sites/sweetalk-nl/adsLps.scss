@@ -84,6 +84,17 @@ h5.recentUsername {
     width: 100px;
 }
 
+.uspIcon {
+    color: $secondaryColor;
+    font-size: 5em;
+    margin-bottom: 20px;
+}
+
+.textBlockIcon {
+    color: $tertiaryColor;
+    font-size: 7em;
+}
+
 @media (min-width: 768px) {
     .bg-img {
         background-image: url('/img/sites/sweetalk-nl/lp1-header-1.jpg');

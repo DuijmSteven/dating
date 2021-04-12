@@ -283,15 +283,6 @@
 
     <div class="container">
         <div class="row mt-5">
-            <div class="col-sm-12">
-                <div class="text-center">
-                    <h3>Contact vrouwen</h3>
-                    <p style="font-size: 18px; font-weight: 300; text-align: justify;">Online chatten begint op een datingsite, zo ook het contact met vrouwen. Sex chat en online chatten, in het bijzonder anoniem geil chatten, zijn bijzonder goede manieren om je toekomstige bedpartner beter te leren kennen. Het fijne is dat je nog weinig van jezelf bloot hoeft te geven, maar wel kunt uitvinden of iemand bij je past. Sekscontact gaat vaak verder dan gewoon kennismaken, aangezien je toch enige verbinding wilt hebben met degene waar je na de sex chat mee het bed in duikt.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="row mt-5">
             @foreach ($users as $user)
                 <div class="text-center col-xs-6 col-lg-2 col-md-4 col-sm-6 mb-4 {{ $loop->index > 5 ? 'hidden-xs' : '' }}">
                     <a href="#" class="scrollToRegistration">
@@ -309,28 +300,75 @@
             @endforeach
         </div>
 
-        <div class="row mt-5">
+        <div class="row mb-5">
             <div class="col-sm-12">
-                <div class="text-center">
-                    <h3>Vreemdgaan</h3>
-                    <p style="font-size: 18px; font-weight: 300; text-align: justify;">Vind een vrouw om vreemd mee te gaan, klinkt makkelijker dan het is. Hoe doe je dat eigenlijk en hoeveel vrouwen zoeken mannen voor dezelfde redenen? Vrouw zoekt man komt net zo vaak voor als man zoekt vrouw óók als het om vreemdgaan gaat. Belangrijk is dat dit geheel discreet gebeurd, vandaar dat de aanmelding geheel anoniem verloopt en er geen persoonlijke gegevens worden vastgelegd. Dit zodat jij in alle rust kan chatten met Nederlanders!</p>
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-4 my-md-auto text-center">
+                            <i class="material-icons textBlockIcon">
+                                coffee
+                            </i>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h3 class="card-title">
+                                    Casual Dating
+                                </h3>
+                                <p class="card-text">
+                                    Een goede relatie begint steeds vaker online. Casual dating begint op [SITE-NAME], waar je makkelijk en snel mensen vindt die enkel casual willen daten. Dit staat vaak voor vluchtige contacten en dates, zonder gelijk een vaste relatie aan te gaan. Een iets spannendere versie van een LAT-relatie bijvoorbeeld. Je geniet van gehele anonimiteit en kunt direct na het inschrijven al op zoek gaan naar mensen bij jou in de buurt.                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="row mt-5">
+        <div class="row mt-5 mb-5">
+            <div class="col-md-4 text-center">
+                <i class="material-icons uspIcon">
+                    group
+                </i>
+                <h3>60% vrouwen</h3>
+            </div>
+
+            <div class="col-md-4 text-center">
+                <i class="material-icons uspIcon">
+                    mark_chat_unread
+                </i>
+                <h3> Meer dan 100 duizend berichten per maand</h3>
+            </div>
+
+            <div class="col-md-4 text-center">
+                <i class="material-icons uspIcon">
+                    sentiment_very_satisfied
+                </i>
+                <h3>30% vindt snel een date!</h3>
+            </div>
+        </div>
+
+        <div class="row mb-5">
             <div class="col-sm-12">
-                <div class="text-center">
-                    <h3>Vrouw vinden</h3>
-                    <p style="font-size: 18px; font-weight: 300; text-align: justify; margin-bottom: 30px">Na het gratis registreren kun je eenvoudig op zoek gaan naar sekscontact met vrouwen online. Of je nu een oudere vrouw zoekt, singles of gebonden mensen. Na inschrijving kun je met je gratis credit direct sekscontact leggen en online chatten op deze datingsite voor sekscontacten!</p>
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h3 class="card-title">
+                                    Live Chat
+                                </h3>
+                                <p class="card-text">
+                                    Live Chat maakt het kennismaken met anderen eenvoudig. Zo voer je makkelijk meerdere gesprekken tegelijk, terwijl je tegelijkertijd het overzicht behoudt. Natuurlijk kun je er ook voor kiezen om de live chat te vergroten en je op één chat te richten. Het live chat-gedeelte van deze datingsite kun je daarom geheel naar eigen smaak inrichten. Of je nu met enkele of meerdere leden wilt chatten, het is allemaal mogelijk op deze bijtijdse online datingsite.
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 my-md-auto text-center">
+                            <i class="material-icons textBlockIcon">
+                                mark_chat_unread
+                            </i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        {{--        <div class="row">--}}
-        {{--            <div class="col-sm-12 text-center" style="margin-bottom: 30px">--}}
-        {{--                <a style="color: #337ab7" href="{{ route('tac.show') }}">{{ trans(config('app.directory_name') . '/footer.tac') }}</a> - <a  style="color: #337ab7" href="{{ route('contact.get') }}">{{ trans(config('app.directory_name') . '/footer.contact') }}</a>--}}
-        {{--            </div>--}}
-        {{--        </div>--}}
     </div>
 
     @include('frontend.layouts.default.partials.sites.sweetalk-nl.footer')
