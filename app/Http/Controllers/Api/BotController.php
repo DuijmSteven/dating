@@ -91,7 +91,10 @@ class BotController
             $this->botManager->createBot($botData);
             return response()->json();
         } catch (\Exception $exception) {
+            \Log::error($exception->getTraceAsString());
+
             return response()->json($exception->getMessage(), 500);
+
         }
     }
 }
