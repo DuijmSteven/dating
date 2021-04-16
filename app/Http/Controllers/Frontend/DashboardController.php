@@ -88,6 +88,35 @@ class DashboardController extends FrontendController
             $users = $this->homeUsers(200, 150);
         }
 
+        if (count($users) < 10) {
+            \Log::debug('Not enough recent bots with profile pic in last 100 days within 100km radius. Showing latest users');
+
+            $users = User::join('user_meta as um', 'users.id', '=', 'um.user_id')
+                ->select('users.*')
+                ->with(['meta', 'profileImage'])
+                ->whereHas('profileImage')
+                ->whereHas('roles', function ($query) {
+                    $query->where('id', User::TYPE_BOT);
+
+                    if ($this->authenticatedUser->meta->looking_for_gender === User::GENDER_MALE) {
+                        $query->orWhere('id', User::TYPE_PEASANT);
+                    }
+                })
+                ->whereHas('meta', function ($query) {
+                    $query->where('gender', $this->authenticatedUser->meta->getLookingForGender());
+                    $query->where('looking_for_gender', $this->authenticatedUser->meta->getGender());
+                })
+                ->whereDoesntHave('meta', function ($query) {
+                    $query->where('too_slutty_for_ads', true);
+                })
+                ->where('users.active', true)
+                ->where('users.created_at', '>=',
+                    Carbon::now('Europe/Amsterdam')->subDays(300)->setTimezone('UTC')
+                )
+                ->orderByRaw('RAND()')
+                ->take(10);
+        }
+
         return view('frontend.sites.' . config('app.directory_name') . '.home', [
             'title' => ucfirst(\config('app.name')) . ' - Dashboard',
             'users' => $users,
