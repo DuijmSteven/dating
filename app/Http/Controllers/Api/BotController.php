@@ -85,10 +85,8 @@ class BotController
 
         \Log::info($request->user()->getId());
 
-        $botData['user']['created_by_id'] = $request->user()->getId();
-
         try {
-            $this->botManager->createBot($botData);
+            $this->botManager->createBot($botData, $request->user()->getId());
             return response()->json();
         } catch (\Exception $exception) {
             \Log::error($exception->getTraceAsString());
