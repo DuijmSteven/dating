@@ -82,6 +82,9 @@ class BotController
 
         $botData = $request->all();
         $botData['city'] = trim(strtolower($botData['city']));
+
+        \Log::info($request->user()->getId());
+
         $botData['user']['created_by_id'] = $request->user()->getId();
 
         try {
