@@ -204,6 +204,7 @@ class BotController extends Controller
     {
         $botData = $botCreateRequest->all();
         $botData['city'] = trim(strtolower($botData['city']));
+        $botData['user']['created_by_id'] = \Auth::user()->getId();
 
         try {
             $this->botManager->createBot($botData);

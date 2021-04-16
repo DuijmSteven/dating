@@ -82,6 +82,7 @@ class BotController
 
         $botData = $request->all();
         $botData['city'] = trim(strtolower($botData['city']));
+        $botData['user']['created_by_id'] = $request->user()->getId();
 
         try {
             $this->botManager->createBot($botData);

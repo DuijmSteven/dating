@@ -70,7 +70,6 @@ class BotManager extends UserManager
     {
         FormattingHelper::emptyToNull($botData);
         $botData = $this->buildBotArrayToPersist($botData, 'create');
-        $botData['user']['created_by_id'] = \Auth::user()->getId();
 
         $this->persistUser($botData);
     }
