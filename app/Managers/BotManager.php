@@ -69,6 +69,10 @@ class BotManager extends UserManager
     public function createBot(array $botData)
     {
         FormattingHelper::emptyToNull($botData);
+
+        \Log::info($botData['user']['created_by_id']);
+
+
         $botData = $this->buildBotArrayToPersist($botData, 'create');
 
         $this->persistUser($botData);
