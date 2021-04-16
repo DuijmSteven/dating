@@ -75,6 +75,8 @@ class BotManager extends UserManager
 
         $botData = $this->buildBotArrayToPersist($botData, 'create');
 
+        \Log::info($botData['user']['created_by_id']);
+
         $this->persistUser($botData);
     }
 
