@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => 'notifications@altijdsex-mail.nl',
-        'name' => 'Altijdsex.nl',
+        'address' => 'notifications@' . env('APP_PURE_NAME') . '-mail.nl',
+        'name' => ucfirst(env('APP_NAME')),
     ],
 
     /*
