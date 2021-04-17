@@ -525,8 +525,8 @@ class StatisticsController extends Controller
                     $endOfLastYear
                 ),
                 'conversionsAllTime' => $googleAdsConversionsAllTime,
-                'allTimeConversionRate' => $googleAdsConversionsAllTimeCount / $googleAdsLeadsAllTimeCount * 100,
-                'allTimeCostPerConversion' => $googleAdsExpensesAllTime / $googleAdsConversionsAllTime
+                'allTimeConversionRate' => $googleAdsLeadsAllTimeCount ? $googleAdsConversionsAllTimeCount / $googleAdsLeadsAllTimeCount * 100 : '-',
+                'allTimeCostPerConversion' => $googleAdsConversionsAllTime ? $googleAdsExpensesAllTime / $googleAdsConversionsAllTime : '-'
             ],
             'googleAdsRevenueStatistics' => [
                 'revenueToday' => $this->statisticsManager->affiliateRevenueBetween(
