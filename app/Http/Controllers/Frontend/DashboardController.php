@@ -110,9 +110,6 @@ class DashboardController extends FrontendController
                     $query->where('too_slutty_for_ads', true);
                 })
                 ->where('users.active', true)
-                ->where('users.created_at', '>=',
-                    Carbon::now('Europe/Amsterdam')->subDays(300)->setTimezone('UTC')
-                )
                 ->orderByRaw('RAND()')
                 ->take(10);
         }
