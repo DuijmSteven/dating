@@ -94,16 +94,18 @@ class DashboardController extends FrontendController
             $users = User::with(['roles', 'meta'])->whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_BOT);
             })
-                ->whereHas('meta', function ($query) use ($countryCode) {
+                ->whereHas('meta', function ($query) {
                     $query->where('gender', User::GENDER_FEMALE);
-                    $query->where('country', $countryCode);
+
+                    $query->where('gender', $this->authenticatedUser->meta->getLookingForGender());
+                    $query->where('looking_for_gender', $this->authenticatedUser->meta->getGender());
                 })
                 ->whereDoesntHave('meta', function ($query) {
                     $query->where('too_slutty_for_ads', true);
                 })
-                ->whereHas('profileImage')
                 ->inRandomOrder()
-                ->take(15);
+                ->take(12)
+                ->get();
         }
 
         return view('frontend.sites.' . config('app.directory_name') . '.home', [
