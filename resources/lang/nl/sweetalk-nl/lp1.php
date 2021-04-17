@@ -22,7 +22,7 @@ return [
         'register_info' => "Wanneer je op “Registreer nu gratis!” klikt, ga je akkoord met het <a target='_blank' href=\":privacyRoute\">Privacy-
                 en Cookiebeleid</a> en de <a target='_blank' href=\":tacRoute\">Algemene Voorwaarden</a> en bevestig je dat je 18 jaar of ouder bent",
         'have_an_account' => 'Heb je al een account?',
-        'not_have_an_account' => 'Heb je geen account?',
+        'not_have_an_account' => 'Heb je nog geen account?',
         'login' => 'Log in',
     ],
     'welcome' => 'Direct Sex Chat!',

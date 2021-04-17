@@ -131,7 +131,7 @@
                         <div class="form-row" style="margin-top: 20px; margin-bottom: 20px">
                             <div class="col-xs-12 mx-auto">
                                 <span>{{ trans(config('app.directory_name') . '/lp1.form.not_have_an_account') }}</span>
-                                <a href="{{ route('ads-lp.show', ['id' => $id, 'lpType' => 'register']) }}" class="btn btn-register btn-sm">Register</a>
+                                <a href="{{ route('ads-lp.show', ['id' => $id, 'lpType' => 'register']) }}" class="btn btn-register btn-sm">Maak een Account</a>
                             </div>
                         </div>
 
