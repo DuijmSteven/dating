@@ -91,27 +91,19 @@ class DashboardController extends FrontendController
         if (count($users) < 10) {
             \Log::debug('Not enough recent bots with profile pic in last 100 days within 100km radius. Showing latest users');
 
-            $users = User::join('user_meta as um', 'users.id', '=', 'um.user_id')
-                ->select('users.*')
-                ->with(['meta', 'profileImage'])
-                ->whereHas('profileImage')
-                ->whereHas('roles', function ($query) {
-                    $query->where('id', User::TYPE_BOT);
-
-                    if ($this->authenticatedUser->meta->looking_for_gender === User::GENDER_MALE) {
-                        $query->orWhere('id', User::TYPE_PEASANT);
-                    }
-                })
-                ->whereHas('meta', function ($query) {
-                    $query->where('gender', $this->authenticatedUser->meta->getLookingForGender());
-                    $query->where('looking_for_gender', $this->authenticatedUser->meta->getGender());
+            $users = User::with(['roles', 'meta'])->whereHas('roles', function ($query) {
+                $query->where('id', User::TYPE_BOT);
+            })
+                ->whereHas('meta', function ($query) use ($countryCode) {
+                    $query->where('gender', User::GENDER_FEMALE);
+                    $query->where('country', $countryCode);
                 })
                 ->whereDoesntHave('meta', function ($query) {
                     $query->where('too_slutty_for_ads', true);
                 })
-                ->where('users.active', true)
-                ->orderByRaw('RAND()')
-                ->take(10);
+                ->whereHas('profileImage')
+                ->inRandomOrder()
+                ->take(15);
         }
 
         return view('frontend.sites.' . config('app.directory_name') . '.home', [
