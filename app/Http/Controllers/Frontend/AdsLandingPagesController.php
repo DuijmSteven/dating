@@ -39,6 +39,7 @@ class AdsLandingPagesController extends FrontendController
             }
 
             $viewData['users'] = $this->getUsers();
+            $viewData['totalUsersCount'] = User::count();
             $viewData['id'] = $id;
 
             return view(
