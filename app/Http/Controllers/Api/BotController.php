@@ -83,16 +83,11 @@ class BotController
         $botData = $request->all();
         $botData['city'] = trim(strtolower($botData['city']));
 
-        \Log::info($request->user()->getId());
-
         try {
-            $this->botManager->createBot($botData, $request->user()->getId());
+            $this->botManager->createBot($botData);
             return response()->json();
         } catch (\Exception $exception) {
-            \Log::error($exception->getTraceAsString());
-
             return response()->json($exception->getMessage(), 500);
-
         }
     }
 }

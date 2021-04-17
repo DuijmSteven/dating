@@ -66,16 +66,11 @@ class BotManager extends UserManager
      * @param array $botData
      * @throws \Exception
      */
-    public function createBot(array $botData, $createdById = null)
+    public function createBot(array $botData)
     {
         FormattingHelper::emptyToNull($botData);
-
-        \Log::info($botData['user']['created_by_id']);
-
-
-        $botData = $this->buildBotArrayToPersist($botData, 'create', $createdById);
-
-        \Log::info($botData['user']['created_by_id']);
+        $botData = $this->buildBotArrayToPersist($botData, 'create');
+        $botData['user']['created_by_id'] = \Auth::user()->getId();
 
         $this->persistUser($botData);
     }
@@ -98,7 +93,7 @@ class BotManager extends UserManager
      * @return array
      * @throws \Spatie\Geocoder\Exceptions\CouldNotGeocode
      */
-    private function buildBotArrayToPersist(array $botData, string $action, $createdById = null)
+    private function buildBotArrayToPersist(array $botData, string $action)
     {
         $usersTableData = Arr::where($botData, function ($value, $key) {
             return in_array(
@@ -122,11 +117,6 @@ class BotManager extends UserManager
         });
 
         $userDataToPersist['user'] = $usersTableData;
-
-        if ($createdById) {
-            $userDataToPersist['user']['created_by_id'] = $createdById;
-        }
-
         $userDataToPersist['user_meta'] = $userMetaTableData;
 
         if (isset($botData['too_slutty_for_ads'])) {
