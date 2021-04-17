@@ -83,6 +83,6 @@ return [
         'smoking_habits' => 'Rookgedrag',
         'drinking_habits' => 'Drinkgewoontes',
     ],
-    'with_profile_image' => 'Foto belankrijk'
+    'with_profile_image' => 'Foto belankrijk?'
 
 ];
