@@ -225,7 +225,7 @@ class RegisterController extends Controller
             try {
                 $this->affiliateManager->storeAffiliateTrackingInfo(
                     $createdUser->id,
-                    null,
+                    $request->input('affiliate'),
                     $request->input('clickId'),
                     $countryCode,
                     null,
