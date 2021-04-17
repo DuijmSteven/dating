@@ -61,7 +61,7 @@
         @if($lpType === 'register')
 
             <div class="col-md-12 text-center text-white warning-box warning-bg">
-                <h6>{{ $users ? $totalUsersCount + 15023 : 15023 }} geregistreerde gebruikers!</h6>
+                <h6>{{ $users ? $totalUsersCount + 42503 : 42503 }} geregistreerde gebruikers!</h6>
                 <span>GRATIS Inschrijven!</span>
                 <?php /*<span>Tijdelijk gratis inschrijving, verloopt over: <span class="time" style="color: #f44336; font-weight: bold">05:00</span></span>*/ ?>
             </div>
@@ -155,7 +155,7 @@
                         </div>
 
                         <div class="text-center text-white d-none d-md-block p-2 warning-bg">
-                            <h5 class="mb-0">{{ $users ? $totalUsersCount + 15023 : 15023 }} geregistreerde gebruikers!</h5>
+                            <h5 class="mb-0">{{ $users ? $totalUsersCount + 42503 : 42503 }} geregistreerde gebruikers!</h5>
                             <h6 class="mb-0 mt-2">GRATIS Inschrijven!</h6>
                         </div>
 
