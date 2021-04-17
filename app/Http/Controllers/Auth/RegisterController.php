@@ -102,7 +102,7 @@ class RegisterController extends Controller
 //            throw new \Exception('no captcha');
 //        }
 //
-//        $userIp = $this->userLocationService->getUserIp();
+        $userIp = $this->userLocationService->getUserIp();
 //
 //        $response = (new ReCaptcha(config('app.recaptcha_secret')))
 //            ->setExpectedAction('register')
