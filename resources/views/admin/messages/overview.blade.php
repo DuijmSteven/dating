@@ -131,15 +131,15 @@
                                             <b>The user has no role set</b>
                                         @endif
                                         <br>
-                                    @else
-                                        <span style="font-weight: bold; color: red">User does not exist</span>
-                                    @endif
 
                                         <b>Country</b>: {{ $message->recipient->meta->country }} <br>
 
                                         @if($message->recipient->meta->city)
                                             <b>City</b>: {{ $message->recipient->meta->city }} <br>
                                         @endif
+                                    @else
+                                        <span style="font-weight: bold; color: red">User does not exist</span>
+                                    @endif
                                 </td>
                                 <td>
                                     <div style="max-width: 240px; white-space: normal">

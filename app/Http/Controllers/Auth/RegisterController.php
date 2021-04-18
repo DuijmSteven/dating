@@ -90,33 +90,33 @@ class RegisterController extends Controller
      */
     public function register(RegisterRequest $request)
     {
-        if (isset($_POST['g-recaptcha-response'])) {
-            $captcha = $_POST['g-recaptcha-response'];
-        } else {
-            $captcha = false;
-        }
-
-        if (!$captcha) {
-            \Log::debug('Recaptcha does not exist!');
-
-            throw new \Exception('no captcha');
-        }
-
+//        if (isset($_POST['g-recaptcha-response'])) {
+//            $captcha = $_POST['g-recaptcha-response'];
+//        } else {
+//            $captcha = false;
+//        }
+//
+//        if (!$captcha) {
+//            \Log::debug('Recaptcha does not exist!');
+//
+//            throw new \Exception('no captcha');
+//        }
+//
         $userIp = $this->userLocationService->getUserIp();
-
-        $response = (new ReCaptcha(config('app.recaptcha_secret')))
-            ->setExpectedAction('register')
-            ->verify($captcha, $userIp);
-
-        if (!$response->isSuccess()) {
-            \Log::info('Failed recaptcha attempt from username: ' . $request->get('username') . ' and email: ' . $request->get('email'));
-            return redirect()->back()->with('recaptchaFailed', true);
-        }
-
-        if ($response->getScore() < 0.6) {
-            \Log::info('Recaptcha attempt with small score from username: ' . $request->get('username') . ' and email: ' . $request->get('email'));
-            return redirect()->back()->with('recaptchaFailed', true);
-        }
+//
+//        $response = (new ReCaptcha(config('app.recaptcha_secret')))
+//            ->setExpectedAction('register')
+//            ->verify($captcha, $userIp);
+//
+//        if (!$response->isSuccess()) {
+//            \Log::info('Failed recaptcha attempt from username: ' . $request->get('username') . ' and email: ' . $request->get('email'));
+//            return redirect()->back()->with('recaptchaFailed', true);
+//        }
+//
+//        if ($response->getScore() < 0.6) {
+//            \Log::info('Recaptcha attempt with small score from username: ' . $request->get('username') . ' and email: ' . $request->get('email'));
+//            return redirect()->back()->with('recaptchaFailed', true);
+//        }
 
         $genderLookingForGender = explode("-", $request->all()['lookingFor']);
         $gender = $genderLookingForGender[0];
@@ -225,7 +225,7 @@ class RegisterController extends Controller
             try {
                 $this->affiliateManager->storeAffiliateTrackingInfo(
                     $createdUser->id,
-                    null,
+                    $request->input('affiliate'),
                     $request->input('clickId'),
                     $countryCode,
                     null,

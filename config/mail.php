@@ -56,7 +56,7 @@ return [
     */
 
     'from' => [
-        'address' => 'notifications@' . env('APP_PURE_NAME') . '-mail.nl',
+        'address' => env('FROM_EMAIL'),
         'name' => ucfirst(env('APP_NAME')),
     ],
 

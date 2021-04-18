@@ -135,7 +135,7 @@
                             <div class="col-xs-12 mx-auto">
                                 <span>{{ trans(config('app.directory_name') . '/lp1.form.not_have_an_account') }}</span>
                                 <a href="{{ route('ads-lp.show', ['id' => $id, 'lpType' => 'register']) }}"
-                                   class="btn btn-register btn-sm">Register</a>
+                                   class="btn btn-register btn-sm">Maak een Account</a>
                             </div>
                         </div>
 
@@ -315,7 +315,7 @@
                                     Casual Dating
                                 </h3>
                                 <p class="card-text">
-                                    Een goede relatie begint steeds vaker online. Casual dating begint op [SITE-NAME], waar je makkelijk en snel mensen vindt die enkel casual willen daten. Dit staat vaak voor vluchtige contacten en dates, zonder gelijk een vaste relatie aan te gaan. Een iets spannendere versie van een LAT-relatie bijvoorbeeld. Je geniet van gehele anonimiteit en kunt direct na het inschrijven al op zoek gaan naar mensen bij jou in de buurt.                                </p>
+                                    Een goede relatie begint steeds vaker online. Casual dating begint op <strong>Sweetalk.nl</strong>, waar je makkelijk en snel mensen vindt die enkel casual willen daten. Dit staat vaak voor vluchtige contacten en dates, zonder gelijk een vaste relatie aan te gaan. Een iets spannendere versie van een LAT-relatie bijvoorbeeld. Je geniet van gehele anonimiteit en kunt direct na het inschrijven al op zoek gaan naar mensen bij jou in de buurt.                                </p>
                             </div>
                         </div>
                     </div>
