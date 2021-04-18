@@ -137,7 +137,7 @@ class UserAffiliateTracking extends TimeZonedModel
         $this->click_id = $clickId;
     }
 
-    public function getAffiliate(): string
+    public function getAffiliate()
     {
         return $this->affiliate;
     }
