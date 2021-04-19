@@ -8,7 +8,7 @@
     @endif
     <meta name="author" content="Dating">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    @if(config('app.env') === 'production' && config('app.name') === 'altijdsex.nl')
+    @if(config('app.env') === 'production')
         <!-- Google Tag Manager -->
         <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
