@@ -39,19 +39,19 @@ class User extends Authenticatable
     ];
 
     const OPERATOR_RELATION_COUNTS = [
-//        'operatorMessages',
-//        'operatorMessagesLastMonth',
-//        'operatorMessagesThisMonth',
-//        'operatorMessagesLastWeek',
-//        'operatorMessagesThisWeek',
-//        'operatorMessagesYesterday',
+        'operatorMessages',
+        'operatorMessagesLastMonth',
+        'operatorMessagesThisMonth',
+        'operatorMessagesLastWeek',
+        'operatorMessagesThisWeek',
+        'operatorMessagesYesterday',
         'operatorMessagesToday',
-//        'operatorMessagesToStoppedConversations',
-//        'operatorMessagesToStoppedConversationsLastMonth',
-//        'operatorMessagesToStoppedConversationsThisMonth',
-//        'operatorMessagesToStoppedConversationsLastWeek',
-//        'operatorMessagesToStoppedConversationsThisWeek',
-//        'operatorMessagesToStoppedConversationsYesterday',
+        'operatorMessagesToStoppedConversations',
+        'operatorMessagesToStoppedConversationsLastMonth',
+        'operatorMessagesToStoppedConversationsThisMonth',
+        'operatorMessagesToStoppedConversationsLastWeek',
+        'operatorMessagesToStoppedConversationsThisWeek',
+        'operatorMessagesToStoppedConversationsYesterday',
         'operatorMessagesToStoppedConversationsToday'
     ];
 
