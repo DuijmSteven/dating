@@ -70,6 +70,20 @@ class UserController
         return $user;
     }
 
+    public function getActiveOperators(Request $request)
+    {
+        $activeOperators = User::with(['roles'])
+            ->whereHas('roles', function ($query) {
+                $query->whereIn('id', [
+                    Role::ROLE_OPERATOR
+                ]);
+            })
+            ->where('active', true)
+            ->get();
+
+        return $activeOperators;
+    }
+
     /**
      * @param int $roleId
      * @param int $page

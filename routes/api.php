@@ -36,6 +36,9 @@ Route::group([
 ], function () {
     Route::get('search/{page}', 'Api\UserSearchController@getPaginatedSearchResults');
 
+    Route::get('active-operators', 'Api\UserController@getActiveOperators')
+        ->name('users.get-active-operators');
+
     Route::get('paginated/{roleId}/{page}', 'Api\UserController@getUsersPaginated')
         ->name('users.get-paginated');
 
@@ -80,6 +83,13 @@ Route::group([
 ], function () {
     Route::post('create', 'Api\PeasantController@create');
     Route::put('{peasantId}/update', 'Api\PeasantController@update');
+});
+
+Route::group([
+    'prefix' => 'operators',
+    'middleware' => ['auth:sanctum']
+], function () {
+    Route::get('{id}/invoice-related-stats/{fromDate}/{untilDate}', 'Api\OperatorController@getInvoiceRelatedData');
 });
 
 Route::group([
