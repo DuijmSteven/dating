@@ -98,7 +98,7 @@ class LoginController extends Controller
         $relationCounts = [];
 
         if ($userRoleId === Role::ROLE_OPERATOR) {
-            $relations = array_merge($relations, User::OPERATOR_RELATIONS);
+            // $relations = array_merge($relations, User::OPERATOR_RELATIONS);
             $relationCounts = array_merge($relationCounts, User::OPERATOR_RELATION_COUNTS);
         } elseif ($userRoleId === Role::ROLE_EDITOR) {
             $relations = array_merge($relations, User::EDITOR_RELATIONS);

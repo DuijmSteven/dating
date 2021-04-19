@@ -54,7 +54,7 @@ class UserController
         $relationCounts = [];
 
         if ($user->isOperator()) {
-            $relations = array_merge($relations, User::OPERATOR_RELATIONS);
+            // $relations = array_merge($relations, User::OPERATOR_RELATIONS);
             $relationCounts = array_merge($relationCounts, User::OPERATOR_RELATION_COUNTS);
         } elseif ($user->isEditor()) {
             $relations = array_merge($relations, User::EDITOR_RELATIONS);
