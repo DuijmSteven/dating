@@ -189,14 +189,14 @@ class AdminDashboardController
 //                        $startOfWeek,
 //                        $endOfWeek
 //                    ),
-//                    'messagesSentCurrentMonth' => $this->statisticsManager->paidMessagesSentCount(
-//                        $startOfMonth,
-//                        $endOfMonth
-//                    ),
-//                    'messagesSentPreviousMonth' => $this->statisticsManager->paidMessagesSentCount(
-//                        $startOfPreviousMonthUtc,
-//                        $endOfPreviousMonthUtc
-//                    ),
+                    'messagesSentCurrentMonth' => $this->statisticsManager->paidMessagesSentCount(
+                        $startOfMonth,
+                        $endOfMonth
+                    ),
+                    'messagesSentPreviousMonth' => $this->statisticsManager->paidMessagesSentCount(
+                        $startOfPreviousMonthUtc,
+                        $endOfPreviousMonthUtc
+                    ),
 //                    'messagesSentCurrentYear' => $this->statisticsManager->paidMessagesSentCount(
 //                        $startOfYear,
 //                        $endOfToday
