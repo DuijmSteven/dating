@@ -111,6 +111,18 @@ class AdminDashboardController
                 User::GENDER_FEMALE
             );
 
+            $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.launch_date'));
+
+            $conversionsAllTimeCount = $this->statisticsManager->affiliateConversionsBetweenCount(
+                'any',
+                $launchDate,
+                $endOfToday
+            );
+
+            $allUsersCount = User::whereHas('roles', function ($query) {
+                $query->where('id', User::TYPE_PEASANT);
+            })->count();
+
             $data = [
                 'onlineIds' => $onlineIds,
                 'onlineFemaleStraightBotsCount' => $onlineFemaleStraightBotsCount,
@@ -231,7 +243,7 @@ class AdminDashboardController
 //                        $startOfLastYear,
 //                        $endOfLastYear
 //                    ),
-//                    'allTimeConversionRate' => $allUsersCount > 0 ? $conversionsAllTimeCount / $allUsersCount * 100 : 0
+                    'allTimeConversionRate' => $allUsersCount > 0 ? $conversionsAllTimeCount / $allUsersCount * 100 : 0
                 ],
             ];
 
