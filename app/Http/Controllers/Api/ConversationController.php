@@ -821,11 +821,13 @@ class ConversationController
                 User::TYPE_PEASANT
             );
 
+
             $return = [
                 'conversation' => $conversation,
                 'userANotes' => $userANotes,
                 'userBNotes' => $userBNotes,
                 'lockedAt' => $conversation->getLockedAt()->tz('Europe/Amsterdam'),
+                'now' => Carbon::now()->tz('Europe/Amsterdam'),
                 'hasCountdown' => true,
                 'userAttachments' => $userAttachments,
                 'createdAtDiffForHumans' => $conversation->getCreatedAt()->diffForHumans()
