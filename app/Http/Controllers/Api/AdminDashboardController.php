@@ -243,6 +243,8 @@ class AdminDashboardController
 //                        $startOfLastYear,
 //                        $endOfLastYear
 //                    ),
+                    'userCount' => $allUsersCount,
+                    'conversionsAllTimeCount' => $conversionsAllTimeCount,
                     'allTimeConversionRate' => $allUsersCount > 0 ? $conversionsAllTimeCount / $allUsersCount * 100 : 0
                 ],
             ];
