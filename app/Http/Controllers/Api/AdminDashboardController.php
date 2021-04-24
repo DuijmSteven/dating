@@ -56,8 +56,8 @@ class AdminDashboardController
             $startOfPreviousMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->subMonth();
             $endOfPreviousMonth = $startOfPreviousMonth->copy()->endOfMonth();
 
-//            $startOfPreviousMonthUtc = $startOfPreviousMonth->setTimezone('UTC');
-//            $endOfPreviousMonthUtc = $endOfPreviousMonth->setTimezone('UTC');
+            $startOfPreviousMonthUtc = $startOfPreviousMonth->setTimezone('UTC');
+            $endOfPreviousMonthUtc = $endOfPreviousMonth->setTimezone('UTC');
 //
 //            $startOfLastYear = Carbon::now('Europe/Amsterdam')->subYears(1)->startOfYear()->setTimezone('UTC');
 //            $endOfLastYear = Carbon::now('Europe/Amsterdam')->subYears(1)->endOfYear()->setTimezone('UTC');
@@ -151,14 +151,14 @@ class AdminDashboardController
                         $startOfYesterday,
                         $endOfYesterday
                     ),
-//                    'revenueCurrentMonth' => $this->statisticsManager->revenueBetween(
-//                        $startOfMonth,
-//                        $endOfMonth
-//                    ),
-//                    'revenuePreviousMonth' => $this->statisticsManager->revenueBetween(
-//                        $startOfPreviousMonthUtc,
-//                        $endOfPreviousMonthUtc
-//                    ),
+                    'revenueCurrentMonth' => $this->statisticsManager->revenueBetween(
+                        $startOfMonth,
+                        $endOfMonth
+                    ),
+                    'revenuePreviousMonth' => $this->statisticsManager->revenueBetween(
+                        $startOfPreviousMonthUtc,
+                        $endOfPreviousMonthUtc
+                    ),
 //                    'revenueCurrentYear' => $this->statisticsManager->revenueBetween(
 //                        $startOfYear,
 //                        $endOfToday
