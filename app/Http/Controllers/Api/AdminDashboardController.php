@@ -49,8 +49,9 @@ class AdminDashboardController
 //
 //            $startOfWeek = Carbon::now('Europe/Amsterdam')->startOfWeek()->setTimezone('UTC');
 //            $endOfWeek = Carbon::now('Europe/Amsterdam')->endOfWeek()->setTimezone('UTC');
-//            $startOfMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->setTimezone('UTC');
-//            $endOfMonth = Carbon::now('Europe/Amsterdam')->endOfMonth()->setTimezone('UTC');
+
+            $startOfMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->setTimezone('UTC');
+            $endOfMonth = Carbon::now('Europe/Amsterdam')->endOfMonth()->setTimezone('UTC');
 
             $startOfPreviousMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->subMonth();
             $endOfPreviousMonth = $startOfPreviousMonth->copy()->endOfMonth();
@@ -210,11 +211,11 @@ class AdminDashboardController
 //                        $startOfWeek,
 //                        $endOfWeek
 //                    ),
-//                    'conversionsCurrentMonth' => $this->statisticsManager->affiliateConversionsBetweenCount(
-//                        'any',
-//                        $startOfMonth,
-//                        $endOfMonth
-//                    ),
+                    'conversionsCurrentMonth' => $this->statisticsManager->affiliateConversionsBetweenCount(
+                        'any',
+                        $startOfMonth,
+                        $endOfMonth
+                    ),
 //                    'conversionsPreviousMonth' => $this->statisticsManager->affiliateConversionsBetweenCount(
 //                        'any',
 //                        $startOfPreviousMonthUtc,
