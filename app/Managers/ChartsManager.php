@@ -130,7 +130,7 @@ class ChartsManager
             ->leftJoin('users as u', 'u.id', 'cm.sender_id')
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('cm.paid', true)
-            ->where('cm.created_at', '>=', '2020-05-01 00:00:00');
+            ->where('cm.created_at', '>=', config('app.new_launch_date'));
 
 
         if (null  == $userId) {
@@ -356,7 +356,7 @@ class ChartsManager
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('p.status', Payment::STATUS_COMPLETED)
-            ->where('p.created_at', '>=', '2020-05-01 00:00:00')
+            ->where('p.created_at', '>=', config('app.new_launch_date'))
             ->groupBy('months')
             ->orderBy('months', 'ASC');
 
@@ -551,7 +551,7 @@ class ChartsManager
             )
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
-            ->where('u.created_at', '>=', '2020-05-01 00:00:00')
+            ->where('u.created_at', '>=', config('app.new_launch_date'))
             ->groupBy('months')
             ->orderBy('months', 'ASC');
 
@@ -828,7 +828,7 @@ class ChartsManager
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('p.status', Payment::STATUS_COMPLETED)
-            ->where('p.created_at', '>=', '2020-05-01 00:00:00')
+            ->where('p.created_at', '>=', config('app.new_launch_date'))
             ->groupBy('months')
             ->orderBy('months', 'ASC');
 
@@ -969,7 +969,7 @@ class ChartsManager
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('p.status', Payment::STATUS_COMPLETED)
-            ->where('p.created_at', '>=', '2020-05-01 00:00:00')
+            ->where('p.created_at', '>=', config('app.new_launch_date'))
             ->groupBy('months')
             ->orderBy('months', 'ASC');
 
@@ -1125,7 +1125,7 @@ class ChartsManager
             )
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
-            ->where('u.created_at', '>=', '2020-05-01 00:00:00')
+            ->where('u.created_at', '>=', config('app.new_launch_date'))
             ->groupBy('months')
             ->orderBy('months', 'ASC');
 
@@ -1277,7 +1277,7 @@ class ChartsManager
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('u.deactivated_at', '!=', null)
-            ->where('u.deactivated_at', '>=', '2020-05-01 00:00:00')
+            ->where('u.deactivated_at', '>=', config('app.new_launch_date'))
             ->groupBy('months')
             ->orderBy('months', 'ASC');
 
