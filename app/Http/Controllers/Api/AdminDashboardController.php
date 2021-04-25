@@ -122,7 +122,9 @@ class AdminDashboardController
 
             $allUsersCount = User::whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_PEASANT);
-            })->count();
+            })
+            ->where('created_at', '>=', $newLaunchDate)
+            ->count();
 
             $data = [
                 'onlineIds' => $onlineIds,
@@ -341,7 +343,9 @@ class AdminDashboardController
 
             $allUsersCount = User::whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_PEASANT);
-            })->count();
+            })
+            ->where('created_at', '>=', $newLaunchDate)
+            ->count();
 
             $data = [
                 'onlineIds' => $onlineIds,
