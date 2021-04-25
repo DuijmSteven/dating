@@ -112,6 +112,7 @@ class AdminDashboardController
             );
 
             $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.launch_date'));
+            $newLaunchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.new_launch_date'));
 
             $conversionsAllTimeCount = $this->statisticsManager->affiliateConversionsBetweenCount(
                 'any',

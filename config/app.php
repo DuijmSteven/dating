@@ -17,6 +17,7 @@ return [
     'pure_name' => env('APP_PURE_NAME', 'altijdsex'),
     'directory_name' => env('APP_DIRECTORY_NAME', 'altijdsex-nl'),
     'launch_date' => env('LAUNCH_DATE', '01-02-2020 00:00:00'),
+    'new_launch_date' => env('NEW_LAUNCH_DATE', '15-04-2021 00:00:00'),
     'show_images' => env('SHOW_IMAGES', true),
 
     /*
