@@ -116,7 +116,7 @@ class AdminDashboardController
 
             $conversionsAllTimeCount = $this->statisticsManager->affiliateConversionsBetweenCount(
                 'any',
-                $launchDate,
+                $newLaunchDate,
                 $endOfToday
             );
 
@@ -287,6 +287,7 @@ class AdminDashboardController
             $now = Carbon::now('Europe/Amsterdam')->setTimezone('UTC');
 
             $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.launch_date'));
+            $newLaunchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.new_launch_date'));
 
             $onlineIds = $this->userActivityService->getOnlineUserIds(
                 $this->userActivityService::GENERAL_ONLINE_TIMEFRAME_IN_MINUTES
@@ -334,7 +335,7 @@ class AdminDashboardController
 
             $conversionsAllTimeCount = $this->statisticsManager->affiliateConversionsBetweenCount(
                 'any',
-                $launchDate,
+                $newLaunchDate,
                 $endOfToday
             );
 
