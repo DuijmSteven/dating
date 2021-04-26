@@ -118,7 +118,6 @@ class CreateDiscountForInactiveUsersAndMailThem extends Command
                 ->queue($email);
         }
 
-
         $peasant->setDiscountPercentage($discountPercentage);
         $peasant->save();
 
