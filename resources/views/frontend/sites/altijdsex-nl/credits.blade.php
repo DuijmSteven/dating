@@ -128,7 +128,7 @@
                         </li>
                         <li class="list-group-item d-flex justify-content-between">
                             <span>{{ trans(config('app.directory_name') . '/credits.total') }}:</span>
-                            <strong><span class="cart-value">&euro;{{ number_format((1 - $authenticatedUser->getDiscountPercentage()) * $creditpacks[1]->price / 100, 2, ',', '.') }}</span></strong>
+                            <strong><span class="cart-value">&euro;{{ number_format((1 - $authenticatedUser->getDiscountPercentage() / 100) * $creditpacks[1]->price / 100, 2, ',', '.') }}</span></strong>
                         </li>
                     </ul>
                     <button class="Button btn btn-primary btn-lg btn-block" type="submit">
