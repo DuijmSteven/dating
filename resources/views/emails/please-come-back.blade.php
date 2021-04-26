@@ -11,7 +11,7 @@
 @section('content')
 
     <h1 style="margin: 0 0 30px; font-size: 25px; line-height: 30px; color: #333333; font-weight: bold; text-align: center">
-        Tijdelijk 15% korting voor je, {{ ucfirst($user->username) }}!
+        Tijdelijk {{ $discountPercentage }}% korting voor je, {{ ucfirst($user->username) }}!
     </h1>
 
     <p style="font-family: sans-serif; font-weight: bold; margin: 0; Margin-bottom: 15px;">Beste {{ $user->username }},</p>
@@ -21,7 +21,7 @@
         <a href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('direct-login', ['user' => $user->id, 'routeName' => 'credits.show', null, null]); @endphp">{{ ucfirst(config('app.name')) }}</a>
         en een aantal gewillige leden hebben aangegeven je te missen! Zoek je nog anonieme, vrijblijvende sensuele contacten? Kom dan gerust terug naar
         <a href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('direct-login', ['user' => $user->id, 'routeName' => 'credits.show', null, null]); @endphp">{{ ucfirst(config('app.name')) }}</a>
-        en profiteer van <b>15% korting</b>.
+        en profiteer van <b>{{ $discountPercentage }}% korting</b>.
     </p>
 
     <div style="text-align: center">
@@ -33,7 +33,7 @@
     <p style="margin-bottom: 0">
         Elke dag weer zijn er duizenden vrouwen die zich met dezelfde intenties inschrijven op
         <a href="@php URL::forceRootUrl(\config('app.url')); echo URL::signedRoute('direct-login', ['user' => $user->id, 'routeName' => 'credits.show', null, null]); @endphp">{{ ucfirst(config('app.name')) }}</a>.
-        Daar zal vast en zeker ook wel een gelijkgestemde voor jou tussen zitten, toch? Speciaal om jouw kansen te vergroten bieden we je momenteel <b>15% korting</b> op je volgende aankoop.
+        Daar zal vast en zeker ook wel een gelijkgestemde voor jou tussen zitten, toch? Speciaal om jouw kansen te vergroten bieden we je momenteel <b>{{ $discountPercentage }}% korting</b> op je volgende aankoop.
     </p>
 
     <div style="text-align: center">

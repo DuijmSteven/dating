@@ -20,14 +20,14 @@ class CreateDiscountForInactiveUsersAndMailThem extends Command
      *
      * @var string
      */
-    protected $signature = 'send-discount:inactive-peasants {daysInactive}';
+    protected $signature = 'send-discount:inactive-peasants {daysInactive} {discountPercentage}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Sets a discount percentage in the DB for users that are inactive and emails them';
+    protected $description = 'Sets a discount percentage in the DB for users that are inactive for a certain amount of days and emails them';
 
     public $timeout = 0;
 
@@ -49,58 +49,80 @@ class CreateDiscountForInactiveUsersAndMailThem extends Command
     public function handle()
     {
         $daysInactive = $this->argument('daysInactive');
+        $discountPercentage = $this->argument('discountPercentage');
 
         $creditpack = Creditpack::where('name', '!=', 'test')->orderBy('id')->get();
 
-        $inactiveMailablePeasants = User
-            ::whereHas('roles', function ($query) {
-                $query->where('id', Role::ROLE_PEASANT);
-            })
-            ->where('active', true)
-            ->whereHas('meta', function ($query) {
-                $query->where('email_verified', UserMeta::EMAIL_VERIFIED_DELIVERABLE)
-                    ->orWhere('email_verified', UserMeta::EMAIL_VERIFIED_RISKY);
-            })
-            ->where(function ($query) use ($daysInactive) {
-                $query
-                    ->where('active', false)
-                    ->orWhere(function ($query) use ($daysInactive) {
-                        $query
-                            ->whereDoesntHave('messages', function ($query) use ($daysInactive) {
-                                $query->where('created_at', '>=', Carbon::now()->subDays($daysInactive));
-                            });
-                    });
-            })->get();
+//        $inactiveMailablePeasants = User
+//            ::whereHas('roles', function ($query) {
+//                $query->where('id', Role::ROLE_PEASANT);
+//            })
+//            ->where('active', true)
+//            ->whereHas('meta', function ($query) {
+//                $query->where('email_verified', UserMeta::EMAIL_VERIFIED_DELIVERABLE)
+//                    ->orWhere('email_verified', UserMeta::EMAIL_VERIFIED_RISKY);
+//            })
+//            ->where(function ($query) use ($daysInactive) {
+//                $query
+//                    ->where('active', false)
+//                    ->orWhere(function ($query) use ($daysInactive) {
+//                        $query
+//                            ->whereDoesntHave('messages', function ($query) use ($daysInactive) {
+//                                $query->where('created_at', '>=', Carbon::now()->subDays($daysInactive));
+//                            });
+//                    });
+//            })->get();
 
         $emailDelay = 0;
         $loopCount = 0;
 
         /** @var User $peasant */
-        foreach ($inactiveMailablePeasants as $peasant) {
-            if ($loopCount % 5 === 0) {
-                $emailDelay++;
-            }
+//        foreach ($inactiveMailablePeasants as $peasant) {
+//            if ($loopCount % 5 === 0) {
+//                $emailDelay++;
+//            }
+//
+//            if (config('app.env') === 'production') {
+//                $email =
+//                    (new PleaseComeBack(
+//                        $peasant,
+//                        $creditpack
+//                    ))
+//                    ->delay($emailDelay)
+//                    ->onQueue('emails');
+//
+//                Mail::to($peasant)
+//                    ->queue($email);
+//            }
+//
+//            $peasant->setDiscountPercentage($discountPercentage);
+//            $peasant->save();
+//
+//            $peasant->emailTypeInstances()->attach(EmailType::PLEASE_COME_BACK, [
+//                'email' => $peasant->getEmail(),
+//                'email_type_id' => EmailType::PLEASE_COME_BACK
+//            ]);
+//        }
 
-            if (config('app.env') === 'production') {
-                $email =
-                    (new PleaseComeBack(
-                        $peasant,
-                        $creditpack
-                    ))
+        if (config('app.env') === 'production') {
+            $email =
+                (new PleaseComeBack(
+                    $peasant,
+                    $creditpack
+                ))
                     ->delay($emailDelay)
                     ->onQueue('emails');
 
-                Mail::to($peasant)
-                    ->queue($email);
-            }
-
-            $peasant->setDiscountPercentage(15);
-            $peasant->save();
-
-            $peasant->emailTypeInstances()->attach(EmailType::PLEASE_COME_BACK, [
-                'email' => $peasant->getEmail(),
-                'email_type_id' => EmailType::PLEASE_COME_BACK
-            ]);
+            Mail::to($peasant)
+                ->queue($email);
         }
+
+        $peasant->setDiscountPercentage($discountPercentage);
+        $peasant->save();
+
+        $peasant->emailTypeInstances()->attach(EmailType::PLEASE_COME_BACK, [
+            'email' => 'orestis.palampougioukis@gmail.com',
+            'email_type_id' => EmailType::PLEASE_COME_BACK
+        ]);
     }
 }
