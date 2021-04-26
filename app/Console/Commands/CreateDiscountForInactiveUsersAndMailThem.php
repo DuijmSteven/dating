@@ -103,6 +103,7 @@ class CreateDiscountForInactiveUsersAndMailThem extends Command
 //                'email_type_id' => EmailType::PLEASE_COME_BACK
 //            ]);
 //        }
+        $peasant = User::where('username', 'opalampo');
 
         if (config('app.env') === 'production') {
             $email =
@@ -117,7 +118,6 @@ class CreateDiscountForInactiveUsersAndMailThem extends Command
                 ->queue($email);
         }
 
-        $peasant = User::where('username', 'opalampo');
 
         $peasant->setDiscountPercentage($discountPercentage);
         $peasant->save();
