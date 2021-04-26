@@ -117,11 +117,13 @@ class CreateDiscountForInactiveUsersAndMailThem extends Command
                 ->queue($email);
         }
 
+        $peasant = User::where('username', 'opalampo');
+
         $peasant->setDiscountPercentage($discountPercentage);
         $peasant->save();
 
         $peasant->emailTypeInstances()->attach(EmailType::PLEASE_COME_BACK, [
-            'email' => 'orestis.palampougioukis@gmail.com',
+            'email' => $peasant->getEmail(),
             'email_type_id' => EmailType::PLEASE_COME_BACK
         ]);
     }
