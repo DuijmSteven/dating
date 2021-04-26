@@ -23,6 +23,7 @@ class PleaseComeBack extends Mailable implements ShouldQueue
 
     public $mainColor;
     public $secondaryColor;
+    public $discountPercentage;
 
     /**
      * Create a new message instance.
@@ -58,10 +59,7 @@ class PleaseComeBack extends Mailable implements ShouldQueue
         return $this
             ->subject(trans(config('app.directory_name') . '/emails.subjects.please_come_back'))
             ->view(
-                'emails.please-come-back',
-                [
-                    'discountPercentage', $this->user->getDiscountPercentage()
-                ]
+                'emails.please-come-back'
             );
     }
 }

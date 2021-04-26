@@ -11,7 +11,7 @@
 @section('content')
 
     <h1 style="margin: 0 0 30px; font-size: 25px; line-height: 30px; color: #333333; font-weight: bold; text-align: center">
-        Tijdelijk {{ $discountPercentage }}% korting voor je, {{ ucfirst($user->username) }}!
+        Tijdelijk {{ $user->getDiscountPercentage() }}% korting voor je, {{ ucfirst($user->getUsername()) }}!
     </h1>
 
     <p style="font-family: sans-serif; font-weight: bold; margin: 0; Margin-bottom: 15px;">Beste {{ $user->username }},</p>
