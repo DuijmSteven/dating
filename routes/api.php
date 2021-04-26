@@ -175,7 +175,13 @@ Route::group([
 
     Route::get('items-with-higher-id-than/{messageIdHigherThan}/{forGender}/{forLookingForGender}', 'Api\PublicChatController@getPublicChatItemsWithIdHigherThan')
         ->name('public-chat.get-items-with-higher-id');
+});
 
-//    Route::post('items', 'Api\PublicChatController@post')
-//        ->name('public-chat.post-item');
+Route::group([
+    'prefix' => 'public-chat-items',
+    'middleware' => ['auth:sanctum']
+], function () {
+
+    Route::get('paginated/{page}', 'Api\PublicChatItemController@getPaginated')
+        ->name('public-chat-items.get-paginated');
 });
