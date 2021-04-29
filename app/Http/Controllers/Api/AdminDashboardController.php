@@ -47,8 +47,8 @@ class AdminDashboardController
 //            $startOfSevenDaysAgo = Carbon::now('Europe/Amsterdam')->subDays(7)->startOfDay()->setTimezone('UTC');
 //            $startOfThirtyDaysAgo = Carbon::now('Europe/Amsterdam')->subDays(30)->startOfDay()->setTimezone('UTC');
 //
-//            $startOfWeek = Carbon::now('Europe/Amsterdam')->startOfWeek()->setTimezone('UTC');
-//            $endOfWeek = Carbon::now('Europe/Amsterdam')->endOfWeek()->setTimezone('UTC');
+            $startOfWeek = Carbon::now('Europe/Amsterdam')->startOfWeek()->setTimezone('UTC');
+            $endOfWeek = Carbon::now('Europe/Amsterdam')->endOfWeek()->setTimezone('UTC');
 
             $startOfMonth = Carbon::now('Europe/Amsterdam')->startOfMonth()->setTimezone('UTC');
             $endOfMonth = Carbon::now('Europe/Amsterdam')->endOfMonth()->setTimezone('UTC');
@@ -153,6 +153,10 @@ class AdminDashboardController
                     'revenueYesterday' => $this->statisticsManager->revenueBetween(
                         $startOfYesterday,
                         $endOfYesterday
+                    ),
+                    'revenueCurrentWeek' => $this->statisticsManager->revenueBetween(
+                        $startOfWeek,
+                        $endOfWeek
                     ),
                     'revenueCurrentMonth' => $this->statisticsManager->revenueBetween(
                         $startOfMonth,
