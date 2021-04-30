@@ -12,6 +12,8 @@ use App\Payment;
 use App\Services\UserActivityService;
 use App\User;
 use App\UserAffiliateTracking;
+use App\UserMeta;
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\RequestException;
@@ -118,45 +120,58 @@ class PaymentController extends FrontendController
 
         $price = (float) $creditPack->price;
 
-        if ($this->authenticatedUser->getDiscountPercentage()) {
-            $price = (1 - $this->authenticatedUser->getDiscountPercentage() / 100) * $price;
+        /** @var User $user */
+        $user = $this->authenticatedUser;
+
+        if ($user->getDiscountPercentage()) {
+            $price = (1 - $user->getDiscountPercentage() / 100) * $price;
         }
 
         $transactionTotal = number_format($price / 100, 2, '.', '');
 
         $previousCompletedPayments = Payment
-            ::where('user_id', $this->authenticatedUser->getId())
+            ::where('user_id', $user->getId())
             ->where('status', Payment::STATUS_COMPLETED)
             ->count();
 
         $isConversion = $previousCompletedPayments === 0 ? true : false;
 
         //get payment status from db
-        $paymentStatus = Payment::where('user_id', $this->authenticatedUser->getId())
+        $paymentStatus = Payment::where('user_id', $user->getId())
             ->where('transaction_id', $transactionId)
             ->firstOrFail()
             ->getStatus();
 
         //check if payment is already completed (user refreshed the thank-you page or visited it again in general)
         if($paymentStatus === Payment::STATUS_COMPLETED) {
-            $this->authenticatedUser->setDiscountPercentage(null);
-            $this->authenticatedUser->save();
+            $user->setDiscountPercentage(null);
+            $user->save();
 
             return redirect()->route('home');
         } else {
             $check = $this->paymentProvider->paymentCheck(
-                $this->authenticatedUser,
+                $user,
                 $paymentMethod,
                 $transactionId,
                 $creditPack,
                 $isConversion
             );
 
-            if($check['status']) {
-                $this->authenticatedUser->setDiscountPercentage(null);
-                $this->authenticatedUser->save();
+            if ($isConversion) {
+                $hoursToConversion = Carbon::now()->diffInHours($user->getCreatedAt());
 
-                $this->successfulPayment($this->authenticatedUser, $creditPack, $transactionId, $transactionTotal);
+                /** @var UserMeta $userMeta */
+                $userMeta = $user->meta;
+                
+                $userMeta->setHoursToConversion($hoursToConversion);
+                $user->meta()->save($userMeta);
+            }
+
+            if($check['status']) {
+                $user->setDiscountPercentage(null);
+                $user->save();
+
+                $this->successfulPayment($user, $creditPack, $transactionId, $transactionTotal);
             }
 
             $check['status'] ? $status = 'success' : $status = 'fail';

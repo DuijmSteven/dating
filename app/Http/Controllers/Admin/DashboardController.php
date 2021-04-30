@@ -100,13 +100,13 @@ class DashboardController extends Controller
         $oneHourAgo = Carbon::now('Europe/Amsterdam')->subHours(1)->setTimezone('UTC');
         $now = Carbon::now('Europe/Amsterdam')->setTimezone('UTC');
 
-        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.launch_date'));
+        $newLaunchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.new_launch_date'));
 
         $googleAdsLaunchDate = Carbon::createFromFormat('d-m-Y H:i:s', '11-06-2020 00:00:00');
 
         $conversionsAllTimeCount = $this->statisticsManager->affiliateConversionsBetweenCount(
             'any',
-            $launchDate,
+            $newLaunchDate,
             $endOfToday
         );
 

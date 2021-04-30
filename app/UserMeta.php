@@ -63,6 +63,7 @@ class UserMeta extends Model
         'registration_lp_id',
         'registration_keyword',
         'too_slutty_for_ads',
+        'hours_to_conversion',
         'created_at',
         'updated_at'
     ];
@@ -123,6 +124,16 @@ class UserMeta extends Model
     public function setLoginsCount(int $loginsCount)
     {
         $this->logins_count = $loginsCount;
+    }
+
+    public function getHoursToConversion()
+    {
+        return $this->hours_to_conversion;
+    }
+
+    public function setHoursToConversion(int $hoursToConversion)
+    {
+        $this->hours_to_conversion = $hoursToConversion;
     }
 
     public function getRelationshipStatus()
