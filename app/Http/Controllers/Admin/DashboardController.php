@@ -290,6 +290,7 @@ class DashboardController extends Controller
                     $googleAdsLaunchDate
                 ),
                 'conversionsChart' => $this->chartsManager->createAffiliateConversionsChart(),
+                'hoursToConversionChart' => $this->chartsManager->createHoursToConversionChart()
             ]
         ));
     }

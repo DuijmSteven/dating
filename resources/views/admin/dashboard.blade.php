@@ -465,4 +465,15 @@
         </div>
     @endif
 
+    @if($hoursToConversionChart)
+        <div class="row">
+            <div class="col-xs-12">
+                <div style="width: 100%">
+                    {!! $hoursToConversionChart->container() !!}
+                    {!! $hoursToConversionChart->script() !!}
+                </div>
+            </div>
+        </div>
+    @endif
+
 @endsection

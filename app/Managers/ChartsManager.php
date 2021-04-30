@@ -811,6 +811,55 @@ class ChartsManager
         return $conversionsChart;
     }
 
+    public function createHoursToConversionChart(string $affiliate = null)
+    {
+        $query = \DB::table('user_meta as um')
+            ->select(\DB::raw('um.hours_to_conversion as hoursToConversion, COUNT(um.id) as conversionsOnHour'))
+            ->where('um.hours_to_conversion', '!=', null);
+
+        $query->groupBy('hoursToConversion')
+            ->orderBy('hoursToConversion', 'ASC');
+
+        $results = $query->get();
+
+        if ($results->count() === 0) {
+            return null;
+        }
+
+        $labels = [];
+        $counts = [];
+
+        $hoursWithConversions = [];
+        $conversionsPerHour = [];
+
+        foreach ($results as $result) {
+            $hoursWithConversions[] = $result->hoursToConversion;
+            $conversionsPerHour[$result->hoursToConversion] = $result->conversionsOnHour;
+        }
+
+        foreach ($hoursWithConversions as $value) {
+            $labels[] = $value;
+
+            if (in_array($value, $hoursWithConversions)) {
+                $counts[] = $conversionsPerHour[$value];
+            } else {
+                $counts[] = 0;
+            }
+        }
+
+        $conversionsChart = new ConversionsChart();
+        $conversionsChart->labels($labels);
+
+        $conversionsChart
+            ->dataset(ucfirst($affiliate) . ' conversions on hour', 'line', $counts)
+            ->backGroundColor('#6d6913');
+
+        $conversionsChart
+            ->title(ucfirst($affiliate) . ' conversions on hour after registration');
+
+        return $conversionsChart;
+    }
+
     /**
      * @return RevenueMonthlyChart|null
      * @throws \Exception
