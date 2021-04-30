@@ -162,7 +162,7 @@ class PaymentController extends FrontendController
 
                 /** @var UserMeta $userMeta */
                 $userMeta = $user->meta;
-                
+
                 $userMeta->setHoursToConversion($hoursToConversion);
                 $user->meta()->save($userMeta);
             }
