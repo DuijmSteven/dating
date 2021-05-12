@@ -814,6 +814,7 @@ class ChartsManager
     public function createHoursToConversionChart(string $affiliate = null)
     {
         $query = \DB::table('user_meta as um')
+            ->whereDate('um.created_at', '>=', Carbon::parse(config('app.new_launch_date'))->format('Y-m-d H:i:s'))
             ->select(\DB::raw('um.hours_to_conversion as hoursToConversion, COUNT(um.id) as conversionsOnHour'))
             ->where('um.hours_to_conversion', '!=', null);
 
