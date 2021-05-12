@@ -110,9 +110,10 @@ class DashboardController extends Controller
             $endOfToday
         );
 
-        $allUsersCount = User::whereHas('roles', function ($query) {
-            $query->where('id', User::TYPE_PEASANT);
-        })->count();
+        $allUsersCount = User::where('created_at', '>=', $newLaunchDate)
+            ->whereHas('roles', function ($query) {
+                $query->where('id', User::TYPE_PEASANT);
+            })->count();
 
         $viewData = [
             'onlineFemaleStraightBotsCount' => $onlineFemaleStraightBotsCount,
