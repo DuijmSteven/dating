@@ -203,6 +203,12 @@
                                     class="DashboardWidget_count">{{ $userTypeStatistics['averageLifetimeValuePerUserRegisteredUntilTwoMonthsAgo'] }}</span></a></li>
                         <li><a href="{{ route('admin.peasants.created-until-date.show', ['date' => \Carbon\Carbon::now('Europe/Amsterdam')->subMonths(1)->format('d-m-Y')]) }}">ALVPU regist. by 1 month ago ( {{ $userTypeStatistics['payingUsersRegisteredUntilOneMonthAgoCount'] }} users) <span
                                     class="DashboardWidget_count">{{ $userTypeStatistics['averageLifetimeValuePerUserRegisteredUntilOneMonthAgo'] }}</span></a></li>
+
+                        <li><a href="{{ route('admin.peasants.created-until-date.show', ['date' => \Carbon\Carbon::now('Europe/Amsterdam')->subDays(20)->format('d-m-Y')]) }}">ALVPU regist. by 20 days ago ( {{ $userTypeStatistics['payingUsersRegisteredUntilTwentyDaysAgoCount'] }} users) <span
+                                    class="DashboardWidget_count">{{ $userTypeStatistics['averageLifetimeValuePerUserRegisteredUntilTwentyDaysAgo'] }}</span></a></li>
+
+                        <li><a href="{{ route('admin.peasants.created-until-date.show', ['date' => \Carbon\Carbon::now('Europe/Amsterdam')->subDays(10)->format('d-m-Y')]) }}">ALVPU regist. by 10 days ago ( {{ $userTypeStatistics['payingUsersRegisteredUntilTenDaysAgoCount'] }} users) <span
+                                    class="DashboardWidget_count">{{ $userTypeStatistics['averageLifetimeValuePerUserRegisteredUntilTenDaysAgo'] }}</span></a></li>
                     </ul>
                 </div>
             </div>
@@ -264,10 +270,10 @@
                                     class="DashboardWidget_count">{{ $excludingXpartnersUserTypeStatistics['alvPerUserRegisteredUntilOneMonthAndAHalfAgo'] }}</span></a></li>
                         <li><a href="{{ route('admin.peasants.created-until-date.show', ['date' => \Carbon\Carbon::now('Europe/Amsterdam')->subMonths(1)->format('d-m-Y')]) }}">ALVPU regist. by 1 month ago ( {{ $excludingXpartnersUserTypeStatistics['payingUsersRegisteredUntilOneMonthAgoCount'] }} users) <span
                                     class="DashboardWidget_count">{{ $excludingXpartnersUserTypeStatistics['alvPerUserRegisteredUntilOneMonthAgo'] }}</span></a></li>
-{{--                        <li><a href="{{ route('admin.peasants.created-until-date.show', ['date' => \Carbon\Carbon::now('Europe/Amsterdam')->subDays(20)->format('d-m-Y')]) }}">ALVPU regist. by 20 days ago ( {{ $excludingXpartnersUserTypeStatistics['payingUsersRegisteredUntilTwentyDaysAgoCount'] }} users) <span--}}
-{{--                                    class="DashboardWidget_count">{{ $excludingXpartnersUserTypeStatistics['alvPerUserRegisteredUntilTwentyDaysAgo'] }}</span></a></li>--}}
-{{--                        <li><a href="{{ route('admin.peasants.created-until-date.show', ['date' => \Carbon\Carbon::now('Europe/Amsterdam')->subDays(10)->format('d-m-Y')]) }}">ALVPU regist. by 10 days ago ( {{ $excludingXpartnersUserTypeStatistics['payingUsersRegisteredUntilTenDaysAgoCount'] }} users) <span--}}
-{{--                                    class="DashboardWidget_count">{{ $excludingXpartnersUserTypeStatistics['alvPerUserRegisteredUntilTenDaysAgo'] }}</span></a></li>--}}
+                        <li><a href="{{ route('admin.peasants.created-until-date.show', ['date' => \Carbon\Carbon::now('Europe/Amsterdam')->subDays(20)->format('d-m-Y')]) }}">ALVPU regist. by 20 days ago ( {{ $excludingXpartnersUserTypeStatistics['payingUsersRegisteredUntilTwentyDaysAgoCount'] }} users) <span
+                                    class="DashboardWidget_count">{{ $excludingXpartnersUserTypeStatistics['alvPerUserRegisteredUntilTwentyDaysAgo'] }}</span></a></li>
+                        <li><a href="{{ route('admin.peasants.created-until-date.show', ['date' => \Carbon\Carbon::now('Europe/Amsterdam')->subDays(10)->format('d-m-Y')]) }}">ALVPU regist. by 10 days ago ( {{ $excludingXpartnersUserTypeStatistics['payingUsersRegisteredUntilTenDaysAgoCount'] }} users) <span
+                                    class="DashboardWidget_count">{{ $excludingXpartnersUserTypeStatistics['alvPerUserRegisteredUntilTenDaysAgo'] }}</span></a></li>
                     </ul>
                 </div>
             </div>

@@ -282,6 +282,9 @@
                         <li><a href="#">All time conversion rate <span
                                     class="DashboardWidget_count">{{ number_format($conversionStatistics['allTimeConversionRate'], 1) }}% </span></a>
                         </li>
+                        <li><a href="#">Average last 10 days <span
+                                    class="DashboardWidget_count">{{ number_format($conversionStatistics['averageLastTenDays'], 1) }} conversions per day </span></a>
+                        </li>
                     </ul>
                 </div>
             </div>

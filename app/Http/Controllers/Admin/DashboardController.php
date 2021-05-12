@@ -78,6 +78,8 @@ class DashboardController extends Controller
         $startOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->startOfDay()->setTimezone('UTC');
         $endOfYesterday = Carbon::now('Europe/Amsterdam')->subDays(1)->endOfDay()->setTimezone('UTC');
 
+        $startOfElevenDaysAgo = Carbon::now('Europe/Amsterdam')->subDays(11)->startOfDay()->setTimezone('UTC');
+
         $startOfSevenDaysAgo = Carbon::now('Europe/Amsterdam')->subDays(7)->startOfDay()->setTimezone('UTC');
         $startOfThirtyDaysAgo = Carbon::now('Europe/Amsterdam')->subDays(30)->startOfDay()->setTimezone('UTC');
 
@@ -108,6 +110,12 @@ class DashboardController extends Controller
             'any',
             $newLaunchDate,
             $endOfToday
+        );
+
+        $conversionsLastTenDaysCount = $this->statisticsManager->affiliateConversionsBetweenCount(
+            'any',
+            $startOfElevenDaysAgo,
+            $endOfYesterday
         );
 
         $allUsersCount = User::where('created_at', '>=', $newLaunchDate)
@@ -258,7 +266,8 @@ class DashboardController extends Controller
                     $startOfLastYear,
                     $endOfLastYear
                 ),
-                'allTimeConversionRate' => $allUsersCount > 0 ? $conversionsAllTimeCount / $allUsersCount * 100 : 0
+                'allTimeConversionRate' => $allUsersCount > 0 ? $conversionsAllTimeCount / $allUsersCount * 100 : 0,
+                'averageLastTenDays' => $conversionsLastTenDaysCount / 10
             ],
             'topMessagerStatistics' => [
                 'today' => $this->statisticsManager->topMessagersBetweenDates($startOfToday, $endOfToday, 50),

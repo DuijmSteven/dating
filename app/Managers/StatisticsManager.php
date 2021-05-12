@@ -108,6 +108,8 @@ class StatisticsManager
     public function getUserTypeStatistics()
     {
         $endOfToday = Carbon::now('Europe/Amsterdam')->endOfDay()->setTimezone('UTC');
+        $tenDaysAgo = Carbon::now('Europe/Amsterdam')->subDays(10)->setTimezone('UTC');
+        $twentyDaysAgo = Carbon::now('Europe/Amsterdam')->subDays(20)->setTimezone('UTC');
         $oneMonthAgo = Carbon::now('Europe/Amsterdam')->subMonths(1)->setTimezone('UTC');
         $twoMonthsAgo = Carbon::now('Europe/Amsterdam')->subMonths(2)->setTimezone('UTC');
         $threeMonthsAgo = Carbon::now('Europe/Amsterdam')->subMonths(3)->setTimezone('UTC');
@@ -118,94 +120,110 @@ class StatisticsManager
         $eightMonthsAgo = Carbon::now('Europe/Amsterdam')->subMonths(8)->setTimezone('UTC');
         $nineMonthsAgo = Carbon::now('Europe/Amsterdam')->subMonths(9)->setTimezone('UTC');
 
-        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.launch_date'));
+        $newLaunchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.new_launch_date'));
 
-        $allTimePayingUsersCount = $this->payingUsersCreatedUntilDateCount($endOfToday);
-        $payingUsersUntilNineMonthsAgoCount = $this->payingUsersCreatedUntilDateCount($nineMonthsAgo);
-        $payingUsersUntilEightMonthsAgoCount = $this->payingUsersCreatedUntilDateCount($eightMonthsAgo);
-        $payingUsersUntilSevenMonthsAgoCount = $this->payingUsersCreatedUntilDateCount($sevenMonthsAgo);
-        $payingUsersUntilSixMonthsAgoCount = $this->payingUsersCreatedUntilDateCount($sixMonthsAgo);
-        $payingUsersUntilFiveMonthsAgoCount = $this->payingUsersCreatedUntilDateCount($fiveMonthsAgo);
-        $payingUsersUntilFourMonthsAgoCount = $this->payingUsersCreatedUntilDateCount($fourMonthsAgo);
-        $payingUsersUntilThreeMonthsAgoCount = $this->payingUsersCreatedUntilDateCount($threeMonthsAgo);
-        $payingUsersUntilTwoMonthsAgoCount = $this->payingUsersCreatedUntilDateCount($twoMonthsAgo);
-        $payingUsersUntilOneMonthAgoCount = $this->payingUsersCreatedUntilDateCount($oneMonthAgo);
+        $allTimePayingUsersCount = $this->payingUsersCreatedFromUntilDateCount($newLaunchDate, $endOfToday);
+        $payingUsersUntilNineMonthsAgoCount = $this->payingUsersCreatedFromUntilDateCount($newLaunchDate, $nineMonthsAgo);
+        $payingUsersUntilEightMonthsAgoCount = $this->payingUsersCreatedFromUntilDateCount($newLaunchDate, $eightMonthsAgo);
+        $payingUsersUntilSevenMonthsAgoCount = $this->payingUsersCreatedFromUntilDateCount($newLaunchDate, $sevenMonthsAgo);
+        $payingUsersUntilSixMonthsAgoCount = $this->payingUsersCreatedFromUntilDateCount($newLaunchDate, $sixMonthsAgo);
+        $payingUsersUntilFiveMonthsAgoCount = $this->payingUsersCreatedFromUntilDateCount($newLaunchDate, $fiveMonthsAgo);
+        $payingUsersUntilFourMonthsAgoCount = $this->payingUsersCreatedFromUntilDateCount($newLaunchDate, $fourMonthsAgo);
+        $payingUsersUntilThreeMonthsAgoCount = $this->payingUsersCreatedFromUntilDateCount($newLaunchDate, $threeMonthsAgo);
+        $payingUsersUntilTwoMonthsAgoCount = $this->payingUsersCreatedFromUntilDateCount($newLaunchDate, $twoMonthsAgo);
+        $payingUsersUntilOneMonthAgoCount = $this->payingUsersCreatedFromUntilDateCount($newLaunchDate, $oneMonthAgo);
+        $payingUsersUntilTwentyDaysAgoCount = $this->payingUsersCreatedFromUntilDateCount($newLaunchDate, $twentyDaysAgo);
+        $payingUsersUntilTenDaysAgoCount = $this->payingUsersCreatedFromUntilDateCount($newLaunchDate, $tenDaysAgo);
 
-        $allUsersCount = User::whereHas('roles', function ($query) {
-            $query->where('id', User::TYPE_PEASANT);
-        })
-        ->count();
+        $allUsersCount = User::where('created_at', '>=', $newLaunchDate)
+            ->whereHas('roles', function ($query) {
+                $query->where('id', User::TYPE_PEASANT);
+            })->count();
 
         $allTimeRevenue = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday
         );
 
         $revenueFromUsersUntilNineMonthsAgo = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             $nineMonthsAgo
         );
 
         $revenueFromUsersUntilEightMonthsAgo = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             $eightMonthsAgo
         );
 
         $revenueFromUsersUntilSevenMonthsAgo = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             $sevenMonthsAgo
         );
 
         $revenueFromUsersUntilSixMonthsAgo = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             $sixMonthsAgo
         );
 
         $revenueFromUsersUntilFiveMonthsAgo = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             $fiveMonthsAgo
         );
 
         $revenueFromUsersUntilFourMonthsAgo = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             $fourMonthsAgo
         );
 
         $revenueFromUsersUntilThreeMonthsAgo = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             $threeMonthsAgo
         );
 
         $revenueFromUsersUntilTwoMonthsAgo = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             $twoMonthsAgo
         );
 
         $revenueFromUsersUntilOneMonthAgo = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             $oneMonthAgo
         );
 
+        $revenueFromUsersUntilTwentyDaysAgo = $this->revenueBetween(
+            $newLaunchDate,
+            $endOfToday,
+            $twentyDaysAgo
+        );
+
+        $revenueFromUsersUntilTenDaysAgo = $this->revenueBetween(
+            $newLaunchDate,
+            $endOfToday,
+            $tenDaysAgo
+        );
+
         $averageRevenuePerAllTimeUser = $allTimeRevenue / $allUsersCount;
         $averageRevenuePerAllTimePayingUser = $allTimeRevenue / $allTimePayingUsersCount;
-        $averageLifetimeValuePerUserRegisteredUntilNineMonthsAgo = $revenueFromUsersUntilNineMonthsAgo / $payingUsersUntilNineMonthsAgoCount;
-        $averageLifetimeValuePerUserRegisteredUntilEightMonthsAgo = $revenueFromUsersUntilEightMonthsAgo / $payingUsersUntilEightMonthsAgoCount;
-        $averageLifetimeValuePerUserRegisteredUntilSevenMonthsAgo = $revenueFromUsersUntilSevenMonthsAgo / $payingUsersUntilSevenMonthsAgoCount;
-        $averageLifetimeValuePerUserRegisteredUntilSixMonthsAgo = $revenueFromUsersUntilSixMonthsAgo / $payingUsersUntilSixMonthsAgoCount;
-        $averageLifetimeValuePerUserRegisteredUntilFiveMonthsAgo = $revenueFromUsersUntilFiveMonthsAgo / $payingUsersUntilFiveMonthsAgoCount;
-        $averageLifetimeValuePerUserRegisteredUntilFourMonthsAgo = $revenueFromUsersUntilFourMonthsAgo / $payingUsersUntilFourMonthsAgoCount;
-        $averageLifetimeValuePerUserRegisteredUntilThreeMonthsAgo = $revenueFromUsersUntilThreeMonthsAgo / $payingUsersUntilThreeMonthsAgoCount;
-        $averageLifetimeValuePerUserRegisteredUntilTwoMonthsAgo = $revenueFromUsersUntilTwoMonthsAgo / $payingUsersUntilTwoMonthsAgoCount;
-        $averageLifetimeValuePerUserRegisteredUntilOneMonthAgo = $revenueFromUsersUntilOneMonthAgo / $payingUsersUntilOneMonthAgoCount;
+        $averageLifetimeValuePerUserRegisteredUntilNineMonthsAgo = $payingUsersUntilNineMonthsAgoCount < 1 ? 0 : $revenueFromUsersUntilNineMonthsAgo / $payingUsersUntilNineMonthsAgoCount;
+        $averageLifetimeValuePerUserRegisteredUntilEightMonthsAgo = $payingUsersUntilEightMonthsAgoCount < 1 ? 0 : $revenueFromUsersUntilEightMonthsAgo / $payingUsersUntilEightMonthsAgoCount;
+        $averageLifetimeValuePerUserRegisteredUntilSevenMonthsAgo = $payingUsersUntilSevenMonthsAgoCount < 1 ? 0 : $revenueFromUsersUntilSevenMonthsAgo / $payingUsersUntilSevenMonthsAgoCount;
+        $averageLifetimeValuePerUserRegisteredUntilSixMonthsAgo = $payingUsersUntilSixMonthsAgoCount < 1 ? 0 : $revenueFromUsersUntilSixMonthsAgo / $payingUsersUntilSixMonthsAgoCount;
+        $averageLifetimeValuePerUserRegisteredUntilFiveMonthsAgo = $payingUsersUntilFiveMonthsAgoCount < 1 ? 0 : $revenueFromUsersUntilFiveMonthsAgo / $payingUsersUntilFiveMonthsAgoCount;
+        $averageLifetimeValuePerUserRegisteredUntilFourMonthsAgo = $payingUsersUntilFourMonthsAgoCount < 1 ? 0 : $revenueFromUsersUntilFourMonthsAgo / $payingUsersUntilFourMonthsAgoCount;
+        $averageLifetimeValuePerUserRegisteredUntilThreeMonthsAgo = $payingUsersUntilThreeMonthsAgoCount < 1 ? 0 : $revenueFromUsersUntilThreeMonthsAgo / $payingUsersUntilThreeMonthsAgoCount;
+        $averageLifetimeValuePerUserRegisteredUntilTwoMonthsAgo = $payingUsersUntilTwoMonthsAgoCount < 1 ? 0 : $revenueFromUsersUntilTwoMonthsAgo / $payingUsersUntilTwoMonthsAgoCount;
+        $averageLifetimeValuePerUserRegisteredUntilOneMonthAgo = $payingUsersUntilOneMonthAgoCount < 1 ? 0 : $revenueFromUsersUntilOneMonthAgo / $payingUsersUntilOneMonthAgoCount;
+        $averageLifetimeValuePerUserRegisteredUntilTwentyDaysAgo = $payingUsersUntilTwentyDaysAgoCount < 1 ? 0 : $revenueFromUsersUntilTwentyDaysAgo / $payingUsersUntilTwentyDaysAgoCount;
+        $averageLifetimeValuePerUserRegisteredUntilTenDaysAgo = $payingUsersUntilTenDaysAgoCount < 1 ? 0 : $revenueFromUsersUntilTenDaysAgo / $payingUsersUntilTenDaysAgoCount;
 
         $peasantsWithCreditpack = $this->peasantsWithCreditpack();
 
@@ -238,6 +256,8 @@ class StatisticsManager
             'payingUsersRegisteredUntilThreeMonthsAgoCount' => $payingUsersUntilThreeMonthsAgoCount,
             'payingUsersRegisteredUntilTwoMonthsAgoCount' => $payingUsersUntilTwoMonthsAgoCount,
             'payingUsersRegisteredUntilOneMonthAgoCount' => $payingUsersUntilOneMonthAgoCount,
+            'payingUsersRegisteredUntilTwentyDaysAgoCount' => $payingUsersUntilTwentyDaysAgoCount,
+            'payingUsersRegisteredUntilTenDaysAgoCount' => $payingUsersUntilTenDaysAgoCount,
             'averageRevenuePerAllTimePayingUser' => number_format($averageRevenuePerAllTimePayingUser / 100, 2),
             'averageRevenuePerUser' => number_format($averageRevenuePerAllTimeUser / 100, 2),
             'averageLifetimeValuePerUserRegisteredUntilNineMonthsAgo' => number_format($averageLifetimeValuePerUserRegisteredUntilNineMonthsAgo / 100, 2),
@@ -249,6 +269,8 @@ class StatisticsManager
             'averageLifetimeValuePerUserRegisteredUntilThreeMonthsAgo' => number_format($averageLifetimeValuePerUserRegisteredUntilThreeMonthsAgo / 100, 2),
             'averageLifetimeValuePerUserRegisteredUntilTwoMonthsAgo' => number_format($averageLifetimeValuePerUserRegisteredUntilTwoMonthsAgo / 100, 2),
             'averageLifetimeValuePerUserRegisteredUntilOneMonthAgo' => number_format($averageLifetimeValuePerUserRegisteredUntilOneMonthAgo / 100, 2),
+            'averageLifetimeValuePerUserRegisteredUntilTwentyDaysAgo' => number_format($averageLifetimeValuePerUserRegisteredUntilTwentyDaysAgo / 100, 2),
+            'averageLifetimeValuePerUserRegisteredUntilTenDaysAgo' => number_format($averageLifetimeValuePerUserRegisteredUntilTenDaysAgo / 100, 2),
         ];
     }
 
@@ -268,23 +290,24 @@ class StatisticsManager
         $eightMonthsAgo = Carbon::now('Europe/Amsterdam')->subMonths(8)->setTimezone('UTC');
         $nineMonthsAgo = Carbon::now('Europe/Amsterdam')->subMonths(9)->setTimezone('UTC');
 
-        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.launch_date'));
+        $newLaunchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.new_launch_date'));
 
-        $allTimePayingUsersCount = $this->payingUsersCreatedUntilDateCount($endOfToday, $affiliate);
-        $payingUsersUntilNineMonthsAgoCount = $this->payingUsersCreatedUntilDateCount($nineMonthsAgo, $affiliate);
-        $payingUsersUntilEightMonthsAgoCount = $this->payingUsersCreatedUntilDateCount($eightMonthsAgo, $affiliate);
-        $payingUsersUntilSevenMonthsAgoCount = $this->payingUsersCreatedUntilDateCount($sevenMonthsAgo, $affiliate);
-        $payingUsersUntilSixMonthsAgoCount = $this->payingUsersCreatedUntilDateCount($sixMonthsAgo, $affiliate);
-        $payingUsersUntilFiveMonthsAgoCount = $this->payingUsersCreatedUntilDateCount($fiveMonthsAgo, $affiliate);
-        $payingUsersUntilFourMonthsAgoCount = $this->payingUsersCreatedUntilDateCount($fourMonthsAgo, $affiliate);
-        $payingUsersUntilThreeMonthsAgoCount = $this->payingUsersCreatedUntilDateCount($threeMonthsAgo, $affiliate);
-        $payingUsersUntilTwoMonthsAgoCount = $this->payingUsersCreatedUntilDateCount($twoMonthsAgo, $affiliate);
-        $payingUsersUntilOneMonthAndAHalfAgoCount = $this->payingUsersCreatedUntilDateCount($oneAndAHalfMonthAgo, $affiliate);
-        $payingUsersUntilOneMonthAgoCount = $this->payingUsersCreatedUntilDateCount($oneMonthAgo, $affiliate);
-        $payingUsersUntilTwentyDaysAgoCount = $this->payingUsersCreatedUntilDateCount($twentyDaysAgo, $affiliate);
-        $payingUsersUntilTenDaysAgoCount = $this->payingUsersCreatedUntilDateCount($tenDaysAgo, $affiliate);
+        $allTimePayingUsersCount = $this->payingUsersCreatedFromUntilDateCount($newLaunchDate, $endOfToday, $affiliate);
+        $payingUsersUntilNineMonthsAgoCount = $this->payingUsersCreatedFromUntilDateCount($newLaunchDate, $nineMonthsAgo, $affiliate);
+        $payingUsersUntilEightMonthsAgoCount = $this->payingUsersCreatedFromUntilDateCount($newLaunchDate, $eightMonthsAgo, $affiliate);
+        $payingUsersUntilSevenMonthsAgoCount = $this->payingUsersCreatedFromUntilDateCount($newLaunchDate, $sevenMonthsAgo, $affiliate);
+        $payingUsersUntilSixMonthsAgoCount = $this->payingUsersCreatedFromUntilDateCount($newLaunchDate, $sixMonthsAgo, $affiliate);
+        $payingUsersUntilFiveMonthsAgoCount = $this->payingUsersCreatedFromUntilDateCount($newLaunchDate, $fiveMonthsAgo, $affiliate);
+        $payingUsersUntilFourMonthsAgoCount = $this->payingUsersCreatedFromUntilDateCount($newLaunchDate, $fourMonthsAgo, $affiliate);
+        $payingUsersUntilThreeMonthsAgoCount = $this->payingUsersCreatedFromUntilDateCount($newLaunchDate, $threeMonthsAgo, $affiliate);
+        $payingUsersUntilTwoMonthsAgoCount = $this->payingUsersCreatedFromUntilDateCount($newLaunchDate, $twoMonthsAgo, $affiliate);
+        $payingUsersUntilOneMonthAndAHalfAgoCount = $this->payingUsersCreatedFromUntilDateCount($newLaunchDate, $oneAndAHalfMonthAgo, $affiliate);
+        $payingUsersUntilOneMonthAgoCount = $this->payingUsersCreatedFromUntilDateCount($newLaunchDate, $oneMonthAgo, $affiliate);
+        $payingUsersUntilTwentyDaysAgoCount = $this->payingUsersCreatedFromUntilDateCount($newLaunchDate, $twentyDaysAgo, $affiliate);
+        $payingUsersUntilTenDaysAgoCount = $this->payingUsersCreatedFromUntilDateCount($newLaunchDate, $tenDaysAgo, $affiliate);
 
-        $allUsersCount = User::whereHas('roles', function ($query) {
+        $allUsersCount = User::where('created_at', '>=', $newLaunchDate)
+            ->whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_PEASANT);
             })
             ->whereHas('affiliateTracking', function ($query) use ($affiliate) {
@@ -293,95 +316,95 @@ class StatisticsManager
             ->count();
 
         $allTimeRevenue = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             null,
             $affiliate
         );
 
         $revenueFromUsersUntilNineMonthsAgo = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             $nineMonthsAgo,
             $affiliate
         );
 
         $revenueFromUsersUntilEightMonthsAgo = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             $eightMonthsAgo,
             $affiliate
         );
 
         $revenueFromUsersUntilSevenMonthsAgo = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             $sevenMonthsAgo,
             $affiliate
         );
 
         $revenueFromUsersUntilSixMonthsAgo = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             $sixMonthsAgo,
             $affiliate
         );
 
         $revenueFromUsersUntilFiveMonthsAgo = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             $fiveMonthsAgo,
             $affiliate
         );
 
         $revenueFromUsersUntilFourMonthsAgo = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             $fourMonthsAgo,
             $affiliate
         );
 
         $revenueFromUsersUntilThreeMonthsAgo = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             $threeMonthsAgo,
             $affiliate
         );
 
         $revenueFromUsersUntilTwoMonthsAgo = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             $twoMonthsAgo,
             $affiliate
         );
 
         $revenueFromUsersUntilOneMonthAndAHalfAgo = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             $oneAndAHalfMonthAgo,
             $affiliate
         );
 
         $revenueFromUsersUntilOneMonthAgo = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             $oneMonthAgo,
             $affiliate
         );
 
-//        $revenueFromUsersUntilTwentyDaysAgo = $this->revenueBetween(
-//            $launchDate,
-//            $endOfToday,
-//            $twentyDaysAgo,
-//            $affiliate
-//        );
-//
-//        $revenueFromUsersUntilTenDaysAgo = $this->revenueBetween(
-//            $launchDate,
-//            $endOfToday,
-//            $tenDaysAgo,
-//            $affiliate
-//        );
+        $revenueFromUsersUntilTwentyDaysAgo = $this->revenueBetween(
+            $newLaunchDate,
+            $endOfToday,
+            $twentyDaysAgo,
+            $affiliate
+        );
+
+        $revenueFromUsersUntilTenDaysAgo = $this->revenueBetween(
+            $newLaunchDate,
+            $endOfToday,
+            $tenDaysAgo,
+            $affiliate
+        );
 
         $alvPerUserRegisteredAllTime = $this->calculateAverageRevenuePerUser($allTimeRevenue, $allUsersCount);
         $alvPerPayingUserRegisteredAllTime = $this->calculateAverageRevenuePerUser($allTimeRevenue, $allTimePayingUsersCount);
@@ -395,8 +418,8 @@ class StatisticsManager
         $alvPerPayingUserRegisteredUntilTwoMonthsAgo = $this->calculateAverageRevenuePerUser($revenueFromUsersUntilTwoMonthsAgo, $payingUsersUntilTwoMonthsAgoCount);
         $alvPerPayingUserRegisteredUntilOneMonthAndAHalfAgo = $this->calculateAverageRevenuePerUser($revenueFromUsersUntilOneMonthAndAHalfAgo, $payingUsersUntilOneMonthAndAHalfAgoCount);
         $alvPerPayingUserRegisteredUntilOneMonthAgo = $this->calculateAverageRevenuePerUser($revenueFromUsersUntilOneMonthAgo, $payingUsersUntilOneMonthAgoCount);
-//        $alvPerPayingUserRegisteredUntilTwentyDaysAgo = $this->calculateAverageRevenuePerUser($revenueFromUsersUntilTwentyDaysAgo, $payingUsersUntilTwentyDaysAgoCount);
-//        $alvPerPayingUserRegisteredUntilTenDaysAgo = $this->calculateAverageRevenuePerUser($revenueFromUsersUntilTenDaysAgo, $payingUsersUntilTenDaysAgoCount);
+        $alvPerPayingUserRegisteredUntilTwentyDaysAgo = $this->calculateAverageRevenuePerUser($revenueFromUsersUntilTwentyDaysAgo, $payingUsersUntilTwentyDaysAgoCount);
+        $alvPerPayingUserRegisteredUntilTenDaysAgo = $this->calculateAverageRevenuePerUser($revenueFromUsersUntilTenDaysAgo, $payingUsersUntilTenDaysAgoCount);
 
         $peasantsWithCreditpack = $this->peasantsWithCreditpack($affiliate);
 
@@ -444,8 +467,8 @@ class StatisticsManager
             'alvPerUserRegisteredUntilTwoMonthsAgo' => number_format($alvPerPayingUserRegisteredUntilTwoMonthsAgo / 100, 2),
             'alvPerUserRegisteredUntilOneMonthAndAHalfAgo' => number_format($alvPerPayingUserRegisteredUntilOneMonthAndAHalfAgo / 100, 2),
             'alvPerUserRegisteredUntilOneMonthAgo' => number_format($alvPerPayingUserRegisteredUntilOneMonthAgo / 100, 2),
-//            'alvPerUserRegisteredUntilTwentyDaysAgo' => number_format($alvPerPayingUserRegisteredUntilTwentyDaysAgo / 100, 2),
-//            'alvPerUserRegisteredUntilTenDaysAgo' => number_format($alvPerPayingUserRegisteredUntilTenDaysAgo / 100, 2),
+            'alvPerUserRegisteredUntilTwentyDaysAgo' => number_format($alvPerPayingUserRegisteredUntilTwentyDaysAgo / 100, 2),
+            'alvPerUserRegisteredUntilTenDaysAgo' => number_format($alvPerPayingUserRegisteredUntilTenDaysAgo / 100, 2),
         ];
     }
 
@@ -465,81 +488,94 @@ class StatisticsManager
         $eightMonthsAgo = Carbon::now('Europe/Amsterdam')->subMonths(8)->setTimezone('UTC');
         $nineMonthsAgo = Carbon::now('Europe/Amsterdam')->subMonths(9)->setTimezone('UTC');
 
-        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.launch_date'));
+        $newLaunchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.new_launch_date'));
 
-        $allTimePayingUsersCount = $this->payingUsersCreatedUntilDateCount(
+        $allTimePayingUsersCount = $this->payingUsersCreatedFromUntilDateCount(
+            $newLaunchDate,
             $endOfToday,
             null,
             UserAffiliateTracking::AFFILIATE_XPARTNERS
         );
 
-        $payingUsersUntilNineMonthsAgoCount = $this->payingUsersCreatedUntilDateCount(
+        $payingUsersUntilNineMonthsAgoCount = $this->payingUsersCreatedFromUntilDateCount(
+            $newLaunchDate,
             $nineMonthsAgo,
             null,
             UserAffiliateTracking::AFFILIATE_XPARTNERS
         );
 
-        $payingUsersUntilEightMonthsAgoCount = $this->payingUsersCreatedUntilDateCount(
+        $payingUsersUntilEightMonthsAgoCount = $this->payingUsersCreatedFromUntilDateCount(
+            $newLaunchDate,
             $eightMonthsAgo,
             null,
             UserAffiliateTracking::AFFILIATE_XPARTNERS
         );
 
-        $payingUsersUntilSevenMonthsAgoCount = $this->payingUsersCreatedUntilDateCount(
+        $payingUsersUntilSevenMonthsAgoCount = $this->payingUsersCreatedFromUntilDateCount(
+            $newLaunchDate,
             $sevenMonthsAgo,
             null,
             UserAffiliateTracking::AFFILIATE_XPARTNERS
         );
 
-        $payingUsersUntilSixMonthsAgoCount = $this->payingUsersCreatedUntilDateCount(
+        $payingUsersUntilSixMonthsAgoCount = $this->payingUsersCreatedFromUntilDateCount(
+            $newLaunchDate,
             $sixMonthsAgo,
             null,
             UserAffiliateTracking::AFFILIATE_XPARTNERS
         );
 
-        $payingUsersUntilFiveMonthsAgoCount = $this->payingUsersCreatedUntilDateCount(
+        $payingUsersUntilFiveMonthsAgoCount = $this->payingUsersCreatedFromUntilDateCount(
+            $newLaunchDate,
             $fiveMonthsAgo,
             null,
             UserAffiliateTracking::AFFILIATE_XPARTNERS
         );
 
-        $payingUsersUntilFourMonthsAgoCount = $this->payingUsersCreatedUntilDateCount(
+        $payingUsersUntilFourMonthsAgoCount = $this->payingUsersCreatedFromUntilDateCount(
+            $newLaunchDate,
             $fourMonthsAgo,
             null,
             UserAffiliateTracking::AFFILIATE_XPARTNERS
         );
 
-        $payingUsersUntilThreeMonthsAgoCount = $this->payingUsersCreatedUntilDateCount(
+        $payingUsersUntilThreeMonthsAgoCount = $this->payingUsersCreatedFromUntilDateCount(
+            $newLaunchDate,
             $threeMonthsAgo,
             null,
             UserAffiliateTracking::AFFILIATE_XPARTNERS
         );
 
-        $payingUsersUntilTwoMonthsAgoCount = $this->payingUsersCreatedUntilDateCount(
+        $payingUsersUntilTwoMonthsAgoCount = $this->payingUsersCreatedFromUntilDateCount(
+            $newLaunchDate,
             $twoMonthsAgo,
             null,
             UserAffiliateTracking::AFFILIATE_XPARTNERS
         );
 
-        $payingUsersUntilOneMonthAndAHalfAgoCount = $this->payingUsersCreatedUntilDateCount(
+        $payingUsersUntilOneMonthAndAHalfAgoCount = $this->payingUsersCreatedFromUntilDateCount(
+            $newLaunchDate,
             $oneAndAHalfMonthAgo,
             null,
             UserAffiliateTracking::AFFILIATE_XPARTNERS
         );
 
-        $payingUsersUntilOneMonthAgoCount = $this->payingUsersCreatedUntilDateCount(
+        $payingUsersUntilOneMonthAgoCount = $this->payingUsersCreatedFromUntilDateCount(
+            $newLaunchDate,
             $oneMonthAgo,
             null,
             UserAffiliateTracking::AFFILIATE_XPARTNERS
         );
 
-        $payingUsersUntilTwentyDaysAgoCount = $this->payingUsersCreatedUntilDateCount(
+        $payingUsersUntilTwentyDaysAgoCount = $this->payingUsersCreatedFromUntilDateCount(
+            $newLaunchDate,
             $twentyDaysAgo,
             null,
             UserAffiliateTracking::AFFILIATE_XPARTNERS
         );
 
-        $payingUsersUntilTenDaysAgoCount = $this->payingUsersCreatedUntilDateCount(
+        $payingUsersUntilTenDaysAgoCount = $this->payingUsersCreatedFromUntilDateCount(
+            $newLaunchDate,
             $tenDaysAgo,
             null,
             UserAffiliateTracking::AFFILIATE_XPARTNERS
@@ -554,7 +590,7 @@ class StatisticsManager
             ->count();
 
         $allTimeRevenue = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             null,
             null,
@@ -562,7 +598,7 @@ class StatisticsManager
         );
 
         $revenueFromUsersUntilNineMonthsAgo = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             $nineMonthsAgo,
             null,
@@ -570,7 +606,7 @@ class StatisticsManager
         );
 
         $revenueFromUsersUntilEightMonthsAgo = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             $eightMonthsAgo,
             null,
@@ -578,7 +614,7 @@ class StatisticsManager
         );
 
         $revenueFromUsersUntilSevenMonthsAgo = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             $sevenMonthsAgo,
             null,
@@ -586,7 +622,7 @@ class StatisticsManager
         );
 
         $revenueFromUsersUntilSixMonthsAgo = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             $sixMonthsAgo,
             null,
@@ -594,7 +630,7 @@ class StatisticsManager
         );
 
         $revenueFromUsersUntilFiveMonthsAgo = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             $fiveMonthsAgo,
             null,
@@ -602,7 +638,7 @@ class StatisticsManager
         );
 
         $revenueFromUsersUntilFourMonthsAgo = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             $fourMonthsAgo,
             null,
@@ -610,7 +646,7 @@ class StatisticsManager
         );
 
         $revenueFromUsersUntilThreeMonthsAgo = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             $threeMonthsAgo,
             null,
@@ -618,7 +654,7 @@ class StatisticsManager
         );
 
         $revenueFromUsersUntilTwoMonthsAgo = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             $twoMonthsAgo,
             null,
@@ -626,7 +662,7 @@ class StatisticsManager
         );
 
         $revenueFromUsersUntilOneMonthAndAHalfAgo = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             $oneAndAHalfMonthAgo,
             null,
@@ -634,28 +670,28 @@ class StatisticsManager
         );
 
         $revenueFromUsersUntilOneMonthAgo = $this->revenueBetween(
-            $launchDate,
+            $newLaunchDate,
             $endOfToday,
             $oneMonthAgo,
             null,
             UserAffiliateTracking::AFFILIATE_XPARTNERS
         );
 
-//        $revenueFromUsersUntilTwentyDaysAgo = $this->revenueBetween(
-//            $launchDate,
-//            $endOfToday,
-//            $twentyDaysAgo,
-//            null,
-//            UserAffiliateTracking::AFFILIATE_XPARTNERS
-//        );
-//
-//        $revenueFromUsersUntilTenDaysAgo = $this->revenueBetween(
-//            $launchDate,
-//            $endOfToday,
-//            $tenDaysAgo,
-//            null,
-//            UserAffiliateTracking::AFFILIATE_XPARTNERS
-//        );
+        $revenueFromUsersUntilTwentyDaysAgo = $this->revenueBetween(
+            $newLaunchDate,
+            $endOfToday,
+            $twentyDaysAgo,
+            null,
+            UserAffiliateTracking::AFFILIATE_XPARTNERS
+        );
+
+        $revenueFromUsersUntilTenDaysAgo = $this->revenueBetween(
+            $newLaunchDate,
+            $endOfToday,
+            $tenDaysAgo,
+            null,
+            UserAffiliateTracking::AFFILIATE_XPARTNERS
+        );
 
         $alvPerUserRegisteredAllTime = $this->calculateAverageRevenuePerUser($allTimeRevenue, $allUsersCount);
         $alvPerPayingUserRegisteredAllTime = $this->calculateAverageRevenuePerUser($allTimeRevenue, $allTimePayingUsersCount);
@@ -669,8 +705,8 @@ class StatisticsManager
         $alvPerPayingUserRegisteredUntilTwoMonthsAgo = $this->calculateAverageRevenuePerUser($revenueFromUsersUntilTwoMonthsAgo, $payingUsersUntilTwoMonthsAgoCount);
         $alvPerPayingUserRegisteredUntilOneMonthAndAHalfAgo = $this->calculateAverageRevenuePerUser($revenueFromUsersUntilOneMonthAndAHalfAgo, $payingUsersUntilOneMonthAndAHalfAgoCount);
         $alvPerPayingUserRegisteredUntilOneMonthAgo = $this->calculateAverageRevenuePerUser($revenueFromUsersUntilOneMonthAgo, $payingUsersUntilOneMonthAgoCount);
-//        $alvPerPayingUserRegisteredUntilTwentyDaysAgo = $this->calculateAverageRevenuePerUser($revenueFromUsersUntilTwentyDaysAgo, $payingUsersUntilTwentyDaysAgoCount);
-//        $alvPerPayingUserRegisteredUntilTenDaysAgo = $this->calculateAverageRevenuePerUser($revenueFromUsersUntilTenDaysAgo, $payingUsersUntilTenDaysAgoCount);
+        $alvPerPayingUserRegisteredUntilTwentyDaysAgo = $this->calculateAverageRevenuePerUser($revenueFromUsersUntilTwentyDaysAgo, $payingUsersUntilTwentyDaysAgoCount);
+        $alvPerPayingUserRegisteredUntilTenDaysAgo = $this->calculateAverageRevenuePerUser($revenueFromUsersUntilTenDaysAgo, $payingUsersUntilTenDaysAgoCount);
 
         $peasantsWithCreditpack = $this->peasantsWithCreditpack(null, UserAffiliateTracking::AFFILIATE_XPARTNERS);
 
@@ -718,8 +754,8 @@ class StatisticsManager
             'alvPerUserRegisteredUntilTwoMonthsAgo' => number_format($alvPerPayingUserRegisteredUntilTwoMonthsAgo / 100, 2),
             'alvPerUserRegisteredUntilOneMonthAndAHalfAgo' => number_format($alvPerPayingUserRegisteredUntilOneMonthAndAHalfAgo / 100, 2),
             'alvPerUserRegisteredUntilOneMonthAgo' => number_format($alvPerPayingUserRegisteredUntilOneMonthAgo / 100, 2),
-//            'alvPerUserRegisteredUntilTwentyDaysAgo' => number_format($alvPerPayingUserRegisteredUntilTwentyDaysAgo / 100, 2),
-//            'alvPerUserRegisteredUntilTenDaysAgo' => number_format($alvPerPayingUserRegisteredUntilTenDaysAgo / 100, 2),
+            'alvPerUserRegisteredUntilTwentyDaysAgo' => number_format($alvPerPayingUserRegisteredUntilTwentyDaysAgo / 100, 2),
+            'alvPerUserRegisteredUntilTenDaysAgo' => number_format($alvPerPayingUserRegisteredUntilTenDaysAgo / 100, 2),
         ];
     }
 
@@ -732,13 +768,13 @@ class StatisticsManager
         return $revenue / $userCount;
     }
 
-    public function payingUsersCreatedUntilDateCount($date, $affiliate = null, $excludeAffiliate = null)
+    public function payingUsersCreatedFromUntilDateCount($fromDate, $untilDate, $affiliate = null, $excludeAffiliate = null)
     {
-        return $this->payingUsersCreatedUntilDateQuery($date, $affiliate, $excludeAffiliate)
+        return $this->payingUsersCreatedUntilDateQuery($fromDate, $untilDate, $affiliate, $excludeAffiliate)
             ->count();
     }
 
-    public function payingUsersCreatedUntilDateQuery($date, $affiliate = null, $excludeAffiliate = null)
+    public function payingUsersCreatedUntilDateQuery($fromDate, $untilDate, $affiliate = null, $excludeAffiliate = null)
     {
         $query = User::whereHas('payments', function ($query) {
             $query->where('status', Payment::STATUS_COMPLETED);
@@ -746,7 +782,8 @@ class StatisticsManager
             ->whereHas('roles', function ($query) {
                 $query->where('id', User::TYPE_PEASANT);
             })
-            ->where('created_at', '<=', $date);
+            ->where('created_at', '>=', $fromDate)
+            ->where('created_at', '<=', $untilDate);
 
         if ($affiliate) {
             $query->whereHas('affiliateTracking', function ($query) use ($affiliate) {
