@@ -40,7 +40,7 @@ class ChartsManager
             ->select(\DB::raw('DATE(CONVERT_TZ(cm.created_at, \'UTC\', \'Europe/Amsterdam\')) as creationDate, COUNT(cm.id) AS messagesCount'))
             ->leftJoin('users as u', 'u.id', 'cm.sender_id')
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
-            ->where('cm.created_at', '>=', $since)
+            ->whereDate('cm.created_at', '>=', Carbon::parse($since)->format('Y-m-d H:i:s'))
             ->where('cm.paid', true);
 
         if ($affiliate) {
@@ -130,7 +130,7 @@ class ChartsManager
             ->leftJoin('users as u', 'u.id', 'cm.sender_id')
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('cm.paid', true)
-            ->where('cm.created_at', '>=', config('app.new_launch_date'));
+            ->where('cm.created_at', '>=', Carbon::parse(config('app.new_launch_date'))->format('Y-m-d H:i:s'));
 
 
         if (null  == $userId) {
@@ -282,7 +282,7 @@ class ChartsManager
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('p.status', Payment::STATUS_COMPLETED)
-            ->where('p.created_at', '>=', $since);
+            ->whereDate('p.created_at', '>=', Carbon::parse($since)->format('Y-m-d H:i:s'));
 
         if ($peasantId) {
             $query->where('u.id', $peasantId);
@@ -356,7 +356,7 @@ class ChartsManager
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('p.status', Payment::STATUS_COMPLETED)
-            ->where('p.created_at', '>=', config('app.new_launch_date'))
+            ->whereDate('p.created_at', '>=', Carbon::parse(config('app.new_launch_date'))->format('Y-m-d H:i:s'))
             ->groupBy('months')
             ->orderBy('months', 'ASC');
 
@@ -421,7 +421,7 @@ class ChartsManager
             ->leftJoin('user_affiliate_tracking as uat', 'uat.user_id', 'u.id')
             ->where('uat.affiliate', UserAffiliateTracking::AFFILIATE_GOOGLE)
             ->where('ru.role_id', User::TYPE_PEASANT)
-            ->where('u.created_at', '>=', '2020-05-23 00:00:00')
+            ->where('u.created_at', '>=', '15-04-2021 00:00:00')
             ->groupBy('registrationDate')
             ->orderBy('registrationDate', 'ASC');
 
@@ -551,7 +551,7 @@ class ChartsManager
             )
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
-            ->where('u.created_at', '>=', config('app.new_launch_date'))
+            ->where('u.created_at', '>=', Carbon::parse(config('app.new_launch_date'))->format('Y-m-d H:i:s'))
             ->groupBy('months')
             ->orderBy('months', 'ASC');
 
@@ -616,7 +616,7 @@ class ChartsManager
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('p.status', Payment::STATUS_COMPLETED)
-            ->where('p.created_at', '>=', $since)
+            ->whereDate('p.created_at', '>=', Carbon::parse($since)->format('Y-m-d H:i:s'))
             ->groupBy('creationDate')
             ->orderBy('creationDate', 'ASC');
 
@@ -684,7 +684,7 @@ class ChartsManager
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('p.status', Payment::STATUS_COMPLETED)
             ->where('uat.affiliate', $affiliate)
-            ->where('p.created_at', '>=', '2020-05-23 00:00:00')
+            ->where('p.created_at', '>=', '15-04-2021 00:00:00')
             ->groupBy('creationDate')
             ->orderBy('creationDate', 'ASC');
 
@@ -756,7 +756,7 @@ class ChartsManager
         }
 
         $query->where('p.status', Payment::STATUS_COMPLETED)
-            ->where('p.created_at', '>=', '2020-05-23 00:00:00')
+            ->whereDate('p.created_at', '>=', Carbon::parse(config('app.new_launch_date'))->format('Y-m-d H:i:s'))
             ->where('p.is_conversion', true)
             ->groupBy('creationDate')
             ->orderBy('creationDate', 'ASC');
@@ -877,7 +877,7 @@ class ChartsManager
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('p.status', Payment::STATUS_COMPLETED)
-            ->where('p.created_at', '>=', config('app.new_launch_date'))
+            ->whereDate('p.created_at', '>=', Carbon::parse(config('app.new_launch_date'))->format('Y-m-d H:i:s'))
             ->groupBy('months')
             ->orderBy('months', 'ASC');
 
@@ -943,7 +943,7 @@ class ChartsManager
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('p.status', Payment::STATUS_COMPLETED)
-            ->where('p.created_at', '>=', '2020-05-23 00:00:00')
+            ->whereDate('p.created_at', '>=', Carbon::parse(config('app.new_launch_date'))->format('Y-m-d H:i:s'))
             ->groupBy('creationDate')
             ->orderBy('creationDate', 'ASC');
 
@@ -1018,7 +1018,7 @@ class ChartsManager
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('p.status', Payment::STATUS_COMPLETED)
-            ->where('p.created_at', '>=', config('app.new_launch_date'))
+            ->whereDate('p.created_at', '>=', Carbon::parse(config('app.new_launch_date'))->format('Y-m-d H:i:s'))
             ->groupBy('months')
             ->orderBy('months', 'ASC');
 
@@ -1105,7 +1105,7 @@ class ChartsManager
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('u.deactivated_at', '!=', null)
-            ->where('u.created_at', '>=', '2020-05-23 00:00:00')
+            ->where('u.created_at', '>=', '15-04-2021 00:00:00')
             ->groupBy('deactivationDate')
             ->orderBy('deactivationDate', 'ASC');
 
@@ -1174,7 +1174,7 @@ class ChartsManager
             )
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
-            ->where('u.created_at', '>=', config('app.new_launch_date'))
+            ->where('u.created_at', '>=', Carbon::parse(config('app.new_launch_date'))->format('Y-m-d H:i:s'))
             ->groupBy('months')
             ->orderBy('months', 'ASC');
 
@@ -1326,7 +1326,7 @@ class ChartsManager
             ->leftJoin('role_user as ru', 'ru.user_id', 'u.id')
             ->where('ru.role_id', User::TYPE_PEASANT)
             ->where('u.deactivated_at', '!=', null)
-            ->where('u.deactivated_at', '>=', config('app.new_launch_date'))
+            ->where('u.deactivated_at', '>=', Carbon::parse(config('app.new_launch_date'))->format('Y-m-d H:i:s'))
             ->groupBy('months')
             ->orderBy('months', 'ASC');
 

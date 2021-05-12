@@ -104,7 +104,7 @@ class DashboardController extends Controller
 
         $newLaunchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.new_launch_date'));
 
-        $googleAdsLaunchDate = Carbon::createFromFormat('d-m-Y H:i:s', '11-06-2020 00:00:00');
+        $googleAdsLaunchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.new_launch_date'));
 
         $conversionsAllTimeCount = $this->statisticsManager->affiliateConversionsBetweenCount(
             'any',

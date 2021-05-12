@@ -154,7 +154,7 @@ class StatisticsController extends Controller
 
         $startOfYear = Carbon::now('Europe/Amsterdam')->startOfYear()->setTimezone('UTC');
 
-        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.launch_date'));
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.new_launch_date'));
         $googleAdsLaunchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.new_launch_date'));
 
         $viewData = [
@@ -413,7 +413,7 @@ class StatisticsController extends Controller
         $endOfLastYear = Carbon::now('Europe/Amsterdam')->subYears(1)->endOfYear()->setTimezone('UTC');
         $startOfYear = Carbon::now('Europe/Amsterdam')->startOfYear()->setTimezone('UTC');
 
-        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.launch_date'));
+        $launchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.new_launch_date'));
 
         $googleAdsLaunchDate = Carbon::createFromFormat('d-m-Y H:i:s', config('app.new_launch_date'));
 
