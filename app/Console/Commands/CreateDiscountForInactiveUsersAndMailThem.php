@@ -70,11 +70,18 @@ class CreateDiscountForInactiveUsersAndMailThem extends Command
             })
             ->where(function ($query) use ($daysInactive) {
                 $query
-                    ->whereDoesntHave('payments', function ($query) {
-                        $query->where('status', Payment::STATUS_COMPLETED);
+                    ->where(function ($query) use ($daysInactive) {
+                        $query
+                            ->where('created_at', '<=', Carbon::now()->subDays($daysInactive))
+                            ->whereDoesntHave('payments', function ($query) {
+                                $query->where('status', Payment::STATUS_COMPLETED);
+                            });
                     })
                     ->orWhere(function ($query) use ($daysInactive) {
                         $query
+                            ->whereHas('payments', function ($query) {
+                                $query->where('status', Payment::STATUS_COMPLETED);
+                            })
                             ->whereHas('messages', function ($query) use ($daysInactive) {
                                 $query->where('created_at', '<', Carbon::now()->subDays($daysInactive));
                             })
