@@ -7,6 +7,7 @@ use App\Console\Commands\CheckXpartnersLeadsWIthPendingEligibilityStatus;
 use App\Console\Commands\CopyBotDataFromS3BucketToOtherS3Bucket;
 use App\Console\Commands\CreateDiscountForInactiveUsersAndMailThem;
 use App\Console\Commands\ExportDb;
+use App\Console\Commands\SendDiscountEmails;
 use App\Console\Commands\SendMassMessage;
 use App\Console\Commands\SendProfileCompletionEmails;
 use App\Console\Commands\SetProfileViews;
@@ -58,6 +59,8 @@ class Kernel extends ConsoleKernel
                 $schedule->command(SendProfileCompletionEmails::class)->dailyAt("19:00");
             }
 
+            $schedule->command(SendDiscountEmails::class)->dailyAt("19:00");
+            
             $schedule->command(ExportDb::class)->dailyAt("05:30");
             $schedule->command(CheckRecentStartedPayments::class)->everyMinute();
             $schedule->command(VerifyPendingEmails::class)->everyMinute();
