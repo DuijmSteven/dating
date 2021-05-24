@@ -67,6 +67,8 @@ class AdminDashboardController
 //            $oneHourAgo = Carbon::now('Europe/Amsterdam')->subHours(1)->setTimezone('UTC');
 //            $now = Carbon::now('Europe/Amsterdam')->setTimezone('UTC');
 
+            $startOfElevenDaysAgo = Carbon::now('Europe/Amsterdam')->subDays(11)->startOfDay()->setTimezone('UTC');
+
             $onlineIds = $this->userActivityService->getOnlineUserIds(
                 $this->userActivityService::GENERAL_ONLINE_TIMEFRAME_IN_MINUTES
             );
@@ -118,6 +120,12 @@ class AdminDashboardController
                 'any',
                 $newLaunchDate,
                 $endOfToday
+            );
+
+            $conversionsLastTenDaysCount = $this->statisticsManager->affiliateConversionsBetweenCount(
+                'any',
+                $startOfElevenDaysAgo,
+                $endOfYesterday
             );
 
             $allUsersCount = User::whereHas('roles', function ($query) {
@@ -252,7 +260,8 @@ class AdminDashboardController
 //                    ),
                     'userCount' => $allUsersCount,
                     'conversionsAllTimeCount' => $conversionsAllTimeCount,
-                    'allTimeConversionRate' => $allUsersCount > 0 ? $conversionsAllTimeCount / $allUsersCount * 100 : 0
+                    'allTimeConversionRate' => $allUsersCount > 0 ? $conversionsAllTimeCount / $allUsersCount * 100 : 0,
+                    'conversionsLastTenDays' => $conversionsLastTenDaysCount
                 ],
             ];
 
