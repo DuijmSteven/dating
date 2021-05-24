@@ -62,6 +62,11 @@ class CreateDiscountForInactiveUsersAndMailThem extends Command
                 $query->where('email_verified', UserMeta::EMAIL_VERIFIED_DELIVERABLE)
                     ->orWhere('email_verified', UserMeta::EMAIL_VERIFIED_RISKY);
             })
+            ->where(function ($query) use ($discountPercentage) {
+                $query
+                    ->where('discount_percentage', null)
+                    ->orWhere('discount_percentage', '<=', $discountPercentage);
+            })
             ->where(function ($query) use ($daysInactive) {
                 $query
                     ->whereHas('messages', function ($query) use ($daysInactive) {
