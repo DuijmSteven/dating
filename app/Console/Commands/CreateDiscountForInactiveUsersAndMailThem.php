@@ -6,6 +6,7 @@ use App\Creditpack;
 use App\EmailType;
 use App\Mail\MessageReceived;
 use App\Mail\PleaseComeBack;
+use App\Payment;
 use App\Role;
 use App\User;
 use App\UserMeta;
@@ -69,11 +70,17 @@ class CreateDiscountForInactiveUsersAndMailThem extends Command
             })
             ->where(function ($query) use ($daysInactive) {
                 $query
-                    ->whereHas('messages', function ($query) use ($daysInactive) {
-                        $query->where('created_at', '<', Carbon::now()->subDays($daysInactive));
+                    ->whereDoesntHave('payments', function ($query) {
+                        $query->where('status', Payment::STATUS_COMPLETED);
                     })
-                    ->whereDoesntHave('messages', function ($query) use ($daysInactive) {
-                        $query->where('created_at', '>=', Carbon::now()->subDays($daysInactive));
+                    ->orWhere(function ($query) use ($daysInactive) {
+                        $query
+                            ->whereHas('messages', function ($query) use ($daysInactive) {
+                                $query->where('created_at', '<', Carbon::now()->subDays($daysInactive));
+                            })
+                            ->whereDoesntHave('messages', function ($query) use ($daysInactive) {
+                                $query->where('created_at', '>=', Carbon::now()->subDays($daysInactive));
+                            });
                     });
             })->get();
 
