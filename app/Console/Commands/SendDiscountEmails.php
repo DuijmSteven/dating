@@ -46,10 +46,14 @@ class SendDiscountEmails extends Command
             return false;
         }
 
+        \Log::info('SendDiscountEmails starting.....');
+
         $this->call('send-discount:inactive-peasants 30 50');
         $this->call('send-discount:inactive-peasants 20 30');
         $this->call('send-discount:inactive-peasants 10 20');
         $this->call('send-discount:inactive-peasants 3 15');
         $this->call('send-discount:inactive-peasants 1 10');
+
+        \Log::info('SendDiscountEmails finished.....');
     }
 }
