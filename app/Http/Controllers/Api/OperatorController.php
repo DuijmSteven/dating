@@ -17,7 +17,7 @@ class OperatorController
     {
         try {
             /** @var User $operator */
-            $operator = User::where('username', $username)->get();
+            $operator = User::where('username', $username)->first();
 
             $fromDate = (new Carbon($fromDate))
                 ->tz('Europe/Amsterdam')
