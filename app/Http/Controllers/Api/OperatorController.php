@@ -13,9 +13,12 @@ use Illuminate\Http\Request;
  */
 class OperatorController
 {
-    public function getInvoiceRelatedData(Request $request, int $id, $fromDate, $untilDate)
+    public function getInvoiceRelatedData(Request $request, string $username, $fromDate, $untilDate)
     {
         try {
+            /** @var User $operator */
+            $operator = User::where('username', $username)->get();
+
             $fromDate = (new Carbon($fromDate))
                 ->tz('Europe/Amsterdam')
                 ->startOfDay()
@@ -27,20 +30,18 @@ class OperatorController
                 ->setTimezone('UTC');
 
             $normalMessagesCount = ConversationMessage
-                ::where('operator_id', $id)
+                ::where('operator_id', $operator->getId())
                 ->where('created_at', '>=', $fromDate)
                 ->where('created_at', '<=', $untilDate)
                 ->where('operator_message_type', null)
                 ->count();
 
             $stoppedMessagesCount = ConversationMessage
-                ::where('operator_id', $id)
+                ::where('operator_id', $operator->getId())
                 ->where('created_at', '>=', $fromDate)
                 ->where('created_at', '<=', $untilDate)
                 ->where('operator_message_type', ConversationMessage::OPERATOR_MESSAGE_TYPE_STOPPED)
                 ->count();
-
-            $operator = User::with(['meta'])->find($id);
 
             return response()->json([
                 'normalMessagesCount' => $normalMessagesCount,

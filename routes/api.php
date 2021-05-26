@@ -89,7 +89,7 @@ Route::group([
     'prefix' => 'operators',
     'middleware' => ['auth:sanctum']
 ], function () {
-    Route::get('{id}/invoice-related-stats/{fromDate}/{untilDate}', 'Api\OperatorController@getInvoiceRelatedData');
+    Route::get('{username}/invoice-related-stats/{fromDate}/{untilDate}', 'Api\OperatorController@getInvoiceRelatedData');
 });
 
 Route::group([

@@ -39,7 +39,8 @@ class Kernel extends ConsoleKernel
         CheckXpartnersLeadsWIthPendingEligibilityStatus::class,
         ValidateEligibleXpartnersLeads::class,
         VerifyPendingEmails::class,
-        CreateDiscountForInactiveUsersAndMailThem::class
+        CreateDiscountForInactiveUsersAndMailThem::class,
+        SendDiscountEmails::class
     ];
 
     /**
