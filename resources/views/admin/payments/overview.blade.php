@@ -26,6 +26,7 @@
                                 <th>User</th>
                                 <th>Method</th>
                                 <th>Amount</th>
+                                <th>Is conversion</th>
                                 <th>Item</th>
                                 <th>Status</th>
                                 <th class="no-wrap">Created at</th>
@@ -95,6 +96,7 @@
                                     </td>
                                     <td>{{ ucfirst($payment->method) }}</td>
                                     <td>{{ number_format($payment->amount / 100, 2) }}</td>
+                                    <td>{{ $payment->getIsConversion() ? 'Yes' : 'No' }}</td>
                                     <td>{{ $payment->creditpack_id ? ucfirst($creditpackNamePerId[$payment->creditpack_id]) . ' Creditpack' : '' }}</td>
                                     <td>{{ \App\Helpers\PaymentsHelper::$statuses[$payment->status] }}</td>
                                     <td class="no-wrap">{{ $payment->getCreatedAt()->format('d-m-Y H:i:s') }}</td>
