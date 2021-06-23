@@ -291,10 +291,10 @@ class RegisterController extends Controller
             throw $exception;
         }
 
-        $ipInstance = new UserIp();
-        $ipInstance->setIp($userIp);
-        $createdUser->associate($ipInstance);
-        $createdUser->save();
+//        $ipInstance = new UserIp();
+//        $ipInstance->setIp($userIp);
+//        $createdUser->associate($ipInstance);
+//        $createdUser->save();
 
         DB::commit();
 
