@@ -1552,9 +1552,9 @@ class User extends Authenticatable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function fingerprints()
+    public function ips()
     {
-        return $this->hasMany(UserFingerprint::class, 'user_id');
+        return $this->hasMany(UserIp::class, 'user_id');
     }
 
     /**

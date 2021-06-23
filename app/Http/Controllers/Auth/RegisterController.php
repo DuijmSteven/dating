@@ -15,6 +15,7 @@ use App\Traits\Users\RegistersUsers;
 use App\User;
 use App\UserAccount;
 use App\UserAffiliateTracking;
+use App\UserIp;
 use App\UserMeta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -289,6 +290,11 @@ class RegisterController extends Controller
             DB::rollBack();
             throw $exception;
         }
+
+        $ipInstance = new UserIp();
+        $ipInstance->setIp($userIp);
+        $createdUser->associate($ipInstance);
+        $createdUser->save();
 
         DB::commit();
 
