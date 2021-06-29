@@ -115,8 +115,15 @@ class UserLocationService
         }
 
         $client = new Client();
-        $geocoder = new GeocoderService($client, $countryCode);
 
-        return $geocoder->getCoordinatesForAddress($cityName . ', ' . $countryCode);
+        try {
+            $geocoder = new GeocoderService($client, $countryCode);
+            $coordinatesForAddress = $geocoder->getCoordinatesForAddress($cityName . ', ' . $countryCode);
+        } catch (\Exception $exception) {
+            $coordinatesForAddress['lat'] = 52.377956;
+            $coordinatesForAddress['lng'] = 4.897070;
+        }
+
+        return $coordinatesForAddress;
     }
 }
