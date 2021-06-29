@@ -201,9 +201,19 @@ class UserMeta extends Model
         return $this->lat;
     }
 
+    public function setLat($lat)
+    {
+        $this->lat = $lat;
+    }
+
     public function getLng()
     {
         return $this->lng;
+    }
+
+    public function setLng($lng)
+    {
+        $this->lng = $lng;
     }
 
     public function getAboutMe()

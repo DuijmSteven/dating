@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Helpers\ApplicationConstants\UserConstants;
 use App\User;
+use App\UserMeta;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Facades\Auth;
@@ -127,6 +128,14 @@ class UserLocationService
 
                 $geocoder = new GeocoderService($client, $countryCode);
                 $coordinatesForAddress = $geocoder->getCoordinatesForAddress($cityName . ', ' . $countryCode);
+
+                /** @var UserMeta $userMeta */
+                $userMeta = UserMeta::where('user_id', $user->getId())->first();
+
+                $userMeta->setLat($coordinatesForAddress['lat']);
+                $userMeta->setLng($coordinatesForAddress['lng']);
+                $userMeta->save();
+
             } catch (\Exception $exception) {
                 $coordinatesForAddress['lat'] = 52.377956;
                 $coordinatesForAddress['lng'] = 4.897070;
