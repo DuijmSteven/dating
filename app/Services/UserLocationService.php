@@ -105,23 +105,32 @@ class UserLocationService
 
     public function getCoordinatesForUser(User $user)
     {
-        $location = $this->getLocationFromIp($this->getUserIp());
-        $cityName = $location['city'];
-        $countryCode = $location['country_code'];
-
-        if (!$cityName || !$countryCode) {
-            $cityName = 'Amsterdam';
-            $countryCode = 'nl';
+        try {
+            $location = $this->getLocationFromIp($this->getUserIp());
+            $cityName = $location['city'];
+            $countryCode = $location['country_code'];
+        } catch (\Exception $exception) {
+            \Log::error('Problem with getting location from IP');
         }
 
-        $client = new Client();
+        $coordinatesForAddress = [];
 
-        try {
-            $geocoder = new GeocoderService($client, $countryCode);
-            $coordinatesForAddress = $geocoder->getCoordinatesForAddress($cityName . ', ' . $countryCode);
-        } catch (\Exception $exception) {
+        if (!isset($cityName) || !isset($countryCode) || !$cityName || !$countryCode) {
+//            $cityName = 'Amsterdam';
+//            $countryCode = 'nl';
+
             $coordinatesForAddress['lat'] = 52.377956;
             $coordinatesForAddress['lng'] = 4.897070;
+        } else {
+            try {
+                $client = new Client();
+
+                $geocoder = new GeocoderService($client, $countryCode);
+                $coordinatesForAddress = $geocoder->getCoordinatesForAddress($cityName . ', ' . $countryCode);
+            } catch (\Exception $exception) {
+                $coordinatesForAddress['lat'] = 52.377956;
+                $coordinatesForAddress['lng'] = 4.897070;
+            }
         }
 
         return $coordinatesForAddress;
