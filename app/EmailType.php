@@ -12,6 +12,7 @@ class EmailType extends Model
     const PROFILE_COMPLETION = 4;
     const GENERAL = 5;
     const PLEASE_COME_BACK = 6;
+    const DATINGSITELIJSTPROMO = 7;
 
     public $table = 'email_types';
 

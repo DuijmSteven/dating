@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Creditpack;
 use App\Mail\CreditsBought;
+use App\Mail\DatingsitelijstPromo;
 use App\Mail\Deactivated;
 use App\Mail\MessageReceived;
 use App\Mail\PleaseComeBack;
@@ -145,6 +146,18 @@ class TestController extends Controller
             ));
 
         return $pleaseComeBackEmail->render();
+    }
+
+    public function showDatingsitelijstPromoEmail()
+    {
+        $user = User::find(233);
+
+        $datingsitelijstPromoEmail =
+            (new DatingsitelijstPromo(
+                $user
+            ));
+
+        return $datingsitelijstPromoEmail->render();
     }
 
     public function showProfileCompletionEmail()
