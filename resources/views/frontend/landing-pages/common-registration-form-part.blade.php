@@ -19,4 +19,6 @@
     <input type="hidden" name="country" value="{{ $country }}">
 @elseif(isset($affiliate) && $affiliate === \App\UserAffiliateTracking::AFFILIATE_DATECENTRALE)
     <input type="hidden" name="affiliate" value="{{ \App\UserAffiliateTracking::AFFILIATE_DATECENTRALE }}">
+@elseif(isset($affiliate) && $affiliate === \App\UserAffiliateTracking::AFFILIATE_DATINGSITELIJSTPROMO)
+    <input type="hidden" name="affiliate" value="{{ \App\UserAffiliateTracking::AFFILIATE_DATINGSITELIJSTPROMO }}">
 @endif

@@ -271,7 +271,7 @@
 
                             <br>
                             <br>
-                            <div style="background: #333; padding-left: 12px; padding-top: 5px">
+                            <div style="background: #333; padding-left: 12px; padding-top: 5px; text-align: center">
                                 <a target="_blank" href="https://altijdsex.nl?affiliate=datingsitelijstpromo">
                                     <img height="50px" src="{{ asset('img/site_logos/altijdsex-nl/main_logo.png') }}" alt="Altijdsex.nl">
                                 </a>
@@ -288,7 +288,7 @@
                             </div>
 
                             <br>
-                            <div style="background: #cb0e46; padding-left: 15px; padding-top: 5px">
+                            <div style="background: #cb0e46; padding-left: 15px; padding-top: 5px; text-align: center">
                                 <a target="_blank" href="https://sweetalk.nl?affiliate=datingsitelijstpromo">
                                     <img height="50px" src="{{ asset('img/site_logos/sweetalk-nl/main_logo.png') }}" alt="Sweetalk.nl">
                                 </a>
@@ -305,7 +305,7 @@
                             </div>
 
                             <br>
-                            <div style="background: #444; padding-left: 5px; padding-top: 5px">
+                            <div style="background: #444; padding-left: 5px; padding-top: 5px; padding-bottom: 2px; text-align: center">
                                 <a target="_blank" href="https://liefdesdate.nl?affiliate=datingsitelijstpromo">
                                     <img height="50px" src="{{ asset('img/site_logos/liefdesdate-nl/main_logo.png') }}" alt="Liefdesdate.nl">
                                 </a>
