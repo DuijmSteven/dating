@@ -95,6 +95,6 @@ class MailPromoToUsers extends Command
 //                'email' => $peasant->getEmail(),
 //                'email_type_id' => EmailType::DATINGSITELIJSTPROMO
 //            ]);
-        }
+ //       }
     }
 }

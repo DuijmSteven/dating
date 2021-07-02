@@ -7,14 +7,14 @@ use App\Console\Commands\CheckXpartnersLeadsWIthPendingEligibilityStatus;
 use App\Console\Commands\CopyBotDataFromS3BucketToOtherS3Bucket;
 use App\Console\Commands\CreateDiscountForInactiveUsersAndMailThem;
 use App\Console\Commands\ExportDb;
+use App\Console\Commands\MailPromoToUsers;
 use App\Console\Commands\SendDiscountEmails;
 use App\Console\Commands\SendMassMessage;
-use App\Console\Commands\SendProfileCompletionEmails;
 use App\Console\Commands\SetProfileViews;
 use App\Console\Commands\UpdateCurrentEnvDbAndAws;
 use App\Console\Commands\ValidateEligibleXpartnersLeads;
 use App\Console\Commands\VerifyPendingEmails;
-use App\Helpers\SiteHelper;
+use App\Mail\DatingsitelijstPromo;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -40,7 +40,8 @@ class Kernel extends ConsoleKernel
         ValidateEligibleXpartnersLeads::class,
         VerifyPendingEmails::class,
         CreateDiscountForInactiveUsersAndMailThem::class,
-        SendDiscountEmails::class
+        SendDiscountEmails::class,
+        MailPromoToUsers::class
     ];
 
     /**
