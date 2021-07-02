@@ -58,6 +58,30 @@ class RegistrationService
         }
 
         if (
+            $request->input('affiliate') &&
+            $request->input('affiliate') === UserAffiliateTracking::AFFILIATE_DATINGSITELIJSTPROMO
+            ||
+            (
+                Cookie::has('affiliate') &&
+                Cookie::get('affiliate') === UserAffiliateTracking::AFFILIATE_DATINGSITELIJSTPROMO
+            )
+        ) {
+            if (!Cookie::has('affiliate')) {
+                Cookie::queue(
+                    'affiliate',
+                    $request->input('affiliate'),
+                    100000
+                );
+            }
+
+            if ($request->input('affiliate')) {
+                $affiliate = $request->input('affiliate');
+            } else {
+                $affiliate = Cookie::get('affiliate');
+            }
+
+            $viewData['affiliate'] = $affiliate;
+        } else if (
             (
                 $request->input('affiliate') &&
                 $request->input('affiliate') === UserAffiliateTracking::AFFILIATE_DATECENTRALE

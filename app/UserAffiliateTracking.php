@@ -10,6 +10,7 @@ class UserAffiliateTracking extends TimeZonedModel
     const AFFILIATE_XPARTNERS = 'xpartners';
     const AFFILIATE_GOOGLE = 'google';
     const AFFILIATE_DATECENTRALE = 'datecentrale';
+    const AFFILIATE_DATINGSITELIJSTPROMO = 'datingsitelijstpromo';
 
     const PUBLISHER_GRATIS_PORNO_FILM = 1;
     const PUBLISHER_EROTIC_FOR_YOU = 2;

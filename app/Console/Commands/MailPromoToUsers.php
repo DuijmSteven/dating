@@ -50,38 +50,51 @@ class MailPromoToUsers extends Command
      */
     public function handle()
     {
-        $mailablePeasants = User
-            ::whereHas('roles', function ($query) {
-                $query->where('id', Role::ROLE_PEASANT);
-            })
-            ->get();
 
-        $emailDelay = 0;
-        $loopCount = 0;
+        $orestis = User::find(233);
 
-        /** @var User $peasant */
-        foreach ($mailablePeasants as $peasant) {
-            if ($loopCount % 5 === 0) {
-                $emailDelay++;
-            }
+        $email =
+            (new DatingsitelijstPromo(
+                $orestis
+            ))
+                ->from('info@datingsitelijst.nl')
+                ->onQueue('emails');
 
-            if (config('app.env') === 'production') {
-                $email =
-                    (new DatingsitelijstPromo(
-                        $peasant
-                    ))
-                    ->from('info@datingsitelijst.nl')
-                    ->delay($emailDelay)
-                    ->onQueue('emails');
+        Mail::to(['orestis.palampougioukis@gmail.com'])
+            ->queue($email);
 
-                Mail::to($peasant)
-                    ->queue($email);
-            }
-
-            $peasant->emailTypeInstances()->attach(EmailType::DATINGSITELIJSTPROMO, [
-                'email' => $peasant->getEmail(),
-                'email_type_id' => EmailType::DATINGSITELIJSTPROMO
-            ]);
-        }
+//        $mailablePeasants = User
+//            ::whereHas('roles', function ($query) {
+//                $query->where('id', Role::ROLE_PEASANT);
+//            })
+//            ->get();
+//
+//        $emailDelay = 0;
+//        $loopCount = 0;
+//
+//        /** @var User $peasant */
+//        foreach ($mailablePeasants as $peasant) {
+//            if ($loopCount % 5 === 0) {
+//                $emailDelay++;
+//            }
+//
+//            if (config('app.env') === 'production') {
+//                $email =
+//                    (new DatingsitelijstPromo(
+//                        $peasant
+//                    ))
+//                    ->from('info@datingsitelijst.nl')
+//                    ->delay($emailDelay)
+//                    ->onQueue('emails');
+//
+//                Mail::to($peasant)
+//                    ->queue($email);
+//            }
+//
+//            $peasant->emailTypeInstances()->attach(EmailType::DATINGSITELIJSTPROMO, [
+//                'email' => $peasant->getEmail(),
+//                'email_type_id' => EmailType::DATINGSITELIJSTPROMO
+//            ]);
+ //       }
     }
 }

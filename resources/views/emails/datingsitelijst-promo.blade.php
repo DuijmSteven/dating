@@ -269,7 +269,13 @@
                                 Bedankt voor het gebruiken van onze diensten. Dagelijks brengen we de beste datingsites in kaart, we stellen jou dan ook graag op de hoogte van de beste datingsites van dit moment. Inschrijven op door ons geselecteerde datingsites is altijd gratis, zonder abonnement of betaling toegankelijk. Niets te verliezen dus!
                             </p>
 
-                            <h3>Altijdsex.nl</h3>
+                            <br>
+                            <br>
+                            <div style="background: #333; padding-left: 12px; padding-top: 5px">
+                                <a target="_blank" href="https://altijdsex.nl?affiliate=datingsitelijstpromo">
+                                    <img height="50px" src="{{ asset('img/site_logos/altijdsex-nl/main_logo.png') }}" alt="Altijdsex.nl">
+                                </a>
+                            </div>
 
                             <p style="margin-bottom: 0">
                                 Altijdsex is de beste erotische datingsite van dit moment. Met 55.000+ actieve leden zit er altijd wel iemand voor jou bij. Of je nu op zoek bent naar een one-night-stand aan de andere kant van het land of meerdere contacten bij jou in de buurt.
@@ -277,11 +283,16 @@
 
                             <div style="text-align: center">
                                 <div style="display: inline-block; padding: 7px 20px; background-color: {{ $altijdsexSecondaryColor }}; color: #fff; border: 1px solid {{ $altijdsexSecondaryColor }}; border-radius: 4px; margin: 20px 0; cursor: pointer">
-                                    <a target="_blank" style="color: #fff" href="https://altijdsex.nl">Naar Altijdsex.nl!</a>
+                                    <a target="_blank" style="color: #fff" href="https://altijdsex.nl?affiliate=datingsitelijstpromo">Naar Altijdsex.nl!</a>
                                 </div>
                             </div>
 
-                            <h3>Sweetalk.nl</h3>
+                            <br>
+                            <div style="background: #cb0e46; padding-left: 15px; padding-top: 5px">
+                                <a target="_blank" href="https://sweetalk.nl?affiliate=datingsitelijstpromo">
+                                    <img height="50px" src="{{ asset('img/site_logos/sweetalk-nl/main_logo.png') }}" alt="Sweetalk.nl">
+                                </a>
+                            </div>
 
                             <p style="margin-bottom: 0">
                                 Deze datingsite is meer gericht op vriendschap, liefde en relaties. Wanneer je het zat bent dat het op de meeste datingsites steeds maar over seks gaat, Sweetalk houdt het netjes. Bovendien voorziet deze datingsite je ruimschoots van handige functies, waardoor je makkelijk iemand kan vinden om mee te chatten, en wie weet wel meer?
@@ -289,11 +300,16 @@
 
                             <div style="text-align: center">
                                 <div style="display: inline-block; padding: 7px 20px; background-color: {{ $sweetalkSecondaryColor }}; color: #fff; border: 1px solid {{ $sweetalkSecondaryColor }}; border-radius: 4px; margin: 20px 0; cursor: pointer">
-                                    <a target="_blank" style="color: #fff" href="https://sweetalk.nl">Naar Sweetalk.nl!</a>
+                                    <a target="_blank" style="color: #fff" href="https://sweetalk.nl?affiliate=datingsitelijstpromo">Naar Sweetalk.nl!</a>
                                 </div>
                             </div>
 
-                            <h3>Liefdesdate.nl</h3>
+                            <br>
+                            <div style="background: #444; padding-left: 5px; padding-top: 5px">
+                                <a target="_blank" href="https://liefdesdate.nl?affiliate=datingsitelijstpromo">
+                                    <img height="50px" src="{{ asset('img/site_logos/liefdesdate-nl/main_logo.png') }}" alt="Liefdesdate.nl">
+                                </a>
+                            </div>
 
                             <p style="margin-bottom: 0">
                                 Op Liefdesdate kom je voornamelijk singles tegen op zoek naar een relatie. Met op dit moment maar liefst 42.500 ingeschreven singles behoort deze datingsite tot de grotere datingsites van dit moment. Een leuk feit: 1 op de 3 (ruim 33%) vindt binnen korte tijd een date/relatie. Mannen hebben hier meer kans van slagen dan vrouwen, 58% van de gebruikers is namelijk vrouw, 42% is man.
@@ -301,14 +317,14 @@
 
                             <div style="text-align: center">
                                 <div style="display: inline-block; padding: 7px 20px; background-color: {{ $liefdesdateSecondaryColor }}; color: #fff; border: 1px solid {{ $liefdesdateSecondaryColor }}; border-radius: 4px; margin: 20px 0; cursor: pointer">
-                                    <a target="_blank" style="color: #fff" href="https://liefdesdate.nl">Naar Liefdesdate.nl!</a>
+                                    <a target="_blank" style="color: #fff" href="https://liefdesdate.nl?affiliate=datingsitelijstpromo">Naar Liefdesdate.nl!</a>
                                 </div>
                             </div>
 
 
                             <p style="font-family: sans-serif; font-weight: normal; margin: 0; Margin-bottom: 15px;">
                                 Met vriendelijke groet,<br>
-                                Team <a target="_blank" href="https://datingsitelijst.nl">Datingsitelijst.nl</a>
+                                Team <a target="_blank" href="https://datingsitelijst.nl?affiliate=datingsitelijstpromo">Datingsitelijst.nl</a>
                             </p>
 
 
