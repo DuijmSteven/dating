@@ -219,6 +219,15 @@ class RegisterController extends Controller
                 null,
                 UserAffiliateTracking::PUBLISHER_DATECENTRALE
             );
+        } else if ($request->input('affiliate') && $request->input('affiliate') === UserAffiliateTracking::AFFILIATE_DATINGSITELIJSTPROMO) {
+            $this->affiliateManager->storeAffiliateTrackingInfo(
+                $createdUser->id,
+                $request->input('affiliate'),
+                null,
+                $countryCode,
+                null,
+                UserAffiliateTracking::PUBLISHER_DATECENTRALE
+            );
         } else if (
             $request->input('publisher') &&
             $request->input('publisher') === UserAffiliateTracking::publisherDescriptionPerId()[UserAffiliateTracking::PUBLISHER_DATINGSITELIJST]
