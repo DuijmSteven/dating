@@ -93,6 +93,11 @@ class ExportDb extends Command
             }
 
             @unlink($tempLocation);
+
+            $process = Process::fromShellCommandline(sprintf(
+                'rm',
+                $tempLocation
+            ));
         }
         catch (\Exception $e)
         {

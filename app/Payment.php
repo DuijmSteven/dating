@@ -25,7 +25,7 @@ class Payment extends TimeZonedModel
 
     public function peasant()
     {
-        return $this->belongsTo('App\User', 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function creditpack()

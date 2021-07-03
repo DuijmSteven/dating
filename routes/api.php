@@ -105,6 +105,9 @@ Route::get('admin-dashboard-data', 'Api\AdminDashboardController@getAdminDashboa
 Route::get('financial-data', 'Api\FinancialController@getFinancialData')
     ->middleware('auth:sanctum', 'api_admin');
 
+Route::get('conversions/promo-data', 'Api\ConversionController@getPromoConversionsData')
+    ->middleware('auth:sanctum', 'api_admin');
+
 Route::get('site-dashboard-data', 'Api\AdminDashboardController@getSiteDashboardData')
     ->middleware('auth:sanctum', 'api_admin');
 
