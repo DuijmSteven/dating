@@ -805,17 +805,7 @@ class StatisticsController extends Controller
             ->groupBy(['keyword'])
             ->orderBy('count', 'desc')
             ->get();
-
-        $conversionsPerKeyword = DB
-            ::table('user_meta')
-            ->select('registration_keyword as keyword', DB::raw('count(*) as count'))
-            ->join('payments', 'user_meta.user_id', '=', 'payments.user_id')
-            ->where('payments.status', '=', Payment::STATUS_COMPLETED)
-            ->where('registration_keyword', '!=', null)
-            ->groupBy(['keyword'])
-            ->orderBy('count', 'desc')
-            ->get();
-
+        
         $conversionsPerKeyword = DB
             ::table('user_meta')
             ->select('registration_keyword as keyword', DB::raw('count(DISTINCT(user_meta.user_id)) as count'))
@@ -825,8 +815,6 @@ class StatisticsController extends Controller
             ->groupBy(['keyword'])
             ->orderBy('count', 'desc')
             ->get();
-
-        dd($conversionsPerKeyword);
 
         return view(
             'admin.statistics.google-ads-keywords',
