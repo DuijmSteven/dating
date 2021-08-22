@@ -48,11 +48,11 @@ class SendDiscountEmails extends Command
 
         \Log::info('SendDiscountEmails starting.....');
 
-        $this->call('send-discount:inactive-peasants', [30, 50]);
-        $this->call('send-discount:inactive-peasants', [20, 30]);
-        $this->call('send-discount:inactive-peasants', [10, 20]);
-        $this->call('send-discount:inactive-peasants', [3, 15]);
-        $this->call('send-discount:inactive-peasants', [1, 10]);
+        $this->call('send-discount:inactive-peasants', ['daysInactive' => 30, 'discountPercentage' => 50]);
+        $this->call('send-discount:inactive-peasants', ['daysInactive' => 20, 'discountPercentage' => 30]);
+        $this->call('send-discount:inactive-peasants', ['daysInactive' => 10, 'discountPercentage' => 20]);
+        $this->call('send-discount:inactive-peasants', ['daysInactive' => 3, 'discountPercentage' => 15]);
+        $this->call('send-discount:inactive-peasants', ['daysInactive' => 1, 'discountPercentage' => 10]);
 
         \Log::info('SendDiscountEmails finished.....');
     }
