@@ -10,9 +10,9 @@
                         @if($creditpack->id !== 4 || $authenticatedUser->isAdmin() || config('app.env') === 'staging')
                             <div class="col-xs-12 {{ $authenticatedUser->getHasNewPricing() ? 'col-md-5ths' : 'col-md-3' }}">
                                 <div data-creditpack-id="{{ $creditpack->id }}"
-                                     class="block block-pricing {{ $loop->iteration == 2 ? 'block-raised' : '' }} JS--creditpack"
+                                     class="block block-pricing {{ $loop->iteration == 3 && $authenticatedUser->getHasNewPricing() ? 'block-raised' : '' }} {{ $loop->iteration == 2 && !$authenticatedUser->getHasNewPricing() ? 'block-raised' : '' }} JS--creditpack"
                                 >
-                                    <div class="table {{ $loop->iteration == 2 ? 'table-rose' : '' }}">
+                                    <div class="table {{ $loop->iteration == 3 && $authenticatedUser->getHasNewPricing() ? 'table-rose' : '' }} {{ $loop->iteration == 2 && !$authenticatedUser->getHasNewPricing() ? 'table-rose' : '' }}">
                                         <h6 class="category">{{ $creditpack->name }}</h6>
                                         <h1 class="block-caption {{ $authenticatedUser->getHasNewPricing() ? 'newPricing' : '' }}"><b class="package-credits">{{ $creditpack->credits }}</b> {{ trans(config('app.directory_name') . '/credits.credits') }}
                                         </h1>
@@ -117,18 +117,18 @@
                     <ul class="Tile list-group mb-3">
                         <li class="list-group-item d-flex justify-content-between">
                             <div>
-                                <h6 class="my-0"><span class="cart-package">{{ $creditpacks[1]->name }}</span> {{ trans(config('app.directory_name') . '/credits.package') }}
+                                <h6 class="my-0"><span class="cart-package">{{ $creditpacks[$authenticatedUser->getHasNewPricing() ? 2 : 1]->name }}</span> {{ trans(config('app.directory_name') . '/credits.package') }}
                                 </h6>
                                 <small class="text-muted"><span
-                                        class="cart-credits">{{ $creditpacks[1]->credits }}</span> {{ trans(config('app.directory_name') . '/credits.credits') }}</small>
-                                <input name="creditpack_id" type="hidden" value="{{ $creditpacks[1]->id }}">
+                                        class="cart-credits">{{ $creditpacks[$authenticatedUser->getHasNewPricing() ? 2 : 1]->credits }}</span> {{ trans(config('app.directory_name') . '/credits.credits') }}</small>
+                                <input name="creditpack_id" type="hidden" value="{{ $creditpacks[$authenticatedUser->getHasNewPricing() ? 2 : 1]->id }}">
                             </div>
                             <span class="text-muted"><span
-                                    class="cart-value">&euro;{{ number_format($creditpacks[1]->price / 100, 2, ',', '.') }}</span></span>
+                                    class="cart-value">&euro;{{ number_format($creditpacks[$authenticatedUser->getHasNewPricing() ? 2 : 1]->price / 100, 2, ',', '.') }}</span></span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between">
                             <span>{{ trans(config('app.directory_name') . '/credits.total') }}:</span>
-                            <strong><span class="cart-value">&euro;{{ number_format((1 - $authenticatedUser->getDiscountPercentage() / 100) * $creditpacks[1]->price / 100, 2, ',', '.') }}</span></strong>
+                            <strong><span class="cart-value">&euro;{{ number_format((1 - $authenticatedUser->getDiscountPercentage() / 100) * $creditpacks[$authenticatedUser->getHasNewPricing() ? 2 : 1]->price / 100, 2, ',', '.') }}</span></strong>
                         </li>
                     </ul>
                     <button class="Button btn btn-primary btn-lg btn-block" type="submit">
