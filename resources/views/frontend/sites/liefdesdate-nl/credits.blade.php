@@ -8,13 +8,13 @@
                 <div class="row">
                     @foreach($creditpacks as $creditpack)
                         @if($creditpack->id !== 4 || $authenticatedUser->isAdmin() || config('app.env') === 'staging')
-                            <div class="col-xs-12 col-md-3">
+                            <div class="col-xs-12 {{ $authenticatedUser->getHasNewPricing() ? 'col-md-5ths' : 'col-md-3' }}">
                                 <div data-creditpack-id="{{ $creditpack->id }}"
                                      class="block block-pricing {{ $loop->iteration == 2 ? 'block-raised' : '' }} JS--creditpack"
                                 >
                                     <div class="table {{ $loop->iteration == 2 ? 'table-rose' : '' }}">
                                         <h6 class="category">{{ $creditpack->name }}</h6>
-                                        <h1 class="block-caption"><b class="package-credits">{{ $creditpack->credits }}</b> {{ trans(config('app.directory_name') . '/credits.credits') }}
+                                        <h1 class="block-caption {{ $authenticatedUser->getHasNewPricing() ? 'newPricing' : '' }}"><b class="package-credits">{{ $creditpack->credits }}</b> {{ trans(config('app.directory_name') . '/credits.credits') }}
                                         </h1>
                                         <ul>
                                             <li>
@@ -46,12 +46,12 @@
                                             {{ trans(config('app.directory_name') . '/credits.select_package') }}
                                         </a>
 
-                                        @if($creditpack->id === 2)
-                                            <div class="usp-label most-popular">
+                                        @if(!$authenticatedUser->getHasNewPricing() && $creditpack->id === 2 || $authenticatedUser->getHasNewPricing() && $creditpack->id === 8)
+                                            <div class="usp-label most-popular {{ $authenticatedUser->getHasNewPricing() ? 'newPricing' : '' }}">
                                                 {{ trans(config('app.directory_name') . '/credits.most_popular') }}
                                             </div>
-                                        @elseif($creditpack->id === 5)
-                                            <div class="usp-label best-value">
+                                        @elseif(!$authenticatedUser->getHasNewPricing() && $creditpack->id === 5 || $authenticatedUser->getHasNewPricing() && $creditpack->id === 10)
+                                            <div class="usp-label best-value {{ $authenticatedUser->getHasNewPricing() ? 'newPricing' : '' }}">
                                                 {{ trans(config('app.directory_name') . '/credits.best_value') }}
                                             </div>
                                         @endif

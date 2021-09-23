@@ -288,10 +288,24 @@ Table of Contents End
 
             &.most-popular {
                 background-color: #a26063;
+
+                @media screen and (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+
+                    &.newPricing {
+                        font-size: 1.3rem;
+                    }
+                }
             }
 
             &.best-value {
                 background-color: #d84747;
+
+                @media screen and (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+
+                    &.newPricing {
+                        font-size: 1.3rem;
+                    }
+                }
             }
         }
 
@@ -471,6 +485,10 @@ Table of Contents End
         letter-spacing: 0;
         will-change: box-shadow, transform;
         transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+        @media screen and (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+            padding: 12px 10px;
+        }
     }
 
     .btn.btn-round {
@@ -649,6 +667,12 @@ Table of Contents End
 
     .block-pricing h1 {
         font-size: 3.1rem;
+
+        @media screen and (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+            &.newPricing {
+                font-size: 2.4rem;
+            }
+        }
     }
 
     .block-caption {

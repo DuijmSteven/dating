@@ -27,12 +27,18 @@ class CreditsController extends FrontendController
             ->where('id', '!=', $this->authenticatedUser->getId())
             ->inRandomOrder()->take(6)->get();
 
+        if (!$this->authenticatedUser->getHasNewPricing()) {
+            $creditpacks = Creditpack::whereIn('id', [1, 2, 3, 5])->orderBy('id')->get();
+        } else {
+            $creditpacks = Creditpack::whereIn('id', [6, 7, 8, 9, 10])->orderBy('id')->get();
+        }
+
         return view('frontend.sites.' . config('app.directory_name') . '.credits',
             [
                 'title' => $this->buildTitleWith(trans(config('app.directory_name') . '/view_titles.credits')),
                 'users' => $users,
                 'carbonNow' => Carbon::now(),
-                'creditpacks' => Creditpack::all()->sortBy('id')
+                'creditpacks' => $creditpacks
             ]
         );
     }

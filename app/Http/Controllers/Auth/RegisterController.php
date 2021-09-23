@@ -125,8 +125,30 @@ class RegisterController extends Controller
 
         DB::beginTransaction();
         try {
+            $userData = $request->all();
+
+            // TEMP SOLUTION TO SOLVE BUG WITH UNIQUE CONSTRAINT VIOLATION
+            $existingUser = User::where('email', '=', trim($userData['email']))->first();
+
+            \Log::debug($existingUser === null ? 'not' : 'yes');
+
+            if ($existingUser instanceof User) {
+                \Log::debug('BUG WITH UNIQUE CONSTRAINT VIOLATION HAPPENED');
+
+                return $this->registered($request, $existingUser)
+                    ?: redirect($this->redirectPath());
+            }
+
+
             /** @var User $createdUser */
-            $createdUser = $this->create($request->all());
+            $createdUser = User::create([
+                'username' => trim($userData['username']),
+                'email' => trim($userData['email']),
+                'active' => 1,
+                'password' => bcrypt($userData['password']),
+                'api_token' => Str::random(60),
+                'has_new_pricing' => true
+            ]);
         } catch (\Exception $exception) {
             DB::rollBack();
             throw $exception;
@@ -334,23 +356,6 @@ class RegisterController extends Controller
             'username' => 'required|max:15',
             //'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:8|confirmed',
-        ]);
-    }
-
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return User
-     */
-    protected function create(array $data)
-    {
-        return User::create([
-            'username' => trim($data['username']),
-            'email' => trim($data['email']),
-            'active' => 1,
-            'password' => bcrypt($data['password']),
-            'api_token' => Str::random(60),
         ]);
     }
 }

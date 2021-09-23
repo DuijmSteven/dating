@@ -403,7 +403,8 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'postal_code',
-        'street_name'
+        'street_name',
+        'has_new_pricing'
     ];
 
     /**
@@ -1523,6 +1524,16 @@ class User extends Authenticatable
         }
 
         return true;
+    }
+
+    public function getHasNewPricing()
+    {
+        return $this->has_new_pricing;
+    }
+
+    public function setHasNewPricing(bool $hasNewPricing)
+    {
+        $this->has_new_pricing = $hasNewPricing;
     }
 
     /**

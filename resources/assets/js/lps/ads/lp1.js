@@ -7,6 +7,9 @@ $(window).on('load', function () {
     });
 
     $('.JS--register-button').click(function (event) {
+        event.preventDefault();
+        $('.JS--register-button').attr('disabled', 'disabled');
+
         grecaptcha.execute(DP.recaptchaKey, {action: 'register'}).then(function (token) {
             document.getElementById('g-recaptcha-response').value = token;
 
