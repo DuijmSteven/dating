@@ -147,7 +147,7 @@ class RegisterController extends Controller
                 'active' => 1,
                 'password' => bcrypt($userData['password']),
                 'api_token' => Str::random(60),
-                'has_new_pricing' => false
+                'has_new_pricing' => true
             ]);
         } catch (\Exception $exception) {
             DB::rollBack();
