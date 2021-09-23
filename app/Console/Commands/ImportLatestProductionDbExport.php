@@ -43,6 +43,7 @@ class ImportLatestProductionDbExport extends Command
     {
         set_time_limit(500);
 
+
         if (!in_array(config('app.env'), ['staging', 'local'])) {
             $this->error('This command cannot be run on the production environment');
             $this->warn('Stopping execution...');
@@ -69,6 +70,7 @@ class ImportLatestProductionDbExport extends Command
             if (!$fileToUse && count($allFiles) > 0) {
                 $fileToUse = $allFiles[count($allFiles) - 1];
             }
+
 
             if (!$fileToUse) {
                 $this->warn('Could not find today\'s production DB export. Stopping execution...');

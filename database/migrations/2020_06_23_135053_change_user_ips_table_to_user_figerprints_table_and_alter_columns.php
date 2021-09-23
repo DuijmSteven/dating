@@ -18,8 +18,6 @@ class ChangeUserIpsTableToUserFigerprintsTableAndAlterColumns extends Migration
         Schema::table('user_fingerprints', function (Blueprint $table) {
             $table->renameColumn('ip', 'fingerprint');
         });
-
-        \App\UserFingerprint::truncate();
     }
 
     /**

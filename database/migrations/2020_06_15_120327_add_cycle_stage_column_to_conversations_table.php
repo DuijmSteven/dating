@@ -24,7 +24,7 @@ class AddCycleStageColumnToConversationsTable extends Migration
             new \App\Conversation(),
             new \App\ConversationMessage(),
             new \App\Managers\StorageManager(),
-            new \App\Services\OnlineUsersService()
+            new \App\Services\UserActivityService()
         );
 
         $unrepliedConversations = $conversationManager->unrepliedPeasantBotConversations();

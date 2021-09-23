@@ -61,15 +61,15 @@ class Kernel extends ConsoleKernel
 //                $schedule->command(SendProfileCompletionEmails::class)->dailyAt("19:00");
 //            }
 
-            $schedule->command(SendDiscountEmails::class)->dailyAt("19:00");
+            $schedule->command(SendDiscountEmails::class)->dailyAt("17:00");
 
-            $schedule->command(ExportDb::class)->dailyAt("05:30");
+            $schedule->command(ExportDb::class)->dailyAt("03:30");
             $schedule->command(CheckRecentStartedPayments::class)->everyMinute();
             $schedule->command(VerifyPendingEmails::class)->everyMinute();
         }
         
         if (config('app.env') === 'staging') {
-            $schedule->command(UpdateCurrentEnvDbAndAws::class)->dailyAt("05:50");
+            $schedule->command(UpdateCurrentEnvDbAndAws::class)->dailyAt("04:10");
         }
     }
 

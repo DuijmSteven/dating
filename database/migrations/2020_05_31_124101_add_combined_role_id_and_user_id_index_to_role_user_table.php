@@ -11,28 +11,28 @@ class AddCombinedRoleIdAndUserIdIndexToRoleUserTable extends Migration
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::table('role_user', function (Blueprint $table) {
-            $table->unique([
-                'user_id',
-                'role_id',
-            ]);
-        });
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::table('role_user', function (Blueprint $table) {
-            $table->dropUnique([
-                'user_id',
-                'role_id',
-            ]);
-        });
-    }
+//    public function up()
+//    {
+//        Schema::table('role_user', function (Blueprint $table) {
+//            $table->unique([
+//                'user_id',
+//                'role_id',
+//            ]);
+//        });
+//    }
+//
+//    /**
+//     * Reverse the migrations.
+//     *
+//     * @return void
+//     */
+//    public function down()
+//    {
+//        Schema::table('role_user', function (Blueprint $table) {
+//            $table->dropUnique([
+//                'user_id',
+//                'role_id',
+//            ]);
+//        });
+//    }
 }
