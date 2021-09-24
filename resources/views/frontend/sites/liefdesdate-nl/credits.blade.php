@@ -41,7 +41,7 @@
 
                                         <a
                                             href="#"
-                                            class="btn {{ $loop->iteration == 2 ? 'btn-white' : 'btn-rose' }} btn-round JS--prevent-default__click"
+                                            class="btn {{ $loop->iteration == 3 && $authenticatedUser->getHasNewPricing() ? 'btn-white' : 'btn-rose' }} {{ $loop->iteration == 2 && !$authenticatedUser->getHasNewPricing() ? 'btn-white' : 'btn-rose' }} btn-round JS--prevent-default__click"
                                         >
                                             {{ trans(config('app.directory_name') . '/credits.select_package') }}
                                         </a>

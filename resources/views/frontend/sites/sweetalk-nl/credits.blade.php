@@ -42,7 +42,7 @@
 
                                         <a
                                             href="#"
-                                            class="btn {{ $loop->iteration == 2 ? 'btn-white' : 'btn-rose' }} btn-round JS--prevent-default__click"
+                                            class="btn {{ $loop->iteration == 3 && $authenticatedUser->getHasNewPricing() ? 'btn-white' : 'btn-rose' }} {{ $loop->iteration == 2 && !$authenticatedUser->getHasNewPricing() ? 'btn-white' : 'btn-rose' }} btn-round JS--prevent-default__click"
                                         >
                                             @if($creditpack->id === \App\Creditpack::MEDIUM)
                                                 {{ trans(config('app.directory_name') . '/credits.i_choose') }} medium
