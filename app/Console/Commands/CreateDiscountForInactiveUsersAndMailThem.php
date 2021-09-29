@@ -94,10 +94,10 @@ class CreateDiscountForInactiveUsersAndMailThem extends Command
                                     ->where('created_at', '>=', Carbon::now()->subDays(45)->format('Y-m-d'));
                             })
                             ->whereHas('messages', function ($query) use ($daysInactive) {
-                                $query->where('created_at', '<', Carbon::now()->subDays($daysInactive));
+                                $query->where('created_at', '<', Carbon::now()->subDays($daysInactive + 45));
                             })
                             ->whereDoesntHave('messages', function ($query) use ($daysInactive) {
-                                $query->where('created_at', '>=', Carbon::now()->subDays($daysInactive));
+                                $query->where('created_at', '>=', Carbon::now()->subDays($daysInactive + 45));
                             });
                     });
             })->get();
