@@ -58,10 +58,6 @@ class CreateDiscountForInactiveUsersAndMailThem extends Command
             ::whereHas('roles', function ($query) {
                 $query->where('id', Role::ROLE_PEASANT);
             })
-            ->whereDoesntHave('emailTypeInstances', function ($query) {
-                $query->where('email_type_id', EmailType::PLEASE_COME_BACK)
-                    ->where('created_at', '>=', Carbon::now()->subDays(7)->format('Y-m-d'));
-            })
             ->where('active', true)
             ->whereHas('meta', function ($query) {
                 $query->where('email_verified', UserMeta::EMAIL_VERIFIED_DELIVERABLE)
@@ -79,7 +75,8 @@ class CreateDiscountForInactiveUsersAndMailThem extends Command
                             ->where('created_at', '<=', Carbon::now()->subDays($daysInactive))
                             ->whereDoesntHave('payments', function ($query) {
                                 $query->where('status', Payment::STATUS_COMPLETED);
-                            });
+                            })
+                        ;
                     })
                     ->orWhere(function ($query) use ($daysInactive) {
                         $query
@@ -98,9 +95,12 @@ class CreateDiscountForInactiveUsersAndMailThem extends Command
                             })
                             ->whereDoesntHave('messages', function ($query) use ($daysInactive) {
                                 $query->where('created_at', '>=', Carbon::now()->subDays($daysInactive + 45));
-                            });
-                    });
-            })->get();
+                            })
+                        ;
+                    })
+                ;
+            })
+            ->get();
 
         $emailDelay = 0;
         $loopCount = 0;

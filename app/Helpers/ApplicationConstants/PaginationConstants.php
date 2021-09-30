@@ -10,7 +10,7 @@ class PaginationConstants
         'default' => 10,
         'user_profiles' => 12,
         'backend' => [
-            'default' => 20
+            'default' => 40
         ]
     ];
 }

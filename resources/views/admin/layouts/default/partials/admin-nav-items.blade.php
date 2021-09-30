@@ -262,6 +262,12 @@
                 Overview
             </a>
         </li>
+        <li class="{!! \Request::route()->getName() == 'admin.payments.completed' ? 'active' : '' !!}">
+            <a href="{!! route('admin.payments.completed', ['page' => 1]) !!}">
+                <i class="fa fa-list"></i>
+                Completed
+            </a>
+        </li>
     </ul>
 </li>
 <li class="treeview {!! \Str::contains(\Request::route()->getName(), 'admin.mass-messages') ? 'active' : '' !!}">

@@ -22,7 +22,14 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $payments = Payment::with(['peasant', 'peasant.affiliateTracking'])
+        $payments = Payment::with([
+            'peasant',
+            'peasant.affiliateTracking',
+            'peasant.payments' => function($query) {
+                $query->where('status', Payment::STATUS_COMPLETED)
+                    ->orderBy('created_at', 'desc');
+            }
+        ])
             ->orderBy('created_at', 'desc')
             ->paginate(PaginationConstants::$perPage['backend']['default']);
 
@@ -39,6 +46,40 @@ class PaymentController extends Controller
                 'title' => 'Payments Overview - ' . ucfirst(\config('app.name')),
                 'headingLarge' => 'Payments',
                 'headingSmall' => 'Overview',
+                'carbonNow' => Carbon::now(),
+                'payments' => $payments,
+                'creditpackNamePerId' => $creditpackNamePerId
+            ]
+        );
+    }
+
+    public function completed()
+    {
+        $payments = Payment::with([
+            'peasant',
+            'peasant.affiliateTracking',
+            'peasant.payments' => function($query) {
+                $query->where('status', Payment::STATUS_COMPLETED)
+                    ->orderBy('created_at', 'desc');
+            }
+        ])
+            ->where('status', Payment::STATUS_COMPLETED)
+            ->orderBy('created_at', 'desc')
+            ->paginate(PaginationConstants::$perPage['backend']['default']);
+
+        $creditpacks = Creditpack::all();
+        $creditpackNamePerId = [];
+
+        foreach ($creditpacks as $creditpack) {
+            $creditpackNamePerId[$creditpack->id] = $creditpack->name;
+        }
+
+        return view(
+            'admin.payments.overview',
+            [
+                'title' => 'Completed Payments Overview - ' . ucfirst(\config('app.name')),
+                'headingLarge' => 'Payments',
+                'headingSmall' => 'Completed',
                 'carbonNow' => Carbon::now(),
                 'payments' => $payments,
                 'creditpackNamePerId' => $creditpackNamePerId

@@ -6426,3 +6426,21 @@ table .action-buttons .btn {
     color: #111111;
     padding: 0 10px 10px;
 }
+
+.completedPayment {
+    background-color: #00c853;
+}
+
+.conversionPayment {
+    background-color: #29b6f6;
+}
+
+.startedPayment {
+    background-color: #d4e157;
+}
+
+.paymentHasDiscount {
+    background-color: #a26063;
+    color: #fff;
+    font-weight: 600;
+}

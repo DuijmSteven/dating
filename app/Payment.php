@@ -20,7 +20,8 @@ class Payment extends TimeZonedModel
         'status',
         'user_id',
         'is_conversion',
-        'transaction_id'
+        'transaction_id',
+        'discount_percentage'
     ];
 
     public function peasant()

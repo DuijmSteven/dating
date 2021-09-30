@@ -30,7 +30,6 @@
                                 <th>Previous completed payment</th>
                                 <th>Is conversion</th>
                                 <th>Item</th>
-                                <th>Status</th>
                                 <th class="no-wrap">Created at</th>
                                 <th class="no-wrap">Updated at</th>
                                 <th>Actions</th>
@@ -107,7 +106,6 @@
                                     <td>{{ count($payment->peasant->payments) > 1 ? \Carbon\Carbon::parse($payment->peasant->payments[1]->created_at)->locale('en')->diffForHumans() : '' }}</td>
                                     <td>{{ $payment->getIsConversion() ? 'Yes' : 'No' }}</td>
                                     <td>{{ $payment->creditpack_id ? ucfirst($creditpackNamePerId[$payment->creditpack_id]) . ' Creditpack' : '' }}</td>
-                                    <td>{{ \App\Helpers\PaymentsHelper::$statuses[$payment->status] }}</td>
                                     <td class="no-wrap">{{ $payment->getCreatedAt()->format('d-m-Y H:i:s') }}</td>
                                     <td class="no-wrap">{{ $payment->getUpdatedAt()->format('d-m-Y H:i:s') }}</td>
                                     <td class="action-buttons">
