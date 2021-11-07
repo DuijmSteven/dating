@@ -14,6 +14,7 @@ use App\Services\UserActivityService;
 use App\User;
 use App\UserAffiliateTracking;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class StatisticsController extends Controller
@@ -963,23 +964,43 @@ class StatisticsController extends Controller
         ));
     }
 
-    public function googleAdsKeywords()
+    public function googleAdsKeywords(Request $request)
     {
-        $leadsPerKeyword = DB
+        $searchParameters = $request->session()->get('searchParametersAdsKeywords');
+
+        $query = DB
             ::table('user_meta')
             ->select('registration_keyword as keyword', DB::raw('count(*) as count'))
-            ->where('registration_keyword', '!=', null)
-            ->groupBy(['keyword'])
+            ->where('registration_keyword', '!=', null);
+
+        if (isset($searchParameters['created_at_after'])) {
+            $query->where('user_meta.created_at', '>=', $searchParameters['created_at_after']);
+        }
+
+        if (isset($searchParameters['created_at_before'])) {
+            $query->where('user_meta.created_at', '<=', $searchParameters['created_at_before']);
+        }
+
+        $leadsPerKeyword = $query->groupBy(['keyword'])
             ->orderBy('count', 'desc')
             ->get();
         
-        $conversionsPerKeyword = DB
+        $query = DB
             ::table('user_meta')
             ->select('registration_keyword as keyword', DB::raw('count(DISTINCT(user_meta.user_id)) as count'))
             ->join('payments', 'user_meta.user_id', '=', 'payments.user_id')
             ->where('payments.status', '=', Payment::STATUS_COMPLETED)
-            ->where('registration_keyword', '!=', null)
-            ->groupBy(['keyword'])
+            ->where('registration_keyword', '!=', null);
+
+        if (isset($searchParameters['created_at_after'])) {
+            $query->where('user_meta.created_at', '>=', $searchParameters['created_at_after']);
+        }
+
+        if (isset($searchParameters['created_at_before'])) {
+            $query->where('user_meta.created_at', '<=', $searchParameters['created_at_before']);
+        }
+
+        $conversionsPerKeyword = $query->groupBy(['keyword'])
             ->orderBy('count', 'desc')
             ->get();
 
@@ -993,6 +1014,39 @@ class StatisticsController extends Controller
                 'conversionsPerKeyword' => $conversionsPerKeyword,
             ]
         );
+    }
+
+    public function searchGoogleAdsKeywords(Request $request)
+    {
+        try {
+            $searchParameters = [];
+
+            $createdAtAfter = $request->all()['created_at_after'];
+            $createdAtBefore = $request->all()['created_at_before'];
+
+            if ($createdAtAfter) {
+                $searchParameters['created_at_after'] = (new Carbon($createdAtAfter))
+                    ->tz('Europe/Amsterdam')
+                    ->format('Y-m-d H:i:s');
+            }
+
+            if ($createdAtBefore) {
+                $searchParameters['created_at_before'] = (new Carbon($createdAtBefore))
+                    ->addDays(1)
+                    ->tz('Europe/Amsterdam')
+                    ->format('Y-m-d H:i:s');
+            }
+
+            // flash parameters to session so the next request can access them
+            $request->session()->put('searchParametersAdsKeywords', $searchParameters);
+        } catch (\Exception $exception) {
+            \Log::error($exception->getMessage() . $exception->getTraceAsString());
+
+            return redirect()->back();
+        }
+
+        // redirect to search results' first page
+        return redirect()->route('admin.statistics.google-ads.keywords');
     }
 
     public function bestBots()

@@ -260,6 +260,9 @@ Route::group([
     Route::get('statistics/google-ads/keywords', 'Admin\StatisticsController@googleAdsKeywords')
         ->name('admin.statistics.google-ads.keywords');
 
+    Route::post('statistics/google-ads/keywords/search', 'Admin\StatisticsController@searchGoogleAdsKeywords')
+        ->name('admin.statistics.google-ads.search');
+
     Route::get('statistics/best-bots', 'Admin\StatisticsController@bestBots')
         ->name('admin.statistics.best-bots');
 
