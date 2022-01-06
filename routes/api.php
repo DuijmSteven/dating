@@ -14,11 +14,9 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('user', 'Api\UserController@getCurrentUser')
-    ->middleware('auth:sanctum');
+Route::get('user', 'Api\UserController@getCurrentUser');
 
-Route::get('user-with-relations', 'Api\UserController@getCurrentUserWithRelations')
-    ->middleware('auth:sanctum');
+Route::get('user-with-relations', 'Api\UserController@getCurrentUserWithRelations');
 
 
 Route::group([
@@ -31,8 +29,7 @@ Route::group([
 });
 
 Route::group([
-    'prefix' => 'users',
-    'middleware' => ['auth:sanctum']
+    'prefix' => 'users'
 ], function () {
     Route::get('search/{page}', 'Api\UserSearchController@getPaginatedSearchResults');
 
@@ -184,8 +181,7 @@ Route::group([
 });
 
 Route::group([
-    'prefix' => 'public-chat-items',
-    'middleware' => ['auth:sanctum']
+    'prefix' => 'public-chat-items'
 ], function () {
 
     Route::get('paginated/{page}', 'Api\PublicChatItemController@getPaginated')
