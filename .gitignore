@@ -2,7 +2,6 @@
 /node_modules
 .idea
 public/styleguide
-.env
 _ide_helper.php
 .phpstorm.meta.php
 public/css/app.css.map
