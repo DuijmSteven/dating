@@ -1,7 +1,7 @@
 @if(config('app.env') === 'local')
     <script src="https://www.google.com/recaptcha/api.js?render=6Lcb0N8UAAAAADUTgOIB9jcrz2xM60BPNjeK3qWL"></script>
 
-@elseif(\config('app.name') == 'altijdsex.nl' && config('app.env') === 'production')
+@elseif(\config('app.name') == 'datevrij.nl' && config('app.env') === 'production')
     <script src="https://www.google.com/recaptcha/api.js?render=6LdHptgUAAAAACP5lA0778MuyBsjs6oEnQcWo0T1"></script>
 
     <script>
@@ -10,7 +10,7 @@
             });
         });
     </script>
-@elseif(\config('app.name') == 'altijdsex.nl' && config('app.env') === 'staging')
+@elseif(\config('app.name') == 'datevrij.nl' && config('app.env') === 'staging')
     <script src="https://www.google.com/recaptcha/api.js?render=6Ldx0N8UAAAAABj1wlIcdnxtgCxrprg3DPMsDtkj"></script>
 
     <script>

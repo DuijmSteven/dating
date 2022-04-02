@@ -48,7 +48,7 @@ trait RegistersUsers
 //            try {
 //                $response = $client->request(
 //                    'GET',
-//                    'https://mt67.net/d/?bdci='. $user->affiliateTracking->getClickId() .'&ti=' . $user->id . '&pn=lead-XP-Altijdsex.nl&iv=media-' . $user->affiliateTracking->getMediaId() . '&c=' . $countryCode .'&g=' . $gender . '&cc=lead',
+//                    'https://mt67.net/d/?bdci='. $user->affiliateTracking->getClickId() .'&ti=' . $user->id . '&pn=lead-XP-Datevrij.nl&iv=media-' . $user->affiliateTracking->getMediaId() . '&c=' . $countryCode .'&g=' . $gender . '&cc=lead',
 //                    [
 //                        'timeout' => 4
 //                    ]

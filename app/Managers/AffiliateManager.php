@@ -55,7 +55,7 @@ class AffiliateManager
             if (config('app.env') === 'production') {
                 $response = $client->request(
                     'GET',
-                    'https://mt67.net/d/?bdci=' . $user->affiliateTracking->getClickId() . '&ti=' . $user->getId() . '&pn=lead-XP-Altijdsex.nl&iv=media-' . $user->affiliateTracking->getMediaId() . '&c=' . $countryCode . '&g=' . $gender . '&cc=lead',
+                    'https://mt67.net/d/?bdci=' . $user->affiliateTracking->getClickId() . '&ti=' . $user->getId() . '&pn=lead-XP-Datevrij.nl&iv=media-' . $user->affiliateTracking->getMediaId() . '&c=' . $countryCode . '&g=' . $gender . '&cc=lead',
                     [
                         'timeout' => 4
                     ]

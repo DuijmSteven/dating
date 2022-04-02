@@ -46,7 +46,7 @@ class LandingPageController extends FrontendController
 
 
         if (
-            config('app.name') === 'altijdsex.nl'
+            config('app.name') === 'datevrij.nl'
         ) {
             $viewData = $this->registrationService->checkAffiliateRequestDataAndSetRegistrationViewData($request, $viewData);
 
@@ -65,7 +65,7 @@ class LandingPageController extends FrontendController
         $users = $this->getUsers();
         $testimonials = $this->getTestimonials();
 
-        if (config('app.name') === 'altijdsex.nl') {
+        if (config('app.name') === 'datevrij.nl') {
             return view(
                 'frontend.landing-pages.' . str_replace('.', '-', config('app.name')) . '.1',
                 [
@@ -144,7 +144,7 @@ class LandingPageController extends FrontendController
                 'names' => 'Laura, 29'
             ],
             [
-                'quote' => 'Op mijn leeftijd sluit je niet meer zo makkelijk aan in de kroeg. Op enkele datingsites kwam ik bedrogen uit, maar ik ben blij dat ik op altijdsex toch nog invulling heb kunnen geven aan mijn lusten, ook al ben ik niet meer de jongste, de oudste zal ik ook zeker niet zijn, toch?',
+                'quote' => 'Op mijn leeftijd sluit je niet meer zo makkelijk aan in de kroeg. Op enkele datingsites kwam ik bedrogen uit, maar ik ben blij dat ik op datevrij toch nog invulling heb kunnen geven aan mijn lusten, ook al ben ik niet meer de jongste, de oudste zal ik ook zeker niet zijn, toch?',
                 'imgSource' => asset('img/lp/testimonials/mrjones.jpg'),
                 'names' => 'Mr. Jones, 68'
             ],

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAltijdsexUserEmailsTable extends Migration
+class CreateDatevrijUserEmailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateAltijdsexUserEmailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('altijdsex_user_emails', function (Blueprint $table) {
+        Schema::create('datevrij_user_emails', function (Blueprint $table) {
             $table->increments('id');
             $table->string('email')->unique();
         });
@@ -26,6 +26,6 @@ class CreateAltijdsexUserEmailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('altijdsex_user_emails');
+        Schema::dropIfExists('datevrij_user_emails');
     }
 }

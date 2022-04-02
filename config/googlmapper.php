@@ -245,7 +245,7 @@ return [
         | Display custom images for clusters using icon path. (Link to an image path)
         |
         */
-        'icon' => 'https://altijdsex.nl/img/admin/markerclusterer/images/m',
+        'icon' => 'https://datevrij.nl/img/admin/markerclusterer/images/m',
 
         /*
         |--------------------------------------------------------------------------

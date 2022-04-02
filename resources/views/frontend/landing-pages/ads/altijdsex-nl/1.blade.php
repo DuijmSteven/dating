@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>Een Date Zoeken en Geil Chatten | Altijdsex.nl</title>
+    <title>Een Date Zoeken en Geil Chatten | Datevrij.nl</title>
     <meta name="description"
           content="Anoniem geil chatten met single vrouwen met interesse in mannen dating, vind een vrouw voor sex chat, sekscontact of zoek date met een seksbuddy.">
 
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
     <meta name="viewport" content="width=device-width"/>
-    <link rel="canonical" href="https://altijdsex.nl/lps/1"/>
+    <link rel="canonical" href="https://datevrij.nl/lps/1"/>
 
-    <link rel="stylesheet" href="{{ mix('css/altijdsex-nl/adsLps.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/datevrij-nl/adsLps.css') }}">
 
     @if(App::environment('production'))
         <!-- Google Tag Manager -->
@@ -62,7 +62,7 @@
         <div class="logo-container text-center">
             <div class="logo">
                 <img
-                    src="{!! asset('img/site_logos/' . config('app.directory_name') . '/Altijdsex_LogoSmall_Pos.svg') !!}"
+                    src="{!! asset('img/site_logos/' . config('app.directory_name') . '/Datevrij_LogoSmall_Pos.svg') !!}"
                     width="200px">
             </div>
         </div>
@@ -244,7 +244,7 @@
                                     <div class="footer-checkbox">
                                         <div class="col-sm-12 text-center">
                                             <div>Heb je al een account?</div>
-                                            <a href="https://altijdsex.nl/login" class="btn btn-sm">Login</a>
+                                            <a href="https://datevrij.nl/login" class="btn btn-sm">Login</a>
                                         </div>
                                     </div>
                                 </div>

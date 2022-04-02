@@ -795,7 +795,7 @@
 <header>
     <div class="container" style="z-index: 50; position:relative;">
         <div class="navbar-brand">
-            <img src="{!! asset('img/site_logos/' . config('app.directory_name') . '/Altijdsex_LogoBig_Neg.svg') !!}" title="{{ config('app.name') }} Logo" alt="{{ config('app.name') }} Logo"/>
+            <img src="{!! asset('img/site_logos/' . config('app.directory_name') . '/Datevrij_LogoBig_Neg.svg') !!}" title="{{ config('app.name') }} Logo" alt="{{ config('app.name') }} Logo"/>
         </div>
 
         @php
@@ -1271,7 +1271,7 @@
         </div>
         <div class="col-xs-12 text-center Footer__logo-container">
             <div class="Footer__logo">
-                <img src="{!! asset('img/site_logos/' . config('app.directory_name') . '/Altijdsex_LogoBig_Neg.svg') !!}" alt="{{ ucfirst(\config('app.name')) }}">
+                <img src="{!! asset('img/site_logos/' . config('app.directory_name') . '/Datevrij_LogoBig_Neg.svg') !!}" alt="{{ ucfirst(\config('app.name')) }}">
             </div>
             <div class="col-md-12 copyright">
                 <h5>{{ trans(config('app.directory_name') . '/footer.copyright', ['currentYear' => $carbonNow->year, 'siteName' => ucfirst(config('app.name'))]) }}</h5>

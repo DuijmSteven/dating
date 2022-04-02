@@ -6,7 +6,7 @@ class EmailHelper
 {
     public static function getSiteMainColor()
     {
-        if ((int) config('app.site_id') === SiteHelper::ALTIJDSEX_NL) {
+        if ((int) config('app.site_id') === SiteHelper::DATEVRIJ_NL) {
             return '#312c2c';
         }
 
@@ -21,7 +21,7 @@ class EmailHelper
 
     public static function getSiteSecondaryColor()
     {
-        if ((int) config('app.site_id') === SiteHelper::ALTIJDSEX_NL) {
+        if ((int) config('app.site_id') === SiteHelper::DATEVRIJ_NL) {
             return '#ce5338';
         }
 
@@ -36,7 +36,7 @@ class EmailHelper
 
     public static function getSiteTertiaryColor()
     {
-        if ((int) config('app.site_id') === SiteHelper::ALTIJDSEX_NL) {
+        if ((int) config('app.site_id') === SiteHelper::DATEVRIJ_NL) {
             return '#4f5d75';
         }
 

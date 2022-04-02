@@ -3,7 +3,7 @@
 
 @import "mixins";
 
-@import "altijdsex-nl-variables";
+@import "datevrij-nl-variables";
 
 // BootstrapPrev
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
@@ -20,48 +20,48 @@
 @import "~jquery-ui/themes/base/datepicker";
 @import "~jquery-ui/themes/base/autocomplete";
 
-@import "sites/altijdsex-nl/scaffolding";
-@import "sites/altijdsex-nl/navbar";
-@import "sites/altijdsex-nl/search-bar";
+@import "sites/datevrij-nl/scaffolding";
+@import "sites/datevrij-nl/navbar";
+@import "sites/datevrij-nl/search-bar";
 @import "forms";
 @import "pagination";
-@import "sites/altijdsex-nl/footer";
+@import "sites/datevrij-nl/footer";
 
 // Components
-@import "components/sites/altijdsex-nl/tile";
+@import "components/sites/datevrij-nl/tile";
 @import "components/button";
 @import "components/activity";
 @import "components/alert";
-@import "components/sites/altijdsex-nl/user-summary";
-@import "components/sites/altijdsex-nl/user-profile";
-@import "components/sites/altijdsex-nl/private-chat-manager";
-@import "components/sites/altijdsex-nl/private-chat-item";
-@import "components/sites/altijdsex-nl/image-modal";
+@import "components/sites/datevrij-nl/user-summary";
+@import "components/sites/datevrij-nl/user-profile";
+@import "components/sites/datevrij-nl/private-chat-manager";
+@import "components/sites/datevrij-nl/private-chat-item";
+@import "components/sites/datevrij-nl/image-modal";
 @import "components/spinner";
 @import "components/confirm-dialog";
 @import "components/scroll-top-button";
 @import "components/low-profile-completion";
-@import "components/sites/altijdsex-nl/public-chat";
-@import "components/sites/altijdsex-nl/discount-header";
+@import "components/sites/datevrij-nl/public-chat";
+@import "components/sites/datevrij-nl/discount-header";
 
 // Modules
 @import "modules/user-account";
-@import "modules/sites/altijdsex-nl/module-profiles";
+@import "modules/sites/datevrij-nl/module-profiles";
 
 // Views
 @import "views/articles";
 @import "views/faq";
-@import "views/sites/altijdsex-nl/edit-profile";
-@import "views/sites/altijdsex-nl/credits";
-@import "views/sites/altijdsex-nl/contact";
-@import "views/sites/altijdsex-nl/thank-you";
+@import "views/sites/datevrij-nl/edit-profile";
+@import "views/sites/datevrij-nl/credits";
+@import "views/sites/datevrij-nl/contact";
+@import "views/sites/datevrij-nl/thank-you";
 @import "views/welcome-modal";
 
 @import "vue-apps/private-chat/main";
 
 .fullWrapper {
   &.withBackground {
-    background-image: url('/img/sites/altijdsex-nl/password-reset-bg.jpg');
+    background-image: url('/img/sites/datevrij-nl/password-reset-bg.jpg');
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: cover;

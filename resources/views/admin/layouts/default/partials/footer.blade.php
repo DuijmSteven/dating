@@ -3,7 +3,7 @@
     !($authenticatedUser->isOperator() || $authenticatedUser->isEditor())
 )
     <div class="pull-right hidden-xs">
-        Altijdsex.nl
+        Datevrij.nl
     </div>
-    <strong><a href="{{ url('/') }}">Altijdsex.nl</a></strong>
+    <strong><a href="{{ url('/') }}">Datevrij.nl</a></strong>
 @endif

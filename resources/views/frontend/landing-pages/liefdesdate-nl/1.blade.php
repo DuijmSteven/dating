@@ -786,7 +786,7 @@
 <header>
     <div class="container" style="z-index: 50; position:relative;">
         <div class="navbar-brand">
-            <img src="{!! asset('img/site_logos/' . config('app.directory_name') . '/Altijdsex_LogoBig_Neg.svg') !!}" title="Altijdsex.nl Logo" alt="Altijdsex.nl Logo"/>
+            <img src="{!! asset('img/site_logos/' . config('app.directory_name') . '/Datevrij_LogoBig_Neg.svg') !!}" title="Datevrij.nl Logo" alt="Datevrij.nl Logo"/>
         </div>
 
         @php
@@ -1256,7 +1256,7 @@
         </div>
         <div class="col-xs-12 text-center Footer__logo-container">
             <div class="Footer__logo">
-                <img src="{!! asset('img/site_logos/' . config('app.directory_name') . '/Altijdsex_LogoBig_Neg.svg') !!}" alt="{{ ucfirst(\config('app.name')) }}">
+                <img src="{!! asset('img/site_logos/' . config('app.directory_name') . '/Datevrij_LogoBig_Neg.svg') !!}" alt="{{ ucfirst(\config('app.name')) }}">
             </div>
             <div class="col-md-12 copyright">
                 <h5>{{ trans(config('app.directory_name') . '/footer.copyright', ['currentYear' => $carbonNow->year]) }}</h5>

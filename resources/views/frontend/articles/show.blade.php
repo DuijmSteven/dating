@@ -45,20 +45,20 @@
             "dateModified": "{!! $article->updated_at->toFormattedDateString() !!}",
             "author": {
                 "@type": "Person",
-                "name": "Altijdsex Author",
+                "name": "Datevrij Author",
                 "worksFor": {
                     "@type": "Organization",
-                    "name": "Altijdsex"
+                    "name": "Datevrij"
                 }
             },
             "publisher": {
                 "@type": "Organization",
-                "name": "Altijdsex",
+                "name": "Datevrij",
                 "logo": {
                     "@type": "ImageObject",
-                    "url": "{!! asset('img/site_logos/' . config('app.directory_name') . '/Altijdsex_LogoSmall_Pos@1x.png') !!}"
+                    "url": "{!! asset('img/site_logos/' . config('app.directory_name') . '/Datevrij_LogoSmall_Pos@1x.png') !!}"
                 },
-                "url": "https://altijdsex.nl/"
+                "url": "https://datevrij.nl/"
             },
             "description": "{!! Str::limit($article->getBody(), 400) !!}"
         }

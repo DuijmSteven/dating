@@ -10,19 +10,19 @@ before_script:
   - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
 
 stages:
-  - deploy_staging_altijdsex_nl
+  - deploy_staging_datevrij_nl
   - deploy_staging_liefdesdate_nl
   - deploy_staging_sweetalk_nl
-  - deploy_production_altijdsex_nl
+  - deploy_production_datevrij_nl
   - deploy_production_liefdesdate_nl
   - deploy_production_sweetalk_nl
 
-deploy_staging_altijdsex_nl:
-  stage: deploy_staging_altijdsex_nl
+deploy_staging_datevrij_nl:
+  stage: deploy_staging_datevrij_nl
   environment:
     name: staging
   script:
-    - ssh opalampo@128.199.53.121 "cd /var/www/dating &&
+    -
       git fetch &&
       git checkout staging &&
       git pull origin staging &&
@@ -42,7 +42,7 @@ deploy_staging_liefdesdate_nl:
   environment:
     name: staging
   script:
-    - ssh opalampo@134.209.87.252 "cd /var/www/dating &&
+    - 
       git fetch &&
       git checkout staging &&
       git pull origin staging &&
@@ -62,7 +62,7 @@ deploy_staging_sweetalk_nl:
   environment:
     name: staging
   script:
-    - ssh opalampo@142.93.141.215 "cd /var/www/dating &&
+    - 
       git fetch &&
       git checkout staging &&
       git pull origin staging &&
@@ -77,12 +77,12 @@ deploy_staging_sweetalk_nl:
   only:
     - staging
 
-deploy_production_altijdsex_nl:
-  stage: deploy_production_altijdsex_nl
+deploy_production_datevrij_nl:
+  stage: deploy_production_datevrij_nl
   environment:
     name: production
   script:
-    - ssh opalampo@178.62.249.225 "cd /var/www/dating &&
+    - 
       git fetch &&
       git checkout master &&
       git pull origin master &&
@@ -102,7 +102,7 @@ deploy_production_liefdesdate_nl:
   environment:
     name: production
   script:
-    - ssh opalampo@188.166.93.182 "cd /var/www/dating &&
+    - 
       git fetch &&
       git checkout master &&
       git pull origin master &&
@@ -122,7 +122,7 @@ deploy_production_sweetalk_nl:
   environment:
     name: production
   script:
-    - ssh opalampo@188.166.3.163 "cd /var/www/dating &&
+    - 
       git fetch &&
       git checkout master &&
       git pull origin master &&

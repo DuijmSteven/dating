@@ -272,18 +272,18 @@
                             <br>
                             <br>
                             <div style="background: #333; padding-left: 12px; padding-top: 5px; text-align: center">
-                                <a target="_blank" href="https://altijdsex.nl?affiliate=datingsitelijstpromo">
-                                    <img height="50px" src="{{ asset('img/site_logos/altijdsex-nl/main_logo.png') }}" alt="Altijdsex.nl">
+                                <a target="_blank" href="https://datevrij.nl?affiliate=datingsitelijstpromo">
+                                    <img height="50px" src="{{ asset('img/site_logos/datevrij-nl/main_logo.png') }}" alt="Datevrij.nl">
                                 </a>
                             </div>
 
                             <p style="margin-bottom: 0">
-                                Altijdsex is de beste erotische datingsite van dit moment. Met 55.000+ actieve leden zit er altijd wel iemand voor jou bij. Of je nu op zoek bent naar een one-night-stand aan de andere kant van het land of meerdere contacten bij jou in de buurt.
+                                Datevrij is de beste erotische datingsite van dit moment. Met 55.000+ actieve leden zit er altijd wel iemand voor jou bij. Of je nu op zoek bent naar een one-night-stand aan de andere kant van het land of meerdere contacten bij jou in de buurt.
                             </p>
 
                             <div style="text-align: center">
-                                <div style="display: inline-block; padding: 7px 20px; background-color: {{ $altijdsexSecondaryColor }}; color: #fff; border: 1px solid {{ $altijdsexSecondaryColor }}; border-radius: 4px; margin: 20px 0; cursor: pointer">
-                                    <a target="_blank" style="color: #fff" href="https://altijdsex.nl?affiliate=datingsitelijstpromo">Naar Altijdsex.nl!</a>
+                                <div style="display: inline-block; padding: 7px 20px; background-color: {{ $datevrijSecondaryColor }}; color: #fff; border: 1px solid {{ $datevrijSecondaryColor }}; border-radius: 4px; margin: 20px 0; cursor: pointer">
+                                    <a target="_blank" style="color: #fff" href="https://datevrij.nl?affiliate=datingsitelijstpromo">Naar Datevrij.nl!</a>
                                 </div>
                             </div>
 

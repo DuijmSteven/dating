@@ -26,7 +26,7 @@ return [
         'login' => 'Log in',
     ],
     'welcome' => 'Direct Sex Chat!',
-    'welcome_text' => 'Welkom op de beste datingsite van Nederland: Sweetalk.nl! Ben je op zoek naar een sexdate? Geil chatten? Of gewoon naar een seksbuddy? Op Altijdsex.nl kom je duizenden gelijkgestemden tegen, waar je direct op veilige en anonieme wijze mee kan sekschatten. Maak nu gratis een account aan en start direct met sex chat!',
+    'welcome_text' => 'Welkom op de beste datingsite van Nederland: Sweetalk.nl! Ben je op zoek naar een sexdate? Geil chatten? Of gewoon naar een seksbuddy? Op Datevrij.nl kom je duizenden gelijkgestemden tegen, waar je direct op veilige en anonieme wijze mee kan sekschatten. Maak nu gratis een account aan en start direct met sex chat!',
     'usps' => [
         'free_access' => [
             'title' => 'Gratis Toegang',
@@ -34,7 +34,7 @@ return [
         ],
         'live_chat' => [
             'title' => 'Live Chat',
-            'text' => 'Op Altijdsex.nl maak je gebruik van een moderne live chat. Je bent dus niet langer afhankelijk van een ouderwetse berichtenbox die je dient te verversen. Hierdoor zie je het direct als je een nieuw bericht krijgt en je kunt dan gelijk door met sekschatten. Maak gratis een account aan en ga vrijblijvend op zoek naar een sex afspraak!',
+            'text' => 'Op Datevrij.nl maak je gebruik van een moderne live chat. Je bent dus niet langer afhankelijk van een ouderwetse berichtenbox die je dient te verversen. Hierdoor zie je het direct als je een nieuw bericht krijgt en je kunt dan gelijk door met sekschatten. Maak gratis een account aan en ga vrijblijvend op zoek naar een sex afspraak!',
         ],
         'privacy_anonymity' => [
             'title' => 'Veiligheid & Privacy',

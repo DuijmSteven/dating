@@ -2,7 +2,7 @@ INSERT INTO dating.articles (id, title, body, meta_description, status, created_
 
 Het begint steeds normaler te worden, mensen vinden elkaar via het internet. Internet is het snelst groeiende medium voor online dates, flirts en relaties. Je hebt besloten om ook online op zoek te gaan naar een seksdates, maar vraagt je toch af of het niet makkelijker kan. Je krijgt genoeg berichten, praat met wat leuke vrouwen, maar aan het einde van de dag lig je nog alleen in bed. Hoe zorg je er nou voor dat je je slagingskans vergroot en de termijn aanzienlijk inkort waarin je een date regelt?
 
-Laten we bij het probleem beginnen, want er zijn immers mannen en vrouwen genoeg op altijdsex.nl. Waar gaat het dan mis?
+Laten we bij het probleem beginnen, want er zijn immers mannen en vrouwen genoeg op datevrij.nl. Waar gaat het dan mis?
 
 Mannen willen vaak snel scoren. Niet teveel chatten, maar gewoon straight to the point en heerlijk genieten tussen de dekens. Het heeft ook wel wat spanning als je niet direct alles weet van iemand en diegene in de slaapkamer leert kennen toch? Dat is de oorzaak van het probleem, want vrouwen zijn (uitzonderingen daargelaten) niet zo. Wat doen ze hier dan zal je je afvragen.. Ze willen wel een seksdate, maar ze willen niet na het eerste berichtje al gelijk met je bed.
 

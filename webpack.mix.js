@@ -12,13 +12,13 @@ let mix = require('laravel-mix');
  */
 
 mix
-    .js('resources/assets/js/sites/altijdsex-nl/app.js', 'public/js/altijdsex-nl/app.js')
+    .js('resources/assets/js/sites/datevrij-nl/app.js', 'public/js/datevrij-nl/app.js')
     .js('resources/assets/js/sites/liefdesdate-nl/app.js', 'public/js/liefdesdate-nl/app.js')
     .js('resources/assets/js/sites/sweetalk-nl/app.js', 'public/js/sweetalk-nl/app.js')
-    .sass('resources/assets/sass/altijdsex-nl.scss', 'public/css/altijdsex-nl/app.css')
+    .sass('resources/assets/sass/datevrij-nl.scss', 'public/css/datevrij-nl/app.css')
     .sass('resources/assets/sass/liefdesdate-nl.scss', 'public/css/liefdesdate-nl/app.css')
     .sass('resources/assets/sass/sweetalk-nl.scss', 'public/css/sweetalk-nl/app.css')
-    .sass('resources/assets/sass/sites/altijdsex-nl/adsLps.scss', 'public/css/altijdsex-nl/adsLps.css')
+    .sass('resources/assets/sass/sites/datevrij-nl/adsLps.scss', 'public/css/datevrij-nl/adsLps.css')
     .sass('resources/assets/sass/sites/liefdesdate-nl/adsLps.scss', 'public/css/liefdesdate-nl/adsLps.css')
     .sass('resources/assets/sass/sites/sweetalk-nl/adsLps.scss', 'public/css/sweetalk-nl/adsLps.css')
     .sourceMaps()

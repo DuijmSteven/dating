@@ -57,7 +57,7 @@ class Kernel extends ConsoleKernel
         $schedule->command(SetProfileViews::class)->everyMinute();
 
         if (config('app.env') === 'production') {
-//            if (config('app.site_id') === SiteHelper::ALTIJDSEX_NL) {
+//            if (config('app.site_id') === SiteHelper::DATEVRIJ_NL) {
 //                $schedule->command(SendProfileCompletionEmails::class)->dailyAt("19:00");
 //            }
 

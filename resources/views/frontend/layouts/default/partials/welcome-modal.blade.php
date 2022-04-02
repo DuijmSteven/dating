@@ -2,7 +2,7 @@
     <div class="modal-dialog" role="document" style="position: relative; z-index: 10000">
         <div class="modal-content">
 {{--            <div class="modal-header" style="text-align: center; background-color: #312c2c">--}}
-{{--                <img style="width: 40%" src="{!! asset('img/site_logos/Altijdsex_LogoSmall_Pos@1x.png') !!}">--}}
+{{--                <img style="width: 40%" src="{!! asset('img/site_logos/Datevrij_LogoSmall_Pos@1x.png') !!}">--}}
 {{--            </div>--}}
             <div class="modal-body">
                 <div class="show-mobile">

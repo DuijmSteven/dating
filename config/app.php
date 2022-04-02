@@ -12,10 +12,10 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => env('APP_NAME', 'altijdsex.nl'),
+    'name' => env('APP_NAME', 'datevrij.nl'),
     'site_id' => env('SITE_ID', 1),
-    'pure_name' => env('APP_PURE_NAME', 'altijdsex'),
-    'directory_name' => env('APP_DIRECTORY_NAME', 'altijdsex-nl'),
+    'pure_name' => env('APP_PURE_NAME', 'datevrij'),
+    'directory_name' => env('APP_DIRECTORY_NAME', 'datevrij-nl'),
     'launch_date' => env('LAUNCH_DATE', '01-02-2020 00:00:00'),
     'new_launch_date' => env('NEW_LAUNCH_DATE', '15-04-2021 00:00:00'),
     'show_images' => env('SHOW_IMAGES', true),

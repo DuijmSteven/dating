@@ -20,7 +20,7 @@ class VerifyAnonymousDomain
     {
         if (
             config('app.env') !== 'local' &&
-            Str::contains(request()->getHttpHost(), 'altijdsex') &&
+            Str::contains(request()->getHttpHost(), 'datevrij') &&
             (is_null(\Auth::user()) || \Auth::user()->roles()->get()[0]->id !== User::TYPE_ADMIN)
         ) {
             if (config('app.env') === 'production') {
@@ -28,13 +28,13 @@ class VerifyAnonymousDomain
                     \Auth::logout();
                 }
 
-                return redirect('https://altijdsex.nl/login');
+                return redirect('https://datevrij.nl/login');
             } elseif (config('app.env') === 'staging') {
                 if (\Auth::user()) {
                     \Auth::logout();
                 }
 
-                return redirect('https://staging.altijdsex.nl/login');
+                return redirect('https://staging.datevrij.nl/login');
             }
         }
 

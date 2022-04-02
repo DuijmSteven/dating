@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>De beste datingsite voor sex dating | Altijdsex.nl</title>
+    <title>De beste datingsite voor sex dating | Datevrij.nl</title>
 
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
     <meta name="viewport" content="width=device-width"/>
@@ -80,7 +80,7 @@
     <a href="#">
         <div class="logo-container text-center">
             <div class="logo">
-                <img src="{!! asset('img/site_logos/' . config('app.directory_name') . '/Altijdsex_Logo_Small_Pos.png') !!}" width="200px">
+                <img src="{!! asset('img/site_logos/' . config('app.directory_name') . '/Datevrij_Logo_Small_Pos.png') !!}" width="200px">
             </div>
         </div>
     </a>
@@ -261,7 +261,7 @@
                                     <div class="footer-checkbox">
                                         <div class="col-sm-12 text-center">
                                             <div>Heb je al een account?</div>
-                                            <a href="https://altijdsex.nl/login" class="btn btn-sm">Login</a>
+                                            <a href="https://datevrij.nl/login" class="btn btn-sm">Login</a>
                                         </div>
                                     </div>
                                 </div>
